@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useState, useRef, useCallback } f
 import type React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Edit3, Save, X, Check } from 'lucide-react';
-import { supabase } from '../lib/supabase';
+import { auth } from '../lib/firebase';
 import { loadContent, saveContent, SiteContent } from '../lib/content';
 
 // ════════════════════════════════════════════════════════════════
@@ -39,16 +39,13 @@ export const EditableProvider = ({ children }: { children: React.ReactNode }) =>
 
   // Verifica se l'utente è loggato come admin
   useEffect(() => {
-    if (!supabase) return;
-    supabase.auth.getSession().then(({ data }) => setIsAdmin(!!data.session));
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
-      setIsAdmin(!!s);
-      if (!s) {
-        setEditing(false);
-        setDirty({});
-      }
+    if (!auth) return;
+    const { onAuthStateChanged } = await import('firebase/auth');
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setIsAdmin(!!u);
+      if (!u) { setEditing(false); setDirty({}); }
     });
-    return () => sub.subscription.unsubscribe();
+    return unsub;
   }, []);
 
   // Quando arriva l'hash #edit, attiva subito modalità modifica
