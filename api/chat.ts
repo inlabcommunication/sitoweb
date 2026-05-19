@@ -289,13 +289,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Limita la lunghezza della history (anti-abuso)
     const limitedMessages = messages.slice(-30);
 
-    // Scegli provider — default Gemini
-    const provider = (process.env.AI_PROVIDER || 'gemini').toLowerCase();
+    // Leggi impostazioni da Supabase (override sulle env vars)
+    let dbSettings: any = {};
+    try {
+      const supabase = getSupabase();
+      const { data } = await supabase
+        .from('app_settings')
+        .select('data')
+        .eq('id', 'global')
+        .single();
+      if (data?.data) dbSettings = data.data;
+    } catch (_) {
+      // Se la tabella non esiste ancora, ignora
+    }
+
+    // Scegli provider — priorità: Supabase > env var > default gemini
+    const provider = (dbSettings.aiProvider || process.env.AI_PROVIDER || 'gemini').toLowerCase();
     const maxTokens = 400;
 
     let result;
     if (provider === 'anthropic') {
-      const apiKey = process.env.ANTHROPIC_API_KEY;
+      const apiKey = dbSettings.anthropicApiKey || process.env.ANTHROPIC_API_KEY;
       if (!apiKey) {
         return res.status(500).json({
           error: 'ANTHROPIC_API_KEY missing',
@@ -304,13 +318,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
       result = await callAnthropic(
         apiKey,
-        process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5',
+        dbSettings.anthropicModel || process.env.ANTHROPIC_MODEL || 'claude-haiku-4-5-20251001',
         SYSTEM_PROMPT,
         limitedMessages,
         maxTokens
       );
     } else {
-      const apiKey = process.env.GEMINI_API_KEY;
+      const apiKey = dbSettings.geminiApiKey || process.env.GEMINI_API_KEY;
       if (!apiKey) {
         return res.status(500).json({
           error: 'GEMINI_API_KEY missing',
@@ -319,7 +333,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       }
       result = await callGemini(
         apiKey,
-        process.env.GEMINI_MODEL || 'gemini-2.5-flash',
+        dbSettings.geminiModel || process.env.GEMINI_MODEL || 'gemini-2.5-flash',
         SYSTEM_PROMPT,
         limitedMessages,
         maxTokens
