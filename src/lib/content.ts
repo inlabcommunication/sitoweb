@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
-import { supabase } from './supabase';
+import { db } from './firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { WEBSITE_CONTENT } from '../constants';
-
-// ════════════════════════════════════════════════════════════════
-// CONTENT LOADER
-// Carica i contenuti dal DB. Se il DB non è raggiungibile o vuoto,
-// usa quelli di constants.ts come fallback. Quando salvi dall'editor,
-// scrive nel DB e tutti i visitatori vedono il nuovo contenuto.
-// ════════════════════════════════════════════════════════════════
 
 export type SiteContent = typeof WEBSITE_CONTENT;
 
@@ -18,21 +12,11 @@ export const getContent = (): SiteContent => cached ?? WEBSITE_CONTENT;
 
 export const loadContent = async (): Promise<SiteContent> => {
   if (cached) return cached;
-  if (!supabase) {
-    cached = WEBSITE_CONTENT;
-    return cached;
-  }
+  if (!db) { cached = WEBSITE_CONTENT; return cached; }
   try {
-    const { data, error } = await supabase
-      .from('site_content')
-      .select('data')
-      .eq('id', 'current')
-      .maybeSingle();
-    if (error) throw error;
-    if (data?.data) {
-      // Merge profondo con i defaults per non rompere se aggiungiamo
-      // campi nuovi dopo il primo salvataggio
-      cached = deepMerge(WEBSITE_CONTENT, data.data) as SiteContent;
+    const snap = await getDoc(doc(db, 'app', 'site_content'));
+    if (snap.exists()) {
+      cached = deepMerge(WEBSITE_CONTENT, snap.data() as any) as SiteContent;
     } else {
       cached = WEBSITE_CONTENT;
     }
@@ -44,17 +28,16 @@ export const loadContent = async (): Promise<SiteContent> => {
 };
 
 export const saveContent = async (newContent: SiteContent): Promise<boolean> => {
-  if (!supabase) return false;
-  const { error } = await supabase
-    .from('site_content')
-    .upsert({ id: 'current', data: newContent, updated_at: new Date().toISOString() });
-  if (error) {
-    console.error('[content] save failed', error);
+  if (!db) return false;
+  try {
+    await setDoc(doc(db, 'app', 'site_content'), newContent);
+    cached = newContent;
+    listeners.forEach((fn) => fn(newContent));
+    return true;
+  } catch (e) {
+    console.error('[content] save failed', e);
     return false;
   }
-  cached = newContent;
-  listeners.forEach((fn) => fn(newContent));
-  return true;
 };
 
 export const subscribeContent = (fn: (c: SiteContent) => void) => {
@@ -62,21 +45,17 @@ export const subscribeContent = (fn: (c: SiteContent) => void) => {
   return () => listeners.delete(fn);
 };
 
-// Hook per i componenti React
 export const useContent = (): SiteContent => {
   const [content, setContent] = useState<SiteContent>(cached ?? WEBSITE_CONTENT);
   useEffect(() => {
-    if (!cached) {
-      loadContent().then(setContent);
-    }
+    if (!cached) loadContent().then(setContent);
     return subscribeContent(setContent);
   }, []);
   return content;
 };
 
-// Helper: deep merge (per fondere il content da DB con eventuali default nuovi)
 function deepMerge(target: any, source: any): any {
-  if (Array.isArray(source)) return source; // gli array sovrascrivono interi
+  if (Array.isArray(source)) return source;
   if (typeof source !== 'object' || source === null) return source;
   const out: any = { ...target };
   for (const k of Object.keys(source)) {
