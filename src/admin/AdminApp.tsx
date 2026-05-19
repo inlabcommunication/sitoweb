@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
 import { motion } from 'motion/react';
-import { BarChart3, Users, Edit3, LogOut, ExternalLink } from 'lucide-react';
+import { BarChart3, Users, Edit3, LogOut, ExternalLink, Settings2 } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { Analytics } from './Analytics';
 import { Leads } from './Leads';
 import { ContentEditor } from './ContentEditor';
+import { Settings } from './Settings';
 
 // ════════════════════════════════════════════════════════════════
 // ADMIN APP — Login + tabs Analytics / Lead / Editor
@@ -13,7 +14,7 @@ import { ContentEditor } from './ContentEditor';
 // Crea il tuo utente admin dalla dashboard Supabase → Authentication.
 // ════════════════════════════════════════════════════════════════
 
-type Tab = 'analytics' | 'leads' | 'editor';
+type Tab = 'analytics' | 'leads' | 'editor' | 'settings';
 
 export const AdminApp = () => {
   const [session, setSession] = useState<any>(null);
@@ -91,6 +92,7 @@ export const AdminApp = () => {
                 { id: 'analytics', label: 'Analytics', icon: <BarChart3 size={14} /> },
                 { id: 'leads', label: 'Lead', icon: <Users size={14} /> },
                 { id: 'editor', label: 'Editor', icon: <Edit3 size={14} /> },
+                { id: 'settings', label: 'Impostazioni', icon: <Settings2 size={14} /> },
               ] as { id: Tab; label: string; icon: React.ReactNode }[]
             ).map((t) => (
               <button
@@ -161,6 +163,7 @@ export const AdminApp = () => {
         {tab === 'analytics' && <Analytics />}
         {tab === 'leads' && <Leads />}
         {tab === 'editor' && <ContentEditor />}
+        {tab === 'settings' && <Settings />}
       </motion.div>
     </div>
   );
