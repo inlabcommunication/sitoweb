@@ -1,38 +1,30 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
-import { GoogleGenAI } from '@google/genai';
-import { supabase } from '../lib/supabase';
 
 // ════════════════════════════════════════════════════════════════
-// CHATBOT AI (Gemini) — Cattura lead automatica
-// Il bot conosce InLab, risponde sui servizi, riconosce l'intento
-// di contatto e chiede l'email in modo naturale. Salva su Supabase.
+// CHATBOT v3 — Backend serverless /api/chat
+//
+// Il browser NON conosce la chiave AI. Tutto passa dal nostro endpoint
+// che vive su Vercel come funzione serverless. Più sicuro e più potente:
+// - Classifica i lead (freddo/tiepido/caldo/urgente)
+// - Estrae nome/email/telefono dalla conversazione
+// - Salva direttamente nel DB Supabase
+// - Switchabile tra Gemini e Claude da variabili d'ambiente Vercel
 // ════════════════════════════════════════════════════════════════
-
-const SYSTEM_PROMPT = `Sei l'assistente virtuale di InLab Communication, un'agenzia di comunicazione di Taranto, Puglia.
-
-I servizi di InLab sono:
-- Gestione Social & Meta Ads (strategia, contenuti, advertising su Instagram, Facebook, TikTok)
-- Siti Web & Web App (design, sviluppo, SEO)
-- Automazioni con AI (chatbot, workflow, processi intelligenti)
-- Shooting Fotografico (brand, prodotti, eventi)
-- Video & Reels (produzione per social, milioni di view organiche)
-- Landing Page (ottimizzate per conversione, A/B testing)
-
-InLab serve clienti in tutta la Puglia: Taranto, Palagiano, Palagianello, Massafra, Mottola, Castellaneta, Laterza, Ginosa.
-
-REGOLE:
-1. Rispondi sempre in italiano, tono amichevole ma professionale, breve (max 2-3 frasi per risposta).
-2. Non inventare prezzi, tempi o promesse specifiche. Se chiedono "quanto costa" o "in quanto tempo", spiega che dipende dal progetto e proponi di lasciare l'email per un preventivo personalizzato.
-3. Dopo 2-3 messaggi, se l'utente sembra interessato, chiedi gentilmente nome e email per farlo contattare dal team. Non essere insistente.
-4. Quando l'utente fornisce un'email valida, ringrazialo e chiudi dicendo che lo contatterete entro 24h.
-5. Quando rilevi un'email nel messaggio, rispondi includendo nel JSON: {"email": "...", "intent": "breve descrizione di cosa cerca"}.
-6. Formato risposta: SEMPRE JSON valido così: {"reply": "il tuo messaggio all'utente", "email": null o "email@trovata.it", "intent": null o "descrizione"}.`;
 
 type Msg = { role: 'user' | 'assistant'; content: string; ts: number };
 
-const EMAIL_RE = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+const SESSION_KEY = 'inlab_sid';
+
+const getSessionId = (): string => {
+  let sid = sessionStorage.getItem(SESSION_KEY);
+  if (!sid) {
+    sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+    sessionStorage.setItem(SESSION_KEY, sid);
+  }
+  return sid;
+};
 
 export const Chatbot = () => {
   const [open, setOpen] = useState(false);
@@ -42,15 +34,15 @@ export const Chatbot = () => {
   const [emailCaptured, setEmailCaptured] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY as string;
 
-  // Saluto iniziale quando si apre per la prima volta
+  // Saluto iniziale
   useEffect(() => {
     if (open && messages.length === 0) {
       setMessages([
         {
           role: 'assistant',
-          content: 'Ciao! 👋 Sono l\'assistente di InLab. Come posso aiutarti? Stai cercando informazioni su social, sito web, video o altro?',
+          content:
+            'Ciao! 👋 Sono l\'assistente di InLab. Come posso aiutarti? Cerchi info su social, sito web, video, foto o automazioni AI?',
           ts: Date.now(),
         },
       ]);
@@ -62,23 +54,6 @@ export const Chatbot = () => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, loading]);
 
-  const saveLead = async (email: string, intent: string | null) => {
-    if (!supabase) return;
-    const sessionId = sessionStorage.getItem('inlab_sid') ?? null;
-    try {
-      await supabase.from('leads').insert({
-        email,
-        intent: intent ?? 'Contatto da chatbot',
-        conversation: messages,
-        session_id: sessionId,
-        source: 'chatbot',
-        status: 'new',
-      });
-    } catch (e) {
-      console.error('[chatbot] salvataggio lead fallito', e);
-    }
-  };
-
   const send = async () => {
     const text = input.trim();
     if (!text || loading) return;
@@ -89,73 +64,34 @@ export const Chatbot = () => {
     setInput('');
     setLoading(true);
 
-    // Estrai email se presente nel messaggio utente (sicurezza extra)
-    const directEmail = text.match(EMAIL_RE)?.[0] ?? null;
-
-    if (!apiKey) {
-      // Fallback se Gemini non è configurato
-      setMessages([
-        ...newMessages,
-        {
-          role: 'assistant',
-          content: directEmail
-            ? `Grazie! Ti contatteremo a ${directEmail} entro 24 ore.`
-            : 'Mi piacerebbe aiutarti meglio. Lasciami la tua email e ti contattiamo entro 24h.',
-          ts: Date.now(),
-        },
-      ]);
-      if (directEmail) {
-        await saveLead(directEmail, null);
-        setEmailCaptured(directEmail);
-      }
-      setLoading(false);
-      return;
-    }
-
     try {
-      const ai = new GoogleGenAI({ apiKey });
-      const conversation = newMessages.map((m) => `${m.role === 'user' ? 'Utente' : 'Assistente'}: ${m.content}`).join('\n');
-      const prompt = `${SYSTEM_PROMPT}\n\n--- CONVERSAZIONE ---\n${conversation}\n\nAssistente (rispondi SOLO con JSON valido):`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash',
-        contents: prompt,
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
+          sessionId: getSessionId(),
+        }),
       });
 
-      const raw = response.text ?? '';
-      // Estrai il JSON anche se Gemini aggiunge backtick
-      const jsonMatch = raw.match(/\{[\s\S]*\}/);
-      let reply = 'Mi dispiace, qualcosa è andato storto. Riprovi?';
-      let emailFromAi: string | null = null;
-      let intent: string | null = null;
+      const data = await response.json();
 
-      if (jsonMatch) {
-        try {
-          const parsed = JSON.parse(jsonMatch[0]);
-          reply = parsed.reply ?? reply;
-          emailFromAi = parsed.email && EMAIL_RE.test(parsed.email) ? parsed.email : null;
-          intent = parsed.intent ?? null;
-        } catch {
-          reply = raw.replace(/```json|```/g, '').trim() || reply;
-        }
-      } else {
-        reply = raw;
-      }
-
+      // Risposta del bot (sempre, anche in caso di errore mostra il messaggio fallback)
+      const reply = data.reply || 'Ops, problema tecnico. Scrivici a ciao@inlab.it 🙂';
       setMessages([...newMessages, { role: 'assistant', content: reply, ts: Date.now() }]);
 
-      const finalEmail = emailFromAi ?? directEmail;
-      if (finalEmail && !emailCaptured) {
-        await saveLead(finalEmail, intent);
-        setEmailCaptured(finalEmail);
+      // Email catturata? Mostra il badge di conferma
+      const email = data.meta?.contact_data?.email;
+      if (email && !emailCaptured) {
+        setEmailCaptured(email);
       }
     } catch (e) {
-      console.error('[chatbot] gemini error', e);
+      console.error('[chatbot] network error', e);
       setMessages([
         ...newMessages,
         {
           role: 'assistant',
-          content: 'Ops, problema tecnico. Puoi scriverci direttamente a ciao@inlab.it 🙂',
+          content: 'Problema di connessione. Riprova o scrivici a ciao@inlab.it 🙂',
           ts: Date.now(),
         },
       ]);
@@ -336,7 +272,7 @@ export const Chatbot = () => {
                     marginTop: 8,
                   }}
                 >
-                  ✓ Email salvata — ti contatteremo
+                  ✓ Contatto salvato — ti scriviamo entro 24h
                 </motion.div>
               )}
             </div>
