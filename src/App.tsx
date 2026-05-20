@@ -129,7 +129,7 @@ const Navbar = () => {
     { to:"/chi-siamo", label:"Studio" },
     { to:"/lavori", label:"Lavori" },
     { to:"/servizi", label:"Servizi" },
-    { to:"/blog", label:"Journal" },
+    
     { to:"/contatti", label:"Contatti" },
   ];
  
@@ -218,7 +218,7 @@ const Footer = () => {
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {[["Chi siamo","/chi-siamo"],["Lavori","/lavori"],["Journal","/blog"],["Contatti","/contatti"]].map(([l,r])=>(
+              {[["Chi siamo","/chi-siamo"],["Lavori","/lavori"],["Contatti","/contatti"]].map(([l,r])=>(
                 <a key={r} onClick={()=>go(r)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
                   onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
                   onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
@@ -378,10 +378,16 @@ const ProcessStep = ({n,title,desc}: any) => (
 );
  
 /* ═══════════════════════════════════════════════════════════════
-   PAGE: HOME
+   PAGE: HOME — usa contenuti dinamici da Firestore
 ═══════════════════════════════════════════════════════════════ */
 const PageHome = () => {
   const {go}=useRouter();
+  const c=useContent();
+  const h=c.hero||{tag:"",headline:{line1:"",line2:"",accent:""},description:"",cta:{primary:"",secondary:""}};
+  const m=c.manifesto||{tag:"",title:{line1:"",line2:"",line3:"",accent:""},text:""};
+  const met=c.metodo||{tag:"",title:["",""],subtitle:"",steps:[]};
+  const ctaHome=c.cta?.home||{title:"",title2:"",title3:"",subtitle:"",btn1:"",btn2:""};
+
   return (
     <>
       {/* HERO */}
@@ -394,45 +400,43 @@ const PageHome = () => {
           <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.08}}
             style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"2rem"}}>
             <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
-            <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>Laboratorio creativo — Taranto, Puglia</span>
+            <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{h.tag||"Laboratorio creativo — Taranto, Puglia"}</span>
           </motion.div>
           <motion.h1 initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.16}}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,11rem)",lineHeight:.87,letterSpacing:".01em",marginBottom:"2.5rem"}}>
-            COMUNICAZIONE<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>CHE SI FA</span><br/>
-            <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:".72em",color:"var(--a)"}}>riconoscere.</span>
+            {h.headline?.line1||"COMUNICAZIONE"}<br/>
+            <span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{h.headline?.line2||"CHE SI FA"}</span><br/>
+            <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:".72em",color:"var(--a)"}}>{h.headline?.accent||"riconoscere."}</span>
           </motion.h1>
           <motion.div initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.28}}
             style={{display:"flex",flexWrap:"wrap",gap:"2rem",alignItems:"flex-end",justifyContent:"space-between"}}>
-            <p style={{maxWidth:460,fontSize:16,lineHeight:1.85,color:"var(--m)",fontWeight:300}}>
-              Un laboratorio creativo che unisce strategia, contenuti foto/video, social media, branding e campagne digitali per aiutarti a comunicare meglio online.
-            </p>
+            <p style={{maxWidth:460,fontSize:16,lineHeight:1.85,color:"var(--m)",fontWeight:300}}>{h.description}</p>
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <button className="btn btn-p" onClick={()=>go("/contatti")}>Raccontaci il tuo progetto <ArrowRight size={14}/></button>
-              <button className="btn btn-g" onClick={()=>go("/lavori")}>Guarda i nostri lavori</button>
+              <button className="btn btn-p" onClick={()=>go("/contatti")}>{h.cta?.primary||"Raccontaci il tuo progetto"} <ArrowRight size={14}/></button>
+              <button className="btn btn-g" onClick={()=>go("/lavori")}>{h.cta?.secondary||"Guarda i nostri lavori"}</button>
             </div>
           </motion.div>
         </div>
       </section>
 
-      <Marquee items={["Gestione Social","✦","Meta Ads","✦","Foto & Video","✦","Branding","✦","Siti Web","✦","Landing Page","✦","Organizzazione Eventi","✦"]}/>
+      <Marquee items={(c.marquee&&c.marquee.length>0)?c.marquee:["Gestione Social","✦","Meta Ads","✦","Foto & Video","✦","Branding","✦"]}/>
 
-      <StatsRow stats={STATS_GLOBAL}/>
+      <StatsRow stats={(c.stats&&c.stats.length>0)?c.stats.map((s:any)=>({n:s.num,l:s.label})):STATS_GLOBAL}/>
 
       {/* MANIFESTO */}
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",top:"50%",left:"50%",width:600,height:600,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",transform:"translate(-50%,-50%)",pointerEvents:"none"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
           <div style={{maxWidth:820}}>
-            <motion.p className="section-label" initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} style={{marginBottom:"2rem"}}>Il nostro manifesto</motion.p>
+            <motion.p className="section-label" initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} style={{marginBottom:"2rem"}}>{m.tag||"Il nostro manifesto"}</motion.p>
             <motion.h2 initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
               style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>
-              NON CREIAMO CONTENUTI<br/>PER RIEMPIRE<br/><span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>UN CALENDARIO.</span><br/>
-              <span style={{fontFamily:"var(--fs)",fontStyle:"italic",color:"var(--a)",fontWeight:400,fontSize:".8em"}}>Costruiamo direzioni.</span>
+              {m.title?.line1||"NON CREIAMO CONTENUTI"}<br/>{m.title?.line2||"PER RIEMPIRE"}<br/>
+              <span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>{m.title?.line3||"UN CALENDARIO."}</span><br/>
+              <span style={{fontFamily:"var(--fs)",fontStyle:"italic",color:"var(--a)",fontWeight:400,fontSize:".8em"}}>{m.title?.accent||"Costruiamo direzioni."}</span>
             </motion.h2>
             <motion.p initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:.1}}
-              style={{fontSize:17,lineHeight:1.85,color:"var(--m)",fontWeight:300,maxWidth:620}}>
-              Ogni post, video, foto o campagna deve avere un motivo per esistere: raccontare il valore del brand, parlare alle persone giuste, creare fiducia e rendere la comunicazione più riconoscibile. Non vendiamo pacchetti. Costruiamo identità.
-            </motion.p>
+              style={{fontSize:17,lineHeight:1.85,color:"var(--m)",fontWeight:300,maxWidth:620}}>{m.text}</motion.p>
           </div>
         </div>
       </section>
@@ -442,18 +446,20 @@ const PageHome = () => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3.5rem",flexWrap:"wrap",gap:"1rem"}}>
             <div>
-              <p className="section-label">Cosa facciamo</p>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9}}>SERVIZI<br/><span className="stroke">PRINCIPALI</span></h2>
+              <p className="section-label">{(c.services as any)?.tag||"Cosa facciamo"}</p>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9}}>
+                {(c.services as any)?.title?.[0]||"SERVIZI"}<br/><span className="stroke">{(c.services as any)?.title?.[1]||"PRINCIPALI"}</span>
+              </h2>
             </div>
             <button className="btn btn-g" onClick={()=>go("/servizi")}>Tutti i servizi <ArrowRight size={13}/></button>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"1rem"}} className="grid-1-mob">
-            {SERVICES.slice(0,6).map((s,i)=>(
+            {((c.services as any)?.items||SERVICES.slice(0,6).map((s:any)=>({icon:null,title:s.label,desc:s.short}))).slice(0,6).map((s:any,i:number)=>(
               <motion.div key={i} className="card" initial={{opacity:0,y:28}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
-                onClick={()=>go("/"+s.slug)} style={{cursor:"pointer"}}>
-                <div style={{color:"var(--a)",marginBottom:"1rem"}}>{s.icon}</div>
-                <h3 style={{fontSize:15,fontWeight:500,marginBottom:".5rem"}}>{s.label}</h3>
-                <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,marginBottom:"1.2rem"}}>{s.short}</p>
+                onClick={()=>go("/servizi")} style={{cursor:"pointer"}}>
+                <div style={{fontSize:20,color:"var(--a)",marginBottom:"1rem"}}>{s.icon||"◈"}</div>
+                <h3 style={{fontSize:15,fontWeight:500,marginBottom:".5rem"}}>{s.title}</h3>
+                <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,marginBottom:"1.2rem"}}>{s.desc}</p>
                 <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri <ArrowUpRight size={11}/></span>
               </motion.div>
             ))}
@@ -466,33 +472,31 @@ const PageHome = () => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3rem",flexWrap:"wrap",gap:"1rem"}}>
             <div>
-              <p className="section-label">Progetti selezionati</p>
+              <p className="section-label">{(c.portfolio as any)?.tag||"Progetti selezionati"}</p>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9}}>LAVORI<br/><span className="stroke">SELEZIONATI</span></h2>
-              <p style={{fontSize:13,color:"var(--m)",marginTop:"1rem",maxWidth:440}}>Foto, video, campagne e identità visive che raccontano il nostro modo di lavorare.</p>
+              <p style={{fontSize:13,color:"var(--m)",marginTop:"1rem",maxWidth:440}}>{(c.portfolio as any)?.subtitle||"Foto, video, campagne e identità visive."}</p>
             </div>
             <button className="btn btn-g" onClick={()=>go("/lavori")}>Vedi tutto <ArrowRight size={13}/></button>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
-            {[
-              {title:"Reel Virale — Ristorante locale",tag:"Video & Reels",stat:"840K views",bg:"#2a2828",large:true,desc:"Contenuto organico prodotto in una sola giornata di riprese."},
-              {title:"E-commerce — Moda Pugliese",tag:"Siti Web",stat:"+340% conversioni",bg:"#252628",large:false,desc:"Design e sviluppo completo con ottimizzazione SEO."},
-              {title:"Meta Ads — Negozio Sport",tag:"Advertising",stat:"3.2× ROAS",bg:"#282525",large:false,desc:"Campagna Meta con targeting localizzato su Taranto."},
-              {title:"Brand Identity — Studio Medico",tag:"Branding",stat:"Rebranding completo",bg:"#252726",large:true,desc:"Logo, palette, tono di voce e materiali di comunicazione."},
-            ].map((p,i)=>(
+            {((c.portfolio as any)?.projects||[]).slice(0,4).map((p:any,i:number)=>(
               <motion.div key={i} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
-                onClick={()=>go("/lavori")}
-                style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?300:220,background:p.bg,borderRadius:24,border:".5px solid var(--b)",padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:"pointer",transition:"border-color .3s"}}
+                onClick={()=>p.link?window.open(p.link,"_blank"):go("/lavori")}
+                style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?300:220,background:p.image?"none":"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:"pointer",transition:"border-color .3s",position:"relative"}}
                 onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.15)"}
                 onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
               >
-                <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
-                  <span className="tag tag-a">{p.tag}</span>
-                  <span className="tag tag-g">{p.stat}</span>
-                </div>
-                <div>
-                  <p style={{fontSize:12,color:"var(--m)",marginBottom:"0.7rem"}}>{p.desc}</p>
-                  <h3 style={{fontFamily:"var(--fd)",fontSize:p.large?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
-                  <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Scopri il progetto <ArrowUpRight size={11}/></span>
+                {p.image && <img src={p.image} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.4}}/>}
+                <div style={{position:"relative",zIndex:1,padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%"}}>
+                  <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
+                    <span className="tag tag-a">{p.tags?.[0]||p.category}</span>
+                    <span className="tag tag-g">{p.stat}</span>
+                  </div>
+                  <div>
+                    <p style={{fontSize:12,color:"var(--m)",marginBottom:"0.7rem"}}>{p.description}</p>
+                    <h3 style={{fontFamily:"var(--fd)",fontSize:p.large?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
+                    <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Scopri il progetto <ArrowUpRight size={11}/></span>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -505,18 +509,14 @@ const PageHome = () => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <div style={{display:"grid",gridTemplateColumns:"1fr 2fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
             <div>
-              <p className="section-label">Come lavoriamo</p>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>IL NOSTRO<br/><span className="stroke">METODO</span></h2>
-              <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75}}>Non lavoriamo a caso. Ogni progetto segue un percorso preciso, costruito per produrre risultati misurabili e comunicazione riconoscibile.</p>
+              <p className="section-label">{met.tag||"Come lavoriamo"}</p>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
+                {met.title?.[0]||"IL NOSTRO"}<br/><span className="stroke">{met.title?.[1]||"METODO"}</span>
+              </h2>
+              <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75}}>{met.subtitle}</p>
             </div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.5rem"}}>
-              {[
-                {n:"01",title:"Analisi",desc:"Partiamo dal brand, dal pubblico, dal mercato e dagli obiettivi. Prima di creare qualsiasi contenuto, capiamo chi sei, a chi parli e cosa vuoi ottenere."},
-                {n:"02",title:"Direzione creativa",desc:"Definiamo tono di voce, stile visivo, contenuti e messaggi chiave. Ogni progetto ha un'identità precisa, non un template."},
-                {n:"03",title:"Produzione",desc:"Realizziamo foto, video, grafiche, copy e materiali digitali con cura artigianale. Ogni contenuto deve avere un motivo per esistere."},
-                {n:"04",title:"Pubblicazione & campagne",desc:"Gestiamo i canali social, pubblichiamo con strategia e attiviamo campagne quando servono per amplificare i risultati."},
-                {n:"05",title:"Ottimizzazione",desc:"Leggiamo i dati, capiamo cosa funziona e miglioriamo la strategia ogni mese. La comunicazione è un processo, non un prodotto."},
-              ].map((step,i)=>(
+              {(met.steps||[]).map((step:any,i:number)=>(
                 <motion.div key={i} initial={{opacity:0,x:20}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.08}}
                   style={{display:"flex",gap:"2rem",padding:"1.75rem",border:".5px solid var(--b)",borderRadius:20,transition:"border-color .3s,background .3s"}}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(205,178,255,.3)";e.currentTarget.style.background="rgba(205,178,255,.03)"}}
@@ -541,13 +541,13 @@ const PageHome = () => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{display:"flex",alignItems:"center",gap:6,marginBottom:"1.5rem"}}><MapPin size={12}/> Operiamo in tutta la provincia di Taranto</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:"0.7rem"}}>
-            {CITIES.map((c,i)=>(
-              <motion.div key={c} initial={{opacity:0,y:8}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}}>
+            {((c.cities as any)?.list||CITIES).map((ci:string,i:number)=>(
+              <motion.div key={ci} initial={{opacity:0,y:8}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}}>
                 <button className="tag tag-g" style={{cursor:"pointer",transition:"all .2s",padding:"8px 16px",fontSize:12}}
-                  onClick={()=>go(`/gestione-social-${c.toLowerCase()}`)}
+                  onClick={()=>go(`/gestione-social-${ci.toLowerCase()}`)}
                   onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(205,178,255,.35)";e.currentTarget.style.color="var(--a)"}}
                   onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--b)";e.currentTarget.style.color="var(--m)"}}
-                >{c}</button>
+                >{ci}</button>
               </motion.div>
             ))}
           </div>
@@ -561,11 +561,14 @@ const PageHome = () => {
             <div style={{position:"absolute",top:0,right:0,width:500,height:500,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
             <div style={{position:"relative",zIndex:1}}>
               <p className="section-label" style={{marginBottom:"1.5rem",display:"flex",justifyContent:"center"}}>Iniziamo a lavorare insieme</p>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,6vw,6rem)",lineHeight:.9,marginBottom:"1.5rem"}}>HAI UN BRAND,<br/>MA NON SAI COME<br/><span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>RACCONTARLO ONLINE?</span></h2>
-              <p style={{fontSize:16,color:"var(--m)",marginBottom:"2.5rem",maxWidth:520,margin:"0 auto 2.5rem"}}>Partiamo da una consulenza: capiamo dove sei, cosa vuoi comunicare e quale direzione può renderti più riconoscibile.</p>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,6vw,6rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
+                {ctaHome.title||"HAI UN BRAND,"}<br/>{ctaHome.title2||"MA NON SAI COME"}<br/>
+                <span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>{ctaHome.title3||"RACCONTARLO ONLINE?"}</span>
+              </h2>
+              <p style={{fontSize:16,color:"var(--m)",marginBottom:"2.5rem",maxWidth:520,margin:"0 auto 2.5rem"}}>{ctaHome.subtitle||"Partiamo da una consulenza."}</p>
               <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
-                <button className="btn btn-p" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/contatti")}>Parliamone <ArrowRight size={15}/></button>
-                <button className="btn btn-g" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/lavori")}>Vedi i lavori</button>
+                <button className="btn btn-p" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/contatti")}>{ctaHome.btn1||"Parliamone"} <ArrowRight size={15}/></button>
+                <button className="btn btn-g" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/lavori")}>{ctaHome.btn2||"Vedi i lavori"}</button>
               </div>
             </div>
           </div>
@@ -574,6 +577,7 @@ const PageHome = () => {
     </>
   );
 };
+
 
  
 /* ═══════════════════════════════════════════════════════════════
@@ -1083,20 +1087,15 @@ const PageChiSiamo = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageLavori = () => {
   const {go}=useRouter();
+  const c=useContent();
+  const portfolio=(c.portfolio as any)||{tag:"",subtitle:"",categories:[],projects:[]};
+  const allProjects=portfolio.projects||[];
+  const cats=portfolio.categories&&portfolio.categories.length>0
+    ?portfolio.categories
+    :["tutti","social","video","foto","web","brand","ads","eventi"];
   const [filter,setFilter]=useState("tutti");
-  const works=[
-    {title:"Reel Virale — Ristorante Da Mario",cat:"video",tag:"Video & Reels",stat:"840K views",metric:"Organico",bg:"#2a2927",large:true},
-    {title:"E-commerce — Moda Pugliese",cat:"web",tag:"Siti Web",stat:"+340% conversioni",metric:"Web",bg:"#252628"},
-    {title:"Meta Ads — Negozio Sport",cat:"ads",tag:"Meta Ads",stat:"3.2× ROAS",metric:"Advertising",bg:"#2a2525"},
-    {title:"Shooting — Agriturismo Sole",cat:"foto",tag:"Shooting",stat:"Portfolio completo",metric:"Foto",bg:"#252826"},
-    {title:"Rebranding — Studio Medico",cat:"brand",tag:"Brand Identity",stat:"Identità rinnovata",metric:"Design",bg:"#26252c"},
-    {title:"Social Strategy — Bar Centrale",cat:"social",tag:"Gestione Social",stat:"+180% engagement",metric:"Social",bg:"#2a2524"},
-    {title:"Landing Page — Studio Legale",cat:"web",tag:"Landing Page",stat:"12% conv. rate",metric:"Web",bg:"#252628"},
-    {title:"TikTok Campaign — Parrucchiere",cat:"video",tag:"Video",stat:"1.1M views",metric:"Organico",bg:"#282525",large:true},
-  ];
-  const cats=["tutti","video","web","ads","foto","social","brand"];
-  const visible=filter==="tutti"?works:works.filter(w=>w.cat===filter);
- 
+  const visible=filter==="tutti"?allProjects:allProjects.filter((p:any)=>p.category===filter);
+
   return (
     <>
       <PageHero tag="Portfolio & Case Study"
@@ -1104,54 +1103,83 @@ const PageLavori = () => {
         sub="Ogni progetto ha una storia. Un problema da risolvere, una strategia da applicare, un risultato da misurare. Ecco i nostri."
         cta1="Inizia un progetto" cta1to="/contatti"
       />
- 
+
       <StatsRow stats={[{n:"3.2M+",l:"Views generate"},{n:"47",l:"Clienti"},{n:"12",l:"Reel virali"},{n:"€2M+",l:"Budget ads gestito"}]}/>
- 
-      {/* Client logos */}
+
       <ClientLogos/>
- 
+
       {/* Portfolio grid */}
       <section style={{padding:"6rem 2rem"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"2.5rem",flexWrap:"wrap",gap:"1rem"}}>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4vw,4rem)",lineHeight:.9}}>TUTTI I<br/><span className="stroke">PROGETTI</span></h2>
-            <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-              {cats.map(c=>(
-                <button key={c} onClick={()=>setFilter(c)}
-                  style={{padding:"7px 16px",borderRadius:100,border:".5px solid",borderColor:filter===c?"var(--a)":"var(--b)",
-                  background:filter===c?"rgba(205,178,255,0.1)":"transparent",color:filter===c?"var(--a)":"var(--m)",
-                  fontSize:10,fontWeight:500,letterSpacing:".12em",textTransform:"uppercase",fontFamily:"var(--fb)",transition:"all .2s"}}>
-                  {c==="tutti"?"Tutti":c==="ads"?"Meta Ads":c.charAt(0).toUpperCase()+c.slice(1)}
-                </button>
-              ))}
+          <div style={{marginBottom:"2.5rem"}}>
+            <p className="section-label" style={{marginBottom:"1rem"}}>{portfolio.tag||"Progetti selezionati"}</p>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4vw,4rem)",lineHeight:.9}}>TUTTI I<br/><span className="stroke">PROGETTI</span></h2>
+              <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
+                {cats.map((cat:string)=>(
+                  <button key={cat} onClick={()=>setFilter(cat)}
+                    style={{padding:"7px 16px",borderRadius:100,border:".5px solid",borderColor:filter===cat?"var(--a)":"var(--b)",
+                    background:filter===cat?"rgba(205,178,255,0.1)":"transparent",color:filter===cat?"var(--a)":"var(--m)",
+                    fontSize:10,fontWeight:500,letterSpacing:".12em",textTransform:"uppercase",fontFamily:"var(--fb)",transition:"all .2s"}}>
+                    {cat==="tutti"?"Tutti":cat.charAt(0).toUpperCase()+cat.slice(1)}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
- 
-          <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
-            {visible.map((p,i)=>(
-              <motion.div key={p.title} layout initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
-                style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?300:220,background:p.bg,borderRadius:24,border:".5px solid var(--b)",padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:"pointer",transition:"border-color .3s"}}
-                onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.15)"}
-                onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
-              >
-                <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
-                  <span className="tag tag-a">{p.tag}</span>
-                  <span className="tag tag-g">{p.stat}</span>
-                </div>
-                <div>
-                  <h3 style={{fontFamily:"var(--fd)",fontSize:p.large?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
-                  <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Vedi caso studio <ArrowUpRight size={11}/></span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+
+          {visible.length===0?(
+            <div style={{padding:"5rem",textAlign:"center",color:"var(--m)",border:".5px solid var(--b)",borderRadius:24}}>
+              <div style={{fontSize:40,marginBottom:"1rem"}}>◈</div>
+              <p style={{fontSize:14}}>Nessun progetto in questa categoria ancora. Aggiungili dalla dashboard → Editor → Portfolio.</p>
+            </div>
+          ):(
+            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
+              {visible.map((p:any,i:number)=>(
+                <motion.div key={p.id||i} layout initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
+                  onClick={()=>p.link?window.open(p.link,"_blank"):undefined}
+                  style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?340:240,background:p.image?"#111":"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:p.link?"pointer":"default",transition:"border-color .3s",position:"relative"}}
+                  onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.2)"}
+                  onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
+                >
+                  {p.image&&(
+                    <img src={p.image} alt={p.title}
+                      style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.5,transition:"opacity .3s"}}
+                      onMouseEnter={e=>(e.currentTarget.style.opacity="0.65")}
+                      onMouseLeave={e=>(e.currentTarget.style.opacity="0.5")}
+                    />
+                  )}
+                  {p.videoUrl&&!p.image&&(
+                    <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
+                      <a href={p.videoUrl} target="_blank" rel="noreferrer"
+                        style={{width:56,height:56,background:"rgba(205,178,255,0.2)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",fontSize:20,border:".5px solid rgba(205,178,255,.4)"}}>▷</a>
+                    </div>
+                  )}
+                  <div style={{position:"relative",zIndex:1,padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
+                      <span className="tag tag-a">{p.tags?.[0]||p.category}</span>
+                      <span className="tag tag-g">{p.stat}</span>
+                    </div>
+                    <div>
+                      {p.client&&<div style={{fontSize:11,color:"var(--m)",letterSpacing:".1em",textTransform:"uppercase",marginBottom:6}}>{p.client} · {p.year}</div>}
+                      <h3 style={{fontFamily:"var(--fd)",fontSize:p.large?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
+                      {p.description&&<p style={{fontSize:12,color:"var(--m)",lineHeight:1.6,marginBottom:"0.75rem"}}>{p.description}</p>}
+                      {p.result&&<p style={{fontSize:12,color:"var(--a)",lineHeight:1.5,marginBottom:"0.75rem"}}>→ {p.result}</p>}
+                      {p.link&&<span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Scopri il progetto <ArrowUpRight size={11}/></span>}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
- 
+
       <ServiceCTA title="IL TUO PROGETTO È IL PROSSIMO." sub="Raccontaci cosa vuoi ottenere." btn="Iniziamo insieme"/>
     </>
   );
 };
+
  
 /* ═══════════════════════════════════════════════════════════════
    PAGE: BLOG
@@ -1261,8 +1289,8 @@ const PageContatti = () => {
           <div>
             <p className="section-label" style={{marginBottom:"2rem"}}>Come raggiungerci</p>
             {[
-              {icon:<Mail size={18}/>,label:"Email",val:"ciao@inlab.it"},
-              {icon:<Phone size={18}/>,label:"Telefono",val:"+39 099 000 0000"},
+              {icon:<Mail size={18}/>,label:"Email",val:"inlab.communication@gmail.com"},
+              {icon:<Phone size={18}/>,label:"Telefono",val:"+39 329 565 4319"},
               {icon:<MapPin size={18}/>,label:"Sede",val:"Taranto, Puglia"},
             ].map((c,i)=>(
               <motion.div key={i} initial={{opacity:0,x:-16}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.1}}
@@ -1293,7 +1321,7 @@ const PageContatti = () => {
                   {[
                     {id:"nome",label:"Nome e cognome *",type:"text",ph:"Mario Rossi"},
                     {id:"email",label:"Email *",type:"email",ph:"mario@azienda.it"},
-                    {id:"tel",label:"Telefono",type:"tel",ph:"+39 099 000 0000"},
+                    {id:"tel",label:"Telefono",type:"tel",ph:"+39 329 565 4319"},
                     {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività"},
                   ].map(f=>(
                     <div key={f.id}>
