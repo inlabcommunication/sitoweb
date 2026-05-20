@@ -1094,10 +1094,38 @@ const PageLavori = () => {
     ?portfolio.categories
     :["tutti","social","video","foto","web","brand","ads","eventi"];
   const [filter,setFilter]=useState("tutti");
+  const [videoOverlay,setVideoOverlay]=useState<string|null>(null);
   const visible=filter==="tutti"?allProjects:allProjects.filter((p:any)=>p.category===filter);
+
+  const isInstagram=(url:string)=>url.includes("instagram.com");
+  const isCloudinaryVideo=(url:string)=>url.includes("cloudinary.com")&&(url.includes(".mp4")||url.includes(".mov")||url.includes(".webm")||url.includes("/video/"));
 
   return (
     <>
+      {/* Video Overlay */}
+      <AnimatePresence>
+        {videoOverlay&&(
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
+            onClick={()=>setVideoOverlay(null)}
+            style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.92)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:"2rem"}}>
+            <motion.div initial={{scale:.9,y:20}} animate={{scale:1,y:0}} exit={{scale:.9,y:20}}
+              onClick={e=>e.stopPropagation()}
+              style={{width:"100%",maxWidth:560,background:"#111",borderRadius:20,overflow:"hidden",position:"relative"}}>
+              <button onClick={()=>setVideoOverlay(null)}
+                style={{position:"absolute",top:12,right:12,zIndex:1,background:"rgba(0,0,0,0.6)",border:"none",borderRadius:"50%",width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",cursor:"pointer"}}>
+                <X size={18}/>
+              </button>
+              {isInstagram(videoOverlay)?(
+                <iframe src={`${videoOverlay}embed/`} width="100%" height="500" frameBorder="0" scrolling="no" allowTransparency style={{display:"block"}}/>
+              ):isCloudinaryVideo(videoOverlay)?(
+                <video src={videoOverlay} controls autoPlay style={{width:"100%",display:"block",maxHeight:"70vh"}}/>
+              ):(
+                <iframe src={videoOverlay} width="100%" height="500" frameBorder="0" allowFullScreen style={{display:"block"}}/>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <PageHero tag="Portfolio & Case Study"
         h1="RISULTATI" h1b="REALI" italic="non solo belle immagini."
         sub="Ogni progetto ha una storia. Un problema da risolvere, una strategia da applicare, un risultato da misurare. Ecco i nostri."
@@ -1137,8 +1165,11 @@ const PageLavori = () => {
             <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
               {visible.map((p:any,i:number)=>(
                 <motion.div key={p.id||i} layout initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
-                  onClick={()=>p.link?window.open(p.link,"_blank"):undefined}
-                  style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?340:240,background:p.image?"#111":"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:p.link?"pointer":"default",transition:"border-color .3s",position:"relative"}}
+                  onClick={()=>{
+                    if(p.videoUrl) setVideoOverlay(p.videoUrl);
+                    else if(p.link) window.open(p.link,"_blank");
+                  }}
+                  style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?340:240,background:p.image?"#111":"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:(p.videoUrl||p.link)?"pointer":"default",transition:"border-color .3s",position:"relative"}}
                   onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.2)"}
                   onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
                 >
@@ -1149,11 +1180,8 @@ const PageLavori = () => {
                       onMouseLeave={e=>(e.currentTarget.style.opacity="0.5")}
                     />
                   )}
-                  {p.videoUrl&&!p.image&&(
-                    <div style={{position:"absolute",inset:0,display:"flex",alignItems:"center",justifyContent:"center"}}>
-                      <a href={p.videoUrl} target="_blank" rel="noreferrer"
-                        style={{width:56,height:56,background:"rgba(205,178,255,0.2)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",fontSize:20,border:".5px solid rgba(205,178,255,.4)"}}>▷</a>
-                    </div>
+                  {p.videoUrl&&(
+                    <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:52,height:52,background:"rgba(205,178,255,0.25)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",fontSize:20,border:".5px solid rgba(205,178,255,.4)",backdropFilter:"blur(4px)",zIndex:2,pointerEvents:"none"}}>▷</div>
                   )}
                   <div style={{position:"relative",zIndex:1,padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%"}}>
                     <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
