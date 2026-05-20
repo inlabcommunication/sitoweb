@@ -9,6 +9,33 @@ import { Leads } from './Leads';
 import { ContentEditor } from './ContentEditor';
 import { Settings } from './Settings';
 
+// Inietta le variabili CSS del sito nella dashboard
+const DashboardStyles = () => (
+  <style>{`
+    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+    :root {
+      --a: #cdb2ff;
+      --bg: #1e1d1d;
+      --s: #262525;
+      --b: rgba(255,255,255,0.07);
+      --t: #F0EDE6;
+      --m: rgba(240,237,230,0.5);
+      --fd: 'Bebas Neue', sans-serif;
+      --fs: 'DM Serif Display', serif;
+      --fb: 'DM Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg) !important; color: var(--t) !important; font-family: var(--fb); }
+    input, textarea, select, button { font-family: var(--fb); }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 100px; font-size: 11px; font-weight: 500; letter-spacing: .13em; text-transform: uppercase; transition: all .2s; border: none; cursor: pointer; }
+    .btn-p { background: var(--a); color: #000; }
+    .btn-p:hover { box-shadow: 0 0 28px rgba(205,178,255,.28); transform: scale(1.03); }
+    .btn-g { background: transparent; color: var(--t); border: .5px solid var(--b); }
+    .btn-g:hover { border-color: rgba(255,255,255,.3); }
+    .section-label { font-size: 10px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--m); }
+  `}</style>
+);
+
 type Tab = 'analytics' | 'leads' | 'editor' | 'settings';
 
 export const AdminApp = () => {
@@ -28,6 +55,7 @@ export const AdminApp = () => {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+      <DashboardStyles />
       <header style={{ position: 'sticky', top: 0, zIndex: 50, background: 'rgba(30,29,29,0.95)', backdropFilter: 'blur(12px)', borderBottom: '.5px solid var(--b)', padding: '0 2rem', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
           <a href="#/" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
@@ -90,6 +118,7 @@ const Login = () => {
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--bg)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', position: 'relative', overflow: 'hidden' }}>
+      <DashboardStyles />
       <div style={{ position: 'absolute', top: '30%', left: '50%', width: 600, height: 600, background: 'rgba(205,178,255,0.04)', borderRadius: '50%', filter: 'blur(120px)', transform: 'translateX(-50%)' }} />
       <motion.form initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} onSubmit={submit} style={{ width: '100%', maxWidth: 380, background: 'var(--s)', border: '.5px solid var(--b)', borderRadius: 24, padding: '2.5rem', position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: '1.5rem' }}>
