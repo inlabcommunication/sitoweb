@@ -99,7 +99,7 @@ const SERVICES = [
   { slug: "shooting", icon: <Camera size={22}/>, label: "Foto & Shooting", short: "Foto professionali per brand, prodotti ed eventi. Perché un'immagine mediocre costa clienti. Una straordinaria li conquista." },
   { slug: "video", icon: <Video size={22}/>, label: "Video & Reels", short: "Produciamo contenuti video che le persone vogliono davvero guardare. Abbiamo portato clienti a milioni di visualizzazioni organiche." },
   { slug: "landing-page", icon: <Layout size={22}/>, label: "Landing Page", short: "Pagine progettate con un solo obiettivo: trasformare i visitatori in lead. Copy, design e A/B test inclusi." },
-  { slug: "gestione-social", icon: <Star size={22}/>, label: "Branding & Identità", short: "Nome, logo, palette, tono di voce. Diamo forma al modo in cui il tuo brand viene percepito dal primo sguardo." },
+  { slug: "branding", icon: <Star size={22}/>, label: "Branding & Identità", short: "Nome, logo, palette, tono di voce. Diamo forma al modo in cui il tuo brand viene percepito dal primo sguardo." },
 ];
  
 const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
