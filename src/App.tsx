@@ -66,6 +66,10 @@ const G = () => (
       .show-mob{display:flex!important}
       .grid-1-mob{grid-template-columns:1fr!important}
       .pad-mob{padding:4rem 1.25rem!important}
+      .grid-col-span-1-mob{grid-column:span 1!important}
+    }
+    @media(max-width:480px){
+      .btn{padding:11px 20px!important;font-size:10px!important}
     }
   `}</style>
 );
@@ -88,13 +92,14 @@ const Link = ({ to, children, style = {}, className = "", onClick = () => {} }: 
    SHARED DATA
 ═══════════════════════════════════════════════════════════════ */
 const SERVICES = [
-  { slug: "gestione-social", icon: <TrendingUp size={22}/>, label: "Gestione Social", short: "Strategia & contenuti social" },
-  { slug: "meta-ads", icon: <Target size={22}/>, label: "Meta Ads", short: "Campagne che convertono" },
-  { slug: "siti-web", icon: <Globe size={22}/>, label: "Siti Web & Web App", short: "Design + sviluppo" },
-  { slug: "automazioni-ai", icon: <Zap size={22}/>, label: "Automazioni AI", short: "Workflow intelligenti" },
-  { slug: "shooting", icon: <Camera size={22}/>, label: "Shooting Foto", short: "Identità visiva autentica" },
-  { slug: "video", icon: <Video size={22}/>, label: "Video & Reels", short: "Contenuti che fermano lo scroll" },
-  { slug: "landing-page", icon: <Layout size={22}/>, label: "Landing Page", short: "Conversioni ottimizzate" },
+  { slug: "gestione-social", icon: <TrendingUp size={22}/>, label: "Gestione Social", short: "Costruiamo una presenza riconoscibile su Instagram, Facebook, TikTok e LinkedIn. Non riempiamo calendari — costruiamo direzioni." },
+  { slug: "meta-ads", icon: <Target size={22}/>, label: "Meta Ads", short: "Campagne progettate per convertire. Budget ottimizzato, audience costruita sui tuoi clienti migliori, risultati misurabili." },
+  { slug: "siti-web", icon: <Globe size={22}/>, label: "Siti Web & Web App", short: "Design e sviluppo di siti che non sono solo belli: sono veloci, ottimizzati e costruiti per portare clienti." },
+  { slug: "automazioni-ai", icon: <Zap size={22}/>, label: "Automazioni AI", short: "Chatbot, workflow e processi automatizzati che fanno lavorare il tuo brand anche quando sei offline." },
+  { slug: "shooting", icon: <Camera size={22}/>, label: "Foto & Shooting", short: "Foto professionali per brand, prodotti ed eventi. Perché un'immagine mediocre costa clienti. Una straordinaria li conquista." },
+  { slug: "video", icon: <Video size={22}/>, label: "Video & Reels", short: "Produciamo contenuti video che le persone vogliono davvero guardare. Abbiamo portato clienti a milioni di visualizzazioni organiche." },
+  { slug: "landing-page", icon: <Layout size={22}/>, label: "Landing Page", short: "Pagine progettate con un solo obiettivo: trasformare i visitatori in lead. Copy, design e A/B test inclusi." },
+  { slug: "gestione-social", icon: <Star size={22}/>, label: "Branding & Identità", short: "Nome, logo, palette, tono di voce. Diamo forma al modo in cui il tuo brand viene percepito dal primo sguardo." },
 ];
  
 const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
@@ -379,7 +384,7 @@ const PageHome = () => {
   const {go}=useRouter();
   return (
     <>
-      {/* Hero */}
+      {/* HERO */}
       <section style={{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:"9rem 2rem 6rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
         <div style={{position:"absolute",inset:0,pointerEvents:"none"}}>
           <div style={{position:"absolute",top:"18%",right:"8%",width:520,height:520,background:"rgba(205,178,255,0.055)",borderRadius:"50%",filter:"blur(120px)"}}/>
@@ -389,31 +394,50 @@ const PageHome = () => {
           <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.08}}
             style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"2rem"}}>
             <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
-            <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>Agenzia di comunicazione — Taranto, Puglia</span>
+            <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>Laboratorio creativo — Taranto, Puglia</span>
           </motion.div>
           <motion.h1 initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.16}}
-            style={{fontFamily:"var(--fd)",fontSize:"clamp(4.5rem,12.5vw,13rem)",lineHeight:.87,letterSpacing:".01em",marginBottom:"3rem"}}>
-            FACCIAMO<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>SMETTERE</span><br/>
-            <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:".77em",color:"var(--a)"}}>di scrollare.</span>
+            style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,11rem)",lineHeight:.87,letterSpacing:".01em",marginBottom:"2.5rem"}}>
+            COMUNICAZIONE<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>CHE SI FA</span><br/>
+            <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:".72em",color:"var(--a)"}}>riconoscere.</span>
           </motion.h1>
           <motion.div initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.28}}
             style={{display:"flex",flexWrap:"wrap",gap:"2rem",alignItems:"flex-end",justifyContent:"space-between"}}>
-            <p style={{maxWidth:420,fontSize:17,lineHeight:1.75,color:"var(--m)",fontWeight:300}}>
-              Uno studia il comportamento delle persone.<br/>L'altra le emoziona.<br/>Insieme costruiamo la comunicazione della tua azienda.
+            <p style={{maxWidth:460,fontSize:16,lineHeight:1.85,color:"var(--m)",fontWeight:300}}>
+              Un laboratorio creativo che unisce strategia, contenuti foto/video, social media, branding e campagne digitali per aiutarti a comunicare meglio online.
             </p>
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <button className="btn btn-p" onClick={()=>go("/lavori")}>Vedi i nostri lavori <ArrowRight size={14}/></button>
-              <button className="btn btn-g" onClick={()=>go("/chi-siamo")}>Chi siamo</button>
+              <button className="btn btn-p" onClick={()=>go("/contatti")}>Raccontaci il tuo progetto <ArrowRight size={14}/></button>
+              <button className="btn btn-g" onClick={()=>go("/lavori")}>Guarda i nostri lavori</button>
             </div>
           </motion.div>
         </div>
       </section>
- 
-      <Marquee items={["Gestione Social","✦","Meta Ads","✦","Siti Web","✦","Video & Reels","✦","Automazioni AI","✦","Landing Page","✦"]}/>
- 
+
+      <Marquee items={["Gestione Social","✦","Meta Ads","✦","Foto & Video","✦","Branding","✦","Siti Web","✦","Landing Page","✦","Organizzazione Eventi","✦"]}/>
+
       <StatsRow stats={STATS_GLOBAL}/>
- 
-      {/* Services grid */}
+
+      {/* MANIFESTO */}
+      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",top:"50%",left:"50%",width:600,height:600,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",transform:"translate(-50%,-50%)",pointerEvents:"none"}}/>
+        <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
+          <div style={{maxWidth:820}}>
+            <motion.p className="section-label" initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} style={{marginBottom:"2rem"}}>Il nostro manifesto</motion.p>
+            <motion.h2 initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
+              style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>
+              NON CREIAMO CONTENUTI<br/>PER RIEMPIRE<br/><span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>UN CALENDARIO.</span><br/>
+              <span style={{fontFamily:"var(--fs)",fontStyle:"italic",color:"var(--a)",fontWeight:400,fontSize:".8em"}}>Costruiamo direzioni.</span>
+            </motion.h2>
+            <motion.p initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:.1}}
+              style={{fontSize:17,lineHeight:1.85,color:"var(--m)",fontWeight:300,maxWidth:620}}>
+              Ogni post, video, foto o campagna deve avere un motivo per esistere: raccontare il valore del brand, parlare alle persone giuste, creare fiducia e rendere la comunicazione più riconoscibile. Non vendiamo pacchetti. Costruiamo identità.
+            </motion.p>
+          </div>
+        </div>
+      </section>
+
+      {/* SERVIZI */}
       <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3.5rem",flexWrap:"wrap",gap:"1rem"}}>
@@ -424,59 +448,95 @@ const PageHome = () => {
             <button className="btn btn-g" onClick={()=>go("/servizi")}>Tutti i servizi <ArrowRight size={13}/></button>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"1rem"}} className="grid-1-mob">
-            {SERVICES.map((s,i)=>(
-              <motion.div key={s.slug} className="card" initial={{opacity:0,y:28}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
+            {SERVICES.slice(0,6).map((s,i)=>(
+              <motion.div key={i} className="card" initial={{opacity:0,y:28}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
                 onClick={()=>go("/"+s.slug)} style={{cursor:"pointer"}}>
                 <div style={{color:"var(--a)",marginBottom:"1rem"}}>{s.icon}</div>
-                <h3 style={{fontSize:15,fontWeight:500,marginBottom:".4rem"}}>{s.label}</h3>
-                <p style={{fontSize:13,color:"var(--m)",lineHeight:1.65,marginBottom:"1.2rem"}}>{s.short}</p>
+                <h3 style={{fontSize:15,fontWeight:500,marginBottom:".5rem"}}>{s.label}</h3>
+                <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,marginBottom:"1.2rem"}}>{s.short}</p>
                 <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri <ArrowUpRight size={11}/></span>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
- 
-      {/* Featured work */}
+
+      {/* LAVORI */}
       <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3rem",flexWrap:"wrap",gap:"1rem"}}>
             <div>
-              <p className="section-label">Risultati reali</p>
+              <p className="section-label">Progetti selezionati</p>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9}}>LAVORI<br/><span className="stroke">SELEZIONATI</span></h2>
+              <p style={{fontSize:13,color:"var(--m)",marginTop:"1rem",maxWidth:440}}>Foto, video, campagne e identità visive che raccontano il nostro modo di lavorare.</p>
             </div>
             <button className="btn btn-g" onClick={()=>go("/lavori")}>Vedi tutto <ArrowRight size={13}/></button>
           </div>
           <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
             {[
-              {title:"Reel virale — Ristorante",tag:"Video",stat:"840K views",bg:"#2a2828",large:true},
-              {title:"E-commerce — Moda Pugliese",tag:"Web",stat:"+340% conversioni",bg:"#252628"},
-              {title:"Meta Ads — Negozio sport",tag:"Advertising",stat:"3.2× ROAS",bg:"#282525"},
-              {title:"Brand Identity — Studio",tag:"Brand",stat:"Rebranding completo",bg:"#252726",large:true},
+              {title:"Reel Virale — Ristorante locale",tag:"Video & Reels",stat:"840K views",bg:"#2a2828",large:true,desc:"Contenuto organico prodotto in una sola giornata di riprese."},
+              {title:"E-commerce — Moda Pugliese",tag:"Siti Web",stat:"+340% conversioni",bg:"#252628",large:false,desc:"Design e sviluppo completo con ottimizzazione SEO."},
+              {title:"Meta Ads — Negozio Sport",tag:"Advertising",stat:"3.2× ROAS",bg:"#282525",large:false,desc:"Campagna Meta con targeting localizzato su Taranto."},
+              {title:"Brand Identity — Studio Medico",tag:"Branding",stat:"Rebranding completo",bg:"#252726",large:true,desc:"Logo, palette, tono di voce e materiali di comunicazione."},
             ].map((p,i)=>(
               <motion.div key={i} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
                 onClick={()=>go("/lavori")}
-                style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?280:200,background:p.bg,borderRadius:24,border:".5px solid var(--b)",padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:"pointer",transition:"border-color .3s"}}
+                style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?300:220,background:p.bg,borderRadius:24,border:".5px solid var(--b)",padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:"pointer",transition:"border-color .3s"}}
                 onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.15)"}
                 onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
               >
-                <div style={{display:"flex",justifyContent:"space-between"}}>
+                <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
                   <span className="tag tag-a">{p.tag}</span>
                   <span className="tag tag-g">{p.stat}</span>
                 </div>
                 <div>
+                  <p style={{fontSize:12,color:"var(--m)",marginBottom:"0.7rem"}}>{p.desc}</p>
                   <h3 style={{fontFamily:"var(--fd)",fontSize:p.large?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
-                  <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Vedi progetto <ArrowUpRight size={11}/></span>
+                  <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Scopri il progetto <ArrowUpRight size={11}/></span>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
- 
+
+      {/* METODO */}
+      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 2fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
+            <div>
+              <p className="section-label">Come lavoriamo</p>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>IL NOSTRO<br/><span className="stroke">METODO</span></h2>
+              <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75}}>Non lavoriamo a caso. Ogni progetto segue un percorso preciso, costruito per produrre risultati misurabili e comunicazione riconoscibile.</p>
+            </div>
+            <div style={{display:"flex",flexDirection:"column",gap:"0.5rem"}}>
+              {[
+                {n:"01",title:"Analisi",desc:"Partiamo dal brand, dal pubblico, dal mercato e dagli obiettivi. Prima di creare qualsiasi contenuto, capiamo chi sei, a chi parli e cosa vuoi ottenere."},
+                {n:"02",title:"Direzione creativa",desc:"Definiamo tono di voce, stile visivo, contenuti e messaggi chiave. Ogni progetto ha un'identità precisa, non un template."},
+                {n:"03",title:"Produzione",desc:"Realizziamo foto, video, grafiche, copy e materiali digitali con cura artigianale. Ogni contenuto deve avere un motivo per esistere."},
+                {n:"04",title:"Pubblicazione & campagne",desc:"Gestiamo i canali social, pubblichiamo con strategia e attiviamo campagne quando servono per amplificare i risultati."},
+                {n:"05",title:"Ottimizzazione",desc:"Leggiamo i dati, capiamo cosa funziona e miglioriamo la strategia ogni mese. La comunicazione è un processo, non un prodotto."},
+              ].map((step,i)=>(
+                <motion.div key={i} initial={{opacity:0,x:20}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.08}}
+                  style={{display:"flex",gap:"2rem",padding:"1.75rem",border:".5px solid var(--b)",borderRadius:20,transition:"border-color .3s,background .3s"}}
+                  onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(205,178,255,.3)";e.currentTarget.style.background="rgba(205,178,255,.03)"}}
+                  onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--b)";e.currentTarget.style.background="transparent"}}
+                >
+                  <div style={{fontFamily:"var(--fd)",fontSize:"2.5rem",color:"rgba(205,178,255,.2)",flexShrink:0,lineHeight:1}}>{step.n}</div>
+                  <div>
+                    <div style={{fontSize:15,fontWeight:500,marginBottom:"0.4rem"}}>{step.title}</div>
+                    <p style={{fontSize:13,color:"var(--m)",lineHeight:1.75}}>{step.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <ClientLogos/>
- 
-      {/* Cities */}
+
+      {/* CITTA */}
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{display:"flex",alignItems:"center",gap:6,marginBottom:"1.5rem"}}><MapPin size={12}/> Operiamo in tutta la provincia di Taranto</p>
@@ -493,11 +553,28 @@ const PageHome = () => {
           </div>
         </div>
       </section>
- 
-      <ServiceCTA title="HAI UN'IDEA?" sub="Raccontacela. Valutiamo insieme come farla crescere." btn="Iniziamo a parlare"/>
+
+      {/* CTA FINALE */}
+      <section style={{padding:"8rem 2rem"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <div className="glass" style={{borderRadius:40,padding:"5rem 4rem",textAlign:"center",position:"relative",overflow:"hidden"}}>
+            <div style={{position:"absolute",top:0,right:0,width:500,height:500,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
+            <div style={{position:"relative",zIndex:1}}>
+              <p className="section-label" style={{marginBottom:"1.5rem",display:"flex",justifyContent:"center"}}>Iniziamo a lavorare insieme</p>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,6vw,6rem)",lineHeight:.9,marginBottom:"1.5rem"}}>HAI UN BRAND,<br/>MA NON SAI COME<br/><span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>RACCONTARLO ONLINE?</span></h2>
+              <p style={{fontSize:16,color:"var(--m)",marginBottom:"2.5rem",maxWidth:520,margin:"0 auto 2.5rem"}}>Partiamo da una consulenza: capiamo dove sei, cosa vuoi comunicare e quale direzione può renderti più riconoscibile.</p>
+              <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+                <button className="btn btn-p" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/contatti")}>Parliamone <ArrowRight size={15}/></button>
+                <button className="btn btn-g" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/lavori")}>Vedi i lavori</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 };
+
  
 /* ═══════════════════════════════════════════════════════════════
    PAGE: GESTIONE SOCIAL
@@ -1144,26 +1221,29 @@ const PageBlog = () => {
    PAGE: CONTATTI
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
-  const [form,setForm]=useState({nome:"",email:"",tel:"",servizio:"",msg:""});
+  const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
   const [sent,setSent]=useState(false);
+  const [error,setError]=useState("");
   const submit=async()=>{
-    if(form.nome&&form.email&&form.msg){
-      try {
-        const { db } = await import('./lib/firebase');
-        const { collection, addDoc } = await import('firebase/firestore');
-        if(db) await addDoc(collection(db,'leads'),{
-          name: form.nome,
-          email: form.email,
-          phone: form.tel || null,
-          intent: form.servizio ? `[FORM] ${form.servizio}` : '[FORM] Contatto dal sito',
-          source: 'contact_form',
-          status: 'new',
-          notes: form.msg,
-          created_at: new Date().toISOString(),
-        });
-      } catch(e){ console.error('Save contact failed',e); }
-      setSent(true);
-    }
+    if(!form.nome||!form.email||!form.msg){setError("Compila i campi obbligatori (nome, email, messaggio)."); return;}
+    if(!form.privacy){setError("Accetta la privacy policy per inviare."); return;}
+    setError("");
+    try {
+      const { db } = await import('./lib/firebase');
+      const { collection, addDoc } = await import('firebase/firestore');
+      if(db) await addDoc(collection(db,'leads'),{
+        name: form.nome,
+        email: form.email,
+        phone: form.tel || null,
+        company: form.azienda || null,
+        intent: form.servizio ? `[FORM] ${form.servizio}` : '[FORM] Contatto dal sito',
+        source: 'contact_form',
+        status: 'new',
+        notes: form.msg,
+        created_at: new Date().toISOString(),
+      });
+    } catch(e){ console.error('Save contact failed',e); }
+    setSent(true);
   };
  
   return (
@@ -1214,10 +1294,11 @@ const PageContatti = () => {
                     {id:"nome",label:"Nome e cognome *",type:"text",ph:"Mario Rossi"},
                     {id:"email",label:"Email *",type:"email",ph:"mario@azienda.it"},
                     {id:"tel",label:"Telefono",type:"tel",ph:"+39 099 000 0000"},
+                    {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività"},
                   ].map(f=>(
                     <div key={f.id}>
                       <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
-                      <input type={f.type} placeholder={f.ph} value={form[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
+                      <input type={f.type} placeholder={f.ph} value={(form as any)[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
                         style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",transition:"border-color .2s"}}
                         onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
                         onBlur={e=>e.target.style.borderColor="var(--b)"}
@@ -1229,17 +1310,25 @@ const PageContatti = () => {
                     <select value={form.servizio} onChange={e=>setForm({...form,servizio:e.target.value})}
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:14,fontFamily:"var(--fb)",outline:"none"}}>
                       <option value="">Seleziona un servizio</option>
-                      {SERVICES.map(s=><option key={s.slug} value={s.slug} style={{background:"#111"}}>{s.label}</option>)}
+                      {["Strategia social","Gestione social","Foto & video","Branding","Campagne Meta Ads","Sito o landing page","Organizzazione eventi","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Il tuo progetto *</label>
-                    <textarea rows={4} placeholder="Raccontaci cosa stai cercando..." value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
+                    <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
+                    <textarea rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",resize:"vertical",transition:"border-color .2s"}}
                       onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
                       onBlur={e=>e.target.style.borderColor="var(--b)"}
                     />
                   </div>
+                  <div style={{display:"flex",alignItems:"flex-start",gap:10}}>
+                    <input type="checkbox" id="privacy" checked={form.privacy} onChange={e=>setForm({...form,privacy:e.target.checked})}
+                      style={{marginTop:3,accentColor:"var(--a)",width:14,height:14,flexShrink:0}}/>
+                    <label htmlFor="privacy" style={{fontSize:11,color:"var(--m)",lineHeight:1.6,cursor:"pointer"}}>
+                      Ho letto e accetto la <span style={{color:"var(--a)"}}>privacy policy</span>. I dati forniti saranno utilizzati esclusivamente per rispondere alla richiesta.
+                    </label>
+                  </div>
+                  {error && <div style={{fontSize:12,color:"#ff8888",padding:"10px 14px",background:"rgba(255,100,100,0.08)",borderRadius:10,border:".5px solid rgba(255,100,100,0.2)"}}>{error}</div>}
                   <button className="btn btn-p" style={{width:"100%",justifyContent:"center",padding:"16px",fontSize:12,marginTop:"0.5rem"}} onClick={submit}>
                     Invia messaggio <ArrowRight size={15}/>
                   </button>
@@ -1251,7 +1340,7 @@ const PageContatti = () => {
                   <Check size={28}/>
                 </div>
                 <h3 style={{fontFamily:"var(--fd)",fontSize:"2.5rem",marginBottom:".8rem"}}>MESSAGGIO INVIATO!</h3>
-                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.7}}>Ti risponderemo entro 24 ore. Nel frattempo, seguici su Instagram per vedere i nostri ultimi lavori.</p>
+                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.7}}>Grazie, abbiamo ricevuto la tua richiesta. Ti ricontatteremo per capire meglio il progetto e valutare la direzione più adatta.</p>
               </motion.div>
             )}
           </motion.div>
@@ -1260,6 +1349,7 @@ const PageContatti = () => {
     </>
   );
 };
+
  
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CITTÀ SEO (template)
