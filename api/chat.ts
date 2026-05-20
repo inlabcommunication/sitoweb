@@ -9,16 +9,12 @@ function getFirebaseAdmin() {
     const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
     if (serviceAccountJson) {
       try {
-        const normalized = serviceAccountJson.replace(/\r?\n/g, '\\n');
-        const parsed = JSON.parse(normalized);
-        if (parsed.private_key) parsed.private_key = parsed.private_key.replace(/\\n/g, '\n');
-        initializeApp({ credential: cert(parsed) });
+        initializeApp({ credential: cert(JSON.parse(serviceAccountJson)) });
       } catch (e) {
-        console.error('[chat] Service account JSON malformed:', e);
+        console.error('Service account JSON malformed', e);
         initializeApp();
       }
     } else {
-      console.error('[chat] FIREBASE_SERVICE_ACCOUNT_KEY not set');
       initializeApp();
     }
   }
@@ -105,7 +101,6 @@ async function saveLeadIfEmailFound(sessionId: string | null, email: string | nu
   try {
     const fs = getFirebaseAdmin();
     const leadsRef = fs.collection('leads');
-
     if (sessionId) {
       const existing = await leadsRef.where('session_id', '==', sessionId).where('email', '==', email).limit(1).get();
       if (!existing.empty) {
@@ -113,11 +108,9 @@ async function saveLeadIfEmailFound(sessionId: string | null, email: string | nu
         return;
       }
     }
-
     const classification = meta.classification || 'freddo';
     const tags = Array.isArray(meta.tags) ? meta.tags : [];
     const urgent = meta.urgency === true;
-
     await leadsRef.add({
       email, name: name || null, phone: phone || null,
       intent: tags.length > 0 ? `[${classification.toUpperCase()}${urgent ? ' · URGENTE' : ''}] ${tags.join(', ')}` : `[${classification.toUpperCase()}] Contatto da chatbot`,
@@ -146,7 +139,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const limitedMessages = messages.slice(-30);
 
-    // Leggi impostazioni da Firestore
     let dbSettings: any = {};
     try {
       const fs = getFirebaseAdmin();
@@ -173,10 +165,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const lastUserMsg = limitedMessages[limitedMessages.length - 1]?.content || '';
     const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
-    const phoneRegex = /(?:\+39\s?)?(?:\d{2,4}[\s.-]?){2,4}\d{2,4}/;
     const email = meta?.contact_data?.email || lastUserMsg.match(emailRegex)?.[0] || null;
     const name = meta?.contact_data?.name || null;
-    const phone = meta?.contact_data?.phone || lastUserMsg.match(phoneRegex)?.[0] || null;
+    const phone = meta?.contact_data?.phone || null;
 
     if (email) await saveLeadIfEmailFound(sessionId || null, email, name, phone, meta, fullConversation);
 
