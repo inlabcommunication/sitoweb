@@ -26,6 +26,44 @@ const getSessionId = (): string => {
   return sid;
 };
 
+// ════════════════════════════════════════════════════════════════
+// MASCOTTE — Personaggio SVG stilizzato per il chatbot
+// ════════════════════════════════════════════════════════════════
+const MascotSVG = () => (
+  <svg width="72" height="88" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', filter: 'drop-shadow(0 8px 24px rgba(205,178,255,0.5))' }}>
+    {/* Corpo */}
+    <rect x="12" y="32" width="48" height="44" rx="16" fill="#cdb2ff"/>
+    {/* Testa */}
+    <ellipse cx="36" cy="24" rx="22" ry="22" fill="#cdb2ff"/>
+    {/* Orecchie */}
+    <ellipse cx="14" cy="20" rx="6" ry="8" fill="#b89cee"/>
+    <ellipse cx="58" cy="20" rx="6" ry="8" fill="#b89cee"/>
+    <ellipse cx="14" cy="20" rx="3" ry="5" fill="#e8d8ff"/>
+    <ellipse cx="58" cy="20" rx="3" ry="5" fill="#e8d8ff"/>
+    {/* Occhi */}
+    <ellipse cx="28" cy="22" rx="5" ry="6" fill="#1e1d1d"/>
+    <ellipse cx="44" cy="22" rx="5" ry="6" fill="#1e1d1d"/>
+    {/* Lucentezza occhi */}
+    <circle cx="30" cy="20" r="2" fill="white"/>
+    <circle cx="46" cy="20" r="2" fill="white"/>
+    {/* Naso */}
+    <ellipse cx="36" cy="30" rx="3" ry="2" fill="#9a7de0"/>
+    {/* Bocca sorriso */}
+    <path d="M28 35 Q36 42 44 35" stroke="#1e1d1d" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+    {/* Guance */}
+    <ellipse cx="20" cy="32" rx="6" ry="4" fill="#e8c4ff" opacity="0.6"/>
+    <ellipse cx="52" cy="32" rx="6" ry="4" fill="#e8c4ff" opacity="0.6"/>
+    {/* Braccia */}
+    <rect x="2" y="42" width="12" height="8" rx="4" fill="#cdb2ff"/>
+    <rect x="58" y="42" width="12" height="8" rx="4" fill="#cdb2ff"/>
+    {/* Gambe */}
+    <rect x="18" y="70" width="14" height="18" rx="7" fill="#b89cee"/>
+    <rect x="40" y="70" width="14" height="18" rx="7" fill="#b89cee"/>
+    {/* Logo IL sul corpo */}
+    <text x="36" y="58" textAnchor="middle" fontFamily="sans-serif" fontWeight="900" fontSize="13" fill="#1e1d1d" letterSpacing="2">IL</text>
+  </svg>
+);
+
 export const Chatbot = () => {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<Msg[]>([]);
@@ -102,45 +140,69 @@ export const Chatbot = () => {
 
   return (
     <>
-      {/* Bottone fluttuante */}
-      <motion.button
-        initial={{ scale: 0, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
-        onClick={() => setOpen(!open)}
-        data-track="chatbot_toggle"
-        style={{
-          position: 'fixed',
-          bottom: 24,
-          right: 24,
-          width: 60,
-          height: 60,
-          borderRadius: '50%',
-          background: 'var(--a)',
-          color: '#000',
-          border: 'none',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          cursor: 'pointer',
-          boxShadow: '0 8px 32px rgba(205,178,255,0.4)',
-          zIndex: 9998,
-        }}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        <AnimatePresence mode="wait">
-          {open ? (
-            <motion.div key="x" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
-              <X size={24} />
-            </motion.div>
-          ) : (
-            <motion.div key="m" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>
-              <MessageCircle size={24} />
+      {/* Mascotte + bottone */}
+      <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9998, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+
+        {/* Fumetto "Parliamo!" — solo quando chiusa */}
+        <AnimatePresence>
+          {!open && (
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.8 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 10, scale: 0.8 }}
+              transition={{ delay: 2, type: 'spring', stiffness: 200 }}
+              style={{
+                background: 'var(--a)',
+                color: '#000',
+                fontSize: 12,
+                fontWeight: 600,
+                letterSpacing: '.08em',
+                padding: '6px 14px',
+                borderRadius: 100,
+                whiteSpace: 'nowrap',
+                marginBottom: 8,
+                boxShadow: '0 4px 16px rgba(205,178,255,0.4)',
+                cursor: 'pointer',
+              }}
+              onClick={() => setOpen(true)}
+            >
+              💬 Parliamo!
             </motion.div>
           )}
         </AnimatePresence>
-      </motion.button>
+
+        {/* Mascotte SVG */}
+        <motion.button
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
+          onClick={() => setOpen(!open)}
+          data-track="chatbot_toggle"
+          style={{
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: 0,
+            display: 'block',
+            filter: open ? 'brightness(0.8)' : 'none',
+            transition: 'filter .2s',
+          }}
+          whileHover={{ scale: 1.08, y: -4 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {open ? (
+            /* Bottone X quando aperto */
+            <motion.div
+              initial={{ scale: 0 }} animate={{ scale: 1 }}
+              style={{ width: 56, height: 56, borderRadius: '50%', background: 'var(--a)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 32px rgba(205,178,255,0.4)' }}>
+              <X size={22} color="#000" />
+            </motion.div>
+          ) : (
+            /* Mascotte quando chiusa */
+            <MascotSVG />
+          )}
+        </motion.button>
+      </div>
 
       {/* Pannello chat */}
       <AnimatePresence>
@@ -170,32 +232,42 @@ export const Chatbot = () => {
             {/* Header */}
             <div
               style={{
-                padding: '1.25rem 1.5rem',
+                padding: '1rem 1.5rem',
                 borderBottom: '.5px solid var(--b)',
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
+                background: 'linear-gradient(135deg, rgba(205,178,255,0.08) 0%, transparent 100%)',
               }}
             >
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  background: 'var(--a)',
-                  borderRadius: 10,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <Sparkles size={18} color="#000" />
+              <div style={{ width: 44, height: 44, flexShrink: 0, overflow: 'hidden' }}>
+                <svg width="44" height="54" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="12" y="32" width="48" height="44" rx="16" fill="#cdb2ff"/>
+                  <ellipse cx="36" cy="24" rx="22" ry="22" fill="#cdb2ff"/>
+                  <ellipse cx="14" cy="20" rx="6" ry="8" fill="#b89cee"/>
+                  <ellipse cx="58" cy="20" rx="6" ry="8" fill="#b89cee"/>
+                  <ellipse cx="14" cy="20" rx="3" ry="5" fill="#e8d8ff"/>
+                  <ellipse cx="58" cy="20" rx="3" ry="5" fill="#e8d8ff"/>
+                  <ellipse cx="28" cy="22" rx="5" ry="6" fill="#1e1d1d"/>
+                  <ellipse cx="44" cy="22" rx="5" ry="6" fill="#1e1d1d"/>
+                  <circle cx="30" cy="20" r="2" fill="white"/>
+                  <circle cx="46" cy="20" r="2" fill="white"/>
+                  <ellipse cx="36" cy="30" rx="3" ry="2" fill="#9a7de0"/>
+                  <path d="M28 35 Q36 42 44 35" stroke="#1e1d1d" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+                  <ellipse cx="20" cy="32" rx="6" ry="4" fill="#e8c4ff" opacity="0.6"/>
+                  <ellipse cx="52" cy="32" rx="6" ry="4" fill="#e8c4ff" opacity="0.6"/>
+                  <text x="36" y="58" textAnchor="middle" fontFamily="sans-serif" fontWeight="900" fontSize="13" fill="#1e1d1d" letterSpacing="2">IL</text>
+                </svg>
               </div>
               <div>
                 <div style={{ fontFamily: 'var(--fd)', fontSize: 16, letterSpacing: '.1em' }}>INLAB AI</div>
                 <div style={{ fontSize: 10, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>
-                  {loading ? 'sta scrivendo...' : 'online · risponde subito'}
+                  {loading ? '✦ sta scrivendo...' : '✦ online · risponde subito'}
                 </div>
               </div>
+              <button onClick={() => setOpen(false)} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'var(--m)', cursor: 'pointer', padding: 4 }}>
+                <X size={18} />
+              </button>
             </div>
 
             {/* Messaggi */}
