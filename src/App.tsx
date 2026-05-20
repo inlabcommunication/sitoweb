@@ -1718,15 +1718,23 @@ const renderPage = (info) => {
    APP
 ═══════════════════════════════════════════════════════════════ */
 export default function App() {
-  const [route,setRoute]=useState("/");
+  const getRouteFromHash = () => {
+    const hash = window.location.hash.replace('#', '') || '/';
+    return hash.startsWith('/') ? hash : '/' + hash;
+  };
+
+  const [route,setRoute]=useState(getRouteFromHash);
 
   useEffect(() => {
-    // Carica contenuti dal DB e inizializza il tracking analytics
     loadContent();
     initAnalytics();
+    const onHash = () => setRoute(getRouteFromHash());
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
   }, []);
  
   const go=useCallback((to)=>{
+    window.location.hash = to;
     setRoute(to);
     window.scrollTo({top:0,behavior:"smooth"});
   },[]);
