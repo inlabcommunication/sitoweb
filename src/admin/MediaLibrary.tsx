@@ -27,13 +27,25 @@ type MediaItem = {
 
 const formatBytes = (b: number) => b < 1024*1024 ? `${(b/1024).toFixed(0)}KB` : `${(b/1024/1024).toFixed(1)}MB`;
 
+// Singleton state condiviso tra tutte le istanze
+let globalItems: MediaItem[] = [];
+let globalLoaded = false;
+const globalListeners = new Set<(items: MediaItem[]) => void>();
+
+const notifyAll = (items: MediaItem[]) => {
+  globalItems = items;
+  globalListeners.forEach(fn => fn(items));
+};
+
 const loadFromFirestore = async (): Promise<MediaItem[]> => {
+  if (globalLoaded) return globalItems;
   if (!db) return [];
   try {
     const snap = await getDoc(doc(db, 'app', 'media_library'));
-    if (snap.exists()) return snap.data().items || [];
+    if (snap.exists()) globalItems = snap.data().items || [];
   } catch {}
-  return [];
+  globalLoaded = true;
+  return globalItems;
 };
 
 const saveToFirestore = async (items: MediaItem[]) => {
@@ -208,30 +220,34 @@ type Props = {
 };
 
 export const MediaLibrary = ({ onSelect, onClose, filter = 'all' }: Props) => {
-  const [items, setItems] = useState<MediaItem[]>([]);
+  const [items, setItems] = useState<MediaItem[]>(globalItems);
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState<'library' | 'upload' | 'instagram'>('library');
   const [copied, setCopied] = useState('');
-  const [loadingLib, setLoadingLib] = useState(true);
+  const [loadingLib, setLoadingLib] = useState(!globalLoaded);
 
   useEffect(() => {
-    loadFromFirestore().then(data => { setItems(data); setLoadingLib(false); });
+    globalListeners.add(setItems);
+    if (!globalLoaded) {
+      loadFromFirestore().then(data => { notifyAll(data); setLoadingLib(false); });
+    }
+    return () => { globalListeners.delete(setItems); };
   }, []);
 
   const saveItems = async (newItems: MediaItem[]) => {
-    setItems(newItems);
+    notifyAll(newItems);
     await saveToFirestore(newItems);
   };
 
   const handleUpload = async (item: MediaItem) => {
-    const newItems = [item, ...items];
+    const newItems = [item, ...globalItems];
     await saveItems(newItems);
     setTab('library');
   };
 
   const handleDelete = async (public_id: string) => {
     if (!confirm('Rimuovere dall\'archivio?')) return;
-    await saveItems(items.filter(i => i.public_id !== public_id));
+    await saveItems(globalItems.filter(i => i.public_id !== public_id));
   };
 
   const copyUrl = (url: string) => {
