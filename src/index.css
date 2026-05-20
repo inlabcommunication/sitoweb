@@ -1,47 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Space+Grotesk:wght@300..700&family=Bebas+Neue&family=Playfair+Display:ital,wght@1,400;1,700&display=swap');
-@import "tailwindcss";
+<!doctype html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  --font-industrial: "Bebas Neue", sans-serif;
-  --font-serif: "Playfair Display", serif;
-  
-  --color-brand: #ffffff;
-  --color-accent: #cdb2ff;
-  --color-surface: #0a0a0a;
-  --color-border: #1f1f1f;
-}
+    <!-- SEO -->
+    <title>InLab Communication | Agenzia social media, contenuti e comunicazione digitale</title>
+    <meta name="description" content="InLab Communication aiuta brand, attività e professionisti a comunicare online con strategia social, contenuti foto/video, branding, campagne digitali, siti e landing page. Taranto, Puglia." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://sitoweb-beta.vercel.app/" />
 
-@layer base {
-  body {
-    @apply bg-[var(--color-surface)] text-[var(--color-brand)] antialiased font-sans selection:bg-[var(--color-accent)] selection:text-black;
-  }
-}
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://sitoweb-beta.vercel.app/" />
+    <meta property="og:title" content="InLab Communication | Agenzia social media, contenuti e comunicazione digitale" />
+    <meta property="og:description" content="Strategia social, contenuti foto/video, branding, campagne Meta Ads, siti web e landing page. Un laboratorio creativo a Taranto, Puglia." />
+    <meta property="og:image" content="https://sitoweb-beta.vercel.app/og-image.jpg" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:site_name" content="InLab Communication" />
 
-.glass {
-  @apply backdrop-blur-xl bg-white/5 border border-white/10;
-}
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="InLab Communication | Agenzia comunicazione digitale" />
+    <meta name="twitter:description" content="Strategia social, contenuti foto/video, branding e campagne digitali. Taranto, Puglia." />
+    <meta name="twitter:image" content="https://sitoweb-beta.vercel.app/og-image.jpg" />
 
-.text-stroke {
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
-  color: transparent;
-}
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23cdb2ff'/><text x='50%' y='50%' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='16' fill='%23000'>IL</text></svg>" />
 
-.custom-cursor {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  background: var(--color-accent);
-  border-radius: 9999px;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  mix-blend-mode: difference;
-  transition: width 0.3s, height 0.3s, border-radius 0.3s;
-}
-
-.custom-cursor.big {
-  width: 80px;
-  height: 80px;
-}
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "InLab Communication",
+      "description": "Agenzia di comunicazione digitale a Taranto, Puglia. Strategia social, contenuti foto/video, branding, campagne Meta Ads, siti web e landing page.",
+      "url": "https://sitoweb-beta.vercel.app/",
+      "email": "ciao@inlab.it",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Taranto",
+        "addressRegion": "Puglia",
+        "addressCountry": "IT"
+      },
+      "areaServed": ["Taranto", "Palagiano", "Massafra", "Mottola", "Castellaneta", "Laterza", "Ginosa", "Puglia"]
+    }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
