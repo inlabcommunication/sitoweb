@@ -44,9 +44,10 @@ export const subscribeContent = (fn: (c: SiteContent) => void) => {
   listeners.add(fn);
   return () => listeners.delete(fn);
 };
+
+export const useContent = (): SiteContent => {
   const [content, setContent] = useState<SiteContent>(cached ?? WEBSITE_CONTENT);
   useEffect(() => {
-    // Forza sempre il reload da Firestore al mount
     loadContent(true).then(c => { setContent(c); });
     return subscribeContent(setContent);
   }, []);
