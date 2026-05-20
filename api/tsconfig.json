@@ -6,8 +6,7 @@
     "lib": ["ES2020"],
     "skipLibCheck": true,
     "allowJs": true,
-    "esModuleInterop": true,
-    "outDir": "./dist"
+    "esModuleInterop": true
   },
   "include": ["./**/*.ts"]
 }
