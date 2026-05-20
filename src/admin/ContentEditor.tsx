@@ -3,6 +3,7 @@ import type React from 'react';
 import { Save, RotateCcw, Check, Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronRight, Image } from 'lucide-react';
 import { WEBSITE_CONTENT } from '../constants';
 import { loadContent, saveContent, SiteContent } from '../lib/content';
+import { useMediaLibrary } from './MediaLibrary';
 
 type Page = 'home' | 'studio' | 'lavori' | 'servizi' | 'journal' | 'contatti';
 type Block = string;
@@ -54,18 +55,34 @@ const Field = ({ label, value, onChange, multiline = false, hint, placeholder }:
   </div>
 );
 
-const ImageField = ({ label, value, onChange }: any) => (
-  <div style={{ marginBottom: 12 }}>
-    <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 5 }}>{label}</div>
-    <input value={value || ''} onChange={e => onChange(e.target.value)} style={inputStyle} placeholder="https://res.cloudinary.com/..." />
-    {value && (
-      <div style={{ marginTop: 8, borderRadius: 8, overflow: 'hidden', background: '#111', border: '.5px solid #2a2a2a' }}>
-        <img src={value} alt="preview" style={{ width: '100%', maxHeight: 120, objectFit: 'cover', display: 'block' }}
-          onError={e => (e.currentTarget.style.display = 'none')} />
+const ImageField = ({ label, value, onChange, type = 'image' }: any) => {
+  const { pick, Modal } = useMediaLibrary();
+
+  const handlePick = async () => {
+    const url = await pick(type);
+    if (url) onChange(url);
+  };
+
+  return (
+    <div style={{ marginBottom: 12 }}>
+      <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 5 }}>{label}</div>
+      <div style={{ display: 'flex', gap: 8 }}>
+        <input value={value || ''} onChange={e => onChange(e.target.value)} style={{ ...inputStyle, flex: 1 }} placeholder="https://res.cloudinary.com/..." />
+        <button onClick={handlePick}
+          style={{ padding: '0 12px', background: 'rgba(205,178,255,0.1)', border: '.5px solid #cdb2ff44', borderRadius: 8, color: '#cdb2ff', cursor: 'pointer', fontSize: 11, whiteSpace: 'nowrap', flexShrink: 0 }}>
+          📁 Archivio
+        </button>
       </div>
-    )}
-  </div>
-);
+      {value && (
+        <div style={{ marginTop: 8, borderRadius: 8, overflow: 'hidden', background: '#111', border: '.5px solid #2a2a2a', maxHeight: 120 }}>
+          <img src={value} alt="preview" style={{ width: '100%', maxHeight: 120, objectFit: 'cover', display: 'block' }}
+            onError={e => (e.currentTarget.style.display = 'none')} />
+        </div>
+      )}
+      {Modal}
+    </div>
+  );
+};
 
 const CardBlock = ({ title, onDelete, children, collapsed = false }: any) => {
   const [open, setOpen] = useState(!collapsed);
@@ -331,8 +348,8 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
             <Field label="Risultato / Stat" value={p.stat} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].stat=v; set('portfolio.projects',a); }} />
             <Field label="Descrizione breve" value={p.description} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].description=v; set('portfolio.projects',a); }} multiline />
             <Field label="Risultato dettagliato" value={p.result} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].result=v; set('portfolio.projects',a); }} multiline />
-            <ImageField label="Immagine (URL Cloudinary)" value={p.image} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].image=v; set('portfolio.projects',a); }} />
-            <Field label="URL Video / Reel (opzionale)" value={p.videoUrl} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].videoUrl=v; set('portfolio.projects',a); }} placeholder="https://www.instagram.com/reel/..." />
+            <ImageField label="Immagine copertina (Cloudinary)" value={p.image} type="image" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].image=v; set('portfolio.projects',a); }} />
+            <ImageField label="Video (Cloudinary o link Instagram)" value={p.videoUrl} type="video" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].videoUrl=v; set('portfolio.projects',a); }} />
             <Field label="Link esterno (opzionale)" value={p.link} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].link=v; set('portfolio.projects',a); }} placeholder="https://..." />
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
               <input type="checkbox" checked={p.large || false} onChange={e => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].large=e.target.checked; set('portfolio.projects',a); }} id={`lg-${i}`} style={{ accentColor: '#cdb2ff' }} />
