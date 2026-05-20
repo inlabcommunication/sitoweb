@@ -293,7 +293,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
         {(content.clients?.items || []).map((c: any, i: number) => (
           <CardBlock key={i} title={c.name} onDelete={() => setContent((p: any) => { const n=JSON.parse(JSON.stringify(p)); n.clients.items.splice(i,1); return n; })}>
             <Field label="Nome cliente" value={c.name} onChange={(v: string) => { const a=JSON.parse(JSON.stringify(content.clients.items)); a[i].name=v; set('clients.items',a); }} />
-            <Field label="URL sito (opzionale)" value={c.url} onChange={(v: string) => { const a=JSON.parse(JSON.stringify(content.clients.items)); a[i].url=v; set('clients.items',a); }} />
+            <Field label="Link (URL sito o ID progetto)" value={c.url} onChange={(v: string) => { const a=JSON.parse(JSON.stringify(content.clients.items)); a[i].url=v; set('clients.items',a); }} hint="Es: progetto/1 per pagina interna, oppure https://sito.it" />
             <ImageField label="Logo (URL Cloudinary)" value={c.logo} onChange={(v: string) => { const a=JSON.parse(JSON.stringify(content.clients.items)); a[i].logo=v; set('clients.items',a); }} />
           </CardBlock>
         ))}
