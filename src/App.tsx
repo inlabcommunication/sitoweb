@@ -339,7 +339,10 @@ const ClientLogos = () => {
         {clients.map((c: any,i: number)=>(
           <motion.div key={i}
             initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:i*.04}}
-            onClick={()=>c.url?window.open(c.url,'_blank'):undefined}
+            onClick={()=>{
+              if(c.url?.startsWith('progetto/')) go('/'+c.url);
+              else if(c.url) window.open(c.url,'_blank');
+            }}
             style={{background:"var(--bg)",padding:"2.5rem 2rem",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16,minHeight:180,cursor:c.url?"pointer":"default",transition:"background .25s",position:"relative",overflow:"hidden"}}
             whileHover={{backgroundColor:"rgba(205,178,255,0.06)"}}
           >
