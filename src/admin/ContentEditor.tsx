@@ -339,6 +339,11 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
       <div>
         {((content as any).portfolio?.projects||[]).map((p: any, i: number) => (
           <CardBlock key={i} title={p.title} collapsed onDelete={() => setContent((prev: any) => { const n=JSON.parse(JSON.stringify(prev)); n.portfolio.projects.splice(i,1); return n; })}>
+            {/* Link pagina progetto */}
+            <a href={`${window.location.origin}/#/progetto/${p.id}`} target="_blank" rel="noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', background: 'rgba(205,178,255,0.1)', border: '.5px solid rgba(205,178,255,0.3)', borderRadius: 8, color: '#cdb2ff', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', marginBottom: 12 }}>
+              👁 Vedi pagina progetto ↗
+            </a>
             <Field label="Titolo progetto" value={p.title} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].title=v; set('portfolio.projects',a); }} />
             <Field label="Cliente" value={p.client} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].client=v; set('portfolio.projects',a); }} />
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
@@ -352,11 +357,11 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
             <ImageField label="Immagine copertina (Cloudinary)" value={p.image} type="image" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].image=v; set('portfolio.projects',a); }} />
             <ImageField label="Video (Cloudinary o link Instagram)" value={p.videoUrl} type="video" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].videoUrl=v; set('portfolio.projects',a); }} />
             <div style={{ marginBottom: 12 }}>
-              <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 8 }}>Galleria foto (URL Cloudinary)</div>
+              <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 8 }}>Galleria foto</div>
               {(p.gallery||[]).map((img: string, gi: number) => (
-                <div key={gi} style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
-                  <input value={img} onChange={e => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].gallery[gi]=e.target.value; set('portfolio.projects',a); }} style={{ ...inputStyle, flex: 1 }} placeholder="https://res.cloudinary.com/..." />
-                  <button onClick={() => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].gallery.splice(gi,1); set('portfolio.projects',a); }} style={{ background: 'rgba(255,100,100,0.1)', border: 'none', borderRadius: 6, color: '#ff8888', padding: '0 8px', cursor: 'pointer' }}><Trash2 size={11} /></button>
+                <div key={gi} style={{ marginBottom: 8 }}>
+                  <ImageField label={`Foto ${gi+1}`} value={img} type="image" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].gallery[gi]=v; set('portfolio.projects',a); }} />
+                  <button onClick={() => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].gallery.splice(gi,1); set('portfolio.projects',a); }} style={{ background: 'rgba(255,100,100,0.1)', border: '.5px solid rgba(255,100,100,0.2)', borderRadius: 6, color: '#ff8888', padding: '5px 10px', cursor: 'pointer', fontSize: 10, display: 'flex', alignItems: 'center', gap: 4 }}><Trash2 size={11}/> Rimuovi</button>
                 </div>
               ))}
               <AddBtn onClick={() => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); if(!a[i].gallery)a[i].gallery=[]; a[i].gallery.push(''); set('portfolio.projects',a); }} label="Aggiungi foto galleria" />
