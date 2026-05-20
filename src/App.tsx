@@ -319,25 +319,43 @@ const StatsRow = ({stats}) => (
  
 const ClientLogos = () => {
   const content = useContent();
+  const {go} = useRouter();
   const clients = content.clients?.items || CLIENTS.map(c => ({ name: c, url: '', logo: '' }));
-  const tag = content.clients?.tag || 'Alcuni dei nostri clienti';
+  const tag = content.clients?.tag || 'Brand e progetti con cui abbiamo lavorato';
   return (
-  <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
+  <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
     <div style={{maxWidth:1280,margin:"0 auto"}}>
-      <p className="section-label" style={{textAlign:"center",marginBottom:"2.5rem"}}>{tag}</p>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:"1rem"}}>
+      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3rem",flexWrap:"wrap",gap:"1rem"}}>
+        <div>
+          <p className="section-label" style={{marginBottom:8}}>{tag}</p>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,5vw,5rem)",lineHeight:.9}}>
+            BRAND CHE<br/><span className="stroke">CI HANNO SCELTO</span>
+          </h2>
+        </div>
+        <span style={{fontSize:11,color:"var(--m)",letterSpacing:".1em",textTransform:"uppercase"}}>{clients.length} clienti</span>
+      </div>
+
+      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"1px",background:"var(--b)",borderRadius:24,overflow:"hidden"}} className="grid-1-mob">
         {clients.map((c: any,i: number)=>(
-          <motion.div key={i} initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:i*.05}}
-            style={{background:"var(--s)",border:".5px solid var(--b)",borderRadius:14,padding:"1.2rem",textAlign:"center",fontSize:12,color:"var(--m)",cursor:c.url?"pointer":"default"}}
-            onClick={()=>c.url&&window.open(c.url,'_blank')}>
-            {c.logo ? (
-              <img src={c.logo} alt={c.name} style={{width:36,height:36,objectFit:"contain",margin:"0 auto 8px",display:"block"}} onError={e=>{(e.currentTarget as HTMLImageElement).style.display='none'}} />
-            ) : (
-              <div style={{width:36,height:36,background:"rgba(205,178,255,0.08)",borderRadius:"50%",margin:"0 auto 8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:"var(--a)",fontFamily:"var(--fd)"}}>
-                {c.name?.[0]}
-              </div>
-            )}
-            {c.name}
+          <motion.div key={i}
+            initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:i*.04}}
+            onClick={()=>c.url?window.open(c.url,'_blank'):undefined}
+            style={{background:"var(--bg)",padding:"2.5rem 2rem",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16,minHeight:180,cursor:c.url?"pointer":"default",transition:"background .25s",position:"relative",overflow:"hidden"}}
+            whileHover={{backgroundColor:"rgba(205,178,255,0.06)"}}
+          >
+            <div style={{width:160,height:80,display:"flex",alignItems:"center",justifyContent:"center"}}>
+              {c.logo ? (
+                <img src={c.logo} alt={c.name}
+                  style={{maxWidth:"100%",maxHeight:"100%",objectFit:"contain",filter:"brightness(0) invert(1)",opacity:.45,transition:"opacity .25s"}}
+                  onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
+                  onMouseLeave={e=>e.currentTarget.style.opacity="0.45"}
+                />
+              ) : (
+                <span style={{fontFamily:"var(--fd)",fontSize:28,color:"rgba(255,255,255,0.18)",letterSpacing:".05em",textAlign:"center",lineHeight:1.1}}>{c.name}</span>
+              )}
+            </div>
+            <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",textAlign:"center"}}>{c.name}</span>
+            <div style={{position:"absolute",bottom:-40,right:-40,width:120,height:120,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(30px)",pointerEvents:"none"}}/>
           </motion.div>
         ))}
       </div>
@@ -1167,7 +1185,7 @@ const PageLavori = () => {
                 <motion.div key={p.id||i} layout initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
                   onClick={()=>{
                     if(p.videoUrl) setVideoOverlay(p.videoUrl);
-                    else if(p.link) window.open(p.link,"_blank");
+                    else go(`/progetto/${p.id}`);
                   }}
                   style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?340:240,background:p.image?"#111":"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:(p.videoUrl||p.link)?"pointer":"default",transition:"border-color .3s",position:"relative"}}
                   onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.2)"}
@@ -1175,7 +1193,7 @@ const PageLavori = () => {
                 >
                   {p.image&&(
                     <img src={p.image} alt={p.title}
-                      style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.5,transition:"opacity .3s"}}
+                      style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",opacity:.5,transition:"opacity .3s"}}
                       onMouseEnter={e=>(e.currentTarget.style.opacity="0.65")}
                       onMouseLeave={e=>(e.currentTarget.style.opacity="0.5")}
                     />
@@ -1505,6 +1523,150 @@ const PageCittaSEO = ({city, service}) => {
 /* ═══════════════════════════════════════════════════════════════
    ROUTER LOGIC
 ═══════════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: PROGETTO — Pagina cliente stile Brainpull
+═══════════════════════════════════════════════════════════════ */
+const PageProgetto = ({id}: {id: string}) => {
+  const {go}=useRouter();
+  const c=useContent();
+  const projects=(c.portfolio as any)?.projects||[];
+  const p=projects.find((pr: any)=>pr.id===id)||projects[0];
+  const nextP=projects.find((pr: any)=>pr.id===p?.nextProject);
+
+  if(!p) return <div style={{padding:"8rem 2rem",textAlign:"center"}}>Progetto non trovato.</div>;
+
+  return (
+    <>
+      {/* HERO con immagine */}
+      <section style={{minHeight:"70vh",position:"relative",display:"flex",alignItems:"flex-end",padding:"6rem 2rem 4rem",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
+        {p.image&&<img src={p.image} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",opacity:.35}}/>}
+        <div style={{position:"absolute",inset:0,background:"linear-gradient(to top, rgba(30,29,29,1) 0%, rgba(30,29,29,0.4) 60%, rgba(30,29,29,0.2) 100%)"}}/>
+        <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
+          <button onClick={()=>go("/lavori")} style={{display:"inline-flex",alignItems:"center",gap:6,background:"none",border:".5px solid var(--b)",borderRadius:100,color:"var(--m)",fontSize:10,letterSpacing:".15em",textTransform:"uppercase",padding:"6px 14px",cursor:"pointer",marginBottom:"2rem"}}>
+            <ArrowLeft size={11}/> Torna al portfolio
+          </button>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",flexWrap:"wrap",gap:"2rem"}}>
+            <div>
+              <p style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>What we've done</p>
+              <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,7vw,7rem)",lineHeight:.87,marginBottom:"1.5rem"}}>{p.client}</h1>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                {(p.tags||[p.category]).map((t: string,i: number)=>(
+                  <span key={i} className="tag tag-a">{t}</span>
+                ))}
+                <span className="tag tag-g">{p.year}</span>
+                <span className="tag tag-g">{p.stat}</span>
+              </div>
+            </div>
+            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2rem",minWidth:300}}>
+              <div>
+                <p style={{fontSize:9,letterSpacing:".2em",textTransform:"uppercase",color:"var(--m)",marginBottom:8}}>Il cliente</p>
+                <p style={{fontSize:13,color:"var(--t)",lineHeight:1.6}}>{p.description?.slice(0,80)}...</p>
+              </div>
+              {p.whoWorked&&p.whoWorked.length>0&&(
+                <div>
+                  <p style={{fontSize:9,letterSpacing:".2em",textTransform:"uppercase",color:"var(--m)",marginBottom:8}}>Chi ci ha lavorato</p>
+                  <div style={{display:"flex",flexDirection:"column",gap:4}}>
+                    {p.whoWorked.map((w: string,i: number)=>(
+                      <span key={i} style={{fontSize:12,color:"var(--t)"}}>{w}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CORPO */}
+      <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"start"}} className="grid-1-mob">
+            <div>
+              {p.clientLogo&&(
+                <img src={p.clientLogo} alt={p.client} style={{maxHeight:60,maxWidth:200,objectFit:"contain",marginBottom:"2rem",opacity:.8}}/>
+              )}
+              <h2 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontSize:"clamp(1.8rem,3vw,3rem)",lineHeight:1.2,marginBottom:"1.5rem",color:"var(--a)"}}>
+                "{p.title}"
+              </h2>
+              <p style={{fontSize:15,lineHeight:1.85,color:"var(--m)",marginBottom:"2rem"}}>{p.description}</p>
+              {p.result&&(
+                <div style={{padding:"1.5rem",background:"rgba(205,178,255,0.05)",border:".5px solid rgba(205,178,255,0.2)",borderRadius:16}}>
+                  <p style={{fontSize:9,letterSpacing:".2em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>Risultato</p>
+                  <p style={{fontSize:14,color:"var(--t)",lineHeight:1.7}}>→ {p.result}</p>
+                </div>
+              )}
+              {/* Social links */}
+              {(p.instagram||p.facebook||p.tiktok||p.website)&&(
+                <div style={{marginTop:"2rem",display:"flex",gap:10,flexWrap:"wrap"}}>
+                  {p.instagram&&<a href={p.instagram} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>Instagram ↗</a>}
+                  {p.facebook&&<a href={p.facebook} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>Facebook ↗</a>}
+                  {p.tiktok&&<a href={p.tiktok} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>TikTok ↗</a>}
+                  {p.website&&<a href={p.website} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>Sito web ↗</a>}
+                </div>
+              )}
+            </div>
+            {/* Video o immagine principale */}
+            <div>
+              {p.videoUrl?(
+                <div style={{borderRadius:20,overflow:"hidden",background:"#111",border:".5px solid var(--b)"}}>
+                  {p.videoUrl.includes("instagram.com")?(
+                    <iframe src={`${p.videoUrl}embed/`} width="100%" height="500" frameBorder="0" scrolling="no" allowTransparency style={{display:"block"}}/>
+                  ):(
+                    <video src={p.videoUrl} controls style={{width:"100%",display:"block",maxHeight:500}}/>
+                  )}
+                </div>
+              ):p.image?(
+                <img src={p.image} alt={p.title} style={{width:"100%",borderRadius:20,objectFit:"cover",maxHeight:500}}/>
+              ):null}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* GALLERIA FOTO */}
+      {p.gallery&&p.gallery.length>0&&(
+        <section style={{padding:"0 0 6rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:2}}>
+            {p.gallery.map((img: string,i: number)=>(
+              <motion.div key={i} initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:i*.05}}
+                style={{aspectRatio:i===0?"16/9":"1",overflow:"hidden",background:"#111",gridColumn:i===0?"span 2":"span 1"}}>
+                <img src={img} alt={`${p.title} ${i+1}`} style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .5s"}}
+                  onMouseEnter={e=>e.currentTarget.style.transform="scale(1.05)"}
+                  onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}
+                />
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* PROSSIMO PROGETTO */}
+      {nextP&&(
+        <section style={{padding:"6rem 2rem"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Prossimo progetto</p>
+            <motion.div onClick={()=>go(`/progetto/${nextP.id}`)}
+              style={{position:"relative",minHeight:280,borderRadius:32,overflow:"hidden",cursor:"pointer",border:".5px solid var(--b)",background:nextP.image?"#111":"#252525"}}
+              whileHover={{scale:1.01}}>
+              {nextP.image&&<img src={nextP.image} alt={nextP.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.4}}/>}
+              <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,.9) 0%,transparent 60%)"}}/>
+              <div style={{position:"relative",zIndex:1,padding:"2.5rem",height:"100%",display:"flex",flexDirection:"column",justifyContent:"flex-end"}}>
+                <div style={{display:"flex",gap:8,marginBottom:"1rem"}}>
+                  {(nextP.tags||[]).slice(0,2).map((t: string,i: number)=><span key={i} className="tag tag-a">{t}</span>)}
+                </div>
+                <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,4vw,4rem)",lineHeight:.9,textTransform:"uppercase"}}>{nextP.client}</h3>
+                <p style={{fontSize:13,color:"var(--m)",marginTop:8}}>{nextP.title}</p>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      <ServiceCTA title="IL TUO PROGETTO È IL PROSSIMO." sub="Raccontaci cosa vuoi ottenere." btn="Iniziamo insieme"/>
+    </>
+  );
+};
+
 const parseRoute = (route) => {
   if(route==="/") return {page:"home"};
   if(route==="/chi-siamo") return {page:"chi-siamo"};
@@ -1512,10 +1674,12 @@ const parseRoute = (route) => {
   if(route==="/servizi") return {page:"servizi"};
   if(route==="/blog") return {page:"blog"};
   if(route==="/contatti") return {page:"contatti"};
+  // project detail pages: /progetto/1
+  if(route.startsWith("/progetto/")) return {page:"progetto",id:route.replace("/progetto/","")};
   // service pages
   const svcSlugs=SERVICES.map(s=>s.slug);
   if(svcSlugs.includes(route.slice(1))) return {page:"service",slug:route.slice(1)};
-  // city SEO pages: /gestione-social-taranto
+  // city SEO pages
   for(const svc of SERVICES){
     for(const city of CITIES){
       const expected=`/${svc.slug}-${city.toLowerCase()}`;
@@ -1527,6 +1691,7 @@ const parseRoute = (route) => {
  
 const renderPage = (info) => {
   switch(info.page){
+    case "progetto": return <PageProgetto id={info.id}/>;
     case "home": return <PageHome/>;
     case "chi-siamo": return <PageChiSiamo/>;
     case "lavori": return <PageLavori/>;
