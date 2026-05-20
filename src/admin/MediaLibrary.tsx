@@ -1,16 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import type React from 'react';
 import { Upload, X, Check, Search, Image, Video, Trash2, Copy, ExternalLink } from 'lucide-react';
+import { db } from '../lib/firebase';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // ════════════════════════════════════════════════════════════════
-// MEDIA LIBRARY — Archivio media con upload Cloudinary
+// MEDIA LIBRARY — Archivio media con upload Cloudinary + Firestore
 // ════════════════════════════════════════════════════════════════
 
 const CLOUD_NAME = 'dp2l14rly';
 const API_KEY = '189381191389964';
-// Upload non firmato — usa upload preset "ml_default" (pubblico)
-// Per sicurezza usiamo unsigned upload con preset configurato su Cloudinary
 const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+const FIRESTORE_DOC = 'app/media_library';
 
 type MediaItem = {
   public_id: string;
@@ -25,6 +26,22 @@ type MediaItem = {
 };
 
 const formatBytes = (b: number) => b < 1024*1024 ? `${(b/1024).toFixed(0)}KB` : `${(b/1024/1024).toFixed(1)}MB`;
+
+const loadFromFirestore = async (): Promise<MediaItem[]> => {
+  if (!db) return [];
+  try {
+    const snap = await getDoc(doc(db, 'app', 'media_library'));
+    if (snap.exists()) return snap.data().items || [];
+  } catch {}
+  return [];
+};
+
+const saveToFirestore = async (items: MediaItem[]) => {
+  if (!db) return;
+  try {
+    await setDoc(doc(db, 'app', 'media_library'), { items, updated_at: new Date().toISOString() });
+  } catch (e) { console.error('Media library save failed', e); }
+};
 
 // ─── Upload widget ───────────────────────────────────────────────
 const UploadZone = ({ onUpload }: { onUpload: (item: MediaItem) => void }) => {
@@ -195,29 +212,26 @@ export const MediaLibrary = ({ onSelect, onClose, filter = 'all' }: Props) => {
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState<'library' | 'upload' | 'instagram'>('library');
   const [copied, setCopied] = useState('');
+  const [loadingLib, setLoadingLib] = useState(true);
 
-  // Carica lista media da localStorage (cache locale)
   useEffect(() => {
-    const saved = localStorage.getItem('inlab_media_library');
-    if (saved) {
-      try { setItems(JSON.parse(saved)); } catch {}
-    }
+    loadFromFirestore().then(data => { setItems(data); setLoadingLib(false); });
   }, []);
 
-  const saveItems = (newItems: MediaItem[]) => {
+  const saveItems = async (newItems: MediaItem[]) => {
     setItems(newItems);
-    localStorage.setItem('inlab_media_library', JSON.stringify(newItems));
+    await saveToFirestore(newItems);
   };
 
-  const handleUpload = (item: MediaItem) => {
+  const handleUpload = async (item: MediaItem) => {
     const newItems = [item, ...items];
-    saveItems(newItems);
+    await saveItems(newItems);
     setTab('library');
   };
 
-  const handleDelete = (public_id: string) => {
+  const handleDelete = async (public_id: string) => {
     if (!confirm('Rimuovere dall\'archivio?')) return;
-    saveItems(items.filter(i => i.public_id !== public_id));
+    await saveItems(items.filter(i => i.public_id !== public_id));
   };
 
   const copyUrl = (url: string) => {
@@ -288,7 +302,9 @@ export const MediaLibrary = ({ onSelect, onClose, filter = 'all' }: Props) => {
                   style={{ width: '100%', padding: '9px 12px 9px 34px', background: 'rgba(255,255,255,0.04)', border: '.5px solid #2a2a2a', borderRadius: 8, color: '#fff', fontSize: 12, outline: 'none' }} />
               </div>
 
-              {filtered.length === 0 ? (
+              {loadingLib ? (
+                <div style={{ textAlign: 'center', padding: '3rem', color: '#444', fontSize: 13 }}>Caricamento libreria...</div>
+              ) : filtered.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '3rem', color: '#444' }}>
                   <Image size={32} style={{ margin: '0 auto 12px', opacity: 0.3 }} />
                   <div style={{ fontSize: 13 }}>{items.length === 0 ? 'Nessun file ancora. Carica qualcosa!' : 'Nessun file corrisponde alla ricerca.'}</div>
