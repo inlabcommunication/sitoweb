@@ -348,8 +348,34 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
             <Field label="Risultato / Stat" value={p.stat} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].stat=v; set('portfolio.projects',a); }} />
             <Field label="Descrizione breve" value={p.description} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].description=v; set('portfolio.projects',a); }} multiline />
             <Field label="Risultato dettagliato" value={p.result} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].result=v; set('portfolio.projects',a); }} multiline />
+            <ImageField label="Logo cliente (Cloudinary)" value={p.clientLogo} type="image" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].clientLogo=v; set('portfolio.projects',a); }} />
             <ImageField label="Immagine copertina (Cloudinary)" value={p.image} type="image" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].image=v; set('portfolio.projects',a); }} />
             <ImageField label="Video (Cloudinary o link Instagram)" value={p.videoUrl} type="video" onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].videoUrl=v; set('portfolio.projects',a); }} />
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 8 }}>Galleria foto (URL Cloudinary)</div>
+              {(p.gallery||[]).map((img: string, gi: number) => (
+                <div key={gi} style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
+                  <input value={img} onChange={e => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].gallery[gi]=e.target.value; set('portfolio.projects',a); }} style={{ ...inputStyle, flex: 1 }} placeholder="https://res.cloudinary.com/..." />
+                  <button onClick={() => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].gallery.splice(gi,1); set('portfolio.projects',a); }} style={{ background: 'rgba(255,100,100,0.1)', border: 'none', borderRadius: 6, color: '#ff8888', padding: '0 8px', cursor: 'pointer' }}><Trash2 size={11} /></button>
+                </div>
+              ))}
+              <AddBtn onClick={() => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); if(!a[i].gallery)a[i].gallery=[]; a[i].gallery.push(''); set('portfolio.projects',a); }} label="Aggiungi foto galleria" />
+            </div>
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 8 }}>Chi ci ha lavorato</div>
+              {(p.whoWorked||[]).map((w: string, wi: number) => (
+                <div key={wi} style={{ display: 'flex', gap: 8, marginBottom: 6 }}>
+                  <input value={w} onChange={e => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].whoWorked[wi]=e.target.value; set('portfolio.projects',a); }} style={{ ...inputStyle, flex: 1 }} placeholder="Es: Social, Video, Branding..." />
+                  <button onClick={() => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].whoWorked.splice(wi,1); set('portfolio.projects',a); }} style={{ background: 'rgba(255,100,100,0.1)', border: 'none', borderRadius: 6, color: '#ff8888', padding: '0 8px', cursor: 'pointer' }}><Trash2 size={11} /></button>
+                </div>
+              ))}
+              <AddBtn onClick={() => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); if(!a[i].whoWorked)a[i].whoWorked=[]; a[i].whoWorked.push(''); set('portfolio.projects',a); }} label="Aggiungi ruolo" />
+            </div>
+            <Field label="Instagram cliente" value={p.instagram} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].instagram=v; set('portfolio.projects',a); }} placeholder="https://instagram.com/..." />
+            <Field label="Facebook cliente" value={p.facebook} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].facebook=v; set('portfolio.projects',a); }} placeholder="https://facebook.com/..." />
+            <Field label="TikTok cliente" value={p.tiktok} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].tiktok=v; set('portfolio.projects',a); }} placeholder="https://tiktok.com/..." />
+            <Field label="Sito web cliente" value={p.website} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].website=v; set('portfolio.projects',a); }} placeholder="https://..." />
+            <Field label="ID prossimo progetto" value={p.nextProject} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].nextProject=v; set('portfolio.projects',a); }} hint="ID del progetto che appare dopo" />
             <Field label="Link esterno (opzionale)" value={p.link} onChange={(v: string) => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].link=v; set('portfolio.projects',a); }} placeholder="https://..." />
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 4 }}>
               <input type="checkbox" checked={p.large || false} onChange={e => { const a=JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].large=e.target.checked; set('portfolio.projects',a); }} id={`lg-${i}`} style={{ accentColor: '#cdb2ff' }} />
