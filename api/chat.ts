@@ -9,8 +9,9 @@ function getFirebaseAdmin() {
     const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
     if (serviceAccountJson) {
       try {
-        const fixed = serviceAccountJson.replace(/\\n/g, '\n');
-        const parsed = JSON.parse(fixed);
+        const normalized = serviceAccountJson.replace(/\r?\n/g, '\\n');
+        const parsed = JSON.parse(normalized);
+        if (parsed.private_key) parsed.private_key = parsed.private_key.replace(/\\n/g, '\n');
         initializeApp({ credential: cert(parsed) });
       } catch (e) {
         console.error('[chat] Service account JSON malformed:', e);
