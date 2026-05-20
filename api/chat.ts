@@ -43,7 +43,7 @@ SERVIZI:
 AREA DI INTERVENTO: Taranto, Palagiano, Palagianello, Massafra, Mottola, Castellaneta, Laterza, Ginosa, e Puglia in generale.
 
 CONTATTI:
-Email: ciao@inlab.it
+Email: inlab.communication@gmail.com
 Sede: Taranto, Puglia
 
 RUOLO E TONO:
@@ -97,6 +97,8 @@ async function callAnthropic(apiKey: string, model: string, systemPrompt: string
 }
 
 async function callGemini(apiKey: string, model: string, systemPrompt: string, messages: any[], maxTokens: number) {
+  const MODELS = [model || "gemini-2.5-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b"];
+
   const ai = new GoogleGenAI({ apiKey });
   const history = messages.slice(0, -1).map((m: any) => ({
     role: m.role === "user" ? "user" : "model",
@@ -108,16 +110,29 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
   })).filter((m: any) => m.parts[0].text && m.parts[0].text.length > 0);
 
   const lastMessage = messages[messages.length - 1];
-  const chat = ai.chats.create({
-    model: model || "gemini-2.5-flash",
-    config: { systemInstruction: systemPrompt, maxOutputTokens: maxTokens, temperature: 0.7 },
-    history,
-  });
-  const response = await chat.sendMessage({ message: String(lastMessage?.content || "") });
-  return {
-    rawText: response.text || "",
-    usage: { inputTokens: response.usageMetadata?.promptTokenCount, outputTokens: response.usageMetadata?.candidatesTokenCount },
-  };
+
+  for (const mdl of MODELS) {
+    try {
+      const chat = ai.chats.create({
+        model: mdl,
+        config: { systemInstruction: systemPrompt, maxOutputTokens: maxTokens, temperature: 0.7 },
+        history,
+      });
+      const response = await chat.sendMessage({ message: String(lastMessage?.content || "") });
+      return {
+        rawText: response.text || "",
+        usage: { inputTokens: response.usageMetadata?.promptTokenCount, outputTokens: response.usageMetadata?.candidatesTokenCount },
+      };
+    } catch (e: any) {
+      const is503 = e?.status === 503 || e?.message?.includes("503") || e?.message?.includes("UNAVAILABLE");
+      if (is503 && mdl !== MODELS[MODELS.length - 1]) {
+        console.warn(`[chat] ${mdl} unavailable, trying fallback...`);
+        continue;
+      }
+      throw e;
+    }
+  }
+  throw new Error("All Gemini models unavailable");
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -138,11 +153,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     let result;
     if (provider === "anthropic") {
       const apiKey = settings.anthropicApiKey || process.env.ANTHROPIC_API_KEY;
-      if (!apiKey) return res.status(500).json({ error: "Anthropic API key not configured", reply: "Configurazione mancante. Scrivici a ciao@inlab.it 🙂" });
+      if (!apiKey) return res.status(500).json({ error: "Anthropic API key not configured", reply: "Configurazione mancante. Scrivici a inlab.communication@gmail.com 🙂" });
       result = await callAnthropic(apiKey, settings.anthropicModel || "claude-haiku-4-5-20251001", SYSTEM_PROMPT, limitedMessages, maxTokens);
     } else {
       const apiKey = settings.geminiApiKey || process.env.GEMINI_API_KEY;
-      if (!apiKey) return res.status(500).json({ error: "Gemini API key not configured", reply: "Configurazione mancante. Scrivici a ciao@inlab.it 🙂" });
+      if (!apiKey) return res.status(500).json({ error: "Gemini API key not configured", reply: "Configurazione mancante. Scrivici a inlab.communication@gmail.com 🙂" });
       result = await callGemini(apiKey, settings.geminiModel || "gemini-2.5-flash", SYSTEM_PROMPT, limitedMessages, maxTokens);
     }
 
@@ -180,6 +195,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ reply: visibleText, meta, usage: result.usage, provider });
   } catch (error: any) {
     console.error("Chat API error:", error);
-    return res.status(500).json({ error: error?.message || "Internal server error", reply: "Mi dispiace, c'è stato un problema tecnico. Scrivici a ciao@inlab.it 🙂" });
+    return res.status(500).json({ error: error?.message || "Internal server error", reply: "Mi dispiace, c'è stato un problema tecnico. Scrivici a inlab.communication@gmail.com 🙂" });
   }
 }
