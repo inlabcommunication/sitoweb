@@ -312,24 +312,34 @@ const StatsRow = ({stats}) => (
   </section>
 );
  
-const ClientLogos = () => (
+const ClientLogos = () => {
+  const content = useContent();
+  const clients = content.clients?.items || CLIENTS.map(c => ({ name: c, url: '', logo: '' }));
+  const tag = content.clients?.tag || 'Alcuni dei nostri clienti';
+  return (
   <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
     <div style={{maxWidth:1280,margin:"0 auto"}}>
-      <p className="section-label" style={{textAlign:"center",marginBottom:"2.5rem"}}>Alcuni dei nostri clienti</p>
+      <p className="section-label" style={{textAlign:"center",marginBottom:"2.5rem"}}>{tag}</p>
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(140px,1fr))",gap:"1rem"}}>
-        {CLIENTS.map((c,i)=>(
+        {clients.map((c: any,i: number)=>(
           <motion.div key={i} initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:i*.05}}
-            style={{background:"var(--s)",border:".5px solid var(--b)",borderRadius:14,padding:"1.2rem",textAlign:"center",fontSize:12,color:"var(--m)"}}>
-            <div style={{width:36,height:36,background:"rgba(205,178,255,0.08)",borderRadius:"50%",margin:"0 auto 8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:"var(--a)",fontFamily:"var(--fd)"}}>
-              {c[0]}
-            </div>
-            {c}
+            style={{background:"var(--s)",border:".5px solid var(--b)",borderRadius:14,padding:"1.2rem",textAlign:"center",fontSize:12,color:"var(--m)",cursor:c.url?"pointer":"default"}}
+            onClick={()=>c.url&&window.open(c.url,'_blank')}>
+            {c.logo ? (
+              <img src={c.logo} alt={c.name} style={{width:36,height:36,objectFit:"contain",margin:"0 auto 8px",display:"block"}} onError={e=>{(e.currentTarget as HTMLImageElement).style.display='none'}} />
+            ) : (
+              <div style={{width:36,height:36,background:"rgba(205,178,255,0.08)",borderRadius:"50%",margin:"0 auto 8px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:14,color:"var(--a)",fontFamily:"var(--fd)"}}>
+                {c.name?.[0]}
+              </div>
+            )}
+            {c.name}
           </motion.div>
         ))}
       </div>
     </div>
   </section>
-);
+  );
+};
  
 const ServiceCTA = ({title="Vuoi questo servizio?",sub="Parliamo del tuo progetto senza impegno.",btn="Richiedi un preventivo",to="/contatti"}) => {
   const {go}=useRouter();
