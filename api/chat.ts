@@ -8,9 +8,18 @@ function getFirebaseAdmin() {
   if (getApps().length === 0) {
     const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
     if (serviceAccountJson) {
-      try { initializeApp({ credential: cert(JSON.parse(serviceAccountJson)) }); }
-      catch (e) { console.error('Service account JSON malformed', e); initializeApp(); }
-    } else { initializeApp(); }
+      try {
+        const fixed = serviceAccountJson.replace(/\\n/g, '\n');
+        const parsed = JSON.parse(fixed);
+        initializeApp({ credential: cert(parsed) });
+      } catch (e) {
+        console.error('[chat] Service account JSON malformed:', e);
+        initializeApp();
+      }
+    } else {
+      console.error('[chat] FIREBASE_SERVICE_ACCOUNT_KEY not set');
+      initializeApp();
+    }
   }
   return getFirestore();
 }
