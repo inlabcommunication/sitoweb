@@ -10,8 +10,8 @@ const listeners = new Set<(c: SiteContent) => void>();
 
 export const getContent = (): SiteContent => cached ?? WEBSITE_CONTENT;
 
-export const loadContent = async (): Promise<SiteContent> => {
-  if (cached) return cached;
+export const loadContent = async (forceRefresh = false): Promise<SiteContent> => {
+  if (cached && !forceRefresh) return cached;
   if (!db) { cached = WEBSITE_CONTENT; return cached; }
   try {
     const snap = await getDoc(doc(db, 'app', 'site_content'));
@@ -44,11 +44,10 @@ export const subscribeContent = (fn: (c: SiteContent) => void) => {
   listeners.add(fn);
   return () => listeners.delete(fn);
 };
-
-export const useContent = (): SiteContent => {
   const [content, setContent] = useState<SiteContent>(cached ?? WEBSITE_CONTENT);
   useEffect(() => {
-    if (!cached) loadContent().then(setContent);
+    // Forza sempre il reload da Firestore al mount
+    loadContent(true).then(c => { setContent(c); });
     return subscribeContent(setContent);
   }, []);
   return content;
