@@ -1,25 +1,21 @@
 import { useState, useEffect } from 'react';
 import type React from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { Save, RotateCcw, Check, ChevronRight, Edit3, Plus, Trash2 } from 'lucide-react';
+import { Save, RotateCcw, Check, Plus, Trash2, ChevronRight, ChevronDown } from 'lucide-react';
 import { WEBSITE_CONTENT } from '../constants';
 import { loadContent, saveContent, SiteContent } from '../lib/content';
 
-// ════════════════════════════════════════════════════════════════
-// CONTENT EDITOR — Modifica testi e dati del sito stile Shopify
-// Naviga tra le sezioni del sito, modifica ogni campo, salva → live.
-// ════════════════════════════════════════════════════════════════
-
-type Section = 'brand' | 'hero' | 'stats' | 'services' | 'portfolio' | 'studio' | 'cities' | 'contact';
+type Section = 'brand' | 'hero' | 'marquee' | 'stats' | 'clients' | 'services' | 'portfolio' | 'studio' | 'cities' | 'contact';
 
 const SECTIONS: { key: Section; label: string; desc: string }[] = [
   { key: 'brand', label: 'Brand', desc: 'Nome, location, copyright' },
-  { key: 'hero', label: 'Hero / Apertura', desc: 'Titolo principale, descrizione, CTA' },
-  { key: 'stats', label: 'Numeri', desc: 'Stats mostrate sotto l\'hero' },
-  { key: 'services', label: 'Servizi', desc: 'Cosa offrite' },
-  { key: 'portfolio', label: 'Portfolio', desc: 'Lavori e progetti' },
-  { key: 'studio', label: 'Studio', desc: 'Chi siete' },
-  { key: 'cities', label: 'Città servite', desc: 'Aree geografiche' },
+  { key: 'hero', label: 'Hero', desc: 'Titolo, descrizione, CTA' },
+  { key: 'marquee', label: 'Marquee', desc: 'Testi dello slider animato' },
+  { key: 'stats', label: 'Numeri', desc: 'Statistiche principali' },
+  { key: 'clients', label: 'Clienti', desc: 'Logo, nome e link clienti' },
+  { key: 'services', label: 'Servizi', desc: 'Servizi offerti' },
+  { key: 'portfolio', label: 'Portfolio', desc: 'Progetti e lavori' },
+  { key: 'studio', label: 'Studio', desc: 'Chi siamo, team' },
+  { key: 'cities', label: 'Città', desc: 'Aree geografiche servite' },
   { key: 'contact', label: 'Contatti', desc: 'Email, telefono, social' },
 ];
 
@@ -32,11 +28,7 @@ export const ContentEditor = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    loadContent().then((c) => {
-      setContent(c);
-      setOriginal(c);
-      setLoading(false);
-    });
+    loadContent().then((c) => { setContent(c); setOriginal(c); setLoading(false); });
   }, []);
 
   const dirty = JSON.stringify(content) !== JSON.stringify(original);
@@ -44,582 +36,356 @@ export const ContentEditor = () => {
   const handleSave = async () => {
     setSaving(true);
     const ok = await saveContent(content);
-    if (ok) {
-      setOriginal(content);
-      setSaved(true);
-      setTimeout(() => setSaved(false), 2000);
-    } else {
-      alert('Salvataggio fallito. Controlla la console.');
-    }
+    if (ok) { setOriginal(content); setSaved(true); setTimeout(() => setSaved(false), 2000); }
+    else alert('Salvataggio fallito.');
     setSaving(false);
   };
 
-  const handleReset = () => {
-    if (!dirty) return;
-    if (confirm('Annullare le modifiche non salvate?')) setContent(original);
+  const set = (path: string, value: any) => {
+    setContent((prev) => {
+      const next = JSON.parse(JSON.stringify(prev));
+      const keys = path.split('.');
+      let obj = next;
+      for (let i = 0; i < keys.length - 1; i++) obj = obj[keys[i]];
+      obj[keys[keys.length - 1]] = value;
+      return next;
+    });
   };
 
-  const update = (path: string, value: any) => {
-    setContent(setIn(content, path.split('.'), value));
-  };
-
-  if (loading) {
-    return <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--m)' }}>Caricamento contenuti...</div>;
-  }
+  if (loading) return <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--m)' }}>Caricamento...</div>;
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '260px 1fr', minHeight: 'calc(100vh - 60px)' }}>
+    <div style={{ display: 'flex', height: 'calc(100vh - 60px)', overflow: 'hidden' }}>
       {/* Sidebar sezioni */}
-      <aside
-        style={{
-          borderRight: '.5px solid var(--b)',
-          padding: '2rem 0',
-          background: 'rgba(0,0,0,0.2)',
-          position: 'sticky',
-          top: 60,
-          alignSelf: 'flex-start',
-          maxHeight: 'calc(100vh - 60px)',
-          overflowY: 'auto',
-        }}
-      >
-        <div style={{ padding: '0 1.5rem 1rem' }}>
-          <div className="section-label">Sezioni del sito</div>
-        </div>
+      <div style={{ width: 220, borderRight: '.5px solid var(--b)', overflowY: 'auto', flexShrink: 0, padding: '1.5rem 0' }}>
         {SECTIONS.map((s) => (
-          <button
-            key={s.key}
-            onClick={() => setSection(s.key)}
-            style={{
-              width: '100%',
-              textAlign: 'left',
-              padding: '12px 1.5rem',
-              background: section === s.key ? 'rgba(205,178,255,0.06)' : 'transparent',
-              border: 'none',
-              borderLeft: `2px solid ${section === s.key ? 'var(--a)' : 'transparent'}`,
-              color: section === s.key ? 'var(--t)' : 'var(--m)',
-              cursor: 'pointer',
-              transition: 'all .2s',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              gap: 8,
-            }}
-          >
-            <div>
-              <div style={{ fontSize: 13, fontWeight: 500 }}>{s.label}</div>
-              <div style={{ fontSize: 11, opacity: 0.7, marginTop: 2 }}>{s.desc}</div>
-            </div>
-            <ChevronRight size={14} style={{ opacity: section === s.key ? 1 : 0.3 }} />
+          <button key={s.key} onClick={() => setSection(s.key)} style={{ width: '100%', padding: '12px 20px', background: section === s.key ? 'rgba(205,178,255,0.1)' : 'transparent', border: 'none', borderLeft: section === s.key ? '2px solid var(--a)' : '2px solid transparent', color: section === s.key ? 'var(--a)' : 'var(--m)', textAlign: 'left', cursor: 'pointer', transition: 'all .2s' }}>
+            <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase' }}>{s.label}</div>
+            <div style={{ fontSize: 10, opacity: 0.6, marginTop: 2 }}>{s.desc}</div>
           </button>
         ))}
-      </aside>
+      </div>
 
       {/* Editor */}
-      <main style={{ padding: '2rem', overflowY: 'auto' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '2rem' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
             <div>
-              <div className="section-label" style={{ marginBottom: 6 }}>Editor contenuti</div>
-              <h2 style={{ fontFamily: 'var(--fd)', fontSize: '2.2rem', letterSpacing: '.02em' }}>
-                {SECTIONS.find((s) => s.key === section)?.label.toUpperCase()}
+              <h2 style={{ fontFamily: 'var(--fd)', fontSize: '1.5rem', letterSpacing: '.1em' }}>
+                {SECTIONS.find(s => s.key === section)?.label.toUpperCase()}
               </h2>
+              <p style={{ fontSize: 12, color: 'var(--m)', marginTop: 4 }}>{SECTIONS.find(s => s.key === section)?.desc}</p>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <button
-                onClick={handleReset}
-                disabled={!dirty}
-                className="btn btn-g"
-                style={{ opacity: dirty ? 1 : 0.4 }}
-              >
-                <RotateCcw size={13} /> Annulla
-              </button>
-              <button
-                onClick={handleSave}
-                disabled={!dirty || saving}
-                className="btn btn-p"
-                style={{ opacity: dirty && !saving ? 1 : 0.5 }}
-              >
-                {saved ? <><Check size={13} /> Salvato</> : saving ? 'Salvo...' : <><Save size={13} /> Salva</>}
+              {dirty && (
+                <button onClick={() => setContent(original)} className="btn btn-g" style={{ gap: 6 }}>
+                  <RotateCcw size={13} /> Annulla
+                </button>
+              )}
+              <button onClick={handleSave} disabled={!dirty || saving} className="btn btn-p" style={{ gap: 6, opacity: !dirty ? 0.4 : 1 }}>
+                {saved ? <><Check size={13} /> Salvato</> : <><Save size={13} /> {saving ? 'Salvataggio...' : 'Salva'}</>}
               </button>
             </div>
           </div>
 
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={section}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.2 }}
-              style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}
-            >
-              {section === 'brand' && (
-                <>
-                  <TextField label="Nome brand" value={content.brand.name} onChange={(v) => update('brand.name', v)} />
-                  <TextField label="Nome breve" value={content.brand.shortName} onChange={(v) => update('brand.shortName', v)} />
-                  <TextField label="Location" value={content.brand.location} onChange={(v) => update('brand.location', v)} />
-                  <TextField label="Location completa" value={content.brand.fullLocation} onChange={(v) => update('brand.fullLocation', v)} />
-                  <TextField label="Copyright" value={content.brand.copy} onChange={(v) => update('brand.copy', v)} />
-                </>
-              )}
-
-              {section === 'hero' && (
-                <>
-                  <TextField label="Tag (badge sopra il titolo)" value={content.hero.tag} onChange={(v) => update('hero.tag', v)} />
-                  <TextField label="Titolo riga 1" value={content.hero.headline.line1} onChange={(v) => update('hero.headline.line1', v)} />
-                  <TextField label="Titolo riga 2" value={content.hero.headline.line2} onChange={(v) => update('hero.headline.line2', v)} />
-                  <TextField label="Titolo accent (corsivo viola)" value={content.hero.headline.accent} onChange={(v) => update('hero.headline.accent', v)} />
-                  <TextField label="Descrizione" multiline value={content.hero.description} onChange={(v) => update('hero.description', v)} />
-                  <TextField label="Bottone primario" value={content.hero.cta.primary} onChange={(v) => update('hero.cta.primary', v)} />
-                  <TextField label="Bottone secondario" value={content.hero.cta.secondary} onChange={(v) => update('hero.cta.secondary', v)} />
-                </>
-              )}
-
-              {section === 'stats' && (
-                <ListEditor
-                  items={content.stats}
-                  onChange={(items) => update('stats', items)}
-                  newItem={() => ({ num: '', label: '' })}
-                  render={(item, onItemChange) => (
-                    <>
-                      <TextField label="Numero" value={item.num} onChange={(v) => onItemChange({ ...item, num: v })} />
-                      <TextField label="Descrizione" value={item.label} onChange={(v) => onItemChange({ ...item, label: v })} />
-                    </>
-                  )}
-                  title={(item) => item.num || 'Nuova stat'}
-                />
-              )}
-
-              {section === 'services' && (
-                <>
-                  <TextField label="Tag sezione" value={content.services.tag} onChange={(v) => update('services.tag', v)} />
-                  <TextField label="Titolo riga 1" value={content.services.title[0]} onChange={(v) => update('services.title.0', v)} />
-                  <TextField label="Titolo riga 2" value={content.services.title[1]} onChange={(v) => update('services.title.1', v)} />
-                  <div style={{ marginTop: '1rem' }}>
-                    <div className="section-label" style={{ marginBottom: 8 }}>Servizi</div>
-                    <ListEditor
-                      items={content.services.items}
-                      onChange={(items) => update('services.items', items)}
-                      newItem={() => ({ icon: '◇', title: '', desc: '' })}
-                      render={(item, onItemChange) => (
-                        <>
-                          <TextField label="Icona (carattere unicode)" value={item.icon} onChange={(v) => onItemChange({ ...item, icon: v })} />
-                          <TextField label="Titolo" value={item.title} onChange={(v) => onItemChange({ ...item, title: v })} />
-                          <TextField label="Descrizione" multiline value={item.desc} onChange={(v) => onItemChange({ ...item, desc: v })} />
-                        </>
-                      )}
-                      title={(item) => item.title || 'Nuovo servizio'}
-                    />
-                  </div>
-                </>
-              )}
-
-              {section === 'portfolio' && (
-                <>
-                  <TextField label="Tag" value={content.portfolio.tag} onChange={(v) => update('portfolio.tag', v)} />
-                  <TextField label="Titolo riga 1" value={content.portfolio.title[0]} onChange={(v) => update('portfolio.title.0', v)} />
-                  <TextField label="Titolo riga 2" value={content.portfolio.title[1]} onChange={(v) => update('portfolio.title.1', v)} />
-                  <div style={{ marginTop: '1rem' }}>
-                    <div className="section-label" style={{ marginBottom: 8 }}>Progetti</div>
-                    <ListEditor
-                      items={content.portfolio.projects}
-                      onChange={(items) => update('portfolio.projects', items)}
-                      newItem={() => ({ title: '', tag: '', type: 'numeri', stat: '', year: '25', size: 'small', color: '#1a1a14' })}
-                      render={(item, onItemChange) => (
-                        <>
-                          <TextField label="Titolo progetto" value={item.title} onChange={(v) => onItemChange({ ...item, title: v })} />
-                          <TextField label="Tag (web, video, social, foto...)" value={item.tag} onChange={(v) => onItemChange({ ...item, tag: v })} />
-                          <TextField label="Statistica / risultato" value={item.stat} onChange={(v) => onItemChange({ ...item, stat: v })} />
-                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
-                            <TextField label="Anno" value={item.year} onChange={(v) => onItemChange({ ...item, year: v })} />
-                            <SelectField label="Tipo" value={item.type} options={['numeri', 'estetica']} onChange={(v) => onItemChange({ ...item, type: v })} />
-                            <SelectField label="Dimensione" value={item.size} options={['small', 'large']} onChange={(v) => onItemChange({ ...item, size: v })} />
-                          </div>
-                          <TextField label="Colore sfondo (hex)" value={item.color} onChange={(v) => onItemChange({ ...item, color: v })} />
-                        </>
-                      )}
-                      title={(item) => item.title || 'Nuovo progetto'}
-                    />
-                  </div>
-                </>
-              )}
-
-              {section === 'studio' && (
-                <>
-                  <TextField label="Tag" value={content.studio.tag} onChange={(v) => update('studio.tag', v)} />
-                  <TextField label="Titolo parte 1" value={content.studio.title[0]} onChange={(v) => update('studio.title.0', v)} />
-                  <TextField label="Titolo parte 2 (corsivo)" value={content.studio.title[1]} onChange={(v) => update('studio.title.1', v)} />
-                  <TextField label="Titolo parte 3" value={content.studio.title[2]} onChange={(v) => update('studio.title.2', v)} />
-                  <TextField label="Descrizione 1" multiline value={content.studio.description1} onChange={(v) => update('studio.description1', v)} />
-                  <TextField label="Descrizione 2" multiline value={content.studio.description2} onChange={(v) => update('studio.description2', v)} />
-                  <div style={{ marginTop: '1rem' }}>
-                    <div className="section-label" style={{ marginBottom: 8 }}>Team / Competenze</div>
-                    <ListEditor
-                      items={content.studio.items}
-                      onChange={(items) => update('studio.items', items)}
-                      newItem={() => ({ icon: '◇', role: '', name: '', desc: '' })}
-                      render={(item, onItemChange) => (
-                        <>
-                          <TextField label="Icona" value={item.icon} onChange={(v) => onItemChange({ ...item, icon: v })} />
-                          <TextField label="Ruolo" value={item.role} onChange={(v) => onItemChange({ ...item, role: v })} />
-                          <TextField label="Nome competenza" value={item.name} onChange={(v) => onItemChange({ ...item, name: v })} />
-                          <TextField label="Descrizione" multiline value={item.desc} onChange={(v) => onItemChange({ ...item, desc: v })} />
-                        </>
-                      )}
-                      title={(item) => item.name || 'Nuova competenza'}
-                    />
-                  </div>
-                </>
-              )}
-
-              {section === 'cities' && (
-                <>
-                  <TextField label="Tag" value={content.cities.tag} onChange={(v) => update('cities.tag', v)} />
-                  <div>
-                    <div className="section-label" style={{ marginBottom: 8 }}>Città</div>
-                    <SimpleListEditor
-                      items={content.cities.list}
-                      onChange={(items) => update('cities.list', items)}
-                      placeholder="Nome città"
-                    />
-                  </div>
-                </>
-              )}
-
-              {section === 'contact' && (
-                <>
-                  <TextField label="Tag" value={content.contact.tag} onChange={(v) => update('contact.tag', v)} />
-                  <TextField label="Titolo parte 1" value={content.contact.title[0]} onChange={(v) => update('contact.title.0', v)} />
-                  <TextField label="Titolo parte 2 (corsivo)" value={content.contact.title[1]} onChange={(v) => update('contact.title.1', v)} />
-                  <TextField label="CTA bottone" value={content.contact.cta} onChange={(v) => update('contact.cta', v)} />
-                  <div style={{ marginTop: '1rem' }}>
-                    <div className="section-label" style={{ marginBottom: 8 }}>Email</div>
-                    <ListEditor
-                      items={content.contact.emails}
-                      onChange={(items) => update('contact.emails', items)}
-                      newItem={() => ({ label: '', value: '' })}
-                      render={(item, onItemChange) => (
-                        <>
-                          <TextField label="Etichetta" value={item.label} onChange={(v) => onItemChange({ ...item, label: v })} />
-                          <TextField label="Email" value={item.value} onChange={(v) => onItemChange({ ...item, value: v })} />
-                        </>
-                      )}
-                      title={(item) => item.value || 'Nuova email'}
-                    />
-                  </div>
-                  <div style={{ marginTop: '1rem' }}>
-                    <div className="section-label" style={{ marginBottom: 8 }}>Telefoni</div>
-                    <ListEditor
-                      items={content.contact.phones}
-                      onChange={(items) => update('contact.phones', items)}
-                      newItem={() => ({ label: '', value: '' })}
-                      render={(item, onItemChange) => (
-                        <>
-                          <TextField label="Etichetta" value={item.label} onChange={(v) => onItemChange({ ...item, label: v })} />
-                          <TextField label="Numero" value={item.value} onChange={(v) => onItemChange({ ...item, value: v })} />
-                        </>
-                      )}
-                      title={(item) => item.value || 'Nuovo numero'}
-                    />
-                  </div>
-                  <div style={{ marginTop: '1rem' }}>
-                    <div className="section-label" style={{ marginBottom: 8 }}>Social</div>
-                    <SimpleListEditor
-                      items={content.contact.socials}
-                      onChange={(items) => update('contact.socials', items)}
-                      placeholder="Nome social"
-                    />
-                  </div>
-                </>
-              )}
-            </motion.div>
-          </AnimatePresence>
+          {section === 'brand' && <BrandEditor content={content} set={set} />}
+          {section === 'hero' && <HeroEditor content={content} set={set} />}
+          {section === 'marquee' && <MarqueeEditor content={content} set={set} setContent={setContent} />}
+          {section === 'stats' && <StatsEditor content={content} setContent={setContent} />}
+          {section === 'clients' && <ClientsEditor content={content} setContent={setContent} set={set} />}
+          {section === 'services' && <ServicesEditor content={content} setContent={setContent} set={set} />}
+          {section === 'portfolio' && <PortfolioEditor content={content} setContent={setContent} set={set} />}
+          {section === 'studio' && <StudioEditor content={content} setContent={setContent} set={set} />}
+          {section === 'cities' && <CitiesEditor content={content} setContent={setContent} />}
+          {section === 'contact' && <ContactEditor content={content} set={set} setContent={setContent} />}
         </div>
-      </main>
+      </div>
     </div>
   );
 };
 
-// ─── Componenti form ────────────────────────────────────────────
+// ─── Helpers UI ─────────────────────────────────────────────────
 
-const TextField = ({
-  label,
-  value,
-  onChange,
-  multiline,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  multiline?: boolean;
-}) => (
-  <div>
-    <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 6 }}>
-      {label}
-    </div>
+const Field = ({ label, value, onChange, multiline = false, hint }: { label: string; value: string; onChange: (v: string) => void; multiline?: boolean; hint?: string }) => (
+  <div style={{ marginBottom: '1.25rem' }}>
+    <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 6 }}>{label}</div>
+    {hint && <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.3)', marginBottom: 4 }}>{hint}</div>}
     {multiline ? (
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          width: '100%',
-          minHeight: 80,
-          padding: '10px 14px',
-          background: 'rgba(255,255,255,0.04)',
-          border: '.5px solid var(--b)',
-          borderRadius: 10,
-          color: 'var(--t)',
-          fontSize: 14,
-          fontFamily: 'var(--fb)',
-          outline: 'none',
-          resize: 'vertical',
-          lineHeight: 1.6,
-        }}
-      />
+      <textarea value={value} onChange={e => onChange(e.target.value)} rows={3} style={inputStyle as any} />
     ) : (
-      <input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        style={{
-          width: '100%',
-          padding: '10px 14px',
-          background: 'rgba(255,255,255,0.04)',
-          border: '.5px solid var(--b)',
-          borderRadius: 10,
-          color: 'var(--t)',
-          fontSize: 14,
-          fontFamily: 'var(--fb)',
-          outline: 'none',
-        }}
-      />
+      <input value={value} onChange={e => onChange(e.target.value)} style={inputStyle as any} />
     )}
   </div>
 );
 
-const SelectField = ({ label, value, options, onChange }: { label: string; value: string; options: string[]; onChange: (v: string) => void }) => (
-  <div>
-    <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 6 }}>{label}</div>
-    <select
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      style={{
-        width: '100%',
-        padding: '10px 14px',
-        background: 'rgba(255,255,255,0.04)',
-        border: '.5px solid var(--b)',
-        borderRadius: 10,
-        color: 'var(--t)',
-        fontSize: 14,
-        fontFamily: 'var(--fb)',
-        outline: 'none',
-      }}
-    >
-      {options.map((o) => (
-        <option key={o} value={o} style={{ background: 'var(--bg)' }}>{o}</option>
-      ))}
-    </select>
+const Card = ({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) => (
+  <div style={{ background: 'var(--s)', border: '.5px solid var(--b)', borderRadius: 16, padding: '1.5rem', marginBottom: '1rem', ...style }}>
+    {children}
   </div>
 );
 
-function ListEditor<T>({
-  items,
-  onChange,
-  render,
-  newItem,
-  title,
-}: {
-  items: T[];
-  onChange: (items: T[]) => void;
-  render: (item: T, onItemChange: (i: T) => void) => React.ReactNode;
-  newItem: () => T;
-  title: (item: T) => string;
-}) {
-  const [expanded, setExpanded] = useState<number | null>(null);
+const inputStyle: React.CSSProperties = { width: '100%', padding: '10px 14px', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 10, color: 'var(--t)', fontSize: 13, fontFamily: 'var(--fb)', outline: 'none', boxSizing: 'border-box', resize: 'vertical' as any };
+
+// ─── Sezione BRAND ───────────────────────────────────────────────
+const BrandEditor = ({ content, set }: any) => (
+  <Card>
+    <Field label="Nome agenzia" value={content.brand.name} onChange={v => set('brand.name', v)} />
+    <Field label="Iniziali (logo)" value={content.brand.shortName} onChange={v => set('brand.shortName', v)} hint="Max 2 caratteri" />
+    <Field label="Location" value={content.brand.location} onChange={v => set('brand.location', v)} />
+    <Field label="Descrizione estesa" value={content.brand.fullLocation} onChange={v => set('brand.fullLocation', v)} />
+    <Field label="Copyright footer" value={content.brand.copy} onChange={v => set('brand.copy', v)} />
+  </Card>
+);
+
+// ─── Sezione HERO ────────────────────────────────────────────────
+const HeroEditor = ({ content, set }: any) => (
+  <>
+    <Card>
+      <Field label="Tag label" value={content.hero.tag} onChange={v => set('hero.tag', v)} />
+      <Field label="Titolo riga 1" value={content.hero.headline.line1} onChange={v => set('hero.headline.line1', v)} />
+      <Field label="Titolo riga 2" value={content.hero.headline.line2} onChange={v => set('hero.headline.line2', v)} />
+      <Field label="Testo accent (corsivo)" value={content.hero.headline.accent} onChange={v => set('hero.headline.accent', v)} />
+      <Field label="Descrizione" value={content.hero.description} onChange={v => set('hero.description', v)} multiline />
+    </Card>
+    <Card>
+      <div style={{ fontSize: 11, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: '1rem' }}>CTA</div>
+      <Field label="Bottone primario" value={content.hero.cta.primary} onChange={v => set('hero.cta.primary', v)} />
+      <Field label="Bottone secondario" value={content.hero.cta.secondary} onChange={v => set('hero.cta.secondary', v)} />
+    </Card>
+  </>
+);
+
+// ─── Sezione MARQUEE ─────────────────────────────────────────────
+const MarqueeEditor = ({ content, setContent }: any) => {
+  const items: string[] = content.marquee;
+  const update = (i: number, v: string) => setContent((p: any) => { const n = { ...p, marquee: [...p.marquee] }; n.marquee[i] = v; return n; });
+  const add = () => setContent((p: any) => ({ ...p, marquee: [...p.marquee, 'Nuovo testo'] }));
+  const remove = (i: number) => setContent((p: any) => ({ ...p, marquee: p.marquee.filter((_: any, j: number) => j !== i) }));
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      {items.map((item, idx) => (
-        <div
-          key={idx}
-          style={{
-            background: 'var(--s)',
-            border: '.5px solid var(--b)',
-            borderRadius: 12,
-            overflow: 'hidden',
-          }}
-        >
-          <div
-            onClick={() => setExpanded(expanded === idx ? null : idx)}
-            style={{
-              padding: '12px 16px',
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              cursor: 'pointer',
-            }}
-          >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <Edit3 size={12} style={{ color: 'var(--m)' }} />
-              <span style={{ fontSize: 13, color: 'var(--t)' }}>{title(item)}</span>
-            </div>
-            <div style={{ display: 'flex', gap: 6 }}>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (confirm('Eliminare questo elemento?')) {
-                    onChange(items.filter((_, i) => i !== idx));
-                  }
-                }}
-                style={{ background: 'none', border: 'none', color: 'var(--m)', cursor: 'pointer', padding: 4 }}
-              >
-                <Trash2 size={13} />
-              </button>
-              <ChevronRight
-                size={14}
-                style={{
-                  color: 'var(--m)',
-                  transform: expanded === idx ? 'rotate(90deg)' : 'none',
-                  transition: 'transform .2s',
-                }}
-              />
-            </div>
-          </div>
-          <AnimatePresence>
-            {expanded === idx && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                style={{ overflow: 'hidden' }}
-              >
-                <div style={{ padding: '0 16px 16px', display: 'flex', flexDirection: 'column', gap: 12, borderTop: '.5px solid var(--b)', paddingTop: 16 }}>
-                  {render(item, (updated) => {
-                    const copy = [...items];
-                    copy[idx] = updated;
-                    onChange(copy);
-                  })}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+    <Card>
+      <div style={{ fontSize: 11, color: 'var(--m)', marginBottom: '1rem' }}>Usa "★" come separatore decorativo</div>
+      {items.map((item, i) => (
+        <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+          <input value={item} onChange={e => update(i, e.target.value)} style={{ ...inputStyle, flex: 1 }} />
+          <button onClick={() => remove(i)} style={{ background: 'rgba(255,100,100,0.1)', border: '.5px solid rgba(255,100,100,0.2)', borderRadius: 8, color: '#ff8888', padding: '0 12px', cursor: 'pointer' }}><Trash2 size={13} /></button>
         </div>
       ))}
-      <button
-        onClick={() => {
-          onChange([...items, newItem()]);
-          setExpanded(items.length);
-        }}
-        style={{
-          padding: '12px',
-          background: 'transparent',
-          border: '.5px dashed rgba(255,255,255,0.15)',
-          borderRadius: 12,
-          color: 'var(--m)',
-          fontSize: 12,
-          fontWeight: 500,
-          letterSpacing: '.1em',
-          textTransform: 'uppercase',
-          cursor: 'pointer',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 6,
-          transition: 'all .2s',
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = 'var(--a)';
-          e.currentTarget.style.color = 'var(--a)';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-          e.currentTarget.style.color = 'var(--m)';
-        }}
-      >
-        <Plus size={13} /> Aggiungi
-      </button>
+      <button onClick={add} className="btn btn-g" style={{ marginTop: 8, gap: 6, fontSize: 11 }}><Plus size={13} /> Aggiungi voce</button>
+    </Card>
+  );
+};
+
+// ─── Sezione STATS ───────────────────────────────────────────────
+const StatsEditor = ({ content, setContent }: any) => {
+  const stats = content.stats;
+  const update = (i: number, key: string, v: string) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.stats[i][key] = v; return n; });
+  const add = () => setContent((p: any) => ({ ...p, stats: [...p.stats, { num: '0', label: 'Nuova stat' }] }));
+  const remove = (i: number) => setContent((p: any) => ({ ...p, stats: p.stats.filter((_: any, j: number) => j !== i) }));
+  return (
+    <div>
+      {stats.map((s: any, i: number) => (
+        <Card key={i}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+            <div style={{ fontSize: 11, color: 'var(--m)' }}>Stat {i + 1}</div>
+            <button onClick={() => remove(i)} style={{ background: 'none', border: 'none', color: '#ff8888', cursor: 'pointer' }}><Trash2 size={13} /></button>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12 }}>
+            <Field label="Numero" value={s.num} onChange={v => update(i, 'num', v)} />
+            <Field label="Etichetta" value={s.label} onChange={v => update(i, 'label', v)} />
+          </div>
+        </Card>
+      ))}
+      <button onClick={add} className="btn btn-g" style={{ gap: 6 }}><Plus size={13} /> Aggiungi stat</button>
     </div>
   );
-}
+};
 
-const SimpleListEditor = ({
-  items,
-  onChange,
-  placeholder,
-}: {
-  items: string[];
-  onChange: (items: string[]) => void;
-  placeholder: string;
-}) => (
-  <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-    {items.map((item, idx) => (
-      <div key={idx} style={{ display: 'flex', gap: 6 }}>
-        <input
-          value={item}
-          onChange={(e) => {
-            const copy = [...items];
-            copy[idx] = e.target.value;
-            onChange(copy);
-          }}
-          placeholder={placeholder}
-          style={{
-            flex: 1,
-            padding: '10px 14px',
-            background: 'rgba(255,255,255,0.04)',
-            border: '.5px solid var(--b)',
-            borderRadius: 10,
-            color: 'var(--t)',
-            fontSize: 14,
-            fontFamily: 'var(--fb)',
-            outline: 'none',
-          }}
-        />
-        <button
-          onClick={() => onChange(items.filter((_, i) => i !== idx))}
-          style={{
-            padding: '10px 12px',
-            background: 'transparent',
-            border: '.5px solid var(--b)',
-            borderRadius: 10,
-            color: 'var(--m)',
-            cursor: 'pointer',
-          }}
-        >
-          <Trash2 size={13} />
-        </button>
+// ─── Sezione CLIENTI ─────────────────────────────────────────────
+const ClientsEditor = ({ content, setContent, set }: any) => {
+  const clients = content.clients?.items || [];
+  const update = (i: number, key: string, v: string) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); if (!n.clients) n.clients = { tag: '', items: [] }; n.clients.items[i][key] = v; return n; });
+  const add = () => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); if (!n.clients) n.clients = { tag: '', items: [] }; n.clients.items.push({ name: 'Nuovo Cliente', url: '', logo: '' }); return n; });
+  const remove = (i: number) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.clients.items.splice(i, 1); return n; });
+
+  return (
+    <div>
+      <Card>
+        <Field label="Titolo sezione" value={content.clients?.tag || 'Alcuni dei nostri clienti'} onChange={v => set('clients.tag', v)} />
+      </Card>
+      {clients.map((c: any, i: number) => (
+        <Card key={i}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--t)' }}>{c.name || `Cliente ${i + 1}`}</div>
+            <button onClick={() => remove(i)} style={{ background: 'none', border: 'none', color: '#ff8888', cursor: 'pointer' }}><Trash2 size={13} /></button>
+          </div>
+          <Field label="Nome cliente" value={c.name} onChange={v => update(i, 'name', v)} />
+          <Field label="URL sito (opzionale)" value={c.url} onChange={v => update(i, 'url', v)} hint="Es: https://esempio.it" />
+          <Field label="URL logo (opzionale)" value={c.logo} onChange={v => update(i, 'logo', v)} hint="Incolla URL immagine logo (png, svg, jpg)" />
+          {c.logo && (
+            <div style={{ marginTop: 8 }}>
+              <img src={c.logo} alt={c.name} style={{ maxHeight: 48, maxWidth: 120, objectFit: 'contain', opacity: 0.8 }} onError={e => (e.currentTarget.style.display = 'none')} />
+            </div>
+          )}
+        </Card>
+      ))}
+      <button onClick={add} className="btn btn-g" style={{ gap: 6 }}><Plus size={13} /> Aggiungi cliente</button>
+    </div>
+  );
+};
+
+// ─── Sezione SERVIZI ─────────────────────────────────────────────
+const ServicesEditor = ({ content, setContent, set }: any) => {
+  const items = content.services.items;
+  const update = (i: number, key: string, v: string) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.services.items[i][key] = v; return n; });
+  const add = () => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.services.items.push({ icon: '◈', title: 'Nuovo servizio', desc: '' }); return n; });
+  const remove = (i: number) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.services.items.splice(i, 1); return n; });
+
+  return (
+    <div>
+      <Card>
+        <Field label="Tag sezione" value={content.services.tag} onChange={v => set('services.tag', v)} />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <Field label="Titolo riga 1" value={content.services.title[0]} onChange={v => { const t = [...content.services.title]; t[0] = v; set('services.title', t); }} />
+          <Field label="Titolo riga 2" value={content.services.title[1]} onChange={v => { const t = [...content.services.title]; t[1] = v; set('services.title', t); }} />
+        </div>
+      </Card>
+      {items.map((s: any, i: number) => (
+        <Card key={i}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+            <div style={{ fontSize: 12, fontWeight: 600 }}>{s.title}</div>
+            <button onClick={() => remove(i)} style={{ background: 'none', border: 'none', color: '#ff8888', cursor: 'pointer' }}><Trash2 size={13} /></button>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '80px 1fr', gap: 12 }}>
+            <Field label="Icona" value={s.icon} onChange={v => update(i, 'icon', v)} />
+            <Field label="Titolo" value={s.title} onChange={v => update(i, 'title', v)} />
+          </div>
+          <Field label="Descrizione" value={s.desc} onChange={v => update(i, 'desc', v)} multiline />
+        </Card>
+      ))}
+      <button onClick={add} className="btn btn-g" style={{ gap: 6 }}><Plus size={13} /> Aggiungi servizio</button>
+    </div>
+  );
+};
+
+// ─── Sezione PORTFOLIO ───────────────────────────────────────────
+const PortfolioEditor = ({ content, setContent, set }: any) => {
+  const projects = content.portfolio.projects;
+  const update = (i: number, key: string, v: any) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.portfolio.projects[i][key] = v; return n; });
+  const add = () => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.portfolio.projects.push({ title: 'Nuovo progetto', tag: 'web', stat: '', year: '25', large: false }); return n; });
+  const remove = (i: number) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.portfolio.projects.splice(i, 1); return n; });
+
+  return (
+    <div>
+      <Card>
+        <Field label="Tag sezione" value={content.portfolio.tag} onChange={v => set('portfolio.tag', v)} />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+          <Field label="Titolo riga 1" value={content.portfolio.title[0]} onChange={v => { const t = [...content.portfolio.title]; t[0] = v; set('portfolio.title', t); }} />
+          <Field label="Titolo riga 2" value={content.portfolio.title[1]} onChange={v => { const t = [...content.portfolio.title]; t[1] = v; set('portfolio.title', t); }} />
+        </div>
+      </Card>
+      {projects.map((p: any, i: number) => (
+        <Card key={i}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+            <div style={{ fontSize: 12, fontWeight: 600 }}>{p.title}</div>
+            <button onClick={() => remove(i)} style={{ background: 'none', border: 'none', color: '#ff8888', cursor: 'pointer' }}><Trash2 size={13} /></button>
+          </div>
+          <Field label="Titolo progetto" value={p.title} onChange={v => update(i, 'title', v)} />
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+            <Field label="Tag" value={p.tag} onChange={v => update(i, 'tag', v)} hint="video, brand, web, social, foto" />
+            <Field label="Stat / Risultato" value={p.stat} onChange={v => update(i, 'stat', v)} />
+            <Field label="Anno" value={p.year} onChange={v => update(i, 'year', v)} />
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 4 }}>
+            <input type="checkbox" checked={p.large} onChange={e => update(i, 'large', e.target.checked)} id={`large-${i}`} />
+            <label htmlFor={`large-${i}`} style={{ fontSize: 12, color: 'var(--m)' }}>Card grande (occupa più spazio)</label>
+          </div>
+        </Card>
+      ))}
+      <button onClick={add} className="btn btn-g" style={{ gap: 6 }}><Plus size={13} /> Aggiungi progetto</button>
+    </div>
+  );
+};
+
+// ─── Sezione STUDIO ──────────────────────────────────────────────
+const StudioEditor = ({ content, setContent, set }: any) => {
+  const items = content.studio.items;
+  const update = (i: number, key: string, v: string) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.studio.items[i][key] = v; return n; });
+
+  return (
+    <div>
+      <Card>
+        <Field label="Tag sezione" value={content.studio.tag} onChange={v => set('studio.tag', v)} />
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 12 }}>
+          {content.studio.title.map((t: string, i: number) => (
+            <Field key={i} label={`Titolo riga ${i + 1}`} value={t} onChange={v => { const arr = [...content.studio.title]; arr[i] = v; set('studio.title', arr); }} />
+          ))}
+        </div>
+        <Field label="Descrizione 1" value={content.studio.description1} onChange={v => set('studio.description1', v)} multiline />
+        <Field label="Descrizione 2" value={content.studio.description2} onChange={v => set('studio.description2', v)} multiline />
+      </Card>
+      <div style={{ fontSize: 11, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', margin: '1.5rem 0 1rem' }}>Membri / ruoli</div>
+      {items.map((s: any, i: number) => (
+        <Card key={i}>
+          <div style={{ display: 'grid', gridTemplateColumns: '60px 1fr', gap: 12 }}>
+            <Field label="Icona" value={s.icon} onChange={v => update(i, 'icon', v)} />
+            <Field label="Nome" value={s.name} onChange={v => update(i, 'name', v)} />
+          </div>
+          <Field label="Ruolo" value={s.role} onChange={v => update(i, 'role', v)} />
+          <Field label="Descrizione" value={s.desc} onChange={v => update(i, 'desc', v)} multiline />
+        </Card>
+      ))}
+    </div>
+  );
+};
+
+// ─── Sezione CITTÀ ───────────────────────────────────────────────
+const CitiesEditor = ({ content, setContent }: any) => {
+  const cities: string[] = content.cities.list;
+  const update = (i: number, v: string) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.cities.list[i] = v; return n; });
+  const add = () => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.cities.list.push('Nuova città'); return n; });
+  const remove = (i: number) => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.cities.list.splice(i, 1); return n; });
+
+  return (
+    <Card>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+        {cities.map((c, i) => (
+          <div key={i} style={{ display: 'flex', gap: 8 }}>
+            <input value={c} onChange={e => update(i, e.target.value)} style={{ ...inputStyle, flex: 1 }} />
+            <button onClick={() => remove(i)} style={{ background: 'rgba(255,100,100,0.1)', border: '.5px solid rgba(255,100,100,0.2)', borderRadius: 8, color: '#ff8888', padding: '0 10px', cursor: 'pointer' }}><Trash2 size={12} /></button>
+          </div>
+        ))}
       </div>
-    ))}
-    <button
-      onClick={() => onChange([...items, ''])}
-      style={{
-        padding: '10px',
-        background: 'transparent',
-        border: '.5px dashed rgba(255,255,255,0.15)',
-        borderRadius: 10,
-        color: 'var(--m)',
-        fontSize: 12,
-        fontWeight: 500,
-        letterSpacing: '.1em',
-        textTransform: 'uppercase',
-        cursor: 'pointer',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: 6,
-      }}
-    >
-      <Plus size={13} /> Aggiungi
-    </button>
+      <button onClick={add} className="btn btn-g" style={{ marginTop: 12, gap: 6 }}><Plus size={13} /> Aggiungi città</button>
+    </Card>
+  );
+};
+
+// ─── Sezione CONTATTI ────────────────────────────────────────────
+const ContactEditor = ({ content, set, setContent }: any) => (
+  <div>
+    <Card>
+      <Field label="Tag sezione" value={content.contact.tag} onChange={v => set('contact.tag', v)} />
+      <Field label="Titolo riga 1" value={content.contact.title[0]} onChange={v => { const t = [...content.contact.title]; t[0] = v; set('contact.title', t); }} />
+      <Field label="Titolo riga 2" value={content.contact.title[1]} onChange={v => { const t = [...content.contact.title]; t[1] = v; set('contact.title', t); }} />
+      <Field label="Testo CTA bottone" value={content.contact.cta} onChange={v => set('contact.cta', v)} />
+    </Card>
+    <Card>
+      <div style={{ fontSize: 11, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: '1rem' }}>Email</div>
+      {content.contact.emails.map((e: any, i: number) => (
+        <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12 }}>
+          <Field label="Label" value={e.label} onChange={v => { const arr = JSON.parse(JSON.stringify(content.contact.emails)); arr[i].label = v; set('contact.emails', arr); }} />
+          <Field label="Email" value={e.value} onChange={v => { const arr = JSON.parse(JSON.stringify(content.contact.emails)); arr[i].value = v; set('contact.emails', arr); }} />
+        </div>
+      ))}
+    </Card>
+    <Card>
+      <div style={{ fontSize: 11, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: '1rem' }}>Telefono</div>
+      {content.contact.phones.map((p: any, i: number) => (
+        <div key={i} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 12 }}>
+          <Field label="Label" value={p.label} onChange={v => { const arr = JSON.parse(JSON.stringify(content.contact.phones)); arr[i].label = v; set('contact.phones', arr); }} />
+          <Field label="Numero" value={p.value} onChange={v => { const arr = JSON.parse(JSON.stringify(content.contact.phones)); arr[i].value = v; set('contact.phones', arr); }} />
+        </div>
+      ))}
+    </Card>
   </div>
 );
-
-// ─── Helper: deep set immutabile ────────────────────────────────
-function setIn(obj: any, path: string[], value: any): any {
-  if (path.length === 0) return value;
-  const [head, ...rest] = path;
-  const idx = /^\d+$/.test(head) ? parseInt(head, 10) : null;
-  if (idx !== null && Array.isArray(obj)) {
-    const copy = [...obj];
-    copy[idx] = setIn(obj[idx], rest, value);
-    return copy;
-  }
-  return { ...obj, [head]: setIn(obj?.[head] ?? {}, rest, value) };
-}
