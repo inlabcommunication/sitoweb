@@ -1136,7 +1136,25 @@ const PageBlog = () => {
 const PageContatti = () => {
   const [form,setForm]=useState({nome:"",email:"",tel:"",servizio:"",msg:""});
   const [sent,setSent]=useState(false);
-  const submit=()=>{if(form.nome&&form.email&&form.msg){setSent(true)}};
+  const submit=async()=>{
+    if(form.nome&&form.email&&form.msg){
+      try {
+        const { db } = await import('./lib/firebase');
+        const { collection, addDoc } = await import('firebase/firestore');
+        if(db) await addDoc(collection(db,'leads'),{
+          name: form.nome,
+          email: form.email,
+          phone: form.tel || null,
+          intent: form.servizio ? `[FORM] ${form.servizio}` : '[FORM] Contatto dal sito',
+          source: 'contact_form',
+          status: 'new',
+          notes: form.msg,
+          created_at: new Date().toISOString(),
+        });
+      } catch(e){ console.error('Save contact failed',e); }
+      setSent(true);
+    }
+  };
  
   return (
     <>
