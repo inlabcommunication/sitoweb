@@ -115,7 +115,7 @@ export const Chatbot = () => {
       const data = await response.json();
 
       // Risposta del bot (sempre, anche in caso di errore mostra il messaggio fallback)
-      const reply = data.reply || 'Ops, problema tecnico. Scrivici a ciao@inlab.it 🙂';
+      const reply = data.reply || 'Ops, problema tecnico. Scrivici a inlab.communication@gmail.com 🙂';
       setMessages([...newMessages, { role: 'assistant', content: reply, ts: Date.now() }]);
 
       // Email catturata? Mostra il badge di conferma
@@ -129,7 +129,7 @@ export const Chatbot = () => {
         ...newMessages,
         {
           role: 'assistant',
-          content: 'Problema di connessione. Riprova o scrivici a ciao@inlab.it 🙂',
+          content: 'Problema di connessione. Riprova o scrivici a inlab.communication@gmail.com 🙂',
           ts: Date.now(),
         },
       ]);
