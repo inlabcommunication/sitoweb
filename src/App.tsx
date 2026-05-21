@@ -2,13 +2,23 @@ import { motion, AnimatePresence } from "motion/react";
 import React, { useState, useEffect, useCallback } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
-  MapPin, Phone, Mail, Check, ChevronRight,
+  MapPin, Phone, Mail, Check,
   TrendingUp, Target, FileText, Video, Camera,
   Globe, Zap, Layout, Users, BarChart2, Star
 } from "lucide-react";
 import { Chatbot } from "./components/Chatbot";
 import { initAnalytics } from "./lib/analytics";
 import { loadContent, useContent } from "./lib/content";
+
+// Nuove sezioni modulari
+import { HeroFlow } from "./sections/HeroFlow";
+import { ServicesGrid } from "./sections/ServicesGrid";
+import { MethodTimeline } from "./sections/MethodTimeline";
+import { PortfolioGallery } from "./sections/PortfolioGallery";
+import { ClientsWall } from "./sections/ClientsWall";
+import { CaseStudiesSection, CASE_STUDIES } from "./sections/CaseStudiesSection";
+import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
+import { CaseParesteta, CaseImh, CaseRicciardi } from "./pages/CaseStudyPages";
  
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -77,7 +87,7 @@ const G = () => (
 /* ═══════════════════════════════════════════════════════════════
    ROUTER
 ═══════════════════════════════════════════════════════════════ */
-const RouterCtx = React.createContext({ route: "/", go: () => {} });
+const RouterCtx = React.createContext<{route:string;go:(to:string)=>void}>({ route: "/", go: () => {} });
 const useRouter = () => React.useContext(RouterCtx);
 const Link = ({ to, children, style = {}, className = "", onClick = () => {} }: any) => {
   const { go } = useRouter();
@@ -127,9 +137,9 @@ const Navbar = () => {
  
   const navLinks = [
     { to:"/chi-siamo", label:"Studio" },
-    { to:"/lavori", label:"Lavori" },
+    { to:"/portfolio", label:"Portfolio" },
+    { to:"/casi-studio", label:"Casi studio" },
     { to:"/servizi", label:"Servizi" },
-    
     { to:"/contatti", label:"Contatti" },
   ];
  
@@ -218,7 +228,7 @@ const Footer = () => {
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {[["Chi siamo","/chi-siamo"],["Lavori","/lavori"],["Contatti","/contatti"]].map(([l,r])=>(
+              {[["Chi siamo","/chi-siamo"],["Portfolio","/portfolio"],["Casi studio","/casi-studio"],["Contatti","/contatti"]].map(([l,r])=>(
                 <a key={r} onClick={()=>go(r)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
                   onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
                   onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
@@ -241,11 +251,15 @@ const Footer = () => {
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
           <p style={{fontSize:11,fontFamily:"monospace",color:"rgba(255,255,255,.15)",letterSpacing:".08em"}}>© 2025 InLab Communication — Taranto, Puglia</p>
           <div style={{display:"flex",gap:"1.5rem"}}>
-            {["Instagram","LinkedIn","Behance"].map(s=>(
-              <a key={s} href="#" style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
+            {[
+              {label:"Instagram",url:"https://www.instagram.com/inlab.communication/"},
+              {label:"LinkedIn",url:"https://www.linkedin.com/company/inlab-communication/"},
+              {label:"Facebook",url:"https://www.facebook.com/inlab.communication"},
+            ].map(s=>(
+              <a key={s.label} href={s.url} target="_blank" rel="noreferrer noopener" style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
                 onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
                 onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
-              >{s}</a>
+              >{s.label}</a>
             ))}
           </div>
         </div>
@@ -397,209 +411,222 @@ const ProcessStep = ({n,title,desc}: any) => (
     </div>
   </motion.div>
 );
+
+/* ═══════════════════════════════════════════════════════════════
+   VIDEO REEL — Sezione "dietro le quinte" con sfumatura sui bordi
+═══════════════════════════════════════════════════════════════ */
+const VideoReel = ({
+  src,
+  tag = "Dietro le quinte",
+  title1 = "IL LAVORO",
+  title2 = "ACCADE",
+  italic = "ogni giorno.",
+  subtitle = "Set, riprese, montaggio. Quello che vedi online nasce qui."
+}: any) => {
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const [muted, setMuted] = useState(true);
+
+  // Play quando il video entra in viewport, pausa quando esce
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      },
+      { threshold: 0.35 } // parte quando il 35% del video è visibile
+    );
+    observer.observe(v);
+    return () => observer.disconnect();
+  }, []);
+
+  const toggleAudio = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = !v.muted;
+    if (!v.muted) v.play().catch(()=>{});
+    setMuted(v.muted);
+  };
+
+  return (
+    <section style={{padding:"7rem 2rem 8rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
+      {/* Glow di sfondo coerente col resto del sito */}
+      <div style={{position:"absolute",top:"30%",right:"-5%",width:520,height:520,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(120px)",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",bottom:"5%",left:"-5%",width:380,height:380,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
+
+      <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
+        {/* Header */}
+        <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
+          style={{marginBottom:"3.5rem",textAlign:"center"}}>
+          <p className="section-label" style={{display:"inline-flex",alignItems:"center",gap:8,marginBottom:"1rem"}}>
+            <span style={{width:6,height:6,background:"var(--a)",borderRadius:"50%",display:"inline-block"}}/>
+            {tag}
+          </p>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5rem)",lineHeight:.9,marginBottom:"1rem"}}>
+            {title1}<br/>
+            <span className="stroke">{title2}</span>
+            {italic && <> <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontSize:".55em",color:"var(--a)",fontWeight:400,verticalAlign:"middle",marginLeft:8}}>{italic}</span></>}
+          </h2>
+          {subtitle && <p style={{fontSize:15,color:"var(--m)",maxWidth:520,margin:"0 auto",lineHeight:1.7}}>{subtitle}</p>}
+        </motion.div>
+
+        {/* Video con maschera sfumata sui 4 lati */}
+        <motion.div
+          initial={{opacity:0,scale:.97}}
+          whileInView={{opacity:1,scale:1}}
+          viewport={{once:true,margin:"-80px"}}
+          transition={{duration:.8,ease:[0.16,1,0.3,1]}}
+          style={{position:"relative",maxWidth:1000,margin:"0 auto"}}
+        >
+          {/* Wrapper con mask radiale: il video sfuma sui bordi e si fonde col bg */}
+          <div style={{
+            position:"relative",
+            aspectRatio:"16/9",
+            // Mask radiale: opaco al centro, trasparente ai bordi
+            WebkitMaskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
+            maskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
+          }}>
+            <video
+              ref={videoRef}
+              src={src}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
+            />
+          </div>
+
+          {/* Bottone audio — fuori dal wrapper sfumato così resta nitido */}
+          <button
+            onClick={toggleAudio}
+            aria-label={muted?"Attiva audio":"Disattiva audio"}
+            style={{
+              position:"absolute",bottom:"6%",right:"6%",zIndex:2,
+              width:52,height:52,borderRadius:"50%",
+              background:"rgba(20,20,20,0.7)",
+              backdropFilter:"blur(10px)",
+              border:".5px solid rgba(255,255,255,0.18)",
+              color:"var(--t)",
+              display:"flex",alignItems:"center",justifyContent:"center",
+              cursor:"pointer",
+              transition:"all .25s",
+            }}
+            onMouseEnter={e=>{
+              e.currentTarget.style.background="rgba(205,178,255,0.18)";
+              e.currentTarget.style.borderColor="rgba(205,178,255,0.45)";
+            }}
+            onMouseLeave={e=>{
+              e.currentTarget.style.background="rgba(20,20,20,0.7)";
+              e.currentTarget.style.borderColor="rgba(255,255,255,0.18)";
+            }}
+          >
+            {muted ? (
+              // icona muto
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <line x1="23" y1="9" x2="17" y2="15"/>
+                <line x1="17" y1="9" x2="23" y2="15"/>
+              </svg>
+            ) : (
+              // icona audio attivo
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path d="M15.54 8.46a5 5 0 010 7.07"/>
+                <path d="M19.07 4.93a10 10 0 010 14.14"/>
+              </svg>
+            )}
+          </button>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
  
 /* ═══════════════════════════════════════════════════════════════
-   PAGE: HOME — usa contenuti dinamici da Firestore
+   PAGE: HOME — orchestra le sezioni modulari
 ═══════════════════════════════════════════════════════════════ */
 const PageHome = () => {
-  const {go}=useRouter();
-  const c=useContent();
-  const h=c.hero||{tag:"",headline:{line1:"",line2:"",accent:""},description:"",cta:{primary:"",secondary:""}};
-  const m=c.manifesto||{tag:"",title:{line1:"",line2:"",line3:"",accent:""},text:""};
-  const met=c.metodo||{tag:"",title:["",""],subtitle:"",steps:[]};
-  const ctaHome=c.cta?.home||{title:"",title2:"",title3:"",subtitle:"",btn1:"",btn2:""};
+  const { go } = useRouter();
 
   return (
     <>
-      {/* HERO */}
-      <section style={{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:"9rem 2rem 6rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
-        <div style={{position:"absolute",inset:0,pointerEvents:"none"}}>
-          <div style={{position:"absolute",top:"18%",right:"8%",width:520,height:520,background:"rgba(205,178,255,0.055)",borderRadius:"50%",filter:"blur(120px)"}}/>
-          <div style={{position:"absolute",bottom:"12%",left:"4%",width:380,height:380,background:"rgba(255,255,255,0.018)",borderRadius:"50%",filter:"blur(80px)"}}/>
-        </div>
-        <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-          <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.08}}
-            style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"2rem"}}>
-            <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
-            <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{h.tag||"Laboratorio creativo — Taranto, Puglia"}</span>
-          </motion.div>
-          <motion.h1 initial={{opacity:0,y:40}} animate={{opacity:1,y:0}} transition={{delay:.16}}
-            style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,11rem)",lineHeight:.87,letterSpacing:".01em",marginBottom:"2.5rem"}}>
-            {h.headline?.line1||"COMUNICAZIONE"}<br/>
-            <span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{h.headline?.line2||"CHE SI FA"}</span><br/>
-            <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:".72em",color:"var(--a)"}}>{h.headline?.accent||"riconoscere."}</span>
-          </motion.h1>
-          <motion.div initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.28}}
-            style={{display:"flex",flexWrap:"wrap",gap:"2rem",alignItems:"flex-end",justifyContent:"space-between"}}>
-            <p style={{maxWidth:460,fontSize:16,lineHeight:1.85,color:"var(--m)",fontWeight:300}}>{h.description}</p>
-            <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <button className="btn btn-p" onClick={()=>go("/contatti")}>{h.cta?.primary||"Raccontaci il tuo progetto"} <ArrowRight size={14}/></button>
-              <button className="btn btn-g" onClick={()=>go("/lavori")}>{h.cta?.secondary||"Guarda i nostri lavori"}</button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <HeroFlow
+        onPrimaryCta={() => go("/contatti")}
+        onSecondaryCta={() => go("/portfolio")}
+      />
 
-      <Marquee items={(c.marquee&&c.marquee.length>0)?c.marquee:["Gestione Social","✦","Meta Ads","✦","Foto & Video","✦","Branding","✦"]}/>
-
-      <StatsRow stats={(c.stats&&c.stats.length>0)?c.stats.map((s:any)=>({n:s.num,l:s.label})):STATS_GLOBAL}/>
+      {/* Marquee servizi */}
+      <Marquee items={[
+        "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
+        "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦",
+        "Organizzazione Eventi", "✦", "Lead Generation", "✦",
+      ]}/>
 
       {/* MANIFESTO */}
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:"50%",left:"50%",width:600,height:600,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",transform:"translate(-50%,-50%)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:"10%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-          <div style={{maxWidth:820}}>
-            <motion.p className="section-label" initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} style={{marginBottom:"2rem"}}>{m.tag||"Il nostro manifesto"}</motion.p>
-            <motion.h2 initial={{opacity:0,y:30}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
-              style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>
-              {m.title?.line1||"NON CREIAMO CONTENUTI"}<br/>{m.title?.line2||"PER RIEMPIRE"}<br/>
-              <span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>{m.title?.line3||"UN CALENDARIO."}</span><br/>
-              <span style={{fontFamily:"var(--fs)",fontStyle:"italic",color:"var(--a)",fontWeight:400,fontSize:".8em"}}>{m.title?.accent||"Costruiamo direzioni."}</span>
-            </motion.h2>
-            <motion.p initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:.1}}
-              style={{fontSize:17,lineHeight:1.85,color:"var(--m)",fontWeight:300,maxWidth:620}}>{m.text}</motion.p>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 1.2fr",gap:"5rem",alignItems:"center"}} className="grid-1-mob">
+            <motion.div initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}} viewport={{once:true,margin:"-80px"}}>
+              <p className="section-label">Il nostro manifesto</p>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,4.5rem)",lineHeight:.92,marginBottom:"1.5rem"}}>
+                NON CREIAMO CONTENUTI<br/>
+                <span className="stroke">PER RIEMPIRE</span><br/>
+                UN CALENDARIO.{" "}
+                <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,color:"var(--a)",fontSize:".75em"}}>Costruiamo direzioni.</span>
+              </h2>
+            </motion.div>
+            <motion.p
+              initial={{opacity:0,y:16}}
+              whileInView={{opacity:1,y:0}}
+              viewport={{once:true,margin:"-80px"}}
+              transition={{delay:.15}}
+              style={{fontSize:17,lineHeight:1.85,color:"var(--m)",fontWeight:300,maxWidth:560}}
+            >
+              Ogni post, video, foto o campagna deve avere un motivo per esistere: raccontare il valore del brand, parlare alle persone giuste, creare fiducia e rendere la comunicazione più riconoscibile. Non vendiamo pacchetti. Costruiamo identità.
+            </motion.p>
           </div>
         </div>
       </section>
+
+      {/* VIDEO REEL — dietro le quinte */}
+      <VideoReel src="https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4"/>
 
       {/* SERVIZI */}
-      <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3.5rem",flexWrap:"wrap",gap:"1rem"}}>
-            <div>
-              <p className="section-label">{(c.services as any)?.tag||"Cosa facciamo"}</p>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9}}>
-                {(c.services as any)?.title?.[0]||"SERVIZI"}<br/><span className="stroke">{(c.services as any)?.title?.[1]||"PRINCIPALI"}</span>
-              </h2>
-            </div>
-            <button className="btn btn-g" onClick={()=>go("/servizi")}>Tutti i servizi <ArrowRight size={13}/></button>
-          </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"1rem"}} className="grid-1-mob">
-            {((c.services as any)?.items||SERVICES.slice(0,6).map((s:any)=>({icon:null,title:s.label,desc:s.short}))).slice(0,6).map((s:any,i:number)=>(
-              <motion.div key={i} className="card" initial={{opacity:0,y:28}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
-                onClick={()=>go("/servizi")} style={{cursor:"pointer"}}>
-                <div style={{fontSize:20,color:"var(--a)",marginBottom:"1rem"}}>{s.icon||"◈"}</div>
-                <h3 style={{fontSize:15,fontWeight:500,marginBottom:".5rem"}}>{s.title}</h3>
-                <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,marginBottom:"1.2rem"}}>{s.desc}</p>
-                <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri <ArrowUpRight size={11}/></span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <ServicesGrid onServiceClick={(slug) => go("/" + slug)} />
 
-      {/* LAVORI */}
-      <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3rem",flexWrap:"wrap",gap:"1rem"}}>
-            <div>
-              <p className="section-label">{(c.portfolio as any)?.tag||"Progetti selezionati"}</p>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9}}>LAVORI<br/><span className="stroke">SELEZIONATI</span></h2>
-              <p style={{fontSize:13,color:"var(--m)",marginTop:"1rem",maxWidth:440}}>{(c.portfolio as any)?.subtitle||"Foto, video, campagne e identità visive."}</p>
-            </div>
-            <button className="btn btn-g" onClick={()=>go("/lavori")}>Vedi tutto <ArrowRight size={13}/></button>
-          </div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
-            {((c.portfolio as any)?.projects||[]).slice(0,4).map((p:any,i:number)=>(
-              <motion.div key={i} initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
-                onClick={()=>p.link?window.open(p.link,"_blank"):go("/lavori")}
-                style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?300:220,background:p.image?"none":"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:"pointer",transition:"border-color .3s",position:"relative"}}
-                onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.15)"}
-                onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
-              >
-                {p.image && <img src={p.image} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.4}}/>}
-                <div style={{position:"relative",zIndex:1,padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%"}}>
-                  <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
-                    <span className="tag tag-a">{p.tags?.[0]||p.category}</span>
-                    <span className="tag tag-g">{p.stat}</span>
-                  </div>
-                  <div>
-                    <p style={{fontSize:12,color:"var(--m)",marginBottom:"0.7rem"}}>{p.description}</p>
-                    <h3 style={{fontFamily:"var(--fd)",fontSize:p.large?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
-                    <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Scopri il progetto <ArrowUpRight size={11}/></span>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* METODO timeline */}
+      <MethodTimeline />
 
-      {/* METODO */}
-      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 2fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
-            <div>
-              <p className="section-label">{met.tag||"Come lavoriamo"}</p>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
-                {met.title?.[0]||"IL NOSTRO"}<br/><span className="stroke">{met.title?.[1]||"METODO"}</span>
-              </h2>
-              <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75}}>{met.subtitle}</p>
-            </div>
-            <div style={{display:"flex",flexDirection:"column",gap:"0.5rem"}}>
-              {(met.steps||[]).map((step:any,i:number)=>(
-                <motion.div key={i} initial={{opacity:0,x:20}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.08}}
-                  style={{display:"flex",gap:"2rem",padding:"1.75rem",border:".5px solid var(--b)",borderRadius:20,transition:"border-color .3s,background .3s"}}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(205,178,255,.3)";e.currentTarget.style.background="rgba(205,178,255,.03)"}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--b)";e.currentTarget.style.background="transparent"}}
-                >
-                  <div style={{fontFamily:"var(--fd)",fontSize:"2.5rem",color:"rgba(205,178,255,.2)",flexShrink:0,lineHeight:1}}>{step.n}</div>
-                  <div>
-                    <div style={{fontSize:15,fontWeight:500,marginBottom:"0.4rem"}}>{step.title}</div>
-                    <p style={{fontSize:13,color:"var(--m)",lineHeight:1.75}}>{step.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* PORTFOLIO preview */}
+      <PortfolioGallery
+        onProjectClick={(id) => go("/casi-studio/" + id)}
+        maxItems={6}
+        onViewAll={() => go("/portfolio")}
+      />
 
-      <ClientLogos/>
+      {/* CLIENTI */}
+      <ClientsWall />
 
-      {/* CITTA */}
-      <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <p className="section-label" style={{display:"flex",alignItems:"center",gap:6,marginBottom:"1.5rem"}}><MapPin size={12}/> Operiamo in tutta la provincia di Taranto</p>
-          <div style={{display:"flex",flexWrap:"wrap",gap:"0.7rem"}}>
-            {((c.cities as any)?.list||CITIES).map((ci:string,i:number)=>(
-              <motion.div key={ci} initial={{opacity:0,y:8}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}}>
-                <button className="tag tag-g" style={{cursor:"pointer",transition:"all .2s",padding:"8px 16px",fontSize:12}}
-                  onClick={()=>go(`/gestione-social-${ci.toLowerCase()}`)}
-                  onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(205,178,255,.35)";e.currentTarget.style.color="var(--a)"}}
-                  onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--b)";e.currentTarget.style.color="var(--m)"}}
-                >{ci}</button>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* CASI STUDIO */}
+      <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
+
+      {/* NUMERI */}
+      <AnimatedStats />
 
       {/* CTA FINALE */}
-      <section style={{padding:"8rem 2rem"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <div className="glass" style={{borderRadius:40,padding:"5rem 4rem",textAlign:"center",position:"relative",overflow:"hidden"}}>
-            <div style={{position:"absolute",top:0,right:0,width:500,height:500,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
-            <div style={{position:"relative",zIndex:1}}>
-              <p className="section-label" style={{marginBottom:"1.5rem",display:"flex",justifyContent:"center"}}>Iniziamo a lavorare insieme</p>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,6vw,6rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
-                {ctaHome.title||"HAI UN BRAND,"}<br/>{ctaHome.title2||"MA NON SAI COME"}<br/>
-                <span style={{WebkitTextStroke:"1px var(--a)",color:"transparent"}}>{ctaHome.title3||"RACCONTARLO ONLINE?"}</span>
-              </h2>
-              <p style={{fontSize:16,color:"var(--m)",marginBottom:"2.5rem",maxWidth:520,margin:"0 auto 2.5rem"}}>{ctaHome.subtitle||"Partiamo da una consulenza."}</p>
-              <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
-                <button className="btn btn-p" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/contatti")}>{ctaHome.btn1||"Parliamone"} <ArrowRight size={15}/></button>
-                <button className="btn btn-g" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go("/lavori")}>{ctaHome.btn2||"Vedi i lavori"}</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FinalCTA onClick={() => go("/contatti")} />
     </>
   );
 };
-
-
  
 /* ═══════════════════════════════════════════════════════════════
    PAGE: GESTIONE SOCIAL
@@ -1231,84 +1258,28 @@ const PageLavori = () => {
 
  
 /* ═══════════════════════════════════════════════════════════════
-   PAGE: BLOG
-═══════════════════════════════════════════════════════════════ */
-const PageBlog = () => {
-  const posts=[
-    {cat:"Social Media",title:"Come fare reel virali per un ristorante (senza budget)",date:"15 Gen 2025",min:8,featured:true},
-    {cat:"Meta Ads",title:"Quanto costa la pubblicità su Facebook a Taranto nel 2025",date:"8 Gen 2025",min:6},
-    {cat:"SEO",title:"Come trovare clienti online se hai un negozio a Massafra",date:"2 Gen 2025",min:7},
-    {cat:"Automazioni",title:"5 automazioni WhatsApp Business che ogni negozio dovrebbe avere",date:"28 Dic 2024",min:5},
-    {cat:"Social Media",title:"Perché i tuoi post non ricevono engagement (e come risolvere)",date:"20 Dic 2024",min:9},
-    {cat:"Siti Web",title:"WordPress o Next.js: cosa scegliere per il tuo sito nel 2025",date:"15 Dic 2024",min:6},
-  ];
- 
-  return (
-    <>
-      <PageHero tag="Journal — Risorse e approfondimenti"
-        h1="IMPARA" h1b="DA CHI LO" italic="fa ogni giorno."
-        sub="Articoli pratici su social media, advertising, SEO e automazioni. Scritti da chi gestisce campagne reali, non da chi le studia sui libri."
-      />
- 
-      <section style={{padding:"6rem 2rem"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
- 
-          {/* Featured */}
-          <motion.div initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
-            style={{background:"#2a2828",borderRadius:28,border:".5px solid var(--b)",padding:"3rem",marginBottom:"2rem",cursor:"pointer",gridColumn:"span 2",transition:"border-color .3s"}}
-            onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.15)"}
-            onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
-          >
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:"1rem",marginBottom:"1.5rem"}}>
-              <div style={{display:"flex",gap:8,alignItems:"center"}}>
-                <span className="tag tag-a">{posts[0].cat}</span>
-                <span className="tag tag-g">Articolo in evidenza</span>
-              </div>
-              <span style={{fontSize:11,color:"var(--m)"}}>{posts[0].date} · {posts[0].min} min di lettura</span>
-            </div>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,4vw,4rem)",lineHeight:.93,marginBottom:"1rem",textTransform:"uppercase"}}>{posts[0].title}</h2>
-            <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Leggi l'articolo <ArrowUpRight size={11}/></span>
-          </motion.div>
- 
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"1rem"}}>
-            {posts.slice(1).map((p,i)=>(
-              <motion.div key={i} className="card" initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
-                style={{cursor:"pointer"}}>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:"1rem",flexWrap:"wrap",gap:6}}>
-                  <span className="tag tag-a">{p.cat}</span>
-                  <span style={{fontSize:11,color:"var(--m)"}}>{p.min} min</span>
-                </div>
-                <h3 style={{fontSize:15,fontWeight:500,lineHeight:1.4,marginBottom:"1rem"}}>{p.title}</h3>
-                <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                  <span style={{fontSize:11,color:"var(--m)"}}>{p.date}</span>
-                  <span style={{fontSize:10,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:3}}>Leggi <ArrowUpRight size={10}/></span>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
- 
-      <ServiceCTA title="VUOI CONTENUTI COME QUESTI PER IL TUO BRAND?" sub="Gestiamo noi la comunicazione. Tu pensi al business." btn="Parliamo"/>
-    </>
-  );
-};
- 
-/* ═══════════════════════════════════════════════════════════════
    PAGE: CONTATTI
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
   const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
   const [sent,setSent]=useState(false);
   const [error,setError]=useState("");
+  const [sending,setSending]=useState(false);
   const submit=async()=>{
     if(!form.nome||!form.email||!form.msg){setError("Compila i campi obbligatori (nome, email, messaggio)."); return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)){setError("Inserisci un indirizzo email valido."); return;}
     if(!form.privacy){setError("Accetta la privacy policy per inviare."); return;}
     setError("");
+    setSending(true);
     try {
       const { db } = await import('./lib/firebase');
       const { collection, addDoc } = await import('firebase/firestore');
-      if(db) await addDoc(collection(db,'leads'),{
+      if(!db) {
+        setError("Servizio momentaneamente non disponibile. Scrivici direttamente a inlab.communication@gmail.com");
+        setSending(false);
+        return;
+      }
+      await addDoc(collection(db,'leads'),{
         name: form.nome,
         email: form.email,
         phone: form.tel || null,
@@ -1319,8 +1290,13 @@ const PageContatti = () => {
         notes: form.msg,
         created_at: new Date().toISOString(),
       });
-    } catch(e){ console.error('Save contact failed',e); }
-    setSent(true);
+      setSent(true);
+    } catch(e){
+      console.error('Save contact failed',e);
+      setError("Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com");
+    } finally {
+      setSending(false);
+    }
   };
  
   return (
@@ -1406,8 +1382,8 @@ const PageContatti = () => {
                     </label>
                   </div>
                   {error && <div style={{fontSize:12,color:"#ff8888",padding:"10px 14px",background:"rgba(255,100,100,0.08)",borderRadius:10,border:".5px solid rgba(255,100,100,0.2)"}}>{error}</div>}
-                  <button className="btn btn-p" style={{width:"100%",justifyContent:"center",padding:"16px",fontSize:12,marginTop:"0.5rem"}} onClick={submit}>
-                    Invia messaggio <ArrowRight size={15}/>
+                  <button className="btn btn-p" style={{width:"100%",justifyContent:"center",padding:"16px",fontSize:12,marginTop:"0.5rem",opacity:sending?0.6:1,pointerEvents:sending?"none":"auto"}} onClick={submit} disabled={sending}>
+                    {sending ? "Invio in corso…" : <>Invia messaggio <ArrowRight size={15}/></>}
                   </button>
                 </div>
               </>
@@ -1690,13 +1666,112 @@ const PageProgetto = ({id}: {id: string}) => {
   );
 };
 
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: PORTFOLIO (dedicata)
+═══════════════════════════════════════════════════════════════ */
+const PagePortfolio = () => {
+  const { go } = useRouter();
+  return (
+    <>
+      <section style={{padding:"10rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <motion.p initial={{opacity:0}} animate={{opacity:1}} className="section-label">Portfolio</motion.p>
+          <motion.h1
+            initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:.7}}
+            style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.5rem"}}
+          >
+            I NOSTRI<br/><span className="stroke">LAVORI</span>
+          </motion.h1>
+          <motion.p
+            initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.2}}
+            style={{fontSize:16,color:"var(--m)",maxWidth:640,lineHeight:1.75}}
+          >
+            Strategia, contenuti, eventi, campagne e identità visive realizzate per brand, attività locali e professionisti.
+          </motion.p>
+        </div>
+      </section>
+      <PortfolioGallery
+        showHeader={false}
+        onProjectClick={(id) => go("/casi-studio/" + id)}
+      />
+      <FinalCTA onClick={() => go("/contatti")} />
+    </>
+  );
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: CASI STUDIO (overview)
+═══════════════════════════════════════════════════════════════ */
+const PageCasiStudio = () => {
+  const { go } = useRouter();
+  return (
+    <>
+      <section style={{padding:"10rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <motion.p initial={{opacity:0}} animate={{opacity:1}} className="section-label">Casi studio</motion.p>
+          <motion.h1
+            initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:.7}}
+            style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.5rem"}}
+          >
+            PROGETTI<br/><span className="stroke">RACCONTATI.</span>
+          </motion.h1>
+          <motion.p
+            initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.2}}
+            style={{fontSize:16,color:"var(--m)",maxWidth:640,lineHeight:1.75}}
+          >
+            Non solo contenuti. Progetti costruiti con strategia, direzione creativa e obiettivi concreti — raccontati passo per passo.
+          </motion.p>
+        </div>
+      </section>
+      <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
+      <FinalCTA onClick={() => go("/contatti")} />
+    </>
+  );
+};
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: CASO STUDIO (singolo)
+═══════════════════════════════════════════════════════════════ */
+const PageCaso = ({id}: {id:string}) => {
+  const { go } = useRouter();
+  const onBack = () => go("/casi-studio");
+  const onContact = () => go("/contatti");
+
+  // Scroll in alto quando si arriva sulla pagina
+  useEffect(() => { window.scrollTo({top:0,behavior:"instant" as any}); }, [id]);
+
+  switch(id){
+    case "paresteta": return <CaseParesteta onBack={onBack} onContact={onContact}/>;
+    case "imh":       return <CaseImh       onBack={onBack} onContact={onContact}/>;
+    case "ricciardi": return <CaseRicciardi onBack={onBack} onContact={onContact}/>;
+    default:
+      return (
+        <section style={{padding:"10rem 2rem 8rem",minHeight:"60vh"}}>
+          <div style={{maxWidth:720,margin:"0 auto",textAlign:"center"}}>
+            <p className="section-label">Caso studio non trovato</p>
+            <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,4rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
+              QUESTO PROGETTO<br/><span className="stroke">NON ESISTE.</span>
+            </h1>
+            <p style={{color:"var(--m)",marginBottom:"2rem"}}>Forse stavi cercando un altro lavoro nel nostro portfolio.</p>
+            <button className="btn btn-p" onClick={() => go("/casi-studio")}>
+              Torna ai casi studio <ArrowRight size={14}/>
+            </button>
+          </div>
+        </section>
+      );
+  }
+};
+
 const parseRoute = (route) => {
   if(route==="/") return {page:"home"};
   if(route==="/chi-siamo") return {page:"chi-siamo"};
   if(route==="/lavori") return {page:"lavori"};
+  if(route==="/portfolio") return {page:"portfolio"};
+  if(route==="/casi-studio") return {page:"casi-studio"};
   if(route==="/servizi") return {page:"servizi"};
-  if(route==="/blog") return {page:"blog"};
   if(route==="/contatti") return {page:"contatti"};
+  // case study detail pages: /casi-studio/paresteta
+  if(route.startsWith("/casi-studio/")) return {page:"caso",id:route.replace("/casi-studio/","")};
   // project detail pages: /progetto/1
   if(route.startsWith("/progetto/")) return {page:"progetto",id:route.replace("/progetto/","")};
   // service pages
@@ -1715,11 +1790,13 @@ const parseRoute = (route) => {
 const renderPage = (info) => {
   switch(info.page){
     case "progetto": return <PageProgetto id={info.id}/>;
+    case "caso": return <PageCaso id={info.id}/>;
     case "home": return <PageHome/>;
     case "chi-siamo": return <PageChiSiamo/>;
     case "lavori": return <PageLavori/>;
+    case "portfolio": return <PagePortfolio/>;
+    case "casi-studio": return <PageCasiStudio/>;
     case "servizi": return <PageServizi/>;
-    case "blog": return <PageBlog/>;
     case "contatti": return <PageContatti/>;
     case "service":
       switch(info.slug){
