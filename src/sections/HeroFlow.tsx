@@ -11,20 +11,14 @@ type Channel = {
   y: number;
 };
 
+// 5 canali a stella perfetta attorno al centro (50,50), raggio 38
 const CHANNELS: Channel[] = [
-  { label: 'Google',    short: 'G',   color: '#4285F4', x: 8,  y: 18 },
-  { label: 'Instagram', short: 'IG',  color: '#E4405F', x: 92, y: 18 },
-  { label: 'Facebook',  short: 'f',   color: '#1877F2', x: 4,  y: 50 },
-  { label: 'TikTok',    short: 'TT',  color: '#ff0050', x: 96, y: 50 },
-  { label: 'Meta Ads',  short: '◈',   color: '#0668E1', x: 8,  y: 82 },
-  { label: 'WhatsApp',  short: 'W',   color: '#25D366', x: 92, y: 82 },
-  { label: 'Sito web',  short: '</>',  color: '#cdb2ff', x: 30, y: 6  },
-  { label: 'Landing',   short: 'L',   color: '#cdb2ff', x: 70, y: 6  },
-  { label: 'Email',     short: '@',   color: '#F0EDE6', x: 30, y: 94 },
-  { label: 'Analytics', short: '↗',   color: '#F0EDE6', x: 70, y: 94 },
+  { label: 'Brand Identity',      short: '★',    color: '#cdb2ff', x: 50, y: 12 },
+  { label: 'Social Media',        short: 'IG',   color: '#E4405F', x: 88, y: 38 },
+  { label: 'Sito Web',            short: '</>',  color: '#60a5fa', x: 74, y: 84 },
+  { label: 'Google My Profile',   short: 'G',    color: '#4285F4', x: 26, y: 84 },
+  { label: 'Contenuti Originali', short: '▷',    color: '#a78bfa', x: 12, y: 38 },
 ];
-
-const KEYWORDS = ['Visibilità', 'Strategia', 'Contenuti', 'Lead', 'Fiducia', 'Vendite', 'Brand'];
 
 const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
   const cx = 50;
@@ -102,16 +96,27 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
           transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : 0.1 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}
           style={{
             position: 'absolute', left: `${ch.x}%`, top: `${ch.y}%`,
-            transform: 'translate(-50%, -50%)', width: 42, height: 42,
-            borderRadius: 12, background: 'rgba(255,255,255,0.04)',
+            transform: 'translate(-50%, -50%)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 5,
+            zIndex: 2,
+          }}
+        >
+          <div style={{
+            width: 46, height: 46,
+            borderRadius: 14, background: 'rgba(255,255,255,0.04)',
             backdropFilter: 'blur(8px)', border: '.5px solid rgba(255,255,255,0.12)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: 'var(--fb)', fontWeight: 600, fontSize: 13, color: ch.color,
-            zIndex: 2, boxShadow: `0 0 20px ${ch.color}22`,
-          }}
-          title={ch.label}
-        >
-          {ch.short}
+            fontFamily: 'var(--fb)', fontWeight: 700, fontSize: 13, color: ch.color,
+            boxShadow: `0 0 24px ${ch.color}33`,
+          }}>
+            {ch.short}
+          </div>
+          <div style={{
+            fontSize: 9, letterSpacing: '.1em', textTransform: 'uppercase',
+            color: 'rgba(240,237,230,0.45)', whiteSpace: 'nowrap', lineHeight: 1,
+          }}>
+            {ch.label}
+          </div>
         </motion.div>
       ))}
 
@@ -150,27 +155,7 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
         </div>
       </motion.div>
 
-      {KEYWORDS.map((kw, i) => {
-        const angle = (i / KEYWORDS.length) * Math.PI * 2 - Math.PI / 2;
-        const radius = 48;
-        const kx = 50 + Math.cos(angle) * radius;
-        const ky = 50 + Math.sin(angle) * radius;
-        return (
-          <motion.span key={kw}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 0.7, y: 0 }}
-            transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : 2.2 + i * 0.1 }}
-            style={{
-              position: 'absolute', left: `${kx}%`, top: `${ky}%`,
-              transform: 'translate(-50%, -50%)', fontSize: 10,
-              letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)',
-              pointerEvents: 'none', whiteSpace: 'nowrap', zIndex: 1,
-            }}
-          >
-            {kw}
-          </motion.span>
-        );
-      })}
+
     </div>
   );
 };
