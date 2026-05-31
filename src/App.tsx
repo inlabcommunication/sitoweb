@@ -573,7 +573,7 @@ const PageHome = () => {
         onSecondaryCta={() => go("/portfolio")}
       />
 
-      {{/* Marquee servizi */}
+      {/* Marquee servizi */}
       <MarqueeHome />
 
       {/* MANIFESTO */}
