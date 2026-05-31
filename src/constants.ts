@@ -37,10 +37,12 @@ export const WEBSITE_CONTENT = {
     text: "Ogni post, video, foto o campagna deve avere un motivo per esistere: raccontare il valore del brand, parlare alle persone giuste, creare fiducia e rendere la comunicazione più riconoscibile. Non vendiamo pacchetti. Costruiamo identità."
   },
 
-  marquee: [
-    "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
-    "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦", "Organizzazione Eventi", "✦"
-  ],
+  marquee: {
+    items: [
+      "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
+      "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦", "Organizzazione Eventi", "✦"
+    ]
+  },
 
   stats: [
     { num: "3.2M+", label: "Visualizzazioni generate" },

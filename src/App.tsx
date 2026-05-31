@@ -117,7 +117,7 @@ const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Caste
 const CLIENTS = ["Ristorante Da Mario","Studio Medico Rossi","Parrucchiere Chic","Moda Pugliese","Bar Centrale","Officina Auto","Agriturismo Sole","Hotel Marina"];
 const STATS_GLOBAL = [
   { n:"3.2M+", l:"Visualizzazioni generate" },
-  { n:"47", l:"Clienti soddisfatti" },
+  { n:"47+", l:"Brand e attività seguiti" },
   { n:"9", l:"Città servite in Puglia" },
   { n:"100%", l:"Progetti consegnati in tempo" },
 ];
@@ -549,6 +549,16 @@ const VideoReel = ({
     </section>
   );
 };
+const MarqueeHome = () => {
+  const c = useContent();
+  const items = (c as any).marquee?.items || [
+    "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
+    "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦",
+    "Organizzazione Eventi", "✦", "Lead Generation", "✦",
+  ];
+  return <Marquee items={items} />;
+};
+
  
 /* ═══════════════════════════════════════════════════════════════
    PAGE: HOME — orchestra le sezioni modulari
@@ -563,12 +573,8 @@ const PageHome = () => {
         onSecondaryCta={() => go("/portfolio")}
       />
 
-      {/* Marquee servizi */}
-      <Marquee items={[
-        "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
-        "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦",
-        "Organizzazione Eventi", "✦", "Lead Generation", "✦",
-      ]}/>
+      {{/* Marquee servizi */}
+      <MarqueeHome />
 
       {/* MANIFESTO */}
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
@@ -618,6 +624,73 @@ const PageHome = () => {
 
       {/* CASI STUDIO */}
       <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
+
+      {/* PER CHI LAVORIAMO */}
+      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",top:"30%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
+        <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
+          <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:"-80px"}} style={{marginBottom:"4rem",maxWidth:720}}>
+            <p className="section-label">Il nostro target</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,6vw,5.5rem)",lineHeight:.9,marginBottom:"1.2rem"}}>
+              PER BRAND CHE<br/><span className="stroke">VOGLIONO FARSI NOTARE.</span>
+            </h2>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.7,maxWidth:520}}>
+              Lavoriamo con chi vuole una comunicazione professionale, riconoscibile e pensata per crescere.
+            </p>
+          </motion.div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"1rem"}} className="grid-1-mob">
+            {[
+              {emoji:"🍽️",label:"Ristoranti e locali",desc:"Comunicazione che fa venir voglia di prenotare."},
+              {emoji:"🛍️",label:"Negozi e attività",desc:"Contenuti che portano persone in negozio e online."},
+              {emoji:"💼",label:"Professionisti",desc:"Immagine autorevole e riconoscibile nel tuo settore."},
+              {emoji:"⚙️",label:"Aziende di servizi",desc:"Spiegare bene cosa fai è già metà del lavoro."},
+              {emoji:"🚀",label:"Brand emergenti",desc:"Costruiamo la tua identità da zero con metodo."},
+              {emoji:"🎉",label:"Eventi e inaugurazioni",desc:"Prima, durante e dopo — raccontiamo ogni momento."},
+              {emoji:"🌐",label:"Progetti digitali",desc:"Landing page, siti e campagne che convertono."},
+              {emoji:"📍",label:"Attività locali",desc:"Presenza digitale forte nel territorio che servi."},
+            ].map((item,i)=>(
+              <motion.div key={i} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}}
+                style={{padding:"1.75rem"}}>
+                <div style={{fontSize:28,marginBottom:".8rem"}}>{item.emoji}</div>
+                <h3 style={{fontSize:14,fontWeight:500,marginBottom:".4rem"}}>{item.label}</h3>
+                <p style={{fontSize:12,color:"var(--m)",lineHeight:1.6}}>{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIAL */}
+      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden",background:"rgba(205,178,255,0.015)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:"-80px"}} style={{marginBottom:"4rem",textAlign:"center"}}>
+            <p className="section-label">Cosa dicono di noi</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,6vw,5.5rem)",lineHeight:.9}}>
+              LE PAROLE<br/><span className="stroke">DEI CLIENTI.</span>
+            </h2>
+          </motion.div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"1.5rem"}} className="grid-1-mob">
+            {[
+              {text:"Finalmente i nostri social hanno un'immagine coerente. Prima pubblicavamo a caso, ora ogni contenuto ha un senso.",role:"Titolare, attività locale"},
+              {text:"Ci hanno aiutato a raccontare meglio il nostro evento. La risposta del pubblico è stata ben oltre le aspettative.",role:"Organizzatore, evento locale"},
+              {text:"Contenuti belli, ma soprattutto pensati con una strategia. Si vede che dietro c'è un metodo, non solo estetica.",role:"Professionista, servizi"},
+              {text:"Da quando lavoriamo con InLab, i messaggi che riceviamo sono più qualificati. Le persone arrivano già informate.",role:"Titolare, studio professionale"},
+              {text:"Il reel che hanno prodotto per la nostra inaugurazione ha fatto numeri che non avremmo mai immaginato.",role:"Brand emergente, retail"},
+              {text:"Professionalità vera. Rispondono sempre, rispettano le scadenze e i contenuti sono sempre di qualità.",role:"Responsabile marketing, azienda"},
+            ].map((t,i)=>(
+              <motion.div key={i} className="glass card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
+                style={{padding:"2rem",borderRadius:24}}>
+                <div style={{fontSize:32,color:"var(--a)",marginBottom:"1rem",lineHeight:1}}>"</div>
+                <p style={{fontSize:15,color:"var(--t)",lineHeight:1.75,marginBottom:"1.5rem",fontStyle:"italic"}}>{t.text}</p>
+                <div style={{fontSize:11,letterSpacing:".12em",textTransform:"uppercase",color:"var(--m)"}}>{t.role}</div>
+              </motion.div>
+            ))}
+          </div>
+          <motion.p initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} style={{textAlign:"center",marginTop:"3rem",fontSize:14,color:"var(--m)"}}>
+            Abbiamo lavorato su progetti per attività locali, eventi, brand e servizi in tutta la provincia di Taranto.
+          </motion.p>
+        </div>
+      </section>
 
       {/* NUMERI */}
       <AnimatedStats />
@@ -1078,10 +1151,11 @@ const PageChiSiamo = () => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label">Le persone dietro InLab</p>
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9,marginBottom:"4rem"}}>IL TEAM<br/><span className="stroke">INLAB</span></h2>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2rem"}} className="grid-1-mob">
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"2rem"}} className="grid-1-mob">
             {[
-              {initials:"NN",role:"Psicologo del marketing",name:"Strategia & Analisi",bio:"Studio il comportamento d'acquisto delle persone da oltre 5 anni. Prima di creare qualsiasi contenuto, analizo chi è il tuo cliente, perché compra, cosa lo frena. La strategia non è un'opinione — è una conclusione basata su dati.",skills:["Analisi comportamentale","Posizionamento brand","Strategia di comunicazione","Ricerca di mercato","SWOT e competitor analysis"]},
-              {initials:"NN",role:"Content Creator & Direttrice Artistica",name:"Creatività & Visual",bio:"Trasformo strategie in contenuti che le persone vogliono davvero guardare. Dalla regia di un reel alla direzione fotografica di uno shooting, mi occupo di tutto ciò che appare — perché l'estetica non è un dettaglio, è un messaggio.",skills:["Produzione video & reels","Direzione artistica","Fotografia di brand","Script & storytelling","Social media content"]},
+              {initials:"P",name:"Prince",role:"Strategia, sviluppo commerciale, progetti digitali",bio:"Segue la visione strategica dei progetti, il rapporto con i clienti e lo sviluppo di soluzioni orientate alla crescita. Collega le esigenze del brand con le leve digitali più efficaci.",skills:["Strategia digitale","Business development","Gestione progetti","Consulenza clienti","Analisi e KPI"]},
+              {initials:"NC",name:"Nicola Carpignano",role:"Social media manager, comunicazione e marketing",bio:"Si occupa di strategia editoriale, copy, gestione social e posizionamento dei contenuti. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",skills:["Social media strategy","Copywriting","Piano editoriale","Community management","Posizionamento brand"]},
+              {initials:"IG",name:"Ilaria Gemma",role:"Content creator e comunicazione visiva",bio:"Lavora sulla creazione di contenuti, immagini, video e racconto visivo dei brand. Dalla direzione artistica di uno shooting alla regia di un reel, cura ogni dettaglio estetico.",skills:["Produzione video & reels","Direzione artistica","Fotografia di brand","Script & storytelling","Visual identity"]},
             ].map((p,i)=>(
               <motion.div key={i} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.1}}
                 style={{padding:"2.5rem"}}>
@@ -1203,9 +1277,33 @@ const PageLavori = () => {
           </div>
 
           {visible.length===0?(
-            <div style={{padding:"5rem",textAlign:"center",color:"var(--m)",border:".5px solid var(--b)",borderRadius:24}}>
-              <div style={{fontSize:40,marginBottom:"1rem"}}>◈</div>
-              <p style={{fontSize:14}}>Nessun progetto in questa categoria ancora. Aggiungili dalla dashboard → Editor → Portfolio.</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
+              {[
+                {title:"Inaugurazione negozio",cat:"eventi",desc:"Lancio di un'attività locale con contenuti pre e post evento.",stat:"📍 Taranto"},
+                {title:"Campagna social ristorante",cat:"social",desc:"Gestione social e reel mensili per un ristorante locale.",stat:"↗ +180% reach"},
+                {title:"Reel storytelling brand",cat:"video",desc:"Serie di reel narrativi per costruire identità e fiducia.",stat:"▷ 40k views"},
+                {title:"Shooting prodotti",cat:"foto",desc:"Fotografia professionale per e-commerce e social.",stat:"📸 200 scatti"},
+                {title:"Landing page lead gen",cat:"web",desc:"Pagina ottimizzata per raccolta contatti qualificati.",stat:"⚡ 12% conv."},
+                {title:"Identità visiva brand emergente",cat:"branding",desc:"Logo, palette, tono di voce e template social.",stat:"✦ Brand completo"},
+              ].map((p,i)=>(
+                <motion.div key={i} layout initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
+                  style={{gridColumn:i===0?"span 2":"span 1",minHeight:i===0?320:220,background:"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",position:"relative"}}
+                  onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(205,178,255,.25)"}
+                  onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
+                >
+                  <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(205,178,255,0.04),rgba(255,255,255,0.01))"}}/>
+                  <div style={{position:"relative",zIndex:1,padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%"}}>
+                    <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
+                      <span className="tag tag-a">{p.cat}</span>
+                      <span className="tag tag-g">{p.stat}</span>
+                    </div>
+                    <div>
+                      <h3 style={{fontFamily:"var(--fd)",fontSize:i===0?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
+                      <p style={{fontSize:12,color:"var(--m)",lineHeight:1.6}}>{p.desc}</p>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           ):(
             <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
@@ -1762,6 +1860,66 @@ const PageCaso = ({id}: {id:string}) => {
   }
 };
 
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGE: BRANDING
+═══════════════════════════════════════════════════════════════ */
+const PageBranding = () => (
+  <>
+    <PageHero tag="Servizio — Branding & Identità Visiva"
+      h1="IL TUO BRAND" h1b="HA UNA VOCE?" italic="Diamogliene una memorabile."
+      sub="Diamo forma all'immagine del brand con grafiche, tono, colori e contenuti coerenti. Non solo un logo — un sistema visivo che comunica chi sei prima ancora che tu parli."
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i lavori" cta2to="/portfolio"
+    />
+    <Marquee items={["Logo & Naming","✦","Brand Identity","✦","Palette colori","✦","Tono di voce","✦","Brand guidelines","✦","Visual system","✦"]}/>
+    <StatsRow stats={[{n:"100%",l:"Progetti con brand guidelines"},{n:"48h",l:"Prime proposte visive"},{n:"3+",l:"Revisioni incluse"},{n:"∞",l:"File sorgenti consegnati"}]}/>
+
+    <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1.4fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
+        <div>
+          <p className="section-label">Identità che dura</p>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>COME<br/><span className="stroke">LO COSTRUIAMO</span></h2>
+          <p style={{fontSize:15,color:"var(--m)",lineHeight:1.75}}>Il branding non è solo estetica. È il modo in cui le persone ti percepiscono prima ancora di leggere cosa scrivi. Partiamo da lì.</p>
+        </div>
+        <div style={{display:"flex",flexDirection:"column",gap:0}}>
+          {[
+            {n:1,title:"Discovery & analisi",desc:"Studiamo il tuo settore, i competitor, il tuo target. Capire il contesto è il punto di partenza per costruire un'identità che si distingua davvero."},
+            {n:2,title:"Naming e concept",desc:"Se necessario, lavoriamo sul nome. Poi definiamo il concept creativo che guiderà tutte le scelte visive: forma, personalità, tono."},
+            {n:3,title:"Identità visiva",desc:"Logo, palette colori, tipografia, pattern. Ogni elemento è scelto con una logica. Ti consegniamo il brand manual con tutte le istruzioni d'uso."},
+            {n:4,title:"Tono di voce",desc:"Come parla il tuo brand? Definire il tono di voce significa dare coerenza a ogni testo — social, sito, campagne, comunicazioni."},
+            {n:5,title:"Applicazioni pratiche",desc:"Mocku su social, biglietti da visita, firme email, template grafici. Il brand prende forma su ogni superficie dove compare."},
+          ].map(s=><ProcessStep key={s.n} {...s}/>)}
+        </div>
+      </div>
+    </section>
+
+    <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto"}}>
+        <p className="section-label">Cosa è incluso</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"3rem"}}>COSA RICEVI<br/><span className="stroke">DAL PROGETTO</span></h2>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:"1rem"}}>
+          {[
+            {t:"Logo principale + varianti",d:"Logo orizzontale, verticale, simbolo isolato, versione monocromatica. File vettoriali (.ai, .svg, .pdf, .png)."},
+            {t:"Palette colori",d:"Colori primari e secondari con codici esatti HEX, RGB, CMYK. Per uso digitale e stampa."},
+            {t:"Brand guidelines",d:"Documento con tutte le regole: spazi di rispetto, tipografia, utilizzi corretti e non corretti del logo."},
+            {t:"Template social",d:"Formati grafici pronti per feed Instagram, stories, copertine. Editabili su Canva o Figma."},
+            {t:"Tono di voce",d:"Documento con le linee guida comunicative: come parla il brand, cosa evita, esempi di copy giusti e sbagliati."},
+            {t:"Supporto post-lancio",d:"30 giorni di supporto per applicare correttamente l'identità visiva e rispondere a dubbi implementativi."},
+          ].map((item,i)=>(
+            <motion.div key={i} className="card" initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}>
+              <h3 style={{fontSize:14,fontWeight:500,marginBottom:".5rem",color:"var(--a)"}}>{item.t}</h3>
+              <p style={{fontSize:12,color:"var(--m)",lineHeight:1.65}}>{item.d}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <ClientLogos/>
+    <ServiceCTA title="IL TUO BRAND MERITA UN'IDENTITÀ VERA." sub="Costruiamola insieme, con metodo e visione." btn="Parliamo del tuo brand"/>
+  </>
+);
+
 const parseRoute = (route) => {
   if(route==="/") return {page:"home"};
   if(route==="/chi-siamo") return {page:"chi-siamo"};
@@ -1800,6 +1958,7 @@ const renderPage = (info) => {
     case "contatti": return <PageContatti/>;
     case "service":
       switch(info.slug){
+        case "branding": return <PageBranding/>;
         case "gestione-social": return <PageGestioneSocial/>;
         case "meta-ads": return <PageMetaAds/>;
         case "siti-web": return <PageSitiWeb/>;
