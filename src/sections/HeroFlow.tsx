@@ -62,17 +62,19 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
         <filter id="hfBlur">
           <feGaussianBlur stdDeviation="2" />
         </filter>
-        {/* Clip per il box centrale */}
-        <clipPath id="centerClip">
-          <rect x="66" y="76" width="68" height="48" rx="10" />
-        </clipPath>
+        {/* Maschera che esclude il box centrale dalle linee */}
+        <mask id="lineMask">
+          <rect x="0" y="0" width="200" height="200" fill="white" />
+          <rect x="62" y="72" width="76" height="56" rx="12" fill="black" />
+        </mask>
       </defs>
 
       {/* Alone centrale */}
       <circle cx={cx} cy={cy} r="28" fill="url(#hfGlow)" />
       <circle cx={cx} cy={cy} r="18" fill="url(#hfGlow)" />
 
-      {/* Linee dai nodi al centro — stile originale: curve morbide, viola semitrasparente */}
+      {/* Linee dai nodi al centro — mascherate dal box centrale */}
+      <g mask="url(#lineMask)">
       {NODES.map((n, i) => {
         // punto di controllo leggermente spostato perpendicolarmente
         const mx = (n.x + cx) / 2;
@@ -95,6 +97,8 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
           />
         );
       })}
+
+      </g>
 
       {/* Pallini che scorrono verso il centro */}
       {!reduced && NODES.map((n, i) => {
@@ -126,16 +130,16 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
         >
           {/* Card icona */}
           <rect
-            x={n.x - 17} y={n.y - 17} width="34" height="34" rx="9"
+            x={n.x - 13} y={n.y - 13} width="26" height="26" rx="7"
             fill="rgba(20,18,28,0.75)"
             stroke="rgba(205,178,255,0.25)"
             strokeWidth="0.6"
           />
           {/* Simbolo */}
           <text
-            x={n.x} y={n.y + 5}
+            x={n.x} y={n.y + 4}
             textAnchor="middle"
-            fontSize="10"
+            fontSize="8"
             fontFamily="var(--fb)"
             fontWeight="700"
             fill="rgba(205,178,255,0.9)"
@@ -144,9 +148,9 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
           </text>
           {/* Label sotto */}
           <text
-            x={n.x} y={n.y + 26}
+            x={n.x} y={n.y + 22}
             textAnchor="middle"
-            fontSize="5.5"
+            fontSize="4.8"
             fontFamily="var(--fb)"
             fontWeight="500"
             letterSpacing="0.8"
