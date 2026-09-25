@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import { ArrowUpRight, MapPin } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { normalizeClients } from '../lib/clientUtils';
 
@@ -56,72 +57,97 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
         </motion.div>
         )}
 
-        {/* Grid loghi: 4 colonne (2 su mobile). Le linee sono sulle celle, così
-            un'ultima riga incompleta non lascia riquadri vuoti colorati. */}
-        <div className="grid-2-mob" style={{
+        {/* Griglia schede clienti */}
+        <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 0,
-          borderRadius: 24,
-          overflow: 'hidden',
-          border: '.5px solid var(--b)',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))',
+          gap: 14,
         }}>
           {clients.map((client, i) => (
             <motion.button
               key={client.id}
               type="button"
               aria-label={`Apri scheda cliente ${client.name}`}
-              initial={{ opacity: 0, scale: 0.92 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-30px' }}
-              transition={{ duration: 0.5, delay: i * 0.04, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ backgroundColor: 'rgba(205,178,255,0.06)' }}
+              transition={{ duration: 0.55, delay: (i % 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4 }}
               onClick={() => openClient(client.id)}
-              style={{
-                background: 'var(--bg)',
-                border: 0,
-                boxShadow: '0 0 0 .5px var(--b)',
-                color: 'inherit',
-                font: 'inherit',
-                padding: '2.5rem 1.5rem',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 14,
-                alignItems: 'center',
-                justifyContent: 'center',
-                minHeight: 120,
-                cursor: 'pointer',
-                transition: 'background .25s',
-                textAlign: 'center',
-              }}
+              className="client-card"
             >
-              {client.logo ? (
-                <img
-                  src={client.logo}
-                  alt={client.name}
-                  loading="lazy"
-                  style={{ maxWidth: 140, maxHeight: 54, objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.55 }}
-                />
-              ) : (
-                <span style={{
-                  fontFamily: 'var(--fd)',
-                  fontSize: 'clamp(1rem, 1.5vw, 1.3rem)',
-                  color: 'rgba(255,255,255,0.4)',
-                  letterSpacing: '.05em',
-                  lineHeight: 1.15,
-                  transition: 'color .25s',
-                }}>
-                  {client.name}
-                </span>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, width: '100%' }}>
+                {client.logo ? (
+                  <img src={client.logo} alt="" loading="lazy"
+                    style={{ maxWidth: 96, maxHeight: 30, objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.8 }} />
+                ) : (
+                  <span style={{ fontFamily: 'var(--fd)', fontSize: 20, color: 'var(--a)', letterSpacing: '.04em', lineHeight: 1 }}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                )}
+                {client.sector && (
+                  <span style={{
+                    fontSize: 9.5, fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase',
+                    color: 'var(--a)', background: 'rgba(205,178,255,0.09)', border: '.5px solid rgba(205,178,255,0.25)',
+                    borderRadius: 100, padding: '5px 10px', textAlign: 'right', lineHeight: 1.3, maxWidth: '70%',
+                  }}>
+                    {client.sector}
+                  </span>
+                )}
+              </div>
+
+              <span style={{
+                fontFamily: 'var(--fd)', fontSize: 'clamp(1.7rem, 2.2vw, 2.1rem)', lineHeight: 0.95,
+                letterSpacing: '.02em', color: 'var(--t)', textTransform: 'uppercase', marginTop: 22,
+              }}>
+                {client.name}
+              </span>
+
+              {client.summary && (
+                <span className="client-card-summary">{client.summary}</span>
               )}
-              {(client.sector || client.location) && (
-                <span style={{ fontSize: 10, letterSpacing: '.13em', textTransform: 'uppercase', color: 'var(--m)' }}>
-                  {[client.sector, client.location].filter(Boolean).join(' / ')}
+
+              <span style={{
+                marginTop: 'auto', paddingTop: 18, width: '100%', borderTop: '.5px solid var(--b)',
+                display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10,
+              }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 11, letterSpacing: '.06em', color: 'rgba(240,237,230,0.55)' }}>
+                  {client.location && <><MapPin size={12} color="var(--a)" /> {client.location}</>}
                 </span>
-              )}
+                <span className="client-card-cta">
+                  Scheda <ArrowUpRight size={13} />
+                </span>
+              </span>
             </motion.button>
           ))}
         </div>
+
+        <style>{`
+          .client-card{
+            display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+            min-height:250px;padding:1.6rem 1.5rem 1.3rem;border-radius:22px;cursor:pointer;
+            font:inherit;color:inherit;
+            background:linear-gradient(160deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));
+            border:.5px solid var(--b);
+            transition:border-color .3s, background .3s, box-shadow .3s;
+          }
+          .client-card:hover,.client-card:focus-visible{
+            border-color:rgba(205,178,255,0.45);
+            background:linear-gradient(160deg,rgba(205,178,255,0.10),rgba(205,178,255,0.02));
+            box-shadow:0 18px 50px rgba(205,178,255,0.10);
+            outline:none;
+          }
+          .client-card-summary{
+            margin-top:12px;font-size:13.5px;line-height:1.6;color:rgba(240,237,230,0.66);
+            display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+          }
+          .client-card-cta{
+            display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;
+            letter-spacing:.15em;text-transform:uppercase;color:var(--a);
+            transition:gap .25s;
+          }
+          .client-card:hover .client-card-cta{gap:8px}
+        `}</style>
 
         {/* Frase finale */}
         <motion.p

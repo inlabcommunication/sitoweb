@@ -147,7 +147,7 @@ export const WEBSITE_CONTENT = {
       {
         id: "villa-natia",
         name: "Villa Natia",
-        sector: "Sala ricevimenti & Luxury Hotel",
+        sector: "Ricevimenti & Hotel",
         location: "Mottola (TA)",
         summary: "Prestigiosa sala ricevimenti e luxury hotel a Mottola: raccontiamo matrimoni ed eventi con foto e video che ne valorizzano l'eleganza.",
         description: "Villa Natia è una sala ricevimenti e luxury hotel a Mottola. Seguiamo i matrimoni e gli eventi con servizi fotografici e contenuti video, costruendo uno storytelling visivo che mette al centro l'eleganza della location e le emozioni delle giornate più importanti.",
@@ -185,7 +185,7 @@ export const WEBSITE_CONTENT = {
       {
         id: "emmesse",
         name: "Emmesse",
-        sector: "Fotovoltaico & Termico",
+        sector: "Fotovoltaico",
         location: "Taranto",
         summary: "Azienda di Taranto specializzata in fotovoltaico e termico, dalla progettazione all'assistenza: video parlati che spiegano i vantaggi in modo semplice.",
         description: "Emmesse è un'azienda di Taranto che si occupa di impianti fotovoltaici e termici: progettazione, installazione e assistenza. Realizziamo soprattutto video parlati promozionali, pensati per spiegare in modo chiaro un tema tecnico e far emergere la competenza dell'azienda.",
@@ -204,7 +204,7 @@ export const WEBSITE_CONTENT = {
       {
         id: "sublime-tentazione",
         name: "Sublime Tentazione",
-        sector: "Gelateria & Pasticceria artigianale",
+        sector: "Gelateria & Pasticceria",
         location: "Palagianello (TA)",
         summary: "Gelateria e pasticceria artigianale a Palagianello: una presenza social costante e golosa, tra gelati d'estate e panettoni a Natale.",
         description: "Sublime Tentazione è una gelateria e pasticceria artigianale di Palagianello, fortemente legata al territorio. I contenuti seguono le stagioni del laboratorio, dal gelato ai panettoni, con una presenza social costante e riconoscibile che fa venire voglia di passare in negozio.",
@@ -242,7 +242,7 @@ export const WEBSITE_CONTENT = {
       {
         id: "masseria-sacramento",
         name: "Masseria Sacramento",
-        sector: "Masseria · Eventi, ristorazione e camere",
+        sector: "Masseria & Eventi",
         location: "Palagianello (TA)",
         summary: "Masseria a Palagianello tra eventi, ristorazione e camere: dalla festa della birra d'estate alle serate con musica live e al pranzo della domenica.",
         description: "Masseria Sacramento, a Palagianello, unisce eventi, ristorazione e ospitalità. Il calendario è ricco: la festa della birra in estate e, tutto l'anno, serate del venerdì e del sabato con menu fissi e musica live, oltre al pranzo della domenica. La comunicazione accompagna ogni appuntamento per riempire la masseria e far vivere l'esperienza anche online.",
