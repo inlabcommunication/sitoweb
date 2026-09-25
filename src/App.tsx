@@ -460,12 +460,12 @@ const VideoReel = ({
   };
 
   return (
-    <section style={{padding:"7rem 2rem 8rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
+    <section style={{padding:"7rem 0 6rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
       {/* Glow di sfondo coerente col resto del sito */}
       <div style={{position:"absolute",top:"30%",right:"-5%",width:520,height:520,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(120px)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",bottom:"5%",left:"-5%",width:380,height:380,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
 
-      <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1280,margin:"0 auto",padding:"0 2rem",position:"relative",zIndex:1}}>
         {/* Header */}
         <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
           style={{marginBottom:"3.5rem",textAlign:"center"}}>
@@ -481,21 +481,22 @@ const VideoReel = ({
           {subtitle && <p style={{fontSize:15,color:"var(--m)",maxWidth:520,margin:"0 auto",lineHeight:1.7}}>{subtitle}</p>}
         </motion.div>
 
-        {/* Video con maschera sfumata sui 4 lati */}
+      </div>
+
+        {/* Video a tutto schermo: larghezza piena e altezza dello schermo, sfumato solo sopra e sotto */}
         <motion.div
           initial={{opacity:0,scale:.97}}
           whileInView={{opacity:1,scale:1}}
           viewport={{once:true,margin:"-80px"}}
           transition={{duration:.8,ease:[0.16,1,0.3,1]}}
-          style={{position:"relative",maxWidth:1000,margin:"0 auto"}}
+          style={{position:"relative",width:"100%"}}
         >
-          {/* Wrapper con mask radiale: il video sfuma sui bordi e si fonde col bg */}
           <div style={{
             position:"relative",
-            aspectRatio:"16/9",
-            // Mask radiale: opaco al centro, trasparente ai bordi
-            WebkitMaskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
-            maskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
+            height:"100svh",
+            minHeight:420,
+            WebkitMaskImage:"linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
+            maskImage:"linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
           }}>
             <video
               ref={videoRef}
@@ -514,7 +515,7 @@ const VideoReel = ({
             onClick={toggleAudio}
             aria-label={muted?"Attiva audio":"Disattiva audio"}
             style={{
-              position:"absolute",bottom:"6%",right:"6%",zIndex:2,
+              position:"absolute",bottom:"14%",right:"4%",zIndex:2,
               width:52,height:52,borderRadius:"50%",
               background:"rgba(20,20,20,0.7)",
               backdropFilter:"blur(10px)",
@@ -550,7 +551,6 @@ const VideoReel = ({
             )}
           </button>
         </motion.div>
-      </div>
     </section>
   );
 };
