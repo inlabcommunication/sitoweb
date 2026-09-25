@@ -165,13 +165,6 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
             >
               Parla con InLab <ArrowRight size={15} />
             </button>
-            <button
-              className="btn btn-g"
-              onClick={onClick}
-              style={{ fontSize: 13, padding: '18px 38px', borderColor: 'rgba(240,237,230,0.25)', color: '#F0EDE6' }}
-            >
-              Richiedi una consulenza
-            </button>
           </div>
         </motion.div>
       </div>
