@@ -4,51 +4,51 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- SEO -->
-    <title>InLab Communication | Agenzia social media, video e comunicazione digitale</title>
-    <meta name="description" content="InLab Communication crea strategie social, foto, video, reel, campagne digitali e contenuti per aziende, professionisti e attività locali che vogliono distinguersi online. Taranto, Puglia." />
-    <meta name="robots" content="index, follow" />
+    <!-- SEO: questi valori sono quelli della home; lo script di build
+         (scripts/prerender.ts) li sostituisce per ogni pagina e il browser
+         li aggiorna a ogni cambio pagina (src/seo). -->
+    <title>InLab Communication | Agenzia di comunicazione a Taranto</title>
+    <meta name="description" content="Agenzia di comunicazione a Taranto: gestione social, video e reel, Meta Ads, siti web, landing page e branding per aziende e attività locali in Puglia." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://sitoweb-beta.vercel.app/" />
+    <meta name="theme-color" content="#1e1d1d" />
+    <meta name="author" content="InLab Communication" />
+    <meta name="geo.region" content="IT-TA" />
+    <meta name="geo.placename" content="Taranto" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://sitoweb-beta.vercel.app/" />
-    <meta property="og:title" content="InLab Communication | Agenzia social media, video e comunicazione digitale" />
-    <meta property="og:description" content="Strategie social, foto, video, reel, campagne Meta Ads, branding, siti web e landing page. Un laboratorio creativo a Taranto, Puglia." />
-    <meta property="og:image" content="https://sitoweb-beta.vercel.app/og-image.jpg" />
-    <meta property="og:locale" content="it_IT" />
     <meta property="og:site_name" content="InLab Communication" />
+    <meta property="og:locale" content="it_IT" />
+    <meta property="og:url" content="https://sitoweb-beta.vercel.app/" />
+    <meta property="og:title" content="InLab Communication | Agenzia di comunicazione a Taranto" />
+    <meta property="og:description" content="Agenzia di comunicazione a Taranto: gestione social, video e reel, Meta Ads, siti web, landing page e branding per aziende e attività locali in Puglia." />
+    <meta property="og:image" content="https://sitoweb-beta.vercel.app/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="InLab Communication | Agenzia comunicazione digitale Taranto" />
-    <meta name="twitter:description" content="Strategie social, foto, video, reel e campagne digitali per brand e attività locali. Taranto, Puglia." />
-    <meta name="twitter:image" content="https://sitoweb-beta.vercel.app/og-image.jpg" />
+    <meta name="twitter:title" content="InLab Communication | Agenzia di comunicazione a Taranto" />
+    <meta name="twitter:description" content="Agenzia di comunicazione a Taranto: gestione social, video e reel, Meta Ads, siti web, landing page e branding per aziende e attività locali in Puglia." />
+    <meta name="twitter:image" content="https://sitoweb-beta.vercel.app/og-image.png" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23cdb2ff'/><text x='50%' y='50%' dominant-baseline='central' text-anchor='middle' font-family='sans-serif' font-weight='900' font-size='16' fill='%23000'>IL</text></svg>" />
+    <!-- Icone -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": "InLab Communication",
-      "description": "Agenzia di comunicazione digitale a Taranto, Puglia. Strategia social, contenuti foto/video, branding, campagne Meta Ads, siti web e landing page.",
-      "url": "https://sitoweb-beta.vercel.app/",
-      "email": "inlab.communication@gmail.com",
-      "telephone": "+393295654319",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Taranto",
-        "addressRegion": "Puglia",
-        "addressCountry": "IT"
-      },
-      "areaServed": ["Taranto", "Palagiano", "Palagianello", "Massafra", "Mottola", "Castellaneta", "Laterza", "Ginosa", "Puglia"]
-    }
-    </script>
+    <!-- Font: caricati subito (prima erano importati dal CSS, più lenti) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" />
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+
+    <!-- Dati strutturati dell'agenzia (generati in build da src/seo/routes.ts) -->
+    <script type="application/ld+json" data-seo="org">{}</script>
   </head>
-  <body>
+  <body style="margin:0;background:#1e1d1d;color:#F0EDE6">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

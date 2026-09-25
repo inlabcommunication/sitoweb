@@ -75,7 +75,7 @@ export const AdminApp = () => {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
           {/* Logo */}
-          <a href="#/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+          <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <div style={{ width: 32, height: 32, background: 'var(--a)', borderRadius: 8, transform: 'rotate(-4deg)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <span style={{ fontFamily: 'var(--fd)', fontSize: 14, color: '#000', transform: 'rotate(4deg)' }}>IL</span>
             </div>
@@ -112,7 +112,7 @@ export const AdminApp = () => {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <a href="#/" target="_blank" rel="noreferrer"
+          <a href="/" target="_blank" rel="noreferrer"
             style={{ fontSize: 11, color: 'var(--m)', letterSpacing: '.08em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: 4, textDecoration: 'none', transition: 'color .2s' }}
             onMouseEnter={e => e.currentTarget.style.color = 'var(--t)'}
             onMouseLeave={e => e.currentTarget.style.color = 'var(--m)'}>

@@ -6,18 +6,21 @@ Sito di InLab Communication (React 19 + Vite + TypeScript) con dashboard admin e
 
 ```
 src/
-  main.tsx          routing: /#/admin → dashboard (caricata a parte), resto → sito
+  main.tsx          routing: /admin → dashboard (caricata a parte), resto → sito
   App.tsx           sito pubblico (pagine, stili globali nel componente <G/>)
   sections/         sezioni della home
   pages/            pagine dei casi studio (caricate on-demand)
   components/       Chatbot
   admin/            dashboard: contenuti, media, lead, analytics, impostazioni
+  seo/              titoli, descrizioni, dati strutturati (routes.ts) e aggiornamento <head>
   lib/
     firebaseConfig.ts  config Firebase (variabili VITE_FIREBASE_*)
     firestoreLite.ts   Firestore "lite" lazy per il sito pubblico
     firebase.ts        SDK completo (Auth + Firestore), solo per /admin
     content.ts         contenuti del sito (Firestore app/site_content + fallback in constants.ts)
     analytics.ts       tracking pageview/scroll/click
+scripts/
+  prerender.ts      dopo la build: HTML per ogni pagina, sitemap.xml, robots.txt
 api/
   chat.ts           funzione serverless Vercel del chatbot (Gemini o Claude)
 ```

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { ArrowUpRight, MapPin } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { normalizeClients } from '../lib/clientUtils';
+import { linkClick, navigate } from '../lib/router';
 
 type ClientsWallProps = {
   onClientClick?: (id: string) => void;
@@ -15,7 +16,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
   const clients = normalizeClients((content as any).clients?.items || []);
   const openClient = (id: string) => {
     if (onClientClick) onClientClick(id);
-    else window.location.hash = `/cliente/${id}`;
+    else navigate(`/cliente/${id}`);
   };
 
   return (
@@ -64,16 +65,16 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
           gap: 14,
         }}>
           {clients.map((client, i) => (
-            <motion.button
+            <motion.a
+              href={`/cliente/${client.id}`}
               key={client.id}
-              type="button"
               aria-label={`Apri scheda cliente ${client.name}`}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-30px' }}
               transition={{ duration: 0.55, delay: (i % 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -4 }}
-              onClick={() => openClient(client.id)}
+              onClick={linkClick(() => openClient(client.id))}
               className="client-card"
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, width: '100%' }}>
@@ -118,12 +119,13 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
                   Scheda <ArrowUpRight size={13} />
                 </span>
               </span>
-            </motion.button>
+            </motion.a>
           ))}
         </div>
 
         <style>{`
           .client-card{
+            text-decoration:none;
             display:flex;flex-direction:column;align-items:flex-start;text-align:left;
             min-height:250px;padding:1.6rem 1.5rem 1.3rem;border-radius:22px;cursor:pointer;
             font:inherit;color:inherit;

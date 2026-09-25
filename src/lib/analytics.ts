@@ -41,7 +41,7 @@ const baseEvent = () => ({
   session_id: getSessionId(),
   user_agent: navigator.userAgent.slice(0, 200),
   device: getDevice(),
-  path: window.location.pathname + window.location.hash,
+  path: window.location.pathname,
   created_at: new Date(), // salvato da Firestore come Timestamp
 });
 
@@ -71,7 +71,7 @@ export const trackPageview = (path?: string, referrer?: string) => {
   enqueue({
     ...baseEvent(),
     event_type: 'pageview',
-    path: path ?? window.location.pathname + window.location.hash,
+    path: path ?? window.location.pathname,
     referrer: referrer ?? document.referrer ?? null,
   });
 };
@@ -141,9 +141,8 @@ export const initAnalytics = () => {
     if (target) trackClick(target.getAttribute('data-track') ?? 'unknown');
   });
 
-  window.addEventListener('hashchange', () => {
+  window.addEventListener('popstate', () => {
     maxScroll = 0; lastScrollSent = 0; currentSection = '';
-    trackPageview();
   });
 
   window.addEventListener('beforeunload', trackSessionEnd);

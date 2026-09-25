@@ -37,6 +37,21 @@ ANTHROPIC_API_KEY=sk-ant-...  # solo se AI_PROVIDER=anthropic
 
 Provider, modello e chiavi si possono anche impostare dalla dashboard (*Impostazioni*): quei valori, salvati in Firestore `app/settings`, hanno la precedenza sulle variabili d'ambiente.
 
+### Dominio del sito (SEO)
+
+```
+VITE_SITE_URL=https://www.tuodominio.it
+```
+
+Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variabile viene usato `https://sitoweb-beta.vercel.app`. Dopo averla cambiata serve un redeploy.
+
+## SEO
+
+- Ogni pagina ha un indirizzo vero (`/servizi`, `/gestione-social-taranto`, `/casi-studio/ricciardi`…); i vecchi link `/#/…` vengono reindirizzati.
+- Titoli, descrizioni e dati strutturati sono in `src/seo/routes.ts`.
+- In build (`npm run build`) lo script `scripts/prerender.ts` crea un HTML per ogni pagina con il `<head>` già corretto, più `sitemap.xml` e `robots.txt`.
+- **Google Search Console**: aggiungi la proprietà del dominio, verifica (record DNS o file HTML in `public/`), poi invia `https://www.tuodominio.it/sitemap.xml`.
+
 ## Dati in Firestore
 
 | Documento / collezione | Contenuto | Chi scrive |
@@ -53,7 +68,7 @@ Provider, modello e chiavi si possono anche impostare dalla dashboard (*Impostaz
 
 ## Dashboard
 
-Vai su `/#/admin` e accedi con un utente creato in Firebase Authentication.
+Vai su `/admin` e accedi con un utente creato in Firebase Authentication.
 
 ## Deploy
 

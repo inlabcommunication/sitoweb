@@ -91,7 +91,7 @@ export const WEBSITE_CONTENT = {
         name: "DIRAM",
         sector: "Ricambi auto e moto",
         location: "Palagianello (TA)",
-        summary: "Ricambi, accessori e prodotti auto e moto, piccole riparazioni di monopattini ed e-bike e punto Poste: un negozio che comunichiamo con video leggeri e simpatici.",
+        summary: "Ricambi e accessori auto e moto, riparazioni di monopattini ed e-bike e punto Poste: un negozio raccontato con video leggeri e simpatici.",
         description: "DIRAM è un negozio di ricambi, accessori e prodotti per auto e moto che offre anche piccole riparazioni di monopattini ed e-bike e un servizio di punto Poste. I contenuti puntano su video simpatici con le persone del negozio come protagonisti: un modo diretto per far conoscere l'assortimento e i servizi, e per creare un legame con la clientela.",
         services: ["Reel & Video", "Gestione Social"],
         results: [],

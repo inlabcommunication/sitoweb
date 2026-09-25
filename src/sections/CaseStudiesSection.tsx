@@ -1,4 +1,5 @@
 import React from 'react';
+import { linkClick } from '../lib/router';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -66,14 +67,15 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
           {CASE_STUDIES.map((cs, i) => {
             const isReverse = i % 2 === 1;
             return (
-              <motion.button
+              <motion.a
+                href={"/casi-studio/" + cs.id}
                 key={cs.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ scale: 1.005 }}
-                onClick={() => onCaseClick(cs.id)}
+                onClick={linkClick(() => onCaseClick(cs.id))}
                 style={{
                   position: 'relative',
                   background: 'linear-gradient(135deg, rgba(205,178,255,0.06), rgba(255,255,255,0.02))',
@@ -207,7 +209,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                     </span>
                   </div>
                 </div>
-              </motion.button>
+              </motion.a>
             );
           })}
         </div>

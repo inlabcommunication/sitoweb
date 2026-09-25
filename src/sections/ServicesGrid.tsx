@@ -1,4 +1,5 @@
 import React from 'react';
+import { linkClick } from '../lib/router';
 import { motion } from 'motion/react';
 import {
   TrendingUp, Video, Camera, Star, Layout,
@@ -74,14 +75,15 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
           {SERVICES_LIST.map((s, i) => {
             const Icon = s.icon;
             return (
-              <motion.button
+              <motion.a
+                href={"/" + s.slug}
                 key={s.label}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -6 }}
-                onClick={() => onServiceClick(s.slug)}
+                onClick={linkClick(() => onServiceClick(s.slug))}
                 style={{
                   textAlign: 'left',
                   background: 'linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01))',
@@ -132,7 +134,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
                 }}>
                   Scopri <ArrowUpRight size={11} />
                 </span>
-              </motion.button>
+              </motion.a>
             );
           })}
         </div>

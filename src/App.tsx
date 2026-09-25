@@ -7,7 +7,10 @@ import {
   Globe, Zap, Layout, Users, BarChart2, Star
 } from "lucide-react";
 import { Chatbot } from "./components/Chatbot";
-import { initAnalytics } from "./lib/analytics";
+import { initAnalytics, trackPageview } from "./lib/analytics";
+import { getCurrentPath, linkClick, navigate } from "./lib/router";
+import { getSeo } from "./seo/routes";
+import { applySeo } from "./seo/head";
 import { loadContent, useContent } from "./lib/content";
 import { getClientId, normalizeClients } from "./lib/clientUtils";
 import { getLiteDb, liteFirestore } from "./lib/firestoreLite";
@@ -29,7 +32,6 @@ const CaseRicciardi = lazy(() => import("./pages/CaseStudyPages").then(m => ({ d
 ═══════════════════════════════════════════════════════════════ */
 const G = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --a:#cdb2ff; --bg:#1e1d1d; --s:#262525; --b:rgba(255,255,255,0.07);
@@ -73,6 +75,8 @@ const G = () => (
     .section-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
  
     @keyframes marq{to{transform:translateX(-50%)}}
+    .foot-link:hover{color:var(--t)!important}
+    .city-link:hover{border-color:rgba(205,178,255,.35)!important;color:var(--a)!important}
     .marq-inner{display:inline-flex;gap:2.5rem;align-items:center;padding-left:2.5rem;animation:marq 28s linear infinite}
  
     @media(max-width:768px){
@@ -94,10 +98,14 @@ const G = () => (
 ═══════════════════════════════════════════════════════════════ */
 const RouterCtx = React.createContext<{route:string;go:(to:string)=>void}>({ route: "/", go: () => {} });
 const useRouter = () => React.useContext(RouterCtx);
-const Link = ({ to, children, style = {}, className = "", onClick = () => {} }: any) => {
+// Link interno: <a href> vero (seguibile dai motori di ricerca) + navigazione senza ricarica
+const Link = ({ to, children, style = {}, className = "", onClick = () => {}, ...rest }: any) => {
   const { go } = useRouter();
   return (
-    <a style={style} className={className} onClick={e => { e.preventDefault(); go(to); onClick?.(); }}>
+    <a href={to} style={style} className={className} {...rest} onClick={e => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return; // apri in nuova scheda
+      e.preventDefault(); go(to); onClick?.();
+    }}>
       {children}
     </a>
   );
@@ -223,10 +231,7 @@ const Footer = () => {
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {SERVICES.map(s=>(
-                <a key={s.slug} onClick={()=>go("/"+s.slug)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
-                  onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
-                  onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
-                >{s.label}</a>
+                <Link key={s.slug} to={"/"+s.slug} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{s.label}</Link>
               ))}
             </div>
           </div>
@@ -234,10 +239,7 @@ const Footer = () => {
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Contatti","/contatti"]].map(([l,r])=>(
-                <a key={r} onClick={()=>go(r)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
-                  onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
-                  onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
-                >{l}</a>
+                <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
               ))}
             </div>
           </div>
@@ -245,10 +247,7 @@ const Footer = () => {
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Aree servite</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {CITIES.map(c=>(
-                <a key={c} onClick={()=>go(`/gestione-social-${c.toLowerCase()}`)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
-                  onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
-                  onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
-                >{c}</a>
+                <Link key={c} to={`/gestione-social-${c.toLowerCase()}`} className="foot-link" title={`Gestione social a ${c}`} style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{c}</Link>
               ))}
             </div>
           </div>
@@ -1120,13 +1119,13 @@ const PageServizi = () => {
       <section style={{padding:"7rem 2rem"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:"1.2rem"}} className="grid-1-mob">
           {SERVICES.map((s,i)=>(
-            <motion.div key={s.slug} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
-              onClick={()=>go("/"+s.slug)} style={{cursor:"pointer",padding:"2.5rem"}}>
+            <motion.a key={s.slug} href={"/"+s.slug} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
+              onClick={linkClick(()=>go("/"+s.slug))} style={{cursor:"pointer",padding:"2.5rem",display:"block",color:"inherit",textDecoration:"none"}}>
               <div style={{color:"var(--a)",marginBottom:"1.2rem"}}>{s.icon}</div>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.5rem)",lineHeight:.95,marginBottom:".6rem",textTransform:"uppercase"}}>{s.label}</h2>
               <p style={{fontSize:14,color:"var(--m)",lineHeight:1.7,marginBottom:"1.5rem"}}>{s.short}</p>
               <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri il servizio <ArrowUpRight size={11}/></span>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </section>
@@ -1583,11 +1582,7 @@ const PageCittaSEO = ({city, service}) => {
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Operiamo anche in queste città</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
             {otherCities.map(c=>(
-              <button key={c} className="tag tag-g" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}
-                onClick={()=>go(`/${svc.slug}-${c.toLowerCase()}`)}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(205,178,255,.35)";e.currentTarget.style.color="var(--a)"}}
-                onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--b)";e.currentTarget.style.color="var(--m)"}}
-              >{svc.label} a {c}</button>
+              <Link key={c} to={`/${svc.slug}-${c.toLowerCase()}`} className="tag tag-g city-link" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}>{svc.label} a {c}</Link>
             ))}
           </div>
         </div>
@@ -2142,26 +2137,28 @@ const renderPage = (info) => {
    APP
 ═══════════════════════════════════════════════════════════════ */
 export default function App() {
-  const getRouteFromHash = () => {
-    const hash = window.location.hash.replace('#', '') || '/';
-    return hash.startsWith('/') ? hash : '/' + hash;
-  };
-
-  const [route,setRoute]=useState(getRouteFromHash);
+  const [route,setRoute]=useState(getCurrentPath);
 
   useEffect(() => {
     loadContent();
     initAnalytics();
-    const onHash = () => setRoute(getRouteFromHash());
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
+    const onPop = () => setRoute(getCurrentPath());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
   }, []);
- 
-  const go=useCallback((to)=>{
-    window.location.hash = to;
-    setRoute(to);
+
+  // Pageview e scroll in alto a ogni cambio pagina (la prima la traccia initAnalytics)
+  const firstRoute = React.useRef(true);
+  useEffect(() => {
+    if (firstRoute.current) { firstRoute.current = false; return; }
+    trackPageview();
     window.scrollTo({top:0,behavior:"smooth"});
-  },[]);
+  }, [route]);
+
+  const go=useCallback((to)=>navigate(to),[]);
+
+  // SEO: titolo, description, canonical e dati strutturati della pagina corrente
+  useEffect(() => { applySeo(getSeo(route)); }, [route]);
  
   const pageInfo=parseRoute(route);
  

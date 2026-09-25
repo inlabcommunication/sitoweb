@@ -8,24 +8,21 @@ import './index.css';
 const AdminApp = lazy(() => import('./admin/AdminApp.tsx').then((m) => ({ default: m.AdminApp })));
 
 // ════════════════════════════════════════════════════════════════
-// Routing top-level: /admin → dashboard, tutto il resto → sito
-// Usa hash (#/admin) per compatibilità con hosting statico.
+// Routing top-level: /admin → dashboard, tutto il resto → sito.
+// I vecchi link /#/admin vengono portati su /admin.
 // ════════════════════════════════════════════════════════════════
 
 const isAdminRoute = () => {
-  const h = window.location.hash || '';
-  const p = window.location.pathname || '';
-  return h.startsWith('#/admin') || p.startsWith('/admin');
+  if (window.location.hash.startsWith('#/admin')) window.history.replaceState(null, '', '/admin');
+  return window.location.pathname.startsWith('/admin');
 };
 
 const Root = () => {
   const [admin, setAdmin] = useState(isAdminRoute());
   useEffect(() => {
     const update = () => setAdmin(isAdminRoute());
-    window.addEventListener('hashchange', update);
     window.addEventListener('popstate', update);
     return () => {
-      window.removeEventListener('hashchange', update);
       window.removeEventListener('popstate', update);
     };
   }, []);

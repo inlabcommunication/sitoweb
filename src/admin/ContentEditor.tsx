@@ -329,7 +329,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
       {((content as any).portfolio?.projects || []).map((p: any, i: number) => (
         <CardBlock key={i} title={p.title || 'Progetto senza titolo'} collapsed
           onDelete={() => setContent((prev: any) => { const n = JSON.parse(JSON.stringify(prev)); n.portfolio.projects.splice(i, 1); return n; })}>
-          <a href={`${window.location.origin}/#/progetto/${p.id}`} target="_blank" rel="noreferrer"
+          <a href={`${window.location.origin}/progetto/${p.id}`} target="_blank" rel="noreferrer"
             style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', background: 'rgba(205,178,255,0.1)', border: '.5px solid rgba(205,178,255,0.3)', borderRadius: 8, color: '#cdb2ff', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', marginBottom: 12 }}>
             👁 Vedi pagina ↗
           </a>
@@ -740,9 +740,9 @@ export const ContentEditor = () => {
   if (loading) return <div style={{ padding: '4rem', textAlign: 'center', color: '#555', fontSize: 13 }}>Caricamento contenuti...</div>;
 
   const pageUrl = {
-    home: '/#/', studio: '/#/chi-siamo', lavori: '/#/portfolio',
-    servizi: '/#/servizi', contatti: '/#/contatti',
-  }[page] ?? '/#/';
+    home: '/', studio: '/chi-siamo', lavori: '/portfolio',
+    servizi: '/servizi', contatti: '/contatti',
+  }[page] ?? '/';
 
   const currentPageDef = PAGES.find(p => p.key === page);
   const currentBlockLabel = currentPageDef?.blocks.find(b => b.key === block)?.label || block;
