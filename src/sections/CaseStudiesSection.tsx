@@ -23,17 +23,8 @@ export const CASE_STUDIES: CaseStudy[] = [
     result: 'Campagna in 5 fasi tra teaser, QR code, video lancio e attività offline. Lead raccolti, partecipazione all\'inaugurazione, percezione del brand rafforzata.',
   },
   {
-    id: 'imh',
-    number: '02',
-    client: 'IMH',
-    title: 'Comunicare fiducia nel settore energia',
-    category: 'Contenuti · Campagne · Landing page',
-    problem: 'Rendere chiaro, semplice e credibile un settore complesso come luce, gas, telefonia e fotovoltaico per generare richieste di consulenza.',
-    result: 'Strategia contenuti, reel informativi, copy persuasivi e landing orientate alla conversione. Più richieste qualificate e brand percepito come affidabile.',
-  },
-  {
     id: 'ricciardi',
-    number: '03',
+    number: '02',
     client: 'Studio Dentistico Ricciardi',
     title: 'Autorevolezza e fiducia online',
     category: 'Social media · Posizionamento · Recensioni',

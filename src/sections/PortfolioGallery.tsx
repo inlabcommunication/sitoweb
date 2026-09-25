@@ -16,7 +16,6 @@ export type PortfolioProject = {
 
 const PROJECTS: PortfolioProject[] = [
   { id: 'paresteta',   client: 'Paresteta',                  title: 'Dal rebranding all\'inaugurazione',     category: 'eventi',    categoryLabel: 'Eventi & Branding',  description: 'Una strategia integrata online e offline per un cambio insegna trasformato in evento locale.', large: true },
-  { id: 'imh',         client: 'IMH',                        title: 'Comunicare fiducia nel settore energia', category: 'campagne',  categoryLabel: 'Campagne & Lead',    description: 'Contenuti, reel e landing page per generare lead qualificati nel settore luce, gas, fotovoltaico.' },
   { id: 'ricciardi',   client: 'Studio Dentistico Ricciardi',title: 'Autorevolezza e fiducia online',         category: 'social',    categoryLabel: 'Social Media',       description: 'Piano editoriale e contenuti che alternano educazione, recensioni e posizionamento.' },
   { id: 'inox-racing', client: 'Inox Racing Puglia',         title: 'Video e storytelling motorsport',         category: 'video',     categoryLabel: 'Reel & Video',       description: 'Storytelling visivo per un settore di nicchia. Riprese, montaggio e narrazione.' },
   { id: 'bmax',        client: 'Bmax',                       title: 'Fotovoltaico e contenuti educativi',      category: 'social',    categoryLabel: 'Social Media',       description: 'Contenuti che spiegano un servizio tecnico in modo chiaro e accessibile.' },

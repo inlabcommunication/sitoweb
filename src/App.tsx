@@ -22,7 +22,6 @@ import { CaseStudiesSection, CASE_STUDIES } from "./sections/CaseStudiesSection"
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CaseParesteta = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseParesteta })));
-const CaseImh       = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseImh })));
 const CaseRicciardi = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseRicciardi })));
  
 /* ═══════════════════════════════════════════════════════════════
@@ -82,6 +81,7 @@ const G = () => (
       .grid-1-mob{grid-template-columns:1fr!important}
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
+      .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
     }
     @media(max-width:480px){
       .btn{padding:11px 20px!important;font-size:10px!important}
@@ -119,7 +119,7 @@ const SERVICES = [
  
 const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
  
-const CLIENTS = ["Ristorante Da Mario","Studio Medico Rossi","Parrucchiere Chic","Moda Pugliese","Bar Centrale","Officina Auto","Agriturismo Sole","Hotel Marina"];
+const CLIENTS = ["Nunzio Putignano","Diram autoricambi","Studio Dentistico Ricciardi","Villa Natia","Ottica OcchiBlu","Sottoscala","Sublime tentazione","Aleph Caffè"];
 const STATS_GLOBAL = [
   { n:"3.2M+", l:"Visualizzazioni generate" },
   { n:"47+", l:"Brand e attività seguiti" },
@@ -1617,7 +1617,7 @@ const PageProgetto = ({id}: {id: string}) => {
       <section style={{height:"100vh",position:"relative",display:"flex",flexDirection:"column",justifyContent:"flex-end",overflow:"hidden"}}>
         {p.image
           ? <img src={p.image} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}}/>
-          : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#2a2828 0%,#1a1a2e 100%)"}}/>
+          : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#2a2828 0%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,0.5) 50%,rgba(30,29,29,0.1) 100%)"}}/>
 
@@ -1995,7 +1995,6 @@ const PageCaso = ({id}: {id:string}) => {
 
   switch(id){
     case "paresteta": return page(<CaseParesteta onBack={onBack} onContact={onContact}/>);
-    case "imh":       return page(<CaseImh       onBack={onBack} onContact={onContact}/>);
     case "ricciardi": return page(<CaseRicciardi onBack={onBack} onContact={onContact}/>);
     default:
       return (
@@ -2085,7 +2084,7 @@ const parseRoute = (route) => {
   if(route==="/contatti") return {page:"contatti"};
   // case study detail pages: /casi-studio/paresteta
   if(route.startsWith("/casi-studio/")) return {page:"caso",id:route.replace("/casi-studio/","")};
-  // client detail pages: /cliente/ristorante-da-mario
+  // client detail pages: /cliente/nunzio-putignano
   if(route.startsWith("/cliente/")) return {page:"cliente",id:route.replace("/cliente/","")};
   // project detail pages: /progetto/1
   if(route.startsWith("/progetto/")) return {page:"progetto",id:route.replace("/progetto/","")};

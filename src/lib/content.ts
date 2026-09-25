@@ -72,6 +72,13 @@ function normalizeSiteContent(content: any): SiteContent {
   } as SiteContent;
 }
 
+// Clienti di esempio della prima versione del sito: se sono rimasti salvati in
+// Firestore non vanno mostrati accanto ai clienti reali.
+const DEMO_CLIENT_IDS = new Set([
+  'ristorante-da-mario', 'studio-medico-rossi', 'parrucchiere-chic', 'moda-pugliese',
+  'bar-centrale', 'officina-auto', 'agriturismo-sole', 'hotel-marina',
+]);
+
 function mergeClientItems(defaultItems: any[] = [], savedItems: any[] = []) {
   const merged = new Map<string, any>();
 
@@ -79,7 +86,7 @@ function mergeClientItems(defaultItems: any[] = [], savedItems: any[] = []) {
     merged.set(getClientId(client), client);
   });
 
-  normalizeClients(savedItems).forEach((client) => {
+  normalizeClients(savedItems).filter((client) => !DEMO_CLIENT_IDS.has(getClientId(client))).forEach((client) => {
     const id = getClientId(client);
     const nameId = client.name ? getClientId({ name: client.name }) : id;
     const finalId = merged.has(id) ? id : merged.has(nameId) ? nameId : id;

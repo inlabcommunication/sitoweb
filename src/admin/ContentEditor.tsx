@@ -401,7 +401,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
         <CardBlock key={i} title={c.name}
           onDelete={() => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.clients.items.splice(i, 1); return n; })}>
           <Field label="ID scheda" value={c.id} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].id = v; set('clients.items', a); }}
-            hint="Usato nell'URL della scheda cliente, es: ristorante-da-mario" />
+            hint="Usato nell'URL della scheda cliente, es: nunzio-putignano" />
           <Field label="Nome cliente" value={c.name} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].name = v; set('clients.items', a); }} />
           <Field label="Settore" value={c.sector} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].sector = v; set('clients.items', a); }} placeholder="Ristorazione, beauty, hospitality..." />
           <Field label="Località" value={c.location} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].location = v; set('clients.items', a); }} placeholder="Taranto, Puglia..." />

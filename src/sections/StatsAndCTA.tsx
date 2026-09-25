@@ -110,7 +110,7 @@ interface FinalCTAProps {
 
 export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
   return (
-    <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, var(--bg) 0%, #0d1e30 40%, #1f3c5e 100%)' }}>
+    <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, var(--bg) 0%, #241e30 40%, #3a2d56 100%)' }}>
       {/* Glow animato */}
       <motion.div
         animate={{ opacity: [0.3, 0.6, 0.3] }}
@@ -126,7 +126,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
         style={{
           position: 'absolute', bottom: '-20%', left: '-10%', width: 500, height: 500,
-          background: 'rgba(31,60,94,0.6)', borderRadius: '50%', filter: 'blur(100px)',
+          background: 'rgba(205,178,255,0.18)', borderRadius: '50%', filter: 'blur(100px)',
           pointerEvents: 'none',
         }}
       />
@@ -161,7 +161,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
             <button
               className="btn btn-p"
               onClick={onClick}
-              style={{ fontSize: 13, padding: '18px 38px', background: '#F0EDE6', color: '#1f3c5e' }}
+              style={{ fontSize: 13, padding: '18px 38px', background: 'var(--a)', color: '#000' }}
             >
               Parla con InLab <ArrowRight size={15} />
             </button>
