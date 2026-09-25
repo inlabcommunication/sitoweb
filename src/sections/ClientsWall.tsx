@@ -5,9 +5,11 @@ import { normalizeClients } from '../lib/clientUtils';
 
 type ClientsWallProps = {
   onClientClick?: (id: string) => void;
+  /** false = solo la griglia, senza titolo di sezione (es. pagina Casi studio) */
+  showHeader?: boolean;
 };
 
-export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick }) => {
+export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHeader = true }) => {
   const content = useContent();
   const clients = normalizeClients((content as any).clients?.items || []);
   const openClient = (id: string) => {
@@ -18,6 +20,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick }) => {
   return (
     <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        {showHeader && (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -51,6 +54,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick }) => {
             letterSpacing: '.1em', textTransform: 'uppercase',
           }}>{clients.length}+ clienti</span>
         </motion.div>
+        )}
 
         {/* Grid loghi: 4 colonne (2 su mobile). Le linee sono sulle celle, così
             un'ultima riga incompleta non lascia riquadri vuoti colorati. */}

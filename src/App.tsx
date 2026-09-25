@@ -1981,6 +1981,7 @@ const PageCasiStudio = () => {
           </motion.p>
         </div>
       </section>
+      <ClientsWall showHeader={false} onClientClick={(id) => go(`/cliente/${id}`)} />
       <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
       <FinalCTA onClick={() => go("/contatti")} />
     </>
