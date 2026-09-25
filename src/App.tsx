@@ -143,7 +143,6 @@ const Navbar = () => {
   const navLinks = [
     { to:"/", label:"Home" },
     { to:"/chi-siamo", label:"Studio" },
-    { to:"/portfolio", label:"Portfolio" },
     { to:"/casi-studio", label:"Casi studio" },
     { to:"/servizi", label:"Servizi" },
     { to:"/contatti", label:"Contatti" },
@@ -234,7 +233,7 @@ const Footer = () => {
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {[["Chi siamo","/chi-siamo"],["Portfolio","/portfolio"],["Casi studio","/casi-studio"],["Contatti","/contatti"]].map(([l,r])=>(
+              {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Contatti","/contatti"]].map(([l,r])=>(
                 <a key={r} onClick={()=>go(r)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
                   onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
                   onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
@@ -578,11 +577,9 @@ const PageHome = () => {
     <>
       <HeroFlow
         onPrimaryCta={() => go("/contatti")}
-        onSecondaryCta={() => go("/portfolio")}
         tag={hero.tag}
         description={hero.description}
         ctaPrimary={hero.cta?.primary}
-        ctaSecondary={hero.cta?.secondary}
       />
 
       {/* Marquee servizi */}
@@ -623,13 +620,6 @@ const PageHome = () => {
 
       {/* METODO timeline */}
       <MethodTimeline />
-
-      {/* PORTFOLIO preview */}
-      <PortfolioGallery
-        onProjectClick={(id) => go("/casi-studio/" + id)}
-        maxItems={6}
-        onViewAll={() => go("/portfolio")}
-      />
 
       {/* CLIENTI */}
       <ClientsWall onClientClick={(id) => go(`/cliente/${id}`)} />

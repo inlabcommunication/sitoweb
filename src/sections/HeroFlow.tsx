@@ -299,7 +299,7 @@ const PhoneMockup: React.FC<{ reduced: boolean }> = ({ reduced }) => (
 
 interface HeroFlowProps {
   onPrimaryCta: () => void;
-  onSecondaryCta: () => void;
+  onSecondaryCta?: () => void; // senza handler il secondo bottone non viene mostrato
   tag?: string;
   headlineLine1?: string;
   headlineLine2?: string;
@@ -389,7 +389,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}
           >
             <button className="btn btn-p" onClick={onPrimaryCta}>{ctaPrimary} <ArrowRight size={14} /></button>
-            <button className="btn btn-g" onClick={onSecondaryCta}>{ctaSecondary}</button>
+            {onSecondaryCta && <button className="btn btn-g" onClick={onSecondaryCta}>{ctaSecondary}</button>}
           </motion.div>
 
           <motion.div
