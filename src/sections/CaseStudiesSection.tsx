@@ -26,10 +26,10 @@ export const CASE_STUDIES: CaseStudy[] = [
     id: 'ricciardi',
     number: '02',
     client: 'Studio Dentistico Ricciardi',
-    title: 'Autorevolezza e fiducia online',
-    category: 'Social media · Posizionamento · Recensioni',
-    problem: 'Aumentare la percezione di affidabilità di uno studio dentistico e migliorare la presenza digitale verso i pazienti.',
-    result: 'Piano editoriale con contenuti educativi, recensioni e posizionamento. Comunicazione più chiara, professionale e rassicurante.',
+    title: 'Lumina: dalla fiducia online alle prenotazioni',
+    category: 'Sito web · Lead generation · Social media',
+    problem: 'Aumentare la percezione di affidabilità di uno studio dentistico e trasformarla in richieste concrete di appuntamento.',
+    result: 'Nuovo sito luminaricciardi.it, campagne di lead generation e piano editoriale con contenuti educativi e recensioni. Più richieste e un brand più solido.',
   },
 ];
 

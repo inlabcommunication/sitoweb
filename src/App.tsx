@@ -1844,6 +1844,11 @@ const PageCliente = ({id}: {id: string}) => {
             <p className="section-label">Scheda cliente</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>INFORMAZIONI<br/><span className="stroke">E CONTESTO</span></h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Aggiungi una descrizione dalla dashboard per completare questa scheda cliente."}</p>
+            {client.caseStudy&&(
+              <button className="btn btn-p" onClick={()=>go(`/casi-studio/${client.caseStudy}`)} style={{marginBottom:"1rem"}}>
+                Leggi il caso studio <ArrowRight size={14}/>
+              </button>
+            )}
             {links.length>0&&(
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
                 {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:10,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
