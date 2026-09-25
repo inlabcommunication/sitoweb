@@ -580,9 +580,6 @@ const PageHome = () => {
         onPrimaryCta={() => go("/contatti")}
         onSecondaryCta={() => go("/portfolio")}
         tag={hero.tag}
-        headlineLine1={hero.headline?.line1}
-        headlineLine2={hero.headline?.line2}
-        headlineAccent={hero.headline?.accent}
         description={hero.description}
         ctaPrimary={hero.cta?.primary}
         ctaSecondary={hero.cta?.secondary}

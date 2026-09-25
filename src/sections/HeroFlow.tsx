@@ -303,7 +303,6 @@ interface HeroFlowProps {
   tag?: string;
   headlineLine1?: string;
   headlineLine2?: string;
-  headlineAccent?: string;
   description?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
@@ -314,7 +313,6 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
   tag = 'Laboratorio creativo — Taranto, Puglia',
   headlineLine1 = 'Non ti servono',
   headlineLine2 = 'solo contenuti.',
-  headlineAccent,
   description = 'InLab Communication crea strategie, foto, video, reel e campagne digitali per aziende, professionisti e attività locali che vogliono distinguersi davvero.',
   ctaPrimary = 'Raccontaci il tuo progetto',
   ctaSecondary = 'Guarda i nostri lavori',
@@ -373,7 +371,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             {headlineLine1}<br />
             {headlineLine2}<br />
             <span style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400, fontSize: '0.72em', textTransform: 'none', color: 'var(--t)' }}>
-              {headlineAccent ? headlineAccent : <>Ti serve essere <RotatingWord reduced={reduced} /></>}
+              Ti serve essere <RotatingWord reduced={reduced} />
             </span>
           </motion.h1>
 
