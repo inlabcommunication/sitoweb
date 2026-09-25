@@ -1,0 +1,2 @@
+/* Base CSS — il resto degli stili è in <style> JSX dentro App.tsx (componente <G/>). */
+html, body { margin: 0; padding: 0; }
