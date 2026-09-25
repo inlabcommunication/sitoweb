@@ -1,5 +1,21 @@
-import { db } from './firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import type { Firestore } from 'firebase/firestore/lite';
+import { isFirebaseConfigured } from './firebaseConfig';
+import { getLiteDb, liteFirestore } from './firestoreLite';
+
+// Riferimenti risolti dopo il primo caricamento lazy di Firestore lite, così
+// session_end (su pagehide) può scrivere in modo sincrono.
+let db: Firestore | null = null;
+let addEvent: ((e: any) => Promise<unknown>) | null = null;
+
+const ensureDb = async () => {
+  if (addEvent) return addEvent;
+  const liteDb = await getLiteDb();
+  if (!liteDb) return null;
+  const { collection, addDoc } = await liteFirestore();
+  db = liteDb;
+  addEvent = (e) => addDoc(collection(liteDb, 'analytics_events'), e);
+  return addEvent;
+};
 
 const SESSION_KEY = 'inlab_sid';
 const SESSION_START_KEY = 'inlab_sst';
@@ -26,24 +42,26 @@ const baseEvent = () => ({
   user_agent: navigator.userAgent.slice(0, 200),
   device: getDevice(),
   path: window.location.pathname + window.location.hash,
-  created_at: Timestamp.now(),
+  created_at: new Date(), // salvato da Firestore come Timestamp
 });
 
 const queue: any[] = [];
 let flushTimer: number | null = null;
 
 const flush = async () => {
-  if (!db || queue.length === 0) return;
+  if (queue.length === 0) return;
+  const add = await ensureDb();
+  if (!add) return;
   const batch = queue.splice(0, queue.length);
   try {
-    await Promise.all(batch.map((e) => addDoc(collection(db!, 'analytics_events'), e)));
+    await Promise.all(batch.map(add));
   } catch (e) {
     console.debug('[analytics] flush failed', e);
   }
 };
 
 const enqueue = (event: any) => {
-  if (!db) return;
+  if (!isFirebaseConfigured()) return;
   queue.push(event);
   if (flushTimer) clearTimeout(flushTimer);
   flushTimer = window.setTimeout(flush, 1500);
@@ -82,9 +100,9 @@ export const trackClick = (target: string) => {
 
 const trackSessionEnd = () => {
   const start = parseInt(sessionStorage.getItem(SESSION_START_KEY) ?? '0', 10);
-  if (!start || !db) return;
+  if (!start || !db || !addEvent) return;
   const duration = Math.round((Date.now() - start) / 1000);
-  addDoc(collection(db, 'analytics_events'), {
+  addEvent({
     ...baseEvent(),
     event_type: 'session_end',
     duration,
@@ -94,7 +112,7 @@ const trackSessionEnd = () => {
 
 let initialized = false;
 export const initAnalytics = () => {
-  if (initialized || !db) return;
+  if (initialized || !isFirebaseConfigured()) return;
   initialized = true;
   trackPageview();
 

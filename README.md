@@ -1,20 +1,35 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# InLab Communication — sito web
 
-# Run and deploy your AI Studio app
+Sito di InLab Communication (React 19 + Vite + TypeScript) con dashboard admin e chatbot AI, pubblicato su Vercel.
 
-This contains everything you need to run your app locally.
+## Struttura
 
-View your app in AI Studio: https://ai.studio/apps/e4ee7efe-76a5-40ee-b9ab-b7d799238c64
+```
+src/
+  main.tsx          routing: /#/admin → dashboard (caricata a parte), resto → sito
+  App.tsx           sito pubblico (pagine, stili globali nel componente <G/>)
+  sections/         sezioni della home
+  pages/            pagine dei casi studio (caricate on-demand)
+  components/       Chatbot
+  admin/            dashboard: contenuti, media, lead, analytics, impostazioni
+  lib/
+    firebaseConfig.ts  config Firebase (variabili VITE_FIREBASE_*)
+    firestoreLite.ts   Firestore "lite" lazy per il sito pubblico
+    firebase.ts        SDK completo (Auth + Firestore), solo per /admin
+    content.ts         contenuti del sito (Firestore app/site_content + fallback in constants.ts)
+    analytics.ts       tracking pageview/scroll/click
+api/
+  chat.ts           funzione serverless Vercel del chatbot (Gemini o Claude)
+```
 
-## Run Locally
+## Sviluppo
 
-**Prerequisites:**  Node.js
+```bash
+npm install
+cp .env.example .env.local   # poi compila i valori
+npm run dev                  # http://localhost:3000
+npm run lint                 # controllo TypeScript
+npm run build                # build di produzione in dist/
+```
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Configurazione di Firebase, Vercel e chatbot: vedi [SETUP.md](SETUP.md).

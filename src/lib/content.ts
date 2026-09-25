@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
-import { db } from './firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { getLiteDb, liteFirestore } from './firestoreLite';
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId, normalizeClients } from './clientUtils';
 
@@ -13,8 +12,10 @@ export const getContent = (): SiteContent => cached ?? normalizeSiteContent(WEBS
 
 export const loadContent = async (forceRefresh = false): Promise<SiteContent> => {
   if (cached && !forceRefresh) return cached;
-  if (!db) { cached = normalizeSiteContent(WEBSITE_CONTENT); return cached; }
   try {
+    const db = await getLiteDb();
+    if (!db) { cached = normalizeSiteContent(WEBSITE_CONTENT); return cached; }
+    const { doc, getDoc } = await liteFirestore();
     const snap = await getDoc(doc(db, 'app', 'site_content'));
     if (snap.exists()) {
       cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, snap.data() as any));
@@ -29,6 +30,9 @@ export const loadContent = async (forceRefresh = false): Promise<SiteContent> =>
 };
 
 export const saveContent = async (newContent: SiteContent): Promise<boolean> => {
+  // Scrittura dalla dashboard: usa l'SDK completo (già caricato in /admin) così
+  // la richiesta porta il token di autenticazione dell'admin.
+  const [{ db }, { doc, setDoc }] = await Promise.all([import('./firebase'), import('firebase/firestore')]);
   if (!db) return false;
   try {
     const prepared = normalizeSiteContent(newContent);

@@ -1,8 +1,11 @@
-import { StrictMode, useEffect, useState } from 'react';
+import { StrictMode, Suspense, lazy, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
-import { AdminApp } from './admin/AdminApp.tsx';
 import './index.css';
+
+// La dashboard (con Firebase Auth + Firestore completo) è in un chunk separato:
+// i visitatori del sito non la scaricano mai.
+const AdminApp = lazy(() => import('./admin/AdminApp.tsx').then((m) => ({ default: m.AdminApp })));
 
 // ════════════════════════════════════════════════════════════════
 // Routing top-level: /admin → dashboard, tutto il resto → sito
@@ -26,7 +29,9 @@ const Root = () => {
       window.removeEventListener('popstate', update);
     };
   }, []);
-  return admin ? <AdminApp /> : <App />;
+  return admin
+    ? <Suspense fallback={null}><AdminApp /></Suspense>
+    : <App />;
 };
 
 createRoot(document.getElementById('root')!).render(

@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
   MapPin, Phone, Mail, Check,
@@ -10,6 +10,7 @@ import { Chatbot } from "./components/Chatbot";
 import { initAnalytics } from "./lib/analytics";
 import { loadContent, useContent } from "./lib/content";
 import { getClientId, normalizeClients } from "./lib/clientUtils";
+import { getLiteDb, liteFirestore } from "./lib/firestoreLite";
 
 // Nuove sezioni modulari
 import { HeroFlow } from "./sections/HeroFlow";
@@ -19,7 +20,10 @@ import { PortfolioGallery } from "./sections/PortfolioGallery";
 import { ClientsWall } from "./sections/ClientsWall";
 import { CaseStudiesSection, CASE_STUDIES } from "./sections/CaseStudiesSection";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
-import { CaseParesteta, CaseImh, CaseRicciardi } from "./pages/CaseStudyPages";
+// Pagine dei casi studio caricate solo quando servono (chunk separato)
+const CaseParesteta = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseParesteta })));
+const CaseImh       = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseImh })));
+const CaseRicciardi = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseRicciardi })));
  
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -1381,8 +1385,8 @@ const PageContatti = () => {
     setError("");
     setSending(true);
     try {
-      const { db } = await import('./lib/firebase');
-      const { collection, addDoc } = await import('firebase/firestore');
+      const db = await getLiteDb();
+      const { collection, addDoc } = await liteFirestore();
       if(!db) {
         setError("Servizio momentaneamente non disponibile. Scrivici direttamente a inlab.communication@gmail.com");
         setSending(false);
@@ -2000,10 +2004,12 @@ const PageCaso = ({id}: {id:string}) => {
   // Scroll in alto quando si arriva sulla pagina
   useEffect(() => { window.scrollTo({top:0,behavior:"instant" as any}); }, [id]);
 
+  const page = (el: React.ReactNode) => <Suspense fallback={<div style={{minHeight:"100vh"}}/>}>{el}</Suspense>;
+
   switch(id){
-    case "paresteta": return <CaseParesteta onBack={onBack} onContact={onContact}/>;
-    case "imh":       return <CaseImh       onBack={onBack} onContact={onContact}/>;
-    case "ricciardi": return <CaseRicciardi onBack={onBack} onContact={onContact}/>;
+    case "paresteta": return page(<CaseParesteta onBack={onBack} onContact={onContact}/>);
+    case "imh":       return page(<CaseImh       onBack={onBack} onContact={onContact}/>);
+    case "ricciardi": return page(<CaseRicciardi onBack={onBack} onContact={onContact}/>);
     default:
       return (
         <section style={{padding:"10rem 2rem 8rem",minHeight:"60vh"}}>
