@@ -52,12 +52,12 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick }) => {
           }}>{clients.length}+ clienti</span>
         </motion.div>
 
-        {/* Grid loghi: 4 colonne (2 su mobile) così 8 clienti riempiono la griglia */}
+        {/* Grid loghi: 4 colonne (2 su mobile). Le linee sono sulle celle, così
+            un'ultima riga incompleta non lascia riquadri vuoti colorati. */}
         <div className="grid-2-mob" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: 1,
-          background: 'var(--b)',
+          gap: 0,
           borderRadius: 24,
           overflow: 'hidden',
           border: '.5px solid var(--b)',
@@ -76,6 +76,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick }) => {
               style={{
                 background: 'var(--bg)',
                 border: 0,
+                boxShadow: '0 0 0 .5px var(--b)',
                 color: 'inherit',
                 font: 'inherit',
                 padding: '2.5rem 1.5rem',

@@ -119,7 +119,7 @@ const SERVICES = [
  
 const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
  
-const CLIENTS = ["Nunzio Putignano","Diram autoricambi","Studio Dentistico Ricciardi","Villa Natia","Ottica OcchiBlu","Sottoscala","Sublime tentazione","Aleph Caffè"];
+const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento","Aleph Caffè"];
 const STATS_GLOBAL = [
   { n:"3.2M+", l:"Visualizzazioni generate" },
   { n:"47+", l:"Brand e attività seguiti" },
@@ -1785,7 +1785,9 @@ const PageCliente = ({id}: {id: string}) => {
     {label:"Facebook", href:client?.facebook},
     {label:"TikTok", href:client?.tiktok},
     {label:"LinkedIn", href:client?.linkedin},
-  ].filter(link=>link.href && /^https?:\/\//.test(String(link.href)));
+    {label:client?.phone ? `Tel. ${client.phone}` : "", href:client?.phone ? `tel:${String(client.phone).replace(/[^\d+]/g,"")}` : ""},
+    {label:client?.address ? "Come arrivare" : "", href:client?.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${client.name} ${client.address}`)}` : ""},
+  ].filter(link=>link.label && link.href && /^(https?:\/\/|tel:)/.test(String(link.href)));
 
   if(!client){
     return (
@@ -1821,7 +1823,7 @@ const PageCliente = ({id}: {id: string}) => {
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1px",background:"var(--b)",borderRadius:24,overflow:"hidden",border:".5px solid var(--b)"}}>
               {[
                 ["Settore", client.sector],
-                ["Area", client.location],
+                ["Area", client.address || client.location],
                 ["Servizi", `${client.services?.length || relatedProjects.length || 0}`],
                 ["Lavori", `${relatedProjects.length}`],
               ].map(([label,value])=>(
@@ -1844,7 +1846,7 @@ const PageCliente = ({id}: {id: string}) => {
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Aggiungi una descrizione dalla dashboard per completare questa scheda cliente."}</p>
             {links.length>0&&(
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target="_blank" rel="noreferrer" style={{fontSize:10,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
+                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:10,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
               </div>
             )}
           </div>

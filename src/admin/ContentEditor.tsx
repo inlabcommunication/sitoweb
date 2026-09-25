@@ -412,6 +412,9 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
           <Field label="Sito web" value={c.website || c.url} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].website = v; a[i].url = v; set('clients.items', a); }}
             hint="Link esterno mostrato nella scheda cliente" />
           <Field label="Instagram" value={c.instagram} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].instagram = v; set('clients.items', a); }} placeholder="https://instagram.com/..." />
+          <Field label="Facebook" value={c.facebook} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].facebook = v; set('clients.items', a); }} placeholder="https://facebook.com/..." />
+          <Field label="Telefono" value={c.phone} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].phone = v; set('clients.items', a); }} placeholder="+39 ..." />
+          <Field label="Indirizzo" value={c.address} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].address = v; set('clients.items', a); }} placeholder="Via ..., Città (TA)" />
           <ImageField label="Logo (Cloudinary)" value={c.logo} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].logo = v; set('clients.items', a); }} />
           <ImageField label="Immagine hero scheda" value={c.image} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].image = v; set('clients.items', a); }} />
         </CardBlock>
