@@ -160,7 +160,7 @@ export const getSeo = (rawPath: string): Seo => {
       'InLab Communication è un laboratorio creativo di Taranto: strategia, contenuti e tecnologia per far crescere brand e attività locali in Puglia.',
       { sitemap: { priority: 0.7, changefreq: 'monthly' }, jsonLd: [
         { '@context': 'https://schema.org', '@type': 'Person', name: 'Nicola Carpignano',
-          jobTitle: 'Psicologo della comunicazione, analista e social media manager', worksFor: orgRef,
+          jobTitle: 'Social media manager, comunicazione e marketing', worksFor: orgRef,
           alumniOf: { '@type': 'CollegeOrUniversity', name: 'Sapienza Università di Roma' },
           knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati'] },
         { '@context': 'https://schema.org', '@type': 'Person', name: 'Ilaria Gemma',
