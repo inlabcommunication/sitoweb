@@ -500,7 +500,7 @@ const VideoReel = ({
 
       </div>
 
-        {/* Video a tutto schermo: larghezza piena e altezza dello schermo, sfumato solo sopra e sotto */}
+        {/* Video a tutta larghezza in 16:9, sfumato solo sopra e sotto */}
         <motion.div
           initial={{opacity:0,scale:.97}}
           whileInView={{opacity:1,scale:1}}
@@ -510,8 +510,10 @@ const VideoReel = ({
         >
           <div style={{
             position:"relative",
-            height:"100svh",
-            minHeight:420,
+            // 16:9 a tutta larghezza: niente ritaglio/zoom del video (che su schermi
+            // alti o sul telefono lo ingrandiva molto e lo rendeva sgranato)
+            aspectRatio:"16/9",
+            maxHeight:"100svh",
             WebkitMaskImage:"linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
             maskImage:"linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
           }}>
