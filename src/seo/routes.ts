@@ -19,7 +19,7 @@ export const BUSINESS = {
   name: BRAND,
   email: 'inlab.communication@gmail.com',
   telephone: '+393295654319',
-  city: 'Taranto',
+  city: 'Castellaneta',
   region: 'Puglia',
   sameAs: [
     'https://www.instagram.com/inlab.communication/',
@@ -76,14 +76,14 @@ export const organizationJsonLd = () => ({
   '@type': ['ProfessionalService', 'LocalBusiness'],
   '@id': `${SITE_URL}/#organization`,
   name: BRAND,
-  description: 'Agenzia di comunicazione a Taranto: gestione social, video e reel, Meta Ads, siti web, landing page, branding e automazioni AI per aziende in Puglia.',
+  description: 'Agenzia di comunicazione con sede a Castellaneta (Taranto): gestione social, video e reel, Meta Ads, siti web, branding e automazioni AI per aziende in Puglia e non solo.',
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/icon-512.png`,
   image: abs(DEFAULT_OG_IMAGE),
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
-  address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, addressRegion: BUSINESS.region, addressCountry: 'IT' },
-  areaServed: [...CITIES.map((c) => ({ '@type': 'City', name: c })), { '@type': 'AdministrativeArea', name: 'Puglia' }],
+  address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, postalCode: '74011', addressRegion: 'TA', addressCountry: 'IT' },
+  areaServed: [{ '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
   sameAs: BUSINESS.sameAs,
   knowsAbout: SERVICES_SEO.map((s) => s.label),
   hasOfferCatalog: {
@@ -144,18 +144,18 @@ export const getSeo = (rawPath: string): Seo => {
   const path = rawPath.length > 1 ? rawPath.replace(/\/+$/, '') : '/';
 
   if (path === '/') {
-    return page('/', `${BRAND} | Agenzia di comunicazione a Taranto`,
-      'Agenzia di comunicazione a Taranto: gestione social, video e reel, Meta Ads, siti web, landing page e branding per aziende e attività locali in Puglia.',
+    return page('/', `${BRAND} | Agenzia di comunicazione in Puglia`,
+      'Agenzia di comunicazione con sede a Castellaneta (TA): social media, video e reel, Meta Ads, siti web e branding per aziende in Puglia e non solo.',
       { sitemap: { priority: 1, changefreq: 'weekly' } }); // i dati dell'agenzia sono già nello script "org" di index.html
   }
   if (path === '/servizi') {
-    return page(path, `Servizi di comunicazione digitale a Taranto | ${BRAND}`,
+    return page(path, `Servizi di comunicazione digitale | ${BRAND}`,
       'Gestione social, Meta Ads, siti web e landing page, video e reel, shooting fotografici, branding e automazioni AI: tutti i servizi di InLab Communication.',
       { sitemap: { priority: 0.9, changefreq: 'monthly' } }, [['Servizi', '/servizi']]);
   }
   if (path === '/chi-siamo') {
-    return page(path, `Chi siamo | ${BRAND}, agenzia creativa a Taranto`,
-      'InLab Communication è un laboratorio creativo di Taranto: strategia, contenuti e tecnologia per far crescere brand e attività locali in Puglia.',
+    return page(path, `Chi siamo | ${BRAND}, agenzia creativa in Puglia`,
+      'InLab Communication è un laboratorio creativo con sede a Castellaneta (TA): strategia, contenuti e tecnologia per far crescere brand e aziende.',
       { sitemap: { priority: 0.7, changefreq: 'monthly' }, jsonLd: [
         { '@context': 'https://schema.org', '@type': 'Person', name: 'Nicola Carpignano',
           jobTitle: 'Social media manager, comunicazione e marketing', worksFor: orgRef,
@@ -168,12 +168,12 @@ export const getSeo = (rawPath: string): Seo => {
   }
   if (path === '/casi-studio') {
     return page(path, `Casi studio e clienti | ${BRAND}`,
-      'Progetti raccontati passo per passo: strategie social, siti web, lead generation e contenuti per aziende e attività della provincia di Taranto.',
+      'Progetti raccontati passo per passo: strategie social, siti web, lead generation e contenuti per aziende e attività in Puglia.',
       { sitemap: { priority: 0.8, changefreq: 'monthly' } }, [['Casi studio', '/casi-studio']]);
   }
   if (path === '/contatti') {
     return page(path, `Contatti | Richiedi un preventivo a ${BRAND}`,
-      'Raccontaci il tuo progetto: social media, video, siti web o campagne. Ti rispondiamo entro 24 ore. InLab Communication, Taranto.',
+      'Raccontaci il tuo progetto: social media, video, siti web o campagne. Ti rispondiamo entro 24 ore. InLab Communication, Castellaneta (TA).',
       { sitemap: { priority: 0.8, changefreq: 'monthly' }, jsonLd: [{ '@context': 'https://schema.org', '@type': 'ContactPage', url: abs(path), about: orgRef }] },
       [['Contatti', '/contatti']]);
   }
@@ -185,7 +185,7 @@ export const getSeo = (rawPath: string): Seo => {
       jsonLd: [{
         '@context': 'https://schema.org', '@type': 'Service', name: svc.label, serviceType: svc.keyword,
         description: svc.description, url: abs(path), provider: orgRef,
-        areaServed: CITIES.map((c) => ({ '@type': 'City', name: c })),
+        areaServed: [{ '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
       }],
     }, [['Servizi', '/servizi'], [svc.label, path]]);
   }
@@ -226,5 +226,5 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   // Pagine non più collegate (portfolio dimostrativo) o sconosciute: non indicizzare
-  return page(path, BRAND, 'Agenzia di comunicazione a Taranto.', { noindex: true, canonical: abs('/') });
+  return page(path, BRAND, 'Agenzia di comunicazione in Puglia.', { noindex: true, canonical: abs('/') });
 };

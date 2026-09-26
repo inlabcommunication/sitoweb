@@ -311,7 +311,7 @@ interface HeroFlowProps {
 
 export const HeroFlow: React.FC<HeroFlowProps> = ({
   onPrimaryCta, onSecondaryCta,
-  tag = 'Laboratorio creativo — Taranto, Puglia',
+  tag = 'Laboratorio creativo — Castellaneta, Puglia',
   headlineLine1 = 'Non ti servono',
   headlineLine2 = 'solo contenuti.',
   description = 'InLab Communication crea strategie, foto, video, reel e campagne digitali per aziende, professionisti e attività locali che vogliono distinguersi davvero.',

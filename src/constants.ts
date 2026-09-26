@@ -7,13 +7,13 @@ export const WEBSITE_CONTENT = {
   brand: {
     name: "INLAB",
     shortName: "IL",
-    location: "Taranto, Puglia",
-    fullLocation: "Laboratorio creativo — Taranto, Puglia",
-    copy: "© 2025 InLab Communication — Taranto, Puglia"
+    location: "Castellaneta (TA), Puglia",
+    fullLocation: "Laboratorio creativo — Castellaneta, Puglia",
+    copy: "© InLab Communication — Castellaneta (TA)"
   },
 
   hero: {
-    tag: "Laboratorio creativo — Taranto, Puglia",
+    tag: "Laboratorio creativo — Castellaneta, Puglia",
     headline: {
       line1: "COMUNICAZIONE",
       line2: "CHE SI FA",
@@ -312,7 +312,7 @@ export const WEBSITE_CONTENT = {
     tag: "Il laboratorio",
     title: ["NON SIAMO", "Semplici", "CONSULENTI."],
     description1: "InLab nasce dall'incontro tra due prospettive complementari: la mente analitica di chi studia il comportamento delle persone, e la visione creativa di chi le sa emozionare.",
-    description2: "Lavoriamo da Taranto con clienti in tutta la Puglia, collaborando con sviluppatori, fotografi e professionisti selezionati per ogni progetto.",
+    description2: "Lavoriamo da Castellaneta con clienti in tutta la Puglia e non solo, collaborando con sviluppatori, fotografi e professionisti selezionati per ogni progetto.",
     team: [
       {
         name: "Strategia & Analisi",
@@ -354,7 +354,7 @@ export const WEBSITE_CONTENT = {
     subtitle: "Una chiamata di 30 minuti è sufficiente per capire cosa ti serve e come possiamo aiutarti. Senza slide inutili, senza promesse vuote.",
     emails: [{ label: "Email", value: "inlab.communication@gmail.com" }],
     phones: [{ label: "Telefono", value: "+39 329 565 4319" }],
-    location: "Taranto, Puglia",
+    location: "Castellaneta (TA), Puglia",
     socials: ["Instagram", "LinkedIn", "Behance"]
   }
 };

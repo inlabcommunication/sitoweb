@@ -240,7 +240,7 @@ const Footer = () => {
   return (
     <footer style={{borderTop:".5px solid var(--b)",padding:"4rem 2rem 2.5rem"}}>
       <div style={{maxWidth:1280,margin:"0 auto"}}>
-        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr",gap:"3rem",marginBottom:"3rem"}}>
+        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"3rem",marginBottom:"3rem"}} className="grid-1-mob">
           <div>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:"1rem"}}>
               <div style={{width:30,height:30,background:"var(--a)",borderRadius:8,transform:"rotate(-4deg)",display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -248,9 +248,9 @@ const Footer = () => {
               </div>
               <span style={{fontFamily:"var(--fd)",fontSize:19,letterSpacing:".15em"}}>INLAB</span>
             </div>
-            <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione a Taranto. Strategia, creatività e tecnologia per far crescere il tuo brand in Puglia.</p>
+            <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione con sede a Castellaneta (TA). Strategia, creatività e tecnologia per far crescere il tuo brand.</p>
             <div style={{display:"flex",alignItems:"center",gap:6,marginTop:"1rem",fontSize:12,color:"var(--m)"}}>
-              <MapPin size={12}/> Taranto, Puglia
+              <MapPin size={12}/> Castellaneta (TA), Puglia
             </div>
           </div>
           <div>
@@ -269,17 +269,9 @@ const Footer = () => {
               ))}
             </div>
           </div>
-          <div>
-            <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Aree servite</div>
-            <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {CITIES.map(c=>(
-                <Link key={c} to={`/gestione-social-${c.toLowerCase()}`} className="foot-link" title={`Gestione social a ${c}`} style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{c}</Link>
-              ))}
-            </div>
-          </div>
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em"}}>© {new Date().getFullYear()} InLab Communication — Taranto, Puglia</p>
+          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em"}}>© {new Date().getFullYear()} InLab Communication — Castellaneta (TA)</p>
           <div style={{display:"flex",gap:"1.5rem"}}>
             {[
               {label:"Instagram",url:"https://www.instagram.com/inlab.communication/"},
@@ -1408,7 +1400,7 @@ const PageContatti = () => {
             {[
               {icon:<Mail size={18}/>,label:"Email",val:"inlab.communication@gmail.com"},
               {icon:<Phone size={18}/>,label:"Telefono",val:"+39 329 565 4319"},
-              {icon:<MapPin size={18}/>,label:"Sede",val:"Taranto, Puglia"},
+              {icon:<MapPin size={18}/>,label:"Sede",val:"Castellaneta (TA), Puglia"},
             ].map((c,i)=>(
               <motion.div key={i} initial={{opacity:0,x:-16}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.1}}
                 style={{display:"flex",gap:"1rem",alignItems:"flex-start",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
@@ -1420,12 +1412,9 @@ const PageContatti = () => {
               </motion.div>
             ))}
  
-            <div style={{marginTop:"2.5rem"}}>
-              <p className="section-label" style={{marginBottom:"1rem"}}>Aree servite</p>
-              <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                {CITIES.map(c=><span key={c} className="tag tag-g" style={{fontSize:11}}>{c}</span>)}
-              </div>
-            </div>
+            <p style={{marginTop:"2.5rem",fontSize:14,color:"var(--m)",lineHeight:1.7,maxWidth:420}}>
+              Sede a Castellaneta (TA). Lavoriamo con aziende e professionisti in tutta la Puglia e non solo: molti progetti si seguono anche da remoto.
+            </p>
           </div>
  
           {/* Form */}
