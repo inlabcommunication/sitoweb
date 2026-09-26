@@ -123,33 +123,6 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
           ))}
         </div>
 
-        <style>{`
-          .client-card{
-            text-decoration:none;
-            display:flex;flex-direction:column;align-items:flex-start;text-align:left;
-            min-height:250px;padding:1.6rem 1.5rem 1.3rem;border-radius:22px;cursor:pointer;
-            font:inherit;color:inherit;
-            background:linear-gradient(160deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));
-            border:.5px solid var(--b);
-            transition:border-color .3s, background .3s, box-shadow .3s;
-          }
-          .client-card:hover,.client-card:focus-visible{
-            border-color:rgba(205,178,255,0.45);
-            background:linear-gradient(160deg,rgba(205,178,255,0.10),rgba(205,178,255,0.02));
-            box-shadow:0 18px 50px rgba(205,178,255,0.10);
-            outline:none;
-          }
-          .client-card-summary{
-            margin-top:12px;font-size:13.5px;line-height:1.6;color:rgba(240,237,230,0.66);
-            display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
-          }
-          .client-card-cta{
-            display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;
-            letter-spacing:.15em;text-transform:uppercase;color:var(--a);
-            transition:gap .25s;
-          }
-          .client-card:hover .client-card-cta{gap:8px}
-        `}</style>
 
         {/* Frase finale */}
         <motion.p

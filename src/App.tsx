@@ -11,6 +11,8 @@ import { Chatbot } from "./components/Chatbot";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { getCurrentPath, linkClick, navigate } from "./lib/router";
 import { STATS } from "./data/stats";
+import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
+import { BrowserMockup } from "./components/BrowserMockup";
 import { getSeo } from "./seo/routes";
 import { applySeo } from "./seo/head";
 import { loadContent, useContent } from "./lib/content";
@@ -78,6 +80,32 @@ const G = () => (
     .section-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
  
     @keyframes marq{to{transform:translateX(-50%)}}
+    /* card cliente / esempio (griglia clienti, esempi nei servizi) */
+    .client-card{
+    text-decoration:none;
+    display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+    min-height:250px;padding:1.6rem 1.5rem 1.3rem;border-radius:22px;cursor:pointer;
+    font:inherit;color:inherit;
+    background:linear-gradient(160deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));
+    border:.5px solid var(--b);
+    transition:border-color .3s, background .3s, box-shadow .3s;
+    }
+    .client-card:hover,.client-card:focus-visible{
+    border-color:rgba(205,178,255,0.45);
+    background:linear-gradient(160deg,rgba(205,178,255,0.10),rgba(205,178,255,0.02));
+    box-shadow:0 18px 50px rgba(205,178,255,0.10);
+    outline:none;
+    }
+    .client-card-summary{
+    margin-top:12px;font-size:13.5px;line-height:1.6;color:rgba(240,237,230,0.66);
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .client-card-cta{
+    display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--a);
+    transition:gap .25s;
+    }
+    .client-card:hover .client-card-cta{gap:8px}
     .foot-link:hover{color:var(--t)!important}
     .city-link:hover{border-color:rgba(205,178,255,.35)!important;color:var(--a)!important}
     .marq-inner{display:inline-flex;gap:2.5rem;align-items:center;padding-left:2.5rem;animation:marq 28s linear infinite}
@@ -635,6 +663,67 @@ const PageHome = () => {
 };
  
 /* ═══════════════════════════════════════════════════════════════
+   ESEMPI REALI per pagina servizio (dati in src/data/serviceExamples.ts)
+═══════════════════════════════════════════════════════════════ */
+const ServiceExamples = ({ slug }: { slug: string }) => {
+  const content = useContent();
+  const examples = SERVICE_EXAMPLES[slug] || [];
+  if (!examples.length) return null;
+  const clients = normalizeClients(((content as any).clients?.items || []) as any[]);
+  const sites = examples.filter((e): e is Extract<ServiceExample, { kind: 'site' }> => e.kind === 'site');
+  const cards = examples.filter(e => e.kind !== 'site');
+
+  return (
+    <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto"}}>
+        <p className="section-label">Esempi reali</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"3rem"}}>
+          ALCUNI LAVORI<br/><span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,color:"var(--a)",fontSize:".7em"}}>che abbiamo realizzato.</span>
+        </h2>
+
+        {sites.map(site => (
+          <div key={site.url} style={{display:"grid",gridTemplateColumns:"1.4fr 1fr",gap:"3rem",alignItems:"center",marginBottom:cards.length?"3rem":0}} className="grid-1-mob">
+            <BrowserMockup url={site.url} label={site.title}/>
+            <div>
+              {site.tags && <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:"1rem"}}>{site.tags.map(t=><span key={t} className="tag tag-g" style={{fontSize:10}}>{t}</span>)}</div>}
+              <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase"}}>{site.title}</h3>
+              <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
+              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                <a className="btn btn-p" href={site.url} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
+                {site.caseStudy && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {cards.length>0 && (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:14}}>
+            {cards.map((e,i) => {
+              const c = e.kind === 'client' ? clients.find((x: any) => x.id === e.clientId) : null;
+              if (e.kind === 'client' && !c) return null;
+              const to = e.kind === 'client' ? `/cliente/${e.clientId}` : `/casi-studio/${(e as any).caseId}`;
+              const title = e.kind === 'client' ? c.name : (e as any).title;
+              const desc = e.kind === 'client' ? c.summary : (e as any).desc;
+              const label = e.kind === 'client' ? (c.sector || 'Cliente') : 'Caso studio';
+              return (
+                <Link key={i} to={to} className="client-card" style={{minHeight:220}}>
+                  <span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>{label}</span>
+                  <span style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18}}>{title}</span>
+                  {desc && <span className="client-card-summary">{desc}</span>}
+                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>
+                    {e.kind === 'client' ? 'Scheda cliente' : 'Leggi il caso studio'} <ArrowUpRight size={13}/>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════════════════════════════════════
    PAGE: GESTIONE SOCIAL
 ═══════════════════════════════════════════════════════════════ */
 const PageGestioneSocial = () => (
@@ -697,6 +786,7 @@ const PageGestioneSocial = () => (
     </section>
  
     <ClientLogos/>
+    <ServiceExamples slug="gestione-social"/>
     <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito"/>
   </>
 );
@@ -757,6 +847,7 @@ const PageMetaAds = () => (
     </section>
  
     <ClientLogos/>
+    <ServiceExamples slug="meta-ads"/>
     <ServiceCTA title="PAGA SOLO I RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
   </>
 );
@@ -817,6 +908,7 @@ const PageSitiWeb = () => (
     </section>
  
     <ClientLogos/>
+    <ServiceExamples slug="siti-web"/>
     <ServiceCTA title="IL TUO SITO ATTUALE TI PORTA CLIENTI?" sub="Se la risposta è no, possiamo cambiarlo." btn="Richiedi un'analisi gratuita"/>
   </>
 );
@@ -877,6 +969,7 @@ const PageAutomazioniAI = () => (
       </div>
     </section>
  
+    <ServiceExamples slug="automazioni-ai"/>
     <ServiceCTA title="QUANTO TEMPO PERDI OGNI GIORNO?" sub="Una consulenza gratuita di 30 minuti per scoprire cosa possiamo automatizzare." btn="Prenota la consulenza"/>
   </>
 );
@@ -935,6 +1028,7 @@ const PageShooting = () => (
       </div>
     </section>
  
+    <ServiceExamples slug="shooting"/>
     <ServiceCTA title="LA TUA AZIENDA MERITA FOTO MIGLIORI." sub="Prenota una call per discutere il tuo shooting." btn="Richiedi disponibilità"/>
   </>
 );
@@ -994,6 +1088,7 @@ const PageVideo = () => (
       </div>
     </section>
  
+    <ServiceExamples slug="video"/>
     <ServiceCTA title="IL PROSSIMO VIDEO VIRALE È IL TUO." sub="Mostraci il tuo brand. Ti diciamo come lo raccontiamo." btn="Parliamo del tuo video"/>
   </>
 );
@@ -1491,6 +1586,7 @@ const PageCittaSEO = ({city, service}) => {
       </section>
  
       <ClientLogos/>
+      <ServiceExamples slug={svc.slug}/>
       <ServiceCTA title={`VUOI CRESCERE A ${cityName.toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
   );
@@ -1975,6 +2071,7 @@ const PageBranding = () => (
     </section>
 
     <ClientLogos/>
+    <ServiceExamples slug="branding"/>
     <ServiceCTA title="IL TUO BRAND MERITA UN'IDENTITÀ VERA." sub="Costruiamola insieme, con metodo e visione." btn="Parliamo del tuo brand"/>
   </>
 );
