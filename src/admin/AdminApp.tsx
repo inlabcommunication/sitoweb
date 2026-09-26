@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import type React from 'react';
 import { motion } from 'motion/react';
 import { BarChart3, Users, Edit3, LogOut, ExternalLink, Settings2, FolderOpen } from 'lucide-react';
-import { auth, isFirebaseConfigured } from '../lib/firebase';
+import { auth, db, isFirebaseConfigured } from '../lib/firebase';
+import { doc, getDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { Analytics } from './Analytics';
 import { Leads } from './Leads';
@@ -42,17 +43,36 @@ type Tab = 'analytics' | 'leads' | 'editor' | 'archivio' | 'settings';
 export const AdminApp = () => {
   const [user, setUser] = useState<any>(null);
   const [checking, setChecking] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [tab, setTab] = useState<Tab>('analytics');
 
   useEffect(() => {
+    // La dashboard non deve finire su Google
+    const robots = document.createElement('meta');
+    robots.name = 'robots'; robots.content = 'noindex, nofollow';
+    document.head.appendChild(robots);
+    return () => robots.remove();
+  }, []);
+
+  useEffect(() => {
     if (!auth) { setChecking(false); return; }
-    const unsub = onAuthStateChanged(auth, (u) => { setUser(u); setChecking(false); });
+    const unsub = onAuthStateChanged(auth, async (u) => {
+      setUser(u);
+      // Accesso consentito solo agli utenti presenti in admins/{uid} (vedi firestore.rules)
+      let admin = false;
+      if (u && db) {
+        try { admin = (await getDoc(doc(db, 'admins', u.uid))).exists(); } catch { admin = false; }
+      }
+      setIsAdmin(admin);
+      setChecking(false);
+    });
     return unsub;
   }, []);
 
   if (!isFirebaseConfigured()) return <SetupRequired />;
   if (checking) return <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--m)' }}>Caricamento...</div>;
   if (!user) return <Login />;
+  if (!isAdmin) return <NotAuthorized uid={user.uid} email={user.email} />;
 
   const NAV_TABS: { id: Tab; label: string; icon: React.ReactNode }[] = [
     { id: 'analytics', label: 'Analytics',    icon: <BarChart3 size={14} /> },
@@ -138,6 +158,22 @@ export const AdminApp = () => {
     </div>
   );
 };
+
+// ── Accesso negato ────────────────────────────────────────────
+
+const NotAuthorized = ({ uid, email }: { uid: string; email?: string | null }) => (
+  <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem', background: 'var(--bg)', color: 'var(--t)' }}>
+    <DashboardStyles />
+    <div style={{ maxWidth: 480, textAlign: 'center' }}>
+      <p style={{ fontSize: 10, letterSpacing: '.2em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 12 }}>Accesso negato</p>
+      <h1 style={{ fontFamily: 'var(--fd)', fontSize: '2.6rem', lineHeight: .95, marginBottom: '1rem' }}>ACCOUNT NON AUTORIZZATO</h1>
+      <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+        {email ? <><b>{email}</b> non è tra gli amministratori.</> : 'Questo account non è tra gli amministratori.'} Per abilitarlo, in Firebase Console → Firestore crea il documento <code>admins/{uid}</code>.
+      </p>
+      <button className="btn btn-p" onClick={() => auth && signOut(auth)}>Esci</button>
+    </div>
+  </div>
+);
 
 // ── Login ──────────────────────────────────────────────────────
 

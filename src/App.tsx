@@ -17,7 +17,6 @@ import { getSeo } from "./seo/routes";
 import { applySeo } from "./seo/head";
 import { loadContent, useContent } from "./lib/content";
 import { getClientId, normalizeClients } from "./lib/clientUtils";
-import { getLiteDb, liteFirestore } from "./lib/firestoreLite";
 
 // Nuove sezioni modulari
 import { HeroFlow } from "./sections/HeroFlow";
@@ -1358,6 +1357,9 @@ const PageLavori = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
   const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
+  // Anti-bot: campo nascosto (le persone non lo vedono) e ora di apertura del modulo
+  const [honeypot,setHoneypot]=useState("");
+  const formStartedAt=React.useRef(Date.now());
   const [sent,setSent]=useState(false);
   const [error,setError]=useState("");
   const [sending,setSending]=useState(false);
@@ -1368,24 +1370,18 @@ const PageContatti = () => {
     setError("");
     setSending(true);
     try {
-      const db = await getLiteDb();
-      const { collection, addDoc } = await liteFirestore();
-      if(!db) {
-        setError("Servizio momentaneamente non disponibile. Scrivici direttamente a inlab.communication@gmail.com");
-        setSending(false);
-        return;
-      }
-      await addDoc(collection(db,'leads'),{
-        name: form.nome,
-        email: form.email,
-        phone: form.tel || null,
-        company: form.azienda || null,
-        intent: form.servizio ? `[FORM] ${form.servizio}` : '[FORM] Contatto dal sito',
-        source: 'contact_form',
-        status: 'new',
-        notes: form.msg,
-        created_at: new Date().toISOString(),
+      // Il lead viene salvato dal server (/api/lead), con controlli anti-spam
+      const r = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
+          service: form.servizio, message: form.msg, privacy: form.privacy,
+          website: honeypot, startedAt: formStartedAt.current,
+        }),
       });
+      if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
       setSent(true);
     } catch(e){
       console.error('Save contact failed',e);
@@ -1464,6 +1460,9 @@ const PageContatti = () => {
                   </div>
                   <div>
                     <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
+                    {/* campo trappola anti-bot: invisibile alle persone */}
+                    <input type="text" name="website" value={honeypot} onChange={e=>setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true"
+                      style={{position:"absolute",left:"-10000px",width:1,height:1,opacity:0}}/>
                     <textarea rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",resize:"vertical",transition:"border-color .2s"}}
                       onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}

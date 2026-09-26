@@ -5,7 +5,7 @@ import {
   ZoomIn, FolderOpen, RefreshCw, Filter, Grid, List,
   Film, FileImage, Plus, AlertCircle, Download, Link2,
 } from 'lucide-react';
-import { db } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // ═══════════════════════════════════════════════════════════════
@@ -105,13 +105,34 @@ const uploadFile = (
   folder: string,
   onProgress: (p: number) => void
 ): Promise<MediaItem> =>
-  new Promise((resolve, reject) => {
+  new Promise(async (resolve, reject) => {
     const fd = new FormData();
+    const targetFolder = `inlab/${folder === 'Tutti' || folder === 'Altro' ? 'generale' : folder.toLowerCase()}`;
+    const context = `alt=${file.name.replace(/[|=]/g, ' ').slice(0, 150)}`;
     fd.append('file', file);
     fd.append('api_key', API_KEY);
-    fd.append('upload_preset', 'ml_default');
-    fd.append('folder', `inlab/${folder === 'Tutti' || folder === 'Altro' ? 'generale' : folder.toLowerCase()}`);
-    fd.append('context', `alt=${file.name}`);
+    // Upload firmato: la firma la rilascia /api/cloudinary-sign solo agli admin
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+      const r = await fetch('/api/cloudinary-sign', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token || ''}` },
+        body: JSON.stringify({ folder: targetFolder, context }),
+      });
+      if (r.ok) {
+        const signed = await r.json();
+        for (const k of ['folder', 'timestamp', 'upload_preset', 'context', 'signature']) if (signed[k]) fd.append(k, signed[k]);
+      } else if (r.status === 501) {
+        // Firma non ancora configurata su Vercel: upload con preset non firmato (vedi SECURITY.md)
+        fd.append('upload_preset', 'ml_default');
+        fd.append('folder', targetFolder);
+        fd.append('context', context);
+      } else {
+        return reject(new Error('Upload non autorizzato'));
+      }
+    } catch {
+      return reject(new Error('Impossibile preparare l\'upload'));
+    }
 
     const xhr = new XMLHttpRequest();
     xhr.upload.onprogress = e => {

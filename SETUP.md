@@ -35,7 +35,15 @@ GEMINI_API_KEY=AIzaSy...
 ANTHROPIC_API_KEY=sk-ant-...  # solo se AI_PROVIDER=anthropic
 ```
 
-Provider, modello e chiavi si possono anche impostare dalla dashboard (*Impostazioni*): quei valori, salvati in Firestore `app/settings`, hanno la precedenza sulle variabili d'ambiente.
+Dalla dashboard (*Impostazioni*) si scelgono solo provider e modello. **Le chiavi si impostano esclusivamente qui su Vercel**, mai nel database.
+
+### Sicurezza (vedi [SECURITY.md](SECURITY.md))
+
+```
+CLOUDINARY_API_SECRET=...     # firma degli upload dalla dashboard
+RATE_LIMIT_SALT=...           # stringa casuale lunga
+CHAT_DAILY_LIMIT=400          # opzionale: tetto giornaliero di messaggi al chatbot
+```
 
 ### Dominio del sito (SEO)
 
@@ -58,17 +66,17 @@ Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variab
 |---|---|---|
 | `app/site_content` | testi e immagini del sito | admin |
 | `app/settings` | provider AI e chiavi | admin |
-| `leads` | contatti da form e chatbot | form pubblico, `/api/chat` |
+| `leads` | contatti da form e chatbot | solo server: `/api/lead`, `/api/chat` |
+| `admins` | UID degli amministratori | a mano dalla console |
 | `analytics_events` | pageview, scroll, click | sito pubblico |
 
-## Sicurezza — da verificare nella console Firebase
+## Sicurezza
 
-- **Authentication**: disattiva la registrazione pubblica (*Settings → User actions → Enable create (sign-up)*) e crea gli admin a mano (*Users → Add user*).
-- **Regole Firestore**: `app/settings` e `leads` devono essere leggibili solo dagli admin; il sito pubblico deve poter solo *leggere* `app/site_content` e solo *creare* documenti in `leads` e `analytics_events`.
+Tutti i passaggi (regole Firestore, admin, chiavi, Cloudinary) sono in **[SECURITY.md](SECURITY.md)**.
 
 ## Dashboard
 
-Vai su `/admin` e accedi con un utente creato in Firebase Authentication.
+Vai su `/admin` e accedi con un utente creato in Firebase Authentication **e presente in `admins/{uid}`** (vedi SECURITY.md).
 
 ## Deploy
 

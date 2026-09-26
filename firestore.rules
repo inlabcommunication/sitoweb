@@ -1,0 +1,69 @@
+rules_version = '2';
+
+// Regole di sicurezza Firestore per il sito InLab.
+// Da incollare in Firebase Console → Firestore Database → Regole → Pubblica.
+//
+// Admin = utente loggato che ha un documento in admins/{uid}
+// (crealo a mano dalla console con l'UID preso da Authentication → Users).
+// Le funzioni /api usano l'Admin SDK e non sono soggette a queste regole.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    function shortStr(v, n) { return v is string && v.size() <= n; }
+
+    // Elenco admin: nessuno può scriverlo dal browser; ogni utente può solo verificare se stesso
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    // Contenuti del sito: pubblici in lettura, modificabili solo dagli admin
+    match /app/site_content {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Impostazioni (provider/modello AI) e libreria media: solo admin
+    match /app/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Lead (dati dei clienti): li scrive solo il server; il browser non può né leggerli né crearli
+    match /leads/{id} {
+      allow read, update, delete: if isAdmin();
+      allow create: if false;
+    }
+
+    // Statistiche: il sito può solo AGGIUNGERE eventi con forma e dimensioni controllate
+    match /analytics_events/{id} {
+      allow read, delete: if isAdmin();
+      allow update: if false;
+      allow create: if request.resource.data.keys().hasOnly([
+          'session_id', 'user_agent', 'device', 'path', 'created_at', 'event_type',
+          'referrer', 'scroll_depth', 'section', 'target', 'duration'])
+        && request.resource.data.event_type in ['pageview', 'scroll', 'click', 'session_end']
+        && shortStr(request.resource.data.session_id, 40)
+        && shortStr(request.resource.data.user_agent, 200)
+        && request.resource.data.device in ['mobile', 'tablet', 'desktop']
+        && shortStr(request.resource.data.path, 300)
+        && request.resource.data.created_at is timestamp
+        && (!('referrer' in request.resource.data) || request.resource.data.referrer == null || shortStr(request.resource.data.referrer, 500))
+        && (!('section' in request.resource.data) || shortStr(request.resource.data.section, 60))
+        && (!('target' in request.resource.data) || shortStr(request.resource.data.target, 80))
+        && (!('scroll_depth' in request.resource.data) || request.resource.data.scroll_depth is number)
+        && (!('duration' in request.resource.data) || request.resource.data.duration is number);
+    }
+
+    // Contatori anti-abuso usati dalle funzioni /api: mai accessibili dal browser
+    match /_ratelimits/{id} { allow read, write: if false; }
+    match /_usage/{id} { allow read, write: if false; }
+
+    // Tutto il resto è chiuso
+    match /{document=**} { allow read, write: if false; }
+  }
+}

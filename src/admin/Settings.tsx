@@ -4,19 +4,17 @@ import { Bot, Key, Save, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
+// Le chiavi API NON si salvano qui: stanno solo nelle variabili d'ambiente di
+// Vercel (GEMINI_API_KEY, ANTHROPIC_API_KEY), mai nel database.
 type Settings = {
   aiProvider: 'gemini' | 'anthropic';
-  geminiApiKey: string;
   geminiModel: string;
-  anthropicApiKey: string;
   anthropicModel: string;
 };
 
 const DEFAULTS: Settings = {
   aiProvider: 'gemini',
-  geminiApiKey: '',
   geminiModel: 'gemini-2.5-flash',
-  anthropicApiKey: '',
   anthropicModel: 'claude-haiku-4-5-20251001',
 };
 
@@ -25,11 +23,16 @@ export const Settings = () => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<'idle' | 'saved' | 'error'>('idle');
+  const [hadStoredKeys, setHadStoredKeys] = useState(false);
 
   useEffect(() => {
     if (!db) { setLoading(false); return; }
     getDoc(doc(db, 'app', 'settings')).then((snap) => {
-      if (snap.exists()) setSettings({ ...DEFAULTS, ...snap.data() });
+      if (snap.exists()) {
+        const d = snap.data() as any;
+        setSettings({ aiProvider: d.aiProvider === 'anthropic' ? 'anthropic' : 'gemini', geminiModel: d.geminiModel || DEFAULTS.geminiModel, anthropicModel: d.anthropicModel || DEFAULTS.anthropicModel });
+        setHadStoredKeys(!!(d.geminiApiKey || d.anthropicApiKey));
+      }
       setLoading(false);
     });
   }, []);
@@ -38,7 +41,9 @@ export const Settings = () => {
     if (!db) return;
     setSaving(true); setStatus('idle');
     try {
-      await setDoc(doc(db, 'app', 'settings'), settings);
+      // setDoc senza merge: sovrascrive il documento e cancella eventuali chiavi salvate in passato
+      await setDoc(doc(db, 'app', 'settings'), { aiProvider: settings.aiProvider, geminiModel: settings.geminiModel, anthropicModel: settings.anthropicModel });
+      setHadStoredKeys(false);
       setStatus('saved');
       setTimeout(() => setStatus('idle'), 3000);
     } catch {
@@ -69,13 +74,11 @@ export const Settings = () => {
         </div>
         {settings.aiProvider === 'gemini' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <Field label="Gemini API Key" hint="Da aistudio.google.com → Get API key (gratuita)" value={settings.geminiApiKey} onChange={(v) => set('geminiApiKey', v)} type="password" placeholder="AIzaSy..." />
             <Field label="Modello" value={settings.geminiModel} onChange={(v) => set('geminiModel', v)} placeholder="gemini-2.5-flash" />
           </div>
         )}
         {settings.aiProvider === 'anthropic' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <Field label="Anthropic API Key" hint="Da console.anthropic.com (richiede credito)" value={settings.anthropicApiKey} onChange={(v) => set('anthropicApiKey', v)} type="password" placeholder="sk-ant-..." />
             <Field label="Modello" value={settings.anthropicModel} onChange={(v) => set('anthropicModel', v)} placeholder="claude-haiku-4-5-20251001" />
           </div>
         )}
@@ -83,8 +86,14 @@ export const Settings = () => {
 
       <div style={{ padding: '14px 16px', background: 'rgba(205,178,255,0.05)', border: '.5px solid rgba(205,178,255,0.15)', borderRadius: 12, fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
         <Zap size={12} style={{ display: 'inline', marginRight: 6, color: 'var(--a)' }} />
-        Le chiavi salvate qui vengono usate dalla funzione serverless <code>/api/chat</code> e non sono mai esposte al browser.
+        Per sicurezza le <b>chiavi API</b> non si inseriscono più qui: vanno impostate solo su <b>Vercel → Settings → Environment Variables</b> (<code>GEMINI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>). Da qui scegli solo provider e modello.
       </div>
+      {hadStoredKeys && (
+        <div style={{ padding: '14px 16px', background: 'rgba(255,120,120,0.08)', border: '.5px solid rgba(255,120,120,0.35)', borderRadius: 12, fontSize: 12, color: '#ffb4b4', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+          <AlertCircle size={12} style={{ display: 'inline', marginRight: 6 }} />
+          Nel database ci sono ancora chiavi API salvate in passato. Premi <b>Salva impostazioni</b> per cancellarle, poi <b>rigenera le chiavi</b> su Google AI Studio / Anthropic Console: potrebbero essere state esposte.
+        </div>
+      )}
 
       <button onClick={save} disabled={saving} className="btn btn-p" style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: saving ? 0.6 : 1 }}>
         {status === 'saved' ? <><CheckCircle size={14} /> Salvato</> : status === 'error' ? <><AlertCircle size={14} /> Errore</> : <><Save size={14} /> {saving ? 'Salvataggio...' : 'Salva impostazioni'}</>}

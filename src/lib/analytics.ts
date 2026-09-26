@@ -41,7 +41,7 @@ const baseEvent = () => ({
   session_id: getSessionId(),
   user_agent: navigator.userAgent.slice(0, 200),
   device: getDevice(),
-  path: window.location.pathname,
+  path: window.location.pathname.slice(0, 300),
   created_at: new Date(), // salvato da Firestore come Timestamp
 });
 
@@ -71,8 +71,8 @@ export const trackPageview = (path?: string, referrer?: string) => {
   enqueue({
     ...baseEvent(),
     event_type: 'pageview',
-    path: path ?? window.location.pathname,
-    referrer: referrer ?? document.referrer ?? null,
+    path: (path ?? window.location.pathname).slice(0, 300),
+    referrer: (referrer ?? document.referrer ?? '').slice(0, 500) || null,
   });
 };
 
@@ -90,12 +90,12 @@ export const trackScroll = (depthPct: number, section?: string) => {
     ...baseEvent(),
     event_type: 'scroll',
     scroll_depth: Math.round(depthPct),
-    section: section ?? currentSection,
+    section: (section ?? currentSection).slice(0, 60),
   });
 };
 
 export const trackClick = (target: string) => {
-  enqueue({ ...baseEvent(), event_type: 'click', target });
+  enqueue({ ...baseEvent(), event_type: 'click', target: target.slice(0, 80) });
 };
 
 const trackSessionEnd = () => {
