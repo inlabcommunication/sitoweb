@@ -9,6 +9,7 @@ import {
 import { Chatbot } from "./components/Chatbot";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { getCurrentPath, linkClick, navigate } from "./lib/router";
+import { STATS } from "./data/stats";
 import { getSeo } from "./seo/routes";
 import { applySeo } from "./seo/head";
 import { loadContent, useContent } from "./lib/content";
@@ -35,7 +36,7 @@ const G = () => (
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --a:#cdb2ff; --bg:#1e1d1d; --s:#262525; --b:rgba(255,255,255,0.07);
-      --t:#F0EDE6; --m:rgba(240,237,230,0.38);
+      --t:#F0EDE6; --m:rgba(240,237,230,0.64);
       --fd:'Bebas Neue',sans-serif; --fs:'DM Serif Display',serif; --fb:'DM Sans',sans-serif;
     }
     html{scroll-behavior:smooth}
@@ -49,7 +50,8 @@ const G = () => (
     .fs{font-family:var(--fs)}
     .acc{color:var(--a)}
     .mut{color:var(--m)}
-    .stroke{-webkit-text-stroke:1px var(--t);color:transparent}
+    /* seconda riga dei titoli: tono più tenue invece del contorno (più leggibile) */
+    .stroke{color:rgba(240,237,230,0.42)}
     .stroke-a{-webkit-text-stroke:1px var(--a);color:transparent}
  
     .glass{background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:.5px solid var(--b)}
@@ -86,6 +88,8 @@ const G = () => (
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
+      .chat-launcher{transform:scale(.72);transform-origin:bottom right;bottom:12px!important;right:12px!important}
+      .chat-bubble{display:none!important}
     }
     @media(max-width:480px){
       .btn{padding:11px 20px!important;font-size:10px!important}
@@ -128,12 +132,7 @@ const SERVICES = [
 const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
  
 const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento","Aleph Caffè"];
-const STATS_GLOBAL = [
-  { n:"3.2M+", l:"Visualizzazioni generate" },
-  { n:"47+", l:"Brand e attività seguiti" },
-  { n:"9", l:"Città servite in Puglia" },
-  { n:"100%", l:"Progetti consegnati in tempo" },
-];
+const STATS_GLOBAL = STATS.map(s => ({ n: s.display, l: s.label }));
  
 /* ═══════════════════════════════════════════════════════════════
    NAVBAR
@@ -253,7 +252,7 @@ const Footer = () => {
           </div>
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-          <p style={{fontSize:11,fontFamily:"monospace",color:"rgba(255,255,255,.15)",letterSpacing:".08em"}}>© 2025 InLab Communication — Taranto, Puglia</p>
+          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em"}}>© {new Date().getFullYear()} InLab Communication — Taranto, Puglia</p>
           <div style={{display:"flex",gap:"1.5rem"}}>
             {[
               {label:"Instagram",url:"https://www.instagram.com/inlab.communication/"},
@@ -588,7 +587,7 @@ const PageHome = () => {
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",top:"10%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1.2fr",gap:"5rem",alignItems:"center"}} className="grid-1-mob">
+          <div style={{display:"grid",gridTemplateColumns:"1.1fr 1fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <motion.div initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}} viewport={{once:true,margin:"-80px"}}>
               <p className="section-label">Il nostro manifesto</p>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,4.5rem)",lineHeight:.92,marginBottom:"1.5rem"}}>
@@ -603,7 +602,7 @@ const PageHome = () => {
               whileInView={{opacity:1,y:0}}
               viewport={{once:true,margin:"-80px"}}
               transition={{delay:.15}}
-              style={{fontSize:17,lineHeight:1.85,color:"var(--m)",fontWeight:300,maxWidth:560}}
+              style={{fontSize:18,lineHeight:1.8,color:"rgba(240,237,230,0.78)",fontWeight:300,maxWidth:560,paddingBottom:"1.4rem",borderLeft:"2px solid var(--a)",paddingLeft:"1.6rem"}}
             >
               Ogni post, video, foto o campagna deve avere un motivo per esistere: raccontare il valore del brand, parlare alle persone giuste, creare fiducia e rendere la comunicazione più riconoscibile. Non vendiamo pacchetti. Costruiamo identità.
             </motion.p>
@@ -611,14 +610,11 @@ const PageHome = () => {
         </div>
       </section>
 
-      {/* VIDEO REEL — dietro le quinte */}
-      <VideoReel src="https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4"/>
-
       {/* SERVIZI */}
       <ServicesGrid onServiceClick={(slug) => go("/" + slug)} />
 
-      {/* METODO timeline */}
-      <MethodTimeline />
+      {/* VIDEO REEL — dietro le quinte */}
+      <VideoReel src="https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4"/>
 
       {/* CLIENTI */}
       <ClientsWall onClientClick={(id) => go(`/cliente/${id}`)} />
@@ -626,72 +622,8 @@ const PageHome = () => {
       {/* CASI STUDIO */}
       <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
 
-      {/* PER CHI LAVORIAMO */}
-      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:"30%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
-        <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-          <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:"-80px"}} style={{marginBottom:"4rem",maxWidth:720}}>
-            <p className="section-label">Il nostro target</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,6vw,5.5rem)",lineHeight:.9,marginBottom:"1.2rem"}}>
-              PER BRAND CHE<br/><span className="stroke">VOGLIONO FARSI NOTARE.</span>
-            </h2>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.7,maxWidth:520}}>
-              Lavoriamo con chi vuole una comunicazione professionale, riconoscibile e pensata per crescere.
-            </p>
-          </motion.div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"1rem"}} className="grid-1-mob">
-            {[
-              {emoji:"🍽️",label:"Ristoranti e locali",desc:"Comunicazione che fa venir voglia di prenotare."},
-              {emoji:"🛍️",label:"Negozi e attività",desc:"Contenuti che portano persone in negozio e online."},
-              {emoji:"💼",label:"Professionisti",desc:"Immagine autorevole e riconoscibile nel tuo settore."},
-              {emoji:"⚙️",label:"Aziende di servizi",desc:"Spiegare bene cosa fai è già metà del lavoro."},
-              {emoji:"🚀",label:"Brand emergenti",desc:"Costruiamo la tua identità da zero con metodo."},
-              {emoji:"🎉",label:"Eventi e inaugurazioni",desc:"Prima, durante e dopo — raccontiamo ogni momento."},
-              {emoji:"🌐",label:"Progetti digitali",desc:"Landing page, siti e campagne che convertono."},
-              {emoji:"📍",label:"Attività locali",desc:"Presenza digitale forte nel territorio che servi."},
-            ].map((item,i)=>(
-              <motion.div key={i} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}}
-                style={{padding:"1.75rem"}}>
-                <div style={{fontSize:28,marginBottom:".8rem"}}>{item.emoji}</div>
-                <h3 style={{fontSize:14,fontWeight:500,marginBottom:".4rem"}}>{item.label}</h3>
-                <p style={{fontSize:12,color:"var(--m)",lineHeight:1.6}}>{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIAL */}
-      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden",background:"rgba(205,178,255,0.015)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:"-80px"}} style={{marginBottom:"4rem",textAlign:"center"}}>
-            <p className="section-label">Cosa dicono di noi</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,6vw,5.5rem)",lineHeight:.9}}>
-              LE PAROLE<br/><span className="stroke">DEI CLIENTI.</span>
-            </h2>
-          </motion.div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"1.5rem"}} className="grid-1-mob">
-            {[
-              {text:"Finalmente i nostri social hanno un'immagine coerente. Prima pubblicavamo a caso, ora ogni contenuto ha un senso.",role:"Titolare, attività locale"},
-              {text:"Ci hanno aiutato a raccontare meglio il nostro evento. La risposta del pubblico è stata ben oltre le aspettative.",role:"Organizzatore, evento locale"},
-              {text:"Contenuti belli, ma soprattutto pensati con una strategia. Si vede che dietro c'è un metodo, non solo estetica.",role:"Professionista, servizi"},
-              {text:"Da quando lavoriamo con InLab, i messaggi che riceviamo sono più qualificati. Le persone arrivano già informate.",role:"Titolare, studio professionale"},
-              {text:"Il reel che hanno prodotto per la nostra inaugurazione ha fatto numeri che non avremmo mai immaginato.",role:"Brand emergente, retail"},
-              {text:"Professionalità vera. Rispondono sempre, rispettano le scadenze e i contenuti sono sempre di qualità.",role:"Responsabile marketing, azienda"},
-            ].map((t,i)=>(
-              <motion.div key={i} className="glass card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
-                style={{padding:"2rem",borderRadius:24}}>
-                <div style={{fontSize:32,color:"var(--a)",marginBottom:"1rem",lineHeight:1}}>"</div>
-                <p style={{fontSize:15,color:"var(--t)",lineHeight:1.75,marginBottom:"1.5rem",fontStyle:"italic"}}>{t.text}</p>
-                <div style={{fontSize:11,letterSpacing:".12em",textTransform:"uppercase",color:"var(--m)"}}>{t.role}</div>
-              </motion.div>
-            ))}
-          </div>
-          <motion.p initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} style={{textAlign:"center",marginTop:"3rem",fontSize:14,color:"var(--m)"}}>
-            Abbiamo lavorato su progetti per attività locali, eventi, brand e servizi in tutta la provincia di Taranto.
-          </motion.p>
-        </div>
-      </section>
+      {/* METODO timeline */}
+      <MethodTimeline />
 
       {/* NUMERI */}
       <AnimatedStats />
@@ -1540,7 +1472,7 @@ const PageCittaSEO = ({city, service}) => {
         </div>
       </section>
  
-      <StatsRow stats={[{n:"47",l:"Clienti in Puglia"},{n:"3.2M+",l:"Views generate"},{n:"9",l:"Città servite"},{n:"100%",l:"Soddisfazione clienti"}]}/>
+      <StatsRow stats={STATS_GLOBAL}/>
  
       {/* Local content */}
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>

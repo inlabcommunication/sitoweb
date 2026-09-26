@@ -125,7 +125,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
                 <h3 style={{ fontSize: 15, fontWeight: 500, marginBottom: 8, color: 'var(--t)' }}>
                   {s.label}
                 </h3>
-                <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.65, marginBottom: '1.4rem' }}>
+                <p style={{ fontSize: 14.5, color: 'var(--m)', lineHeight: 1.65, marginBottom: '1.4rem' }}>
                   {s.desc}
                 </p>
                 <span style={{

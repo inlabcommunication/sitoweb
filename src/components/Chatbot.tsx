@@ -141,12 +141,13 @@ export const Chatbot = () => {
   return (
     <>
       {/* Mascotte + bottone */}
-      <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9998, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+      <div className="chat-launcher" style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9998, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
 
         {/* Fumetto "Parliamo!" — solo quando chiusa */}
         <AnimatePresence>
           {!open && (
             <motion.div
+              className="chat-bubble"
               initial={{ opacity: 0, y: 10, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.8 }}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, useReducedMotion as useFmReducedMotion } from 'motion/react';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { STATS } from '../data/stats';
 
 // ── 5 nodi a stella perfetta ─────────────────────────────────────
 // SVG viewBox 200x200, centro (100,100), raggio 70
@@ -263,8 +264,8 @@ const PhoneMockup: React.FC<{ reduced: boolean }> = ({ reduced }) => (
           }}>
             <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 70% 25%,rgba(255,255,255,.34),transparent 18%), linear-gradient(to top,rgba(10,10,12,.9),transparent 55%)' }} />
             <div style={{ position: 'absolute', left: 18, bottom: 18 }}>
-              <div style={{ fontFamily: 'var(--fd)', fontSize: 56, lineHeight: .85, letterSpacing: '.02em' }}>100K+</div>
-              <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'rgba(240,237,230,.68)' }}>view organiche</div>
+              <div style={{ fontFamily: 'var(--fd)', fontSize: 56, lineHeight: .85, letterSpacing: '.02em' }}>{STATS[0].display}</div>
+              <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'rgba(240,237,230,.68)' }}>visualizzazioni</div>
             </div>
             <div style={{ position: 'absolute', right: 14, top: 14, display: 'grid', gap: 8 }}>
               {['IG', 'ADS', 'SEO'].map((item) => (
@@ -397,7 +398,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             transition={{ delay: reduced ? 0 : 0.9 }}
             style={{ display: 'flex', gap: '1.5rem', marginTop: '2rem', flexWrap: 'wrap' }}
           >
-            {[{ n: '100k+', l: 'visualizzazioni' }, { n: '47', l: 'brand seguiti' }, { n: '9', l: 'città in Puglia' }].map((s, i) => (
+            {STATS.slice(0, 3).map(s => ({ n: s.display, l: s.short })).map((s, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontFamily: 'var(--fd)', fontSize: 20, color: 'var(--a)', letterSpacing: '.04em' }}>{s.n}</span>
                 <span style={{ fontSize: 11, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>{s.l}</span>

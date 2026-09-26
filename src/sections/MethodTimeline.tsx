@@ -129,7 +129,7 @@ export const MethodTimeline: React.FC = () => {
                   }}>
                     {s.title}
                   </h3>
-                  <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.75, maxWidth: 580 }}>
+                  <p style={{ fontSize: 15.5, color: 'var(--m)', lineHeight: 1.75, maxWidth: 580 }}>
                     {s.desc}
                   </p>
                 </div>

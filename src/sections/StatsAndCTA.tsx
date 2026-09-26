@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { STATS as AGENCY_STATS } from '../data/stats';
+
+const STATS = AGENCY_STATS.map(s => ({ value: s.value, suffix: s.display.endsWith('+') ? '+' : '', label: s.label }));
 
 interface CounterProps {
   to: number;
@@ -41,21 +44,10 @@ const Counter: React.FC<CounterProps> = ({ to, suffix = '', prefix = '', duratio
   return <span ref={ref}>{prefix}{formatted}{suffix}</span>;
 };
 
-const STATS = [
-  { value: 3200000, suffix: '+', label: 'Visualizzazioni generate' },
-  { value: 47,      suffix: '+', label: 'Brand e attività seguiti' },
-  { value: 9,       suffix: '',  label: 'Città servite in Puglia' },
-  { value: 100,     suffix: '%', label: 'Progetti consegnati in tempo' },
-];
 
 export const AnimatedStats: React.FC = () => {
   return (
-    <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
-      <div style={{
-        position: 'absolute', top: '50%', left: '50%', width: 700, height: 700,
-        background: 'rgba(205,178,255,0.025)', borderRadius: '50%', filter: 'blur(120px)',
-        transform: 'translate(-50%, -50%)', pointerEvents: 'none',
-      }} />
+    <section style={{ padding: '6rem 2rem', position: 'relative', overflow: 'hidden', background: 'var(--a)', color: '#000' }}>
 
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <motion.div
@@ -64,7 +56,7 @@ export const AnimatedStats: React.FC = () => {
           viewport={{ once: true, margin: '-80px' }}
           style={{ textAlign: 'center', marginBottom: '4rem' }}
         >
-          <p className="section-label" style={{ display: 'inline-block' }}>I numeri</p>
+          <p className="section-label" style={{ display: 'inline-block', color: 'rgba(0,0,0,0.6)' }}>I numeri</p>
           <h2 style={{
             fontFamily: 'var(--fd)', fontSize: 'clamp(2.5rem, 5vw, 4.8rem)',
             lineHeight: 0.9, marginBottom: '1rem',
@@ -72,7 +64,7 @@ export const AnimatedStats: React.FC = () => {
             CREATIVITÀ<br />
             <span style={{
               fontFamily: 'var(--fs)', fontStyle: 'italic',
-              fontWeight: 400, fontSize: '0.85em', color: 'var(--a)',
+              fontWeight: 400, fontSize: '0.85em', color: '#000', opacity: 0.7,
             }}>misurabile.</span>
           </h2>
         </motion.div>
@@ -84,16 +76,16 @@ export const AnimatedStats: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              style={{ padding: '2.5rem 2rem', borderLeft: '.5px solid rgba(205,178,255,0.2)', position: 'relative' }}
+              style={{ padding: '2rem', borderLeft: '1px solid rgba(0,0,0,0.18)', position: 'relative' }}
             >
               <div style={{
                 fontFamily: 'var(--fd)', fontSize: 'clamp(3rem, 6vw, 5rem)',
-                lineHeight: 1, color: i === 0 ? 'var(--a)' : 'var(--t)',
+                lineHeight: 1, color: '#000',
                 marginBottom: '0.6rem', letterSpacing: '-0.02em',
               }}>
                 <Counter to={s.value} suffix={s.suffix} />
               </div>
-              <p style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--m)', lineHeight: 1.4 }}>
+              <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.68)', lineHeight: 1.4 }}>
                 {s.label}
               </p>
             </motion.div>
