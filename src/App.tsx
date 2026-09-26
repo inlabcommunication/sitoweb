@@ -122,11 +122,10 @@ const Link = ({ to, children, style = {}, className = "", onClick = () => {}, ..
 const SERVICES = [
   { slug: "gestione-social", icon: <TrendingUp size={22}/>, label: "Gestione Social", short: "Costruiamo una presenza riconoscibile su Instagram, Facebook, TikTok e LinkedIn. Non riempiamo calendari — costruiamo direzioni." },
   { slug: "meta-ads", icon: <Target size={22}/>, label: "Meta Ads", short: "Campagne progettate per convertire. Budget ottimizzato, audience costruita sui tuoi clienti migliori, risultati misurabili." },
-  { slug: "siti-web", icon: <Globe size={22}/>, label: "Siti Web & Web App", short: "Design e sviluppo di siti che non sono solo belli: sono veloci, ottimizzati e costruiti per portare clienti." },
+  { slug: "siti-web", icon: <Globe size={22}/>, label: "Siti Web & Web App", short: "Siti, e-commerce e landing page che non sono solo belli: sono veloci, ottimizzati e costruiti per portare clienti." },
   { slug: "automazioni-ai", icon: <Zap size={22}/>, label: "Automazioni AI", short: "Chatbot, workflow e processi automatizzati che fanno lavorare il tuo brand anche quando sei offline." },
   { slug: "shooting", icon: <Camera size={22}/>, label: "Foto & Shooting", short: "Foto professionali per brand, prodotti ed eventi. Perché un'immagine mediocre costa clienti. Una straordinaria li conquista." },
   { slug: "video", icon: <Video size={22}/>, label: "Video & Reels", short: "Produciamo contenuti video che le persone vogliono davvero guardare. Abbiamo portato clienti a milioni di visualizzazioni organiche." },
-  { slug: "landing-page", icon: <Layout size={22}/>, label: "Landing Page", short: "Pagine progettate con un solo obiettivo: trasformare i visitatori in lead. Copy, design e A/B test inclusi." },
   { slug: "branding", icon: <Star size={22}/>, label: "Branding & Identità", short: "Nome, logo, palette, tono di voce. Diamo forma al modo in cui il tuo brand viene percepito dal primo sguardo." },
 ];
  
@@ -557,7 +556,7 @@ const MarqueeHome = () => {
   const c = useContent();
   const items = (c as any).marquee?.items || [
     "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
-    "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦",
+    "Branding", "✦", "Siti Web", "✦",
     "Organizzazione Eventi", "✦", "Lead Generation", "✦",
   ];
   return <Marquee items={items} />;
@@ -996,43 +995,6 @@ const PageVideo = () => (
     </section>
  
     <ServiceCTA title="IL PROSSIMO VIDEO VIRALE È IL TUO." sub="Mostraci il tuo brand. Ti diciamo come lo raccontiamo." btn="Parliamo del tuo video"/>
-  </>
-);
- 
-/* ═══════════════════════════════════════════════════════════════
-   PAGE: LANDING PAGE
-═══════════════════════════════════════════════════════════════ */
-const PageLandingPage = () => (
-  <>
-    <PageHero tag="Servizio — Landing Page ad Alta Conversione"
-      h1="PAGINE CHE" h1b="CONVERTONO" italic="non solo informano."
-      sub="Una landing page non è un sito web ridotto. È una macchina di conversione progettata con un obiettivo unico: trasformare i visitatori in lead o clienti."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi esempi" cta2to="/lavori"
-    />
-    <Marquee items={["Lead Generation","✦","Vendite","✦","Prenotazioni","✦","Download","✦","Iscrizioni","✦","A/B Testing","✦"]}/>
-    <StatsRow stats={[{n:"12%",l:"Conversion rate medio"},{n:"×4",l:"Vs sito standard"},{n:"48h",l:"Tempo di consegna"},{n:"100%",l:"Mobile-first"}]}/>
- 
-    <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
-      <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1.4fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
-        <div>
-          <p className="section-label">Psicologia della conversione</p>
-          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>OGNI ELEMENTO<br/><span className="stroke">HA UNO SCOPO</span></h2>
-          <p style={{fontSize:15,color:"var(--m)",lineHeight:1.75}}>Utilizziamo principi di psicologia comportamentale, copywriting persuasivo e design orientato alla conversione. Niente è casuale.</p>
-        </div>
-        <div style={{display:"flex",flexDirection:"column",gap:0}}>
-          {[
-            {n:1,title:"Definizione dell'obiettivo",desc:"Una landing page = un obiettivo. Che sia un form di contatto, un acquisto, una prenotazione o un download — tutto il design è costruito intorno a quella singola azione."},
-            {n:2,title:"Ricerca e copywriting",desc:"Il copy viene prima del design. Studiamo la voce del cliente ideale, le obiezioni più comuni, i benefici che contano davvero. Scriviamo headline e body copy che parlano direttamente al tuo pubblico."},
-            {n:3,title:"Design persuasivo",desc:"Gerarchia visiva chiara, CTA prominente, social proof ben posizionata, rimozione di ogni elemento che distrae dalla conversione. Design che guida, non che decora."},
-            {n:4,title:"Sviluppo veloce e performante",desc:"Sviluppo su Next.js o Webflow. PageSpeed 95+, caricamento <2s, ottimizzazione per Core Web Vitals. La velocità impatta direttamente la conversion rate."},
-            {n:5,title:"A/B Testing",desc:"Testiamo headline alternative, varianti di CTA, posizionamento della social proof. Piccoli cambiamenti, grandi differenze. Ottimizzazione basata sui dati reali, non sulle opinioni."},
-            {n:6,title:"Analytics e ottimizzazione",desc:"Google Analytics 4, Hotjar per heatmap, tracciamento conversioni preciso. Ogni settimana i dati, ogni mese l'ottimizzazione."},
-          ].map(s=><ProcessStep key={s.n} {...s}/>)}
-        </div>
-      </div>
-    </section>
- 
-    <ServiceCTA title="STAI PAGANDO CLICK CHE NON CONVERTONO?" sub="Mandiamo traffico su una landing ottimizzata e cambia tutto." btn="Costruiamo la tua landing"/>
   </>
 );
  
@@ -2031,6 +1993,8 @@ const parseRoute = (route) => {
   if(route.startsWith("/cliente/")) return {page:"cliente",id:route.replace("/cliente/","")};
   // project detail pages: /progetto/1
   if(route.startsWith("/progetto/")) return {page:"progetto",id:route.replace("/progetto/","")};
+  // "Landing Page" non è più un servizio a sé (è dentro Siti Web)
+  if(route==="/landing-page"||route.startsWith("/landing-page-")) return parseRoute(route.replace("/landing-page","/siti-web"));
   // service pages
   const svcSlugs=SERVICES.map(s=>s.slug);
   if(svcSlugs.includes(route.slice(1))) return {page:"service",slug:route.slice(1)};
@@ -2065,7 +2029,6 @@ const renderPage = (info) => {
         case "automazioni-ai": return <PageAutomazioniAI/>;
         case "shooting": return <PageShooting/>;
         case "video": return <PageVideo/>;
-        case "landing-page": return <PageLandingPage/>;
         default: return <PageHome/>;
       }
     case "city": return <PageCittaSEO city={info.city} service={info.service}/>;

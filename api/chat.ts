@@ -34,11 +34,10 @@ Agenzia che aiuta aziende e brand della Puglia a comunicare meglio attraverso st
 
 SERVIZI:
 - Gestione Social & Meta Ads (Instagram, Facebook, TikTok — strategia, contenuti, advertising)
-- Siti Web & Web App (design, sviluppo full-stack, SEO, e-commerce)
+- Siti Web & Web App (design, sviluppo full-stack, SEO, e-commerce, landing page ottimizzate per conversione)
 - Automazioni con AI (chatbot, workflow intelligenti, integrazioni)
 - Shooting Fotografico (brand, prodotti, eventi)
 - Video & Reels (produzione per social — track record di milioni di view organiche)
-- Landing Page ottimizzate per conversione
 
 AREA DI INTERVENTO: Taranto, Palagiano, Palagianello, Massafra, Mottola, Castellaneta, Laterza, Ginosa, e Puglia in generale.
 

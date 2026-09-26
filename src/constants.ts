@@ -40,7 +40,7 @@ export const WEBSITE_CONTENT = {
   marquee: {
     items: [
       "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
-      "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦", "Organizzazione Eventi", "✦"
+      "Branding", "✦", "Siti Web", "✦", "Organizzazione Eventi", "✦"
     ]
   },
 
@@ -286,11 +286,10 @@ export const WEBSITE_CONTENT = {
     items: [
       { icon: "◈", title: "Gestione Social", desc: "Costruiamo una presenza riconoscibile su Instagram, Facebook, TikTok e LinkedIn. Non riempiamo calendari — costruiamo direzioni." },
       { icon: "◎", title: "Meta Ads", desc: "Campagne progettate per convertire. Budget ottimizzato, audience costruita sui tuoi clienti migliori, risultati misurabili." },
-      { icon: "◻", title: "Siti Web & Web App", desc: "Design e sviluppo di siti che non sono solo belli: sono veloci, ottimizzati e costruiti per portare clienti." },
+      { icon: "◻", title: "Siti Web & Web App", desc: "Siti, e-commerce e landing page che non sono solo belli: sono veloci, ottimizzati e costruiti per portare clienti." },
       { icon: "⬡", title: "Automazioni AI", desc: "Chatbot, workflow e processi automatizzati che fanno lavorare il tuo brand anche quando sei offline." },
       { icon: "◉", title: "Foto & Shooting", desc: "Foto professionali per brand, prodotti ed eventi. Perché un'immagine mediocre costa clienti. Una straordinaria li conquista." },
       { icon: "▷", title: "Video & Reels", desc: "Produciamo contenuti video che le persone vogliono davvero guardare. Abbiamo portato clienti a milioni di visualizzazioni organiche." },
-      { icon: "◇", title: "Landing Page", desc: "Pagine progettate con un solo obiettivo: trasformare i visitatori in lead. Copy, design e A/B test inclusi." },
       { icon: "★", title: "Branding & Identità", desc: "Nome, logo, palette, tono di voce. Diamo forma al modo in cui il tuo brand viene percepito dal primo sguardo." },
     ]
   },

@@ -7,6 +7,18 @@
       "maxDuration": 30
     }
   },
+  "redirects": [
+    {
+      "source": "/landing-page",
+      "destination": "/siti-web",
+      "permanent": true
+    },
+    {
+      "source": "/landing-page-:city",
+      "destination": "/siti-web-:city",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

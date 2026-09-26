@@ -36,15 +36,13 @@ export const SERVICES_SEO = [
   { slug: 'meta-ads', label: 'Meta Ads', keyword: 'campagne Meta Ads',
     description: 'Campagne Meta Ads su Facebook e Instagram progettate per generare contatti e vendite: targeting, creatività, test A/B e report chiari.' },
   { slug: 'siti-web', label: 'Siti Web & Web App', keyword: 'realizzazione siti web',
-    description: 'Realizzazione siti web e web app veloci, ottimizzati SEO e pensati per portare clienti: design su misura, sviluppo e gestione.' },
+    description: 'Realizzazione siti web, e-commerce e landing page veloci, ottimizzati SEO e pensati per portare clienti: design su misura, sviluppo e gestione.' },
   { slug: 'automazioni-ai', label: 'Automazioni AI', keyword: 'automazioni e chatbot AI',
     description: 'Chatbot, automazioni e workflow con intelligenza artificiale per risparmiare tempo, gestire i lead e far lavorare il tuo brand 24/7.' },
   { slug: 'shooting', label: 'Foto & Shooting', keyword: 'shooting fotografico',
     description: 'Shooting fotografici professionali per brand, prodotti, food ed eventi: immagini curate per social, sito web e campagne.' },
   { slug: 'video', label: 'Video & Reels', keyword: 'video e reel per social',
     description: 'Produzione video e reel per social: idea, riprese, montaggio e caption. Contenuti che le persone guardano davvero, fino a milioni di views organiche.' },
-  { slug: 'landing-page', label: 'Landing Page', keyword: 'landing page',
-    description: 'Landing page progettate per convertire: copy persuasivo, design orientato all\'azione e test A/B per trasformare visitatori in contatti.' },
   { slug: 'branding', label: 'Branding & Identità', keyword: 'branding e identità visiva',
     description: 'Branding e identità visiva: nome, logo, palette e tono di voce per un brand riconoscibile e coerente su ogni canale.' },
 ];
@@ -152,7 +150,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
   if (path === '/servizi') {
     return page(path, `Servizi di comunicazione digitale a Taranto | ${BRAND}`,
-      'Gestione social, Meta Ads, siti web, landing page, video e reel, shooting fotografici, branding e automazioni AI: tutti i servizi di InLab Communication.',
+      'Gestione social, Meta Ads, siti web e landing page, video e reel, shooting fotografici, branding e automazioni AI: tutti i servizi di InLab Communication.',
       { sitemap: { priority: 0.9, changefreq: 'monthly' } }, [['Servizi', '/servizi']]);
   }
   if (path === '/chi-siamo') {
