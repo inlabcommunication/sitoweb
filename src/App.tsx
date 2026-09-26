@@ -4,7 +4,8 @@ import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
   MapPin, Phone, Mail, Check,
   TrendingUp, Target, FileText, Video, Camera,
-  Globe, Zap, Layout, Users, BarChart2, Star
+  Globe, Zap, Layout, Users, BarChart2, Star,
+  GraduationCap,
 } from "lucide-react";
 import { Chatbot } from "./components/Chatbot";
 import { initAnalytics, trackPageview } from "./lib/analytics";
@@ -1086,8 +1087,8 @@ const PageChiSiamo = () => {
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9,marginBottom:"4rem"}}>IL TEAM<br/><span className="stroke">INLAB</span></h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem",maxWidth:980}} className="grid-1-mob">
             {[
-              {initials:"NC",name:"Nicola Carpignano",role:"Social media manager, comunicazione e marketing",bio:"Si occupa di strategia editoriale, copy, gestione social e posizionamento dei contenuti. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",skills:["Social media strategy","Copywriting","Piano editoriale","Community management","Posizionamento brand"]},
-              {initials:"IG",name:"Ilaria Gemma",role:"Content creator e comunicazione visiva",bio:"Lavora sulla creazione di contenuti, immagini, video e racconto visivo dei brand. Dalla direzione artistica di uno shooting alla regia di un reel, cura ogni dettaglio estetico.",skills:["Produzione video & reels","Direzione artistica","Fotografia di brand","Script & storytelling","Visual identity"]},
+              {initials:"NC",name:"Nicola Carpignano",role:"Psicologo della comunicazione, analista e social media manager",bio:"Studia il comportamento delle persone prima di creare qualsiasi contenuto: strategia editoriale, copy, gestione social, analisi dei dati e posizionamento. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",edu:["Psicologia della comunicazione e del marketing — Sapienza Università di Roma","Master in Digital Marketing"],skills:["Psicologia del consumatore","Social media strategy","Analisi dati & KPI","Copywriting","Piano editoriale","Posizionamento brand"]},
+              {initials:"IG",name:"Ilaria Gemma",role:"Content creator e comunicazione visiva",bio:"Lavora sulla creazione di contenuti, immagini, video e racconto visivo dei brand. Dalla direzione artistica di uno shooting alla regia e al montaggio di un reel, cura ogni dettaglio estetico.",edu:["Laurea in Scienze della Comunicazione","Corsi di specializzazione in video editing"],skills:["Produzione video & reels","Video editing","Direzione artistica","Fotografia di brand","Script & storytelling"]},
             ].map((p,i)=>(
               <motion.div key={i} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.1}}
                 style={{padding:"2.5rem"}}>
@@ -1101,6 +1102,14 @@ const PageChiSiamo = () => {
                   </div>
                 </div>
                 <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}</p>
+                {p.edu?.length>0&&(
+                  <div style={{marginBottom:"1.5rem",padding:"1rem 1.1rem",borderRadius:14,background:"rgba(205,178,255,0.06)",border:".5px solid rgba(205,178,255,0.2)"}}>
+                    <div style={{display:"flex",alignItems:"center",gap:6,fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
+                      <GraduationCap size={13}/> Formazione
+                    </div>
+                    {p.edu.map(e=><p key={e} style={{fontSize:13.5,color:"var(--t)",lineHeight:1.55,marginBottom:4}}>{e}</p>)}
+                  </div>
+                )}
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
                   {p.skills.map(s=><span key={s} className="tag tag-g" style={{fontSize:11}}>{s}</span>)}
                 </div>

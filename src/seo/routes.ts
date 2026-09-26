@@ -158,7 +158,15 @@ export const getSeo = (rawPath: string): Seo => {
   if (path === '/chi-siamo') {
     return page(path, `Chi siamo | ${BRAND}, agenzia creativa a Taranto`,
       'InLab Communication è un laboratorio creativo di Taranto: strategia, contenuti e tecnologia per far crescere brand e attività locali in Puglia.',
-      { sitemap: { priority: 0.7, changefreq: 'monthly' } }, [['Chi siamo', '/chi-siamo']]);
+      { sitemap: { priority: 0.7, changefreq: 'monthly' }, jsonLd: [
+        { '@context': 'https://schema.org', '@type': 'Person', name: 'Nicola Carpignano',
+          jobTitle: 'Psicologo della comunicazione, analista e social media manager', worksFor: orgRef,
+          alumniOf: { '@type': 'CollegeOrUniversity', name: 'Sapienza Università di Roma' },
+          knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati'] },
+        { '@context': 'https://schema.org', '@type': 'Person', name: 'Ilaria Gemma',
+          jobTitle: 'Content creator e comunicazione visiva', worksFor: orgRef,
+          knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'] },
+      ] }, [['Chi siamo', '/chi-siamo']]);
   }
   if (path === '/casi-studio') {
     return page(path, `Casi studio e clienti | ${BRAND}`,
