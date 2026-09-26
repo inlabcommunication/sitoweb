@@ -1084,9 +1084,8 @@ const PageChiSiamo = () => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label">Le persone dietro InLab</p>
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9,marginBottom:"4rem"}}>IL TEAM<br/><span className="stroke">INLAB</span></h2>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"2rem"}} className="grid-1-mob">
+          <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem",maxWidth:980}} className="grid-1-mob">
             {[
-              {initials:"P",name:"Prince",role:"Strategia, sviluppo commerciale, progetti digitali",bio:"Segue la visione strategica dei progetti, il rapporto con i clienti e lo sviluppo di soluzioni orientate alla crescita. Collega le esigenze del brand con le leve digitali più efficaci.",skills:["Strategia digitale","Business development","Gestione progetti","Consulenza clienti","Analisi e KPI"]},
               {initials:"NC",name:"Nicola Carpignano",role:"Social media manager, comunicazione e marketing",bio:"Si occupa di strategia editoriale, copy, gestione social e posizionamento dei contenuti. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",skills:["Social media strategy","Copywriting","Piano editoriale","Community management","Posizionamento brand"]},
               {initials:"IG",name:"Ilaria Gemma",role:"Content creator e comunicazione visiva",bio:"Lavora sulla creazione di contenuti, immagini, video e racconto visivo dei brand. Dalla direzione artistica di uno shooting alla regia di un reel, cura ogni dettaglio estetico.",skills:["Produzione video & reels","Direzione artistica","Fotografia di brand","Script & storytelling","Visual identity"]},
             ].map((p,i)=>(

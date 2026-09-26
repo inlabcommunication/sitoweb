@@ -369,7 +369,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
           <Field label="Sito web" value={p.website} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].website = v; set('portfolio.projects', a); }} placeholder="https://..." />
 
           <SectionTitle>Altre opzioni</SectionTitle>
-          <Field label="Chi ci ha lavorato (separati da virgola)" value={(p.whoWorked || []).join(', ')} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].whoWorked = v.split(',').map((s: string) => s.trim()).filter(Boolean); set('portfolio.projects', a); }} placeholder="Nicola, Ilaria, Prince" />
+          <Field label="Chi ci ha lavorato (separati da virgola)" value={(p.whoWorked || []).join(', ')} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].whoWorked = v.split(',').map((s: string) => s.trim()).filter(Boolean); set('portfolio.projects', a); }} placeholder="Nicola, Ilaria" />
           <Field label="ID prossimo progetto" value={p.nextProject} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].nextProject = v; set('portfolio.projects', a); }} hint="ID del progetto successivo (per navigazione)" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
             <input type="checkbox" checked={p.large || false} onChange={e => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].large = e.target.checked; set('portfolio.projects', a); }} id={`lg-${i}`} style={{ accentColor: '#cdb2ff' }} />
@@ -572,18 +572,17 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
   // ── TEAM ─────────────────────────────────────────────────────
   if (block === 'team') return (
     <div>
-      <SectionTitle>Team InLab (3 profili)</SectionTitle>
-      <Note>I 3 profili fissi: Prince, Nicola Carpignano, Ilaria Gemma. Puoi modificare bio, ruolo e foto.</Note>
+      <SectionTitle>Team InLab (2 profili)</SectionTitle>
+      <Note>I 2 profili fissi: Nicola Carpignano, Ilaria Gemma. Puoi modificare bio, ruolo e foto.</Note>
       {[
-        { name: 'Prince', role: 'Strategia, sviluppo commerciale, progetti digitali', initials: 'P' },
         { name: 'Nicola Carpignano', role: 'Social media manager, comunicazione e marketing', initials: 'NC' },
         { name: 'Ilaria Gemma', role: 'Content creator e comunicazione visiva', initials: 'IG' },
       ].map((defaults, i) => {
-        const teamItems = (content as any).studio?.team || [];
+        // eventuali dati salvati del vecchio profilo "Prince" vengono ignorati
+        const teamItems = ((content as any).studio?.team || []).filter((m: any) => m?.name !== 'Prince');
         const member = teamItems[i] || {};
         const updateMember = (key: string, val: string) => {
-          const a: any[] = JSON.parse(JSON.stringify(teamItems.length >= 3 ? teamItems : [
-            { name: 'Prince', role: 'Strategia, sviluppo commerciale, progetti digitali' },
+          const a: any[] = JSON.parse(JSON.stringify(teamItems.length >= 2 ? teamItems : [
             { name: 'Nicola Carpignano', role: 'Social media manager, comunicazione e marketing' },
             { name: 'Ilaria Gemma', role: 'Content creator e comunicazione visiva' },
           ]));
