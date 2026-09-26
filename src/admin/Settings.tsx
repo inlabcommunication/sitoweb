@@ -14,7 +14,7 @@ type Settings = {
 
 const DEFAULTS: Settings = {
   aiProvider: 'gemini',
-  geminiModel: 'gemini-2.5-flash',
+  geminiModel: 'gemini-flash-latest',
   anthropicModel: 'claude-haiku-4-5-20251001',
 };
 
@@ -74,7 +74,7 @@ export const Settings = () => {
         </div>
         {settings.aiProvider === 'gemini' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <Field label="Modello" value={settings.geminiModel} onChange={(v) => set('geminiModel', v)} placeholder="gemini-2.5-flash" />
+            <Field label="Modello" value={settings.geminiModel} onChange={(v) => set('geminiModel', v)} placeholder="gemini-flash-latest" />
           </div>
         )}
         {settings.aiProvider === 'anthropic' && (

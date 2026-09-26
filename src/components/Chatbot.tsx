@@ -113,6 +113,7 @@ export const Chatbot = () => {
       });
 
       const data = await response.json();
+      if (data.code) console.warn('[chatbot] errore server:', response.status, data.code);
 
       // Risposta del bot (sempre, anche in caso di errore mostra il messaggio fallback)
       const reply = data.reply || 'Ops, problema tecnico. Scrivici a inlab.communication@gmail.com 🙂';

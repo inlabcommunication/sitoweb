@@ -87,8 +87,12 @@ async function callAnthropic(apiKey: string, model: string, systemPrompt: string
   return { rawText, usage: { inputTokens: response.usage?.input_tokens, outputTokens: response.usage?.output_tokens } };
 }
 
+// Modelli provati in ordine: se uno è ritirato/non disponibile si passa al successivo.
+// "-latest" sono alias di Google che puntano sempre al modello Flash più recente.
+const GEMINI_FALLBACKS = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-flash-lite-latest"];
+
 async function callGemini(apiKey: string, model: string, systemPrompt: string, messages: any[], maxTokens: number) {
-  const MODELS = Array.from(new Set([model || "gemini-2.5-flash", "gemini-2.5-flash"]));
+  const MODELS = Array.from(new Set([model, ...GEMINI_FALLBACKS].filter(Boolean)));
 
   const ai = new GoogleGenAI({ apiKey });
   const history = messages.slice(0, -1).map((m: any) => ({
@@ -99,31 +103,49 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
         : String(m.content),
     }],
   })).filter((m: any) => m.parts[0].text && m.parts[0].text.length > 0);
+  // Gemini vuole che la cronologia inizi con un messaggio dell'utente (togli il saluto iniziale del bot)
+  while (history.length && history[0].role !== "user") history.shift();
 
   const lastMessage = messages[messages.length - 1];
+  let lastError: any = null;
 
   for (const mdl of MODELS) {
     try {
       const chat = ai.chats.create({
         model: mdl,
-        config: { systemInstruction: systemPrompt, maxOutputTokens: maxTokens, temperature: 0.7 },
+        // margine ampio: i modelli recenti usano token anche per "ragionare" prima di rispondere
+        config: { systemInstruction: systemPrompt, maxOutputTokens: Math.max(maxTokens, 1024), temperature: 0.7 },
         history,
       });
       const response = await chat.sendMessage({ message: String(lastMessage?.content || "") });
+      const text = response.text || "";
+      if (!text.trim()) throw Object.assign(new Error(`Empty response from ${mdl}`), { status: 502 });
       return {
-        rawText: response.text || "",
+        rawText: text,
         usage: { inputTokens: response.usageMetadata?.promptTokenCount, outputTokens: response.usageMetadata?.candidatesTokenCount },
       };
     } catch (e: any) {
-      const is503 = e?.status === 503 || e?.message?.includes("503") || e?.message?.includes("UNAVAILABLE");
-      if (is503 && mdl !== MODELS[MODELS.length - 1]) {
-        console.warn(`[chat] ${mdl} unavailable, trying fallback...`);
-        continue;
-      }
-      throw e;
+      lastError = e;
+      const status = Number(e?.status || e?.code || 0);
+      const msg = String(e?.message || "");
+      // Chiave non valida o quota esaurita: inutile provare altri modelli
+      if (status === 401 || /API key not valid|API_KEY_INVALID|PERMISSION_DENIED.*key/i.test(msg)) throw Object.assign(e, { chatCode: "AI_KEY" });
+      if (status === 429 || /RESOURCE_EXHAUSTED|quota/i.test(msg)) throw Object.assign(e, { chatCode: "AI_QUOTA" });
+      console.warn(`[chat] modello ${mdl} non disponibile (${status}): ${msg.slice(0, 160)} — provo il successivo`);
     }
   }
-  throw new Error("All Gemini models unavailable");
+  throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: "AI_MODEL" });
+}
+
+// Limite di riserva per istanza, usato solo se Firestore non è raggiungibile
+const memHits = new Map<string, number[]>();
+function memoryLimit(ip: string): boolean {
+  const now = Date.now();
+  const hits = (memHits.get(ip) || []).filter((t) => now - t < 600_000);
+  hits.push(now);
+  memHits.set(ip, hits);
+  if (memHits.size > 5000) memHits.clear();
+  return hits.length <= Math.min(LIMIT_PER_IP_10MIN, 10);
 }
 
 const FALLBACK_REPLY = "Mi dispiace, c'è stato un problema tecnico. Scrivici a inlab.communication@gmail.com 🙂";
@@ -150,33 +172,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const sessionId = str(req.body?.sessionId, 64).replace(/[^a-zA-Z0-9_-]/g, "") || null;
 
   try {
-    const db = getAdminDb();
     const ip = clientIp(req);
-
-    // Limiti: per visitatore (10 minuti e giorno) e tetto globale giornaliero di spesa
-    const okIp = await rateLimit(db, "chat10m", ip, LIMIT_PER_IP_10MIN, 600)
-      && await rateLimit(db, "chatday", ip, LIMIT_PER_IP_DAY, 86400);
-    if (!okIp) return res.status(429).json({ error: "Too many requests", reply: "Hai inviato molti messaggi in poco tempo. Riprova tra qualche minuto o scrivici a inlab.communication@gmail.com 🙂" });
-    if (!(await dailyCap(db, "chat", LIMIT_GLOBAL_DAY))) {
-      return res.status(429).json({ error: "Daily limit", reply: "L'assistente è molto richiesto oggi. Scrivici a inlab.communication@gmail.com e ti rispondiamo noi 🙂" });
+    let db: ReturnType<typeof getAdminDb> | null = null;
+    let settings: any = {};
+    try {
+      db = getAdminDb();
+      // Limiti: per visitatore (10 minuti e giorno) e tetto globale giornaliero di spesa
+      const okIp = await rateLimit(db, "chat10m", ip, LIMIT_PER_IP_10MIN, 600)
+        && await rateLimit(db, "chatday", ip, LIMIT_PER_IP_DAY, 86400);
+      if (!okIp) return res.status(429).json({ error: "Too many requests", reply: "Hai inviato molti messaggi in poco tempo. Riprova tra qualche minuto o scrivici a inlab.communication@gmail.com 🙂" });
+      if (!(await dailyCap(db, "chat", LIMIT_GLOBAL_DAY))) {
+        return res.status(429).json({ error: "Daily limit", reply: "L'assistente è molto richiesto oggi. Scrivici a inlab.communication@gmail.com e ti rispondiamo noi 🙂" });
+      }
+      // Dal database leggiamo SOLO provider e modello; le chiavi stanno esclusivamente nelle variabili d'ambiente
+      const settingsSnap = await db.collection("app").doc("settings").get();
+      settings = settingsSnap.exists ? (settingsSnap.data() as any) : {};
+    } catch (e) {
+      // Database non raggiungibile (es. FIREBASE_SERVICE_ACCOUNT_KEY mancante/errata):
+      // la chat continua con un limite in memoria, più prudente, invece di bloccarsi
+      console.error("[chat] Firestore non disponibile, uso limiti in memoria:", e);
+      db = null;
+      if (!memoryLimit(ip)) return res.status(429).json({ error: "Too many requests", code: "RATE", reply: "Hai inviato molti messaggi in poco tempo. Riprova tra qualche minuto 🙂" });
     }
-
-    // Dal database leggiamo SOLO provider e modello; le chiavi stanno esclusivamente nelle variabili d'ambiente
-    const settingsSnap = await db.collection("app").doc("settings").get();
-    const settings = settingsSnap.exists ? (settingsSnap.data() as any) : {};
     const provider = (settings.aiProvider || process.env.AI_PROVIDER) === "anthropic" ? "anthropic" : "gemini";
     const maxTokens = 400;
 
     let result;
     if (provider === "anthropic") {
       const apiKey = process.env.ANTHROPIC_API_KEY;
-      if (!apiKey) return res.status(503).json({ error: "Not configured", reply: FALLBACK_REPLY });
+      if (!apiKey) return res.status(503).json({ error: "Not configured", code: "NO_KEY", reply: FALLBACK_REPLY });
       const model = /^claude-[a-z0-9.-]+$/.test(settings.anthropicModel || "") ? settings.anthropicModel : (process.env.ANTHROPIC_MODEL || "claude-haiku-4-5-20251001");
       result = await callAnthropic(apiKey, model, SYSTEM_PROMPT, messages, maxTokens);
     } else {
       const apiKey = process.env.GEMINI_API_KEY;
-      if (!apiKey) return res.status(503).json({ error: "Not configured", reply: FALLBACK_REPLY });
-      const model = /^gemini-[a-z0-9.-]+$/.test(settings.geminiModel || "") ? settings.geminiModel : (process.env.GEMINI_MODEL || "gemini-2.5-flash");
+      if (!apiKey) return res.status(503).json({ error: "Not configured", code: "NO_KEY", reply: FALLBACK_REPLY });
+      const model = process.env.GEMINI_MODEL || (/^gemini-[a-z0-9.-]+$/.test(settings.geminiModel || "") ? settings.geminiModel : "gemini-flash-latest");
       result = await callGemini(apiKey, model, SYSTEM_PROMPT, messages, maxTokens);
     }
 
@@ -188,7 +218,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const candidate = str(m?.contact_data?.email, 254) || (lastUserMsg.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/)?.[0] ?? "");
     const email = EMAIL_RE.test(candidate) ? candidate.toLowerCase() : null;
 
-    if (email && sessionId) {
+    if (email && sessionId && db) {
       try {
         const conversation = [...messages, { role: "assistant", content: visibleText }].slice(-30);
         const leadsRef = db.collection("leads");
@@ -216,6 +246,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(200).json({ reply: visibleText, meta: { contact_data: { email } } });
   } catch (error: any) {
     console.error("Chat API error:", error);
-    return res.status(500).json({ error: "Internal error", reply: FALLBACK_REPLY });
+    // "code" indica solo la fase che ha fallito (nessun dettaglio interno), utile per la diagnosi
+    return res.status(500).json({ error: "Internal error", code: error?.chatCode || "SERVER", reply: FALLBACK_REPLY });
   }
 }
