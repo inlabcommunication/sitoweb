@@ -17,6 +17,15 @@ const setAttr = (html: string, selector: RegExp, value: string) => {
   return html.replace(selector, (_m, before) => `${before}${esc(value)}"`);
 };
 
+// Google Search Console: codice di verifica (metodo "tag HTML"). Si può
+// incollare solo il codice o l'intero tag <meta ...>.
+const GSC = (() => {
+  const raw = String(process.env.VITE_GSC_VERIFICATION || '').trim();
+  const code = raw.match(/content="([^"]+)"/)?.[1] ?? raw;
+  return /^[A-Za-z0-9_-]{10,100}$/.test(code) ? code : '';
+})();
+if (process.env.VITE_GSC_VERIFICATION && !GSC) console.warn('[prerender] VITE_GSC_VERIFICATION non valido: ignorato');
+
 const render = (path: string) => {
   const seo = getSeo(path);
   let html = template.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(seo.title)}</title>`);
@@ -33,7 +42,8 @@ const render = (path: string) => {
   html = html.replace(/<script type="application\/ld\+json" data-seo="org">[\s\S]*?<\/script>/,
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
-  return html.replace('</head>', `    ${pageLd}\n  </head>`);
+  const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
+  return html.replace('</head>', `    ${gsc}${pageLd}\n  </head>`);
 };
 
 // Articoli pubblicati dalla dashboard (Firestore, API REST pubblica: le regole
