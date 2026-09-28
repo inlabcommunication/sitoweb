@@ -29,6 +29,8 @@ import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CaseParesteta = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseParesteta })));
 const CaseRicciardi = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseRicciardi })));
+const PageBlog = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageBlog })));
+const PageArticolo = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageArticolo })));
  
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -183,6 +185,7 @@ const Navbar = () => {
     { to:"/chi-siamo", label:"Studio" },
     { to:"/casi-studio", label:"Casi studio" },
     { to:"/servizi", label:"Servizi" },
+    { to:"/blog", label:"Blog" },
     { to:"/contatti", label:"Contatti" },
   ];
  
@@ -205,7 +208,7 @@ const Navbar = () => {
  
         <div className="hide-mob" style={{display:"flex",gap:32,alignItems:"center"}}>
           {navLinks.map(l=>(
-            <Link key={l.to} to={l.to} className={`nav-link${route===l.to?" active":""}`}>{l.label}</Link>
+            <Link key={l.to} to={l.to} className={`nav-link${route===l.to||(l.to!=="/"&&route.startsWith(l.to+"/"))?" active":""}`}>{l.label}</Link>
           ))}
         </div>
  
@@ -269,7 +272,7 @@ const Footer = () => {
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Contatti","/contatti"]].map(([l,r])=>(
+              {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Blog","/blog"],["Contatti","/contatti"]].map(([l,r])=>(
                 <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
               ))}
             </div>
@@ -2024,7 +2027,7 @@ const PageBranding = () => (
     <PageHero tag="Servizio — Branding & Identità Visiva"
       h1="IL TUO BRAND" h1b="HA UNA VOCE?" italic="Diamogliene una memorabile."
       sub="Diamo forma all'immagine del brand con grafiche, tono, colori e contenuti coerenti. Non solo un logo — un sistema visivo che comunica chi sei prima ancora che tu parli."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i lavori" cta2to="/portfolio"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i casi studio" cta2to="/casi-studio"
     />
     <Marquee items={["Logo & Naming","✦","Brand Identity","✦","Palette colori","✦","Tono di voce","✦","Brand guidelines","✦","Visual system","✦"]}/>
     <StatsRow stats={[{n:"100%",l:"Progetti con brand guidelines"},{n:"48h",l:"Prime proposte visive"},{n:"3+",l:"Revisioni incluse"},{n:"∞",l:"File sorgenti consegnati"}]}/>
@@ -2084,6 +2087,8 @@ const parseRoute = (route) => {
   if(route==="/casi-studio") return {page:"casi-studio"};
   if(route==="/servizi") return {page:"servizi"};
   if(route==="/contatti") return {page:"contatti"};
+  if(route==="/blog") return {page:"blog"};
+  if(route.startsWith("/blog/")) return {page:"articolo",id:route.replace("/blog/","")};
   // case study detail pages: /casi-studio/paresteta
   if(route.startsWith("/casi-studio/")) return {page:"caso",id:route.replace("/casi-studio/","")};
   // client detail pages: /cliente/nunzio-putignano
@@ -2117,6 +2122,8 @@ const renderPage = (info) => {
     case "casi-studio": return <PageCasiStudio/>;
     case "servizi": return <PageServizi/>;
     case "contatti": return <PageContatti/>;
+    case "blog": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageBlog go={navigate}/></Suspense>;
+    case "articolo": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageArticolo slug={info.id} go={navigate}/></Suspense>;
     case "service":
       switch(info.slug){
         case "branding": return <PageBranding/>;
