@@ -27,6 +27,25 @@ porta nessuno verso i servizi o i contatti ha fatto solo metà del lavoro.
    brief: cosa ha fatto, cosa no e perché, dubbi, idee.
 4. La settimana dopo il responsabile misura i risultati e aggiorna brief e linee guida.
 
+### Dove si scrivono gli articoli (regola tecnica, non negoziabile)
+Il sito legge gli articoli **solo** da due posti:
+1. `src/data/blogSeed.ts`, l'array `BLOG_SEED` (formato `BlogPost`);
+2. la dashboard `/admin` → Blog (collezione Firestore `blog_posts`).
+
+I file in `content/blog/*.md` **non vengono letti dal sito**: un articolo scritto
+solo lì non va online. Si può usare `content/blog/` come bozza, ma l'articolo
+è consegnato solo quando si trova in `BLOG_SEED`. Se serve un campo che
+`BlogPost` non ha, chiedilo nel resoconto: lo aggiunge il responsabile SEO.
+
+### Due tipi di articolo
+- **Evergreen (priorità):** guide che rispondono a ricerche stabili nel tempo
+  (costi, "come fare", confronti). Le assegna il responsabile SEO nel brief, in
+  base ai dati.
+- **Novità:** aggiornamenti di Meta, Google, TikTok, normative. Nascono dal
+  monitoraggio delle fonti descritto in `docs/blog-brief.md` (classificazione
+  A/B/C). Si pubblicano solo per notizie A o B forti, e **solo dopo** aver
+  completato i compiti di priorità 1 del brief in corso.
+
 **Le indicazioni si basano sui dati, non sui gusti personali.** Ogni richiesta del
 responsabile SEO deve indicare da dove nasce: numeri di Google Analytics o Search
 Console, analisi dei risultati su Google, regole di Google o queste linee guida.
@@ -142,8 +161,10 @@ non su frasi intere ogni due righe.
 | `category` | una tra: `Social media`, `Video & Reel`, `Siti web`, `Strategia`, `Advertising`. |
 | `tags` | 3-6 tag, in minuscolo, riutilizzando quelli già esistenti quando possibile. |
 | `author` | `Nicola Carpignano` (strategia, social, advertising, dati) o `Ilaria Gemma` (video, foto, contenuti visivi). |
-| `date` | data **reale** di pubblicazione (`AAAA-MM-GG`). Non pubblicare più articoli con la stessa data se non sono usciti davvero insieme. |
-| `cover` | **obbligatoria.** Immagine 16:9, almeno 1600×900, in WebP o JPG compressa (< 250 KB). |
+| `date` | data **reale** di pubblicazione (`AAAA-MM-GG`). Non pubblicare più articoli con la stessa data se non sono usciti davvero insieme. **Non si cambia** quando si aggiorna l'articolo. |
+| `updated` | data dell'ultimo aggiornamento **sostanziale** (`AAAA-MM-GG`): nuove sezioni, dati aggiornati, riscrittura. Non per un refuso. Google la legge come data di modifica. |
+| `cover` | **obbligatoria.** Percorso (es. `/blog/<slug>/hero.webp`) o URL. WebP 1200×630 generata con `tools/blog-images`, < 250 KB. Il sito la mostra ritagliata in 16:9: tieni testo e soggetto **lontani dai bordi sinistro e destro** (circa 40 px). |
+| `coverAlt` | descrizione concreta della copertina (cosa si vede), 8-15 parole. Se manca si usa il titolo, ma va sempre compilata. |
 
 Conta sempre i caratteri di `seoTitle` e `seoDescription` prima di consegnare.
 
@@ -216,7 +237,9 @@ Google premia i contenuti scritti da chi ha **esperienza vera**. Quindi:
 - [ ] Sezione `## Domande frequenti` con 3-5 domande
 - [ ] Link al servizio collegato + 1-3 articoli + `/contatti`
 - [ ] Aggiunto un link verso il nuovo articolo in un articolo esistente
-- [ ] Copertina presente, immagini con descrizione
+- [ ] Articolo inserito in `src/data/blogSeed.ts` (non solo in `content/blog/`)
+- [ ] Copertina presente con `coverAlt`, immagini con descrizione
+- [ ] Se è un aggiornamento: `updated` compilato, `date` e `slug` invariati
 - [ ] Nessun dato inventato, nessuna promessa di risultati garantiti
 - [ ] Solo la sintassi supportata (niente `#`, tabelle, HTML)
 - [ ] Data reale, autore giusto, categoria e tag corretti

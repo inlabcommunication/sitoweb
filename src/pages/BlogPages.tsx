@@ -189,7 +189,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
         {post.cover && (
           <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 2rem 1rem' }}>
-            <img src={post.cover} alt="" style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
+            <img src={post.cover} alt={post.coverAlt || post.title} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
           </div>
         )}
 

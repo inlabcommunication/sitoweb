@@ -245,7 +245,7 @@ export const getSeo = (rawPath: string): Seo => {
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'BlogPosting',
           headline: post.title.slice(0, 110), description: clip(desc), image: [image],
-          datePublished: post.date, dateModified: post.date,
+          datePublished: post.date, dateModified: post.updated && post.updated > post.date ? post.updated : post.date,
           author: { '@type': 'Person', name: post.author },
           publisher: orgRef, mainEntityOfPage: abs(path), url: abs(path),
           articleSection: post.category, keywords: post.tags.join(', '), wordCount: words, inLanguage: 'it-IT',
