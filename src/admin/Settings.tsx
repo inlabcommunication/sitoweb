@@ -62,7 +62,7 @@ export const Settings = () => {
       else if (r.status === 429) setTest({ ok: false, text: CHAT_CODES.RATE + ' ' + (d.reply || '') });
       else if (r.status === 403) setTest({ ok: false, text: 'Richiesta rifiutata (403): stai usando un indirizzo diverso dal sito. Se hai un nuovo dominio, imposta VITE_SITE_URL su Vercel e fai Redeploy.' });
       else if (!d.code) setTest({ ok: false, text: `Errore ${r.status} senza codice: la funzione /api/chat si è bloccata prima di rispondere (crash o timeout). Apri Vercel → progetto → Logs, filtra per /api/chat e copia il messaggio di errore in rosso.` });
-      else setTest({ ok: false, text: `Errore ${r.status} (${d.code}): ${CHAT_CODES[d.code] || CHAT_CODES.SERVER}` });
+      else setTest({ ok: false, text: `Errore ${r.status} (${d.code}): ${CHAT_CODES[d.code] || CHAT_CODES.SERVER}${Array.isArray(d.attempts) && d.attempts.length ? `\n\nEsito per modello:\n• ${d.attempts.join('\n• ')}` : ''}` });
     } catch {
       setTest({ ok: false, text: 'Il server non risponde: controlla su Vercel che l\'ultimo deploy sia andato a buon fine.' });
     }
@@ -146,7 +146,7 @@ export const Settings = () => {
         <p style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: 12 }}>Invia un messaggio di prova al chatbot del sito e mostra la risposta o la causa del problema (con le impostazioni salvate).</p>
         <button onClick={testChat} disabled={testing} className="btn btn-g" style={{ opacity: testing ? 0.6 : 1 }}>{testing ? 'Prova in corso…' : 'Prova il chatbot'}</button>
         {test && (
-          <div style={{ marginTop: 12, padding: '12px 14px', borderRadius: 10, fontSize: 12, lineHeight: 1.7, background: test.ok ? 'rgba(126,224,161,0.08)' : 'rgba(255,120,120,0.08)', border: `.5px solid ${test.ok ? 'rgba(126,224,161,0.35)' : 'rgba(255,120,120,0.35)'}`, color: test.ok ? '#b5f0c8' : '#ffb4b4' }}>
+          <div style={{ marginTop: 12, padding: '12px 14px', borderRadius: 10, fontSize: 12, lineHeight: 1.7, background: test.ok ? 'rgba(126,224,161,0.08)' : 'rgba(255,120,120,0.08)', border: `.5px solid ${test.ok ? 'rgba(126,224,161,0.35)' : 'rgba(255,120,120,0.35)'}`, color: test.ok ? '#b5f0c8' : '#ffb4b4', whiteSpace: 'pre-line' }}>
             {test.ok ? <CheckCircle size={12} style={{ display: 'inline', marginRight: 6 }} /> : <AlertCircle size={12} style={{ display: 'inline', marginRight: 6 }} />}{test.text}
           </div>
         )}

@@ -117,6 +117,7 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
   const lastMessage = messages[messages.length - 1];
   let lastError: any = null;
   let quotaHit = false;
+  const attempts: string[] = [];
 
   for (const mdl of MODELS) {
     try {
@@ -141,10 +142,15 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
       if (status === 401 || /API key not valid|API_KEY_INVALID|API key expired|reported as leaked|PERMISSION_DENIED.*key/i.test(msg)) throw Object.assign(e, { chatCode: "AI_KEY" });
       // Quota esaurita: nel piano gratuito i limiti sono per modello, quindi provo il successivo
       if (status === 429 || /RESOURCE_EXHAUSTED|quota/i.test(msg)) quotaHit = true;
+      // Riepilogo per la diagnosi: solo modello, codice HTTP e motivo breve (niente dettagli dell'account)
+      const reason = /per.?day|PerDay/i.test(msg) ? "limite giornaliero" : /per.?minute|PerMinute/i.test(msg) ? "limite al minuto"
+        : /free.?tier|FreeTier/i.test(msg) ? "piano gratuito" : /spend|budget|billing|prepa/i.test(msg) ? "fatturazione/limite di spesa"
+        : /not found|NOT_FOUND|is not supported/i.test(msg) ? "modello inesistente" : "";
+      attempts.push(`${mdl}: ${status || "errore"}${reason ? ` (${reason})` : ""}`);
       console.warn(`[chat] modello ${mdl} non disponibile (${status}): ${msg.slice(0, 160)} — provo il successivo`);
     }
   }
-  throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: quotaHit ? "AI_QUOTA" : "AI_MODEL" });
+  throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: quotaHit ? "AI_QUOTA" : "AI_MODEL", attempts });
 }
 
 // Limite di riserva per istanza, usato solo se Firestore non è raggiungibile
@@ -273,6 +279,6 @@ async function handle(req: VercelRequest, res: VercelResponse) {
   } catch (error: any) {
     console.error("Chat API error:", error);
     // "code" indica solo la fase che ha fallito (nessun dettaglio interno), utile per la diagnosi
-    return res.status(500).json({ error: "Internal error", code: error?.chatCode || "SERVER", reply: FALLBACK_REPLY });
+    return res.status(500).json({ error: "Internal error", code: error?.chatCode || "SERVER", reply: FALLBACK_REPLY, ...(Array.isArray(error?.attempts) ? { attempts: error.attempts.slice(0, 8) } : {}) });
   }
 }
