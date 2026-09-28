@@ -43,6 +43,15 @@ for (const path of routes) {
   writeFileSync(file, render(path));
 }
 
+// Pagine senza HTML dedicato: /admin (dashboard) e 404.html come riserva per
+// indirizzi sconosciuti. Entrambe caricano l'app, che mostra la pagina giusta,
+// così funzionano anche se la regola di rewrite di Vercel non si applica.
+const noindex = (html: string, title: string) => html
+  .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`)
+  .replace(/(<meta name="robots" content=")[^"]*"/, '$1noindex, nofollow"');
+writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
+writeFileSync(join(DIST, '404.html'), noindex(template, 'InLab Communication'));
+
 const today = new Date().toISOString().slice(0, 10);
 const urls = routes
   .map((p) => ({ p, seo: getSeo(p) }))
