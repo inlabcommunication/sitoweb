@@ -12,7 +12,9 @@ export type BlogPost = {
   tags: string[];
   author: string;
   date: string;         // YYYY-MM-DD
+  updated?: string;     // YYYY-MM-DD, ultimo aggiornamento sostanziale (dateModified per Google)
   cover?: string;
+  coverAlt?: string;    // descrizione della copertina (se manca si usa il titolo)
   published: boolean;
   seoTitle?: string;
   seoDescription?: string;
@@ -36,7 +38,9 @@ export const normalizePost = (slug: string, d: any): BlogPost => ({
   tags: Array.isArray(d?.tags) ? d.tags.map(String).slice(0, 12) : [],
   author: String(d?.author || 'InLab Communication'),
   date: /^\d{4}-\d{2}-\d{2}$/.test(d?.date) ? d.date : new Date().toISOString().slice(0, 10),
+  updated: /^\d{4}-\d{2}-\d{2}$/.test(d?.updated) ? d.updated : undefined,
   cover: d?.cover ? String(d.cover) : undefined,
+  coverAlt: d?.coverAlt ? String(d.coverAlt) : undefined,
   published: d?.published === true,
   seoTitle: d?.seoTitle ? String(d.seoTitle) : undefined,
   seoDescription: d?.seoDescription ? String(d.seoDescription) : undefined,
