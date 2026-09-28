@@ -3,7 +3,8 @@
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { getSeo, listRoutes, organizationJsonLd, SITE_URL } from '../src/seo/routes';
+import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, SITE_URL } from '../src/seo/routes';
+import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
 const template = readFileSync(join(DIST, 'index.html'), 'utf-8');
@@ -35,6 +36,54 @@ const render = (path: string) => {
   return html.replace('</head>', `    ${pageLd}\n  </head>`);
 };
 
+// Articoli pubblicati dalla dashboard (Firestore, API REST pubblica: le regole
+// consentono di leggere solo quelli con published == true). Se Firestore non è
+// raggiungibile il build continua con i soli articoli inclusi nel codice.
+const fromValue = (v: any): any => {
+  if (!v) return undefined;
+  if ('stringValue' in v) return v.stringValue;
+  if ('booleanValue' in v) return v.booleanValue;
+  if ('integerValue' in v) return Number(v.integerValue);
+  if ('doubleValue' in v) return v.doubleValue;
+  if ('timestampValue' in v) return v.timestampValue;
+  if ('arrayValue' in v) return (v.arrayValue.values || []).map(fromValue);
+  if ('mapValue' in v) return Object.fromEntries(Object.entries(v.mapValue.fields || {}).map(([k, x]) => [k, fromValue(x)]));
+  return undefined;
+};
+
+async function fetchRemotePosts() {
+  const project = process.env.VITE_FIREBASE_PROJECT_ID;
+  const key = process.env.VITE_FIREBASE_API_KEY;
+  if (!project || !key) return [];
+  try {
+    const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents:runQuery?key=${encodeURIComponent(key)}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ structuredQuery: {
+        from: [{ collectionId: 'blog_posts' }],
+        where: { fieldFilter: { field: { fieldPath: 'published' }, op: 'EQUAL', value: { booleanValue: true } } },
+        limit: 500,
+      } }),
+      signal: AbortSignal.timeout(10000),
+    });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const rows = (await r.json()) as any[];
+    return rows.filter((x) => x.document).map((x) => {
+      const doc = x.document;
+      const data = Object.fromEntries(Object.entries(doc.fields || {}).map(([k, v]) => [k, fromValue(v)]));
+      return normalizePost(doc.name.split('/').pop(), data);
+    });
+  } catch (e) {
+    console.warn('[prerender] articoli Firestore non caricati:', (e as Error).message);
+    return [];
+  }
+}
+
+async function main() {
+const remotePosts = await fetchRemotePosts();
+registerBlogPosts(mergePosts(BLOG_SEED, remotePosts));
+console.log(`[prerender] blog: ${remotePosts.length} articoli da Firestore`);
+
 const routes = listRoutes();
 for (const path of routes) {
   // cleanUrls di Vercel: /servizi → servizi.html, /casi-studio/paresteta → casi-studio/paresteta.html
@@ -64,3 +113,6 @@ writeFileSync(join(DIST, 'robots.txt'),
   `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });
