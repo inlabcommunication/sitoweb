@@ -9,11 +9,13 @@ export type SiteContent = typeof WEBSITE_CONTENT;
 // dashboard dalla v2: i valori salvati con versioni precedenti (testi vecchi,
 // sede "Taranto", profilo Prince…) vengono ignorati finché un admin non salva
 // di nuovo dalla dashboard aggiornata.
-export const CONTENT_SCHEMA = 2;
+// Dalla v3 l'elenco clienti salvato è quello definitivo (i clienti eliminati
+// in dashboard restano eliminati) e ci sono casi studio ed esempi per servizio.
+export const CONTENT_SCHEMA = 3;
 const V2_SECTIONS = ['manifesto', 'metodo', 'stats', 'cta', 'studio', 'contact'];
 
 function dropStaleSections(saved: any) {
-  if (!saved || saved.schemaVersion >= CONTENT_SCHEMA) return saved;
+  if (!saved || saved.schemaVersion >= 2) return saved;
   const clean = { ...saved };
   for (const k of V2_SECTIONS) delete clean[k];
   if (clean.hero) { clean.hero = { ...clean.hero }; delete clean.hero.mini_stats; }
@@ -33,7 +35,8 @@ export const loadContent = async (forceRefresh = false): Promise<SiteContent> =>
     const { doc, getDoc } = await liteFirestore();
     const snap = await getDoc(doc(db, 'app', 'site_content'));
     if (snap.exists()) {
-      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, dropStaleSections(snap.data() as any)));
+      const saved = dropStaleSections(snap.data() as any);
+      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, saved), saved?.schemaVersion >= 3);
     } else {
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
@@ -50,7 +53,7 @@ export const saveContent = async (newContent: SiteContent): Promise<boolean> => 
   const [{ db }, { doc, setDoc }] = await Promise.all([import('./firebase'), import('firebase/firestore')]);
   if (!db) return false;
   try {
-    const prepared = { ...normalizeSiteContent(newContent), schemaVersion: CONTENT_SCHEMA } as SiteContent;
+    const prepared = { ...normalizeSiteContent(newContent, true), schemaVersion: CONTENT_SCHEMA } as SiteContent;
     await setDoc(doc(db, 'app', 'site_content'), prepared);
     cached = prepared;
     listeners.forEach((fn) => fn(prepared));
@@ -75,8 +78,9 @@ export const useContent = (): SiteContent => {
   return content;
 };
 
-function normalizeSiteContent(content: any): SiteContent {
-  const clients = mergeClientItems(WEBSITE_CONTENT.clients?.items || [], content?.clients?.items || []);
+/** authoritative = l'elenco clienti salvato è completo (non va unito ai clienti predefiniti) */
+function normalizeSiteContent(content: any, authoritative = false): SiteContent {
+  const clients = mergeClientItems(authoritative ? [] : WEBSITE_CONTENT.clients?.items || [], content?.clients?.items || []);
   return {
     ...content,
     clients: {
@@ -114,6 +118,7 @@ function mergeClientItems(defaultItems: any[] = [], savedItems: any[] = []) {
       services: client.services?.length ? client.services : base.services || [],
       results: client.results?.length ? client.results : base.results || [],
       gallery: client.gallery?.length ? client.gallery : base.gallery || [],
+      reels: client.reels?.length ? client.reels : base.reels || [],
     });
   });
 

@@ -2,43 +2,20 @@ import React from 'react';
 import { linkClick } from '../lib/router';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+import { useContent } from '../lib/content';
+import { DEFAULT_CASES, type CaseStudy } from '../data/caseStudies';
 
-export type CaseStudy = {
-  id: string;
-  number: string;
-  client: string;
-  title: string;
-  category: string;
-  problem: string;
-  result: string;
-};
-
-export const CASE_STUDIES: CaseStudy[] = [
-  {
-    id: 'paresteta',
-    number: '01',
-    client: 'Paresteta',
-    title: 'Dal rebranding all\'inaugurazione',
-    category: 'Eventi · Branding · Lead generation',
-    problem: 'Trasformare un cambio insegna da H28 a Paresteta in un evento locale capace di generare attenzione e presenza fisica in negozio.',
-    result: 'Campagna in 5 fasi tra teaser, QR code, video lancio e attività offline. Lead raccolti, partecipazione all\'inaugurazione, percezione del brand rafforzata.',
-  },
-  {
-    id: 'ricciardi',
-    number: '02',
-    client: 'Studio Dentistico Ricciardi',
-    title: 'Lumina: dalla fiducia online alle prenotazioni',
-    category: 'Sito web · Lead generation · Social media',
-    problem: 'Aumentare la percezione di affidabilità di uno studio dentistico e trasformarla in richieste concrete di appuntamento.',
-    result: 'Nuovo sito luminaricciardi.it, campagne di lead generation e piano editoriale con contenuti educativi e recensioni. Più richieste e un brand più solido.',
-  },
-];
+// I casi studio arrivano dalla dashboard (content.cases.items); i valori
+// predefiniti sono in src/data/caseStudies.ts.
+const useCases = (): CaseStudy[] => ((useContent() as any).cases?.items || DEFAULT_CASES) as CaseStudy[];
 
 interface CaseStudiesSectionProps {
   onCaseClick: (id: string) => void;
 }
 
 export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseClick }) => {
+  const cases = useCases();
+  if (!cases.length) return null;
   return (
     <section style={{ padding: '8rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -64,7 +41,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
         </motion.div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-          {CASE_STUDIES.map((cs, i) => {
+          {cases.map((cs, i) => {
             const isReverse = i % 2 === 1;
             return (
               <motion.a
@@ -111,7 +88,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                   userSelect: 'none',
                   letterSpacing: '-0.04em',
                 }}>
-                  {cs.number}
+                  {cs.number || String(i + 1).padStart(2, '0')}
                 </div>
 
                 <div style={{
@@ -135,7 +112,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                         fontSize: 14,
                         color: 'var(--a)',
                         letterSpacing: '.1em',
-                      }}>CASO {cs.number}</span>
+                      }}>CASO {cs.number || String(i + 1).padStart(2, '0')}</span>
                       <span style={{
                         height: 1,
                         flex: 1,
@@ -172,7 +149,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                   </div>
 
                   <div style={{ direction: 'ltr' }}>
-                    <div style={{ marginBottom: '1.5rem' }}>
+                    {cs.problem && (<div style={{ marginBottom: '1.5rem' }}>
                       <p style={{
                         fontSize: 9,
                         letterSpacing: '.2em',
@@ -183,8 +160,8 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                       <p style={{ fontSize: 14, color: 'var(--t)', lineHeight: 1.7, fontWeight: 300 }}>
                         {cs.problem}
                       </p>
-                    </div>
-                    <div style={{ marginBottom: '1.8rem' }}>
+                    </div>)}
+                    {cs.result && (<div style={{ marginBottom: '1.8rem' }}>
                       <p style={{
                         fontSize: 9,
                         letterSpacing: '.2em',
@@ -195,7 +172,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                       <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7 }}>
                         {cs.result}
                       </p>
-                    </div>
+                    </div>)}
                     <span style={{
                       fontSize: 11,
                       letterSpacing: '.14em',

@@ -53,6 +53,17 @@ VITE_SITE_URL=https://www.tuodominio.it
 
 Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variabile viene usato `https://sitoweb-beta.vercel.app`. Dopo averla cambiata serve un redeploy.
 
+### Google Analytics e Search Console
+
+```
+VITE_GA_ID=G-XXXXXXXXXX          # Analytics → Amministrazione → Stream di dati → ID misurazione
+VITE_GSC_VERIFICATION=...         # Search Console → metodo "Tag HTML" (codice o intero <meta>)
+```
+
+- Analytics parte **solo dopo il consenso** dal banner cookie (Accetta/Rifiuta); eventi inviati: `page_view`, `generate_lead` (modulo contatti), `contact_click` (telefono/email/WhatsApp), `social_click`.
+- Informativa in `/privacy` (`src/pages/PrivacyPage.tsx`): va verificata e tenuta aggiornata.
+- Dopo aver impostato le variabili serve un **Redeploy**.
+
 ## SEO
 
 - Ogni pagina ha un indirizzo vero (`/servizi`, `/gestione-social-taranto`, `/casi-studio/ricciardi`…); i vecchi link `/#/…` vengono reindirizzati.
@@ -74,6 +85,15 @@ Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variab
 ## Sicurezza
 
 Tutti i passaggi (regole Firestore, admin, chiavi, Cloudinary) sono in **[SECURITY.md](SECURITY.md)**.
+
+## Casi studio, clienti ed esempi
+
+Dashboard → Editor:
+- **Casi studio → Progetti raccontati**: schede clienti (aggiungi, modifica, riordina, elimina), con logo, immagine hero, foto e reel. Per ogni reel carichi il video, che si guarda sul sito, e il link Instagram.
+- **Casi studio → Non solo contenuti**: casi studio a blocchi (testo, fasi, sito web, numeri, reel, foto, citazione). La pagina mostra solo i blocchi compilati.
+- **Servizi → Esempi per servizio**: i lavori mostrati in fondo a ogni pagina servizio (siti e web app, schede clienti, casi studio).
+
+I valori iniziali sono in `src/constants.ts`, `src/data/caseStudies.ts` e `src/data/serviceExamples.ts`. Dopo il primo salvataggio dalla dashboard vale quello che è salvato in Firestore.
 
 ## Blog
 
