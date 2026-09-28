@@ -5,8 +5,7 @@
  */
 
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import Anthropic from "@anthropic-ai/sdk";
-import { GoogleGenAI } from "@google/genai";
+import type Anthropic from "@anthropic-ai/sdk";
 import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, securityHeaders, str } from "./_lib/security";
 
 // Limiti anti-abuso (sovrascrivibili da variabili d'ambiente su Vercel)
@@ -87,7 +86,9 @@ async function callAnthropic(apiKey: string, model: string, systemPrompt: string
       : String(m.content),
   })).filter((m) => typeof m.content === "string" && m.content.length > 0);
 
-  const client = new Anthropic({ apiKey });
+  // Caricata solo quando serve: un problema della libreria non blocca l'altro provider
+  const { default: AnthropicSDK } = await import("@anthropic-ai/sdk").catch((e) => { throw Object.assign(e, { chatCode: "SDK" }); });
+  const client = new AnthropicSDK({ apiKey });
   const response = await client.messages.create({ model, max_tokens: maxTokens, system: systemPrompt, messages: cleanMessages });
   const rawText = response.content.filter((c: any) => c.type === "text").map((c: any) => c.text).join("\n");
   return { rawText, usage: { inputTokens: response.usage?.input_tokens, outputTokens: response.usage?.output_tokens } };
@@ -95,11 +96,12 @@ async function callAnthropic(apiKey: string, model: string, systemPrompt: string
 
 // Modelli provati in ordine: se uno è ritirato/non disponibile si passa al successivo.
 // "-latest" sono alias di Google che puntano sempre al modello Flash più recente.
-const GEMINI_FALLBACKS = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-flash-lite-latest"];
+const GEMINI_FALLBACKS = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-flash-lite-latest", "gemini-2.5-flash-lite"];
 
 async function callGemini(apiKey: string, model: string, systemPrompt: string, messages: any[], maxTokens: number) {
   const MODELS = Array.from(new Set([model, ...GEMINI_FALLBACKS].filter(Boolean)));
 
+  const { GoogleGenAI } = await import("@google/genai").catch((e) => { throw Object.assign(e, { chatCode: "SDK" }); });
   const ai = new GoogleGenAI({ apiKey });
   const history = messages.slice(0, -1).map((m: any) => ({
     role: m.role === "user" ? "user" : "model",
@@ -114,6 +116,7 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
 
   const lastMessage = messages[messages.length - 1];
   let lastError: any = null;
+  let quotaHit = false;
 
   for (const mdl of MODELS) {
     try {
@@ -134,13 +137,14 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
       lastError = e;
       const status = Number(e?.status || e?.code || 0);
       const msg = String(e?.message || "");
-      // Chiave non valida o quota esaurita: inutile provare altri modelli
-      if (status === 401 || /API key not valid|API_KEY_INVALID|PERMISSION_DENIED.*key/i.test(msg)) throw Object.assign(e, { chatCode: "AI_KEY" });
-      if (status === 429 || /RESOURCE_EXHAUSTED|quota/i.test(msg)) throw Object.assign(e, { chatCode: "AI_QUOTA" });
+      // Chiave non valida, scaduta o bloccata da Google: inutile provare altri modelli
+      if (status === 401 || /API key not valid|API_KEY_INVALID|API key expired|reported as leaked|PERMISSION_DENIED.*key/i.test(msg)) throw Object.assign(e, { chatCode: "AI_KEY" });
+      // Quota esaurita: nel piano gratuito i limiti sono per modello, quindi provo il successivo
+      if (status === 429 || /RESOURCE_EXHAUSTED|quota/i.test(msg)) quotaHit = true;
       console.warn(`[chat] modello ${mdl} non disponibile (${status}): ${msg.slice(0, 160)} — provo il successivo`);
     }
   }
-  throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: "AI_MODEL" });
+  throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: quotaHit ? "AI_QUOTA" : "AI_MODEL" });
 }
 
 // Limite di riserva per istanza, usato solo se Firestore non è raggiungibile
@@ -169,6 +173,16 @@ function sanitizeMessages(input: unknown): { role: "user" | "assistant"; content
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Qualsiasi errore imprevisto diventa una risposta JSON con codice, mai un crash muto
+  try {
+    return await handle(req, res);
+  } catch (e: any) {
+    console.error("Chat API fatal:", e);
+    if (!res.headersSent) return res.status(500).json({ error: "Internal error", code: e?.chatCode || "FATAL", reply: FALLBACK_REPLY });
+  }
+}
+
+async function handle(req: VercelRequest, res: VercelResponse) {
   securityHeaders(res);
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   if (!isAllowedOrigin(req)) return res.status(403).json({ error: "Forbidden" });

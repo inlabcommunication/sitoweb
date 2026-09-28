@@ -30,6 +30,8 @@ const CHAT_CODES: Record<string, string> = {
   AI_QUOTA: 'Quota esaurita: il piano gratuito di Gemini ha raggiunto il limite (si azzera ogni giorno) oppure mancano crediti. Attiva la fatturazione su Google AI Studio o aspetta il reset.',
   AI_MODEL: 'Nessun modello disponibile: il modello impostato non esiste più. Lascia vuoto il campo Modello (usa quello predefinito) e salva.',
   RATE: 'Limite di messaggi raggiunto per questo dispositivo: riprova tra qualche minuto.',
+  SDK: 'La libreria del provider AI non si carica sul server: prova l\'altro provider e avvisa lo sviluppatore con il log di Vercel.',
+  FATAL: 'Errore imprevisto nella funzione: apri Vercel → progetto → Logs, filtra per /api/chat e guarda il messaggio "Chat API fatal".',
   SERVER: 'Errore interno: apri Vercel → progetto → Logs, filtra per /api/chat e guarda il messaggio "Chat API error".',
 };
 
@@ -59,7 +61,8 @@ export const Settings = () => {
       if (r.ok) setTest({ ok: true, text: `Funziona. Risposta: "${String(d.reply || '').slice(0, 220)}"` });
       else if (r.status === 429) setTest({ ok: false, text: CHAT_CODES.RATE + ' ' + (d.reply || '') });
       else if (r.status === 403) setTest({ ok: false, text: 'Richiesta rifiutata (403): stai usando un indirizzo diverso dal sito. Se hai un nuovo dominio, imposta VITE_SITE_URL su Vercel e fai Redeploy.' });
-      else setTest({ ok: false, text: `Errore ${r.status}${d.code ? ` (${d.code})` : ''}: ${CHAT_CODES[d.code] || CHAT_CODES.SERVER}` });
+      else if (!d.code) setTest({ ok: false, text: `Errore ${r.status} senza codice: la funzione /api/chat si è bloccata prima di rispondere (crash o timeout). Apri Vercel → progetto → Logs, filtra per /api/chat e copia il messaggio di errore in rosso.` });
+      else setTest({ ok: false, text: `Errore ${r.status} (${d.code}): ${CHAT_CODES[d.code] || CHAT_CODES.SERVER}` });
     } catch {
       setTest({ ok: false, text: 'Il server non risponde: controlla su Vercel che l\'ultimo deploy sia andato a buon fine.' });
     }
