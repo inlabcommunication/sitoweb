@@ -9,11 +9,17 @@ type ClientsWallProps = {
   onClientClick?: (id: string) => void;
   /** false = solo la griglia, senza titolo di sezione (es. pagina Casi studio) */
   showHeader?: boolean;
+  /** scheda da escludere (es. nella pagina del cliente stesso) */
+  excludeId?: string;
+  /** testi del titolo di sezione, se diversi da quelli della home */
+  heading?: { label: string; title: string; accent: string; text?: string };
+  /** nasconde la frase finale */
+  compact?: boolean;
 };
 
-export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHeader = true }) => {
+export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHeader = true, excludeId, heading, compact = false }) => {
   const content = useContent();
-  const clients = normalizeClients((content as any).clients?.items || []);
+  const clients = normalizeClients((content as any).clients?.items || []).filter((c) => c.id !== excludeId);
   const openClient = (id: string) => {
     if (onClientClick) onClientClick(id);
     else navigate(`/cliente/${id}`);
@@ -37,24 +43,24 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
           }}
         >
           <div style={{ maxWidth: 640 }}>
-            <p className="section-label">I clienti</p>
+            <p className="section-label">{heading?.label ?? 'I clienti'}</p>
             <h2 style={{
               fontFamily: 'var(--fd)',
               fontSize: 'clamp(2.5rem, 5vw, 4.8rem)',
               lineHeight: 0.9,
               marginBottom: '1.2rem',
             }}>
-              BRAND CHE<br />
-              <span className="stroke">HANNO SCELTO INLAB</span>
+              {heading?.title ?? 'BRAND CHE'}<br />
+              <span className="stroke">{heading?.accent ?? 'HANNO SCELTO INLAB'}</span>
             </h2>
             <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.7, maxWidth: 520 }}>
-              Collaboriamo con attività locali, professionisti e aziende che vogliono comunicare meglio, distinguersi e costruire una presenza più forte.
+              {heading ? heading.text : 'Collaboriamo con attività locali, professionisti e aziende che vogliono comunicare meglio, distinguersi e costruire una presenza più forte.'}
             </p>
           </div>
           <span style={{
             fontSize: 11, color: 'var(--m)',
             letterSpacing: '.1em', textTransform: 'uppercase',
-          }}>{clients.length}+ clienti</span>
+          }}>{heading ? `${clients.length} schede` : `${clients.length}+ clienti`}</span>
         </motion.div>
         )}
 
@@ -125,7 +131,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
 
 
         {/* Frase finale */}
-        <motion.p
+        {!compact && <motion.p
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -143,7 +149,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
           }}
         >
           "Ogni brand ha una voce. Il nostro lavoro è renderla riconoscibile."
-        </motion.p>
+        </motion.p>}
       </div>
     </section>
   );

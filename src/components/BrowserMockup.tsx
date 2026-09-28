@@ -7,7 +7,7 @@ import { ArrowUpRight } from 'lucide-react';
 export const siteShot = (url: string, w = 1280, h = 800) =>
   `https://s.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=${w}&h=${h}`;
 
-export const BrowserMockup: React.FC<{ url: string; label: string; w?: number; h?: number }> = ({ url, label, w, h }) => {
+export const BrowserMockup: React.FC<{ url: string; label: string; w?: number; h?: number; image?: string }> = ({ url, label, w, h, image }) => {
   const [failed, setFailed] = React.useState(false);
   return (
     <a href={url} target="_blank" rel="noreferrer" style={{
@@ -23,7 +23,7 @@ export const BrowserMockup: React.FC<{ url: string; label: string; w?: number; h
       </div>
       <div style={{ aspectRatio: `${w ?? 1280} / ${h ?? 800}`, background: 'linear-gradient(135deg, #1e1d1d, #2b2440)', position: 'relative' }}>
         {!failed ? (
-          <img src={siteShot(url, w, h)} alt={label} loading="lazy" onError={() => setFailed(true)}
+          <img src={image || siteShot(url, w, h)} alt={label} loading="lazy" onError={() => setFailed(true)}
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
         ) : (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, color: 'var(--a)', fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase' }}>

@@ -3,11 +3,12 @@
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, SITE_URL } from '../src/seo/routes';
+import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SITE_URL } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
-const template = readFileSync(join(DIST, 'index.html'), 'utf-8');
+// index.html contiene l'indirizzo provvisorio: sostituito ovunque col dominio attuale
+const template = readFileSync(join(DIST, 'index.html'), 'utf-8').split('https://sitoweb-beta.vercel.app').join(SITE_URL);
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const json = (o: object) => JSON.stringify(o).replace(/</g, '\\u003c');
@@ -16,6 +17,15 @@ const setAttr = (html: string, selector: RegExp, value: string) => {
   if (!selector.test(html)) throw new Error(`Tag non trovato in index.html: ${selector}`);
   return html.replace(selector, (_m, before) => `${before}${esc(value)}"`);
 };
+
+// Google Search Console: codice di verifica (metodo "tag HTML"). Si può
+// incollare solo il codice o l'intero tag <meta ...>.
+const GSC = (() => {
+  const raw = String(process.env.VITE_GSC_VERIFICATION || '').trim();
+  const code = raw.match(/content="([^"]+)"/)?.[1] ?? raw;
+  return /^[A-Za-z0-9_-]{10,100}$/.test(code) ? code : '';
+})();
+if (process.env.VITE_GSC_VERIFICATION && !GSC) console.warn('[prerender] VITE_GSC_VERIFICATION non valido: ignorato');
 
 const render = (path: string) => {
   const seo = getSeo(path);
@@ -33,7 +43,8 @@ const render = (path: string) => {
   html = html.replace(/<script type="application\/ld\+json" data-seo="org">[\s\S]*?<\/script>/,
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
-  return html.replace('</head>', `    ${pageLd}\n  </head>`);
+  const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
+  return html.replace('</head>', `    ${gsc}${pageLd}\n  </head>`);
 };
 
 // Articoli pubblicati dalla dashboard (Firestore, API REST pubblica: le regole
@@ -50,6 +61,23 @@ const fromValue = (v: any): any => {
   if ('mapValue' in v) return Object.fromEntries(Object.entries(v.mapValue.fields || {}).map(([k, x]) => [k, fromValue(x)]));
   return undefined;
 };
+
+// Contenuti salvati dalla dashboard (documento pubblico app/site_content):
+// dalla versione 3 elenco clienti e casi studio salvati sono quelli definitivi.
+async function fetchSiteContent() {
+  const project = process.env.VITE_FIREBASE_PROJECT_ID;
+  const key = process.env.VITE_FIREBASE_API_KEY;
+  if (!project || !key) return null;
+  try {
+    const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents/app/site_content?key=${encodeURIComponent(key)}`, { signal: AbortSignal.timeout(10000) });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const doc = (await r.json()) as any;
+    return Object.fromEntries(Object.entries(doc.fields || {}).map(([k, v]) => [k, fromValue(v)])) as any;
+  } catch (e) {
+    console.warn('[prerender] contenuti dashboard non caricati:', (e as Error).message);
+    return null;
+  }
+}
 
 async function fetchRemotePosts() {
   const project = process.env.VITE_FIREBASE_PROJECT_ID;
@@ -80,6 +108,11 @@ async function fetchRemotePosts() {
 }
 
 async function main() {
+const saved = await fetchSiteContent();
+if (saved && saved.schemaVersion >= 3) {
+  registerContent(saved);
+  console.log(`[prerender] contenuti dashboard: ${saved.clients?.items?.length ?? 0} clienti, ${saved.cases?.items?.length ?? 0} casi studio`);
+}
 const remotePosts = await fetchRemotePosts();
 registerBlogPosts(mergePosts(BLOG_SEED, remotePosts));
 console.log(`[prerender] blog: ${remotePosts.length} articoli da Firestore`);
