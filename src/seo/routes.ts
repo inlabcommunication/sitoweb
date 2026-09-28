@@ -155,7 +155,7 @@ export const listRoutes = (): string[] => [
   ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${c.toLowerCase()}`)),
   ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
-  '/blog',
+  '/blog', '/privacy',
   ...blogPosts.map((p) => '/blog/' + p.slug),
 ];
 
@@ -231,6 +231,12 @@ export const getSeo = (rawPath: string): Seo => {
         jsonLd: [{ '@context': 'https://schema.org', '@type': 'CreativeWork', name: cs.title, description: cs.description, url: abs(path), creator: orgRef, inLanguage: 'it-IT' }],
       }, [['Casi studio', '/casi-studio'], [cs.title.split(':')[0], path]]);
     }
+  }
+
+  if (path === '/privacy') {
+    return page(path, `Privacy e cookie | ${BRAND}`,
+      'Informativa privacy e cookie di InLab Communication: quali dati raccoglie il sito, perché, per quanto tempo e come esercitare i tuoi diritti.',
+      { sitemap: { priority: 0.2, changefreq: 'monthly' } }, [['Privacy e cookie', '/privacy']]);
   }
 
   if (path === '/blog') {

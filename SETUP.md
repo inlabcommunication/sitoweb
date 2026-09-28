@@ -53,6 +53,17 @@ VITE_SITE_URL=https://www.tuodominio.it
 
 Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variabile viene usato `https://sitoweb-beta.vercel.app`. Dopo averla cambiata serve un redeploy.
 
+### Google Analytics e Search Console
+
+```
+VITE_GA_ID=G-XXXXXXXXXX          # Analytics → Amministrazione → Stream di dati → ID misurazione
+VITE_GSC_VERIFICATION=...         # Search Console → metodo "Tag HTML" (codice o intero <meta>)
+```
+
+- Analytics parte **solo dopo il consenso** dal banner cookie (Accetta/Rifiuta); eventi inviati: `page_view`, `generate_lead` (modulo contatti), `contact_click` (telefono/email/WhatsApp), `social_click`.
+- Informativa in `/privacy` (`src/pages/PrivacyPage.tsx`): va verificata e tenuta aggiornata.
+- Dopo aver impostato le variabili serve un **Redeploy**.
+
 ## SEO
 
 - Ogni pagina ha un indirizzo vero (`/servizi`, `/gestione-social-taranto`, `/casi-studio/ricciardi`…); i vecchi link `/#/…` vengono reindirizzati.

@@ -8,6 +8,8 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { Chatbot } from "./components/Chatbot";
+import { CookieBanner } from "./components/CookieBanner";
+import { initGa, gaPageview, gaEvent, reopenConsent, GA_ID } from "./lib/ga";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { getCurrentPath, linkClick, navigate } from "./lib/router";
 import { useAgencyStats } from "./data/stats";
@@ -30,6 +32,7 @@ import { registerContent } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
+const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ default: m.PagePrivacy })));
 const PageBlog = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageBlog })));
 const PageArticolo = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageArticolo })));
  
@@ -280,7 +283,11 @@ const Footer = () => {
           </div>
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em"}}>© {new Date().getFullYear()} InLab Communication — Castellaneta (TA)</p>
+          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
+            <span>© {new Date().getFullYear()} InLab Communication — Castellaneta (TA)</span>
+            <Link to="/privacy" className="foot-link" style={{color:"var(--m)"}}>Privacy e cookie</Link>
+            {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:11,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
+          </p>
           <div style={{display:"flex",gap:"1.5rem"}}>
             {[
               {label:"Instagram",url:"https://www.instagram.com/inlab.communication/"},
@@ -1393,6 +1400,7 @@ const PageContatti = () => {
       if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       setSent(true);
+      gaEvent('generate_lead', { method: 'modulo_contatti', service: form.servizio || 'non indicato' });
     } catch(e){
       console.error('Save contact failed',e);
       setError("Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com");
@@ -1480,7 +1488,7 @@ const PageContatti = () => {
                     <input type="checkbox" id="privacy" checked={form.privacy} onChange={e=>setForm({...form,privacy:e.target.checked})}
                       style={{marginTop:3,accentColor:"var(--a)",width:14,height:14,flexShrink:0}}/>
                     <label htmlFor="privacy" style={{fontSize:11,color:"var(--m)",lineHeight:1.6,cursor:"pointer"}}>
-                      Ho letto e accetto la <span style={{color:"var(--a)"}}>privacy policy</span>. I dati forniti saranno utilizzati esclusivamente per rispondere alla richiesta.
+                      Ho letto e accetto la <a href="/privacy" target="_blank" rel="noopener" style={{color:"var(--a)",textDecoration:"underline"}}>privacy policy</a>. I dati forniti saranno utilizzati esclusivamente per rispondere alla richiesta.
                     </label>
                   </div>
                   {error && <div style={{fontSize:12,color:"#ff8888",padding:"10px 14px",background:"rgba(255,100,100,0.08)",borderRadius:10,border:".5px solid rgba(255,100,100,0.2)"}}>{error}</div>}
@@ -2108,6 +2116,7 @@ const parseRoute = (route) => {
   if(route==="/casi-studio") return {page:"casi-studio"};
   if(route==="/servizi") return {page:"servizi"};
   if(route==="/contatti") return {page:"contatti"};
+  if(route==="/privacy") return {page:"privacy"};
   if(route==="/blog") return {page:"blog"};
   if(route.startsWith("/blog/")) return {page:"articolo",id:route.replace("/blog/","")};
   // case study detail pages: /casi-studio/paresteta
@@ -2143,6 +2152,7 @@ const renderPage = (info) => {
     case "casi-studio": return <PageCasiStudio/>;
     case "servizi": return <PageServizi/>;
     case "contatti": return <PageContatti/>;
+    case "privacy": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PagePrivacy/></Suspense>;
     case "blog": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageBlog go={navigate}/></Suspense>;
     case "articolo": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageArticolo slug={info.id} go={navigate}/></Suspense>;
     case "service":
@@ -2170,6 +2180,7 @@ export default function App() {
   useEffect(() => {
     loadContent();
     initAnalytics();
+    initGa();
     const onPop = () => setRoute(getCurrentPath());
     window.addEventListener('popstate', onPop);
     return () => window.removeEventListener('popstate', onPop);
@@ -2189,6 +2200,13 @@ export default function App() {
   // (ricalcolati quando arrivano i contenuti salvati dalla dashboard)
   const siteContent = useContent();
   useEffect(() => { registerContent(siteContent); applySeo(getSeo(route)); }, [route, siteContent]);
+  // Google Analytics (solo con consenso): page_view dopo l'aggiornamento del titolo
+  const lastGaRoute = React.useRef(route); // la prima visualizzazione la invia initGa
+  useEffect(() => {
+    if (lastGaRoute.current === route) return;
+    const t = window.setTimeout(() => { lastGaRoute.current = route; gaPageview(); }, 50);
+    return () => window.clearTimeout(t);
+  }, [route]);
  
   const pageInfo=parseRoute(route);
  
@@ -2207,6 +2225,7 @@ export default function App() {
       </AnimatePresence>
       <Footer/>
       <Chatbot/>
+      <CookieBanner/>
     </RouterCtx.Provider>
   );
 }
