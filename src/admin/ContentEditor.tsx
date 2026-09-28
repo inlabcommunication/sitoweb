@@ -665,7 +665,7 @@ export const ContentEditor = () => {
             {['#ff5f57', '#febc2e', '#28c840'].map(c => <div key={c} style={{ width: 10, height: 10, borderRadius: '50%', background: c }} />)}
           </div>
           <div style={{ flex: 1, background: '#1a1a1a', borderRadius: 6, padding: '4px 12px', fontSize: 10, color: '#555', fontFamily: 'monospace', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-            sitoweb-beta.vercel.app{pageUrl}
+            {window.location.host}{pageUrl}
           </div>
           <button onClick={() => setPreview(v => !v)}
             style={{ background: 'none', border: '.5px solid #333', borderRadius: 6, color: '#555', padding: '4px 8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, fontSize: 10 }}>

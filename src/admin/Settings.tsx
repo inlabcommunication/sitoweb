@@ -22,6 +22,17 @@ const DEFAULTS: Settings = {
 };
 
 const KNOWLEDGE_MAX = 8000;
+
+// Significato dei codici restituiti da /api/chat (vedi api/chat.ts)
+const CHAT_CODES: Record<string, string> = {
+  NO_KEY: 'Manca la chiave API su Vercel per il provider scelto: GEMINI_API_KEY (Gemini) o ANTHROPIC_API_KEY (Claude). Aggiungila in Settings → Environment Variables e fai Redeploy — oppure scegli qui l\'altro provider.',
+  AI_KEY: 'La chiave API non è valida o è stata eliminata. Creane una nuova (Google AI Studio o Anthropic Console), sostituiscila su Vercel e fai Redeploy.',
+  AI_QUOTA: 'Quota esaurita: il piano gratuito di Gemini ha raggiunto il limite (si azzera ogni giorno) oppure mancano crediti. Attiva la fatturazione su Google AI Studio o aspetta il reset.',
+  AI_MODEL: 'Nessun modello disponibile: il modello impostato non esiste più. Lascia vuoto il campo Modello (usa quello predefinito) e salva.',
+  RATE: 'Limite di messaggi raggiunto per questo dispositivo: riprova tra qualche minuto.',
+  SERVER: 'Errore interno: apri Vercel → progetto → Logs, filtra per /api/chat e guarda il messaggio "Chat API error".',
+};
+
 const KNOWLEDGE_EXAMPLE = `Esempi di cosa scrivere (una informazione per riga):
 - Orari: lun-ven 9:00-18:00, sabato su appuntamento.
 - Prima consulenza gratuita di 30 minuti, anche in videochiamata.
@@ -36,6 +47,24 @@ export const Settings = () => {
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<'idle' | 'saved' | 'error'>('idle');
   const [hadStoredKeys, setHadStoredKeys] = useState(false);
+  const [test, setTest] = useState<{ ok: boolean; text: string } | null>(null);
+  const [testing, setTesting] = useState(false);
+
+  const testChat = async () => {
+    setTesting(true); setTest(null);
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [{ role: 'user', content: 'Ciao, quali servizi offrite? (test dalla dashboard)' }], sessionId: 'dashboard-test' }) });
+      const d = await r.json().catch(() => ({}));
+      if (r.ok) setTest({ ok: true, text: `Funziona. Risposta: "${String(d.reply || '').slice(0, 220)}"` });
+      else if (r.status === 429) setTest({ ok: false, text: CHAT_CODES.RATE + ' ' + (d.reply || '') });
+      else if (r.status === 403) setTest({ ok: false, text: 'Richiesta rifiutata (403): stai usando un indirizzo diverso dal sito. Se hai un nuovo dominio, imposta VITE_SITE_URL su Vercel e fai Redeploy.' });
+      else setTest({ ok: false, text: `Errore ${r.status}${d.code ? ` (${d.code})` : ''}: ${CHAT_CODES[d.code] || CHAT_CODES.SERVER}` });
+    } catch {
+      setTest({ ok: false, text: 'Il server non risponde: controlla su Vercel che l\'ultimo deploy sia andato a buon fine.' });
+    }
+    setTesting(false);
+  };
 
   useEffect(() => {
     if (!db) { setLoading(false); return; }
@@ -108,6 +137,16 @@ export const Settings = () => {
           style={{ width: '100%', padding: '12px 14px', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 10, color: 'var(--t)', fontSize: 13, lineHeight: 1.6, fontFamily: 'var(--fb)', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}
         />
         <div style={{ fontSize: 11, color: 'var(--m)', textAlign: 'right', marginTop: 6 }}>{settings.chatKnowledge.length} / {KNOWLEDGE_MAX}</div>
+      </Section>
+
+      <Section icon={<Zap size={15} />} title="Prova il chatbot">
+        <p style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: 12 }}>Invia un messaggio di prova al chatbot del sito e mostra la risposta o la causa del problema (con le impostazioni salvate).</p>
+        <button onClick={testChat} disabled={testing} className="btn btn-g" style={{ opacity: testing ? 0.6 : 1 }}>{testing ? 'Prova in corso…' : 'Prova il chatbot'}</button>
+        {test && (
+          <div style={{ marginTop: 12, padding: '12px 14px', borderRadius: 10, fontSize: 12, lineHeight: 1.7, background: test.ok ? 'rgba(126,224,161,0.08)' : 'rgba(255,120,120,0.08)', border: `.5px solid ${test.ok ? 'rgba(126,224,161,0.35)' : 'rgba(255,120,120,0.35)'}`, color: test.ok ? '#b5f0c8' : '#ffb4b4' }}>
+            {test.ok ? <CheckCircle size={12} style={{ display: 'inline', marginRight: 6 }} /> : <AlertCircle size={12} style={{ display: 'inline', marginRight: 6 }} />}{test.text}
+          </div>
+        )}
       </Section>
 
       <div style={{ padding: '14px 16px', background: 'rgba(205,178,255,0.05)', border: '.5px solid rgba(205,178,255,0.15)', borderRadius: 12, fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
