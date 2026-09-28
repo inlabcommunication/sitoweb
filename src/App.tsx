@@ -1,13 +1,20 @@
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
   MapPin, Phone, Mail, Check,
   TrendingUp, Target, FileText, Video, Camera,
-  Globe, Zap, Layout, Users, BarChart2, Star
+  Globe, Zap, Layout, Users, BarChart2, Star,
+  GraduationCap,
 } from "lucide-react";
 import { Chatbot } from "./components/Chatbot";
-import { initAnalytics } from "./lib/analytics";
+import { initAnalytics, trackPageview } from "./lib/analytics";
+import { getCurrentPath, linkClick, navigate } from "./lib/router";
+import { useAgencyStats } from "./data/stats";
+import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
+import { BrowserMockup } from "./components/BrowserMockup";
+import { getSeo } from "./seo/routes";
+import { applySeo } from "./seo/head";
 import { loadContent, useContent } from "./lib/content";
 import { getClientId, normalizeClients } from "./lib/clientUtils";
 
@@ -19,18 +26,19 @@ import { PortfolioGallery } from "./sections/PortfolioGallery";
 import { ClientsWall } from "./sections/ClientsWall";
 import { CaseStudiesSection, CASE_STUDIES } from "./sections/CaseStudiesSection";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
-import { CaseParesteta, CaseImh, CaseRicciardi } from "./pages/CaseStudyPages";
+// Pagine dei casi studio caricate solo quando servono (chunk separato)
+const CaseParesteta = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseParesteta })));
+const CaseRicciardi = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseRicciardi })));
  
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
 ═══════════════════════════════════════════════════════════════ */
 const G = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --a:#cdb2ff; --bg:#1e1d1d; --s:#262525; --b:rgba(255,255,255,0.07);
-      --t:#F0EDE6; --m:rgba(240,237,230,0.38);
+      --t:#F0EDE6; --m:rgba(240,237,230,0.64);
       --fd:'Bebas Neue',sans-serif; --fs:'DM Serif Display',serif; --fb:'DM Sans',sans-serif;
     }
     html{scroll-behavior:smooth}
@@ -44,7 +52,8 @@ const G = () => (
     .fs{font-family:var(--fs)}
     .acc{color:var(--a)}
     .mut{color:var(--m)}
-    .stroke{-webkit-text-stroke:1px var(--t);color:transparent}
+    /* seconda riga dei titoli: tono più tenue invece del contorno (più leggibile) */
+    .stroke{color:rgba(240,237,230,0.42)}
     .stroke-a{-webkit-text-stroke:1px var(--a);color:transparent}
  
     .glass{background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:.5px solid var(--b)}
@@ -70,6 +79,34 @@ const G = () => (
     .section-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
  
     @keyframes marq{to{transform:translateX(-50%)}}
+    /* card cliente / esempio (griglia clienti, esempi nei servizi) */
+    .client-card{
+    text-decoration:none;
+    display:flex;flex-direction:column;align-items:flex-start;text-align:left;
+    min-height:250px;padding:1.6rem 1.5rem 1.3rem;border-radius:22px;cursor:pointer;
+    font:inherit;color:inherit;
+    background:linear-gradient(160deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));
+    border:.5px solid var(--b);
+    transition:border-color .3s, background .3s, box-shadow .3s;
+    }
+    .client-card:hover,.client-card:focus-visible{
+    border-color:rgba(205,178,255,0.45);
+    background:linear-gradient(160deg,rgba(205,178,255,0.10),rgba(205,178,255,0.02));
+    box-shadow:0 18px 50px rgba(205,178,255,0.10);
+    outline:none;
+    }
+    .client-card-summary{
+    margin-top:12px;font-size:13.5px;line-height:1.6;color:rgba(240,237,230,0.66);
+    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+    }
+    .client-card-cta{
+    display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--a);
+    transition:gap .25s;
+    }
+    .client-card:hover .client-card-cta{gap:8px}
+    .foot-link:hover{color:var(--t)!important}
+    .city-link:hover{border-color:rgba(205,178,255,.35)!important;color:var(--a)!important}
     .marq-inner{display:inline-flex;gap:2.5rem;align-items:center;padding-left:2.5rem;animation:marq 28s linear infinite}
  
     @media(max-width:768px){
@@ -78,6 +115,9 @@ const G = () => (
       .grid-1-mob{grid-template-columns:1fr!important}
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
+      .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
+      .chat-launcher{transform:scale(.72);transform-origin:bottom right;bottom:12px!important;right:12px!important}
+      .chat-bubble{display:none!important}
     }
     @media(max-width:480px){
       .btn{padding:11px 20px!important;font-size:10px!important}
@@ -90,10 +130,14 @@ const G = () => (
 ═══════════════════════════════════════════════════════════════ */
 const RouterCtx = React.createContext<{route:string;go:(to:string)=>void}>({ route: "/", go: () => {} });
 const useRouter = () => React.useContext(RouterCtx);
-const Link = ({ to, children, style = {}, className = "", onClick = () => {} }: any) => {
+// Link interno: <a href> vero (seguibile dai motori di ricerca) + navigazione senza ricarica
+const Link = ({ to, children, style = {}, className = "", onClick = () => {}, ...rest }: any) => {
   const { go } = useRouter();
   return (
-    <a style={style} className={className} onClick={e => { e.preventDefault(); go(to); onClick?.(); }}>
+    <a href={to} style={style} className={className} {...rest} onClick={e => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return; // apri in nuova scheda
+      e.preventDefault(); go(to); onClick?.();
+    }}>
       {children}
     </a>
   );
@@ -105,23 +149,21 @@ const Link = ({ to, children, style = {}, className = "", onClick = () => {} }: 
 const SERVICES = [
   { slug: "gestione-social", icon: <TrendingUp size={22}/>, label: "Gestione Social", short: "Costruiamo una presenza riconoscibile su Instagram, Facebook, TikTok e LinkedIn. Non riempiamo calendari — costruiamo direzioni." },
   { slug: "meta-ads", icon: <Target size={22}/>, label: "Meta Ads", short: "Campagne progettate per convertire. Budget ottimizzato, audience costruita sui tuoi clienti migliori, risultati misurabili." },
-  { slug: "siti-web", icon: <Globe size={22}/>, label: "Siti Web & Web App", short: "Design e sviluppo di siti che non sono solo belli: sono veloci, ottimizzati e costruiti per portare clienti." },
+  { slug: "siti-web", icon: <Globe size={22}/>, label: "Siti Web & Web App", short: "Siti, e-commerce e landing page che non sono solo belli: sono veloci, ottimizzati e costruiti per portare clienti." },
   { slug: "automazioni-ai", icon: <Zap size={22}/>, label: "Automazioni AI", short: "Chatbot, workflow e processi automatizzati che fanno lavorare il tuo brand anche quando sei offline." },
   { slug: "shooting", icon: <Camera size={22}/>, label: "Foto & Shooting", short: "Foto professionali per brand, prodotti ed eventi. Perché un'immagine mediocre costa clienti. Una straordinaria li conquista." },
   { slug: "video", icon: <Video size={22}/>, label: "Video & Reels", short: "Produciamo contenuti video che le persone vogliono davvero guardare. Abbiamo portato clienti a milioni di visualizzazioni organiche." },
-  { slug: "landing-page", icon: <Layout size={22}/>, label: "Landing Page", short: "Pagine progettate con un solo obiettivo: trasformare i visitatori in lead. Copy, design e A/B test inclusi." },
   { slug: "branding", icon: <Star size={22}/>, label: "Branding & Identità", short: "Nome, logo, palette, tono di voce. Diamo forma al modo in cui il tuo brand viene percepito dal primo sguardo." },
 ];
  
 const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
  
-const CLIENTS = ["Ristorante Da Mario","Studio Medico Rossi","Parrucchiere Chic","Moda Pugliese","Bar Centrale","Officina Auto","Agriturismo Sole","Hotel Marina"];
-const STATS_GLOBAL = [
-  { n:"3.2M+", l:"Visualizzazioni generate" },
-  { n:"47+", l:"Brand e attività seguiti" },
-  { n:"9", l:"Città servite in Puglia" },
-  { n:"100%", l:"Progetti consegnati in tempo" },
-];
+const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento","Aleph Caffè"];
+// Riga di numeri dell'agenzia (modificabili da dashboard → Home → Numeri)
+const AgencyStatsRow = () => {
+  const stats = useAgencyStats();
+  return <StatsRow stats={stats.map(s => ({ n: s.display, l: s.label }))}/>;
+};
  
 /* ═══════════════════════════════════════════════════════════════
    NAVBAR
@@ -139,7 +181,6 @@ const Navbar = () => {
   const navLinks = [
     { to:"/", label:"Home" },
     { to:"/chi-siamo", label:"Studio" },
-    { to:"/portfolio", label:"Portfolio" },
     { to:"/casi-studio", label:"Casi studio" },
     { to:"/servizi", label:"Servizi" },
     { to:"/contatti", label:"Contatti" },
@@ -200,10 +241,11 @@ const Navbar = () => {
 ═══════════════════════════════════════════════════════════════ */
 const Footer = () => {
   const { go } = useRouter();
+  const location = ((useContent() as any).contact?.location) || "Castellaneta (TA), Puglia";
   return (
     <footer style={{borderTop:".5px solid var(--b)",padding:"4rem 2rem 2.5rem"}}>
       <div style={{maxWidth:1280,margin:"0 auto"}}>
-        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr 1fr",gap:"3rem",marginBottom:"3rem"}}>
+        <div style={{display:"grid",gridTemplateColumns:"2fr 1fr 1fr",gap:"3rem",marginBottom:"3rem"}} className="grid-1-mob">
           <div>
             <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:"1rem"}}>
               <div style={{width:30,height:30,background:"var(--a)",borderRadius:8,transform:"rotate(-4deg)",display:"flex",alignItems:"center",justifyContent:"center"}}>
@@ -211,47 +253,30 @@ const Footer = () => {
               </div>
               <span style={{fontFamily:"var(--fd)",fontSize:19,letterSpacing:".15em"}}>INLAB</span>
             </div>
-            <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione a Taranto. Strategia, creatività e tecnologia per far crescere il tuo brand in Puglia.</p>
+            <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione con sede a Castellaneta (TA). Strategia, creatività e tecnologia per far crescere il tuo brand.</p>
             <div style={{display:"flex",alignItems:"center",gap:6,marginTop:"1rem",fontSize:12,color:"var(--m)"}}>
-              <MapPin size={12}/> Taranto, Puglia
+              <MapPin size={12}/> {location}
             </div>
           </div>
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {SERVICES.map(s=>(
-                <a key={s.slug} onClick={()=>go("/"+s.slug)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
-                  onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
-                  onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
-                >{s.label}</a>
+                <Link key={s.slug} to={"/"+s.slug} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{s.label}</Link>
               ))}
             </div>
           </div>
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {[["Chi siamo","/chi-siamo"],["Portfolio","/portfolio"],["Casi studio","/casi-studio"],["Contatti","/contatti"]].map(([l,r])=>(
-                <a key={r} onClick={()=>go(r)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
-                  onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
-                  onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
-                >{l}</a>
-              ))}
-            </div>
-          </div>
-          <div>
-            <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Aree servite</div>
-            <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {CITIES.map(c=>(
-                <a key={c} onClick={()=>go(`/gestione-social-${c.toLowerCase()}`)} style={{fontSize:13,color:"var(--m)",transition:"color .2s",cursor:"pointer"}}
-                  onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
-                  onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
-                >{c}</a>
+              {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Contatti","/contatti"]].map(([l,r])=>(
+                <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
               ))}
             </div>
           </div>
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-          <p style={{fontSize:11,fontFamily:"monospace",color:"rgba(255,255,255,.15)",letterSpacing:".08em"}}>© 2025 InLab Communication — Taranto, Puglia</p>
+          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em"}}>© {new Date().getFullYear()} InLab Communication — Castellaneta (TA)</p>
           <div style={{display:"flex",gap:"1.5rem"}}>
             {[
               {label:"Instagram",url:"https://www.instagram.com/inlab.communication/"},
@@ -457,12 +482,12 @@ const VideoReel = ({
   };
 
   return (
-    <section style={{padding:"7rem 2rem 8rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
+    <section style={{padding:"7rem 0 6rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
       {/* Glow di sfondo coerente col resto del sito */}
       <div style={{position:"absolute",top:"30%",right:"-5%",width:520,height:520,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(120px)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",bottom:"5%",left:"-5%",width:380,height:380,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
 
-      <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
+      <div style={{maxWidth:1280,margin:"0 auto",padding:"0 2rem",position:"relative",zIndex:1}}>
         {/* Header */}
         <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
           style={{marginBottom:"3.5rem",textAlign:"center"}}>
@@ -478,21 +503,24 @@ const VideoReel = ({
           {subtitle && <p style={{fontSize:15,color:"var(--m)",maxWidth:520,margin:"0 auto",lineHeight:1.7}}>{subtitle}</p>}
         </motion.div>
 
-        {/* Video con maschera sfumata sui 4 lati */}
+      </div>
+
+        {/* Video a tutta larghezza in 16:9, sfumato solo sopra e sotto */}
         <motion.div
           initial={{opacity:0,scale:.97}}
           whileInView={{opacity:1,scale:1}}
           viewport={{once:true,margin:"-80px"}}
           transition={{duration:.8,ease:[0.16,1,0.3,1]}}
-          style={{position:"relative",maxWidth:1000,margin:"0 auto"}}
+          style={{position:"relative",width:"100%"}}
         >
-          {/* Wrapper con mask radiale: il video sfuma sui bordi e si fonde col bg */}
           <div style={{
             position:"relative",
+            // 16:9 a tutta larghezza: niente ritaglio/zoom del video (che su schermi
+            // alti o sul telefono lo ingrandiva molto e lo rendeva sgranato)
             aspectRatio:"16/9",
-            // Mask radiale: opaco al centro, trasparente ai bordi
-            WebkitMaskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
-            maskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
+            maxHeight:"100svh",
+            WebkitMaskImage:"linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
+            maskImage:"linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%)",
           }}>
             <video
               ref={videoRef}
@@ -511,7 +539,7 @@ const VideoReel = ({
             onClick={toggleAudio}
             aria-label={muted?"Attiva audio":"Disattiva audio"}
             style={{
-              position:"absolute",bottom:"6%",right:"6%",zIndex:2,
+              position:"absolute",bottom:"14%",right:"4%",zIndex:2,
               width:52,height:52,borderRadius:"50%",
               background:"rgba(20,20,20,0.7)",
               backdropFilter:"blur(10px)",
@@ -547,7 +575,6 @@ const VideoReel = ({
             )}
           </button>
         </motion.div>
-      </div>
     </section>
   );
 };
@@ -555,7 +582,7 @@ const MarqueeHome = () => {
   const c = useContent();
   const items = (c as any).marquee?.items || [
     "Gestione Social", "✦", "Meta Ads", "✦", "Foto & Video", "✦",
-    "Branding", "✦", "Siti Web", "✦", "Landing Page", "✦",
+    "Branding", "✦", "Siti Web", "✦",
     "Organizzazione Eventi", "✦", "Lead Generation", "✦",
   ];
   return <Marquee items={items} />;
@@ -569,19 +596,15 @@ const PageHome = () => {
   const { go } = useRouter();
   const content = useContent();
   const hero = (content as any).hero || {};
+  const manifesto = (content as any).manifesto || {};
 
   return (
     <>
       <HeroFlow
         onPrimaryCta={() => go("/contatti")}
-        onSecondaryCta={() => go("/portfolio")}
         tag={hero.tag}
-        headlineLine1={hero.headline?.line1}
-        headlineLine2={hero.headline?.line2}
-        headlineAccent={hero.headline?.accent}
         description={hero.description}
         ctaPrimary={hero.cta?.primary}
-        ctaSecondary={hero.cta?.secondary}
       />
 
       {/* Marquee servizi */}
@@ -591,14 +614,14 @@ const PageHome = () => {
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",top:"10%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1.2fr",gap:"5rem",alignItems:"center"}} className="grid-1-mob">
+          <div style={{display:"grid",gridTemplateColumns:"1.1fr 1fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <motion.div initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}} viewport={{once:true,margin:"-80px"}}>
-              <p className="section-label">Il nostro manifesto</p>
+              <p className="section-label">{manifesto.tag}</p>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,4.5rem)",lineHeight:.92,marginBottom:"1.5rem"}}>
-                NON CREIAMO CONTENUTI<br/>
-                <span className="stroke">PER RIEMPIRE</span><br/>
-                UN CALENDARIO.{" "}
-                <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,color:"var(--a)",fontSize:".75em"}}>Costruiamo direzioni.</span>
+                {manifesto.title?.line1}<br/>
+                <span className="stroke">{manifesto.title?.line2}</span><br/>
+                {manifesto.title?.line3}{" "}
+                <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,color:"var(--a)",fontSize:".75em"}}>{manifesto.title?.accent}</span>
               </h2>
             </motion.div>
             <motion.p
@@ -606,29 +629,19 @@ const PageHome = () => {
               whileInView={{opacity:1,y:0}}
               viewport={{once:true,margin:"-80px"}}
               transition={{delay:.15}}
-              style={{fontSize:17,lineHeight:1.85,color:"var(--m)",fontWeight:300,maxWidth:560}}
+              style={{fontSize:18,lineHeight:1.8,color:"rgba(240,237,230,0.78)",fontWeight:300,maxWidth:560,paddingBottom:"1.4rem",borderLeft:"2px solid var(--a)",paddingLeft:"1.6rem"}}
             >
-              Ogni post, video, foto o campagna deve avere un motivo per esistere: raccontare il valore del brand, parlare alle persone giuste, creare fiducia e rendere la comunicazione più riconoscibile. Non vendiamo pacchetti. Costruiamo identità.
+              {manifesto.text}
             </motion.p>
           </div>
         </div>
       </section>
 
-      {/* VIDEO REEL — dietro le quinte */}
-      <VideoReel src="https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4"/>
-
       {/* SERVIZI */}
       <ServicesGrid onServiceClick={(slug) => go("/" + slug)} />
 
-      {/* METODO timeline */}
-      <MethodTimeline />
-
-      {/* PORTFOLIO preview */}
-      <PortfolioGallery
-        onProjectClick={(id) => go("/casi-studio/" + id)}
-        maxItems={6}
-        onViewAll={() => go("/portfolio")}
-      />
+      {/* VIDEO REEL — dietro le quinte */}
+      <VideoReel src="https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4"/>
 
       {/* CLIENTI */}
       <ClientsWall onClientClick={(id) => go(`/cliente/${id}`)} />
@@ -636,72 +649,8 @@ const PageHome = () => {
       {/* CASI STUDIO */}
       <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
 
-      {/* PER CHI LAVORIAMO */}
-      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:"30%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
-        <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-          <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:"-80px"}} style={{marginBottom:"4rem",maxWidth:720}}>
-            <p className="section-label">Il nostro target</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,6vw,5.5rem)",lineHeight:.9,marginBottom:"1.2rem"}}>
-              PER BRAND CHE<br/><span className="stroke">VOGLIONO FARSI NOTARE.</span>
-            </h2>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.7,maxWidth:520}}>
-              Lavoriamo con chi vuole una comunicazione professionale, riconoscibile e pensata per crescere.
-            </p>
-          </motion.div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"1rem"}} className="grid-1-mob">
-            {[
-              {emoji:"🍽️",label:"Ristoranti e locali",desc:"Comunicazione che fa venir voglia di prenotare."},
-              {emoji:"🛍️",label:"Negozi e attività",desc:"Contenuti che portano persone in negozio e online."},
-              {emoji:"💼",label:"Professionisti",desc:"Immagine autorevole e riconoscibile nel tuo settore."},
-              {emoji:"⚙️",label:"Aziende di servizi",desc:"Spiegare bene cosa fai è già metà del lavoro."},
-              {emoji:"🚀",label:"Brand emergenti",desc:"Costruiamo la tua identità da zero con metodo."},
-              {emoji:"🎉",label:"Eventi e inaugurazioni",desc:"Prima, durante e dopo — raccontiamo ogni momento."},
-              {emoji:"🌐",label:"Progetti digitali",desc:"Landing page, siti e campagne che convertono."},
-              {emoji:"📍",label:"Attività locali",desc:"Presenza digitale forte nel territorio che servi."},
-            ].map((item,i)=>(
-              <motion.div key={i} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.05}}
-                style={{padding:"1.75rem"}}>
-                <div style={{fontSize:28,marginBottom:".8rem"}}>{item.emoji}</div>
-                <h3 style={{fontSize:14,fontWeight:500,marginBottom:".4rem"}}>{item.label}</h3>
-                <p style={{fontSize:12,color:"var(--m)",lineHeight:1.6}}>{item.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* TESTIMONIAL */}
-      <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden",background:"rgba(205,178,255,0.015)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:"-80px"}} style={{marginBottom:"4rem",textAlign:"center"}}>
-            <p className="section-label">Cosa dicono di noi</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,6vw,5.5rem)",lineHeight:.9}}>
-              LE PAROLE<br/><span className="stroke">DEI CLIENTI.</span>
-            </h2>
-          </motion.div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"1.5rem"}} className="grid-1-mob">
-            {[
-              {text:"Finalmente i nostri social hanno un'immagine coerente. Prima pubblicavamo a caso, ora ogni contenuto ha un senso.",role:"Titolare, attività locale"},
-              {text:"Ci hanno aiutato a raccontare meglio il nostro evento. La risposta del pubblico è stata ben oltre le aspettative.",role:"Organizzatore, evento locale"},
-              {text:"Contenuti belli, ma soprattutto pensati con una strategia. Si vede che dietro c'è un metodo, non solo estetica.",role:"Professionista, servizi"},
-              {text:"Da quando lavoriamo con InLab, i messaggi che riceviamo sono più qualificati. Le persone arrivano già informate.",role:"Titolare, studio professionale"},
-              {text:"Il reel che hanno prodotto per la nostra inaugurazione ha fatto numeri che non avremmo mai immaginato.",role:"Brand emergente, retail"},
-              {text:"Professionalità vera. Rispondono sempre, rispettano le scadenze e i contenuti sono sempre di qualità.",role:"Responsabile marketing, azienda"},
-            ].map((t,i)=>(
-              <motion.div key={i} className="glass card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
-                style={{padding:"2rem",borderRadius:24}}>
-                <div style={{fontSize:32,color:"var(--a)",marginBottom:"1rem",lineHeight:1}}>"</div>
-                <p style={{fontSize:15,color:"var(--t)",lineHeight:1.75,marginBottom:"1.5rem",fontStyle:"italic"}}>{t.text}</p>
-                <div style={{fontSize:11,letterSpacing:".12em",textTransform:"uppercase",color:"var(--m)"}}>{t.role}</div>
-              </motion.div>
-            ))}
-          </div>
-          <motion.p initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} style={{textAlign:"center",marginTop:"3rem",fontSize:14,color:"var(--m)"}}>
-            Abbiamo lavorato su progetti per attività locali, eventi, brand e servizi in tutta la provincia di Taranto.
-          </motion.p>
-        </div>
-      </section>
+      {/* METODO timeline */}
+      <MethodTimeline />
 
       {/* NUMERI */}
       <AnimatedStats />
@@ -712,6 +661,67 @@ const PageHome = () => {
   );
 };
  
+/* ═══════════════════════════════════════════════════════════════
+   ESEMPI REALI per pagina servizio (dati in src/data/serviceExamples.ts)
+═══════════════════════════════════════════════════════════════ */
+const ServiceExamples = ({ slug }: { slug: string }) => {
+  const content = useContent();
+  const examples = SERVICE_EXAMPLES[slug] || [];
+  if (!examples.length) return null;
+  const clients = normalizeClients(((content as any).clients?.items || []) as any[]);
+  const sites = examples.filter((e): e is Extract<ServiceExample, { kind: 'site' }> => e.kind === 'site');
+  const cards = examples.filter(e => e.kind !== 'site');
+
+  return (
+    <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto"}}>
+        <p className="section-label">Esempi reali</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"3rem"}}>
+          ALCUNI LAVORI<br/><span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,color:"var(--a)",fontSize:".7em"}}>che abbiamo realizzato.</span>
+        </h2>
+
+        {sites.map(site => (
+          <div key={site.url} style={{display:"grid",gridTemplateColumns:"1.4fr 1fr",gap:"3rem",alignItems:"center",marginBottom:cards.length?"3rem":0}} className="grid-1-mob">
+            <BrowserMockup url={site.url} label={site.title}/>
+            <div>
+              {site.tags && <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:"1rem"}}>{site.tags.map(t=><span key={t} className="tag tag-g" style={{fontSize:10}}>{t}</span>)}</div>}
+              <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase"}}>{site.title}</h3>
+              <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
+              <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+                <a className="btn btn-p" href={site.url} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
+                {site.caseStudy && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {cards.length>0 && (
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:14}}>
+            {cards.map((e,i) => {
+              const c = e.kind === 'client' ? clients.find((x: any) => x.id === e.clientId) : null;
+              if (e.kind === 'client' && !c) return null;
+              const to = e.kind === 'client' ? `/cliente/${e.clientId}` : `/casi-studio/${(e as any).caseId}`;
+              const title = e.kind === 'client' ? c.name : (e as any).title;
+              const desc = e.kind === 'client' ? c.summary : (e as any).desc;
+              const label = e.kind === 'client' ? (c.sector || 'Cliente') : 'Caso studio';
+              return (
+                <Link key={i} to={to} className="client-card" style={{minHeight:220}}>
+                  <span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>{label}</span>
+                  <span style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18}}>{title}</span>
+                  {desc && <span className="client-card-summary">{desc}</span>}
+                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>
+                    {e.kind === 'client' ? 'Scheda cliente' : 'Leggi il caso studio'} <ArrowUpRight size={13}/>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+};
+
 /* ═══════════════════════════════════════════════════════════════
    PAGE: GESTIONE SOCIAL
 ═══════════════════════════════════════════════════════════════ */
@@ -775,6 +785,7 @@ const PageGestioneSocial = () => (
     </section>
  
     <ClientLogos/>
+    <ServiceExamples slug="gestione-social"/>
     <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito"/>
   </>
 );
@@ -835,6 +846,7 @@ const PageMetaAds = () => (
     </section>
  
     <ClientLogos/>
+    <ServiceExamples slug="meta-ads"/>
     <ServiceCTA title="PAGA SOLO I RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
   </>
 );
@@ -895,6 +907,7 @@ const PageSitiWeb = () => (
     </section>
  
     <ClientLogos/>
+    <ServiceExamples slug="siti-web"/>
     <ServiceCTA title="IL TUO SITO ATTUALE TI PORTA CLIENTI?" sub="Se la risposta è no, possiamo cambiarlo." btn="Richiedi un'analisi gratuita"/>
   </>
 );
@@ -955,6 +968,7 @@ const PageAutomazioniAI = () => (
       </div>
     </section>
  
+    <ServiceExamples slug="automazioni-ai"/>
     <ServiceCTA title="QUANTO TEMPO PERDI OGNI GIORNO?" sub="Una consulenza gratuita di 30 minuti per scoprire cosa possiamo automatizzare." btn="Prenota la consulenza"/>
   </>
 );
@@ -1013,6 +1027,7 @@ const PageShooting = () => (
       </div>
     </section>
  
+    <ServiceExamples slug="shooting"/>
     <ServiceCTA title="LA TUA AZIENDA MERITA FOTO MIGLIORI." sub="Prenota una call per discutere il tuo shooting." btn="Richiedi disponibilità"/>
   </>
 );
@@ -1072,44 +1087,8 @@ const PageVideo = () => (
       </div>
     </section>
  
+    <ServiceExamples slug="video"/>
     <ServiceCTA title="IL PROSSIMO VIDEO VIRALE È IL TUO." sub="Mostraci il tuo brand. Ti diciamo come lo raccontiamo." btn="Parliamo del tuo video"/>
-  </>
-);
- 
-/* ═══════════════════════════════════════════════════════════════
-   PAGE: LANDING PAGE
-═══════════════════════════════════════════════════════════════ */
-const PageLandingPage = () => (
-  <>
-    <PageHero tag="Servizio — Landing Page ad Alta Conversione"
-      h1="PAGINE CHE" h1b="CONVERTONO" italic="non solo informano."
-      sub="Una landing page non è un sito web ridotto. È una macchina di conversione progettata con un obiettivo unico: trasformare i visitatori in lead o clienti."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi esempi" cta2to="/lavori"
-    />
-    <Marquee items={["Lead Generation","✦","Vendite","✦","Prenotazioni","✦","Download","✦","Iscrizioni","✦","A/B Testing","✦"]}/>
-    <StatsRow stats={[{n:"12%",l:"Conversion rate medio"},{n:"×4",l:"Vs sito standard"},{n:"48h",l:"Tempo di consegna"},{n:"100%",l:"Mobile-first"}]}/>
- 
-    <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
-      <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1.4fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
-        <div>
-          <p className="section-label">Psicologia della conversione</p>
-          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>OGNI ELEMENTO<br/><span className="stroke">HA UNO SCOPO</span></h2>
-          <p style={{fontSize:15,color:"var(--m)",lineHeight:1.75}}>Utilizziamo principi di psicologia comportamentale, copywriting persuasivo e design orientato alla conversione. Niente è casuale.</p>
-        </div>
-        <div style={{display:"flex",flexDirection:"column",gap:0}}>
-          {[
-            {n:1,title:"Definizione dell'obiettivo",desc:"Una landing page = un obiettivo. Che sia un form di contatto, un acquisto, una prenotazione o un download — tutto il design è costruito intorno a quella singola azione."},
-            {n:2,title:"Ricerca e copywriting",desc:"Il copy viene prima del design. Studiamo la voce del cliente ideale, le obiezioni più comuni, i benefici che contano davvero. Scriviamo headline e body copy che parlano direttamente al tuo pubblico."},
-            {n:3,title:"Design persuasivo",desc:"Gerarchia visiva chiara, CTA prominente, social proof ben posizionata, rimozione di ogni elemento che distrae dalla conversione. Design che guida, non che decora."},
-            {n:4,title:"Sviluppo veloce e performante",desc:"Sviluppo su Next.js o Webflow. PageSpeed 95+, caricamento <2s, ottimizzazione per Core Web Vitals. La velocità impatta direttamente la conversion rate."},
-            {n:5,title:"A/B Testing",desc:"Testiamo headline alternative, varianti di CTA, posizionamento della social proof. Piccoli cambiamenti, grandi differenze. Ottimizzazione basata sui dati reali, non sulle opinioni."},
-            {n:6,title:"Analytics e ottimizzazione",desc:"Google Analytics 4, Hotjar per heatmap, tracciamento conversioni preciso. Ogni settimana i dati, ogni mese l'ottimizzazione."},
-          ].map(s=><ProcessStep key={s.n} {...s}/>)}
-        </div>
-      </div>
-    </section>
- 
-    <ServiceCTA title="STAI PAGANDO CLICK CHE NON CONVERTONO?" sub="Mandiamo traffico su una landing ottimizzata e cambia tutto." btn="Costruiamo la tua landing"/>
   </>
 );
  
@@ -1125,17 +1104,17 @@ const PageServizi = () => {
         sub="Dalla strategia all'esecuzione. Dal brand alla conversione. Lavoriamo su ogni touchpoint della tua comunicazione digitale."
         cta1="Parliamo del tuo progetto" cta1to="/contatti"
       />
-      <StatsRow stats={STATS_GLOBAL}/>
+      <AgencyStatsRow/>
       <section style={{padding:"7rem 2rem"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:"1.2rem"}} className="grid-1-mob">
           {SERVICES.map((s,i)=>(
-            <motion.div key={s.slug} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
-              onClick={()=>go("/"+s.slug)} style={{cursor:"pointer",padding:"2.5rem"}}>
+            <motion.a key={s.slug} href={"/"+s.slug} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
+              onClick={linkClick(()=>go("/"+s.slug))} style={{cursor:"pointer",padding:"2.5rem",display:"block",color:"inherit",textDecoration:"none"}}>
               <div style={{color:"var(--a)",marginBottom:"1.2rem"}}>{s.icon}</div>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.5rem)",lineHeight:.95,marginBottom:".6rem",textTransform:"uppercase"}}>{s.label}</h2>
               <p style={{fontSize:14,color:"var(--m)",lineHeight:1.7,marginBottom:"1.5rem"}}>{s.short}</p>
               <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri il servizio <ArrowUpRight size={11}/></span>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </section>
@@ -1149,12 +1128,23 @@ const PageServizi = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageChiSiamo = () => {
   const {go}=useRouter();
+  // Testi, team e collaboratori modificabili da dashboard → Chi siamo
+  const studio = ((useContent() as any).studio) || {};
+  const title = Array.isArray(studio.title) ? studio.title : [];
+  const initialsOf = (name = "") => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w: string) => w[0]).join("").toUpperCase();
+  const team = (Array.isArray(studio.team) ? studio.team : [])
+    .filter((m: any) => m?.name && m.name !== "Prince")
+    .map((m: any) => ({ ...m, initials: initialsOf(m.name), skills: Array.isArray(m.skills) ? m.skills : [], edu: Array.isArray(m.edu) ? m.edu.filter(Boolean) : [] }));
+  const collabIcons = [<Globe size={18}/>, <Camera size={18}/>, <Zap size={18}/>, <Star size={18}/>];
+  const collaboratori = (Array.isArray(studio.collaboratori) ? studio.collaboratori : [])
+    .filter((c: any) => c?.title)
+    .map((c: any, i: number) => ({ icon: collabIcons[i % collabIcons.length], t: c.title, d: c.desc }));
   return (
     <>
-      <PageHero tag="Il laboratorio"
-        h1="NON SIAMO" h1b="CONSULENTI" italic="siamo partner."
-        sub="InLab nasce dall'incontro tra due prospettive complementari. La mente che analizza. La voce che emoziona. Un laboratorio dove strategia e creatività si incontrano ogni giorno."
-        cta1="Vedi i nostri lavori" cta1to="/lavori" cta2="Contattaci" cta2to="/contatti"
+      <PageHero tag={studio.tag || "Il laboratorio"}
+        h1={title[0] || "NON SIAMO"} h1b={title[1] || "CONSULENTI"} italic={title[2] || "siamo partner."}
+        sub={studio.description1}
+        cta1="Vedi i casi studio" cta1to="/casi-studio" cta2="Contattaci" cta2to="/contatti"
       />
  
       {/* Team */}
@@ -1162,17 +1152,13 @@ const PageChiSiamo = () => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label">Le persone dietro InLab</p>
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9,marginBottom:"4rem"}}>IL TEAM<br/><span className="stroke">INLAB</span></h2>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"2rem"}} className="grid-1-mob">
-            {[
-              {initials:"P",name:"Prince",role:"Strategia, sviluppo commerciale, progetti digitali",bio:"Segue la visione strategica dei progetti, il rapporto con i clienti e lo sviluppo di soluzioni orientate alla crescita. Collega le esigenze del brand con le leve digitali più efficaci.",skills:["Strategia digitale","Business development","Gestione progetti","Consulenza clienti","Analisi e KPI"]},
-              {initials:"NC",name:"Nicola Carpignano",role:"Social media manager, comunicazione e marketing",bio:"Si occupa di strategia editoriale, copy, gestione social e posizionamento dei contenuti. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",skills:["Social media strategy","Copywriting","Piano editoriale","Community management","Posizionamento brand"]},
-              {initials:"IG",name:"Ilaria Gemma",role:"Content creator e comunicazione visiva",bio:"Lavora sulla creazione di contenuti, immagini, video e racconto visivo dei brand. Dalla direzione artistica di uno shooting alla regia di un reel, cura ogni dettaglio estetico.",skills:["Produzione video & reels","Direzione artistica","Fotografia di brand","Script & storytelling","Visual identity"]},
-            ].map((p,i)=>(
+          <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem",maxWidth:980}} className="grid-1-mob">
+            {team.map((p: any,i: number)=>(
               <motion.div key={i} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.1}}
                 style={{padding:"2.5rem"}}>
                 <div style={{display:"flex",alignItems:"center",gap:"1rem",marginBottom:"1.5rem"}}>
                   <div style={{width:56,height:56,background:"rgba(205,178,255,0.12)",border:".5px solid rgba(205,178,255,.3)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"var(--fd)",fontSize:22,color:"var(--a)"}}>
-                    {p.initials}
+                    {p.photo ? <img src={p.photo} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",borderRadius:"50%"}}/> : p.initials}
                   </div>
                   <div>
                     <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
@@ -1180,8 +1166,16 @@ const PageChiSiamo = () => {
                   </div>
                 </div>
                 <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}</p>
+                {p.edu?.length>0&&(
+                  <div style={{marginBottom:"1.5rem",padding:"1rem 1.1rem",borderRadius:14,background:"rgba(205,178,255,0.06)",border:".5px solid rgba(205,178,255,0.2)"}}>
+                    <div style={{display:"flex",alignItems:"center",gap:6,fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
+                      <GraduationCap size={13}/> Formazione
+                    </div>
+                    {p.edu.map((e: string)=><p key={e} style={{fontSize:13.5,color:"var(--t)",lineHeight:1.55,marginBottom:4}}>{e}</p>)}
+                  </div>
+                )}
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                  {p.skills.map(s=><span key={s} className="tag tag-g" style={{fontSize:11}}>{s}</span>)}
+                  {p.skills.map((s: string)=><span key={s} className="tag tag-g" style={{fontSize:11}}>{s}</span>)}
                 </div>
               </motion.div>
             ))}
@@ -1191,12 +1185,7 @@ const PageChiSiamo = () => {
           <div style={{marginTop:"3rem"}}>
             <p className="section-label" style={{marginBottom:"1.5rem"}}>La nostra rete di collaboratori</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"1rem"}}>
-              {[
-                {icon:<Globe size={18}/>,t:"Web Developer",d:"Sviluppatori front-end e back-end selezionati per ogni tipo di progetto. React, Next.js, WordPress."},
-                {icon:<Camera size={18}/>,t:"Fotografi partner",d:"Professionisti locali per shooting che richiedono attrezzatura specifica o copertura estesa."},
-                {icon:<Zap size={18}/>,t:"AI & Automation specialist",d:"Esperti di Make, Zapier e sviluppo custom per automazioni complesse."},
-                {icon:<Star size={18}/>,t:"Copywriter",d:"Per progetti che richiedono copy specializzato in settori tecnici o legali."},
-              ].map((c,i)=>(
+              {collaboratori.map((c: any,i: number)=>(
                 <motion.div key={i} className="card" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
                   style={{padding:"1.5rem"}}>
                   <div style={{color:"var(--a)",marginBottom:".7rem"}}>{c.icon}</div>
@@ -1209,7 +1198,7 @@ const PageChiSiamo = () => {
         </div>
       </section>
  
-      <StatsRow stats={STATS_GLOBAL}/>
+      <AgencyStatsRow/>
       <ServiceCTA title="LAVORIAMO INSIEME?" sub="Raccontaci il tuo progetto. Valutiamo come possiamo aiutarti." btn="Contattaci"/>
     </>
   );
@@ -1370,7 +1359,11 @@ const PageLavori = () => {
    PAGE: CONTATTI
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
+  const contact = ((useContent() as any).contact) || {};
   const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
+  // Anti-bot: campo nascosto (le persone non lo vedono) e ora di apertura del modulo
+  const [honeypot,setHoneypot]=useState("");
+  const formStartedAt=React.useRef(Date.now());
   const [sent,setSent]=useState(false);
   const [error,setError]=useState("");
   const [sending,setSending]=useState(false);
@@ -1381,24 +1374,18 @@ const PageContatti = () => {
     setError("");
     setSending(true);
     try {
-      const { db } = await import('./lib/firebase');
-      const { collection, addDoc } = await import('firebase/firestore');
-      if(!db) {
-        setError("Servizio momentaneamente non disponibile. Scrivici direttamente a inlab.communication@gmail.com");
-        setSending(false);
-        return;
-      }
-      await addDoc(collection(db,'leads'),{
-        name: form.nome,
-        email: form.email,
-        phone: form.tel || null,
-        company: form.azienda || null,
-        intent: form.servizio ? `[FORM] ${form.servizio}` : '[FORM] Contatto dal sito',
-        source: 'contact_form',
-        status: 'new',
-        notes: form.msg,
-        created_at: new Date().toISOString(),
+      // Il lead viene salvato dal server (/api/lead), con controlli anti-spam
+      const r = await fetch('/api/lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
+          service: form.servizio, message: form.msg, privacy: form.privacy,
+          website: honeypot, startedAt: formStartedAt.current,
+        }),
       });
+      if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
       setSent(true);
     } catch(e){
       console.error('Save contact failed',e);
@@ -1410,10 +1397,10 @@ const PageContatti = () => {
  
   return (
     <>
-      <PageHero tag="Parliamo del tuo progetto"
-        h1="INIZIAMO" h1b="INSIEME"
-        italic="senza impegno."
-        sub="Una chiamata di 30 minuti è sufficiente per capire cosa ti serve e come possiamo aiutarti. Senza slide inutili, senza promesse vuote."
+      <PageHero tag={contact.tag || "Parliamo del tuo progetto"}
+        h1={contact.title?.[0] || "INIZIAMO"} h1b={contact.title?.[1] || "INSIEME"}
+        italic={contact.accent || "senza impegno."}
+        sub={contact.subtitle}
       />
  
       <section style={{padding:"6rem 2rem"}}>
@@ -1423,26 +1410,23 @@ const PageContatti = () => {
           <div>
             <p className="section-label" style={{marginBottom:"2rem"}}>Come raggiungerci</p>
             {[
-              {icon:<Mail size={18}/>,label:"Email",val:"inlab.communication@gmail.com"},
-              {icon:<Phone size={18}/>,label:"Telefono",val:"+39 329 565 4319"},
-              {icon:<MapPin size={18}/>,label:"Sede",val:"Taranto, Puglia"},
-            ].map((c,i)=>(
+              ...(contact.emails || []).map((e: any) => ({icon:<Mail size={18}/>,label:e.label || "Email",val:e.value,href:`mailto:${e.value}`})),
+              ...(contact.phones || []).map((p: any) => ({icon:<Phone size={18}/>,label:p.label || "Telefono",val:p.value,href:`tel:${String(p.value).replace(/[^\d+]/g,"")}`})),
+              ...(contact.location ? [{icon:<MapPin size={18}/>,label:"Sede",val:contact.location,href:""}] : []),
+            ].filter((c: any) => c.val).map((c: any,i: number)=>(
               <motion.div key={i} initial={{opacity:0,x:-16}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.1}}
                 style={{display:"flex",gap:"1rem",alignItems:"flex-start",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
                 <div style={{width:40,height:40,background:"rgba(205,178,255,0.08)",border:".5px solid rgba(205,178,255,.2)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",flexShrink:0}}>{c.icon}</div>
                 <div>
                   <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:2}}>{c.label}</div>
-                  <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>
+                  {c.href ? <a href={c.href} style={{fontSize:16,fontWeight:400,color:"var(--t)",textDecoration:"none"}}>{c.val}</a> : <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>}
                 </div>
               </motion.div>
             ))}
  
-            <div style={{marginTop:"2.5rem"}}>
-              <p className="section-label" style={{marginBottom:"1rem"}}>Aree servite</p>
-              <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                {CITIES.map(c=><span key={c} className="tag tag-g" style={{fontSize:11}}>{c}</span>)}
-              </div>
-            </div>
+            <p style={{marginTop:"2.5rem",fontSize:14,color:"var(--m)",lineHeight:1.7,maxWidth:420}}>
+              Sede a Castellaneta (TA). Lavoriamo con aziende e professionisti in tutta la Puglia e non solo: molti progetti si seguono anche da remoto.
+            </p>
           </div>
  
           {/* Form */}
@@ -1477,6 +1461,9 @@ const PageContatti = () => {
                   </div>
                   <div>
                     <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
+                    {/* campo trappola anti-bot: invisibile alle persone */}
+                    <input type="text" name="website" value={honeypot} onChange={e=>setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true"
+                      style={{position:"absolute",left:"-10000px",width:1,height:1,opacity:0}}/>
                     <textarea rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",resize:"vertical",transition:"border-color .2s"}}
                       onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
@@ -1550,7 +1537,7 @@ const PageCittaSEO = ({city, service}) => {
         </div>
       </section>
  
-      <StatsRow stats={[{n:"47",l:"Clienti in Puglia"},{n:"3.2M+",l:"Views generate"},{n:"9",l:"Città servite"},{n:"100%",l:"Soddisfazione clienti"}]}/>
+      <AgencyStatsRow/>
  
       {/* Local content */}
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
@@ -1592,17 +1579,14 @@ const PageCittaSEO = ({city, service}) => {
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Operiamo anche in queste città</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
             {otherCities.map(c=>(
-              <button key={c} className="tag tag-g" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}
-                onClick={()=>go(`/${svc.slug}-${c.toLowerCase()}`)}
-                onMouseEnter={e=>{e.currentTarget.style.borderColor="rgba(205,178,255,.35)";e.currentTarget.style.color="var(--a)"}}
-                onMouseLeave={e=>{e.currentTarget.style.borderColor="var(--b)";e.currentTarget.style.color="var(--m)"}}
-              >{svc.label} a {c}</button>
+              <Link key={c} to={`/${svc.slug}-${c.toLowerCase()}`} className="tag tag-g city-link" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}>{svc.label} a {c}</Link>
             ))}
           </div>
         </div>
       </section>
  
       <ClientLogos/>
+      <ServiceExamples slug={svc.slug}/>
       <ServiceCTA title={`VUOI CRESCERE A ${cityName.toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
   );
@@ -1626,7 +1610,7 @@ const PageProgetto = ({id}: {id: string}) => {
       <section style={{height:"100vh",position:"relative",display:"flex",flexDirection:"column",justifyContent:"flex-end",overflow:"hidden"}}>
         {p.image
           ? <img src={p.image} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}}/>
-          : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#2a2828 0%,#1a1a2e 100%)"}}/>
+          : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#2a2828 0%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,0.5) 50%,rgba(30,29,29,0.1) 100%)"}}/>
 
@@ -1794,7 +1778,9 @@ const PageCliente = ({id}: {id: string}) => {
     {label:"Facebook", href:client?.facebook},
     {label:"TikTok", href:client?.tiktok},
     {label:"LinkedIn", href:client?.linkedin},
-  ].filter(link=>link.href && /^https?:\/\//.test(String(link.href)));
+    {label:client?.phone ? `Tel. ${client.phone}` : "", href:client?.phone ? `tel:${String(client.phone).replace(/[^\d+]/g,"")}` : ""},
+    {label:client?.address ? "Come arrivare" : "", href:client?.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${client.name} ${client.address}`)}` : ""},
+  ].filter(link=>link.label && link.href && /^(https?:\/\/|tel:)/.test(String(link.href)));
 
   if(!client){
     return (
@@ -1830,7 +1816,7 @@ const PageCliente = ({id}: {id: string}) => {
             <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1px",background:"var(--b)",borderRadius:24,overflow:"hidden",border:".5px solid var(--b)"}}>
               {[
                 ["Settore", client.sector],
-                ["Area", client.location],
+                ["Area", client.address || client.location],
                 ["Servizi", `${client.services?.length || relatedProjects.length || 0}`],
                 ["Lavori", `${relatedProjects.length}`],
               ].map(([label,value])=>(
@@ -1851,9 +1837,14 @@ const PageCliente = ({id}: {id: string}) => {
             <p className="section-label">Scheda cliente</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>INFORMAZIONI<br/><span className="stroke">E CONTESTO</span></h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Aggiungi una descrizione dalla dashboard per completare questa scheda cliente."}</p>
+            {client.caseStudy&&(
+              <button className="btn btn-p" onClick={()=>go(`/casi-studio/${client.caseStudy}`)} style={{marginBottom:"1rem"}}>
+                Leggi il caso studio <ArrowRight size={14}/>
+              </button>
+            )}
             {links.length>0&&(
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target="_blank" rel="noreferrer" style={{fontSize:10,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
+                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:10,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
               </div>
             )}
           </div>
@@ -1983,6 +1974,7 @@ const PageCasiStudio = () => {
           </motion.p>
         </div>
       </section>
+      <ClientsWall showHeader={false} onClientClick={(id) => go(`/cliente/${id}`)} />
       <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
       <FinalCTA onClick={() => go("/contatti")} />
     </>
@@ -2000,10 +1992,11 @@ const PageCaso = ({id}: {id:string}) => {
   // Scroll in alto quando si arriva sulla pagina
   useEffect(() => { window.scrollTo({top:0,behavior:"instant" as any}); }, [id]);
 
+  const page = (el: React.ReactNode) => <Suspense fallback={<div style={{minHeight:"100vh"}}/>}>{el}</Suspense>;
+
   switch(id){
-    case "paresteta": return <CaseParesteta onBack={onBack} onContact={onContact}/>;
-    case "imh":       return <CaseImh       onBack={onBack} onContact={onContact}/>;
-    case "ricciardi": return <CaseRicciardi onBack={onBack} onContact={onContact}/>;
+    case "paresteta": return page(<CaseParesteta onBack={onBack} onContact={onContact}/>);
+    case "ricciardi": return page(<CaseRicciardi onBack={onBack} onContact={onContact}/>);
     default:
       return (
         <section style={{padding:"10rem 2rem 8rem",minHeight:"60vh"}}>
@@ -2078,6 +2071,7 @@ const PageBranding = () => (
     </section>
 
     <ClientLogos/>
+    <ServiceExamples slug="branding"/>
     <ServiceCTA title="IL TUO BRAND MERITA UN'IDENTITÀ VERA." sub="Costruiamola insieme, con metodo e visione." btn="Parliamo del tuo brand"/>
   </>
 );
@@ -2092,10 +2086,12 @@ const parseRoute = (route) => {
   if(route==="/contatti") return {page:"contatti"};
   // case study detail pages: /casi-studio/paresteta
   if(route.startsWith("/casi-studio/")) return {page:"caso",id:route.replace("/casi-studio/","")};
-  // client detail pages: /cliente/ristorante-da-mario
+  // client detail pages: /cliente/nunzio-putignano
   if(route.startsWith("/cliente/")) return {page:"cliente",id:route.replace("/cliente/","")};
   // project detail pages: /progetto/1
   if(route.startsWith("/progetto/")) return {page:"progetto",id:route.replace("/progetto/","")};
+  // "Landing Page" non è più un servizio a sé (è dentro Siti Web)
+  if(route==="/landing-page"||route.startsWith("/landing-page-")) return parseRoute(route.replace("/landing-page","/siti-web"));
   // service pages
   const svcSlugs=SERVICES.map(s=>s.slug);
   if(svcSlugs.includes(route.slice(1))) return {page:"service",slug:route.slice(1)};
@@ -2130,7 +2126,6 @@ const renderPage = (info) => {
         case "automazioni-ai": return <PageAutomazioniAI/>;
         case "shooting": return <PageShooting/>;
         case "video": return <PageVideo/>;
-        case "landing-page": return <PageLandingPage/>;
         default: return <PageHome/>;
       }
     case "city": return <PageCittaSEO city={info.city} service={info.service}/>;
@@ -2142,26 +2137,28 @@ const renderPage = (info) => {
    APP
 ═══════════════════════════════════════════════════════════════ */
 export default function App() {
-  const getRouteFromHash = () => {
-    const hash = window.location.hash.replace('#', '') || '/';
-    return hash.startsWith('/') ? hash : '/' + hash;
-  };
-
-  const [route,setRoute]=useState(getRouteFromHash);
+  const [route,setRoute]=useState(getCurrentPath);
 
   useEffect(() => {
     loadContent();
     initAnalytics();
-    const onHash = () => setRoute(getRouteFromHash());
-    window.addEventListener('hashchange', onHash);
-    return () => window.removeEventListener('hashchange', onHash);
+    const onPop = () => setRoute(getCurrentPath());
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
   }, []);
- 
-  const go=useCallback((to)=>{
-    window.location.hash = to;
-    setRoute(to);
+
+  // Pageview e scroll in alto a ogni cambio pagina (la prima la traccia initAnalytics)
+  const firstRoute = React.useRef(true);
+  useEffect(() => {
+    if (firstRoute.current) { firstRoute.current = false; return; }
+    trackPageview();
     window.scrollTo({top:0,behavior:"smooth"});
-  },[]);
+  }, [route]);
+
+  const go=useCallback((to)=>navigate(to),[]);
+
+  // SEO: titolo, description, canonical e dati strutturati della pagina corrente
+  useEffect(() => { applySeo(getSeo(route)); }, [route]);
  
   const pageInfo=parseRoute(route);
  

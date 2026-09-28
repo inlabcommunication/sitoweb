@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { useAgencyStats } from '../data/stats';
+import { useContent } from '../lib/content';
 
 interface CounterProps {
   to: number;
@@ -33,7 +35,7 @@ const Counter: React.FC<CounterProps> = ({ to, suffix = '', prefix = '', duratio
     }
     if (to >= 1000) {
       const k = val / 1000;
-      return k.toFixed(k < 10 ? 1 : 0) + 'k';
+      return k.toFixed(k < 10 ? 1 : 0) + 'K';
     }
     return Math.round(val).toString();
   })();
@@ -41,21 +43,11 @@ const Counter: React.FC<CounterProps> = ({ to, suffix = '', prefix = '', duratio
   return <span ref={ref}>{prefix}{formatted}{suffix}</span>;
 };
 
-const STATS = [
-  { value: 3200000, suffix: '+', label: 'Visualizzazioni generate' },
-  { value: 47,      suffix: '+', label: 'Brand e attività seguiti' },
-  { value: 9,       suffix: '',  label: 'Città servite in Puglia' },
-  { value: 100,     suffix: '%', label: 'Progetti consegnati in tempo' },
-];
 
 export const AnimatedStats: React.FC = () => {
+  const STATS = useAgencyStats();
   return (
-    <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
-      <div style={{
-        position: 'absolute', top: '50%', left: '50%', width: 700, height: 700,
-        background: 'rgba(205,178,255,0.025)', borderRadius: '50%', filter: 'blur(120px)',
-        transform: 'translate(-50%, -50%)', pointerEvents: 'none',
-      }} />
+    <section style={{ padding: '6rem 2rem', position: 'relative', overflow: 'hidden', background: 'var(--a)', color: '#000' }}>
 
       <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
         <motion.div
@@ -64,7 +56,7 @@ export const AnimatedStats: React.FC = () => {
           viewport={{ once: true, margin: '-80px' }}
           style={{ textAlign: 'center', marginBottom: '4rem' }}
         >
-          <p className="section-label" style={{ display: 'inline-block' }}>I numeri</p>
+          <p className="section-label" style={{ display: 'inline-block', color: 'rgba(0,0,0,0.6)' }}>I numeri</p>
           <h2 style={{
             fontFamily: 'var(--fd)', fontSize: 'clamp(2.5rem, 5vw, 4.8rem)',
             lineHeight: 0.9, marginBottom: '1rem',
@@ -72,7 +64,7 @@ export const AnimatedStats: React.FC = () => {
             CREATIVITÀ<br />
             <span style={{
               fontFamily: 'var(--fs)', fontStyle: 'italic',
-              fontWeight: 400, fontSize: '0.85em', color: 'var(--a)',
+              fontWeight: 400, fontSize: '0.85em', color: '#000', opacity: 0.7,
             }}>misurabile.</span>
           </h2>
         </motion.div>
@@ -84,16 +76,16 @@ export const AnimatedStats: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              style={{ padding: '2.5rem 2rem', borderLeft: '.5px solid rgba(205,178,255,0.2)', position: 'relative' }}
+              style={{ padding: '2rem', borderLeft: '1px solid rgba(0,0,0,0.18)', position: 'relative' }}
             >
               <div style={{
                 fontFamily: 'var(--fd)', fontSize: 'clamp(3rem, 6vw, 5rem)',
-                lineHeight: 1, color: i === 0 ? 'var(--a)' : 'var(--t)',
+                lineHeight: 1, color: '#000',
                 marginBottom: '0.6rem', letterSpacing: '-0.02em',
               }}>
-                <Counter to={s.value} suffix={s.suffix} />
+                <Counter to={s.value} prefix={s.prefix} suffix={s.suffix} />
               </div>
-              <p style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--m)', lineHeight: 1.4 }}>
+              <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.68)', lineHeight: 1.4 }}>
                 {s.label}
               </p>
             </motion.div>
@@ -109,8 +101,9 @@ interface FinalCTAProps {
 }
 
 export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
+  const cta = ((useContent() as any).cta?.home) || {};
   return (
-    <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, var(--bg) 0%, #0d1e30 40%, #1f3c5e 100%)' }}>
+    <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, var(--bg) 0%, #241e30 40%, #3a2d56 100%)' }}>
       {/* Glow animato */}
       <motion.div
         animate={{ opacity: [0.3, 0.6, 0.3] }}
@@ -126,7 +119,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
         transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
         style={{
           position: 'absolute', bottom: '-20%', left: '-10%', width: 500, height: 500,
-          background: 'rgba(31,60,94,0.6)', borderRadius: '50%', filter: 'blur(100px)',
+          background: 'rgba(205,178,255,0.18)', borderRadius: '50%', filter: 'blur(100px)',
           pointerEvents: 'none',
         }}
       />
@@ -139,38 +132,30 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{ textAlign: 'center', maxWidth: 820, margin: '0 auto' }}
         >
-          <p className="section-label" style={{ marginBottom: '1.5rem', color: 'rgba(240,237,230,0.5)' }}>Iniziamo</p>
+          <p className="section-label" style={{ marginBottom: '1.5rem', color: 'rgba(240,237,230,0.5)' }}>{cta.tag || 'Iniziamo'}</p>
           <h2 style={{
             fontFamily: 'var(--fd)', fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
             lineHeight: 0.92, marginBottom: '1.5rem', color: '#F0EDE6',
           }}>
-            HAI UN'ATTIVITÀ,<br />UN BRAND O UN PROGETTO<br />
+            {cta.title || "HAI UN'ATTIVITÀ,"}<br />{cta.title2 || 'UN BRAND O UN PROGETTO'}<br />
             <span style={{
               fontFamily: 'var(--fs)', fontStyle: 'italic',
               fontWeight: 400, fontSize: '0.7em', color: 'var(--a)',
-            }}>da raccontare meglio?</span>
+            }}>{cta.accent || 'da raccontare meglio?'}</span>
           </h2>
           <p style={{
             fontSize: 16, color: 'rgba(240,237,230,0.6)', lineHeight: 1.75,
             marginBottom: '2.5rem', maxWidth: 600, margin: '0 auto 2.5rem',
           }}>
-            Partiamo da una chiacchierata. Ti aiutiamo a capire quali contenuti, canali e strategie
-            possono valorizzare davvero la tua comunicazione.
+            {cta.subtitle || 'Partiamo da una chiacchierata. Ti aiutiamo a capire quali contenuti, canali e strategie possono valorizzare davvero la tua comunicazione.'}
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button
               className="btn btn-p"
               onClick={onClick}
-              style={{ fontSize: 13, padding: '18px 38px', background: '#F0EDE6', color: '#1f3c5e' }}
+              style={{ fontSize: 13, padding: '18px 38px', background: 'var(--a)', color: '#000' }}
             >
-              Parla con InLab <ArrowRight size={15} />
-            </button>
-            <button
-              className="btn btn-g"
-              onClick={onClick}
-              style={{ fontSize: 13, padding: '18px 38px', borderColor: 'rgba(240,237,230,0.25)', color: '#F0EDE6' }}
-            >
-              Richiedi una consulenza
+              {cta.btn1 || 'Parla con InLab'} <ArrowRight size={15} />
             </button>
           </div>
         </motion.div>

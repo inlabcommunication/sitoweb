@@ -1,4 +1,5 @@
 import React from 'react';
+import { linkClick } from '../lib/router';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 
@@ -23,22 +24,13 @@ export const CASE_STUDIES: CaseStudy[] = [
     result: 'Campagna in 5 fasi tra teaser, QR code, video lancio e attività offline. Lead raccolti, partecipazione all\'inaugurazione, percezione del brand rafforzata.',
   },
   {
-    id: 'imh',
-    number: '02',
-    client: 'IMH',
-    title: 'Comunicare fiducia nel settore energia',
-    category: 'Contenuti · Campagne · Landing page',
-    problem: 'Rendere chiaro, semplice e credibile un settore complesso come luce, gas, telefonia e fotovoltaico per generare richieste di consulenza.',
-    result: 'Strategia contenuti, reel informativi, copy persuasivi e landing orientate alla conversione. Più richieste qualificate e brand percepito come affidabile.',
-  },
-  {
     id: 'ricciardi',
-    number: '03',
+    number: '02',
     client: 'Studio Dentistico Ricciardi',
-    title: 'Autorevolezza e fiducia online',
-    category: 'Social media · Posizionamento · Recensioni',
-    problem: 'Aumentare la percezione di affidabilità di uno studio dentistico e migliorare la presenza digitale verso i pazienti.',
-    result: 'Piano editoriale con contenuti educativi, recensioni e posizionamento. Comunicazione più chiara, professionale e rassicurante.',
+    title: 'Lumina: dalla fiducia online alle prenotazioni',
+    category: 'Sito web · Lead generation · Social media',
+    problem: 'Aumentare la percezione di affidabilità di uno studio dentistico e trasformarla in richieste concrete di appuntamento.',
+    result: 'Nuovo sito luminaricciardi.it, campagne di lead generation e piano editoriale con contenuti educativi e recensioni. Più richieste e un brand più solido.',
   },
 ];
 
@@ -75,14 +67,15 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
           {CASE_STUDIES.map((cs, i) => {
             const isReverse = i % 2 === 1;
             return (
-              <motion.button
+              <motion.a
+                href={"/casi-studio/" + cs.id}
                 key={cs.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ scale: 1.005 }}
-                onClick={() => onCaseClick(cs.id)}
+                onClick={linkClick(() => onCaseClick(cs.id))}
                 style={{
                   position: 'relative',
                   background: 'linear-gradient(135deg, rgba(205,178,255,0.06), rgba(255,255,255,0.02))',
@@ -216,7 +209,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                     </span>
                   </div>
                 </div>
-              </motion.button>
+              </motion.a>
             );
           })}
         </div>

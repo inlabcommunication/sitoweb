@@ -1,166 +1,90 @@
-# 🚀 InLab Dashboard v3 — Guida configurazione
+# Guida configurazione
 
-## Cosa cambia rispetto a v2
+## Variabili d'ambiente
 
-- 🔐 **Sicurezza**: chiave Gemini ora nascosta sul server. Il browser non la vede più.
-- 🧠 **Chatbot più intelligente**: classifica i lead in *freddo / tiepido / caldo / urgente*, estrae nome/email/telefono automaticamente.
-- 🔄 **Provider switchabile**: Gemini di default, ma puoi passare a Claude in qualsiasi momento aggiungendo una variabile.
-- 📦 **Bundle browser più leggero**: niente più SDK Gemini caricato dal cliente (-56 KB).
+Su **Vercel → progetto → Settings → Environment Variables** (in locale: `.env.local`).
 
----
+### Firebase (browser)
 
-## 🔧 Variabili d'ambiente Vercel — da aggiornare
-
-Vai su **Vercel → tuo progetto → Settings → Environment Variables**. Devi avere queste variabili:
-
-### ✅ Già presenti dalla v1/v2 (lasciale)
+Da *console.firebase.google.com → Project Settings → Your apps → Config*:
 
 ```
-VITE_SUPABASE_URL=https://xxxxx.supabase.co
-VITE_SUPABASE_ANON_KEY=sb_publishable_...
+VITE_FIREBASE_API_KEY=
+VITE_FIREBASE_AUTH_DOMAIN=
+VITE_FIREBASE_PROJECT_ID=
+VITE_FIREBASE_STORAGE_BUCKET=
+VITE_FIREBASE_MESSAGING_SENDER_ID=
+VITE_FIREBASE_APP_ID=
 ```
 
-### 🆕 Nuove da aggiungere ora
+### Firebase Admin (solo server, usato da `/api/chat`)
+
+Da *Project Settings → Service Accounts → Generate new private key*, tutto il JSON su una riga:
 
 ```
-GEMINI_API_KEY=AIzaSy...           ← STESSA chiave di prima, ma SENZA prefisso VITE_
-SUPABASE_URL=https://xxxxx.supabase.co     ← STESSO URL di sopra, ma SENZA prefisso VITE_
-SUPABASE_SERVICE_KEY=sb_secret_...  ← LA CHIAVE SEGRETA (Secret key, NON publishable)
+FIREBASE_SERVICE_ACCOUNT_KEY={"type":"service_account",...}
 ```
 
-### 🗑️ Puoi eliminare
+⚠️ Senza prefisso `VITE_`: non deve mai finire nel browser.
+
+### Chatbot AI (solo server)
 
 ```
-VITE_GEMINI_API_KEY                ← non serve più: il browser non chiama Gemini direttamente
+AI_PROVIDER=gemini            # oppure "anthropic"
+GEMINI_API_KEY=AIzaSy...
+ANTHROPIC_API_KEY=sk-ant-...  # solo se AI_PROVIDER=anthropic
 ```
 
-(Se la lasci non rompi niente, è solo inutile.)
+Dalla dashboard (*Impostazioni*) si scelgono solo provider e modello. **Le chiavi si impostano esclusivamente qui su Vercel**, mai nel database.
 
-### ⚙️ Opzionali
-
-```
-AI_PROVIDER=gemini                  ← oppure "anthropic" se vuoi usare Claude
-GEMINI_MODEL=gemini-2.5-flash       ← se non specifichi, usa questo
-ANTHROPIC_API_KEY=sk-ant-...        ← solo se vuoi attivare Claude
-ANTHROPIC_MODEL=claude-haiku-4-5    ← se non specifichi, usa questo
-```
-
----
-
-## 🔑 Come trovare la SUPABASE_SERVICE_KEY
-
-⚠️ **MOLTO IMPORTANTE**: la `SUPABASE_SERVICE_KEY` è una chiave SEGRETA che dà pieni poteri al database. **Mai metterla nel codice del browser**, mai pubblicarla.
-
-Si trova qui:
-
-1. Vai su **supabase.com** → tuo progetto
-2. **Settings** → **API Keys**
-3. Scorri fino alla sezione **"Secret keys"** (sotto le Publishable keys)
-4. Clicca il pulsante 👁️ accanto a `default` per vedere il valore
-5. Copia il valore (inizia con `sb_secret_...`)
-6. Incollalo in Vercel come `SUPABASE_SERVICE_KEY`
-
-Questa chiave la usa SOLO la nostra funzione `/api/chat` per salvare i lead. Non viene mai mandata al browser.
-
----
-
-## 🚀 Passi per attivare v3
-
-1. **Carica i nuovi file su GitHub** (sostituisci tutto col contenuto del nuovo zip)
-2. **Aggiungi le 3 variabili nuove** su Vercel (vedi sopra)
-3. **Forza un redeploy**: Vercel → Deployments → ⋯ → Redeploy
-4. **Test**:
-   - Apri il sito
-   - Clicca il chatbot
-   - Scrivi "ciao, vorrei info per un sito web"
-   - Dovrebbe risponderti
-   - Lascia un'email tipo `test@test.it`
-   - Vai su `/#/admin` → tab Lead → dovresti vedere il contatto con status "qualified" (perché classificato "caldo")
-
----
-
-## 🎨 Come funziona ora il chatbot
-
-Quando un utente scrive un messaggio:
+### Sicurezza (vedi [SECURITY.md](SECURITY.md))
 
 ```
-Browser
-   │ POST /api/chat
-   │ { messages: [...], sessionId: "..." }
-   ▼
-Vercel Function /api/chat (server-side)
-   │ 1. Costruisce il system prompt InLab
-   │ 2. Chiama Gemini con la chiave segreta
-   │ 3. Riceve risposta + blocco <META>
-   │ 4. Se trova un'email nei meta → salva lead in Supabase
-   │ 5. Restituisce al browser solo la risposta visibile
-   ▼
-Browser
-   │ Mostra la risposta nel pannello chat
-   │ Se email catturata → badge "Contatto salvato"
+CLOUDINARY_API_SECRET=...     # firma degli upload dalla dashboard
+RATE_LIMIT_SALT=...           # stringa casuale lunga
+CHAT_DAILY_LIMIT=400          # opzionale: tetto giornaliero di messaggi al chatbot
 ```
 
-**Classificazione automatica dei lead:**
-
-Il sistema legge ogni risposta del bot e classifica:
-- `freddo`: utente curioso, info generiche → status `new`
-- `tiepido`: confronta opzioni → status `new`
-- `caldo`: vuole un preventivo, dà l'email → status `qualified` ✨
-- `urgente`: ha bisogno subito → status `qualified` ✨
-
-I lead "caldi" e "urgenti" appaiono già pre-qualificati nella dashboard.
-
----
-
-## 🔄 Come switchare a Claude (futuro)
-
-Quando vuoi provare Claude:
-
-1. Vai su [console.anthropic.com](https://console.anthropic.com) → API keys → crea una key
-2. Aggiungi minimo $5 di credito (saldo prepagato)
-3. Su Vercel aggiungi:
-   ```
-   ANTHROPIC_API_KEY=sk-ant-...
-   AI_PROVIDER=anthropic
-   ```
-4. Redeploy
-
-Costo previsto: ~€0.50 per ogni 1000 conversazioni con Claude Haiku.
-
-Per tornare a Gemini: imposta `AI_PROVIDER=gemini` (o rimuovi la variabile).
-
----
-
-## 📁 File modificati in v3
+### Dominio del sito (SEO)
 
 ```
-NUOVI:
-├── api/chat.ts                          serverless function (Gemini + Claude)
-└── vercel.json                          config functions
-
-MODIFICATI:
-├── src/components/Chatbot.tsx          ora chiama /api/chat invece di Gemini diretto
-├── package.json                         + @anthropic-ai/sdk, @vercel/node
-
-INVARIATI rispetto a v2:
-├── tutto il resto (editor inline, leads, etc.)
+VITE_SITE_URL=https://www.tuodominio.it
 ```
 
----
+Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variabile viene usato `https://sitoweb-beta.vercel.app`. Dopo averla cambiata serve un redeploy.
 
-## ❓ Problemi comuni v3
+## SEO
 
-**Chatbot dice "Configurazione chatbot incompleta"**
-→ Manca `GEMINI_API_KEY` (senza prefisso VITE_) nelle env Vercel. Aggiungila e redeploy.
+- Ogni pagina ha un indirizzo vero (`/servizi`, `/gestione-social-taranto`, `/casi-studio/ricciardi`…); i vecchi link `/#/…` vengono reindirizzati.
+- Titoli, descrizioni e dati strutturati sono in `src/seo/routes.ts`.
+- In build (`npm run build`) lo script `scripts/prerender.ts` crea un HTML per ogni pagina con il `<head>` già corretto, più `sitemap.xml` e `robots.txt`.
+- **Google Search Console**: aggiungi la proprietà del dominio, verifica (record DNS o file HTML in `public/`), poi invia `https://www.tuodominio.it/sitemap.xml`.
 
-**Chatbot dice "Problema di connessione"**
-→ La function `/api/chat` non risponde. Vai su Vercel → Logs → trova l'errore.
+## Dati in Firestore
 
-**Lead non vengono salvati nonostante l'email sia stata data**
-→ Manca `SUPABASE_SERVICE_KEY` o è quella sbagliata. Verifica sia la **Secret key**, non la Publishable.
+| Documento / collezione | Contenuto | Chi scrive |
+|---|---|---|
+| `app/site_content` | testi e immagini del sito | admin |
+| `app/settings` | provider/modello AI e informazioni per il chatbot | admin |
+| `leads` | contatti da form e chatbot | solo server: `/api/lead`, `/api/chat` |
+| `admins` | UID degli amministratori | a mano dalla console |
+| `analytics_events` | pageview, scroll, click | sito pubblico |
 
-**Voglio usare Claude ma dà errore "ANTHROPIC_API_KEY missing"**
-→ Hai messo `AI_PROVIDER=anthropic` ma non hai aggiunto la chiave. O aggiungi la chiave, o togli `AI_PROVIDER` (torna a Gemini).
+## Sicurezza
 
-**Errore "Module not found: @anthropic-ai/sdk" in build**
-→ Vercel non ha installato le nuove dipendenze. Forza un redeploy con "Use existing build cache" disattivato.
+Tutti i passaggi (regole Firestore, admin, chiavi, Cloudinary) sono in **[SECURITY.md](SECURITY.md)**.
+
+## Dashboard
+
+Vai su `/admin` e accedi con un utente creato in Firebase Authentication **e presente in `admins/{uid}`** (vedi SECURITY.md).
+
+## Deploy
+
+Push sul branch collegato a Vercel. Se cambi le variabili d'ambiente serve un redeploy (*Deployments → ⋯ → Redeploy*).
+
+## Problemi comuni
+
+- **Chatbot non risponde** → apri la console del browser (F12): il codice dopo `[chatbot] errore server:` indica la causa (NO_KEY, AI_KEY, AI_QUOTA, AI_MODEL, SERVER).
+- **Cosa sa il chatbot** → servizi, sede e contatti sono in `api/chat.ts`; il resto (FAQ, orari, pacchetti…) si scrive in dashboard → Impostazioni → *Informazioni per il chatbot*.
+- **Chatbot: "problema tecnico"** → guarda *Vercel → Logs* della funzione `/api/chat`.
+- **Dashboard: "non configurata"** → mancano le variabili `VITE_FIREBASE_*` (serve un nuovo build).

@@ -17,11 +17,11 @@
     "jsx": "react-jsx",
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
   },
-  "include": ["src", "api", "vite.config.ts"]
+  "include": ["src", "api", "scripts", "vite.config.ts"]
 }

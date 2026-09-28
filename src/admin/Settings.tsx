@@ -4,32 +4,47 @@ import { Bot, Key, Save, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
+// Le chiavi API NON si salvano qui: stanno solo nelle variabili d'ambiente di
+// Vercel (GEMINI_API_KEY, ANTHROPIC_API_KEY), mai nel database.
 type Settings = {
   aiProvider: 'gemini' | 'anthropic';
-  geminiApiKey: string;
   geminiModel: string;
-  anthropicApiKey: string;
   anthropicModel: string;
+  /** Informazioni extra per il chatbot (FAQ, orari, offerte…), aggiunte alle sue istruzioni */
+  chatKnowledge: string;
 };
 
 const DEFAULTS: Settings = {
   aiProvider: 'gemini',
-  geminiApiKey: '',
-  geminiModel: 'gemini-2.5-flash',
-  anthropicApiKey: '',
+  geminiModel: 'gemini-flash-latest',
   anthropicModel: 'claude-haiku-4-5-20251001',
+  chatKnowledge: '',
 };
+
+const KNOWLEDGE_MAX = 8000;
+const KNOWLEDGE_EXAMPLE = `Esempi di cosa scrivere (una informazione per riga):
+- Orari: lun-ven 9:00-18:00, sabato su appuntamento.
+- Prima consulenza gratuita di 30 minuti, anche in videochiamata.
+- Tempi medi: sito vetrina 3-4 settimane; avvio gestione social in 1 settimana.
+- Pacchetti social da 8, 12 o 16 contenuti al mese (non dire i prezzi).
+- Clienti di riferimento: Studio Dentistico Ricciardi (sito Lumina), Villa Natia, Sottoscala…
+- FAQ: "Lavorate fuori Puglia?" → Sì, anche da remoto.`;
 
 export const Settings = () => {
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<'idle' | 'saved' | 'error'>('idle');
+  const [hadStoredKeys, setHadStoredKeys] = useState(false);
 
   useEffect(() => {
     if (!db) { setLoading(false); return; }
     getDoc(doc(db, 'app', 'settings')).then((snap) => {
-      if (snap.exists()) setSettings({ ...DEFAULTS, ...snap.data() });
+      if (snap.exists()) {
+        const d = snap.data() as any;
+        setSettings({ aiProvider: d.aiProvider === 'anthropic' ? 'anthropic' : 'gemini', geminiModel: d.geminiModel || DEFAULTS.geminiModel, anthropicModel: d.anthropicModel || DEFAULTS.anthropicModel, chatKnowledge: typeof d.chatKnowledge === 'string' ? d.chatKnowledge : '' });
+        setHadStoredKeys(!!(d.geminiApiKey || d.anthropicApiKey));
+      }
       setLoading(false);
     });
   }, []);
@@ -38,7 +53,9 @@ export const Settings = () => {
     if (!db) return;
     setSaving(true); setStatus('idle');
     try {
-      await setDoc(doc(db, 'app', 'settings'), settings);
+      // setDoc senza merge: sovrascrive il documento e cancella eventuali chiavi salvate in passato
+      await setDoc(doc(db, 'app', 'settings'), { aiProvider: settings.aiProvider, geminiModel: settings.geminiModel, anthropicModel: settings.anthropicModel, chatKnowledge: settings.chatKnowledge.slice(0, KNOWLEDGE_MAX) });
+      setHadStoredKeys(false);
       setStatus('saved');
       setTimeout(() => setStatus('idle'), 3000);
     } catch {
@@ -55,7 +72,7 @@ export const Settings = () => {
     <div style={{ maxWidth: 640, margin: '0 auto', padding: '2.5rem 2rem' }}>
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontFamily: 'var(--fd)', fontSize: '1.6rem', letterSpacing: '.05em', marginBottom: 6 }}>IMPOSTAZIONI</h2>
-        <p style={{ fontSize: 13, color: 'var(--m)' }}>Configura il provider AI del chatbot. Gemini è gratuito con limiti generosi.</p>
+        <p style={{ fontSize: 13, color: 'var(--m)' }}>Configura il chatbot: provider AI, modello e informazioni da conoscere.</p>
       </div>
 
       <Section icon={<Bot size={15} />} title="Provider AI">
@@ -69,22 +86,40 @@ export const Settings = () => {
         </div>
         {settings.aiProvider === 'gemini' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <Field label="Gemini API Key" hint="Da aistudio.google.com → Get API key (gratuita)" value={settings.geminiApiKey} onChange={(v) => set('geminiApiKey', v)} type="password" placeholder="AIzaSy..." />
-            <Field label="Modello" value={settings.geminiModel} onChange={(v) => set('geminiModel', v)} placeholder="gemini-2.5-flash" />
+            <Field label="Modello" value={settings.geminiModel} onChange={(v) => set('geminiModel', v)} placeholder="gemini-flash-latest" />
           </div>
         )}
         {settings.aiProvider === 'anthropic' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            <Field label="Anthropic API Key" hint="Da console.anthropic.com (richiede credito)" value={settings.anthropicApiKey} onChange={(v) => set('anthropicApiKey', v)} type="password" placeholder="sk-ant-..." />
             <Field label="Modello" value={settings.anthropicModel} onChange={(v) => set('anthropicModel', v)} placeholder="claude-haiku-4-5-20251001" />
           </div>
         )}
       </Section>
 
+      <Section icon={<Bot size={15} />} title="Informazioni per il chatbot">
+        <p style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: 12 }}>
+          Scrivi qui tutto quello che il chatbot deve sapere oltre a servizi, sede e contatti (che conosce già): orari, tempi di lavoro, come funziona la prima consulenza, pacchetti, risposte alle domande frequenti, clienti da citare. Viene aggiunto alle sue istruzioni appena salvi. <b>Non inserire password, chiavi o dati personali dei clienti.</b>
+        </p>
+        <textarea
+          value={settings.chatKnowledge}
+          onChange={(e) => set('chatKnowledge', e.target.value.slice(0, KNOWLEDGE_MAX))}
+          placeholder={KNOWLEDGE_EXAMPLE}
+          rows={12}
+          style={{ width: '100%', padding: '12px 14px', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 10, color: 'var(--t)', fontSize: 13, lineHeight: 1.6, fontFamily: 'var(--fb)', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}
+        />
+        <div style={{ fontSize: 11, color: 'var(--m)', textAlign: 'right', marginTop: 6 }}>{settings.chatKnowledge.length} / {KNOWLEDGE_MAX}</div>
+      </Section>
+
       <div style={{ padding: '14px 16px', background: 'rgba(205,178,255,0.05)', border: '.5px solid rgba(205,178,255,0.15)', borderRadius: 12, fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
         <Zap size={12} style={{ display: 'inline', marginRight: 6, color: 'var(--a)' }} />
-        Le chiavi salvate qui vengono usate dalla funzione serverless <code>/api/chat</code> e non sono mai esposte al browser.
+        Per sicurezza le <b>chiavi API</b> non si inseriscono più qui: vanno impostate solo su <b>Vercel → Settings → Environment Variables</b> (<code>GEMINI_API_KEY</code>, <code>ANTHROPIC_API_KEY</code>). Da qui scegli solo provider e modello.
       </div>
+      {hadStoredKeys && (
+        <div style={{ padding: '14px 16px', background: 'rgba(255,120,120,0.08)', border: '.5px solid rgba(255,120,120,0.35)', borderRadius: 12, fontSize: 12, color: '#ffb4b4', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+          <AlertCircle size={12} style={{ display: 'inline', marginRight: 6 }} />
+          Nel database ci sono ancora chiavi API salvate in passato. Premi <b>Salva impostazioni</b> per cancellarle, poi <b>rigenera le chiavi</b> su Google AI Studio / Anthropic Console: potrebbero essere state esposte.
+        </div>
+      )}
 
       <button onClick={save} disabled={saving} className="btn btn-p" style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: saving ? 0.6 : 1 }}>
         {status === 'saved' ? <><CheckCircle size={14} /> Salvato</> : status === 'error' ? <><AlertCircle size={14} /> Errore</> : <><Save size={14} /> {saving ? 'Salvataggio...' : 'Salva impostazioni'}</>}

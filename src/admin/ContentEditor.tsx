@@ -7,46 +7,29 @@ import { useMediaLibrary } from './MediaLibrary';
 
 // ─── Struttura pagine + blocchi ────────────────────────────────
 
-type Page =
-  | 'home' | 'studio' | 'lavori' | 'servizi' | 'contatti';
+type Page = 'home' | 'studio' | 'contatti';
 
+// Solo le sezioni che il sito legge davvero da qui. Le pagine dei singoli
+// servizi e dei casi studio hanno testi lunghi e strutturati: si modificano nel codice.
 const PAGES: { key: Page; label: string; icon: string; blocks: { key: string; label: string }[] }[] = [
   {
     key: 'home', label: 'Home', icon: '🏠',
     blocks: [
       { key: 'hero',            label: '① Hero' },
-      { key: 'marquee',         label: '② Marquee testo' },
+      { key: 'marquee',         label: '② Fascia scorrevole' },
       { key: 'manifesto',       label: '③ Manifesto' },
-      { key: 'services_grid',   label: '④ Servizi' },
+      { key: 'clients',         label: '④ Clienti' },
       { key: 'metodo',          label: '⑤ Metodo' },
-      { key: 'portfolio',       label: '⑥ Portfolio' },
-      { key: 'clients',         label: '⑦ Clienti / Brand' },
-      { key: 'per_chi',         label: '⑧ Per chi lavoriamo' },
-      { key: 'testimonial',     label: '⑨ Testimonianze' },
-      { key: 'stats',           label: '⑩ Numeri' },
-      { key: 'cta_home',        label: '⑪ CTA finale' },
+      { key: 'stats',           label: '⑥ Numeri' },
+      { key: 'cta_home',        label: '⑦ CTA finale' },
     ],
   },
   {
     key: 'studio', label: 'Chi siamo', icon: '👥',
     blocks: [
       { key: 'studio_hero', label: 'Hero & Intro' },
-      { key: 'team',        label: 'Team (3 persone)' },
+      { key: 'team',        label: 'Team' },
       { key: 'collaboratori', label: 'Collaboratori' },
-    ],
-  },
-  {
-    key: 'lavori', label: 'Portfolio', icon: '🎨',
-    blocks: [
-      { key: 'portfolio_settings', label: 'Impostazioni' },
-      { key: 'portfolio_projects', label: 'Progetti' },
-    ],
-  },
-  {
-    key: 'servizi', label: 'Servizi', icon: '⚙️',
-    blocks: [
-      { key: 'services_list', label: 'Lista servizi' },
-      { key: 'branding',      label: 'Branding' },
     ],
   },
   {
@@ -158,25 +141,12 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
       <SectionTitle>Hero Section</SectionTitle>
       <Note>Il testo ruota automaticamente: scelto → ricordato → desiderato → trovato → riconosciuto</Note>
       <Field label="Badge / Tag" value={content.hero?.tag} onChange={(v: string) => set('hero.tag', v)}
-        hint="Piccolo testo sopra il titolo" placeholder="Laboratorio creativo — Taranto, Puglia" />
+        hint="Piccolo testo sopra il titolo" placeholder="Laboratorio creativo — Castellaneta, Puglia" />
       <Field label="CTA principale" value={content.hero?.cta?.primary} onChange={(v: string) => set('hero.cta.primary', v)}
         placeholder="Raccontaci il tuo progetto" />
-      <Field label="CTA secondario" value={content.hero?.cta?.secondary} onChange={(v: string) => set('hero.cta.secondary', v)}
-        placeholder="Guarda i nostri lavori" />
-      <SectionTitle>Mini statistiche sotto i bottoni</SectionTitle>
-      <Note>3 numeri visualizzati subito sotto le CTA. Esempio: 100k+ / visualizzazioni</Note>
-      {(content.hero?.mini_stats || [{ n: '100k+', l: 'visualizzazioni' }, { n: '47', l: 'brand seguiti' }, { n: '9', l: 'città in Puglia' }]).map((s: any, i: number) => (
-        <CardBlock key={i} title={`Stat ${i + 1}: ${s.n}`}>
-          <Field label="Numero" value={s.n} onChange={(v: string) => {
-            const a = JSON.parse(JSON.stringify(content.hero?.mini_stats || [{ n: '100k+', l: 'visualizzazioni' }, { n: '47', l: 'brand seguiti' }, { n: '9', l: 'città in Puglia' }]));
-            a[i].n = v; set('hero.mini_stats', a);
-          }} />
-          <Field label="Etichetta" value={s.l} onChange={(v: string) => {
-            const a = JSON.parse(JSON.stringify(content.hero?.mini_stats || [{ n: '100k+', l: 'visualizzazioni' }, { n: '47', l: 'brand seguiti' }, { n: '9', l: 'città in Puglia' }]));
-            a[i].l = v; set('hero.mini_stats', a);
-          }} />
-        </CardBlock>
-      ))}
+      <Field label="Descrizione" value={(content.hero as any)?.description} onChange={(v: string) => set('hero.description', v)} multiline
+        hint="Paragrafo sotto il titolo" />
+      <Note>I 3 numeri sotto il bottone sono i primi 3 della sezione ⑥ Numeri.</Note>
     </div>
   );
 
@@ -329,7 +299,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
       {((content as any).portfolio?.projects || []).map((p: any, i: number) => (
         <CardBlock key={i} title={p.title || 'Progetto senza titolo'} collapsed
           onDelete={() => setContent((prev: any) => { const n = JSON.parse(JSON.stringify(prev)); n.portfolio.projects.splice(i, 1); return n; })}>
-          <a href={`${window.location.origin}/#/progetto/${p.id}`} target="_blank" rel="noreferrer"
+          <a href={`${window.location.origin}/progetto/${p.id}`} target="_blank" rel="noreferrer"
             style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 12px', background: 'rgba(205,178,255,0.1)', border: '.5px solid rgba(205,178,255,0.3)', borderRadius: 8, color: '#cdb2ff', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', textDecoration: 'none', marginBottom: 12 }}>
             👁 Vedi pagina ↗
           </a>
@@ -369,7 +339,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
           <Field label="Sito web" value={p.website} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].website = v; set('portfolio.projects', a); }} placeholder="https://..." />
 
           <SectionTitle>Altre opzioni</SectionTitle>
-          <Field label="Chi ci ha lavorato (separati da virgola)" value={(p.whoWorked || []).join(', ')} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].whoWorked = v.split(',').map((s: string) => s.trim()).filter(Boolean); set('portfolio.projects', a); }} placeholder="Nicola, Ilaria, Prince" />
+          <Field label="Chi ci ha lavorato (separati da virgola)" value={(p.whoWorked || []).join(', ')} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].whoWorked = v.split(',').map((s: string) => s.trim()).filter(Boolean); set('portfolio.projects', a); }} placeholder="Nicola, Ilaria" />
           <Field label="ID prossimo progetto" value={p.nextProject} onChange={(v: string) => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].nextProject = v; set('portfolio.projects', a); }} hint="ID del progetto successivo (per navigazione)" />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
             <input type="checkbox" checked={p.large || false} onChange={e => { const a = JSON.parse(JSON.stringify((content as any).portfolio.projects)); a[i].large = e.target.checked; set('portfolio.projects', a); }} id={`lg-${i}`} style={{ accentColor: '#cdb2ff' }} />
@@ -401,7 +371,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
         <CardBlock key={i} title={c.name}
           onDelete={() => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.clients.items.splice(i, 1); return n; })}>
           <Field label="ID scheda" value={c.id} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].id = v; set('clients.items', a); }}
-            hint="Usato nell'URL della scheda cliente, es: ristorante-da-mario" />
+            hint="Usato nell'URL della scheda cliente, es: nunzio-putignano" />
           <Field label="Nome cliente" value={c.name} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].name = v; set('clients.items', a); }} />
           <Field label="Settore" value={c.sector} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].sector = v; set('clients.items', a); }} placeholder="Ristorazione, beauty, hospitality..." />
           <Field label="Località" value={c.location} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].location = v; set('clients.items', a); }} placeholder="Taranto, Puglia..." />
@@ -412,6 +382,9 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
           <Field label="Sito web" value={c.website || c.url} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].website = v; a[i].url = v; set('clients.items', a); }}
             hint="Link esterno mostrato nella scheda cliente" />
           <Field label="Instagram" value={c.instagram} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].instagram = v; set('clients.items', a); }} placeholder="https://instagram.com/..." />
+          <Field label="Facebook" value={c.facebook} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].facebook = v; set('clients.items', a); }} placeholder="https://facebook.com/..." />
+          <Field label="Telefono" value={c.phone} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].phone = v; set('clients.items', a); }} placeholder="+39 ..." />
+          <Field label="Indirizzo" value={c.address} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].address = v; set('clients.items', a); }} placeholder="Via ..., Città (TA)" />
           <ImageField label="Logo (Cloudinary)" value={c.logo} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].logo = v; set('clients.items', a); }} />
           <ImageField label="Immagine hero scheda" value={c.image} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].image = v; set('clients.items', a); }} />
         </CardBlock>
@@ -520,7 +493,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
   if (block === 'stats') return (
     <div>
       <SectionTitle>Numeri animati</SectionTitle>
-      <Note>I numeri vengono animati in contatore allo scroll. Usa valori numerici puri nel campo "Valore".</Note>
+      <Note>Usati nella fascia lilla "I numeri", nelle pagine Studio/Servizi/città e (i primi 3) sotto il titolo della home. Nel campo "Valore" scrivi solo il numero: 3200000 diventa 3.2M.</Note>
       {(content.stats || []).map((s: any, i: number) => (
         <CardBlock key={i} title={`${s.value || s.num || '?'} — ${s.label}`}
           onDelete={() => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.stats.splice(i, 1); return n; })}>
@@ -529,6 +502,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
             <Field label="Prefisso" value={s.prefix} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.stats)); a[i].prefix = v; set('stats', a); }} placeholder="€" />
             <Field label="Suffisso" value={s.suffix} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.stats)); a[i].suffix = v; set('stats', a); }} placeholder="+" />
           </div>
+          <Field label="Etichetta breve (hero)" value={s.short} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.stats)); a[i].short = v; set('stats', a); }} placeholder="visualizzazioni" />
           <Field label="Valore numerico" value={s.value || s.num} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.stats)); a[i].value = Number(v) || v; a[i].num = v; set('stats', a); }}
             hint="Inserisci solo il numero. Es: 3200000 per 3.2M+" placeholder="3200000" />
         </CardBlock>
@@ -540,67 +514,55 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
   // ── CTA FINALE ───────────────────────────────────────────────
   if (block === 'cta_home') return (
     <div>
-      <SectionTitle>CTA Finale (sfondo blu)</SectionTitle>
+      <SectionTitle>CTA finale (in fondo alle pagine)</SectionTitle>
       <Field label="Tag / label piccolo" value={(content as any).cta?.home?.tag} onChange={(v: string) => set('cta.home.tag', v)} placeholder="Iniziamo" />
       <Field label="Titolo riga 1" value={(content as any).cta?.home?.title} onChange={(v: string) => set('cta.home.title', v)} placeholder="HAI UN'ATTIVITÀ," />
       <Field label="Titolo riga 2" value={(content as any).cta?.home?.title2} onChange={(v: string) => set('cta.home.title2', v)} placeholder="UN BRAND O UN PROGETTO" />
       <Field label="Accent corsivo" value={(content as any).cta?.home?.accent} onChange={(v: string) => set('cta.home.accent', v)} placeholder="da raccontare meglio?" />
       <Field label="Sottotitolo" value={(content as any).cta?.home?.subtitle} onChange={(v: string) => set('cta.home.subtitle', v)} multiline />
       <Field label="Bottone principale" value={(content as any).cta?.home?.btn1} onChange={(v: string) => set('cta.home.btn1', v)} placeholder="Parla con InLab" />
-      <Field label="Bottone secondario" value={(content as any).cta?.home?.btn2} onChange={(v: string) => set('cta.home.btn2', v)} placeholder="Richiedi una consulenza" />
     </div>
   );
 
   // ── STUDIO HERO ──────────────────────────────────────────────
   if (block === 'studio_hero') return (
     <div>
-      <SectionTitle>Chi siamo — Hero & Testi</SectionTitle>
-      <Field label="Tag sezione" value={content.studio?.tag} onChange={(v: string) => set('studio.tag', v)} />
-      {(content.studio?.title || []).map((t: string, i: number) => (
-        <Field key={i} label={`Titolo riga ${i + 1}`} value={t} onChange={(v: string) => {
+      <SectionTitle>Chi siamo — Hero</SectionTitle>
+      <Field label="Tag sezione" value={content.studio?.tag} onChange={(v: string) => set('studio.tag', v)} placeholder="Il laboratorio" />
+      {['Titolo riga 1', 'Titolo riga 2 (tono tenue)', 'Frase corsiva lilla'].map((label, i) => (
+        <Field key={i} label={label} value={(content.studio?.title || [])[i]} onChange={(v: string) => {
           const a = [...(content.studio?.title || [])]; a[i] = v; set('studio.title', a);
         }} />
       ))}
-      <Field label="Paragrafo intro 1" value={content.studio?.description1} onChange={(v: string) => set('studio.description1', v)} multiline />
-      <Field label="Paragrafo intro 2" value={content.studio?.description2} onChange={(v: string) => set('studio.description2', v)} multiline />
+      <Field label="Sottotitolo" value={content.studio?.description1} onChange={(v: string) => set('studio.description1', v)} multiline />
     </div>
   );
 
   // ── TEAM ─────────────────────────────────────────────────────
-  if (block === 'team') return (
-    <div>
-      <SectionTitle>Team InLab (3 profili)</SectionTitle>
-      <Note>I 3 profili fissi: Prince, Nicola Carpignano, Ilaria Gemma. Puoi modificare bio, ruolo e foto.</Note>
-      {[
-        { name: 'Prince', role: 'Strategia, sviluppo commerciale, progetti digitali', initials: 'P' },
-        { name: 'Nicola Carpignano', role: 'Social media manager, comunicazione e marketing', initials: 'NC' },
-        { name: 'Ilaria Gemma', role: 'Content creator e comunicazione visiva', initials: 'IG' },
-      ].map((defaults, i) => {
-        const teamItems = (content as any).studio?.team || [];
-        const member = teamItems[i] || {};
-        const updateMember = (key: string, val: string) => {
-          const a: any[] = JSON.parse(JSON.stringify(teamItems.length >= 3 ? teamItems : [
-            { name: 'Prince', role: 'Strategia, sviluppo commerciale, progetti digitali' },
-            { name: 'Nicola Carpignano', role: 'Social media manager, comunicazione e marketing' },
-            { name: 'Ilaria Gemma', role: 'Content creator e comunicazione visiva' },
-          ]));
-          a[i] = { ...a[i], [key]: val };
-          set('studio.team', a);
-        };
-        return (
-          <CardBlock key={i} title={`${defaults.initials} — ${defaults.name}`} accent>
-            <Field label="Nome" value={member.name || defaults.name} onChange={(v: string) => updateMember('name', v)} />
-            <Field label="Ruolo" value={member.role || defaults.role} onChange={(v: string) => updateMember('role', v)} />
-            <Field label="Bio" value={member.bio} onChange={(v: string) => updateMember('bio', v)} multiline rows={4}
-              placeholder={`Breve descrizione di ${defaults.name}...`} />
-            <ImageField label="Foto profilo (Cloudinary)" value={member.photo} onChange={(v: string) => updateMember('photo', v)} />
-            <Field label="Skill (separate da virgola)" value={(member.skills || []).join(', ')} onChange={(v: string) => updateMember('skills', v.split(',').map((s: string) => s.trim()).filter(Boolean) as any)}
-              placeholder="Social media strategy, Copywriting, Piano editoriale" />
+  if (block === 'team') {
+    const team: any[] = ((content as any).studio?.team || []).filter((m: any) => m?.name !== 'Prince');
+    const setTeam = (a: any[]) => set('studio.team', a);
+    const upd = (i: number, key: string, val: any) => { const a = JSON.parse(JSON.stringify(team)); a[i] = { ...a[i], [key]: val }; setTeam(a); };
+    return (
+      <div>
+        <SectionTitle>Team InLab</SectionTitle>
+        <Note>Le card della pagina Chi siamo. Senza foto viene mostrata l'iniziale del nome.</Note>
+        {team.map((m, i) => (
+          <CardBlock key={i} title={m.name || `Persona ${i + 1}`} accent
+            onDelete={() => { const a = JSON.parse(JSON.stringify(team)); a.splice(i, 1); setTeam(a); }}>
+            <Field label="Nome" value={m.name} onChange={(v: string) => upd(i, 'name', v)} />
+            <Field label="Ruolo" value={m.role} onChange={(v: string) => upd(i, 'role', v)} />
+            <Field label="Bio" value={m.bio} onChange={(v: string) => upd(i, 'bio', v)} multiline rows={4} />
+            <Field label="Formazione (una per riga)" value={(m.edu || []).join('\n')} onChange={(v: string) => upd(i, 'edu', v.split('\n').map((x: string) => x.trim()).filter(Boolean))} multiline rows={3}
+              placeholder="Psicologia della comunicazione — Sapienza Università di Roma" />
+            <Field label="Competenze (separate da virgola)" value={(m.skills || []).join(', ')} onChange={(v: string) => upd(i, 'skills', v.split(',').map((x: string) => x.trim()).filter(Boolean))} />
+            <ImageField label="Foto profilo" value={m.photo} onChange={(v: string) => upd(i, 'photo', v)} />
           </CardBlock>
-        );
-      })}
-    </div>
-  );
+        ))}
+        <AddBtn onClick={() => setTeam([...team, { name: 'Nuova persona', role: '', bio: '', edu: [], skills: [], photo: '' }])} label="Aggiungi persona" />
+      </div>
+    );
+  }
 
   // ── COLLABORATORI ────────────────────────────────────────────
   if (block === 'collaboratori') return (
@@ -654,6 +616,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
       <Field label="Tag sezione" value={content.contact?.tag} onChange={(v: string) => set('contact.tag', v)} />
       <Field label="Titolo riga 1" value={content.contact?.title?.[0]} onChange={(v: string) => { const t = [...(content.contact?.title || [])]; t[0] = v; set('contact.title', t); }} />
       <Field label="Titolo riga 2" value={content.contact?.title?.[1]} onChange={(v: string) => { const t = [...(content.contact?.title || [])]; t[1] = v; set('contact.title', t); }} />
+      <Field label="Frase corsiva lilla" value={(content.contact as any)?.accent} onChange={(v: string) => set('contact.accent', v)} placeholder="senza impegno." />
       <Field label="Sottotitolo" value={(content.contact as any)?.subtitle} onChange={(v: string) => set('contact.subtitle', v)} multiline />
     </div>
   );
@@ -737,9 +700,9 @@ export const ContentEditor = () => {
   if (loading) return <div style={{ padding: '4rem', textAlign: 'center', color: '#555', fontSize: 13 }}>Caricamento contenuti...</div>;
 
   const pageUrl = {
-    home: '/#/', studio: '/#/chi-siamo', lavori: '/#/portfolio',
-    servizi: '/#/servizi', contatti: '/#/contatti',
-  }[page] ?? '/#/';
+    home: '/', studio: '/chi-siamo', lavori: '/portfolio',
+    servizi: '/servizi', contatti: '/contatti',
+  }[page] ?? '/';
 
   const currentPageDef = PAGES.find(p => p.key === page);
   const currentBlockLabel = currentPageDef?.blocks.find(b => b.key === block)?.label || block;

@@ -1,5 +1,21 @@
-import { db } from './firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import type { Firestore } from 'firebase/firestore/lite';
+import { isFirebaseConfigured } from './firebaseConfig';
+import { getLiteDb, liteFirestore } from './firestoreLite';
+
+// Riferimenti risolti dopo il primo caricamento lazy di Firestore lite, così
+// session_end (su pagehide) può scrivere in modo sincrono.
+let db: Firestore | null = null;
+let addEvent: ((e: any) => Promise<unknown>) | null = null;
+
+const ensureDb = async () => {
+  if (addEvent) return addEvent;
+  const liteDb = await getLiteDb();
+  if (!liteDb) return null;
+  const { collection, addDoc } = await liteFirestore();
+  db = liteDb;
+  addEvent = (e) => addDoc(collection(liteDb, 'analytics_events'), e);
+  return addEvent;
+};
 
 const SESSION_KEY = 'inlab_sid';
 const SESSION_START_KEY = 'inlab_sst';
@@ -25,25 +41,27 @@ const baseEvent = () => ({
   session_id: getSessionId(),
   user_agent: navigator.userAgent.slice(0, 200),
   device: getDevice(),
-  path: window.location.pathname + window.location.hash,
-  created_at: Timestamp.now(),
+  path: window.location.pathname.slice(0, 300),
+  created_at: new Date(), // salvato da Firestore come Timestamp
 });
 
 const queue: any[] = [];
 let flushTimer: number | null = null;
 
 const flush = async () => {
-  if (!db || queue.length === 0) return;
+  if (queue.length === 0) return;
+  const add = await ensureDb();
+  if (!add) return;
   const batch = queue.splice(0, queue.length);
   try {
-    await Promise.all(batch.map((e) => addDoc(collection(db!, 'analytics_events'), e)));
+    await Promise.all(batch.map(add));
   } catch (e) {
     console.debug('[analytics] flush failed', e);
   }
 };
 
 const enqueue = (event: any) => {
-  if (!db) return;
+  if (!isFirebaseConfigured()) return;
   queue.push(event);
   if (flushTimer) clearTimeout(flushTimer);
   flushTimer = window.setTimeout(flush, 1500);
@@ -53,8 +71,8 @@ export const trackPageview = (path?: string, referrer?: string) => {
   enqueue({
     ...baseEvent(),
     event_type: 'pageview',
-    path: path ?? window.location.pathname + window.location.hash,
-    referrer: referrer ?? document.referrer ?? null,
+    path: (path ?? window.location.pathname).slice(0, 300),
+    referrer: (referrer ?? document.referrer ?? '').slice(0, 500) || null,
   });
 };
 
@@ -72,19 +90,19 @@ export const trackScroll = (depthPct: number, section?: string) => {
     ...baseEvent(),
     event_type: 'scroll',
     scroll_depth: Math.round(depthPct),
-    section: section ?? currentSection,
+    section: (section ?? currentSection).slice(0, 60),
   });
 };
 
 export const trackClick = (target: string) => {
-  enqueue({ ...baseEvent(), event_type: 'click', target });
+  enqueue({ ...baseEvent(), event_type: 'click', target: target.slice(0, 80) });
 };
 
 const trackSessionEnd = () => {
   const start = parseInt(sessionStorage.getItem(SESSION_START_KEY) ?? '0', 10);
-  if (!start || !db) return;
+  if (!start || !db || !addEvent) return;
   const duration = Math.round((Date.now() - start) / 1000);
-  addDoc(collection(db, 'analytics_events'), {
+  addEvent({
     ...baseEvent(),
     event_type: 'session_end',
     duration,
@@ -94,7 +112,7 @@ const trackSessionEnd = () => {
 
 let initialized = false;
 export const initAnalytics = () => {
-  if (initialized || !db) return;
+  if (initialized || !isFirebaseConfigured()) return;
   initialized = true;
   trackPageview();
 
@@ -123,9 +141,8 @@ export const initAnalytics = () => {
     if (target) trackClick(target.getAttribute('data-track') ?? 'unknown');
   });
 
-  window.addEventListener('hashchange', () => {
+  window.addEventListener('popstate', () => {
     maxScroll = 0; lastScrollSent = 0; currentSection = '';
-    trackPageview();
   });
 
   window.addEventListener('beforeunload', trackSessionEnd);

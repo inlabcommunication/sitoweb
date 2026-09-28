@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, useReducedMotion as useFmReducedMotion } from 'motion/react';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { useAgencyStats } from '../data/stats';
 
 // ── 5 nodi a stella perfetta ─────────────────────────────────────
 // SVG viewBox 200x200, centro (100,100), raggio 70
@@ -207,7 +208,7 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
   );
 };
 
-const PhoneMockup: React.FC<{ reduced: boolean }> = ({ reduced }) => (
+const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced, topStat }) => (
   <motion.div
     initial={{ opacity: 0, y: 28, rotate: -2 }}
     animate={reduced ? { opacity: 1, y: 0, rotate: -2 } : { opacity: 1, y: [0, -10, 0], rotate: [-2, -1, -2] }}
@@ -263,8 +264,8 @@ const PhoneMockup: React.FC<{ reduced: boolean }> = ({ reduced }) => (
           }}>
             <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 70% 25%,rgba(255,255,255,.34),transparent 18%), linear-gradient(to top,rgba(10,10,12,.9),transparent 55%)' }} />
             <div style={{ position: 'absolute', left: 18, bottom: 18 }}>
-              <div style={{ fontFamily: 'var(--fd)', fontSize: 56, lineHeight: .85, letterSpacing: '.02em' }}>100K+</div>
-              <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'rgba(240,237,230,.68)' }}>view organiche</div>
+              <div style={{ fontFamily: 'var(--fd)', fontSize: 56, lineHeight: .85, letterSpacing: '.02em' }}>{topStat}</div>
+              <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'rgba(240,237,230,.68)' }}>visualizzazioni</div>
             </div>
             <div style={{ position: 'absolute', right: 14, top: 14, display: 'grid', gap: 8 }}>
               {['IG', 'ADS', 'SEO'].map((item) => (
@@ -299,11 +300,10 @@ const PhoneMockup: React.FC<{ reduced: boolean }> = ({ reduced }) => (
 
 interface HeroFlowProps {
   onPrimaryCta: () => void;
-  onSecondaryCta: () => void;
+  onSecondaryCta?: () => void; // senza handler il secondo bottone non viene mostrato
   tag?: string;
   headlineLine1?: string;
   headlineLine2?: string;
-  headlineAccent?: string;
   description?: string;
   ctaPrimary?: string;
   ctaSecondary?: string;
@@ -311,15 +311,15 @@ interface HeroFlowProps {
 
 export const HeroFlow: React.FC<HeroFlowProps> = ({
   onPrimaryCta, onSecondaryCta,
-  tag = 'Laboratorio creativo — Taranto, Puglia',
+  tag = 'Laboratorio creativo — Castellaneta, Puglia',
   headlineLine1 = 'Non ti servono',
   headlineLine2 = 'solo contenuti.',
-  headlineAccent,
   description = 'InLab Communication crea strategie, foto, video, reel e campagne digitali per aziende, professionisti e attività locali che vogliono distinguersi davvero.',
   ctaPrimary = 'Raccontaci il tuo progetto',
   ctaSecondary = 'Guarda i nostri lavori',
 }) => {
   const reducedSystem = useReducedMotion();
+  const agencyStats = useAgencyStats();
   const reducedFm = useFmReducedMotion();
   const reduced = reducedSystem || !!reducedFm;
 
@@ -373,7 +373,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             {headlineLine1}<br />
             {headlineLine2}<br />
             <span style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400, fontSize: '0.72em', textTransform: 'none', color: 'var(--t)' }}>
-              {headlineAccent ? headlineAccent : <>Ti serve essere <RotatingWord reduced={reduced} /></>}
+              Ti serve essere <RotatingWord reduced={reduced} />
             </span>
           </motion.h1>
 
@@ -391,7 +391,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}
           >
             <button className="btn btn-p" onClick={onPrimaryCta}>{ctaPrimary} <ArrowRight size={14} /></button>
-            <button className="btn btn-g" onClick={onSecondaryCta}>{ctaSecondary}</button>
+            {onSecondaryCta && <button className="btn btn-g" onClick={onSecondaryCta}>{ctaSecondary}</button>}
           </motion.div>
 
           <motion.div
@@ -399,7 +399,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             transition={{ delay: reduced ? 0 : 0.9 }}
             style={{ display: 'flex', gap: '1.5rem', marginTop: '2rem', flexWrap: 'wrap' }}
           >
-            {[{ n: '100k+', l: 'visualizzazioni' }, { n: '47', l: 'brand seguiti' }, { n: '9', l: 'città in Puglia' }].map((s, i) => (
+            {agencyStats.slice(0, 3).map(s => ({ n: s.display, l: s.short })).map((s, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontFamily: 'var(--fd)', fontSize: 20, color: 'var(--a)', letterSpacing: '.04em' }}>{s.n}</span>
                 <span style={{ fontSize: 11, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>{s.l}</span>
@@ -410,7 +410,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
 
         {/* Phone mockup */}
         <div>
-          <PhoneMockup reduced={reduced} />
+          <PhoneMockup reduced={reduced} topStat={agencyStats[0]?.display || ''} />
         </div>
       </div>
     </section>

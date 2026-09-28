@@ -1,4 +1,5 @@
 import React from 'react';
+import { linkClick } from '../lib/router';
 import { motion } from 'motion/react';
 import {
   TrendingUp, Video, Camera, Star, Layout,
@@ -10,7 +11,7 @@ const SERVICES_LIST = [
   { icon: Video,      slug: 'video',           label: 'Reel & Video',             desc: 'Script, riprese e montaggio. Contenuti video che fanno fermare lo scroll.' },
   { icon: Camera,     slug: 'shooting',        label: 'Shooting fotografici',      desc: 'Foto professionali per brand, prodotti, eventi e attività locali.' },
   { icon: Star,       slug: 'branding',        label: 'Branding & identità',       desc: 'Nome, logo, palette, tono di voce. Diamo forma al modo in cui ti percepiscono.' },
-  { icon: Layout,     slug: 'landing-page',    label: 'Landing page',              desc: 'Pagine progettate per un obiettivo: trasformare visitatori in lead reali.' },
+  { icon: Layout,     slug: 'siti-web',        label: 'Siti web & landing page',   desc: 'Siti veloci e landing page progettate per trasformare i visitatori in contatti.' },
   { icon: Target,     slug: 'meta-ads',        label: 'Campagne pubblicitarie',    desc: 'Meta Ads, Google Ads, retargeting. Budget ottimizzato, risultati misurabili.' },
   { icon: Users,      slug: 'meta-ads',        label: 'Lead generation',           desc: 'Sistemi pensati per portare contatti qualificati al tuo business.' },
   { icon: Calendar,   slug: 'eventi',          label: 'Eventi & inaugurazioni',    desc: 'Comunicazione integrata online e offline per trasformare aperture in eventi.' },
@@ -74,14 +75,15 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
           {SERVICES_LIST.map((s, i) => {
             const Icon = s.icon;
             return (
-              <motion.button
+              <motion.a
+                href={"/" + s.slug}
                 key={s.label}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-50px' }}
                 transition={{ delay: i * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 whileHover={{ y: -6 }}
-                onClick={() => onServiceClick(s.slug)}
+                onClick={linkClick(() => onServiceClick(s.slug))}
                 style={{
                   textAlign: 'left',
                   background: 'linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.01))',
@@ -123,7 +125,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
                 <h3 style={{ fontSize: 15, fontWeight: 500, marginBottom: 8, color: 'var(--t)' }}>
                   {s.label}
                 </h3>
-                <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.65, marginBottom: '1.4rem' }}>
+                <p style={{ fontSize: 14.5, color: 'var(--m)', lineHeight: 1.65, marginBottom: '1.4rem' }}>
                   {s.desc}
                 </p>
                 <span style={{
@@ -132,7 +134,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
                 }}>
                   Scopri <ArrowUpRight size={11} />
                 </span>
-              </motion.button>
+              </motion.a>
             );
           })}
         </div>

@@ -1,10 +1,24 @@
 import { useEffect, useState } from 'react';
-import { db } from './firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { getLiteDb, liteFirestore } from './firestoreLite';
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId, normalizeClients } from './clientUtils';
 
 export type SiteContent = typeof WEBSITE_CONTENT;
+
+// Versione dello schema dei contenuti. Le sezioni sotto sono collegate alla
+// dashboard dalla v2: i valori salvati con versioni precedenti (testi vecchi,
+// sede "Taranto", profilo Prince…) vengono ignorati finché un admin non salva
+// di nuovo dalla dashboard aggiornata.
+export const CONTENT_SCHEMA = 2;
+const V2_SECTIONS = ['manifesto', 'metodo', 'stats', 'cta', 'studio', 'contact'];
+
+function dropStaleSections(saved: any) {
+  if (!saved || saved.schemaVersion >= CONTENT_SCHEMA) return saved;
+  const clean = { ...saved };
+  for (const k of V2_SECTIONS) delete clean[k];
+  if (clean.hero) { clean.hero = { ...clean.hero }; delete clean.hero.mini_stats; }
+  return clean;
+}
 
 let cached: SiteContent | null = null;
 const listeners = new Set<(c: SiteContent) => void>();
@@ -13,11 +27,13 @@ export const getContent = (): SiteContent => cached ?? normalizeSiteContent(WEBS
 
 export const loadContent = async (forceRefresh = false): Promise<SiteContent> => {
   if (cached && !forceRefresh) return cached;
-  if (!db) { cached = normalizeSiteContent(WEBSITE_CONTENT); return cached; }
   try {
+    const db = await getLiteDb();
+    if (!db) { cached = normalizeSiteContent(WEBSITE_CONTENT); return cached; }
+    const { doc, getDoc } = await liteFirestore();
     const snap = await getDoc(doc(db, 'app', 'site_content'));
     if (snap.exists()) {
-      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, snap.data() as any));
+      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, dropStaleSections(snap.data() as any)));
     } else {
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
@@ -29,9 +45,12 @@ export const loadContent = async (forceRefresh = false): Promise<SiteContent> =>
 };
 
 export const saveContent = async (newContent: SiteContent): Promise<boolean> => {
+  // Scrittura dalla dashboard: usa l'SDK completo (già caricato in /admin) così
+  // la richiesta porta il token di autenticazione dell'admin.
+  const [{ db }, { doc, setDoc }] = await Promise.all([import('./firebase'), import('firebase/firestore')]);
   if (!db) return false;
   try {
-    const prepared = normalizeSiteContent(newContent);
+    const prepared = { ...normalizeSiteContent(newContent), schemaVersion: CONTENT_SCHEMA } as SiteContent;
     await setDoc(doc(db, 'app', 'site_content'), prepared);
     cached = prepared;
     listeners.forEach((fn) => fn(prepared));
@@ -68,6 +87,13 @@ function normalizeSiteContent(content: any): SiteContent {
   } as SiteContent;
 }
 
+// Clienti di esempio della prima versione del sito: se sono rimasti salvati in
+// Firestore non vanno mostrati accanto ai clienti reali.
+const DEMO_CLIENT_IDS = new Set([
+  'ristorante-da-mario', 'studio-medico-rossi', 'parrucchiere-chic', 'moda-pugliese',
+  'bar-centrale', 'officina-auto', 'agriturismo-sole', 'hotel-marina',
+]);
+
 function mergeClientItems(defaultItems: any[] = [], savedItems: any[] = []) {
   const merged = new Map<string, any>();
 
@@ -75,7 +101,7 @@ function mergeClientItems(defaultItems: any[] = [], savedItems: any[] = []) {
     merged.set(getClientId(client), client);
   });
 
-  normalizeClients(savedItems).forEach((client) => {
+  normalizeClients(savedItems).filter((client) => !DEMO_CLIENT_IDS.has(getClientId(client))).forEach((client) => {
     const id = getClientId(client);
     const nameId = client.name ? getClientId({ name: client.name }) : id;
     const finalId = merged.has(id) ? id : merged.has(nameId) ? nameId : id;

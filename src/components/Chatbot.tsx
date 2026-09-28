@@ -113,6 +113,7 @@ export const Chatbot = () => {
       });
 
       const data = await response.json();
+      if (data.code) console.warn('[chatbot] errore server:', response.status, data.code);
 
       // Risposta del bot (sempre, anche in caso di errore mostra il messaggio fallback)
       const reply = data.reply || 'Ops, problema tecnico. Scrivici a inlab.communication@gmail.com 🙂';
@@ -141,12 +142,13 @@ export const Chatbot = () => {
   return (
     <>
       {/* Mascotte + bottone */}
-      <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9998, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
+      <div className="chat-launcher" style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 9998, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0 }}>
 
         {/* Fumetto "Parliamo!" — solo quando chiusa */}
         <AnimatePresence>
           {!open && (
             <motion.div
+              className="chat-bubble"
               initial={{ opacity: 0, y: 10, scale: 0.8 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.8 }}
