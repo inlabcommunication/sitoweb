@@ -65,7 +65,7 @@ Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variab
 | Documento / collezione | Contenuto | Chi scrive |
 |---|---|---|
 | `app/site_content` | testi e immagini del sito | admin |
-| `app/settings` | provider AI e chiavi | admin |
+| `app/settings` | provider/modello AI e informazioni per il chatbot | admin |
 | `leads` | contatti da form e chatbot | solo server: `/api/lead`, `/api/chat` |
 | `admins` | UID degli amministratori | a mano dalla console |
 | `analytics_events` | pageview, scroll, click | sito pubblico |
@@ -84,6 +84,7 @@ Push sul branch collegato a Vercel. Se cambi le variabili d'ambiente serve un re
 
 ## Problemi comuni
 
-- **Chatbot: "Configurazione mancante"** → manca la chiave del provider scelto (env o *Impostazioni*).
+- **Chatbot non risponde** → apri la console del browser (F12): il codice dopo `[chatbot] errore server:` indica la causa (NO_KEY, AI_KEY, AI_QUOTA, AI_MODEL, SERVER).
+- **Cosa sa il chatbot** → servizi, sede e contatti sono in `api/chat.ts`; il resto (FAQ, orari, pacchetti…) si scrive in dashboard → Impostazioni → *Informazioni per il chatbot*.
 - **Chatbot: "problema tecnico"** → guarda *Vercel → Logs* della funzione `/api/chat`.
 - **Dashboard: "non configurata"** → mancano le variabili `VITE_FIREBASE_*` (serve un nuovo build).

@@ -24,17 +24,23 @@ CHI È INLAB:
 Agenzia che aiuta aziende e brand della Puglia a comunicare meglio attraverso strategia digitale, contenuti, advertising e tecnologia.
 
 SERVIZI:
-- Gestione Social & Meta Ads (Instagram, Facebook, TikTok — strategia, contenuti, advertising)
-- Siti Web & Web App (design, sviluppo full-stack, SEO, e-commerce, landing page ottimizzate per conversione)
+- Gestione Social (Instagram, Facebook, TikTok, LinkedIn — strategia, piano editoriale, contenuti, community)
+- Meta Ads e lead generation (campagne Facebook/Instagram per contatti e vendite)
+- Siti Web & Web App (design, sviluppo, SEO, e-commerce, landing page ottimizzate per conversione)
 - Automazioni con AI (chatbot, workflow intelligenti, integrazioni)
-- Shooting Fotografico (brand, prodotti, eventi)
-- Video & Reels (produzione per social — track record di milioni di view organiche)
+- Foto & Shooting (brand, prodotti, food, eventi)
+- Video & Reels (idea, riprese, montaggio — milioni di visualizzazioni organiche generate)
+- Branding & Identità (nome, logo, palette, tono di voce)
+
+TEAM: Nicola Carpignano (social media manager, comunicazione e marketing) e Ilaria Gemma (content creator e comunicazione visiva), più una rete di collaboratori (sviluppatori, fotografi, copywriter).
 
 AREA DI INTERVENTO: tutta la Puglia e anche fuori regione (molti servizi si seguono da remoto). Non dire mai che una zona non è servita.
 
 CONTATTI:
 Email: inlab.communication@gmail.com
+Telefono: +39 329 565 4319
 Sede: Castellaneta (TA), Puglia
+Pagina contatti del sito: /contatti
 
 RUOLO E TONO:
 Sei accogliente, professionale ma diretto. Niente fronzoli da marketing. Risposte brevi (max 2-3 frasi).
@@ -197,17 +203,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const provider = (settings.aiProvider || process.env.AI_PROVIDER) === "anthropic" ? "anthropic" : "gemini";
     const maxTokens = 400;
 
+    // Informazioni extra scritte dagli admin in dashboard (Impostazioni → Informazioni per il chatbot)
+    const knowledge = str(settings.chatKnowledge, 8000);
+    const systemPrompt = knowledge
+      ? `${SYSTEM_PROMPT}\n\nINFORMAZIONI AGGIUNTIVE DELL'AGENZIA (usale per rispondere; le REGOLE OBBLIGATORIE restano prioritarie):\n${knowledge}`
+      : SYSTEM_PROMPT;
+
     let result;
     if (provider === "anthropic") {
       const apiKey = process.env.ANTHROPIC_API_KEY;
       if (!apiKey) return res.status(503).json({ error: "Not configured", code: "NO_KEY", reply: FALLBACK_REPLY });
       const model = /^claude-[a-z0-9.-]+$/.test(settings.anthropicModel || "") ? settings.anthropicModel : (process.env.ANTHROPIC_MODEL || "claude-haiku-4-5-20251001");
-      result = await callAnthropic(apiKey, model, SYSTEM_PROMPT, messages, maxTokens);
+      result = await callAnthropic(apiKey, model, systemPrompt, messages, maxTokens);
     } else {
       const apiKey = process.env.GEMINI_API_KEY;
       if (!apiKey) return res.status(503).json({ error: "Not configured", code: "NO_KEY", reply: FALLBACK_REPLY });
       const model = process.env.GEMINI_MODEL || (/^gemini-[a-z0-9.-]+$/.test(settings.geminiModel || "") ? settings.geminiModel : "gemini-flash-latest");
-      result = await callGemini(apiKey, model, SYSTEM_PROMPT, messages, maxTokens);
+      result = await callGemini(apiKey, model, systemPrompt, messages, maxTokens);
     }
 
     const { visibleText, meta } = extractMetaAndCleanResponse(result.rawText);

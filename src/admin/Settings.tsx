@@ -10,13 +10,25 @@ type Settings = {
   aiProvider: 'gemini' | 'anthropic';
   geminiModel: string;
   anthropicModel: string;
+  /** Informazioni extra per il chatbot (FAQ, orari, offerte…), aggiunte alle sue istruzioni */
+  chatKnowledge: string;
 };
 
 const DEFAULTS: Settings = {
   aiProvider: 'gemini',
   geminiModel: 'gemini-flash-latest',
   anthropicModel: 'claude-haiku-4-5-20251001',
+  chatKnowledge: '',
 };
+
+const KNOWLEDGE_MAX = 8000;
+const KNOWLEDGE_EXAMPLE = `Esempi di cosa scrivere (una informazione per riga):
+- Orari: lun-ven 9:00-18:00, sabato su appuntamento.
+- Prima consulenza gratuita di 30 minuti, anche in videochiamata.
+- Tempi medi: sito vetrina 3-4 settimane; avvio gestione social in 1 settimana.
+- Pacchetti social da 8, 12 o 16 contenuti al mese (non dire i prezzi).
+- Clienti di riferimento: Studio Dentistico Ricciardi (sito Lumina), Villa Natia, Sottoscala…
+- FAQ: "Lavorate fuori Puglia?" → Sì, anche da remoto.`;
 
 export const Settings = () => {
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
@@ -30,7 +42,7 @@ export const Settings = () => {
     getDoc(doc(db, 'app', 'settings')).then((snap) => {
       if (snap.exists()) {
         const d = snap.data() as any;
-        setSettings({ aiProvider: d.aiProvider === 'anthropic' ? 'anthropic' : 'gemini', geminiModel: d.geminiModel || DEFAULTS.geminiModel, anthropicModel: d.anthropicModel || DEFAULTS.anthropicModel });
+        setSettings({ aiProvider: d.aiProvider === 'anthropic' ? 'anthropic' : 'gemini', geminiModel: d.geminiModel || DEFAULTS.geminiModel, anthropicModel: d.anthropicModel || DEFAULTS.anthropicModel, chatKnowledge: typeof d.chatKnowledge === 'string' ? d.chatKnowledge : '' });
         setHadStoredKeys(!!(d.geminiApiKey || d.anthropicApiKey));
       }
       setLoading(false);
@@ -42,7 +54,7 @@ export const Settings = () => {
     setSaving(true); setStatus('idle');
     try {
       // setDoc senza merge: sovrascrive il documento e cancella eventuali chiavi salvate in passato
-      await setDoc(doc(db, 'app', 'settings'), { aiProvider: settings.aiProvider, geminiModel: settings.geminiModel, anthropicModel: settings.anthropicModel });
+      await setDoc(doc(db, 'app', 'settings'), { aiProvider: settings.aiProvider, geminiModel: settings.geminiModel, anthropicModel: settings.anthropicModel, chatKnowledge: settings.chatKnowledge.slice(0, KNOWLEDGE_MAX) });
       setHadStoredKeys(false);
       setStatus('saved');
       setTimeout(() => setStatus('idle'), 3000);
@@ -60,7 +72,7 @@ export const Settings = () => {
     <div style={{ maxWidth: 640, margin: '0 auto', padding: '2.5rem 2rem' }}>
       <div style={{ marginBottom: '2rem' }}>
         <h2 style={{ fontFamily: 'var(--fd)', fontSize: '1.6rem', letterSpacing: '.05em', marginBottom: 6 }}>IMPOSTAZIONI</h2>
-        <p style={{ fontSize: 13, color: 'var(--m)' }}>Configura il provider AI del chatbot. Gemini è gratuito con limiti generosi.</p>
+        <p style={{ fontSize: 13, color: 'var(--m)' }}>Configura il chatbot: provider AI, modello e informazioni da conoscere.</p>
       </div>
 
       <Section icon={<Bot size={15} />} title="Provider AI">
@@ -82,6 +94,20 @@ export const Settings = () => {
             <Field label="Modello" value={settings.anthropicModel} onChange={(v) => set('anthropicModel', v)} placeholder="claude-haiku-4-5-20251001" />
           </div>
         )}
+      </Section>
+
+      <Section icon={<Bot size={15} />} title="Informazioni per il chatbot">
+        <p style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: 12 }}>
+          Scrivi qui tutto quello che il chatbot deve sapere oltre a servizi, sede e contatti (che conosce già): orari, tempi di lavoro, come funziona la prima consulenza, pacchetti, risposte alle domande frequenti, clienti da citare. Viene aggiunto alle sue istruzioni appena salvi. <b>Non inserire password, chiavi o dati personali dei clienti.</b>
+        </p>
+        <textarea
+          value={settings.chatKnowledge}
+          onChange={(e) => set('chatKnowledge', e.target.value.slice(0, KNOWLEDGE_MAX))}
+          placeholder={KNOWLEDGE_EXAMPLE}
+          rows={12}
+          style={{ width: '100%', padding: '12px 14px', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 10, color: 'var(--t)', fontSize: 13, lineHeight: 1.6, fontFamily: 'var(--fb)', outline: 'none', boxSizing: 'border-box', resize: 'vertical' }}
+        />
+        <div style={{ fontSize: 11, color: 'var(--m)', textAlign: 'right', marginTop: 6 }}>{settings.chatKnowledge.length} / {KNOWLEDGE_MAX}</div>
       </Section>
 
       <div style={{ padding: '14px 16px', background: 'rgba(205,178,255,0.05)', border: '.5px solid rgba(205,178,255,0.15)', borderRadius: 12, fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: '1.5rem' }}>
