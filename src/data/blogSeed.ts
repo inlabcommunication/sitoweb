@@ -61,144 +61,415 @@ export const BLOG_SEED: BlogPost[] = [
   {
     slug: 'gestione-social-attivita-locale-cosa-include',
     title: 'Gestione social per attività locali: cosa include davvero (e come sceglierla)',
-    excerpt: 'Piano editoriale, contenuti, community, report: cosa aspettarsi da una gestione social professionale e le domande da fare prima di scegliere un\'agenzia.',
+    excerpt: 'Strategia, piano editoriale, foto e video, community e report: cosa aspettarsi da una gestione social professionale, com\'è fatto un mese tipo e le domande da fare prima di scegliere.',
     category: 'Social media',
-    tags: ['gestione social', 'attività locali', 'Instagram', 'Facebook'],
+    tags: ['gestione social', 'attività locali', 'instagram', 'facebook', 'piano editoriale'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
+    updated: '2026-09-28',
+    cover: '/blog/gestione-social-attivita-locale-cosa-include/cover.jpg',
+    coverAlt: 'Calendario del piano editoriale mensile di una pizzeria con reel, caroselli e storie',
     published: true,
     seoTitle: 'Gestione social per attività locali: cosa include | InLab',
-    seoDescription: 'Cosa include una gestione social professionale per attività locali e come scegliere l\'agenzia giusta: piano editoriale, contenuti, community e report.',
-    content: `Molte attività aprono una pagina Instagram, pubblicano per qualche settimana e poi si fermano. Non per pigrizia: gestire i social bene richiede tempo, idee e costanza. Per questo sempre più aziende affidano la comunicazione a un'agenzia. Ma cosa significa, in concreto, "gestione social"?
+    seoDescription: 'Gestione social per attività locali: cosa include un servizio serio, un mese tipo di contenuti, agenzia o fai-da-te e cosa chiedere prima di scegliere.',
+    content: `La **gestione social per attività locali** è molto più di "pubblicare qualche post". Se hai un ristorante, un negozio o uno studio e stai pensando di affidare Instagram e Facebook a qualcuno, qui trovi cosa deve includere un servizio serio, com'è fatto un mese tipo e le domande da fare prima di scegliere.
 
-## 1. Strategia prima dei contenuti
+**Risposta breve: una gestione social professionale comprende strategia, piano editoriale mensile, produzione di foto e video, pubblicazione, risposte a commenti e messaggi e un report con i numeri. Se in un preventivo manca una di queste voci, chiedi perché.**
 
-Una gestione seria non parte dai post, ma dalle domande: **a chi ti rivolgi, cosa ti distingue, cosa vuoi ottenere?** Più prenotazioni, più persone in negozio, più richieste di preventivo. Da qui nascono il tono di voce, lo stile visivo e i canali giusti: non tutte le attività devono essere su TikTok, e non tutte hanno bisogno di LinkedIn.
+Molte attività aprono una pagina Instagram, pubblicano per qualche settimana e poi si fermano. Non per pigrizia: gestire i social bene richiede tempo, idee e costanza, tre cose che chi manda avanti un'attività ha raramente. Vediamo allora cosa significa, in concreto, delegare.
 
-## 2. Il piano editoriale
+## Cosa include la gestione social per attività locali
 
-È il calendario dei contenuti: cosa pubblicare, quando e con quale obiettivo. Un buon piano alterna contenuti diversi:
+Un servizio completo si regge su cinque attività. Se in un preventivo ne manca una, chiedi perché.
 
-- **Contenuti che fanno conoscere** l'attività e le persone che ci lavorano
-- **Contenuti utili** che rispondono alle domande dei clienti
-- **Prove concrete**: recensioni, lavori realizzati, prima e dopo
-- **Contenuti che portano all'azione**: offerte, eventi, inviti a contattarti
+### 1. Strategia: chi vuoi raggiungere e perché
 
-## 3. Produzione di foto, video e testi
+Prima dei contenuti si decide la direzione. A chi parli? Clienti nuovi, clienti abituali, turisti d'estate? Cosa vuoi ottenere: più prenotazioni, più passaggi in negozio, più richieste di preventivo?
 
-Qui si vede la differenza. Foto curate, reel girati bene e testi scritti per il tuo pubblico rendono l'attività riconoscibile. I video brevi, in particolare, oggi sono il formato che raggiunge più persone nuove.
+Da qui nascono il **tono di voce**, i temi ricorrenti e i canali giusti. Un bar in piazza vive su Instagram e sulle storie. Uno studio professionale può aver bisogno anche di Facebook, che in Italia raggiunge ancora un pubblico molto ampio, soprattutto adulto.
 
-## 4. Community e messaggi
+### 2. Piano editoriale: il calendario del mese
 
-Rispondere ai commenti e ai messaggi fa parte del lavoro: è lì che un utente curioso diventa un cliente. Tempi di risposta rapidi e un tono coerente contano quanto un bel post.
+Il piano editoriale è il calendario dei contenuti: cosa esce, quando e su quale canale. Di solito si prepara ogni mese e si approva insieme al cliente.
 
-## 5. Numeri e miglioramento
+Un buon piano tiene conto della stagionalità, degli eventi del paese e dei momenti forti dell'attività. In provincia di Taranto questo conta molto: un locale di Castellaneta Marina ha un'estate fittissima e un inverno tranquillo, un negozio di città ha i suoi picchi a Natale e con i saldi.
 
-Ogni mese si guardano i dati: quali contenuti funzionano, da dove arrivano i contatti, cosa cambiare. **La strategia evolve con i risultati reali**, non con le impressioni.
+### 3. Produzione di foto e video
+
+È la parte che fa la differenza. **Foto e video girati nella tua attività**, con le persone che ci lavorano, funzionano molto meglio delle immagini di repertorio. Anche le piattaforme lo premiano: Meta ha annunciato nel 2026 che su Facebook i contenuti ripubblicati senza apporto originale vengono mostrati meno.
+
+Nel servizio vanno chiariti tre punti: chi gira, ogni quanto si fanno le riprese e quanti reel escono da ogni sessione. Se hai bisogno di immagini curate per prodotti o piatti, valuta anche uno [shooting fotografico](/shooting) dedicato.
+
+### 4. Community: commenti, messaggi e recensioni
+
+I social sono una conversazione. Rispondere ai commenti e ai messaggi privati in tempi rapidi e con il tono giusto conta quanto un bel post. Una domanda sugli orari lasciata senza risposta è un cliente perso.
+
+Chiedi sempre chi risponde ai messaggi, in quali orari e cosa succede con le richieste di prenotazione o di prezzo.
+
+### 5. Numeri e miglioramento
+
+Ogni mese si guardano i dati: quali contenuti hanno funzionato, da dove arrivano i contatti, cosa cambiare. **La strategia evolve con i risultati reali**, non con le impressioni. Un report utile non elenca solo like e follower, ma collega i contenuti a qualcosa di concreto: messaggi ricevuti, chiamate, clic al sito, prenotazioni.
+
+![Le cinque voci di una gestione social per attività locali: strategia, piano editoriale, foto e video, community e report](/blog/gestione-social-attivita-locale-cosa-include/cosa-include.webp)
+
+## Un mese tipo di gestione social: un esempio
+
+Facciamo un esempio per una pizzeria di Massafra con una gestione di livello intermedio. Un mese potrebbe contenere:
+
+- **1 sessione di riprese** di mezza giornata nel locale, da cui escono foto e video per tutto il mese;
+- **8-10 contenuti nel feed**, di cui 4-6 reel e 2-3 caroselli (per esempio il menu della settimana o i nuovi impasti);
+- **storie quasi ogni giorno**: la pizza del giorno, sondaggi, dietro le quinte, promemoria della serata con musica;
+- **risposte a commenti e messaggi** nei giorni lavorativi;
+- **un report a fine mese** con cosa ha funzionato e cosa cambiare nel mese successivo.
+
+Non è una regola fissa. Per capire il ritmo giusto per la tua attività, leggi la guida su [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social): la costanza conta più della quantità.
+
+## Cosa cambia da un servizio all'altro
+
+Due gestioni social possono avere lo stesso nome e contenere cose molto diverse. Quando confronti più proposte, metti a fianco queste voci:
+
+- **quanti canali** vengono seguiti (solo Instagram, oppure anche Facebook, TikTok, LinkedIn);
+- **chi produce i contenuti**: foto e video girati da chi gestisce, oppure materiale fornito da te;
+- **quante sessioni di riprese** sono previste ogni mese;
+- **chi risponde a commenti e messaggi**, e in quali orari;
+- **se le sponsorizzate sono incluse** o sono un servizio a parte (il budget pubblicitario si paga sempre direttamente a Meta);
+- **cosa contiene il report** e ogni quanto lo ricevi.
+
+Più le voci sono chiare, più è facile capire cosa stai comprando e confrontare le proposte in modo corretto.
+
+## Agenzia, freelance o fai-da-te: come scegliere
+
+Non esiste la scelta giusta per tutti. Dipende dal tempo che hai e da quanto contano i social per il tuo lavoro.
+
+**Fai-da-te.** Costa poco in denaro ma molto in tempo. Funziona se hai qualcuno in squadra che ama farlo e riesce a essere costante. Il rischio è fermarsi alla prima settimana piena.
+
+**Freelance.** Di solito costa meno di un'agenzia ed è un buon compromesso per chi ha esigenze semplici. Verifica chi produce foto e video e cosa succede quando il professionista è in ferie o malato.
+
+**Agenzia.** Ha un costo più alto, ma mette insieme più competenze: strategia, riprese, grafica, advertising, sito. Ha senso quando vuoi un unico referente per tutta la comunicazione, anche offline.
+
+![Confronto tra gestione social fai-da-te e gestione professionale per un'attività locale](/blog/gestione-social-attivita-locale-cosa-include/fai-da-te-agenzia.webp)
+
+## Gli errori più comuni
+
+- **Pubblicare senza un obiettivo.** Tanti post scollegati non costruiscono niente. Meglio pochi contenuti riconoscibili e costanti.
+- **Usare solo foto di repertorio.** Le persone vogliono vedere il tuo locale, i tuoi piatti, le tue facce.
+- **Ignorare i messaggi.** Chi scrive in privato spesso è pronto a prenotare o comprare.
+- **Guardare solo i follower.** Mille follower del tuo paese valgono più di diecimila sconosciuti.
+- **Fermarsi dopo un mese.** I social danno risultati con la costanza: servono almeno tre mesi per capire cosa funziona.
+
+## Cosa abbiamo imparato gestendo i social di attività locali
+
+Lavorando con attività della provincia di Taranto abbiamo visto che il contenuto che funziona segue la vita reale dell'attività. Per [Sublime Tentazione](/cliente/sublime-tentazione), gelateria e pasticceria di Palagianello, i contenuti seguono le stagioni del laboratorio: il gelato d'estate, i panettoni a Natale. Per [Masseria Sacramento](/cliente/masseria-sacramento) la comunicazione accompagna ogni appuntamento del calendario, dalla festa della birra alle serate con musica live.
+
+Il caso più completo è quello di [Paresteta](/casi-studio/paresteta): un cambio insegna trasformato in un evento locale, con teaser sui social, QR code per raccogliere contatti, video di lancio e attività in città. I social, da soli, fanno una parte del lavoro. Collegati a quello che succede offline, fanno la differenza.
+
+Se vuoi capire quale formato usare per ogni contenuto, leggi anche [reel o post: cosa pubblicare su Instagram](/blog/reel-o-post-cosa-pubblicare-instagram).
+
+## Domande frequenti
+
+### Cosa fa esattamente un social media manager per un'attività locale?
+
+Definisce la strategia, prepara il piano editoriale, crea o coordina foto e video, pubblica, risponde a commenti e messaggi e misura i risultati ogni mese. In un'agenzia queste attività sono divise tra più persone.
+
+### Quanto tempo serve per vedere risultati dalla gestione social?
+
+Di solito servono almeno tre mesi di pubblicazione costante per capire cosa funziona e vedere una crescita stabile. Con le sponsorizzate i primi contatti possono arrivare prima, ma la base resta un profilo curato.
+
+### Devo dare le password dei miei profili all'agenzia?
+
+No. Con Meta Business Suite puoi dare accesso alla tua pagina e al tuo profilo Instagram senza condividere le password, e toglierlo quando vuoi. I profili restano sempre tuoi.
+
+### La gestione della pagina Instagram aziendale include le sponsorizzate?
+
+Spesso l'impostazione delle campagne è un servizio a parte, e il budget pubblicitario si paga sempre direttamente a Meta. Chiedi che nel preventivo le due voci siano separate e chiare.
+
+### Posso gestire i social da solo e farmi aiutare solo con i video?
+
+Sì, è una soluzione frequente per chi ha tempo per pubblicare ma non per girare e montare. In quel caso ha senso un servizio di [video e reel](/video) con sessioni di riprese periodiche.
 
 ## Le domande da fare prima di scegliere
 
-> Puoi vedere lavori reali per attività simili alla mia? Chi produce foto e video? Ogni quanto ricevo un report e cosa contiene?
+Prima di firmare, chiedi di vedere lavori reali per attività simili alla tua, chi produce foto e video, ogni quanto ricevi un report e cosa contiene. Un'agenzia seria risponde con esempi concreti e non promette risultati garantiti in poche settimane.
 
-Un'agenzia seria risponde con esempi concreti e non promette risultati garantiti in poche settimane.
+Se ti chiedi con che ritmo pubblicare, leggi la guida su [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social). Se la tua attività è in provincia di Taranto, trovi i dettagli del servizio nella pagina sulla [gestione social a Taranto](/gestione-social-taranto).
 
-Se ti chiedi con che ritmo pubblicare, leggi la guida su [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social).
-
-Vuoi capire come potrebbe funzionare per la tua attività? [Scopri il servizio di gestione social](/gestione-social) oppure [scrivici](/contatti): la prima chiacchierata è senza impegno.`,
+Vuoi capire come potrebbe funzionare per la tua attività? [Scopri il servizio di gestione social](/gestione-social) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
   {
     slug: 'reel-o-post-cosa-pubblicare-instagram',
     title: 'Reel o post? Cosa pubblicare su Instagram per far crescere un\'attività locale',
-    excerpt: 'Reel per farsi scoprire, caroselli per spiegare, storie per restare in contatto: come usare ogni formato e costruire un mix che porta clienti.',
+    excerpt: 'Reel, caroselli, foto e storie: a cosa serve ogni formato, quanto deve durare un reel, come aprirlo nei primi 3 secondi e 10 idee concrete divise per settore.',
     category: 'Video & Reel',
-    tags: ['reel', 'Instagram', 'contenuti', 'video'],
+    tags: ['reel', 'instagram', 'contenuti', 'video', 'caroselli'],
     author: 'Ilaria Gemma',
     date: '2026-09-28',
+    updated: '2026-09-28',
+    cover: '/blog/reel-o-post-cosa-pubblicare-instagram/cover.jpg',
+    coverAlt: 'Schermate di un reel, di un carosello e delle storie di Instagram affiancate',
     published: true,
-    seoTitle: 'Reel o post su Instagram? Guida per attività locali | InLab',
-    seoDescription: 'Reel, caroselli o storie: come usare ogni formato di Instagram per far crescere un\'attività locale e costruire un piano di contenuti che porta clienti.',
-    content: `"Meglio fare reel o post?" è una delle domande che ci fanno più spesso. La risposta breve: **servono entrambi, ma con obiettivi diversi.** Vediamo come usarli.
+    seoTitle: 'Reel o post su Instagram? Guida e 10 idee | InLab',
+    seoDescription: 'Reel o post su Instagram: a cosa serve ogni formato, quanto deve durare un reel, i primi 3 secondi, 10 idee per settore e un piano settimanale da copiare.',
+    content: `Reel o post? È la domanda che ci fanno più spesso i titolari di attività locali che gestiscono Instagram da soli. In questa guida trovi a cosa serve ogni formato, quanto deve durare un reel, 10 idee concrete divise per settore e un piano settimanale da copiare.
 
-## Reel: per farti scoprire
+**Risposta breve: i reel servono a farti scoprire da persone che non ti seguono ancora, i caroselli a spiegare e convincere, le storie a restare presenti ogni giorno con chi ti segue già. Per un'attività locale funziona un mix dei tre formati, non uno solo.**
 
-I reel sono il formato che Instagram mostra di più a chi non ti segue ancora. Sono perfetti per:
+Nessun formato è "il migliore" in assoluto. Ognuno ha un lavoro preciso da fare. Capire quale lavoro ti serve in un certo momento è il primo passo per pubblicare con meno fatica e più risultati.
 
-- far conoscere l'attività a persone nuove della tua zona
-- mostrare le persone, il dietro le quinte, il "come lo facciamo"
-- raccontare con leggerezza e personalità
+## Reel, carosello, post singolo e storie: a cosa serve ciascuno
 
-Non servono produzioni da film: servono **un'idea chiara nei primi secondi**, un buon ritmo e una storia semplice. Spesso i reel più efficaci sono quelli più autentici.
+### Reel: per farti scoprire
 
-## Caroselli: per spiegare e convincere
+I reel sono il formato che Instagram mostra di più a chi non ti segue ancora. Sono il modo più diretto per farti conoscere da nuove persone della tua zona.
 
-Il carosello (più immagini da scorrere) funziona quando devi spiegare: un servizio, un prima e dopo, i passaggi di un trattamento, le domande frequenti. Viene salvato e condiviso, e aiuta chi ti conosce già a decidere.
+Funzionano bene quando mostrano qualcosa di vero: un piatto che esce dal forno, un prima e dopo, il titolare che risponde a una domanda. Non serve una produzione cinematografica, serve un'idea chiara e girata bene.
 
-## Storie: per restare in contatto
+### Carosello: per spiegare e convincere
 
-Le storie non portano molti nuovi follower, ma tengono vivo il rapporto con chi ti segue: novità del giorno, sondaggi, risposte alle domande, promemoria di eventi. Sono il formato più "vicino" alle persone.
+Il carosello è una sequenza di immagini che si scorrono. È perfetto per spiegare: i passaggi di un trattamento, le novità del menu, i lavori finiti, le risposte alle domande frequenti.
 
-## Un mix che funziona
+Chi scorre fino all'ultima immagine è una persona interessata. Per questo il carosello è ottimo per chi sta già valutando di sceglierti.
 
-Per molte attività locali un buon punto di partenza è:
+### Post con foto singola: per le comunicazioni semplici
 
-- **2-3 reel a settimana** per farsi scoprire
-- **1 carosello** per spiegare o mostrare risultati
-- **storie quasi ogni giorno** per restare presenti
+La foto singola ha ancora senso per annunci veloci: un nuovo orario, una chiusura per ferie, un prodotto appena arrivato. Da sola però raggiunge meno persone di un reel, quindi non conviene usarla come formato principale.
 
-Poi i numeri dicono cosa aumentare e cosa ridurre.
+### Storie: per restare presenti ogni giorno
 
-## L'errore più comune
+Le storie durano 24 ore e le vede soprattutto chi ti segue già. Servono per la relazione quotidiana: la novità del giorno, un sondaggio, un dietro le quinte, il promemoria di un evento.
 
-Pubblicare tanto senza un filo conduttore. Meglio pochi contenuti riconoscibili e costanti che tanti post scollegati.
+Sono il formato più "vicino" alle persone, e spesso è da una storia che arriva il messaggio privato con una richiesta.
 
-Gli stessi video possono farti trovare anche su TikTok, che molti usano come motore di ricerca: te lo spieghiamo nella guida alla [SEO su TikTok](/blog/seo-tiktok-search-ads).
+![A cosa servono reel, storie, caroselli e foto singole su Instagram per un'attività locale](/blog/reel-o-post-cosa-pubblicare-instagram/formati.webp)
 
-Se vuoi reel che raccontano davvero la tua attività, dai un'occhiata al nostro [servizio Video & Reels](/video) o [raccontaci il tuo progetto](/contatti).`,
+## Quanto deve durare un reel e come iniziarlo
+
+### La durata giusta
+
+Da inizio 2025 Instagram permette reel fino a 3 minuti. Questo non vuol dire che debbano essere lunghi.
+
+Per farsi scoprire, di solito conviene restare **tra i 7 e i 30 secondi**: un'idea sola, raccontata senza pause. Un reel più lungo ha senso quando il contenuto lo giustifica, per esempio un tutorial, una ricetta o la presentazione di un immobile.
+
+La regola pratica è semplice: taglia tutto quello che non serve. Se un secondo non aggiunge niente, via.
+
+### I primi 3 secondi: dove si decide tutto
+
+Chi scorre decide in un attimo se fermarsi. Nei primi 3 secondi devono succedere due cose: si deve capire **di cosa parla il video** e **perché vale la pena guardarlo**.
+
+Qualche modo per aprire bene:
+
+- **una domanda diretta**: "Sai perché la nostra pizza riposa 48 ore?";
+- **il risultato prima del processo**: il piatto finito, poi come si prepara;
+- **un testo a schermo chiaro**, perché molti guardano senza audio;
+- **un volto**: le persone si fermano per le persone.
+
+Evita le aperture lente con il logo o con inquadrature vuote del locale. Il logo può arrivare alla fine.
+
+## 10 idee di reel per attività locali, divise per settore
+
+### Ristorante, bar e pizzeria
+
+1. **La preparazione del piatto simbolo**, dall'impasto al tavolo, in 15 secondi.
+2. **"Una giornata in cucina"**: il team che si prepara al servizio, montato veloce.
+3. **Il cliente abituale** che racconta il suo piatto preferito (con il suo permesso).
+
+Ne abbiamo raccolte molte altre, con i consigli per girarle, nella guida alle [idee di reel per ristoranti e bar](/blog/idee-reel-ristoranti).
+
+### Negozio
+
+4. **"3 modi di abbinare"** un capo, un accessorio o un prodotto appena arrivato.
+5. **L'unboxing dei nuovi arrivi** raccontato dal titolare.
+6. **La domanda che ti fanno tutti** in negozio, con la risposta in 20 secondi.
+
+### Studio medico o dentistico
+
+7. **"Cosa succede durante la prima visita"**, spiegato con calma dal professionista.
+8. **Il mito da sfatare**: una convinzione diffusa e cosa dice davvero la pratica clinica, sempre con un linguaggio corretto e senza promesse.
+
+### Centro estetico e parrucchiere
+
+9. **Il prima e dopo** di un trattamento o di un taglio, con il consenso della cliente.
+10. **Il consiglio da portare a casa**: come mantenere il risultato dopo il trattamento.
+
+## Un piano settimanale di esempio
+
+Per molte attività locali un buon punto di partenza è questo:
+
+- **lunedì**: storia con la novità della settimana;
+- **martedì**: reel (per esempio un dietro le quinte);
+- **mercoledì**: carosello (un approfondimento o le domande frequenti);
+- **giovedì**: storie con sondaggio o domanda;
+- **venerdì**: reel (il prodotto o il piatto forte del weekend);
+- **sabato e domenica**: storie dal vivo, se l'attività è aperta.
+
+Sono **2 reel, 1 carosello e storie quasi ogni giorno**. Poi i numeri dicono cosa aumentare e cosa ridurre. Per le frequenze consigliate su ogni piattaforma trovi i dati nella guida su [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social).
+
+![Esempio di piano settimanale Instagram con due reel, un carosello e storie quasi ogni giorno](/blog/reel-o-post-cosa-pubblicare-instagram/piano-settimanale.webp)
+
+## Cosa abbiamo imparato girando reel per attività locali
+
+Nei progetti che seguiamo in provincia di Taranto, i reel che funzionano meglio sono quelli in cui si riconoscono le persone e il posto. Per [Nunzio Putignano Autofficina](/cliente/nunzio-putignano) a Palagiano abbiamo scelto reel ironici e spontanei, spesso in dialetto, con il titolare e il suo team protagonisti. Per [Ottica Occhi Blu](/cliente/ottica-occhiblu) a Castellaneta i video spiegano i servizi in modo semplice e simpatico.
+
+Sono settori molto diversi, ma il principio è lo stesso: **meglio un video autentico girato bene che un contenuto perfetto e impersonale**. Gli stessi video, con qualche accorgimento, possono farti trovare anche su TikTok, che molti usano come motore di ricerca: te lo spieghiamo nella guida alla [SEO su TikTok](/blog/seo-tiktok-search-ads).
+
+### Gli errori più comuni
+
+- **Pubblicare tanto senza un filo conduttore.** Meglio pochi contenuti riconoscibili e costanti che tanti post scollegati.
+- **Copiare i trend senza adattarli.** Un audio di tendenza non basta se non c'entra niente con la tua attività.
+- **Dimenticare i sottotitoli.** Molte persone guardano i reel senza audio.
+- **Non rispondere ai commenti.** Un reel che genera domande è un'occasione: rispondi presto.
+
+## Domande frequenti
+
+### È meglio pubblicare reel o post su Instagram?
+
+Dipende dall'obiettivo. I reel servono soprattutto a raggiungere persone nuove, i caroselli a spiegare e convincere chi è già interessato. Per un'attività locale conviene alternarli, con le storie ogni giorno.
+
+### Quanto deve durare un reel per un'attività?
+
+Per farsi scoprire di solito bastano tra 7 e 30 secondi, con un'idea sola. Reel più lunghi vanno bene per tutorial o presentazioni, purché ogni secondo aggiunga qualcosa.
+
+### Quanti reel a settimana deve pubblicare un'attività locale?
+
+Un buon punto di partenza sono 2-3 reel a settimana, con storie quasi ogni giorno. È più importante riuscire a mantenere il ritmo nel tempo che pubblicare tanto per un mese e poi fermarsi.
+
+### Serve una videocamera professionale per fare reel?
+
+No, uno smartphone recente basta per la maggior parte dei contenuti. Contano di più luce, audio pulito e un'idea chiara. Per i contenuti più importanti, come un lancio o un evento, una produzione professionale fa la differenza.
+
+### I caroselli funzionano ancora su Instagram?
+
+Sì. Sono il formato più adatto per spiegare e vengono salvati e condivisi spesso. Sono utili soprattutto per menu, listini di servizi, passaggi di un trattamento e domande frequenti.
+
+## Da dove partire
+
+Scegli un formato per ogni obiettivo e un ritmo che riesci a mantenere per tre mesi. Poi guarda i numeri e aggiusta. Se ti serve una mano anche con la parte organizzativa, leggi [cosa include una gestione social](/blog/gestione-social-attivita-locale-cosa-include).
+
+Se vuoi reel che raccontano davvero la tua attività, dai un'occhiata al nostro [servizio Video & Reels](/video) e agli [shooting fotografici](/shooting) per prodotti e locali. Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
   {
     slug: 'sito-web-o-solo-social-attivita-locale',
     title: 'Sito web o solo social? Perché a un\'attività locale servono entrambi',
-    excerpt: 'I social ti fanno scoprire, il sito ti fa scegliere. Come lavorano insieme sito, pagine dei servizi e social per trasformare l\'interesse in contatti.',
+    excerpt: 'Cosa fa il sito che i social non fanno, come lavora con la scheda Google (Google Business Profile) e la checklist del sito per un\'attività locale, con il caso Lumina.',
     category: 'Siti web',
-    tags: ['sito web', 'SEO locale', 'lead generation'],
+    tags: ['sito web', 'seo locale', 'google business profile', 'lead generation'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
+    updated: '2026-09-28',
+    cover: '/blog/sito-web-o-solo-social-attivita-locale/cover.jpg',
+    coverAlt: 'Un sito web, un profilo social e la scheda Google di un\'attività collegati tra loro',
     published: true,
-    seoTitle: 'Sito web o solo social? Cosa serve a un\'attività locale | InLab',
-    seoDescription: 'Perché un\'attività locale ha bisogno sia dei social sia di un sito web: come lavorano insieme per farti trovare su Google e trasformare l\'interesse in contatti.',
-    content: `"Ho Instagram, a cosa mi serve un sito?" È una domanda legittima. I social sono fondamentali, ma da soli lasciano scoperte alcune cose importanti.
+    seoTitle: 'Sito web o social? Cosa serve a un\'attività locale | InLab',
+    seoDescription: 'Sito web per attività locali: perché servono sia il sito sia i social, come lavora la scheda Google e la checklist per farti trovare e ricevere richieste.',
+    content: `Un **sito web per attività locali** serve ancora, anche se hai una pagina Instagram curata e tanti follower? È una domanda legittima: i social sono gratuiti, veloci da aggiornare e le persone ci passano ore. Qui vediamo cosa fa il sito che i social non possono fare, come lavora insieme alla scheda Google e cosa deve avere per portarti clienti.
 
-## I social ti fanno scoprire
+**Risposta breve: sì, a un'attività locale servono entrambi. I social fanno conoscere e ricordare, il sito ti fa trovare su Google, spiega bene i servizi e trasforma l'interesse in una richiesta. In mezzo c'è la scheda Google (Google Business Profile), che collega le ricerche al tuo sito e al tuo telefono.**
 
-Sui social le persone ti incontrano mentre scorrono il feed: vedono un reel, una foto, una storia. È il momento dell'**attenzione**. Ma quando qualcuno sta per scegliere, di solito cerca di più.
+Non è una gara tra strumenti. Sono pezzi dello stesso percorso: una persona ti scopre, ti cerca, ti valuta e alla fine ti contatta. Ogni strumento copre un tratto diverso.
 
-## Il sito ti fa scegliere
+## Cosa fa il sito che i social non fanno
 
-Quando una persona cerca su Google "dentista a Palagiano" o "ristorante a Castellaneta", trova siti e schede Google, non post Instagram. Il sito serve a:
+### Ti fa trovare quando qualcuno ti cerca
 
-- **farti trovare su Google** con le pagine dei tuoi servizi
-- **spiegare con calma** cosa fai, come lavori, quanto tempo serve
-- **rassicurare** con recensioni, casi reali, foto dello studio o del locale
-- **raccogliere contatti** con moduli, telefono, WhatsApp, prenotazioni
+Quando una persona ha un bisogno preciso, "dentista a Palagiano", "pizzeria aperta la domenica a Massafra", "ottico a Castellaneta", apre Google, non Instagram. I post dei social compaiono raramente in queste ricerche. Un sito con una pagina per ogni servizio, invece, può comparire proprio lì.
 
-## Come lavorano insieme
+### Risponde alle domande prima che te le facciano
 
-Il percorso ideale è semplice: i social portano attenzione, il sito approfondisce e trasforma l'interesse in una richiesta. Per lo Studio Dentistico Ricciardi, ad esempio, abbiamo costruito il nuovo sito **Lumina** con pagine dedicate ai trattamenti, collegato a contenuti social e campagne: [leggi il caso studio](/casi-studio/ricciardi).
+Sui social le informazioni scorrono e si perdono. Sul sito restano ordinate: servizi, orari, come arrivare, domande frequenti, come prenotare. Chi arriva sul sito trova risposte e si presenta già deciso.
 
-## Il sito è tuo
+### È tuo, e resta tuo
 
 C'è anche un motivo pratico: i social possono cambiare regole, ridurre la visibilità o bloccare un profilo. **Il sito e il dominio restano tuoi**, e tutto quello che costruisci lì non si perde.
 
-## Cosa deve avere un buon sito per un'attività locale
+### Ti permette di misurare
 
-- caricamento veloce e ottima resa da telefono
-- una pagina per ogni servizio principale
-- contatti sempre visibili
-- testi scritti per le persone (e per Google)
+Con un sito puoi sapere quante persone sono arrivate da Google, dai social o dalla scheda Google, e cosa hanno fatto dopo: hanno chiamato, compilato il modulo, chiesto le indicazioni. È la base per capire dove investire tempo e budget.
 
-Per capire quante persone arrivano dalla scheda Google e cosa fanno dopo, leggi come [collegare Google Business Profile a GA4](/blog/google-business-profile-ga4).
+![Confronto tra sito web e social per un'attività locale: cosa fa ciascuno](/blog/sito-web-o-solo-social-attivita-locale/sito-o-social.webp)
 
-Vuoi capire di cosa ha bisogno la tua attività? Scopri il servizio [Siti Web & Web App](/siti-web) o [scrivici](/contatti).`,
+## Serve un sito web se ho già Instagram?
+
+Instagram è ottimo per farti conoscere e per mostrare chi sei ogni giorno. Ma ha tre limiti per un'attività locale:
+
+- **non ti porta chi cerca su Google** un servizio specifico nella tua zona;
+- **non ti dà spazio per spiegare bene** servizi, trattamenti, menu o condizioni;
+- **non è tuo**: dipendi dalle regole e dall'algoritmo di una piattaforma.
+
+Il modo migliore è farli lavorare insieme. I social portano le persone a conoscerti e le mandano sul sito quando vogliono approfondire o prenotare. Il sito, a sua volta, mostra i contenuti social e rimanda ai profili.
+
+## La scheda Google (Google Business Profile) e come lavora con il sito
+
+La scheda Google è il riquadro che compare su Google e su Maps quando cerchi un'attività: nome, orari, recensioni, foto, pulsanti per chiamare e per le indicazioni. Si chiama **Google Business Profile** ed è gratuita.
+
+Per un'attività locale è spesso il primo contatto, prima ancora del sito. Ma **la scheda non sostituisce il sito**: fino al 2024 Google permetteva di creare un semplice sito dalla scheda, poi ha chiuso questa funzione. Oggi il pulsante "Sito web" della scheda deve portare a un sito vero.
+
+Scheda e sito si rafforzano a vicenda quando:
+
+- **nome, indirizzo e telefono** sono identici su scheda, sito e social;
+- le **categorie della scheda** corrispondono alle pagine dei servizi sul sito;
+- il link della scheda porta alla **pagina giusta**, non sempre alla home;
+- le **recensioni** vengono lette e ricevono risposta;
+- le **foto** sono reali e aggiornate.
+
+Dal 2026 puoi anche collegare la scheda a Google Analytics 4 e vedere in un unico posto chiamate, indicazioni stradali e visite al sito. Ti spieghiamo come nella guida su come [collegare Google Business Profile a GA4](/blog/google-business-profile-ga4).
+
+## Checklist: cosa deve avere un sito per un'attività locale
+
+- **Caricamento veloce** e ottima resa da telefono: la maggior parte delle visite arriva da smartphone.
+- **Una pagina per ogni servizio principale**, con un titolo chiaro che contiene il servizio e la zona.
+- **Contatti sempre visibili**: telefono cliccabile, WhatsApp, modulo breve.
+- **Indirizzo, orari e mappa** facili da trovare.
+- **Foto reali** dell'attività, dello staff e dei lavori.
+- **Recensioni o testimonianze** vere, con il consenso dei clienti.
+- **Domande frequenti** scritte con le parole dei tuoi clienti.
+- **Testi scritti per le persone** (e quindi anche per Google), senza frasi generiche.
+- **Informativa privacy e cookie** in regola.
+- **Statistiche attive** per sapere da dove arrivano i contatti.
+
+![Checklist del sito web per attività locali: velocità, pagine servizi, contatti, orari, recensioni e scheda Google](/blog/sito-web-o-solo-social-attivita-locale/checklist-sito.webp)
+
+## Un caso reale: Lumina, il sito dello Studio Dentistico Ricciardi
+
+Per lo studio del Dott. Francesco Ricciardi a Palagiano abbiamo realizzato il nuovo sito **Lumina**. L'obiettivo era aumentare la percezione di affidabilità dello studio e trasformarla in richieste concrete di appuntamento.
+
+Il sito ha **una pagina dedicata a ogni trattamento**, così chi cerca un servizio specifico trova subito le informazioni giuste. Intorno al sito abbiamo costruito il resto del percorso: campagne di lead generation, un piano editoriale con contenuti educativi e caroselli informativi, la gestione delle recensioni.
+
+È un buon esempio di come sito e social lavorano insieme: i contenuti social costruiscono fiducia, il sito risponde alle domande e raccoglie le richieste. Trovi tutti i dettagli nel [caso studio Lumina](/casi-studio/ricciardi).
+
+## Gli errori più comuni
+
+- **Un sito "vetrina" con una sola pagina** che dice tutto e niente: Google non sa per cosa mostrarlo.
+- **Contatti nascosti** in fondo a una pagina lunga.
+- **Informazioni vecchie**: orari non aggiornati, servizi che non offri più.
+- **Nessun collegamento tra scheda Google, sito e social.**
+- **Nessuna statistica**: non sai se il sito lavora o no.
+
+## Domande frequenti
+
+### Serve un sito web se ho Instagram e la scheda Google?
+
+Sì, se vuoi farti trovare da chi cerca un servizio specifico su Google e avere uno spazio tuo per spiegare e raccogliere richieste. Instagram e la scheda Google sono utilissimi, ma lavorano meglio quando rimandano a un sito ben fatto.
+
+### Google Business Profile può sostituire un sito?
+
+No. La scheda è fondamentale per farti trovare su Google e Maps, ma dal 2024 Google non offre più i siti creati dalla scheda. Il pulsante "Sito web" della scheda deve portare a un sito vero, con le pagine dei tuoi servizi.
+
+### Quante pagine deve avere il sito di un'attività locale?
+
+Almeno una home, una pagina per ogni servizio principale, una pagina contatti con mappa e orari e una pagina chi siamo. È meglio avere poche pagine chiare e aggiornate che tante pagine vuote.
+
+### Il sito aiuta la SEO locale?
+
+Sì. Un sito con pagine dedicate ai servizi e alla zona, dati di contatto coerenti con la scheda Google e contenuti utili aiuta a comparire nelle ricerche locali. La SEO locale lavora sempre insieme alla scheda Google e alle recensioni.
+
+### Quanto tempo serve per vedere un sito su Google?
+
+Un sito nuovo viene di solito indicizzato in qualche giorno o settimana, ma per posizionarsi bene su ricerche competitive servono mesi di contenuti utili e aggiornati. Per le ricerche con il nome dell'attività i tempi sono più brevi.
+
+## Da dove partire
+
+Se hai già social attivi, il passo successivo è dare loro una "casa": un sito semplice, veloce, con i tuoi servizi ben spiegati e collegato alla scheda Google. Per curare anche la parte social, leggi [cosa include una gestione social per attività locali](/blog/gestione-social-attivita-locale-cosa-include).
+
+Se la tua attività è in provincia di Taranto, trovi i dettagli nella pagina sulla [realizzazione di siti web a Taranto](/siti-web-taranto). Oppure scopri il servizio [Siti Web & Web App](/siti-web) e [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
   {
     slug: 'tracking-pixel-email-garante',
@@ -209,6 +480,7 @@ Vuoi capire di cosa ha bisogno la tua attività? Scopri il servizio [Siti Web & 
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/tracking-pixel-email-garante/cover.jpg',
+    coverAlt: 'Illustrazione di una busta email aperta con un piccolo pixel di tracciamento evidenziato in lilla e un interruttore del consenso',
     published: true,
     seoTitle: 'Tracking pixel email e Garante: cosa fare ora | InLab',
     seoDescription: 'Tracking pixel email Garante: cosa prevedono le linee guida, quando serve il consenso e la checklist per adeguare la newsletter entro ottobre 2026.',
@@ -376,6 +648,7 @@ Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti ge
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/contenuti-ai-obblighi-ai-act/cover.jpg',
+    coverAlt: 'Illustrazione di un post social con immagine realistica e un\'etichetta \'Generato con AI\' evidenziata in lilla, accanto a una chat di un assistente virtuale',
     published: true,
     seoTitle: 'Contenuti AI: obblighi AI Act e legge italiana | InLab',
     seoDescription: 'Contenuti generati con AI: obblighi dell\'AI Act art. 50 dal 2 agosto 2026 e della legge 132/2025. Cosa etichettare, chatbot, deepfake e checklist per PMI.',
@@ -531,6 +804,7 @@ Se hai una newsletter, dai un'occhiata anche alle nuove regole sui [tracking pix
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/ai-overviews-search-console-report/cover.jpg',
+    coverAlt: 'Schermata semplificata di Search Console con grafico delle impressioni in AI Overviews e AI Mode',
     published: true,
     seoTitle: 'Report AI Overviews in Search Console: guida | InLab',
     seoDescription: 'Report AI Overviews in Search Console: come leggere le impressioni in AI Mode e Discover, quando conviene escludersi e cosa fare subito per la tua PMI.',
@@ -695,6 +969,7 @@ Il primo passo è semplice: apri Search Console questa settimana, guarda le prim
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/seo-ai-overviews-geo-google/cover.jpg',
+    coverAlt: 'Barra di ricerca stilizzata con risposta AI che si scompone in più ricerche correlate, a illustrare la SEO per AI Overviews',
     published: true,
     seoTitle: 'SEO per AI Overviews e GEO: cosa dice Google | InLab',
     seoDescription: 'SEO per AI Overviews e GEO: la guida ufficiale di Google spiega cosa conta davvero, perché llms.txt non serve e come riconoscere le offerte GEO fuffa.',
@@ -855,6 +1130,7 @@ Il passo pratico da fare oggi: prendi le tre pagine più importanti del tuo sito
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/google-business-profile-ga4/cover.jpg',
+    coverAlt: 'Scheda Google Business Profile di un\'attività locale collegata a un report GA4 con chiamate, indicazioni stradali e clic al sito',
     published: true,
     seoTitle: 'Google Business Profile in GA4: SEO locale 2026 | InLab',
     seoDescription: 'Come collegare Google Business Profile a GA4, quali metriche guardare ogni mese e come leggere il traffico da ChatGPT: guida pratica per attività locali.',
@@ -1017,6 +1293,8 @@ La SEO locale nel 2026 non si gioca solo sulla posizione in Maps. Si gioca sulla
 
 Il punto pratico: collega la scheda, scegli tre metriche e guardale ogni mese, sempre nello stesso giorno. Il resto viene di conseguenza.
 
+Se ti chiedi se ti serve ancora un sito quando hai già la scheda e i social, leggi [sito web o solo social: cosa serve a un'attività locale](/blog/sito-web-o-solo-social-attivita-locale).
+
 Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, sito e misurazione, possiamo aiutarti con i [siti web a Taranto](/siti-web-taranto) e con la [gestione social a Taranto](/gestione-social-taranto), così che le informazioni siano coerenti ovunque. Se vuoi partire da un controllo della tua scheda, [parliamone](/contatti).
 
 ## Fonti
@@ -1034,6 +1312,7 @@ Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, si
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/whatsapp-business-ai/cover.jpg',
+    coverAlt: 'Smartphone con chat WhatsApp Business in cui un assistente AI risponde a un cliente e propone una prenotazione',
     published: true,
     seoTitle: 'WhatsApp Business AI: guida a Meta Business Agent | InLab',
     seoDescription: 'WhatsApp Business AI e Meta Business Agent: cosa fa l\'assistente, username, annunci negli Stati e costi dei messaggi. Guida pratica per attività locali.',
@@ -1185,6 +1464,7 @@ Se vuoi un assistente su misura, collegato ai tuoi strumenti e costruito sulle r
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/meta-ads-creativita-advantage/cover.jpg',
+    coverAlt: 'Griglia di creatività pubblicitarie in formati diversi analizzate da un sistema AI che le distribuisce agli utenti',
     published: true,
     seoTitle: 'Meta Ads 2026: creatività, AI e Advantage+ | InLab',
     seoDescription: 'Meta Ads 2026: come l\'AI decide chi vede i tuoi annunci, cosa cambia con verifica inserzionisti e regole UE, e come impostare creatività e segnali.',
@@ -1309,6 +1589,8 @@ Per immagini e video realistici generati con l'AI è bene prevedere un'etichetta
 
 Nel 2026 fare Meta Ads significa meno regolazioni manuali e più sostanza: creatività varie, dati affidabili, un'offerta chiara e test fatti con metodo. Se parti da qui, le campagne automatiche lavorano a tuo favore invece che al buio.
 
+Se hai un'attività locale e vuoi partire con la prima campagna, segui la guida passo passo alle [sponsorizzate Instagram per attività locali](/blog/sponsorizzate-instagram-attivita-locali).
+
 Se vuoi impostare così le tue campagne, la nostra [gestione delle campagne Meta Ads](/meta-ads) parte proprio da creatività e tracciamento. Hai un dubbio sul tuo account? [Parliamone](/contatti).
 
 *Le parti su regole UE e verifica degli inserzionisti hanno scopo informativo e non sostituiscono una consulenza legale.*
@@ -1328,6 +1610,7 @@ Se vuoi impostare così le tue campagne, la nostra [gestione delle campagne Meta
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/meta-one-aziende/cover.jpg',
+    coverAlt: 'Illustrazione di uno smartphone con profilo aziendale Instagram, badge verificato e link nel post, accanto ai piani dell\'abbonamento Meta One',
     published: true,
     seoTitle: 'Meta One per aziende: prezzi e se conviene | InLab',
     seoDescription: 'Meta One aziende: prezzi dei piani, link nei post Instagram, badge verificato e 4 domande per capire se l\'abbonamento conviene alla tua PMI.',
@@ -1473,6 +1756,7 @@ Se vuoi capire se l'abbonamento ha senso per la tua attività, guardando i tuoi 
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/seo-tiktok-search-ads/cover.jpg',
+    coverAlt: 'Illustrazione di uno smartphone con barra di ricerca TikTok, la query parrucchiere Massafra e risultati video con un annuncio sponsorizzato in evidenza',
     published: true,
     seoTitle: 'SEO su TikTok e Search Ads per attività locali | InLab',
     seoDescription: 'SEO su TikTok e TikTok Search Ads in Italia: come ottimizzare i video per la ricerca, usare keyword locali e valutare TikTok Shop con i conti giusti.',
@@ -1602,6 +1886,8 @@ Non esiste un numero magico. Secondo la nostra esperienza funzionano meglio poch
 
 Su TikTok la ricerca è ormai un'abitudine. Il primo passo non costa nulla: rendere ogni video chiaro su cosa mostra e dove sei. Il secondo è testare le Search Ads su poche keyword locali, con un budget piccolo e obiettivi misurabili. Il terzo, se vendi prodotti, è valutare TikTok Shop con i conti alla mano.
 
+Se hai un ristorante o un bar e cerchi spunti su cosa girare, trovi 15 esempi pronti nella guida alle [idee di reel per ristoranti e bar](/blog/idee-reel-ristoranti).
+
 Se vuoi impostare una strategia TikTok per la tua attività, con una [gestione dei social](/gestione-social) pensata per il tuo territorio (lavoriamo anche con la [gestione social a Taranto](/gestione-social-taranto) e provincia), [parliamone](/contatti).
 
 ## Fonti
@@ -1621,6 +1907,7 @@ Se vuoi impostare una strategia TikTok per la tua attività, con una [gestione d
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/quante-volte-pubblicare-social/cover.jpg',
+    coverAlt: 'Calendario editoriale settimanale con post, reel e stories distribuiti sui giorni e orari consigliati per pubblicare sui social',
     published: true,
     seoTitle: 'Quante volte pubblicare sui social: guida 2026 | InLab',
     seoDescription: 'Quante volte pubblicare sui social e a che ora: frequenze per piattaforma, orari migliori 2026, dati Italia e un piano editoriale sostenibile per PMI.',
@@ -1791,5 +2078,268 @@ Se ti serve una mano a costruire un piano editoriale realistico e a produrre con
 - [The Best Time to Post on LinkedIn](https://buffer.com/resources/best-time-to-post-on-linkedin/) – Buffer, aggiornato il 9 settembre 2026
 - [2026 Social Media Content Strategy Report](https://sproutsocial.com/insights/data/2026-social-media-content-strategy-report/) – Sprout Social, 2026
 - [Rewarding Original Creators on Facebook](https://about.fb.com/news/2026/03/rewarding-original-creators-on-facebook/) – Meta, marzo 2026`,
+  },
+  {
+    slug: 'sponsorizzate-instagram-attivita-locali',
+    title: 'Sponsorizzate su Instagram e Facebook: come farle funzionare per un\'attività locale',
+    excerpt: 'Obiettivo, zona e contenuto: come impostare le sponsorizzate Instagram per un\'attività locale, la differenza tra Metti in evidenza e Gestione inserzioni e cosa misurare.',
+    category: 'Advertising',
+    tags: ['sponsorizzate', 'instagram', 'meta ads', 'attività locali', 'facebook'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    updated: '2026-09-28',
+    cover: '/blog/sponsorizzate-instagram-attivita-locali/cover.jpg',
+    coverAlt: 'Mappa con un raggio intorno a un\'attività locale e i risultati messaggi, chiamate e prenotazioni',
+    published: true,
+    seoTitle: 'Sponsorizzate Instagram per attività locali: guida | InLab',
+    seoDescription: 'Sponsorizzate Instagram per attività locali: come scegliere obiettivo e zona, quali contenuti funzionano, cosa misurare e gli errori da evitare.',
+    content: `Le **sponsorizzate su Instagram per attività locali** possono portare nuovi clienti dal tuo paese e dai comuni vicini, oppure bruciare budget senza lasciare niente. La differenza raramente sta nel "trucco" giusto: sta nell'obiettivo scelto, nella zona impostata e nel contenuto che mostri. In questa guida vediamo come impostarle passo passo e cosa guardare per capire se funzionano.
+
+**Risposta breve: per un'attività locale una sponsorizzata funziona quando ha un solo obiettivo concreto (messaggi, chiamate, prenotazioni o visite al sito), una zona geografica realistica intorno all'attività e un contenuto girato nel tuo locale. Si misura in contatti ricevuti, non in like.**
+
+Instagram e Facebook fanno parte dello stesso sistema pubblicitario di Meta. Quello che leggi qui vale quindi per entrambi: una campagna ben fatta può mostrare lo stesso annuncio su tutti e due.
+
+## "Metti in evidenza" o Gestione inserzioni: qual è la differenza
+
+Ci sono due strade per sponsorizzare un contenuto.
+
+**Il pulsante "Metti in evidenza"** si trova direttamente sotto i post e i reel nell'app. È rapido: scegli il pubblico, la durata e il budget, e il contenuto parte. Va bene per dare una spinta a un post che sta già andando bene, per esempio l'annuncio di una serata.
+
+**Gestione inserzioni (Ads Manager)** è lo strumento completo di Meta. Permette di scegliere obiettivi più precisi, creare più versioni dello stesso annuncio, collegare il sito e misurare i risultati in modo affidabile. È la strada giusta quando vuoi ottenere contatti o prenotazioni in modo continuativo.
+
+Il nostro consiglio: usa "Metti in evidenza" per gli annunci occasionali e Gestione inserzioni per tutto quello che deve portare richieste nel tempo.
+
+## Obiettivo e zona: le due scelte che contano
+
+### Scegli un solo obiettivo, quello giusto per te
+
+L'errore più comune è chiedere tutto a una sola campagna: follower, like, visite e prenotazioni insieme. Meta ottimizza la distribuzione verso l'obiettivo che scegli, quindi sceglilo bene.
+
+- **Messaggi**: per chi vende su appuntamento o riceve richieste in chat, come centri estetici, parrucchieri, studi. Le persone ti scrivono su WhatsApp, Messenger o Instagram Direct.
+- **Chiamate**: per chi riceve prenotazioni al telefono, come ristoranti e servizi urgenti.
+- **Traffico o contatti sul sito**: per chi ha un sito con un modulo o un sistema di prenotazione. Serve che il sito misuri correttamente le richieste.
+- **Notorietà nella zona**: per far conoscere un'apertura, un evento o un cambio di gestione a più persone possibile nel raggio dell'attività.
+
+Se usi i messaggi, preparati a rispondere in fretta. Ti può aiutare anche l'[assistente AI di WhatsApp Business](/blog/whatsapp-business-ai), purché sia impostato bene.
+
+### Il pubblico locale: dove, non solo chi
+
+Per un'attività locale la cosa più importante è **la zona**. Puoi impostare un raggio intorno all'indirizzo oppure scegliere comuni specifici.
+
+Qualche indicazione pratica:
+
+- **Pensa a da dove arrivano davvero i tuoi clienti.** Una pizzeria di Mottola lavora con il paese e i comuni vicini, una sala ricevimenti può attirare persone da tutta la provincia.
+- **Considera la stagionalità.** D'estate un locale di Castellaneta Marina o Ginosa Marina parla anche a turisti e a chi ha una casa al mare.
+- **Non restringere troppo.** Un pubblico piccolissimo, con molti interessi combinati, rende la campagna più lenta a imparare.
+
+Negli ultimi anni i sistemi di Meta sono diventati molto bravi a trovare le persone giuste da soli, dentro la zona che scegli. Per questo conta sempre di più il contenuto: ne abbiamo parlato nell'articolo su [Meta Ads 2026 e la creatività](/blog/meta-ads-creativita-advantage).
+
+![I cinque passi per impostare una sponsorizzata Instagram per un'attività locale](/blog/sponsorizzate-instagram-attivita-locali/impostare-campagna.webp)
+
+## Il contenuto che funziona per un'attività locale
+
+L'annuncio deve fermare chi scorre e far capire subito chi sei, dove sei e cosa offri. Funzionano soprattutto:
+
+- **video verticali girati nella tua attività**, con le persone che ci lavorano;
+- **il prodotto o il servizio in azione**: il piatto che esce dal forno, il trattamento, il lavoro finito;
+- **un'offerta chiara e limitata nel tempo**, se c'è: una serata, un evento, una novità;
+- **il luogo riconoscibile**: la piazza, la via, il panorama, così chi è della zona si identifica.
+
+Prepara almeno due o tre versioni dello stesso annuncio con attacchi diversi. Meta mostrerà di più quella che funziona meglio. Se hai bisogno di contenuti girati bene, un servizio di [video e reel](/video) ti evita di sponsorizzare materiale improvvisato.
+
+## Quanto investire: il ragionamento, prima della cifra
+
+Non esiste un budget giusto per tutti. Dipende dalla zona, dal settore, dall'obiettivo e da quanto vale per te un cliente nuovo.
+
+Il ragionamento che consigliamo è questo:
+
+1. **Parti con un test** di qualche settimana su un solo obiettivo e una sola zona.
+2. **Dai tempo alla campagna** prima di cambiarla: i primi giorni servono a Meta per imparare.
+3. **Guarda quanto ti costa un contatto utile**, cioè un messaggio vero, una chiamata, una prenotazione.
+4. **Confrontalo con quanto vale un cliente** per la tua attività nel tempo, non solo al primo acquisto.
+5. **Aumenta gradualmente** solo quello che funziona.
+
+Il budget pubblicitario si paga direttamente a Meta ed è sempre distinto dal lavoro di chi imposta e segue le campagne.
+
+## Come capire se una sponsorizzata funziona
+
+Like e visualizzazioni non pagano l'affitto. Guarda i numeri legati all'obiettivo:
+
+- **costo per messaggio o per contatto**, se l'obiettivo è ricevere richieste;
+- **chiamate e prenotazioni** arrivate nel periodo della campagna;
+- **qualità dei contatti**: le persone che scrivono sono della zona? Sono interessate davvero?
+- **frequenza**: se le stesse persone vedono l'annuncio troppe volte, è ora di cambiare contenuto.
+
+Tieni un semplice foglio con le richieste ricevute e da dove arrivano. È il modo più affidabile per capire cosa rende davvero.
+
+![Le metriche da guardare nelle sponsorizzate Instagram per attività locali: contatti, chiamate e prenotazioni](/blog/sponsorizzate-instagram-attivita-locali/metriche.webp)
+
+### Gli errori più comuni
+
+- **Sponsorizzare per avere follower** invece di clienti.
+- **Nessuna zona impostata**, o una zona troppo ampia per un'attività che lavora con il paese.
+- **Un solo annuncio** per settimane, finché le persone non lo guardano più.
+- **Non rispondere ai messaggi** generati dalla campagna.
+- **Cambiare tutto ogni due giorni**, senza dare alla campagna il tempo di imparare.
+- **Dimenticare la verifica dell'account.** Meta sta chiedendo la verifica a sempre più inserzionisti: tieni pronti i dati dell'attività per evitare blocchi.
+
+Un caso a parte riguarda **associazioni, liste civiche ed enti**: dal 6 ottobre 2025 Meta non pubblica più nell'Unione Europea annunci politici, elettorali e su temi sociali. I contenuti organici restano consentiti.
+
+## Cosa vediamo nei progetti per attività locali
+
+Nelle campagne che seguiamo, la sponsorizzata funziona meglio quando è **l'ultimo pezzo di un percorso**, non il primo. Nel caso [Paresteta](/casi-studio/paresteta) la comunicazione per l'inaugurazione era divisa in fasi: teaser sui social, QR code per raccogliere contatti, video di lancio e attività in città. Ogni fase preparava la successiva.
+
+Per lo [Studio Dentistico Ricciardi](/casi-studio/ricciardi) a Palagiano le campagne di lead generation sono state costruite insieme al nuovo sito, con pagine dedicate ai trattamenti: chi cliccava trovava subito risposte e un modo semplice per chiedere un appuntamento.
+
+## Domande frequenti
+
+### Come fare una sponsorizzata su Instagram per un'attività locale?
+
+Scegli un obiettivo concreto (messaggi, chiamate o richieste dal sito), imposta la zona intorno all'attività, prepara due o tre video girati nel tuo locale e lascia lavorare la campagna per qualche settimana. Poi misura quanti contatti utili ha portato.
+
+### Meglio "Metti in evidenza" o Gestione inserzioni?
+
+"Metti in evidenza" va bene per spingere un singolo post, per esempio un evento. Per ottenere contatti in modo continuativo è meglio Gestione inserzioni, che permette obiettivi più precisi, più versioni dell'annuncio e una misurazione affidabile.
+
+### Le sponsorizzate su Instagram escono anche su Facebook?
+
+Sì, se lo scegli. Instagram e Facebook usano lo stesso sistema pubblicitario di Meta, e una campagna può essere mostrata su entrambe le piattaforme, anche nelle storie e nei reel.
+
+### Quanto deve durare una campagna sponsorizzata?
+
+Per un'attività locale conviene ragionare per settimane, non per giorni. Meta ha bisogno di qualche giorno per capire a chi mostrare l'annuncio, e servono dati sufficienti per valutare i risultati. Per un evento, invece, la campagna segue le date dell'evento.
+
+### Perché la mia sponsorizzata ha tanti like ma nessun cliente?
+
+Probabilmente l'obiettivo scelto era l'interazione, non i contatti. Meta ottimizza per quello che chiedi: se vuoi messaggi o chiamate, scegli quell'obiettivo e misura quelli.
+
+## Da dove partire
+
+Scegli un obiettivo, una zona e un contenuto girato bene. Poi dai alla campagna il tempo di lavorare e misura i contatti veri. Per capire come è cambiato il ruolo della creatività con l'AI, leggi anche [Meta Ads 2026: la creatività è il nuovo targeting](/blog/meta-ads-creativita-advantage).
+
+Se preferisci affidarti a chi lo fa ogni giorno, scopri il servizio di [campagne Meta Ads](/meta-ads) o la pagina dedicata alle [campagne Meta Ads a Taranto](/meta-ads-taranto). Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'idee-reel-ristoranti',
+    title: '15 idee di reel per ristoranti e bar (con esempi da girare subito)',
+    excerpt: 'Dalla cucina allo staff, dal locale pieno agli eventi: 15 idee di reel per ristoranti, bar e pizzerie, con le regole per girarle e come organizzare le riprese in mezza giornata.',
+    category: 'Video & Reel',
+    tags: ['reel', 'ristoranti', 'instagram', 'video', 'contenuti'],
+    author: 'Ilaria Gemma',
+    date: '2026-09-28',
+    updated: '2026-09-28',
+    cover: '/blog/idee-reel-ristoranti/cover.jpg',
+    coverAlt: 'Smartphone che mostra il reel di una pizza del giorno appena sfornata',
+    published: true,
+    seoTitle: 'Idee reel per ristoranti e bar: 15 esempi da girare | InLab',
+    seoDescription: 'Idee reel per ristoranti e bar: 15 esempi da girare subito, come aprire il video nei primi 3 secondi e come organizzare le riprese in mezza giornata.',
+    content: `Cerchi **idee di reel per ristoranti** e bar che non siano il solito piatto ripreso dall'alto? Qui ne trovi 15, divise per tema, con come girarle e cosa mettere nei primi secondi. Sono pensate per chi ha poco tempo e uno smartphone, e funzionano anche per pizzerie, pasticcerie, pub e caffetterie.
+
+**Risposta breve: i reel che portano clienti a un ristorante mostrano cose vere e riconoscibili: il piatto mentre nasce, le persone che ci lavorano, il locale pieno, le informazioni utili (menu, serate, orari). Si girano in verticale, con luce naturale, e fanno capire nei primi 3 secondi dove siamo e cosa si mangia.**
+
+Un buon reel non deve per forza diventare virale. Deve far venire voglia a chi abita vicino di venirti a trovare, e ricordare a chi c'è già stato perché tornare.
+
+## Prima di girare: 3 regole che valgono per tutti i reel
+
+1. **Si deve capire dove siamo entro 3 secondi.** Un'insegna, un testo a schermo con il nome del locale e del paese, un dettaglio riconoscibile. Chi non ti conosce deve collocarti subito.
+2. **Verticale, luce naturale, audio pulito.** Gira vicino a una finestra o all'aperto, tieni il telefono stabile e, se qualcuno parla, avvicinati. Aggiungi sempre i sottotitoli: molti guardano senza audio.
+3. **Un'idea per video.** Un piatto, una persona, una notizia. Se vuoi dire tre cose, fai tre reel.
+
+![Tre regole per girare reel per ristoranti e bar: dove siamo in 3 secondi, formato verticale, un'idea per video](/blog/idee-reel-ristoranti/tre-regole.webp)
+
+## 15 idee di reel per ristoranti e bar
+
+### Dalla cucina: il piatto mentre nasce
+
+**1. Il piatto simbolo in 15 secondi.** Dall'ingrediente crudo al piatto in tavola, con tagli veloci. Apri con il piatto finito, poi torna indietro: il risultato prima del processo ferma chi scorre.
+
+**2. L'ingrediente del territorio.** Il fornitore, l'olio del frantoio vicino, la mozzarella appena arrivata. Racconta da dove viene e perché l'hai scelto. È un contenuto che parla di qualità senza doverlo dire.
+
+**3. Il suono della cucina.** Il crepitio della frittura, la pizza che entra in forno, il caffè che sale. Pochi secondi con l'audio originale e un testo a schermo. Funziona molto bene nelle storie.
+
+**4. "Come lo facciamo noi".** Un passaggio che i clienti non vedono mai: la lievitazione, la pasta tirata a mano, la crema preparata al mattino. Mostra il tempo e la cura dietro al piatto.
+
+**5. Il piatto della settimana.** Un format fisso, sempre nello stesso giorno: "Ogni martedì vi mostriamo il piatto della settimana". Le persone imparano ad aspettarlo.
+
+### Le persone: chi c'è dietro
+
+**6. Presentiamo lo staff.** Una persona per reel: nome, cosa fa, il suo piatto preferito del menu. Le persone tornano dove si sentono conosciute.
+
+**7. Il titolare risponde.** Una domanda vera dei clienti ("fate piatti senza glutine?", "si può prenotare per gruppi?") e la risposta del titolare in 20 secondi, guardando in camera.
+
+**8. Prima dell'apertura.** Tavoli apparecchiati, luci che si accendono, il team che si prepara. Un momento che i clienti non vedono e che racconta l'atmosfera.
+
+### I clienti e il locale vivo
+
+**9. Il locale pieno.** Il sabato sera, il pranzo della domenica, l'aperitivo in piazza. Pochi secondi di atmosfera vera valgono più di cento foto del locale vuoto. Evita di inquadrare da vicino i clienti senza il loro permesso.
+
+**10. La reazione al primo assaggio.** Con clienti che accettano di essere ripresi: il primo morso, la faccia, una frase spontanea. È un contenuto sincero e difficile da imitare.
+
+**11. L'evento in 30 secondi.** La serata con musica, la degustazione, la festa a tema. Gira durante l'evento e pubblica il giorno dopo, con l'invito al prossimo appuntamento.
+
+### Informazioni utili che fanno prenotare
+
+**12. Il menu in 10 secondi.** Scorri le novità del menu con un testo a schermo per ogni piatto. Alla fine: come prenotare.
+
+**13. "Dove siamo" in modo semplice.** Il percorso dalla piazza o dal parcheggio fino all'ingresso. Utilissimo d'estate, quando arrivano turisti che non conoscono la zona, per esempio a Castellaneta Marina o Ginosa Marina.
+
+**14. Il dietro le quinte della consegna o dell'asporto.** Come prepari una pizza da asporto o un vassoio di dolci per una festa. Rassicura chi ordina e mostra la cura anche fuori dal locale.
+
+### Stagioni e occasioni
+
+**15. Il calendario del territorio.** La sagra del paese, le feste patronali, Natale, l'estate al mare. Collega il tuo menu a quello che succede intorno: le persone cercano proprio questi momenti.
+
+![Le 15 idee di reel per ristoranti e bar divise per tema: cucina, persone, locale, informazioni utili e stagioni](/blog/idee-reel-ristoranti/quindici-idee.webp)
+
+## Come organizzare le riprese in mezza giornata
+
+Non serve girare tutti i giorni. Con un po' di organizzazione, una mattina di riprese può coprire due o tre settimane di contenuti.
+
+1. **Scegli 5-6 idee** da questa lista e scrivi per ognuna la prima frase o il primo testo a schermo.
+2. **Gira nel momento giusto**: la cucina che si prepara al mattino, il locale pieno la sera.
+3. **Riprendi più del necessario**: dettagli, mani, vapore, facce. Serviranno per più video.
+4. **Monta subito i primi due reel** e programma gli altri nei giorni successivi.
+
+Se vuoi immagini curate anche per il menu, il sito e le campagne, uno [shooting fotografico](/shooting) nella stessa giornata ti fa risparmiare tempo.
+
+## Quanti reel pubblicare e quando
+
+Per un ristorante o un bar un buon ritmo di partenza è **2-3 reel a settimana**, con storie quasi ogni giorno. Pubblica prima dei momenti in cui le persone decidono dove andare: a metà settimana per il weekend, a fine mattinata per il pranzo.
+
+Per le frequenze consigliate e gli orari trovi i dati nella guida su [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social). Per capire quando usare un reel e quando un carosello, leggi [reel o post: cosa pubblicare su Instagram](/blog/reel-o-post-cosa-pubblicare-instagram).
+
+## Cosa abbiamo imparato girando per locali della provincia di Taranto
+
+Con i locali che seguiamo abbiamo visto che il contenuto più efficace è quello che segue la vita reale dell'attività. Per [Sottoscala](/cliente/sottoscala), bar di Mottola con una proposta ampia tra sushi, cocktail, focacce e poke, abbiamo costruito un'identità food riconoscibile con foto curate e reel che valorizzano piatti e atmosfera. Per [Sublime Tentazione](/cliente/sublime-tentazione), gelateria e pasticceria di Palagianello, i contenuti seguono le stagioni del laboratorio, dal gelato d'estate ai panettoni a Natale.
+
+Per [Masseria Sacramento](/cliente/masseria-sacramento) a Palagianello la comunicazione accompagna ogni appuntamento del calendario, dalla festa della birra alle serate con musica live e al pranzo della domenica. Il reel non è mai isolato: annuncia, racconta e invita al prossimo evento.
+
+## Domande frequenti
+
+### Che reel fare per un ristorante?
+
+I più efficaci mostrano il piatto mentre nasce, le persone dello staff, il locale pieno e le informazioni utili come menu, serate e come prenotare. Scegli pochi format fissi e ripetili nel tempo, così il pubblico li riconosce.
+
+### Quanto deve durare un reel per un ristorante?
+
+Di solito tra 7 e 30 secondi, con un'idea sola. La preparazione di un piatto o una ricetta possono durare di più, purché il ritmo resti veloce e ogni passaggio aggiunga qualcosa.
+
+### Posso riprendere i clienti nei reel del mio locale?
+
+Solo con il loro consenso, soprattutto se sono riconoscibili. Per l'atmosfera del locale pieno puoi usare inquadrature generali, dettagli e mani, senza primi piani di chi non ha dato il permesso.
+
+### Meglio girare con lo smartphone o con una videocamera?
+
+Per la maggior parte dei reel basta uno smartphone recente, con buona luce e il telefono stabile. Per lanci, eventi importanti o contenuti da sponsorizzare, una produzione professionale dà un risultato più curato.
+
+### Servono i reel anche su TikTok?
+
+Sì, se la tua clientela è anche lì. Molti usano TikTok per cercare dove mangiare, quindi conviene curare testo a schermo, parole chiave e località. Ti spieghiamo come nella guida alla [SEO su TikTok](/blog/seo-tiktok-search-ads).
+
+## Da dove partire
+
+Scegli tre idee da questa lista, gira questa settimana e pubblica la prossima. Poi guarda quali reel portano messaggi, prenotazioni e commenti, e fai di più di quelli.
+
+Se vuoi reel che raccontano davvero il tuo locale, scopri il nostro servizio di [video e reel per attività](/video). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
 ];

@@ -254,11 +254,11 @@ coperte" evita i doppioni: aggiornala ogni volta che pubblichi.
 
 | Servizio | Pagina | Argomenti per il blog | Già coperte (parola chiave → articolo) |
 |---|---|---|---|
-| Gestione Social | `/gestione-social` | costi, cosa include, come scegliere, piano editoriale, social per settore (ristoranti, dentisti, negozi…) | *gestione social attività locali* → `gestione-social-attivita-locale-cosa-include` |
-| Video & Reels | `/video` | idee per reel per settore, come girare reel, durata, trend, reel vs post | *reel o post Instagram* → `reel-o-post-cosa-pubblicare-instagram` |
-| Siti Web & Web App | `/siti-web` | costi di un sito, sito vs social, SEO locale, scheda Google, e-commerce, landing page | *sito web o social* → `sito-web-o-solo-social-attivita-locale` |
-| Meta Ads | `/meta-ads` | quanto investire, sponsorizzate Instagram, errori comuni, campagne per attività locali | — |
-| Automazioni AI | `/automazioni-ai` | chatbot per attività locali, risposte automatiche WhatsApp/Instagram, AI per piccole imprese | — |
+| Gestione Social | `/gestione-social` | costi, cosa include, come scegliere, piano editoriale, social per settore (ristoranti, dentisti, negozi…) | *gestione social per attività locali* → `gestione-social-attivita-locale-cosa-include`; *quante volte pubblicare sui social* → `quante-volte-pubblicare-social`; *Meta One aziende* → `meta-one-aziende` |
+| Video & Reels | `/video` | idee per reel per settore, come girare reel, durata, trend, reel vs post | *reel o post Instagram* → `reel-o-post-cosa-pubblicare-instagram`; *idee reel per ristoranti* → `idee-reel-ristoranti`; *SEO su TikTok* → `seo-tiktok-search-ads` |
+| Siti Web & Web App | `/siti-web` | costi di un sito, sito vs social, SEO locale, scheda Google, e-commerce, landing page | *sito web per attività locali* → `sito-web-o-solo-social-attivita-locale`; *Google Business Profile GA4* → `google-business-profile-ga4`; *report AI Overviews Search Console* → `ai-overviews-search-console-report`; *SEO per AI Overviews / GEO* → `seo-ai-overviews-geo-google` |
+| Meta Ads | `/meta-ads` | quanto investire, sponsorizzate Instagram, errori comuni, campagne per attività locali | *sponsorizzate Instagram per attività locali* → `sponsorizzate-instagram-attivita-locali`; *Meta Ads 2026* → `meta-ads-creativita-advantage` |
+| Automazioni AI | `/automazioni-ai` | chatbot per attività locali, risposte automatiche WhatsApp/Instagram, AI per piccole imprese | *WhatsApp Business AI* → `whatsapp-business-ai`; *contenuti AI obblighi / AI Act* → `contenuti-ai-obblighi-ai-act` |
 | Foto & Shooting | `/shooting` | shooting per ristoranti/prodotti, foto per i social, come prepararsi a uno shooting | — |
 | Branding & Identità | `/branding` | logo, rebranding, identità visiva, nome dell'attività (caso Paresteta) | — |
 
