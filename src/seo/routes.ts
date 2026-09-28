@@ -4,6 +4,7 @@
 // Nessun import di React qui: deve poter girare anche in Node.
 
 import { WEBSITE_CONTENT } from '../constants';
+import { BLOG_SEED, type BlogPost } from '../data/blogSeed';
 
 /** Dominio del sito. Impostalo su Vercel con VITE_SITE_URL (es. https://www.inlabcommunication.it). */
 export const SITE_URL = (
@@ -116,6 +117,13 @@ const webPage = (path: string, title: string, description: string) => ({
   about: orgRef,
 });
 
+// Articoli del blog: quelli nel codice + quelli pubblicati dalla dashboard
+// (registrati dal browser dopo il caricamento e dallo script di build).
+let blogPosts: BlogPost[] = BLOG_SEED.filter((p) => p.published);
+export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filter((p) => p.published); };
+export const getBlogPosts = () => blogPosts;
+const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
+
 const clients = () => ((WEBSITE_CONTENT as any).clients?.items || []) as any[];
 
 const page = (path: string, title: string, description: string, extra: Partial<Seo> = {}, crumbs?: [string, string][]): Seo => {
@@ -138,6 +146,8 @@ export const listRoutes = (): string[] => [
   ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${c.toLowerCase()}`)),
   ...CASES.map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
+  '/blog',
+  ...blogPosts.map((p) => '/blog/' + p.slug),
 ];
 
 export const getSeo = (rawPath: string): Seo => {
@@ -211,6 +221,36 @@ export const getSeo = (rawPath: string): Seo => {
         sitemap: { priority: 0.7, changefreq: 'monthly' },
         jsonLd: [{ '@context': 'https://schema.org', '@type': 'CreativeWork', name: cs.title, description: cs.description, url: abs(path), creator: orgRef, inLanguage: 'it-IT' }],
       }, [['Casi studio', '/casi-studio'], [cs.title.split(':')[0], path]]);
+    }
+  }
+
+  if (path === '/blog') {
+    return page(path, `Blog: social media, video e marketing per attività locali | ${BRAND}`,
+      'Guide pratiche e consigli su social media, reel, siti web e advertising per aziende e attività locali, scritti dal team di InLab Communication.',
+      { sitemap: { priority: 0.7, changefreq: 'weekly' }, jsonLd: [{
+        '@context': 'https://schema.org', '@type': 'Blog', name: `Blog ${BRAND}`, url: abs(path), inLanguage: 'it-IT', publisher: orgRef,
+        blogPost: blogPosts.slice(0, 20).map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: abs('/blog/' + p.slug), datePublished: p.date })),
+      }] }, [['Blog', '/blog']]);
+  }
+
+  if (path.startsWith('/blog/')) {
+    const post = blogPosts.find((p) => path === '/blog/' + p.slug);
+    if (post) {
+      const desc = post.seoDescription || post.excerpt || plain(post.content);
+      const image = post.cover ? (post.cover.startsWith('/') ? abs(post.cover) : post.cover) : abs(DEFAULT_OG_IMAGE);
+      const words = plain(post.content).split(' ').length;
+      return page(path, post.seoTitle || `${post.title} | ${BRAND}`, desc, {
+        image,
+        sitemap: { priority: 0.6, changefreq: 'monthly' },
+        jsonLd: [{
+          '@context': 'https://schema.org', '@type': 'BlogPosting',
+          headline: post.title.slice(0, 110), description: clip(desc), image: [image],
+          datePublished: post.date, dateModified: post.date,
+          author: { '@type': 'Person', name: post.author },
+          publisher: orgRef, mainEntityOfPage: abs(path), url: abs(path),
+          articleSection: post.category, keywords: post.tags.join(', '), wordCount: words, inLanguage: 'it-IT',
+        }],
+      }, [['Blog', '/blog'], [post.title, path]]);
     }
   }
 

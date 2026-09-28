@@ -65,6 +65,7 @@ Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variab
 | Documento / collezione | Contenuto | Chi scrive |
 |---|---|---|
 | `app/site_content` | testi e immagini del sito | admin |
+| `blog_posts` | articoli del blog (pubblici solo se `published`) | admin |
 | `app/settings` | provider/modello AI e informazioni per il chatbot | admin |
 | `leads` | contatti da form e chatbot | solo server: `/api/lead`, `/api/chat` |
 | `admins` | UID degli amministratori | a mano dalla console |
@@ -73,6 +74,11 @@ Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variab
 ## Sicurezza
 
 Tutti i passaggi (regole Firestore, admin, chiavi, Cloudinary) sono in **[SECURITY.md](SECURITY.md)**.
+
+## Blog
+
+- Pagine: `/blog` e `/blog/<indirizzo>`. Gli articoli iniziali sono in `src/data/blogSeed.ts`; quelli nuovi si scrivono in dashboard → **Blog** (salvati in Firestore `blog_posts`).
+- Un articolo pubblicato è visibile subito. Per inserirlo anche nella sitemap e nell'HTML pre-generato serve un nuovo deploy: crea un *Deploy Hook* su Vercel (*Settings → Git → Deploy Hooks*, branch `main`) e salvalo come variabile `VERCEL_DEPLOY_HOOK_URL`; poi in dashboard basta il pulsante **Aggiorna per Google**.
 
 ## Dashboard
 
