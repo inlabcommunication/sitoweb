@@ -7,7 +7,8 @@ import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerCont
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
-const template = readFileSync(join(DIST, 'index.html'), 'utf-8');
+// index.html contiene l'indirizzo provvisorio: sostituito ovunque col dominio attuale
+const template = readFileSync(join(DIST, 'index.html'), 'utf-8').split('https://sitoweb-beta.vercel.app').join(SITE_URL);
 
 const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const json = (o: object) => JSON.stringify(o).replace(/</g, '\\u003c');
