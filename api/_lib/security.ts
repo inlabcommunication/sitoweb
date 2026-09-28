@@ -4,7 +4,6 @@ import type { VercelRequest, VercelResponse } from "./types";
 import { createHash } from "node:crypto";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore, FieldValue, type Firestore } from "firebase-admin/firestore";
-import { getAuth } from "firebase-admin/auth";
 
 export function getAdminDb(): Firestore {
   if (getApps().length === 0) {
@@ -80,6 +79,8 @@ export async function requireAdmin(req: VercelRequest): Promise<string | null> {
   if (!token) return null;
   try {
     const db = getAdminDb();
+    // Caricato solo qui: chat e form contatti non hanno bisogno del modulo di autenticazione
+    const { getAuth } = await import("firebase-admin/auth");
     const decoded = await getAuth().verifyIdToken(token, true);
     const admin = await db.collection("admins").doc(decoded.uid).get();
     return admin.exists ? decoded.uid : null;
