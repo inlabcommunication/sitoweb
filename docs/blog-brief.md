@@ -19,7 +19,7 @@ Ogni **martedì e venerdì**:
 6. Se no, scrivi solo un breve report interno.
 
 Pubblica solo per notizie A o B forti. Non pubblicare contenuti deboli solo per rispettare la cadenza.
-Non ripetere temi già trattati: controlla `content/blog/index.json`. Se c'è un seguito di un tema già coperto, preferisci aggiornare l'articolo esistente (campo `updated`) o scriverne uno che lo linki.
+Non ripetere temi già trattati: controlla gli articoli in `src/data/blogSeed.ts`. Se c'è un seguito di un tema già coperto, preferisci aggiornare l'articolo esistente (campo `updated`) o scriverne uno che lo linki.
 
 ## Fonti da monitorare
 
@@ -44,7 +44,13 @@ Non ripetere temi già trattati: controlla `content/blog/index.json`. Se c'è un
 
 Titolo SEO, slug, meta title, meta description, H1, struttura H2/H3, introduzione chiara, spiegazione della novità, perché è importante, impatto per PMI, aziende locali e professionisti, cosa fare in pratica, eventuale esempio o caso studio, conclusione con call to action morbida verso l'agenzia, fonti con link, link interni verso pagine e articoli pertinenti. FAQ SEO quando servono; schema Article/FAQ indicato nel frontmatter.
 
-Formato tecnico dei file: [`content/blog/README.md`](../content/blog/README.md). Usa come riferimento gli articoli già pubblicati.
+### Dove e come si pubblica
+
+- Gli articoli sono in `src/data/blogSeed.ts` (array `BLOG_SEED`): `slug`, `title` (H1), `excerpt`, `category` (una tra Social media, Video & Reel, Siti web, Strategia, Advertising), `tags` (3-6, minuscolo), `author` (Nicola Carpignano o Ilaria Gemma), `date` (data reale), `cover` (`/blog/<slug>/cover.jpg`, 1600×900), `published: true`, `seoTitle` (max 60 caratteri, termina con " | InLab"), `seoDescription` (140-155 caratteri), `content` (Markdown).
+- Markdown supportato dal sito: `##`/`###`/`####`, grassetto, corsivo, link, elenchi `-` e `1.`, `>` citazione di una sola riga logica, immagine `![alt](url)` su riga propria (l'alt diventa anche la didascalia), `---`. **Niente** `#`, tabelle, HTML o codice; niente elenchi dentro le citazioni.
+- Se esiste, segui anche `docs/seo/LINEE-GUIDA-BLOG.md` (manuale del responsabile SEO): lunghezza minima 1.200 parole, risposta breve in grassetto, "## Domande frequenti", link al servizio collegato, a 1-3 articoli e a `/contatti`, un link verso il nuovo articolo da un articolo già esistente.
+- Immagini: spec in `tools/blog-images/specs/<slug>.cjs`, poi `NODE_PATH=$(npm root -g) node tools/blog-images/gen.cjs tools/blog-images/specs/<slug>.cjs`. Crea `public/blog/<slug>/cover.jpg` e le infografiche `.webp`. Usa gli spec esistenti come modello.
+- Prima del commit: `npx tsc --ignoreConfig --noEmit --target es2022 --strict src/data/blogSeed.ts` (oppure `npm run lint` se le dipendenze sono installate).
 
 ## Stile
 
@@ -67,7 +73,7 @@ Si possono usare casi forniti dall'agenzia, casi da fonti autorevoli, esempi rea
 ## Immagini
 
 Per ogni articolo: immagine hero, eventuali immagini interne, grafiche semplici che spiegano concetti, dati o passaggi. Devono aiutare a capire, non decorare. Stile del sito: moderno, concreto, pulito (sfondo scuro, accento lilla). Niente stock banale o visual astratti.
-Per ogni immagine: titolo, prompt per generarla, alt text SEO, posizione consigliata. Si generano con `tools/blog-images` (vedi README del blog).
+Per ogni immagine: titolo, prompt per generarla, alt text SEO, posizione consigliata. Si generano con `tools/blog-images` (vedi sopra); titolo, prompt, alt e posizione vanno nel report della sessione.
 
 ## Google Search Console e GA4
 

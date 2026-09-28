@@ -1,7 +1,7 @@
 // Immagini del blog (hero 1200x630 + infografiche) generate da uno spec JS,
 // nello stile del sito. Uso:
 //   NODE_PATH=$(npm root -g) node tools/blog-images/gen.cjs tools/blog-images/specs/<slug>.cjs [...]
-// Output: public/blog/<slug>/hero.webp, og.png e <name>.webp per ogni infografica.
+// Output: public/blog/<slug>/cover.jpg (copertina 1600x900) e <name>.webp per ogni infografica.
 // Serve Playwright con Chromium (preinstallato negli ambienti cloud).
 const fs = require('fs'); const path = require('path'); const os = require('os');
 const OUT = path.join(__dirname, '../../public/blog');
@@ -23,8 +23,8 @@ body{width:${w}px;${h?`height:${h}px;`:''}background:#1e1d1d;color:#F0EDE6;font-
 </style></head><body><div class="bgglow"></div><div class="grid"></div>${body}</body></html>`;
 const logo = (pos) => `<div class="logo" style="${pos}"><b>IL</b>InLab Communication</div>`;
 
-function hero(s){ // 1200x630
-  return base(1200,630,`
+function hero(s){ // 1200x675 → copertina 1600x900 (16:9)
+  return base(1200,675,`
   <div style="position:absolute;left:64px;top:58px;width:640px">
     <span class="tag">${esc(s.tag)}</span>
     <div class="h" style="font-size:${s.size||66}px;margin-top:30px">${s.title}</div>
@@ -74,7 +74,7 @@ const jobs=[];
 for (const a of specs){
   const dir = path.join(OUT, a.slug); fs.mkdirSync(dir,{recursive:true});
   const hf = path.join(TMP, a.slug + '_hero.html'); fs.writeFileSync(hf, hero(a.hero));
-  jobs.push({html:hf,out:path.join(dir,'hero.webp'),png:path.join(dir,'og.png'),w:1200,h:630});
+  jobs.push({html:hf,out:path.join(dir,'cover.jpg'),w:1200,h:675,scale:4/3,type:'jpeg'});
   (a.inline||[]).forEach((im)=>{ const [html,h] = ({steps,compare,timeline})[im.type](im);
     const f=path.join(TMP,`${a.slug}_${im.name}.html`); fs.writeFileSync(f,html); jobs.push({html:f,out:path.join(dir,im.name+'.webp'),w:1200,h:200,full:true}); });
 }

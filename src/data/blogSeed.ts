@@ -98,6 +98,8 @@ Ogni mese si guardano i dati: quali contenuti funzionano, da dove arrivano i con
 
 Un'agenzia seria risponde con esempi concreti e non promette risultati garantiti in poche settimane.
 
+Se ti chiedi con che ritmo pubblicare, leggi la guida su [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social).
+
 Vuoi capire come potrebbe funzionare per la tua attività? [Scopri il servizio di gestione social](/gestione-social) oppure [scrivici](/contatti): la prima chiacchierata è senza impegno.`,
   },
   {
@@ -145,6 +147,8 @@ Poi i numeri dicono cosa aumentare e cosa ridurre.
 
 Pubblicare tanto senza un filo conduttore. Meglio pochi contenuti riconoscibili e costanti che tanti post scollegati.
 
+Gli stessi video possono farti trovare anche su TikTok, che molti usano come motore di ricerca: te lo spieghiamo nella guida alla [SEO su TikTok](/blog/seo-tiktok-search-ads).
+
 Se vuoi reel che raccontano davvero la tua attività, dai un'occhiata al nostro [servizio Video & Reels](/video) o [raccontaci il tuo progetto](/contatti).`,
   },
   {
@@ -188,6 +192,1600 @@ C'è anche un motivo pratico: i social possono cambiare regole, ridurre la visib
 - contatti sempre visibili
 - testi scritti per le persone (e per Google)
 
+Per capire quante persone arrivano dalla scheda Google e cosa fanno dopo, leggi come [collegare Google Business Profile a GA4](/blog/google-business-profile-ga4).
+
 Vuoi capire di cosa ha bisogno la tua attività? Scopri il servizio [Siti Web & Web App](/siti-web) o [scrivici](/contatti).`,
+  },
+  {
+    slug: 'tracking-pixel-email-garante',
+    title: 'Tracking pixel nelle email e Garante Privacy: come mettere in regola la tua newsletter',
+    excerpt: 'Il Garante Privacy equipara i pixel nelle email ai cookie: senza consenso non puoi tracciare chi apre le tue newsletter. Ecco cosa cambia e cosa fare entro fine ottobre 2026.',
+    category: 'Strategia',
+    tags: ['email marketing', 'newsletter', 'gdpr', 'garante privacy', 'tracking pixel', 'consenso'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/tracking-pixel-email-garante/cover.jpg',
+    published: true,
+    seoTitle: 'Tracking pixel email e Garante: cosa fare ora | InLab',
+    seoDescription: 'Tracking pixel email Garante: cosa prevedono le linee guida, quando serve il consenso e la checklist per adeguare la newsletter entro ottobre 2026.',
+    content: `Se mandi newsletter o DEM, le linee guida del Garante sui **tracking pixel nelle email** ti riguardano da vicino. Il Garante Privacy ha stabilito che il pixel che registra chi apre i tuoi messaggi va trattato come un cookie: serve il consenso, e il tempo per adeguarsi scade **entro fine ottobre 2026**.
+
+**Risposta breve: se la tua piattaforma registra chi apre ogni singola email, ti serve un consenso specifico, come per i cookie. Hai tempo fino a fine ottobre 2026 per aggiornare moduli, informativa e impostazioni. Senza consenso puoi contare solo le aperture complessive in forma anonima.**
+
+Non è un tema da ufficio legale e basta. Cambia il modo in cui raccogli le iscrizioni, cosa scrivi nell'informativa e perfino come leggi i risultati delle tue campagne. Qui trovi cosa dice il provvedimento, cosa resta permesso e una checklist pratica da seguire.
+
+**In breve**
+
+- I pixel nelle email rientrano nell'art. 122 del Codice privacy, lo stesso regime dei cookie: serve un consenso preventivo, libero, specifico e informato.
+- Senza consenso puoi misurare solo il tasso di apertura complessivo in forma anonima, oltre ai pixel per sicurezza e comunicazioni obbligatorie per legge.
+- L'utente deve poter togliere solo il tracciamento e continuare a ricevere le email.
+- Scadenza per mettersi in regola: entro fine ottobre 2026.
+- L'open rate diventerà meno affidabile: conviene spostare l'attenzione su clic, risposte e conversioni.
+
+## Cosa ha deciso il Garante sui tracking pixel nelle email
+
+Partiamo dalla definizione. Un **tracking pixel** è un'immagine minuscola, spesso invisibile, inserita nel corpo dell'email. Quando il destinatario apre il messaggio, il client di posta scarica quell'immagine e la piattaforma di invio registra l'apertura. Quasi tutti gli strumenti di email marketing, da Mailchimp a Brevo a MailUp, usano questo meccanismo per calcolare il tasso di apertura.
+
+Con il [provvedimento del 17 aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943), pubblicato in Gazzetta Ufficiale il 29 aprile 2026, il Garante ha adottato linee guida specifiche su questo tema. Il testo concede sei mesi per adeguarsi: la scadenza cade quindi entro fine ottobre 2026.
+
+### Il pixel come un cookie
+
+Il punto centrale è l'inquadramento giuridico. Secondo il Garante, i pixel nelle email rientrano nell'**art. 122 del Codice privacy**, la stessa norma che regola i cookie sui siti. In pratica, leggere informazioni dal dispositivo di chi apre la mail richiede un consenso:
+
+- **preventivo**, cioè raccolto prima di attivare il tracciamento;
+- **libero**, senza forzature;
+- **specifico**, riferito proprio al tracciamento delle aperture;
+- **informato**, dopo aver spiegato in modo chiaro cosa succede.
+
+### Cosa resta permesso senza consenso
+
+Le linee guida individuano tre eccezioni:
+
+1. **Statistica anonima delle aperture.** Puoi contare quante persone hanno aperto una campagna in totale, a patto che i pixel siano uguali per tutti (non individuali) e che indirizzi IP e dati sul client di posta siano anonimizzati.
+2. **Sicurezza e autenticazione.** Ad esempio email di attivazione dell'account o di cambio password.
+3. **Comunicazioni di servizio obbligatorie per legge.**
+
+Attenzione a un dettaglio che fa la differenza: se la piattaforma conserva il dato di apertura legato al singolo indirizzo, **anche solo per poco tempo**, quel dato non è anonimo. E quindi serve il consenso.
+
+### Informativa e revoca granulare
+
+Chi si iscrive deve capire in modo chiaro che le email contengono pixel e a cosa servono. Inoltre la revoca deve essere semplice e **granulare**: l'utente deve poter scegliere se disiscriversi del tutto oppure togliere solo il tracciamento, continuando a ricevere le tue email senza pixel.
+
+Le regole valgono per chiunque invii email con pixel: aziende, piattaforme di invio (ESP) e provider di posta. Le analisi di [Agenda Digitale](https://www.agendadigitale.eu/sicurezza/privacy/tracking-pixel-nelle-email-sei-mesi-per-mettersi-in-regola/) e [Altalex](https://www.altalex.com/documents/news/2026/05/08/tracking-pixel-comunicazioni-posta-elettronica-nuove-linee-guida) approfondiscono gli aspetti tecnici e giuridici.
+
+## Perché conta anche se mandi "solo" una newsletter al mese
+
+Molte piccole attività pensano che queste regole riguardino solo i grandi e-commerce. Non è così. Se usi una piattaforma di email marketing con le impostazioni standard, con buona probabilità stai già tracciando le aperture individuali di ogni iscritto.
+
+Il 2026 è stato anche un anno di controlli concreti sul marketing. Due casi aiutano a capire l'aria che tira:
+
+- **Altroconsumo Edizioni**, luglio 2026: sanzione da 280 mila euro. Secondo il [provvedimento del Garante](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10275843), la società aveva inviato email promozionali a utenti che non avevano completato la creazione dell'account. Nessuna vendita conclusa, quindi niente "soft spam". A questo si aggiungevano ritardi nel rispondere alle richieste di esercizio dei diritti.
+- **Lusha Systems**, data broker attivo nella lead generation B2B, luglio 2026: sanzione da 2 milioni di euro e divieto di trattamento.
+
+Queste sanzioni non riguardano i pixel, ma ribadiscono principi che chi fa email marketing deve conoscere. Li trovi nel box qui sotto.
+
+**Errori da evitare nell'email marketing**
+
+- Usare dati trovati online (profili LinkedIn, siti aziendali) per inviare promozioni come se fossero liberamente utilizzabili: non lo sono.
+- Comprare liste di contatti senza verificare che le persone abbiano dato un consenso specifico alla cessione dei loro dati.
+- Applicare il "soft spam" a chi non ha mai comprato: vale solo per clienti con una vendita conclusa.
+- Perdere le disiscrizioni quando cambi piattaforma o CRM: devono restare valide anche dopo la migrazione.
+- Rispondere in ritardo a chi chiede accesso o cancellazione dei propri dati.
+
+## Cosa cambia per PMI, attività locali e professionisti
+
+L'impatto dipende da come usi le email. Qualche scenario tipico, a titolo di esempio.
+
+**Ristorante o pizzeria.** Mandi una newsletter con il menu della settimana e le serate a tema. Se vuoi sapere chi apre, ti serve il consenso. Se ti basta il dato complessivo, puoi lavorare con statistiche anonime, purché la piattaforma le produca davvero in forma anonima.
+
+**Negozio con carta fedeltà.** Raccogli email in cassa o sul sito. È il momento di rivedere il modulo di iscrizione: oltre al consenso al marketing, serve una scelta separata e chiara sul tracciamento delle aperture.
+
+**Studio professionale (dentista, commercialista, avvocato).** Le email di promemoria appuntamento e le comunicazioni di servizio vanno distinte dalle newsletter informative. Solo le comunicazioni obbligatorie per legge rientrano nell'eccezione: le altre seguono la regola generale.
+
+**E-commerce.** È il caso più delicato, perché spesso le automazioni (carrello abbandonato, email di benvenuto, riattivazione) si basano proprio sulle aperture individuali. Se un flusso scatta quando qualcuno apre o non apre una mail, va ripensato per chi non ha dato il consenso.
+
+### Il tasso di apertura diventa meno affidabile
+
+C'è un effetto collaterale che riguarda tutti: l'**open rate** perderà valore come indicatore. Una parte degli iscritti non darà il consenso, quindi le aperture misurate saranno parziali.
+
+Secondo noi è un'occasione per misurare meglio. Clic, risposte, prenotazioni, vendite e visite al sito dicono molto di più sul valore di una newsletter rispetto a un'apertura, che non garantisce nemmeno che il messaggio sia stato letto. Se il tuo obiettivo è portare persone sul sito, ti conviene [misurare cosa arriva dal sito in GA4](/blog/google-business-profile-ga4) e collegare le campagne ai risultati reali.
+
+## Cosa fare in pratica entro fine ottobre 2026
+
+Ecco una checklist operativa. Non sostituisce il parere del tuo consulente privacy, ma ti aiuta a non arrivare impreparato.
+
+1. **Mappa dove usi i pixel.** Elenca newsletter, DEM, automazioni ed email transazionali. Per ciascuna chiediti: c'è un pixel? Serve davvero?
+2. **Verifica come lavora la tua piattaforma.** Controlla se il tracciamento delle aperture è individuale e se esistono opzioni per disattivarlo o renderlo anonimo. Se il dato resta legato all'indirizzo, anche per poco, non è anonimo.
+3. **Separa le email di servizio.** Attivazione account, cambio password e comunicazioni obbligatorie per legge possono restare fuori dalla regola del consenso. Le promozioni no.
+4. **Aggiorna i moduli di iscrizione.** Aggiungi una richiesta di consenso specifica per il tracciamento, separata da quella al marketing e non preselezionata. Se i tuoi form sono sul sito, è il momento di rivederli insieme a chi gestisce i tuoi [siti web e landing page](/siti-web).
+5. **Riscrivi l'informativa.** Spiega in parole semplici cosa sono i pixel, cosa registrano e come rinunciarvi.
+6. **Rendi la revoca granulare.** Nel footer delle email e nel centro preferenze devono esserci due strade: disiscrizione completa oppure stop al solo tracciamento.
+7. **Gestisci la base iscritti esistente.** Per chi è già in lista e non ha dato un consenso specifico al tracciamento, valuta con il tuo consulente se inviare email senza pixel o chiedere il consenso.
+8. **Rivedi KPI e automazioni.** Sostituisci i flussi basati sulle aperture con trigger legati a clic, acquisti o azioni sul sito. Se usi [automazioni e chatbot AI](/automazioni-ai) collegati al CRM, controlla che rispettino le nuove scelte degli utenti.
+
+![Checklist in sei punti per adeguare la newsletter alle linee guida del Garante sui tracking pixel entro fine ottobre 2026](/blog/tracking-pixel-email-garante/checklist.webp)
+
+## Un esempio concreto: la newsletter di un negozio di arredamento
+
+Facciamo un esempio ipotetico. Un negozio di arredamento in provincia di Taranto invia due newsletter al mese con novità e promozioni a circa duemila iscritti, raccolti in negozio e dal sito. La piattaforma registra le aperture per ogni contatto e c'è un'automazione che rimanda la stessa email a chi non l'ha aperta.
+
+Per adeguarsi, il negozio:
+
+- aggiunge al form del sito una casella separata per il consenso al tracciamento;
+- aggiorna l'informativa con una sezione dedicata ai pixel;
+- inserisce nel footer un link "ricevi le email senza tracciamento";
+- per chi non ha dato il consenso, invia le email senza pixel e sostituisce l'automazione "non ha aperto" con un invio programmato uguale per tutti;
+- inizia a valutare le campagne in base ai clic sui prodotti e alle richieste di preventivo.
+
+Il risultato è una newsletter meno "spiata", ma più facile da difendere in caso di controllo e misurata su numeri che contano davvero.
+
+## Come lo affrontiamo con i nostri clienti
+
+Quando rivediamo l'email marketing di un'attività locale, partiamo sempre dallo stesso punto: da dove arrivano i contatti e cosa è stato detto alle persone quando si sono iscritte. Spesso la lista nasce in modi diversi (il modulo del sito, la cassa del negozio, un evento) e ogni fonte va controllata a parte.
+
+Il secondo passo è guardare la newsletter con gli occhi di chi la riceve. Una mail utile, con un'offerta chiara e un link che porta dove promette, funziona anche senza sapere chi l'ha aperta. È lo stesso principio che applichiamo quando progettiamo [siti web e landing page](/siti-web): misurare le azioni vere, come una richiesta di preventivo o una prenotazione, invece delle metriche di vanità.
+
+## Domande frequenti
+
+### Cosa sono i tracking pixel nelle email?
+
+Sono immagini minuscole, di solito invisibili, inserite nel corpo dell'email. Quando il destinatario apre il messaggio, l'immagine viene scaricata e la piattaforma registra l'apertura, spesso collegandola al singolo indirizzo.
+
+### Entro quando bisogna adeguarsi alle linee guida del Garante?
+
+Il provvedimento del 17 aprile 2026 è stato pubblicato in Gazzetta Ufficiale il 29 aprile 2026 e concede sei mesi per mettersi in regola. La scadenza cade quindi entro fine ottobre 2026.
+
+### Posso ancora misurare il tasso di apertura senza consenso?
+
+Sì, ma solo come conteggio statistico anonimo e complessivo: pixel uguali per tutti, non individuali, e indirizzi IP e dati del client anonimizzati. Se la piattaforma lega l'apertura al singolo indirizzo, anche per poco tempo, serve il consenso.
+
+### Le email transazionali e di servizio sono coinvolte?
+
+Le linee guida ammettono senza consenso i pixel usati per sicurezza e autenticazione, come attivazione dell'account o cambio password, e quelli nelle comunicazioni di servizio obbligatorie per legge. Per tutto il resto vale la regola del consenso.
+
+### Cosa succede se un utente revoca solo il consenso al tracciamento?
+
+Deve poter continuare a ricevere le tue email, ma senza pixel. Le linee guida chiedono una revoca semplice e granulare: disiscrizione completa oppure stop al solo tracciamento.
+
+## Mettere in regola la newsletter senza perdere i risultati
+
+Le linee guida del Garante sui tracking pixel non vietano l'email marketing: chiedono trasparenza e scelte reali per chi riceve i tuoi messaggi. Il primo passo pratico è semplice: apri la tua piattaforma di invio, verifica come registra le aperture e aggiorna form e informativa prima di fine ottobre 2026.
+
+Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti generati con l'AI](/blog/contenuti-ai-obblighi-ai-act). Se vuoi rivedere form, automazioni e metriche delle tue campagne email, [parliamone](/contatti): possiamo aiutarti a impostare un sistema chiaro e misurabile.
+
+*Questo articolo ha scopo informativo e non sostituisce una consulenza legale. Per valutare il tuo caso specifico rivolgiti a un professionista della protezione dei dati.*
+
+## Fonti
+
+- [Linee guida sui tracking pixel nelle comunicazioni di posta elettronica, provvedimento del 17 aprile 2026 – Garante per la protezione dei dati personali, aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943)
+- [Comunicato sulle linee guida sui tracking pixel nelle email – Garante per la protezione dei dati personali, 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241977)
+- [Tracking pixel nelle email: sei mesi per mettersi in regola – Agenda Digitale, 2026](https://www.agendadigitale.eu/sicurezza/privacy/tracking-pixel-nelle-email-sei-mesi-per-mettersi-in-regola/)
+- [Tracking pixel nelle comunicazioni di posta elettronica: le nuove linee guida – Altalex, 8 maggio 2026](https://www.altalex.com/documents/news/2026/05/08/tracking-pixel-comunicazioni-posta-elettronica-nuove-linee-guida)
+- [Provvedimento sanzionatorio nei confronti di Altroconsumo Edizioni – Garante per la protezione dei dati personali, luglio 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10275843)`,
+  },
+  {
+    slug: 'contenuti-ai-obblighi-ai-act',
+    title: 'Contenuti generati con AI: obblighi di trasparenza tra AI Act e legge italiana',
+    excerpt: 'Dal 2 agosto 2026 l\'articolo 50 dell\'AI Act impone trasparenza su chatbot, deepfake e contenuti sintetici. Ecco cosa cambia per chi usa l\'AI per post, ads e immagini, anche alla luce della legge italiana 132/2025.',
+    category: 'Strategia',
+    tags: ['intelligenza artificiale', 'ai act', 'legge 132/2025', 'deepfake', 'chatbot', 'contenuti ai'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/contenuti-ai-obblighi-ai-act/cover.jpg',
+    published: true,
+    seoTitle: 'Contenuti AI: obblighi AI Act e legge italiana | InLab',
+    seoDescription: 'Contenuti generati con AI: obblighi dell\'AI Act art. 50 dal 2 agosto 2026 e della legge 132/2025. Cosa etichettare, chatbot, deepfake e checklist per PMI.',
+    content: `Se usi ChatGPT per i post, un generatore di immagini per le ads o un chatbot sul sito, devi conoscere gli obblighi sui **contenuti generati con AI**. Dal 2 agosto 2026 si applica l'articolo 50 dell'AI Act europeo, che introduce regole di trasparenza su chatbot, deepfake e contenuti sintetici.
+
+In Italia, poi, è già in vigore dal 10 ottobre 2025 la legge 132/2025 sull'intelligenza artificiale, con norme su professionisti, diritto d'autore e deepfake. In questo articolo mettiamo ordine: cosa è obbligatorio, cosa no e come organizzarti senza rinunciare agli strumenti AI.
+
+**In breve**
+
+- Dal 2 agosto 2026 l'articolo 50 dell'AI Act impone trasparenza su chatbot, contenuti sintetici e deepfake.
+- Anche l'azienda che si limita a usare uno strumento AI (il "deployer") ha obblighi, soprattutto sui deepfake.
+- I testi su temi di interesse pubblico non vanno etichettati se c'è revisione umana e una persona ne è responsabile.
+- La legge italiana 132/2025 obbliga i professionisti a informare i clienti sull'uso dell'AI e punisce i deepfake dannosi con la reclusione da 1 a 5 anni.
+- Un logo o un'immagine generati al 100% dall'AI potrebbero non essere tutelati dal diritto d'autore.
+
+## Cosa è cambiato: l'articolo 50 dell'AI Act
+
+L'AI Act (Regolamento UE 2024/1689) è la normativa europea sull'intelligenza artificiale. L'**articolo 50** riguarda la trasparenza: in parole semplici, le persone devono sapere quando parlano con una macchina o guardano un contenuto creato da una macchina. Questi obblighi si applicano dal **2 agosto 2026**. Il 20 luglio 2026 la Commissione europea ha adottato le [linee guida finali](https://digital-strategy.ec.europa.eu/en/news/commission-publishes-guidelines-transparency-obligations-providers-and-deployers-certain-ai-systems) per interpretarli.
+
+### I quattro ambiti della trasparenza
+
+Il [testo dell'articolo 50](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50) copre quattro situazioni:
+
+1. **Chatbot e sistemi che interagiscono con le persone**: devono rendere chiaro che si tratta di un'AI.
+2. **Marcatura dei contenuti sintetici** (art. 50, paragrafo 2): immagini, audio, video e testi generati devono avere un contrassegno leggibile da una macchina, come un watermark o metadati. Questo obbligo è a carico dei **fornitori**, cioè di chi sviluppa lo strumento.
+3. **Riconoscimento delle emozioni e categorizzazione biometrica**: un ambito specifico, che raramente riguarda una piccola attività.
+4. **Deepfake e testi su temi di interesse pubblico** (art. 50, paragrafo 4): obblighi a carico dei **deployer**.
+
+### Chi è il "deployer"
+
+Qui c'è il punto che interessa di più alle PMI. Il deployer non è solo una grande azienda tecnologica: è **chiunque usi un sistema AI** nella propria attività. Se il tuo negozio crea un'immagine con un generatore AI e la pubblica su Instagram, per l'AI Act sei un deployer.
+
+### Deepfake: quando va dichiarato
+
+Per deepfake si intendono immagini, audio o video che **somigliano a persone, luoghi o eventi reali** e che possono sembrare autentici. In questi casi serve una dichiarazione chiara e visibile al primo contatto con il contenuto.
+
+Se l'opera è chiaramente artistica, satirica o di finzione, la dichiarazione può essere attenuata, ad esempio inserita nei materiali di accompagnamento, senza rovinare la fruizione.
+
+### Testi generati con AI
+
+I testi prodotti con l'AI su temi di interesse pubblico vanno dichiarati. L'etichetta però **non serve** se c'è una revisione umana o un controllo editoriale e una persona ne ha la responsabilità. Per chi usa l'AI come aiuto e poi rilegge, corregge e firma, è una distinzione importante.
+
+### Il Digital Omnibus: cosa è stato rinviato e cosa no
+
+Il [Digital Omnibus sull'AI](https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force), in vigore dal 27 luglio 2026, ha modificato alcune scadenze. Ma **non rinvia l'articolo 50** in generale. Le novità principali:
+
+- per il watermark (art. 50, paragrafo 2), i sistemi già sul mercato prima del 2 agosto 2026 hanno tempo fino al **2 dicembre 2026**;
+- gli obblighi per i sistemi ad alto rischio slittano al **2 dicembre 2027** per quelli dell'Allegato III (ad esempio selezione del personale e credit scoring) e al **2 agosto 2028** per quelli dell'Allegato I;
+- l'obbligo di alfabetizzazione AI (art. 4) è stato ammorbidito: ora si chiede di "adottare misure per favorire" le competenze, invece di "garantire un livello sufficiente".
+
+![Timeline delle scadenze: legge italiana sull'AI dal 10 ottobre 2025, articolo 50 AI Act dal 2 agosto 2026, watermark sistemi esistenti 2 dicembre 2026, alto rischio 2 dicembre 2027](/blog/contenuti-ai-obblighi-ai-act/scadenze.webp)
+
+### Il codice di condotta UE e l'etichetta comune
+
+Il 10 giugno 2026 la Commissione ha pubblicato la versione finale del [codice di condotta sulla marcatura e l'etichettatura dei contenuti AI](https://digital-strategy.ec.europa.eu/en/news/commission-publishes-code-practice-marking-and-labelling-ai-generated-content). L'adesione è volontaria e prevede un'icona UE comune o etichette equivalenti. Il 28 luglio 2026 [Meta ha annunciato](https://about.fb.com/news/2026/07/meta-is-signing-the-eu-ai-act-code-of-practice-on-transparency-of-ai-generated-content/) che lo firmerà.
+
+## La legge italiana sull'AI: cosa aggiunge
+
+La [legge 23 settembre 2025, n. 132](https://www.gazzettaufficiale.it/eli/id/2025/09/25/25G00143/sg), in vigore dal 10 ottobre 2025, affianca l'AI Act con alcune regole nazionali:
+
+- **Professioni intellettuali (art. 13)**: l'AI può essere usata solo come supporto, con prevalenza del lavoro del professionista. Il cliente va informato in modo chiaro.
+- **Deepfake come reato**: il nuovo art. 612-quater del codice penale punisce la diffusione illecita di contenuti generati o alterati con AI che causa un danno ingiusto, con la reclusione da 1 a 5 anni.
+- **Diritto d'autore**: sono protette solo le opere con un apporto creativo umano.
+- **Minori**: sotto i 14 anni serve il consenso dei genitori.
+
+## Perché è importante anche per una piccola attività
+
+Le sanzioni previste dall'AI Act per le violazioni della trasparenza arrivano fino a **15 milioni di euro o al 3% del fatturato mondiale**. Ma secondo noi il rischio più concreto per una PMI è un altro: la fiducia.
+
+Un cliente che scopre che la "recensione video" o il "prima e dopo" erano generati con l'AI senza dirlo difficilmente torna. La trasparenza, al contrario, può diventare un segno di serietà. E la tendenza delle piattaforme va nella stessa direzione, come mostra l'adesione annunciata da Meta al codice di condotta.
+
+## Cosa cambia per PMI, attività locali e professionisti
+
+Qualche scenario, a titolo di esempio.
+
+**Ristorante.** Usi l'AI per scrivere le didascalie dei post e poi le rileggi: nessuna etichetta obbligatoria. Se invece generi una foto realistica della tua sala piena di clienti che non ci sono mai stati, il contenuto raffigura un luogo reale e può sembrare autentico: va dichiarato.
+
+**Negozio o e-commerce.** Immagini prodotto ambientate create con l'AI, modelle virtuali, video promozionali: se sono realistici e possono essere scambiati per reali, serve un'etichetta chiara. Vale anche per le [campagne Meta Ads](/meta-ads), dove le creatività AI sono sempre più diffuse (ne parliamo nell'articolo su [creatività e Advantage+ nelle Meta Ads](/blog/meta-ads-creativita-advantage)).
+
+**Studio professionale.** Commercialisti, avvocati, consulenti e altri professionisti intellettuali che usano l'AI per bozze, ricerche o analisi devono rispettare l'art. 13 della legge 132/2025: il lavoro del professionista deve restare prevalente e il cliente va informato.
+
+**Qualsiasi attività con un chatbot.** L'assistente sul sito o su WhatsApp deve presentarsi come AI. Se stai valutando di introdurne uno, conviene progettarlo così fin dall'inizio: è quello che facciamo quando sviluppiamo [chatbot e automazioni AI](/automazioni-ai).
+
+## Cosa fare in pratica: la checklist
+
+1. **Scrivi una policy interna "contenuti AI".** Anche una pagina: quali strumenti usate, per cosa, chi rivede i contenuti e quando si etichetta.
+2. **Etichetta immagini, video e audio realistici.** Se un contenuto AI rappresenta persone, luoghi o eventi che sembrano reali, aggiungi una dichiarazione visibile, ad esempio "Immagine generata con AI" sul visual o all'inizio della didascalia.
+3. **Fai presentare il chatbot come AI.** Un messaggio di benvenuto chiaro basta: "Ciao, sono l'assistente virtuale di…, un sistema di intelligenza artificiale".
+4. **Non rimuovere metadati e watermark.** Quando scarichi un contenuto da uno strumento AI, evita di cancellare i contrassegni inseriti dal fornitore.
+5. **Mantieni la revisione umana sui testi.** Rileggi, correggi e assegna la responsabilità di ogni contenuto a una persona.
+6. **Se sei un professionista, aggiorna l'informativa clienti.** Spiega in modo chiaro se e come usi l'AI nel tuo lavoro.
+7. **Garantisci l'apporto umano sui brand asset.** Logo, mascotte, payoff: l'AI può aiutare a esplorare idee, ma il lavoro creativo deve restare umano. Un logo generato al 100% dall'AI potrebbe non essere tutelabile. È un tema che affrontiamo in ogni progetto di [branding](/branding).
+
+## Un esempio: il "testimonial" AI di un centro estetico
+
+Facciamo un esempio ipotetico. Un centro estetico vuole lanciare una promozione e crea con l'AI un video di una "cliente soddisfatta" molto realistica che racconta il trattamento. Nessuna persona reale ha girato quel video.
+
+Il contenuto somiglia a una persona reale e può sembrare autentico: rientra nella definizione di deepfake. Va quindi dichiarato in modo chiaro e visibile fin dal primo contatto, ad esempio con una scritta sul video. Senza dichiarazione, il centro rischia sanzioni e, soprattutto, di perdere credibilità con le clienti.
+
+Il nostro consiglio: per le testimonianze, usa clienti veri con il loro consenso. Riserva l'AI a contenuti in cui l'origine sintetica è evidente o dichiarata.
+
+## Come usiamo l'AI in agenzia
+
+Anche noi usiamo strumenti di AI generativa: per esplorare idee, preparare bozze, varianti di testo o mockup. La regola che ci siamo dati è semplice: l'AI accelera il lavoro, ma le scelte creative e la verifica finale restano a una persona del team.
+
+Per un'attività locale la trasparenza è anche una questione di fiducia. Facciamo un esempio: un ristorante di Castellaneta Marina che pubblica foto dei piatti generate con l'AI rischia di deludere il cliente quando il piatto arriva al tavolo. Per questo, quando possibile, preferiamo [shooting fotografici](/shooting) reali per prodotti e locali. Teniamo l'AI per grafiche e usi dove è chiaro che non si tratta di una foto.
+
+## Domande frequenti
+
+### Devo scrivere "generato con AI" su ogni post creato con ChatGPT?
+
+Non necessariamente. Per i testi su temi di interesse pubblico l'etichetta non serve se c'è revisione umana e una persona ne ha la responsabilità editoriale. L'obbligo più netto riguarda immagini, audio e video realistici che possono sembrare autentici, cioè i deepfake.
+
+### Da quando si applicano gli obblighi dell'articolo 50 dell'AI Act?
+
+Dal 2 agosto 2026. Il Digital Omnibus sull'AI non ha rinviato l'articolo 50 in generale: solo per il watermark dei sistemi già sul mercato prima di quella data c'è tempo fino al 2 dicembre 2026, e riguarda i fornitori degli strumenti.
+
+### Il chatbot sul mio sito deve dire che è un'intelligenza artificiale?
+
+Sì. I sistemi che interagiscono con le persone devono rendere chiaro che si tratta di un'AI. Il modo più semplice è un messaggio di benvenuto esplicito all'apertura della chat.
+
+### Un logo creato con l'AI è protetto dal diritto d'autore?
+
+La legge italiana 132/2025 tutela solo le opere con un apporto creativo umano. Un logo generato al 100% dall'AI potrebbe quindi non essere tutelabile: per i brand asset conviene che il lavoro creativo resti umano.
+
+### Quali sanzioni prevede l'AI Act per chi non rispetta la trasparenza?
+
+Per le violazioni degli obblighi di trasparenza sono previste sanzioni fino a 15 milioni di euro o al 3% del fatturato mondiale annuo.
+
+## Usare l'AI, ma in modo trasparente
+
+L'AI resta uno strumento utile per creare contenuti più velocemente. Le nuove regole non lo vietano: chiedono di essere chiari con chi guarda, legge o chatta con te. Il primo passo pratico è fare l'elenco dei contenuti AI che pubblichi oggi e decidere quali vanno etichettati.
+
+Se hai una newsletter, dai un'occhiata anche alle nuove regole sui [tracking pixel nelle email](/blog/tracking-pixel-email-garante). E se vuoi impostare una policy sui contenuti AI o un chatbot trasparente per la tua attività, [parliamone](/contatti).
+
+*Questo articolo ha scopo informativo e non sostituisce una consulenza legale. Per valutare il tuo caso specifico rivolgiti a un professionista.*
+
+## Fonti
+
+- [Commission publishes guidelines on transparency obligations for providers and deployers of certain AI systems – Commissione europea, 20 luglio 2026](https://digital-strategy.ec.europa.eu/en/news/commission-publishes-guidelines-transparency-obligations-providers-and-deployers-certain-ai-systems)
+- [AI Act, Article 50: Transparency obligations – AI Act Service Desk, Commissione europea](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50)
+- [AI Omnibus enters into force – Commissione europea, 27 luglio 2026](https://digital-strategy.ec.europa.eu/en/news/ai-omnibus-enters-force)
+- [Commission publishes Code of Practice on marking and labelling of AI-generated content – Commissione europea, 10 giugno 2026](https://digital-strategy.ec.europa.eu/en/news/commission-publishes-code-practice-marking-and-labelling-ai-generated-content)
+- [Legge 23 settembre 2025, n. 132 – Gazzetta Ufficiale, 25 settembre 2025](https://www.gazzettaufficiale.it/eli/id/2025/09/25/25G00143/sg)
+- [Meta is signing the EU AI Act Code of Practice on transparency of AI-generated content – Meta, 28 luglio 2026](https://about.fb.com/news/2026/07/meta-is-signing-the-eu-ai-act-code-of-practice-on-transparency-of-ai-generated-content/)`,
+  },
+  {
+    slug: 'ai-overviews-search-console-report',
+    title: 'Report AI Overviews in Search Console: cosa mostra e come usarlo davvero',
+    excerpt: 'Google ha aggiunto a Search Console un report sulle impressioni in AI Overviews e AI Mode, un controllo per escludersi e il nuovo tipo di ricerca multimodale. Ecco come leggerli e cosa fare.',
+    category: 'Siti web',
+    tags: ['search console', 'ai overviews', 'ai mode', 'google lens', 'seo', 'analytics'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/ai-overviews-search-console-report/cover.jpg',
+    published: true,
+    seoTitle: 'Report AI Overviews in Search Console: guida | InLab',
+    seoDescription: 'Report AI Overviews in Search Console: come leggere le impressioni in AI Mode e Discover, quando conviene escludersi e cosa fare subito per la tua PMI.',
+    content: `Fino a pochi mesi fa capire se il tuo sito compariva nelle risposte AI di Google era quasi impossibile. Oggi il **report AI Overviews in Search Console** (il nome ufficiale è "Generative AI performance") ti dice quante volte le tue pagine vengono mostrate nelle AI Overviews, in AI Mode e in Discover.
+
+È una novità che conta per un motivo semplice: una parte crescente delle ricerche passa da lì. E se non misuri, decidi a sensazione. In questa guida vediamo cosa mostra il report, cosa non mostra, quando ha senso (quasi mai) escludersi e cosa fare in pratica.
+
+**In breve**
+
+- Search Console ha un nuovo report con le impressioni del tuo sito in AI Overviews, AI Mode e Discover. Niente clic, solo impressioni.
+- Dalle Impostazioni puoi scegliere se includere o escludere il sito dalle funzioni di AI generativa di Google.
+- Dal 24 settembre 2026 c'è anche il tipo di ricerca "multimodal": Google Lens, Cerchia e Cerca e ricerche per immagine.
+- Per una PMI escludersi quasi sempre non conviene: meglio usare i dati per capire quali pagine funzionano.
+- Foto originali e dati strutturati prodotto diventano ancora più importanti.
+
+## Cosa è cambiato in Search Console
+
+Search Console è lo strumento gratuito di Google che mostra come il tuo sito si comporta nella Ricerca: per quali parole compare, quanti clic riceve, eventuali errori. Nel 2026 si è arricchito di tre novità legate all'intelligenza artificiale.
+
+### Il report "Generative AI performance"
+
+Google lo ha [annunciato il 3 giugno 2026](https://blog.google/products-and-platforms/products/search/new-controls-website-owners/), inizialmente in test su un gruppo di siti del Regno Unito. Il 31 agosto 2026 è stato esteso a tutti i siti nel mondo, quindi anche al tuo.
+
+Il report mostra le **impressioni**, cioè quante volte una tua pagina è stata mostrata, nelle funzioni di AI generativa:
+
+- **AI Overviews**, i riassunti generati dall'AI in cima ai risultati di Google;
+- **AI Mode**, la modalità di ricerca conversazionale;
+- un report dedicato a **Discover**, il feed di contenuti consigliati sul telefono.
+
+Puoi filtrare i dati per Pagine (l'URL canonico, cioè la versione "ufficiale" della pagina), Paesi, Dispositivi (solo per la Ricerca) e Date, con granularità oraria, giornaliera, settimanale o mensile. C'è l'export, con un limite di 1.000 righe. I dettagli sono nella [documentazione ufficiale del report](https://support.google.com/webmasters/answer/16984139).
+
+Tre cose da sapere subito:
+
+1. **Non ci sono i clic.** Solo impressioni.
+2. **Le impressioni AI restano anche nel report Prestazioni generale.** Il nuovo report le isola, non le aggiunge.
+3. **Gli esperimenti di Search Labs sono esclusi** dai dati.
+
+### Il controllo "Search generative AI"
+
+Nelle Impostazioni di Search Console trovi la voce "Search generative AI" con tre opzioni: **Includi** (predefinita), **Escludi**, **Eredita dalla proprietà padre**.
+
+Se scegli Escludi, Google non mostra link al tuo sito nelle funzioni AI e non usa i tuoi contenuti per il "grounding", cioè per ancorare le risposte dell'AI a fonti reali. Risultato: zero impressioni e zero traffico da AI Overviews, AI Mode e AI in Discover. L'effetto arriva in 1-2 giorni, a volte di più.
+
+Secondo [Google](https://support.google.com/webmasters/answer/16908024) il controllo non è usato come segnale di ranking al di fuori delle funzioni AI. Non riguarda l'addestramento dei modelli (per quello esiste Google-Extended) né l'app Gemini.
+
+### Il tipo di ricerca "multimodal"
+
+Dal [24 settembre 2026](https://developers.google.com/search/blog/2026/09/web-multimodal-in-sc) nei report Prestazioni e Generative AI compare un nuovo tipo di ricerca: "multimodal". Comprende le ricerche fatte con Google Lens, con Cerchia e Cerca su Android, caricando un'immagine su Google Search e con "Cerca questa immagine" dal tasto destro di Chrome.
+
+Nel report Gen AI trovi quindi due voci: "Web: text-based" (ricerche scritte) e "Web: multimodal" (ricerche per immagine). Il rollout è globale, ma vedi dati solo se il tuo sito riceve davvero quel traffico.
+
+### Bonus: le platform properties
+
+Dal [29 luglio 2026](https://developers.google.com/search/blog/2026/07/platform-properties-social-video-guide) Search Console permette anche di misurare come rendono su Search, Discover e News i profili e i post di Instagram, TikTok, X e YouTube. Se curi la [gestione dei social](/gestione-social), è un dato in più da tenere d'occhio.
+
+## Perché è importante misurare la visibilità nelle risposte AI
+
+I numeri li dà Google stesso: le AI Overviews superano i 2,5 miliardi di utenti attivi mensili, AI Mode supera il miliardo di utenti mensili. Sono dati globali, non solo italiani. Ma [AI Mode è disponibile in Italia e in italiano dall'8 ottobre 2025](https://blog.google/intl/it-it/ai-mode-arriva-anche-in-italia/), quindi riguarda anche i tuoi clienti.
+
+Finora molti siti vedevano calare i clic senza capire perché. Il report non risolve tutto, perché i clic dalle risposte AI non sono separati. Però ti dice almeno una cosa preziosa: **quali pagine Google considera abbastanza utili da mostrarle nelle risposte AI**.
+
+È un'informazione che prima dovevi indovinare. Ora puoi usarla per decidere su cosa investire.
+
+## Cosa cambia per PMI, attività locali e professionisti
+
+Il report è uguale per tutti, ma cosa guardare cambia in base al tipo di attività. Qualche esempio.
+
+**Ristorante o pizzeria.** Le ricerche per immagine contano: chi fotografa un piatto o un locale con Lens può arrivare a te. Foto originali del menu, dei piatti e della sala valgono più di qualsiasi immagine stock. Per la visibilità locale, lavora anche su [Google Business Profile e SEO locale](/blog/google-business-profile-ga4).
+
+**Negozio di moda o arredamento.** Qui la voce "Web: multimodal" può diventare interessante. Chi vede un divano o una giacca e lo inquadra con il telefono cerca un prodotto simile. Se le tue schede hanno foto tue, chiare e ben descritte, hai più possibilità di comparire.
+
+**Studio professionale (dentista, avvocato, commercialista).** Le domande informative ("quanto dura un impianto?", "cosa serve per aprire la partita IVA?") sono terreno delle AI Overviews. Guarda quali pagine del sito compaiono e quali no: ti dice dove i contenuti sono chiari e dove serve lavorare.
+
+**E-commerce.** Controlla che le pagine prodotto abbiano dati strutturati corretti (il codice che descrive a Google prezzo, disponibilità, recensioni) e immagini originali. Sono due leve concrete, anche per la ricerca multimodale.
+
+**Turismo e ospitalità.** B&B, agriturismi, lidi: chi cerca un posto spesso parte da una foto. Immagini vere del luogo, non generiche, sono un investimento che si ripaga anche qui.
+
+### Conviene escludersi dalle AI Overviews?
+
+Il nostro consiglio: **per una PMI quasi mai**. Escludersi significa rinunciare a impressioni e traffico da AI Overviews, AI Mode e AI in Discover, e i tuoi contenuti non verranno usati come fonte per le risposte.
+
+Può avere senso valutarlo in casi molto specifici, per esempio se vendi contenuti a pagamento che l'AI rischia di riassumere al posto tuo. Ma per un'attività locale o un professionista, che vive di visibilità, di solito è un autogol. Ricorda comunque che la scelta è reversibile.
+
+## Come leggere il report: la procedura passo passo
+
+Ecco un metodo semplice, che puoi seguire anche se non sei un esperto di SEO.
+
+1. **Apri il report.** Entra in Search Console, seleziona la tua proprietà e cerca il report "Generative AI performance". Se hai più proprietà, verifica anche l'impostazione "Search generative AI" in Impostazioni.
+2. **Guarda le pagine che compaiono.** Filtra per Pagine e ordina per impressioni. Sono le pagine che Google usa di più nelle risposte AI. Spesso non sono quelle che ti aspetti.
+3. **Confronta con i clic.** Apri il report Prestazioni generale sulle stesse pagine. Se una pagina ha tante impressioni AI ma pochi clic, forse la risposta dell'AI basta già all'utente: valuta di aggiungere qualcosa che l'AI non può dare (preventivo, prenotazione, casi reali, foto tue).
+4. **Segui l'andamento settimanale.** La granularità giornaliera è molto "rumorosa". Quella settimanale ti mostra le tendenze vere, senza farti preoccupare per un calo di un giorno.
+5. **Annota le modifiche.** Ogni volta che pubblichi o aggiorni una pagina, segnalo con le annotazioni di Search Console o in un foglio condiviso. Dopo qualche settimana capirai cosa funziona.
+
+![Checklist in 5 passi per leggere il report Generative AI performance di Search Console](/blog/ai-overviews-search-console-report/checklist.webp)
+
+### Tre controlli da fare subito
+
+- **Immagini originali.** Sostituisci le foto stock nelle pagine chiave con foto vere dei tuoi prodotti, del locale, del team. Se ti serve una mano, il nostro [servizio di shooting fotografico](/shooting) nasce proprio per questo.
+- **Dati strutturati prodotto.** Se hai un e-commerce, verifica che le schede prodotto abbiano il markup corretto e senza errori in Search Console.
+- **Impostazione AI.** Controlla che il sito sia su "Includi" (o "Eredita" da una proprietà che include). Capita che qualcuno lo cambi senza pensarci.
+
+## Un esempio pratico (ipotetico)
+
+Facciamo un esempio: un negozio di arredamento di Taranto con un piccolo e-commerce. Aprendo il report scopre che la pagina più mostrata nelle AI Overviews non è una scheda prodotto, ma una guida su come scegliere il divano per un soggiorno piccolo.
+
+Nel report Prestazioni, però, quella guida riceve pochi clic. Il titolare decide di arricchirla: aggiunge foto scattate in negozio, due ambienti reali allestiti e un link diretto ai modelli disponibili. Poi annota la data della modifica e segue l'andamento settimanale per un mese.
+
+Nel frattempo nota qualche impressione su "Web: multimodal" per le schede con foto proprie, e decide di rifare anche quelle con immagini originali. Non è una formula magica: è un modo di prendere decisioni sui dati invece che a sensazione.
+
+Per capire come scrivere contenuti che Google considera utili nelle risposte AI, leggi anche la nostra guida su [cosa dice davvero Google sulla SEO per l'intelligenza artificiale](/blog/seo-ai-overviews-geo-google).
+
+## Cosa guardiamo noi nei report dei clienti
+
+Quando seguiamo il sito di un'attività, il report sull'AI non sostituisce quello classico: lo affianchiamo. Ci interessa capire quali pagine compaiono nelle risposte AI e se sono le stesse che portano clic e contatti.
+
+Facciamo un esempio. Un B&B tra Ginosa Marina e Castellaneta Marina potrebbe comparire nelle AI Overviews con la pagina sulle spiagge vicine, mentre le prenotazioni arrivano dalla pagina delle camere. È un'informazione utile: dice quali contenuti costruiscono visibilità e quali la trasformano in richieste. Nel [caso studio dello Studio Dentistico Ricciardi](/casi-studio/ricciardi) il sito è stato progettato proprio così, con pagine dedicate ai singoli trattamenti.
+
+## Domande frequenti
+
+### Il report AI di Search Console mostra anche i clic?
+
+No. Il report Generative AI performance mostra solo le impressioni nelle AI Overviews, in AI Mode e in Discover. Per i clic devi guardare il report Prestazioni generale e confrontare i due dati pagina per pagina.
+
+### Le impressioni AI vengono contate due volte?
+
+Le impressioni ottenute nelle funzioni di AI generativa restano conteggiate anche nel report Prestazioni generale. Il report dedicato serve a isolarle, non a sommarle al totale.
+
+### Se escludo il mio sito dalle AI Overviews perdo posizioni su Google?
+
+Secondo Google il controllo non viene usato come segnale di ranking al di fuori delle funzioni AI. Però, se escludi il sito, azzeri impressioni e traffico da AI Overviews, AI Mode e AI in Discover.
+
+### Escludere il sito blocca anche l'addestramento dei modelli di Google?
+
+No. Il controllo di Search Console non riguarda l'addestramento dei modelli, per cui esiste Google-Extended, e non riguarda l'app Gemini.
+
+### Cosa significa "Web: multimodal" nel report?
+
+Sono le ricerche fatte con immagini: Google Lens, Cerchia e Cerca su Android, upload di immagini su Google e "Cerca questa immagine" in Chrome. Vedi dati solo se il tuo sito riceve quel tipo di traffico.
+
+## Conclusione: misura prima di decidere
+
+Il report AI Overviews in Search Console non ti dà tutte le risposte, perché mancano i clic. Ma ti dice quali pagine Google usa nelle sue risposte AI, e questo basta per iniziare a lavorare meglio: rafforzare le pagine che compaiono, migliorare quelle che non compaiono, curare immagini e dati strutturati.
+
+Il primo passo è semplice: apri Search Console questa settimana, guarda le prime dieci pagine del report e confrontale con i clic. Se vuoi un aiuto a leggere i dati o a sistemare il tuo sito, dai un'occhiata a come lavoriamo sui [siti web](/siti-web) oppure [parliamone](/contatti).
+
+## Fonti
+
+- [New controls for website owners – Google, The Keyword, 3 giugno 2026](https://blog.google/products-and-platforms/products/search/new-controls-website-owners/)
+- [Generative AI performance reports in Search Console – Google Search Central Blog, giugno 2026](https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports)
+- [Report sulle prestazioni dell'AI generativa – Guida di Search Console, 2026](https://support.google.com/webmasters/answer/16984139)
+- [Controllo Search generative AI – Guida di Search Console, 2026](https://support.google.com/webmasters/answer/16908024)
+- [Web multimodal search type in Search Console – Google Search Central Blog, 24 settembre 2026](https://developers.google.com/search/blog/2026/09/web-multimodal-in-sc)
+- [Platform properties: social and video guide – Google Search Central Blog, 29 luglio 2026](https://developers.google.com/search/blog/2026/07/platform-properties-social-video-guide)
+- [AI Mode arriva anche in Italia – Google Italia, 8 ottobre 2025](https://blog.google/intl/it-it/ai-mode-arriva-anche-in-italia/)`,
+  },
+  {
+    slug: 'seo-ai-overviews-geo-google',
+    title: 'SEO per AI Overviews e GEO: cosa dice davvero Google',
+    excerpt: 'Google ha pubblicato una guida ufficiale su come ottimizzare un sito per le funzioni AI della Ricerca. Spoiler: è SEO. Ecco cosa conta, cosa puoi ignorare e come difenderti dalle offerte GEO miracolose.',
+    category: 'Siti web',
+    tags: ['seo', 'geo', 'ai overviews', 'ai mode', 'llms.txt', 'core update'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/seo-ai-overviews-geo-google/cover.jpg',
+    published: true,
+    seoTitle: 'SEO per AI Overviews e GEO: cosa dice Google | InLab',
+    seoDescription: 'SEO per AI Overviews e GEO: la guida ufficiale di Google spiega cosa conta davvero, perché llms.txt non serve e come riconoscere le offerte GEO fuffa.',
+    content: `Negli ultimi mesi si è moltiplicata un'offerta nuova: la "GEO", ottimizzazione per i motori generativi, venduta come qualcosa di diverso dalla solita SEO. Se ti stai chiedendo come funziona la **SEO per AI Overviews** e se devi davvero pagare per un servizio a parte, c'è finalmente una risposta ufficiale: l'ha data Google.
+
+**Risposta breve: per Google la "GEO" non è una disciplina a parte. Le risposte AI si basano sugli stessi sistemi della ricerca classica: servono pagine indicizzate e contenuti originali, non file llms.txt o testi riscritti "per l'AI".**
+
+Il 15 maggio 2026 Google ha pubblicato una guida dedicata all'ottimizzazione dei siti per le sue funzioni di AI generativa. Il messaggio è chiaro e ti fa risparmiare tempo e soldi: conta la qualità dei contenuti, non i trucchi.
+
+**In breve**
+
+- Per Google "AEO" e "GEO" restano SEO: AI Overviews e AI Mode usano gli stessi sistemi di ranking della Ricerca.
+- La priorità sono i contenuti "non-commodity": esperienza diretta, dati propri, casi reali.
+- llms.txt, "chunking" dei testi e riscritture "per l'AI" si possono ignorare, per Google Search.
+- Creare pagine per ogni variante di domanda viola le regole contro lo spam.
+- Per attività locali ed e-commerce contano Google Business Profile e Merchant Center.
+
+## Cosa è cambiato: la guida ufficiale di Google sulla SEO per l'AI
+
+Il [15 maggio 2026](https://developers.google.com/search/blog/2026/05/a-new-resource-for-optimizing) John Mueller, di Google, ha annunciato la guida "[Optimizing your website for generative AI features on Google Search](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)". È il primo documento ufficiale che spiega cosa fare (e cosa no) per comparire nelle risposte AI della Ricerca.
+
+### AEO e GEO? Per Google è sempre SEO
+
+Il punto centrale: le funzioni AI di Google si basano sui **sistemi di ranking core**, gli stessi che ordinano i risultati classici. Due concetti aiutano a capire perché.
+
+Il primo è il **grounding**: l'AI ancora le sue risposte a pagine web reali, che trova con la Ricerca. Il secondo è il **query fan-out**: l'AI scompone la tua domanda in più ricerche correlate. Se chiedi "dove mangiare pesce a Taranto con bambini", l'AI può cercare separatamente ristoranti di pesce, locali adatti alle famiglie, recensioni recenti.
+
+In pratica: se una pagina è forte nella Ricerca normale, ha buone possibilità di esserlo anche nelle risposte AI.
+
+### La priorità: contenuti non-commodity
+
+Google insiste sui contenuti **non-commodity**. "Commodity" è un prodotto indistinguibile, uguale ovunque. Un contenuto commodity è quello che trovi identico su cento siti.
+
+L'esempio di Google è chiaro: un articolo "7 consigli per chi compra casa per la prima volta" è commodity. Il racconto in prima persona di chi l'ha comprata davvero, con errori e scoperte, non lo è. L'AI può riassumere i sette consigli da sola. L'esperienza vissuta no.
+
+### Cosa è vietato: moltiplicare pagine
+
+Creare una pagina per ogni variante di una domanda, o per ogni possibile query di fan-out, con lo scopo di manipolare i risultati viola la policy sullo **scaled content abuse**, cioè la produzione di contenuti in massa per scalare le classifiche. Non è una zona grigia: è spam.
+
+## Cosa puoi ignorare (anche se te lo vendono)
+
+Qui la guida è preziosa, perché smonta diverse tattiche vendute come "GEO". Per Google Search puoi ignorare:
+
+- **llms.txt** e altri file o markup "speciali" pensati per l'AI;
+- il **"chunking"**, cioè spezzare i testi in blocchetti per renderli "digeribili" dall'AI;
+- **riscrivere i testi "per l'AI"**;
+- cercare **menzioni non autentiche** del tuo brand in giro per il web.
+
+Non serve nemmeno uno schema di dati strutturati speciale. I dati strutturati restano utili, ma per i rich result, cioè i risultati arricchiti con stelline, prezzi o eventi.
+
+I requisiti tecnici sono pochi: la pagina deve essere **indicizzata** e **idonea a mostrare uno snippet**, e il sito deve essere incluso nel controllo AI di Search Console. Se vuoi capire come verificarlo e come misurare i risultati, leggi la nostra guida su come [misurare la visibilità del sito nelle risposte AI](/blog/ai-overviews-search-console-report).
+
+![Confronto tra le tattiche GEO che Google dice di poter ignorare e i fattori che contano davvero per le AI Overviews](/blog/seo-ai-overviews-geo-google/serve-non-serve.webp)
+
+## Perché è importante: il contesto dei core update 2026
+
+La guida arriva in un anno movimentato. I core update sono aggiornamenti generali degli algoritmi di Google, e possono spostare molto traffico.
+
+Secondo le rilevazioni di Search Engine Land, nel 2026 ci sono stati il March 2026 core update (dal 27 marzo all'8 aprile) e il [May 2026 core update](https://searchengineland.com/google-may-2026-core-update-rollout-is-now-complete-479119) (dal 21 maggio al 2 giugno). Uno spam update è partito il 24 settembre 2026.
+
+Esperti come Glenn Gabe e Lily Ray ritengono che il core update di maggio sia stato più forte di quello di marzo. Diverse analisi di settore indicano tra i più penalizzati i contenuti commodity e le traduzioni fatte con l'AI su larga scala. È un'interpretazione, non una dichiarazione di Google, ma è coerente con la direzione della guida.
+
+C'è poi un dato ufficiale: il [Discover core update del 5 febbraio 2026](https://developers.google.com/search/blog/2026/02/discover-core-update). Punta a mostrare più contenuti locali di siti del proprio Paese, meno clickbait, più contenuti approfonditi e originali, e valuta la competenza argomento per argomento. È partito in inglese negli Stati Uniti, con espansione prevista a tutti i Paesi.
+
+Il filo rosso è sempre lo stesso: **originalità e competenza reale**.
+
+## Cosa significa per PMI, attività locali e professionisti
+
+La buona notizia: una piccola impresa ha spesso più materiale non-commodity di un grande portale. Ha clienti veri, casi veri, un territorio. Basta usarlo.
+
+**Ristorante.** Invece di "i 5 piatti tipici pugliesi", racconta come prepari le tue orecchiette, da chi compri la farina, quali piatti chiedono di più i clienti. E cura il Google Business Profile: per la ricerca locale pesa molto.
+
+**Negozio o e-commerce.** Schede prodotto con foto tue, misure verificate, risposte alle domande che i clienti ti fanno davvero. Google indica il **feed Merchant Center** (l'elenco prodotti che invii a Google) come aiuto alla visibilità nelle risposte AI.
+
+**Studio professionale.** Un dentista che spiega come gestisce la paura del paziente alla prima visita offre qualcosa che nessuna AI può inventare. Lo stesso vale per un commercialista che racconta gli errori più frequenti che vede nei suoi clienti. È l'approccio che seguiamo anche nei progetti per studi professionali, come il [sito e lead generation per uno studio dentistico](/casi-studio/ricciardi).
+
+**Attività locali in generale.** Google cita esplicitamente **Google Business Profile** tra gli strumenti che aiutano la visibilità nelle risposte AI. Se non l'hai ancora curato, parti da lì: trovi i dettagli nel nostro articolo su [Google Business Profile e la SEO locale](/blog/google-business-profile-ga4).
+
+## Cosa fare in pratica
+
+### Come rendere un contenuto non-commodity
+
+1. **Parti dall'esperienza diretta.** Scrivi cosa hai fatto, visto, sbagliato. In prima persona, con nome e cognome.
+2. **Usa dati tuoi.** Tempi medi di consegna, domande più frequenti, stagionalità delle richieste. Anche numeri piccoli, purché veri.
+3. **Metti foto tue.** Prodotti, locale, team, lavori finiti. Niente stock nelle pagine importanti.
+4. **Racconta casi reali.** Con il permesso del cliente, e senza gonfiare i risultati.
+5. **Firma le opinioni.** "Secondo noi" è un valore: mostra che dietro c'è una persona competente.
+6. **Scrivi FAQ vere.** Raccogli le domande che ti fanno al telefono, su WhatsApp, in negozio. Sono le stesse che le persone fanno a Google.
+
+### Come riconoscere un'offerta GEO fuffa
+
+Prima di firmare, fai queste domande al fornitore:
+
+- **"Cosa fate di diverso dalla SEO?"** Se la risposta è llms.txt, chunking o riscrittura dei testi "per l'AI", sono proprio le cose che Google dice di poter ignorare.
+- **"Da dove vengono le vostre metriche?"** Diffida di chi dice di usare metriche "interne" di Google: Google stessa invita a essere cauti con i tool di terze parti che fanno queste affermazioni.
+- **"Pensate di creare molte pagine simili?"** Se il piano è una pagina per ogni variante di domanda, rischi di violare la policy sullo scaled content abuse.
+- **"Come costruite le menzioni del brand?"** Menzioni non autentiche sono tra le cose da ignorare, oltre che un rischio.
+- **"Come misurerete i risultati?"** Una risposta seria parte da Search Console e dal report sulle prestazioni dell'AI generativa.
+- **"Chi scrive i contenuti?"** Se la risposta è "l'AI, in massa, anche tradotti", ripensaci.
+
+Il nostro consiglio: se un'offerta promette di "farti comparire su ChatGPT e Google AI in 30 giorni", è un campanello d'allarme. Nessuno può garantirlo.
+
+## Un esempio pratico (ipotetico)
+
+Facciamo un esempio: un centro di fisioterapia di Castellaneta ha un blog con articoli generici tipo "10 esercizi per il mal di schiena", simili a quelli di mille altri siti.
+
+Decide di cambiare approccio. Il fisioterapista titolare scrive un articolo firmato sui tre errori che vede più spesso nei pazienti che lavorano in ufficio, con foto scattate nello studio e le domande reali raccolte in sala d'attesa. Aggiorna il Google Business Profile con orari, servizi e foto recenti.
+
+Nessun file llms.txt, nessun testo "riscritto per l'AI". Solo contenuti che nessun altro sito può copiare, perché nascono dalla sua esperienza. Poi misura in Search Console quali pagine compaiono nelle risposte AI e decide i prossimi articoli su quella base.
+
+## Come lavoriamo sui contenuti dei siti
+
+Quando scriviamo i testi di un sito, per ogni pagina facciamo al titolare una domanda precisa: cosa ti chiedono davvero i clienti, al telefono o in negozio? Le risposte a quelle domande sono il contenuto "non-commodity" che Google descrive: nessun concorrente può copiarlo, perché nasce dall'esperienza di quell'attività.
+
+È anche il motivo per cui diffidiamo delle scorciatoie. Pagine scritte in serie per ogni paese della provincia, testi generati e mai rivisti, file tecnici venduti come soluzione miracolosa: nella migliore delle ipotesi non servono. Una pagina servizio chiara, con foto vere e FAQ reali, lavora meglio sia per le persone sia per Google.
+
+## Domande frequenti
+
+### La GEO è diversa dalla SEO?
+
+Secondo Google no: ottimizzare per le funzioni AI della Ricerca resta SEO. AI Overviews e AI Mode si basano sugli stessi sistemi di ranking core della Ricerca classica.
+
+### Serve il file llms.txt per comparire nelle AI Overviews?
+
+Per Google Search no. Nella sua guida Google indica llms.txt e altri file o markup "speciali" tra le cose che puoi ignorare. Non serve nemmeno uno schema di dati strutturati dedicato all'AI.
+
+### Cosa sono i contenuti non-commodity?
+
+Sono contenuti che non si trovano uguali ovunque: esperienza diretta, dati tuoi, foto tue, casi reali, opinioni firmate. Una lista generica di consigli è commodity, il racconto di un'esperienza vissuta no.
+
+### Quali sono i requisiti minimi per comparire nelle risposte AI di Google?
+
+La pagina deve essere indicizzata e idonea a mostrare uno snippet, e il sito deve essere incluso nel controllo AI di Search Console. Poi contano la qualità e l'utilità del contenuto.
+
+### Conviene creare una pagina per ogni variante di una domanda?
+
+No. Google dice che creare pagine per ogni variante o per le query di fan-out allo scopo di manipolare i risultati viola la policy contro lo scaled content abuse.
+
+## Conclusione: meno trucchi, più sostanza
+
+La SEO per AI Overviews non è una disciplina segreta. È buona SEO con un'attenzione in più all'originalità: pagine indicizzate, contenuti che nascono dalla tua esperienza, profili locali curati. Il resto, per Google Search, è rumore.
+
+Il passo pratico da fare oggi: prendi le tre pagine più importanti del tuo sito e chiediti cosa contengono che un concorrente non potrebbe copiare. Se la risposta è "niente", sai da dove partire. Se vuoi un sito costruito su questi principi, scopri come lavoriamo sui [siti web](/siti-web) oppure [parliamone](/contatti).
+
+## Fonti
+
+- [A new resource for optimizing your website for generative AI features – Google Search Central Blog, 15 maggio 2026](https://developers.google.com/search/blog/2026/05/a-new-resource-for-optimizing)
+- [Optimizing your website for generative AI features on Google Search – Google Search Central, maggio 2026](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)
+- [Discover core update – Google Search Central Blog, 5 febbraio 2026](https://developers.google.com/search/blog/2026/02/discover-core-update)
+- [Google May 2026 core update rollout is now complete – Search Engine Land, giugno 2026](https://searchengineland.com/google-may-2026-core-update-rollout-is-now-complete-479119)`,
+  },
+  {
+    slug: 'google-business-profile-ga4',
+    title: 'Collegare Google Business Profile a GA4: cosa cambia per la SEO locale nel 2026',
+    excerpt: 'Da giugno 2026 i dati della scheda Google finiscono in GA4 e c\'è un canale dedicato al traffico da ChatGPT e simili. Ecco cosa guardare e cosa fare se hai un\'attività locale.',
+    category: 'Siti web',
+    tags: ['google business profile', 'ga4', 'seo locale', 'google maps', 'ai assistant', 'ask maps'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/google-business-profile-ga4/cover.jpg',
+    published: true,
+    seoTitle: 'Google Business Profile in GA4: SEO locale 2026 | InLab',
+    seoDescription: 'Come collegare Google Business Profile a GA4, quali metriche guardare ogni mese e come leggere il traffico da ChatGPT: guida pratica per attività locali.',
+    content: `Collegare Google Business Profile a GA4 oggi è possibile, ed è una delle novità più utili del 2026 per chi ha un'attività con una sede fisica. Se fai SEO locale nel 2026, cioè lavori per farti trovare da chi cerca "vicino a me" su Google e su Maps, finalmente puoi vedere nello stesso posto quante persone ti chiamano dalla scheda e quante visitano il sito.
+
+Non è l'unico cambiamento. Google Analytics 4 ha introdotto anche un canale dedicato al traffico che arriva da ChatGPT, Gemini e altri assistenti AI, mentre su Google Maps sta arrivando un modo nuovo di cercare, basato su domande in linguaggio naturale. In questa guida vediamo cosa è cambiato, cosa guardare e cosa fare, senza tecnicismi inutili.
+
+**In breve**
+
+- Dall'8 giugno 2026 puoi collegare una proprietà GA4 al tuo profilo Google Business Profile e vedere 7 metriche della scheda, su una finestra di 6 mesi.
+- Dal 13 maggio 2026 GA4 ha un canale "AI Assistant" che raccoglie il traffico da ChatGPT, Gemini, Claude e altri.
+- Ask Maps porta le domande conversazionali su Google Maps, ma il funzionamento in italiano in Italia non è ancora confermato.
+- Secondo Google, una scheda curata aiuta anche la visibilità nelle risposte generate dall'AI.
+- Il nostro consiglio: tre metriche da controllare ogni mese e una scheda sempre aggiornata valgono più di cento report.
+
+## Cosa è cambiato in GA4 per le attività locali
+
+Tutte le novità che seguono sono elencate nella pagina ufficiale ["Novità di Google Analytics"](https://support.google.com/analytics/answer/9164320), che abbiamo consultato a settembre 2026.
+
+### Google Business Profile dentro GA4
+
+Dall'8 giugno 2026 puoi collegare una proprietà GA4 ai tuoi profili Google Business Profile (la scheda gratuita che compare su Google e Maps con orari, foto e recensioni). Il collegamento si fa dal pannello Amministrazione di GA4.
+
+Una volta attivo, trovi una nuova raccolta di report con 7 metriche della scheda:
+
+- **interazioni**, il totale delle azioni fatte sulla scheda;
+- **chiamate**;
+- **prenotazioni**;
+- **indicazioni stradali**;
+- **clic al sito**;
+- **messaggi**;
+- **menu**.
+
+Un dettaglio da non trascurare: i dati sono calcolati su una **finestra mobile di 6 mesi**. In pratica vedi sempre gli ultimi sei mesi, non lo storico completo.
+
+### Un canale per il traffico da ChatGPT e dagli assistenti AI
+
+Dal 13 maggio 2026 il raggruppamento canali predefinito di GA4 (cioè il modo in cui Analytics divide le visite per provenienza: organico, social, diretto e così via) include un nuovo canale, **AI Assistant**. Le visite arrivano con medium "ai-assistant" e campagna "(ai-assistant)" e comprendono il traffico da ChatGPT, Gemini, Claude e altri assistenti.
+
+Prima questo traffico finiva spesso mescolato tra i "referral" o nel "diretto". Ora ha un nome e un posto preciso.
+
+### Le altre novità utili
+
+- **Source Group** (11 giugno 2026): una dimensione che raggruppa sorgenti simili, per esempio Facebook, Instagram e TikTok, e include anche ChatGPT/OpenAI e Perplexity. È retroattiva, quindi vale anche per i dati passati.
+- **Filtri hostname** (11 giugno e 21 settembre 2026): prima sono arrivati i filtri di esclusione, poi quelli di tipo "Include". Con questi ultimi puoi indicare quali domini sono tuoi e tenere fuori lo spam dai report.
+- **Finestre di conversione personalizzate** (11 agosto 2026): puoi scegliere una finestra click-through da 1 a 90 giorni.
+- **Dashboard** (9 settembre 2026): report componibili con il trascinamento e nuove visualizzazioni.
+
+### Ask Maps: cercare su Maps facendo domande
+
+Il 12 marzo 2026 Google ha lanciato [Ask Maps](https://blog.google/products-and-platforms/products/maps/ask-maps-immersive-navigation/), cioè Gemini dentro Google Maps, in USA e India. È un pulsante conversazionale per fare domande complesse, che attinge a oltre 300 milioni di luoghi e alle recensioni di oltre 500 milioni di contributori.
+
+Secondo un post di Google su X (non un annuncio sul blog ufficiale), ad agosto 2026 la funzione si è estesa ad altri Paesi e a "oltre 150 Paesi in inglese". **Non abbiamo verificato che funzioni in italiano in Italia**: per ora trattala come una direzione di marcia, non come qualcosa su cui contare oggi.
+
+## Perché è importante per la SEO locale
+
+Fino a ieri, per un'attività locale, i dati erano sparsi: le chiamate e le indicazioni stavano nella scheda, le visite al sito in Analytics. Confrontarli richiedeva tempo e fogli di calcolo. Adesso puoi vedere nello stesso strumento **cosa fa la gente sulla scheda e cosa fa dopo sul sito**.
+
+Il secondo motivo riguarda l'intelligenza artificiale. Nella sua [guida di maggio 2026 sulle funzioni AI della Ricerca](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide), Google indica che Google Business Profile e i feed di Merchant Center aiutano la visibilità nelle risposte generate dall'AI. Ne abbiamo parlato anche nell'articolo su [cosa dice Google sulla SEO per l'intelligenza artificiale](/blog/seo-ai-overviews-geo-google).
+
+Secondo noi il messaggio è chiaro: la scheda Google non è più un "extra". È una delle fonti da cui Google, Maps e gli assistenti AI prendono le informazioni sulla tua attività. Se è incompleta o vecchia, rischi di essere raccontato male o di non essere raccontato affatto.
+
+## Cosa significa per PMI, attività locali e professionisti
+
+Le 7 metriche non pesano allo stesso modo per tutti. Ecco come leggerle in base al tipo di attività.
+
+- **Ristorante o pizzeria**: contano soprattutto chiamate, prenotazioni, menu e indicazioni stradali. Se le visualizzazioni del menu salgono ma le prenotazioni no, forse il percorso per prenotare non è chiaro.
+- **Negozio**: indicazioni stradali e chiamate sono i segnali più vicini a una visita in negozio. I clic al sito ti dicono quanta gente vuole vedere prodotti o orari prima di muoversi.
+- **Studio professionale** (dentista, commercialista, avvocato): chiamate, messaggi e clic al sito. Qui il sito fa spesso da "seconda verifica" prima di contattarti, quindi deve essere chiaro e aggiornato.
+- **Centro estetico**: prenotazioni e messaggi. Se ricevi molti messaggi, conviene organizzare risposte rapide e coerenti.
+- **E-commerce con punto vendita**: il canale AI Assistant e i clic al sito diventano interessanti, insieme ai feed di Merchant Center che Google cita nella sua guida.
+
+Il canale AI Assistant, per ora, porterà numeri piccoli a molte attività locali. Non è un problema: l'importante è iniziare a osservarlo, così saprai se e quando cresce.
+
+## Cosa fare in pratica: collegamento, metriche e scheda
+
+### 1. Collega Google Business Profile a GA4
+
+1. Verifica di avere accesso sia alla proprietà GA4 del sito sia al profilo dell'attività (spesso sono account diversi, magari uno in mano all'agenzia e uno al titolare).
+2. Entra in GA4 e apri il pannello **Amministrazione**.
+3. Cerca l'area dei collegamenti con gli altri prodotti Google e seleziona Google Business Profile.
+4. Scegli il profilo (o i profili, se hai più sedi) e conferma.
+5. Dopo il collegamento, cerca la nuova raccolta di report dedicata alla scheda.
+
+### 2. Scegli 3 metriche da guardare ogni mese
+
+Il nostro consiglio: non guardare tutto. Per la maggior parte delle attività locali bastano tre numeri.
+
+1. **Chiamate** (o prenotazioni, se le usi): il contatto più diretto.
+2. **Indicazioni stradali**: chi si sta muovendo verso di te.
+3. **Clic al sito**: chi vuole saperne di più prima di decidere.
+
+Annota i valori ogni mese in un foglio. Ricorda che la finestra è di 6 mesi: senza un tuo archivio, i confronti anno su anno si perdono.
+
+### 3. Leggi il canale AI Assistant
+
+Nei report di acquisizione cerca il canale **AI Assistant**. Guarda tre cose: quante visite arrivano, su quali pagine atterrano e se quelle visite portano a un contatto (una chiamata, un modulo, una prenotazione). Con la dimensione Source Group puoi vedere, per esempio, quanto arriva da ChatGPT/OpenAI rispetto a Perplexity.
+
+Se vuoi completare il quadro con Google Search Console, leggi la nostra guida su come [misurare la visibilità in AI Overviews con Search Console](/blog/ai-overviews-search-console-report).
+
+### 4. Pulisci i dati
+
+Con i filtri hostname di tipo "Include" puoi dire a GA4 quali sono i tuoi domini. È un modo semplice per tenere fuori dai report il traffico spam che "finge" di arrivare dal tuo sito.
+
+### 5. Cura la scheda come cureresti la vetrina
+
+- **Categorie**: scegli quella principale con attenzione e aggiungi solo categorie secondarie pertinenti.
+- **Orari**: aggiornali sempre, festivi e chiusure comprese.
+- **Foto reali**: del locale, dei prodotti, delle persone. Meglio una foto vera fatta bene che dieci immagini generiche.
+- **Risposte alle recensioni**: rispondi a tutte, positive e negative, con tono calmo e personale.
+- **Post**: novità, eventi, offerte stagionali. Anche pochi post, ma regolari.
+
+### 6. Controlla nome, indirizzo e telefono
+
+Nome, indirizzo e numero di telefono devono essere **identici** sulla scheda, sul [sito web](/siti-web) e sui social. Sembra un dettaglio, ma informazioni contrastanti confondono i clienti e rendono meno chiaro chi sei a chi legge i tuoi dati.
+
+![Checklist mensile per attività locali con chiamate, indicazioni stradali, clic al sito, canale AI Assistant, recensioni e dati della scheda](/blog/google-business-profile-ga4/checklist-mensile.webp)
+
+*La checklist da ripetere ogni mese: tre metriche GBP, il canale AI Assistant e la cura della scheda.*
+
+## Un esempio: la pasticceria di Castellaneta
+
+Facciamo un esempio ipotetico. Un bar pasticceria di Castellaneta collega la sua scheda a GA4 e, dopo qualche mese, confronta due dati: le **chiamate dalla scheda** e le **visite al sito**.
+
+Scopre che le chiamate crescono nelle settimane prima delle festività, quando la gente ordina torte e vassoi, mentre le visite al sito restano stabili. La lettura possibile: chi cerca la pasticceria su Maps chiama direttamente, senza passare dal sito.
+
+Cosa può fare il titolare? Mettere in evidenza sulla scheda, con un post e foto reali dei prodotti, le informazioni che le persone chiedono al telefono: tempi di ordinazione, formati, orari. E sul sito, una pagina chiara sugli ordini per le feste. Il mese successivo controlla se le chiamate "di informazione" calano e quelle di ordine restano. Nessun numero magico: solo un confronto mese per mese.
+
+## Cosa vediamo lavorando con le attività locali
+
+Nel lavoro con le attività della provincia di Taranto la scheda Google è spesso il primo punto di contatto, prima ancora del sito e dei social. Chi cerca "pasticceria aperta" o "dentista Massafra" decide spesso lì se chiamare, chiedere le indicazioni o passare oltre.
+
+Per questo quando progettiamo un sito lo colleghiamo sempre alla scheda: stessi dati di contatto, stesse categorie di servizi, link diretti alle pagine giuste. Il collegamento con GA4 ci permette finalmente di mostrare al cliente, in un unico posto, quante persone sono arrivate dalla scheda e cosa hanno fatto dopo.
+
+## Domande frequenti
+
+### Come si collega Google Business Profile a GA4?
+
+Dall'8 giugno 2026 il collegamento si fa dal pannello Amministrazione della proprietà GA4, nell'area dei collegamenti con gli altri prodotti Google. Serve avere accesso sia alla proprietà GA4 sia al profilo dell'attività. Una volta collegato, compare una raccolta di report dedicata.
+
+### Quali dati di Google Business Profile vedo in GA4?
+
+Sette metriche: interazioni, chiamate, prenotazioni, indicazioni stradali, clic al sito, messaggi e menu. I dati coprono una finestra mobile di 6 mesi, quindi conviene esportarli o annotarli se vuoi confronti su periodi più lunghi.
+
+### Come vedo in GA4 il traffico che arriva da ChatGPT?
+
+Dal 13 maggio 2026 GA4 ha un canale predefinito chiamato AI Assistant, con medium ai-assistant, che raccoglie le visite da assistenti come ChatGPT, Gemini e Claude. Lo trovi nei report di acquisizione, accanto a ricerca organica, social e diretto.
+
+### Ask Maps funziona in Italia?
+
+Al momento non lo sappiamo con certezza. Ask Maps è stato lanciato a marzo 2026 in USA e India e, secondo un post di Google su X, ad agosto si è esteso ad altri Paesi e a oltre 150 Paesi in inglese. Non abbiamo conferme sul funzionamento in italiano in Italia.
+
+### La scheda Google conta anche per le risposte dell'intelligenza artificiale?
+
+Sì, secondo la guida di Google di maggio 2026 sulle funzioni AI della Ricerca, Google Business Profile e i feed di Merchant Center aiutano la visibilità nelle risposte generate dall'AI. Curare la scheda resta quindi una delle azioni più utili per un'attività locale.
+
+## Dalla scheda al sito: un unico percorso da misurare
+
+La SEO locale nel 2026 non si gioca solo sulla posizione in Maps. Si gioca sulla qualità della scheda, sulla coerenza delle informazioni e sulla capacità di capire cosa succede dopo il primo clic. Il collegamento tra Google Business Profile e GA4 ti dà, per la prima volta, una vista unica su questo percorso.
+
+Il punto pratico: collega la scheda, scegli tre metriche e guardale ogni mese, sempre nello stesso giorno. Il resto viene di conseguenza.
+
+Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, sito e misurazione, possiamo aiutarti con i [siti web a Taranto](/siti-web-taranto) e con la [gestione social a Taranto](/gestione-social-taranto), così che le informazioni siano coerenti ovunque. Se vuoi partire da un controllo della tua scheda, [parliamone](/contatti).
+
+## Fonti
+
+- [Novità di Google Analytics (What's new in Google Analytics)](https://support.google.com/analytics/answer/9164320) – Google Analytics Help, consultata a settembre 2026
+- [Ask Maps e navigazione immersiva in Google Maps](https://blog.google/products-and-platforms/products/maps/ask-maps-immersive-navigation/) – Google The Keyword, 12 marzo 2026
+- [Guida all'ottimizzazione per le funzioni AI della Ricerca](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) – Google Search Central, maggio 2026`,
+  },
+  {
+    slug: 'whatsapp-business-ai',
+    title: 'WhatsApp Business AI: cosa cambia con Meta Business Agent per le attività locali',
+    excerpt: 'Meta ha lanciato un assistente AI che risponde ai clienti su WhatsApp e Messenger. Ecco cosa fa davvero, cosa cambia con username e annunci negli Stati e come prepararti senza errori.',
+    category: 'Social media',
+    tags: ['whatsapp business', 'meta business agent', 'chatbot', 'intelligenza artificiale', 'attività locali', 'meta'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/whatsapp-business-ai/cover.jpg',
+    published: true,
+    seoTitle: 'WhatsApp Business AI: guida a Meta Business Agent | InLab',
+    seoDescription: 'WhatsApp Business AI e Meta Business Agent: cosa fa l\'assistente, username, annunci negli Stati e costi dei messaggi. Guida pratica per attività locali.',
+    content: `WhatsApp Business AI non è più un esperimento: con **Meta Business Agent**, l'assistente AI annunciato da Meta a giugno 2026, un'attività può far rispondere ai clienti un agente che conosce orari, prodotti e disponibilità. Per chi riceve decine di messaggi al giorno, spesso fuori orario, è una novità che conviene capire subito, prima di attivarla alla cieca.
+
+**Risposta breve: Meta Business Agent è l'assistente AI di Meta che risponde ai clienti su WhatsApp e Messenger, consiglia prodotti e prenota appuntamenti. L'attivazione iniziale è gratuita. Funziona bene solo se prima gli dai informazioni complete e regole chiare su quando passare la chat a una persona.**
+
+In questa guida vediamo cosa fa davvero l'assistente, cosa cambia con username, annunci negli Stati e prezzi dei messaggi, e come prepararti.
+
+**In breve**
+
+- Meta Business Agent risponde ai clienti su WhatsApp e Messenger, consiglia prodotti, prenota appuntamenti e ogni mattina ti riepiloga le conversazioni perse.
+- L'attivazione iniziale è gratuita; in futuro l'accesso passerà da abbonamenti. La disponibilità in Italia va verificata nell'app.
+- Da fine giugno 2026 puoi prenotare lo username WhatsApp: i clienti ti scrivono senza vedere il numero.
+- Per chi usa la piattaforma API, in Italia dal 1° luglio 2026 i messaggi marketing costano di più: servono liste segmentate.
+- Prima di attivare l'AI prepara informazioni, regole di passaggio all'operatore e attenzione ai dati sensibili.
+
+## Cosa è cambiato: l'assistente AI entra nelle chat aziendali
+
+### Cosa fa Meta Business Agent
+
+Il 3 giugno 2026, all'evento Conversations di Londra, Meta ha presentato [Meta Business Agent](https://about.fb.com/news/2026/06/meta-business-agent/), un assistente basato sull'intelligenza artificiale pensato per le aziende. In pratica è un addetto virtuale che risponde nelle chat al posto tuo, quando non puoi farlo.
+
+Secondo Meta, l'assistente può:
+
+- rispondere alle domande sulla tua attività (orari, servizi, politiche);
+- consigliare prodotti presi dal tuo catalogo;
+- prenotare appuntamenti;
+- qualificare i contatti, cioè capire chi è davvero interessato, e chiudere vendite;
+- inviarti ogni mattina un riepilogo delle conversazioni che ti sei perso.
+
+Risponde nella lingua del cliente e con il tono della tua attività. Oggi funziona su WhatsApp e Messenger, e Meta lo sta estendendo a Instagram. L'azienda dichiara che lo usano già oltre un milione di imprese e che ogni giorno sono attivi più di un miliardo di thread di conversazione con le aziende.
+
+### Configurazione e costi
+
+Meta parla di configurazione "in minuti" e di attivazione iniziale gratuita, con un futuro accesso tramite offerte in abbonamento. Online circolano date precise per il passaggio a pagamento, ma non sono confermate da fonti ufficiali. Il nostro consiglio: per ora non pianificare il budget su quelle.
+
+Un punto importante: la pagina ufficiale **non indica in quali Paesi** l'assistente è disponibile. Se lo vedi nella tua app WhatsApp Business, puoi usarlo; se non lo vedi, non è ancora arrivato per il tuo account.
+
+Per completezza: il 28 settembre 2026 Meta ha annunciato [Meta Enterprise Platform](https://about.fb.com/news/2026/09/launching-meta-enterprise-platform/), una piattaforma dedicata alle grandi aziende. Per un'attività locale non è la notizia principale.
+
+### Username, annunci negli Stati, prezzi e chiamate
+
+Attorno all'assistente AI si muovono altre novità che toccano chi usa WhatsApp per lavoro.
+
+**Username.** Dalla settimana del 29 giugno 2026 si può [prenotare il nome utente](https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/) da Impostazioni > Account > Nome utente. Il lancio completo è previsto entro l'anno, con rilascio graduale per Paese e notifica in app. Brand e creator possono rivendicare lo stesso username che usano su Instagram o Facebook. Non esiste una directory pubblica, e con lo username attivo il tuo numero resta nascosto ai nuovi contatti.
+
+**Pubblicità nella scheda Aggiornamenti.** Meta ha annunciato [annunci negli Stati](https://about.fb.com/news/2025/06/helping-you-find-more-channels-businesses-on-whatsapp/) (da cui l'utente può aprire una chat con l'azienda), canali promossi e abbonamenti ai canali. Nelle chat personali non compare nessuna pubblicità. La scheda Aggiornamenti conta 1,5 miliardi di utenti al giorno (dato globale). Il targeting si basa su Paese o città, lingua, canali seguiti e interazioni con gli annunci, oltre ai dati dell'account Meta se collegato al Centro gestione account. Meta precisa che non venderà né condividerà il numero di telefono. Sull'arrivo in Italia non c'è ancora una data ufficiale certa: a quanto risulta, Meta nel suo report DMA di marzo 2026 parlava di "prossime settimane".
+
+**Messaggi marketing in Ads Manager.** Da luglio 2025 i messaggi marketing WhatsApp sono [un posizionamento in Ads Manager](https://about.fb.com/news/2025/07/centralized-campaigns-ai-support-businesses-whatsapp/), accanto a Facebook e Instagram. Significa gestire tutto da un'unica campagna.
+
+**Prezzi della piattaforma API.** Per chi usa la WhatsApp Business Platform (la versione per integrazioni e gestionali, diversa dall'app), dal 1° luglio 2025 si paga [a messaggio](https://developers.facebook.com/docs/whatsapp/pricing/updates-to-pricing/). I messaggi di tipo "utility" (conferme, promemoria) inviati dentro la finestra di servizio, cioè mentre stai già conversando con il cliente, sono gratuiti. Dal 1° luglio 2026, in Italia, i messaggi marketing hanno una tariffa più alta.
+
+**Chiamate.** Con la [Business Calling API](https://developers.facebook.com/docs/whatsapp/cloud-api/calling/) i clienti possono chiamarti su WhatsApp e, anche in Italia, puoi essere tu a chiamarli. Per i clienti le chiamate sono gratuite.
+
+## Perché è importante per chi lavora con i clienti in chat
+
+Secondo i dati We Are Social / DataReportal, WhatsApp è la piattaforma più usata in Italia. Per molti clienti è il canale più naturale: scrivono lì prima di telefonare, prima di compilare un modulo, spesso prima ancora di guardare il sito.
+
+Il problema è noto a chiunque gestisca un'attività: i messaggi arrivano quando sei in cucina, in poltrona con un paziente, alla cassa. Risposte lente significano clienti che scrivono al concorrente. Un assistente AI ben configurato copre proprio quei vuoti.
+
+Ma c'è un rovescio. Un assistente che risponde male, inventa un prezzo o promette un orario che non esiste fa più danni del silenzio. Il valore non sta nell'attivare l'AI, sta nel **prepararla bene**.
+
+## Cosa cambia per ristoranti, studi, negozi ed e-commerce
+
+**Ristorante o pizzeria.** Le domande sono sempre le stesse: siete aperti lunedì, avete opzioni senza glutine, c'è posto sabato. L'assistente può rispondere e raccogliere prenotazioni anche a servizio in corso, lasciando a te solo i casi particolari (gruppi numerosi, eventi).
+
+**Studio medico o dentistico.** Utile per orari, indicazioni, prime informazioni sulle prestazioni e richieste di appuntamento. Qui però serve prudenza: i dati sanitari sono dati particolari secondo il GDPR. L'assistente non dovrebbe chiedere sintomi o dettagli clinici; meglio limitarlo alla parte organizzativa e passare a una persona tutto il resto.
+
+**Parrucchiere o centro estetico.** Prenotazioni, spostamenti di appuntamento, listino dei servizi. Il riepilogo mattutino delle conversazioni perse ti aiuta a richiamare chi ha scritto la sera.
+
+**Negozio.** Disponibilità di un prodotto, orari, resi. Se hai un catalogo su WhatsApp, l'assistente può proporre gli articoli giusti.
+
+**E-commerce.** Domande su spedizioni, taglie, stato dell'ordine. Qui entrano in gioco anche i prezzi della piattaforma API: i messaggi di servizio nella finestra di conversazione sono gratuiti, quelli promozionali in Italia costano di più. Inviare offerte a tutta la lista senza criterio diventa una spesa, oltre che un fastidio per i clienti.
+
+## Cosa fare in pratica: come prepararti
+
+1. **Costruisci la base informativa.** Scrivi in modo chiaro orari, listini, servizi, FAQ, politiche di reso o disdetta, zone di consegna. L'assistente risponde bene solo se ha informazioni aggiornate e complete.
+2. **Definisci quando passa la mano.** Decidi in quali casi la conversazione deve arrivare a una persona: reclami, richieste complesse, preventivi su misura, qualunque tema sanitario o legale.
+3. **Metti dei limiti sui dati sensibili.** Soprattutto per studi medici e professionisti: stabilisci cosa il bot non deve chiedere e aggiorna l'informativa privacy.
+4. **Sii trasparente.** Il cliente deve sapere che sta parlando con un'AI. Dal 2 agosto 2026 è un obbligo previsto dall'AI Act: ne parliamo nell'articolo sugli [obblighi di trasparenza sui contenuti AI](/blog/contenuti-ai-obblighi-ai-act).
+5. **Prenota lo username.** Scegli un nome coerente con Instagram e Facebook, prima che lo faccia qualcun altro.
+6. **Segmenta le liste marketing.** Se invii messaggi promozionali tramite piattaforma, dividi i contatti per interesse e frequenza d'acquisto. In Italia ogni messaggio marketing costa di più: meglio pochi e mirati.
+7. **Porta traffico in chat con gli annunci click-to-WhatsApp.** Sono annunci su Facebook e Instagram che aprono direttamente una conversazione. Se l'assistente è pronto a rispondere, il contatto non si raffredda. Le impostiamo spesso nelle nostre [campagne Meta Ads](/meta-ads).
+8. **Controlla le conversazioni.** Nelle prime settimane leggi il riepilogo ogni mattina e correggi le risposte sbagliate aggiornando la base informativa.
+
+![Checklist in sei punti da completare prima di attivare l'assistente AI su WhatsApp Business](/blog/whatsapp-business-ai/checklist.webp)
+
+## Un esempio: lo studio dentistico e la trattoria
+
+Facciamo un esempio ipotetico. Uno studio dentistico riceve la sera messaggi come "Fate sbiancamenti?" o "Avete posto giovedì?". Con l'assistente configurato, il paziente riceve subito orari, informazioni generali sul servizio e una proposta di appuntamento. Se scrive "Ho un dolore forte a un dente", l'assistente non entra nel merito: indica il numero per le urgenze e segnala il caso alla segreteria. La mattina, il riepilogo mostra chi richiamare.
+
+Stesso schema per una trattoria: l'AI risponde su menu e allergeni in base alle schede che le hai fornito, prende la prenotazione per quattro persone e lascia a te la festa di compleanno da trenta.
+
+Il punto non è sostituire le persone, ma togliere loro le domande ripetitive. Se vuoi vedere come lavoriamo sulla generazione di contatti per uno studio, guarda [il progetto per lo studio dentistico Ricciardi](/casi-studio/ricciardi).
+
+## Cosa abbiamo imparato progettando chatbot
+
+Nei progetti di [automazioni e chatbot AI](/automazioni-ai) la parte più lunga non è la tecnologia: è scrivere le risposte. Orari, prezzi indicativi, cosa succede se il cliente arriva in ritardo, come si disdice una prenotazione. Sono informazioni che il titolare ha in testa ma che raramente sono scritte da qualche parte.
+
+Il nostro consiglio è partire da lì, anche prima di attivare Meta Business Agent. Facciamo un esempio: una trattoria di Mottola che riceve messaggi soprattutto il sabato mattina può raccogliere per due settimane le domande più frequenti. Con quell'elenco l'assistente risponde meglio, e il personale sa quali chat deve gestire di persona.
+
+## Domande frequenti
+
+### Cos'è Meta Business Agent?
+
+È l'assistente AI di Meta per le aziende, presentato il 3 giugno 2026. Risponde ai clienti su WhatsApp e Messenger, consiglia prodotti dal catalogo, prenota appuntamenti, qualifica contatti e invia al titolare un riepilogo delle conversazioni perse. L'estensione a Instagram è in corso.
+
+### Meta Business Agent è disponibile in Italia?
+
+L'annuncio ufficiale non indica i Paesi coperti. Il modo più sicuro per saperlo è controllare direttamente nell'app WhatsApp Business o negli strumenti Meta della tua attività.
+
+### Quanto costa l'assistente AI di WhatsApp Business?
+
+Meta dice che l'attivazione iniziale è gratuita e che in futuro l'accesso passerà da offerte in abbonamento. Tempi e prezzi di questo passaggio non sono ancora stati comunicati in modo ufficiale: meglio non basare il budget su date circolate online.
+
+### Posso usare un chatbot WhatsApp in uno studio medico?
+
+Sì, ma con cautela. L'assistente può gestire orari, prenotazioni e informazioni generali, mentre i dati sanitari richiedono attenzione particolare al GDPR. Stabilisci cosa il bot non deve chiedere né trattare e quando passare la conversazione a una persona.
+
+### A cosa serve lo username di WhatsApp per un'azienda?
+
+Permette ai clienti di trovarti e scriverti senza conoscere il tuo numero, che resta nascosto ai nuovi contatti. I brand possono rivendicare lo stesso nome usato su Instagram o Facebook. La prenotazione si fa da Impostazioni > Account > Nome utente.
+
+## In conclusione: prepara le risposte prima di attivare l'AI
+
+WhatsApp Business AI può far risparmiare ore e non perdere clienti fuori orario, a patto di dargli informazioni corrette, limiti chiari e un passaggio rapido a una persona quando serve. Intanto prenota lo username e rivedi come usi i messaggi promozionali, perché in Italia costano di più.
+
+Se vuoi un assistente su misura, collegato ai tuoi strumenti e costruito sulle regole della tua attività, realizziamo [chatbot e automazioni AI](/automazioni-ai) per PMI e professionisti. Se hai dubbi su da dove partire, [parliamone](/contatti).
+
+*Questo articolo ha scopo informativo e non sostituisce una consulenza legale, in particolare sul trattamento dei dati personali.*
+
+## Fonti
+
+- [Meta Business Agent, annuncio ufficiale](https://about.fb.com/news/2026/06/meta-business-agent/) – Meta, 3 giugno 2026
+- [Meta Enterprise Platform, annuncio di lancio](https://about.fb.com/news/2026/09/launching-meta-enterprise-platform/) – Meta, 28 settembre 2026
+- [Username WhatsApp, apertura delle prenotazioni](https://about.fb.com/news/2026/06/its-time-to-reserve-your-whatsapp-username/) – Meta, 29 giugno 2026
+- [Scheda Aggiornamenti: annunci negli Stati e canali promossi](https://about.fb.com/news/2025/06/helping-you-find-more-channels-businesses-on-whatsapp/) – Meta, giugno 2025
+- [Campagne centralizzate e supporto AI per le aziende su WhatsApp](https://about.fb.com/news/2025/07/centralized-campaigns-ai-support-businesses-whatsapp/) – Meta, luglio 2025
+- [WhatsApp Business Platform, aggiornamenti sui prezzi](https://developers.facebook.com/docs/whatsapp/pricing/updates-to-pricing/) – Meta for Developers
+- [WhatsApp Cloud API, Business Calling API](https://developers.facebook.com/docs/whatsapp/cloud-api/calling/) – Meta for Developers`,
+  },
+  {
+    slug: 'meta-ads-creativita-advantage',
+    title: 'Meta Ads 2026: con l\'AI e Advantage+ la creatività diventa il vero targeting',
+    excerpt: 'Nel 2026 è l\'intelligenza artificiale di Meta a scegliere chi vede i tuoi annunci. Il tuo lavoro si sposta su creatività, segnali di conversione e misurazione: ecco come organizzarti.',
+    category: 'Advertising',
+    tags: ['meta ads', 'advantage+', 'facebook ads', 'instagram ads', 'intelligenza artificiale', 'pmi'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/meta-ads-creativita-advantage/cover.jpg',
+    published: true,
+    seoTitle: 'Meta Ads 2026: creatività, AI e Advantage+ | InLab',
+    seoDescription: 'Meta Ads 2026: come l\'AI decide chi vede i tuoi annunci, cosa cambia con verifica inserzionisti e regole UE, e come impostare creatività e segnali.',
+    content: `Meta Ads 2026 funziona in modo diverso da qualche anno fa: oggi è l'intelligenza artificiale di Meta a decidere, in larga parte, chi vede i tuoi annunci e quando. Per un'impresa questo cambia le priorità: meno tempo a scegliere interessi e pubblici, più attenzione alle creatività, ai dati che arrivano dal sito e alla misurazione.
+
+Vediamo cosa ha comunicato Meta, cosa ne pensano gli addetti ai lavori e cosa fare in concreto.
+
+**In breve**
+
+- Meta dichiara che i nuovi modelli AI hanno migliorato clic e conversioni degli annunci (dati globali, Q4 2025).
+- Secondo un'interpretazione diffusa tra gli esperti, oggi la creatività guida la distribuzione più del targeting per interessi.
+- Entro fine 2026 Meta vuole che il 90% del fatturato pubblicitario arrivi da inserzionisti verificati.
+- Nell'UE niente più annunci politici, elettorali e su temi sociali dal 6 ottobre 2025.
+- Il lavoro si sposta su creatività varie, segnali di conversione puliti e test.
+
+## Cosa è cambiato in Meta Ads nel 2026
+
+### L'AI al centro della distribuzione
+
+Il 28 gennaio 2026 Meta ha pubblicato [un aggiornamento sui risultati dei suoi sistemi pubblicitari](https://about.fb.com/news/2026/01/2026-ai-drives-performance/). Alcuni numeri, tutti riferiti al quarto trimestre 2025 e a livello globale:
+
+- il nuovo sistema di ranking (l'algoritmo che ordina gli annunci da mostrare) ha portato un +3,5% di clic sugli annunci Facebook e oltre +1% di conversioni su Instagram;
+- il modello di Instagram per Feed, Stories e Reels ha aumentato del 3% il tasso di conversione;
+- GEM, il modello generativo con cui Meta raccomanda gli annunci, è stato addestrato con il doppio delle GPU;
+- il consolidamento dei modelli in Meta Lattice ha migliorato del 12% la qualità degli annunci;
+- gli strumenti di generazione video per le inserzioni hanno raggiunto un run-rate (il valore annuo stimato al ritmo attuale) di 10 miliardi di dollari;
+- quasi il 10% delle visualizzazioni giornaliere dei Reels riguarda contenuti creati con Edits, l'app di montaggio di Meta;
+- negli Stati Uniti gli annunci click-to-message, quelli che aprono una chat, sono cresciuti del 50% anno su anno.
+
+Meta ha anche introdotto un'attribuzione "incrementale", che prova a misurare solo le conversioni che senza l'annuncio non ci sarebbero state. Secondo l'azienda, rispetto al modello standard rileva il 24% in più di conversioni incrementali.
+
+### Verso campagne sempre più automatiche
+
+Secondo quanto riportato dal Wall Street Journal a giugno 2025, l'obiettivo di Meta è arrivare entro fine 2026 a campagne completamente automatizzate: l'inserzionista fornisce URL, immagine e budget, l'AI fa il resto. Non è un annuncio ufficiale, ma la direzione è coerente con la crescita di Advantage+, cioè le funzioni in cui Meta gestisce da sola pubblico, posizionamenti e ottimizzazione.
+
+### Perché la creatività pesa di più
+
+Tra gli addetti ai lavori (per esempio il consulente statunitense Jon Loomer) si è diffusa una lettura: a quanto risulta Andromeda è il sistema che seleziona quali annunci entrano nella fase di ranking, cioè quali hanno una possibilità di essere mostrati. La conseguenza pratica, secondo questa interpretazione, è che **la creatività pesa più del targeting per interessi**: è l'annuncio stesso a "trovare" il pubblico giusto.
+
+![Confronto tra le campagne Meta Ads basate sul targeting manuale e quelle basate su creatività e segnali di conversione](/blog/meta-ads-creativita-advantage/prima-dopo.webp)
+
+### Verifica degli inserzionisti e regole europee
+
+L'11 marzo 2026 Meta ha presentato [nuovi strumenti contro le truffe](https://about.fb.com/news/2026/03/meta-launches-new-anti-scam-tools-deploys-ai-technology-to-fight-scammers-and-protect-people/). L'obiettivo è che entro fine 2026 il 90% del fatturato pubblicitario arrivi da inserzionisti verificati, contro il 70% attuale. La verifica si concentra sulle categorie più a rischio e può essere richiesta in base al luogo, allo storico di conformità e al tipo di annuncio. Nel 2025 Meta dichiara di aver rimosso oltre 159 milioni di annunci truffa, il 92% prima di qualsiasi segnalazione.
+
+Poi ci sono le regole UE:
+
+- **Annunci politici e sociali.** Dal 6 ottobre 2025 Meta [non pubblica più annunci politici, elettorali e su temi sociali](https://about.fb.com/news/2025/07/ending-political-electoral-and-social-issue-advertising-in-the-eu/) nell'Unione europea, per effetto del regolamento TTPA sulla pubblicità politica, in vigore dal 10 ottobre 2025. I contenuti organici restano consentiti.
+- **Annunci meno personalizzati.** A quanto risulta, in base a un impegno preso con la Commissione europea a dicembre 2025 nell'ambito del Digital Markets Act, da gennaio 2026 gli utenti UE possono scegliere tra annunci personalizzati, abbonamento senza pubblicità e annunci "meno personalizzati". Se confermato, una parte del pubblico riceve annunci basati su meno dati, e la creatività deve funzionare anche senza un targeting preciso.
+- **Etichette AI.** Il 28 luglio 2026 Meta ha firmato il Codice di condotta UE sulla trasparenza dei contenuti AI: è ragionevole aspettarsi più etichette sulle creatività generate con l'AI.
+
+## Perché è importante: il tuo lavoro si sposta
+
+Secondo noi il messaggio è chiaro. Se l'AI decide chi vede cosa, il vantaggio competitivo non sta più nel conoscere le impostazioni nascoste del pannello, ma in cinque cose:
+
+1. **Creatività varie e di qualità**: formati diversi, angoli di messaggio diversi, contenuti in stile UGC (girati come se li avesse fatti un cliente), video verticali.
+2. **Segnali puliti**: Pixel e API Conversioni (il collegamento diretto tra il tuo sito e Meta) installati bene, con eventi corretti.
+3. **Obiettivi giusti**: ottimizzare per l'azione che conta davvero, non per quella più facile.
+4. **Offerta chiara e landing veloce**: l'AI porta le persone, ma è la pagina a convincerle.
+5. **Misurazione**: attribuzione incrementale e test, per capire cosa funziona davvero.
+
+L'algoritmo impara da quello che gli dai. Creatività scarse e dati sporchi producono risultati scarsi, anche con il sistema più avanzato.
+
+## Cosa cambia per PMI, attività locali e professionisti
+
+**Ristorante o bar.** Un solo annuncio con la foto del locale non basta più. Servono varianti: il piatto in primo piano, un breve video della preparazione, una recensione letta da un cliente. Il sistema capisce da solo a chi mostrare cosa.
+
+**Negozio.** Il carosello prodotti resta utile, ma affiancato da un video verticale che mostra un articolo in uso. Gli annunci che aprono una chat possono funzionare bene per chi preferisce chiedere prima di passare in negozio: se ti interessa, leggi la nostra guida all'[assistente AI su WhatsApp](/blog/whatsapp-business-ai).
+
+**Studio professionale.** Per uno studio dentistico, legale o medico il tracciamento corretto dei contatti è decisivo: se Meta non riceve il segnale "richiesta inviata", ottimizza su clic poco utili. Attenzione anche alla verifica dell'account, che per alcune categorie può essere richiesta.
+
+**E-commerce.** Il catalogo e Advantage+ lavorano meglio con eventi d'acquisto affidabili. Qui la misurazione incrementale aiuta a capire se le campagne portano vendite nuove o intercettano chi avrebbe comprato comunque.
+
+**Associazioni, liste civiche, enti.** Dal 6 ottobre 2025 nell'UE non è più possibile sponsorizzare contenuti politici, elettorali o su temi sociali. Resta la comunicazione organica, su cui conviene investire con più costanza.
+
+## Cosa fare in pratica: la checklist per il 2026
+
+1. **Costruisci una griglia creativa.** Per esempio 3 angoli di messaggio (prezzo, qualità, esperienza del cliente) per 3 formati (video verticale, immagine statica, carosello). Nove annunci da cui l'AI può scegliere.
+2. **Cura foto e video.** Materiale autentico, girato bene, dà all'algoritmo qualcosa su cui lavorare. È il motivo per cui abbiniamo spesso le campagne a [shooting fotografici](/shooting) e produzione di [video e reel](/video).
+3. **Controlla Pixel e API Conversioni.** Verifica che gli eventi importanti (contatto, prenotazione, acquisto) vengano registrati una sola volta e con i dati giusti.
+4. **Verifica l'account in anticipo.** Completa i dati del Business Manager, verifica l'attività e i metodi di pagamento prima di averne bisogno.
+5. **Non spezzettare il budget.** Tante campagne da pochi euro al giorno danno all'AI pochi dati per imparare. Meglio meno campagne, con più varianti creative dentro.
+6. **Scegli l'obiettivo giusto.** Se vuoi contatti, ottimizza per i contatti, non per il traffico.
+7. **Etichetta le creatività AI realistiche.** Se usi immagini o video generati con l'AI che sembrano reali, dichiaralo. Approfondiamo gli [obblighi sui contenuti AI](/blog/contenuti-ai-obblighi-ai-act) in un articolo dedicato.
+8. **Testa e misura.** Usa l'attribuzione incrementale quando disponibile e confronta le varianti per qualche settimana prima di tirare conclusioni.
+
+## Un esempio reale: lead generation per uno studio dentistico
+
+Un esempio concreto di questo approccio è il [caso dello studio dentistico Ricciardi](/casi-studio/ricciardi): abbiamo lavorato insieme su sito e lead generation, cioè sulla raccolta di richieste di contatto da pazienti potenziali. Il principio è lo stesso descritto qui: creatività pensate per il pubblico locale, pagina di destinazione chiara e tracciamento affidabile delle richieste, così che le campagne possano ottimizzare sul risultato che conta.
+
+Se lavori in provincia, trovi anche la nostra pagina dedicata a [Meta Ads a Taranto](/meta-ads-taranto).
+
+## Come impostiamo le campagne oggi
+
+Nelle campagne che gestiamo per attività locali il tempo si è spostato: meno ore sulle impostazioni del pubblico, più ore sui contenuti. Per ogni campagna prepariamo varianti diverse per formato e messaggio, e le produciamo quando possibile con [video e reel](/video) girati nell'attività, con le persone che ci lavorano.
+
+L'altra metà del lavoro è la misurazione. Prima di spendere il budget verifichiamo che Pixel ed eventi registrino le azioni giuste: una richiesta di contatto, una prenotazione, una telefonata. Nel [caso studio dello Studio Dentistico Ricciardi](/casi-studio/ricciardi) le campagne di lead generation sono state costruite insieme al sito proprio per questo.
+
+## Domande frequenti
+
+### Nel 2026 il targeting per interessi su Meta Ads serve ancora?
+
+Può ancora servire in alcuni casi, ma pesa meno di un tempo. Il sistema di Meta usa l'AI per decidere a chi mostrare gli annunci, e molti addetti ai lavori ritengono che oggi sia la creatività a guidare la distribuzione. Per questo conviene investire soprattutto su annunci vari e di qualità.
+
+### Cos'è Advantage+ e conviene a una piccola impresa?
+
+Advantage+ è l'insieme delle funzioni automatiche di Meta Ads, in cui l'AI gestisce pubblico, posizionamenti e ottimizzazione. Può funzionare bene anche per una PMI, a patto di fornire creatività sufficienti, un evento di conversione ben tracciato e un budget non troppo frammentato.
+
+### Devo verificare il mio account inserzionista Meta?
+
+Meta punta a far arrivare entro fine 2026 il 90% del fatturato pubblicitario da inserzionisti verificati. La verifica si concentra sulle categorie a rischio e può essere richiesta in base a luogo, storico e tipo di annuncio. Conviene completare i dati del Business Manager in anticipo, per non trovarsi le campagne bloccate.
+
+### Un'associazione può fare pubblicità su Meta nell'UE?
+
+Dal 6 ottobre 2025 Meta non pubblica più annunci politici, elettorali e su temi sociali nell'Unione europea. I contenuti organici restano consentiti. Associazioni, liste civiche ed enti devono quindi valutare con attenzione il tema di ogni annuncio.
+
+### Le creatività fatte con l'AI vanno etichettate?
+
+Per immagini e video realistici generati con l'AI è bene prevedere un'etichetta. Meta ha firmato il Codice di condotta UE sulla trasparenza dei contenuti AI, quindi è ragionevole aspettarsi più etichette automatiche sulle piattaforme.
+
+## In conclusione: dai all'AI materiale migliore
+
+Nel 2026 fare Meta Ads significa meno regolazioni manuali e più sostanza: creatività varie, dati affidabili, un'offerta chiara e test fatti con metodo. Se parti da qui, le campagne automatiche lavorano a tuo favore invece che al buio.
+
+Se vuoi impostare così le tue campagne, la nostra [gestione delle campagne Meta Ads](/meta-ads) parte proprio da creatività e tracciamento. Hai un dubbio sul tuo account? [Parliamone](/contatti).
+
+*Le parti su regole UE e verifica degli inserzionisti hanno scopo informativo e non sostituiscono una consulenza legale.*
+
+## Fonti
+
+- [Come l'AI guida le performance pubblicitarie nel 2026](https://about.fb.com/news/2026/01/2026-ai-drives-performance/) – Meta, 28 gennaio 2026
+- [Nuovi strumenti e AI contro le truffe](https://about.fb.com/news/2026/03/meta-launches-new-anti-scam-tools-deploys-ai-technology-to-fight-scammers-and-protect-people/) – Meta, 11 marzo 2026
+- [Stop agli annunci politici, elettorali e su temi sociali nell'UE](https://about.fb.com/news/2025/07/ending-political-electoral-and-social-issue-advertising-in-the-eu/) – Meta, luglio 2025`,
+  },
+  {
+    slug: 'meta-one-aziende',
+    title: 'Meta One per aziende: cosa offre, quanto costa e quando conviene davvero',
+    excerpt: 'Meta ha lanciato Meta One, l\'abbonamento unico per Instagram, Facebook e WhatsApp. Ecco cosa includono i piani per aziende, quanto costano e come capire se ti servono davvero.',
+    category: 'Social media',
+    tags: ['meta one', 'instagram', 'facebook', 'whatsapp business', 'social media marketing', 'pmi'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/meta-one-aziende/cover.jpg',
+    published: true,
+    seoTitle: 'Meta One per aziende: prezzi e se conviene | InLab',
+    seoDescription: 'Meta One aziende: prezzi dei piani, link nei post Instagram, badge verificato e 4 domande per capire se l\'abbonamento conviene alla tua PMI.',
+    content: `**Meta One** è il nuovo abbonamento unico di Meta per Instagram, Facebook, WhatsApp e Meta AI, e per le **aziende** introduce piani a pagamento con funzioni che fino a ieri non esistevano, come i link cliccabili nei post organici. La domanda che ci stanno facendo i clienti è una sola: conviene?
+
+**Risposta breve: Meta One conviene soprattutto a chi vive di clic verso il sito (e-commerce, prenotazioni online) e a chi subisce profili falsi che lo imitano. Per molte attività locali che lavorano con messaggi e telefonate si può aspettare: prima verifica il prezzo in euro nella tua app.**
+
+La risposta onesta è "dipende". In questo articolo trovi cosa includono i piani, quanto costano secondo Meta e un metodo semplice in quattro domande per decidere senza farti guidare dall'effetto novità.
+
+**In breve**
+
+- Il 15 settembre 2026 Meta ha annunciato Meta One, un abbonamento unico per le sue app, con piani per singoli utenti e per creator e aziende.
+- I bundle business partono da 14,99 $ al mese (Essential) e 49,99 $ (Advanced); i prezzi ufficiali sono in dollari e possono variare per Paese e account.
+- Link nei post e nei Reels organici, Storie programmate fino a 30 giorni prima e accesso del team sono nel piano Advanced; badge verificato e protezione dai profili falsi già nell'Essential.
+- L'abbonamento non sostituisce la leva più importante: su Facebook Meta premia i contenuti originali e declassa quelli ripubblicati.
+- Prima di abbonarti, verifica il prezzo in euro nell'app e confrontalo con quello che otterresti investendo la stessa cifra in sponsorizzate.
+
+## Cosa è cambiato: Meta One in parole semplici
+
+Con l'[annuncio del 15 settembre 2026](https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/) Meta ha riunito sotto un unico nome gli abbonamenti alle sue app. Il servizio è presentato come disponibile a livello globale, ma Meta specifica che piani, prezzi e disponibilità possono cambiare in base alla regione, all'app e al tipo di account.
+
+### I piani per utenti singoli
+
+Ci sono abbonamenti per la singola app: Instagram Plus e Facebook Plus a 3,99 $ al mese, WhatsApp Plus a 2,99 $. Poi due pacchetti che li combinano: Core a 7,99 $ e Premium a 19,99 $. Sono pensati per l'uso personale, non per chi gestisce un'attività.
+
+### I bundle per creator e aziende
+
+Qui c'è la parte che interessa a te. Meta indica prezzi "a partire da", sempre in dollari:
+
+- **Essential, da 14,99 $/mese**: badge verificato, canale verificato nell'app WhatsApp Business, protezione dall'impersonificazione (cioè dai profili che si spacciano per il tuo brand) e accesso a Meta Business Agent, l'assistente AI di Meta per le aziende.
+- **Advanced, da 49,99 $/mese**: programmazione delle Storie fino a 30 giorni prima, link nei post e nei Reels organici, analytics esportabili, accesso per i membri del team e più capacità per l'agente AI.
+- **Expert (149 $) e Max (499 $)**: pensati per team strutturati.
+
+Tra le funzioni business annunciate ci sono anche un profilo arricchito con sito web, sedi e una sezione "cosa dicono di te" con le recensioni, un pulsante Segui più evidente sui Reels e inviti automatici a seguire l'account rivolti a chi interagisce con i tuoi contenuti.
+
+### E i prezzi in euro?
+
+La pagina ufficiale non riporta prezzi in euro. Secondo alcune testate di settore i bundle business in Europa partirebbero da 16,99 €, ma è un dato da confermare. Il nostro consiglio: la cifra che conta è quella che vedi nell'app, sul tuo account, al momento dell'acquisto.
+
+## Perché è importante (e cosa non cambia)
+
+Per anni la regola su Instagram è stata "link in bio", perché i link nei post organici non erano cliccabili. Meta One cambia questo punto, ma solo per chi paga il piano Advanced. È una novità concreta per chi vive di traffico verso il sito.
+
+Allo stesso tempo, l'abbonamento non è una scorciatoia per la visibilità. A marzo 2026 Meta ha spiegato come [premia i creator originali su Facebook](https://about.fb.com/news/2026/03/rewarding-original-creators-on-facebook/):
+
+- è **originale** un contenuto girato o prodotto dal titolare del profilo o della Pagina;
+- un **remix** conta come originale solo se aggiunge informazioni, analisi o miglioramenti sostanziali;
+- non basta reagire a un video, cucire clip, aggiungere bordi, didascalie o cambiare la velocità;
+- il contenuto non originale viene declassato in Feed e Reels, e gli account che pubblicano soprattutto materiale altrui possono diventare non raccomandabili e perdere la monetizzazione.
+
+Secondo Meta, visualizzazioni e tempo di visione dei Reels originali sono circa raddoppiati nel secondo semestre 2025 rispetto allo stesso periodo del 2024. Il messaggio è chiaro: il badge si compra, la pertinenza no.
+
+### Badge verificato: gratuito o a pagamento?
+
+C'è un possibile equivoco. A luglio 2026 Meta ha lanciato [Facebook Verified](https://about.fb.com/news/2026/07/introducing-facebook-verified/), un badge gratuito per persone maggiorenni che si verificano con un video-selfie, in mercati selezionati. Però non è disponibile per le Pagine né per i profili in modalità professionale. Per una Pagina aziendale, quindi, il badge verificato passa dai bundle business di Meta One.
+
+## Cosa significa per PMI, attività locali e professionisti
+
+Non tutte le attività traggono lo stesso vantaggio da Meta One. Vediamo alcuni casi tipici.
+
+**E-commerce e negozi con vendita online.** Se ogni clic al sito può diventare un ordine, i link nei post e nei Reels organici del piano Advanced possono avere senso: ogni contenuto diventa una porta verso la scheda prodotto, senza passare dal link in bio.
+
+**Brand imitati da profili falsi.** Se ti è capitato di trovare account che copiano nome e logo per truffare i tuoi clienti, il badge verificato e la protezione dall'impersonificazione dell'Essential sono un investimento in fiducia. Qui conta anche una [identità di marca](/branding) riconoscibile e coerente, che rende più facile distinguere l'originale dalla copia.
+
+**Aziende con un team che gestisce i social.** Accessi per i membri del team, Storie programmate con un mese di anticipo e analytics esportabili aiutano chi lavora con più persone o con un'agenzia.
+
+**Attività locali che convertono via messaggio o telefono.** Un ristorante che riceve prenotazioni in DM, un parrucchiere che fissa appuntamenti su WhatsApp, uno studio professionale che viene chiamato dopo aver visto un post: per loro il link nel post aggiunge poco. Spesso conviene aspettare e lavorare su contenuti e messaggistica. Se il tuo canale principale è WhatsApp, leggi la nostra guida su [WhatsApp Business e Meta Business Agent](/blog/whatsapp-business-ai).
+
+## Cosa fare in pratica: 5 passi prima di abbonarti
+
+1. **Controlla il prezzo reale nell'app.** Apri le impostazioni del tuo account aziendale e verifica se Meta One è disponibile e a quanto, in euro, IVA inclusa.
+2. **Guarda da dove arrivano i clienti.** Negli ultimi tre mesi, quanti contatti sono arrivati da clic al sito e quanti da messaggi o telefonate? Se i clic sono marginali, il piano Advanced ha poco da offrirti.
+3. **Confronta il costo con le sponsorizzate.** Il canone annuo di un piano Advanced è una cifra che potresti investire in [campagne Meta Ads](/meta-ads) mirate. Chiediti quale delle due opzioni ti porterebbe più contatti misurabili.
+4. **Valuta il rischio di profili falsi.** Se hai già avuto casi di imitazione o lavori in un settore dove sono frequenti, l'Essential può valere anche solo per il badge e la protezione.
+5. **Prova per un periodo definito.** Se decidi di abbonarti, fissa un obiettivo (per esempio clic dai post o richieste ricevute) e dopo due o tre mesi verifica se il costo si è ripagato.
+
+![Checklist in 4 domande per capire se l'abbonamento Meta One conviene a un'azienda: clic al sito, profili falsi, team, prezzo in euro](/blog/meta-one-aziende/conviene-4-domande.webp)
+
+### La leva che resta gratuita: contenuti originali
+
+Qualunque cosa decidi sull'abbonamento, la base non cambia. Secondo noi il miglior investimento per una PMI resta produrre contenuti propri: riprese in negozio, lo staff al lavoro, il dietro le quinte di un servizio o di una preparazione.
+
+Meta stessa mette a disposizione strumenti gratuiti. L'app [Edits](https://about.fb.com/news/2026/04/one-year-of-edits-built-for-and-with-creators/) offre teleprompter, sottotitoli, curve di velocità, una scheda Idee con spunti AI settimanali e template. I [Trial reels](https://about.fb.com/news/2024/12/trial-reels-try-content-non-followers-first-see-what-perfoms-best/) permettono di mostrare un reel prima a chi non ti segue, per capire cosa funziona senza "sporcare" il profilo. Se vuoi un aiuto a impostare le riprese, trovi il nostro servizio di [video e reel](/video).
+
+## Un esempio: negozio di arredamento contro pizzeria
+
+Facciamo un esempio ipotetico con due attività della stessa città.
+
+Il **negozio di arredamento** vende anche online e ogni settimana pubblica Reels con i nuovi arrivi. Oggi chi vuole il prodotto deve andare nel profilo, aprire il link in bio e cercarlo sul sito. Con il link diretto nel Reel il percorso si accorcia. In più, il team di tre persone potrebbe condividere gli accessi e programmare le Storie delle promozioni in anticipo. Per lui l'Advanced è un'ipotesi concreta da testare.
+
+La **pizzeria** riceve quasi tutte le prenotazioni per telefono o WhatsApp e non ha un e-commerce. Il link nel post porterebbe al massimo al menu. Per lei l'abbonamento può aspettare: lo stesso budget rende di più in video girati in cucina, in una buona [gestione dei social](/gestione-social) e magari in una piccola sponsorizzata locale nel weekend.
+
+Stessa piattaforma, scelte opposte. Ed entrambe corrette.
+
+## Il nostro punto di vista
+
+Nei profili che gestiamo, i contenuti che funzionano meglio sono quasi sempre quelli girati nell'attività: il laboratorio, il banco, lo staff al lavoro. È quello che Meta chiama contenuto originale, ed è gratis. Un abbonamento può aggiungere strumenti utili, ma non sostituisce una buona idea girata bene.
+
+Facciamo un esempio: una boutique di Taranto che vende anche online potrebbe avere un vantaggio reale dai link nei post e nei Reels. Un bar di Palagiano che lavora con clienti di passaggio probabilmente no. Prima di abbonarti guarda i tuoi numeri: quante persone cliccano già il link nella bio e quante ti scrivono in DM. Se vuoi un parere su come impostare il profilo, è parte del nostro lavoro di [gestione social](/gestione-social).
+
+## Domande frequenti
+
+### Quanto costa Meta One per le aziende?
+
+Meta indica prezzi ufficiali in dollari: i bundle per creator e aziende partono da 14,99 $ al mese (Essential) e 49,99 $ (Advanced), fino a 149 $ (Expert) e 499 $ (Max). La pagina ufficiale non riporta prezzi in euro e Meta precisa che piani e prezzi possono variare per Paese, app e account: controlla la cifra direttamente nell'app.
+
+### Con Meta One posso mettere link nei post Instagram?
+
+Sì, secondo l'annuncio di Meta i link nei post e nei Reels organici sono inclusi nel bundle Advanced, non nell'Essential. Se il tuo obiettivo principale è portare traffico al sito, è la funzione da valutare con più attenzione.
+
+### La spunta blu su Instagram per aziende è inclusa in Meta One?
+
+Il badge verificato è incluso già nel bundle Essential, insieme alla protezione dall'impersonificazione e al canale verificato su WhatsApp Business. Il badge gratuito Facebook Verified tramite video-selfie, invece, non è disponibile per Pagine e profili professionali.
+
+### Senza abbonamento i miei post avranno meno visibilità?
+
+Nelle comunicazioni ufficiali che abbiamo consultato non si parla di penalizzazioni per chi non si abbona. Il fattore che Meta ha dichiarato di premiare su Facebook è l'originalità: i contenuti girati o prodotti da te vengono favoriti, quelli ripubblicati da altri vengono declassati in Feed e Reels.
+
+### Meta One conviene a un'attività locale?
+
+Dipende da come arrivano i tuoi clienti. Se convertono soprattutto via messaggio o telefono, spesso puoi aspettare e investire prima in contenuti e sponsorizzate. Se vivi di clic al sito o hai problemi di profili falsi, vale la pena fare due conti.
+
+## Conclusione: decidi con i numeri, non con l'effetto novità
+
+Meta One porta funzioni utili, soprattutto i link nei post organici e la protezione dai profili falsi. Ma è un costo fisso che va giustificato con risultati misurabili, e non sostituisce la cosa che l'algoritmo premia davvero: contenuti tuoi, girati da te, pubblicati con costanza. Se non sai da dove partire, un [piano editoriale](/blog/quante-volte-pubblicare-social) realistico è il primo passo.
+
+Se vuoi capire se l'abbonamento ha senso per la tua attività, guardando i tuoi dati e non quelli medi, [parliamone](/contatti).
+
+## Fonti
+
+- [Introducing Meta One: A Subscription Service With More Features and AI – Meta Newsroom, 15 settembre 2026](https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/)
+- [Rewarding Original Creators on Facebook – Meta Newsroom, marzo 2026](https://about.fb.com/news/2026/03/rewarding-original-creators-on-facebook/)
+- [Introducing Facebook Verified – Meta Newsroom, 24 luglio 2026](https://about.fb.com/news/2026/07/introducing-facebook-verified/)
+- [One Year of Edits: Built for and With Creators – Meta Newsroom, 22 aprile 2026](https://about.fb.com/news/2026/04/one-year-of-edits-built-for-and-with-creators/)
+- [Trial Reels: Try Content With Non-Followers First – Meta Newsroom, dicembre 2024](https://about.fb.com/news/2024/12/trial-reels-try-content-non-followers-first-see-what-perfoms-best/)`,
+  },
+  {
+    slug: 'seo-tiktok-search-ads',
+    title: 'SEO su TikTok e TikTok Search Ads: la guida pratica per attività e PMI',
+    excerpt: 'TikTok è sempre più usato come motore di ricerca. Ecco come ottimizzare i tuoi video per farti trovare, come funzionano le Search Ads disponibili in Italia e quando ha senso TikTok Shop.',
+    category: 'Social media',
+    tags: ['tiktok', 'seo su tiktok', 'tiktok search ads', 'tiktok shop', 'pubblicità locale', 'video marketing'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/seo-tiktok-search-ads/cover.jpg',
+    published: true,
+    seoTitle: 'SEO su TikTok e Search Ads per attività locali | InLab',
+    seoDescription: 'SEO su TikTok e TikTok Search Ads in Italia: come ottimizzare i video per la ricerca, usare keyword locali e valutare TikTok Shop con i conti giusti.',
+    content: `Fare **SEO su TikTok** significa preparare i tuoi video perché compaiano quando qualcuno cerca un servizio, un prodotto o un posto dentro l'app, e con le **TikTok Search Ads** oggi puoi anche sponsorizzarti proprio in quei risultati di ricerca. Per molte persone, soprattutto quando cercano un ristorante, un parrucchiere o un prodotto da provare, TikTok è diventato un vero motore di ricerca.
+
+Questo cambia il modo di pensare i contenuti: non basta intrattenere, serve anche farsi trovare. Vediamo cosa è cambiato, cosa è disponibile in Italia e cosa puoi fare da subito.
+
+**In breve**
+
+- Secondo dati globali di TikTok, il 57% degli utenti usa la funzione di ricerca e il 23% cerca qualcosa entro 30 secondi dall'apertura dell'app.
+- In Italia le campagne Search Ads sono disponibili con obiettivi Traffico e Conversioni sul sito web, con targeting per parole chiave.
+- Un video si ottimizza per la ricerca dicendo e scrivendo la parola chiave, con una didascalia descrittiva e la località.
+- TikTok Shop in Italia conta oltre 21.000 venditori attivi: può valere la pena, ma solo facendo bene i conti dei margini.
+
+## Cosa è cambiato: TikTok come motore di ricerca
+
+I numeri che TikTok comunica sono chiari, anche se vanno letti per quello che sono: **dati globali, non italiani**. Secondo TikTok, il 57% degli utenti usa la ricerca, il 23% cerca qualcosa entro 30 secondi dall'apertura dell'app e oltre la metà preferisce cercare prodotti su video e social piuttosto che sui browser.
+
+In pratica, molte persone aprono TikTok e scrivono "dove mangiare a Taranto" come farebbero su Google. E i risultati sono video.
+
+### Le Search Ads Campaign, disponibili anche in Italia
+
+Su questa abitudine TikTok ha costruito un formato pubblicitario dedicato. Secondo la [pagina di disponibilità delle Search Ads Campaign](https://ads.tiktok.com/help/article/search-ads-campaign-availability?lang=en), aggiornata ad aprile 2026, in Italia puoi usarle con due obiettivi: **Traffico** (portare persone al sito) e **Conversioni sul sito web** (spingerle a compiere un'azione, come un acquisto o una richiesta). L'obiettivo Lead generation risulta disponibile solo negli Stati Uniti.
+
+I formati previsti sono tre:
+
+- **Search Ads Video**, cioè annunci video nei risultati di ricerca;
+- **Carousel Image Ads**, annunci a carosello di immagini;
+- **Search Catalog**, basati su un catalogo prodotti, solo per le categorie Sales e Travel & Entertainment.
+
+Come spiega TikTok nella [presentazione del formato](https://ads.tiktok.com/business/en-US/blog/introducing-search-ads-campaign), il targeting avviene per parole chiave nella pagina dei risultati. Ci sono strumenti di suggerimento delle keyword con stima delle impressioni (quante volte l'annuncio potrebbe essere visto), keyword automatiche, miniature generate in automatico ("smart thumbnails") e annunci con più varianti di testo.
+
+### Le novità in arrivo
+
+Nella [Product Preview del terzo trimestre 2026](https://ads.tiktok.com/business/en-US/blog/tiktok-product-preview) TikTok ha annunciato le "Smart+ Search Ads", cioè una versione più automatizzata delle campagne di ricerca. A [TikTok World '26](https://newsroom.tiktok.com/tiktok-world-26?lang=it-IT) sono stati presentati anche i Search Hubs, pagine del brand che compaiono in cima ai risultati di ricerca: un prodotto premium, pensato più per grandi marchi che per le PMI.
+
+## Perché è importante per chi fa marketing
+
+Chi cerca ha già un'intenzione. Chi scorre il feed, invece, si sta distraendo. È la stessa differenza che c'è tra una ricerca su Google e un annuncio visto per caso.
+
+TikTok sostiene che usare Search Ads insieme agli annunci In-Feed (quelli che compaiono mentre scorri i video) porti in media il 20% di conversioni in più, e che il 18% di chi non converte con un annuncio In-Feed lo faccia dopo averne visto uno nella ricerca. Sono dati dell'azienda, da prendere come indicazione e non come promessa.
+
+Il punto per noi è un altro: se i tuoi video non sono pensati per essere trovati, stai lasciando fuori proprio le persone più vicine a scegliere.
+
+## Cosa significa per PMI, attività locali e professionisti
+
+**Ristoranti e bar.** Le ricerche con città e tipo di locale ("brunch Taranto", "pizzeria Castellaneta") sono il terreno ideale. Un video che mostra il piatto e dice chiaramente dove sei può comparire per mesi.
+
+**Parrucchieri, estetiste e centri benessere.** Le persone cercano tagli, colori, trattamenti. Un video "prima e dopo" con il nome del trattamento detto e scritto risponde esattamente a quella ricerca.
+
+**Negozi e e-commerce.** Qui entra in gioco anche TikTok Shop, che vediamo tra poco. Chi cerca "idee regalo" o un prodotto specifico è già in modalità acquisto.
+
+**Studi professionali.** Un dentista, un commercialista o un avvocato possono rispondere in video alle domande che si sentono fare ogni giorno. Non per vendere subito, ma per essere il nome che compare quando qualcuno cerca.
+
+### TikTok Shop Italia: i numeri e i conti da fare
+
+Secondo il [comunicato di TikTok sul primo anno di TikTok Shop in Italia](https://newsroom.tiktok.com/tiktok-shop-italia-un-anno-dopo-il-discovery-e-commerce-riscrive-il-retail-digitale?lang=it-IT), pubblicato ad aprile 2026:
+
+- i venditori attivi in Italia sono oltre 21.000, contro gli oltre 8.000 di settembre 2025;
+- TikTok Italia dichiara 25,2 milioni di utenti attivi mensili;
+- secondo NielsenIQ, 1 e-shopper su 5 usa TikTok Shop;
+- il 38% del fatturato arriva dai video acquistabili e il 20% dalle LIVE di shopping;
+- gli over 40 valgono il 41% del valore di TikTok Shop, contro il 32% dell'e-commerce nel suo complesso;
+- bellezza, moda, casa ed elettronica sono le categorie in crescita.
+
+Il dato sugli over 40 è interessante: smentisce l'idea che TikTok sia solo per ragazzi.
+
+Attenzione però ai costi. Secondo quanto riportato da alcune testate di settore, dall'8 gennaio 2026 la commissione di TikTok Shop in Italia sarebbe passata dal 5% al 9%. Il nostro consiglio: prima di aprire, calcola il margine reale per prodotto, considerando commissioni, spedizioni, resi ed eventuali compensi ai creator.
+
+## Cosa fare in pratica: SEO su TikTok passo per passo
+
+Le indicazioni che seguono non sono regole ufficiali di TikTok, ma le buone pratiche che applichiamo ogni giorno nella produzione di [video e reel](/video) per i nostri clienti.
+
+![Checklist in 6 passi per ottimizzare un video per la ricerca su TikTok: parola chiave detta, testo a schermo, didascalia con località, sottotitoli, hashtag, serie ricorrenti](/blog/seo-tiktok-search-ads/ottimizzare-video-ricerca.webp)
+
+1. **Di' la parola chiave nei primi secondi.** Se il video parla di "taglio bob", dillo a voce all'inizio. Aiuta chi guarda a capire subito e rende chiaro l'argomento.
+2. **Scrivila anche a schermo.** Un testo in sovrimpressione con la parola chiave rafforza il messaggio, anche per chi guarda senza audio.
+3. **Scrivi una didascalia descrittiva, con la località.** Non "Che ne dite? 😍", ma "Taglio bob corto per capelli ricci, nel nostro salone a Massafra".
+4. **Attiva i sottotitoli.** Rendono il video accessibile e più comprensibile anche in contesti silenziosi.
+5. **Usa pochi hashtag, ma pertinenti.** Meglio tre hashtag legati al servizio e alla città che dieci hashtag di tendenza che non c'entrano.
+6. **Rispondi alle domande vere dei clienti.** "Quanto dura una piega?", "Si può prenotare per un gruppo?": ogni domanda ricorrente è un video.
+7. **Crea serie ricorrenti.** Un appuntamento fisso ("il piatto del giovedì", "un consiglio a settimana") aiuta a pubblicare con costanza. Per decidere ritmo e frequenza, parti da un [piano editoriale](/blog/quante-volte-pubblicare-social) sostenibile.
+
+### Poi, testa le Search Ads su keyword locali
+
+Quando hai qualche video che funziona in modo organico, puoi provare le Search Ads su poche parole chiave locali, come "pizzeria Taranto" o "parrucchiere Massafra". Parti con un budget contenuto, usa lo strumento di suggerimento keyword per stimare le impressioni e misura i clic al sito.
+
+Se già investi su Instagram e Facebook, confronta i risultati con le tue campagne [Meta Ads](/meta-ads): non tutte le attività hanno bisogno di essere ovunque.
+
+## Un esempio: il parrucchiere di Massafra
+
+Facciamo un esempio ipotetico. Un salone di Massafra pubblica ogni settimana un video "prima e dopo". Finora le didascalie erano solo emoji.
+
+Cambia approccio: nei primi secondi la titolare dice "balayage biondo miele su capelli castani", lo stesso testo compare a schermo, la didascalia cita il salone e la città, gli hashtag sono tre e pertinenti. Lancia una serie "Domande dal salone" con le richieste che riceve più spesso.
+
+Dopo qualche settimana, avvia una piccola campagna Search Ads con obiettivo Traffico verso la pagina di prenotazione, su due o tre keyword come "parrucchiere Massafra" e "balayage Massafra". Il budget è limitato e l'obiettivo è capire se quelle ricerche portano prenotazioni vere. Solo dopo decide se continuare.
+
+## Cosa osserviamo nei contenuti per attività locali
+
+Quando progettiamo i video per un'attività locale partiamo dalle domande che i clienti fanno davvero: "quanto dura un trattamento", "si può prenotare per gruppi", "cosa c'è di nuovo nel menu". Un video che risponde a una domanda precisa ha più possibilità di comparire quando qualcuno la cerca. Vale per TikTok, ma anche per Instagram e YouTube Shorts.
+
+L'altra lezione riguarda la costanza. Una serie di video con lo stesso format è più facile da produrre per chi ha poco tempo, ed è più riconoscibile per chi guarda. Nel [caso studio Paresteta](/casi-studio/paresteta) la campagna di lancio era divisa in fasi, con contenuti diversi prima e dopo l'inaugurazione.
+
+## Domande frequenti
+
+### Cos'è la SEO su TikTok?
+
+È l'insieme di accorgimenti che aiutano un video a comparire quando qualcuno cerca un argomento dentro TikTok: parole chiave dette e scritte, didascalie descrittive, sottotitoli, hashtag pertinenti. L'idea è la stessa della SEO su Google, applicata ai video.
+
+### Le TikTok Search Ads sono disponibili in Italia?
+
+Sì. Secondo la pagina di disponibilità di TikTok aggiornata ad aprile 2026, in Italia le campagne Search Ads si possono usare con gli obiettivi Traffico e Conversioni sul sito web. L'obiettivo Lead generation, invece, risulta disponibile solo negli Stati Uniti.
+
+### Le Search Ads servono anche a un'attività locale?
+
+Possono servire, soprattutto se le persone cercano il tuo servizio con il nome della città, per esempio "parrucchiere Massafra". Il nostro consiglio è partire con un budget contenuto su poche keyword locali e misurare i risultati prima di aumentare la spesa.
+
+### Quanto costa vendere su TikTok Shop in Italia?
+
+Secondo quanto riportato da alcune testate di settore, dall'8 gennaio 2026 la commissione di TikTok Shop in Italia sarebbe passata dal 5% al 9%. Verifica sempre le condizioni aggiornate nel Seller Center prima di fare i conti sui margini.
+
+### Quanti hashtag usare su TikTok per farsi trovare?
+
+Non esiste un numero magico. Secondo la nostra esperienza funzionano meglio pochi hashtag pertinenti al contenuto e alla località, rispetto a lunghe liste di hashtag generici o di tendenza che non c'entrano con il video.
+
+## Conclusione: prima farsi trovare, poi sponsorizzarsi
+
+Su TikTok la ricerca è ormai un'abitudine. Il primo passo non costa nulla: rendere ogni video chiaro su cosa mostra e dove sei. Il secondo è testare le Search Ads su poche keyword locali, con un budget piccolo e obiettivi misurabili. Il terzo, se vendi prodotti, è valutare TikTok Shop con i conti alla mano.
+
+Se vuoi impostare una strategia TikTok per la tua attività, con una [gestione dei social](/gestione-social) pensata per il tuo territorio (lavoriamo anche con la [gestione social a Taranto](/gestione-social-taranto) e provincia), [parliamone](/contatti).
+
+## Fonti
+
+- [Search Ads Campaign availability – TikTok Ads Manager Help Center, aprile 2026](https://ads.tiktok.com/help/article/search-ads-campaign-availability?lang=en)
+- [Introducing Search Ads Campaign – TikTok for Business](https://ads.tiktok.com/business/en-US/blog/introducing-search-ads-campaign)
+- [TikTok Product Preview Q3 2026 – TikTok for Business, 28 luglio 2026](https://ads.tiktok.com/business/en-US/blog/tiktok-product-preview)
+- [TikTok World '26 – TikTok Newsroom, 13 maggio 2026](https://newsroom.tiktok.com/tiktok-world-26?lang=it-IT)
+- [TikTok Shop Italia un anno dopo – TikTok Newsroom, 27 aprile 2026](https://newsroom.tiktok.com/tiktok-shop-italia-un-anno-dopo-il-discovery-e-commerce-riscrive-il-retail-digitale?lang=it-IT)`,
+  },
+  {
+    slug: 'quante-volte-pubblicare-social',
+    title: 'Quante volte pubblicare sui social nel 2026: frequenza, orari e un piano sostenibile per PMI',
+    excerpt: 'Frequenza consigliata per Instagram, TikTok, LinkedIn, Facebook, YouTube e Pinterest, orari da cui partire e un piano minimo che una PMI riesce davvero a mantenere.',
+    category: 'Social media',
+    tags: ['piano editoriale', 'instagram', 'linkedin', 'tiktok', 'facebook', 'statistiche social'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-28',
+    cover: '/blog/quante-volte-pubblicare-social/cover.jpg',
+    published: true,
+    seoTitle: 'Quante volte pubblicare sui social: guida 2026 | InLab',
+    seoDescription: 'Quante volte pubblicare sui social e a che ora: frequenze per piattaforma, orari migliori 2026, dati Italia e un piano editoriale sostenibile per PMI.',
+    content: `Quante volte pubblicare sui social, e a che ora? È la domanda che ci fanno più spesso titolari di negozi, ristoranti e studi professionali, e la risposta onesta è: dipende dalla piattaforma, ma soprattutto da quanto riesci a sostenere nel tempo. In questa guida mettiamo insieme gli orari migliori per pubblicare nel 2026 secondo i dati più recenti, le frequenze consigliate per ogni social e un piano editoriale minimo che una PMI può davvero rispettare.
+
+**Risposta breve: per una PMI un buon punto di partenza è 3-5 contenuti a settimana su Instagram, 2-5 su TikTok e LinkedIn, 1-2 al giorno su Facebook solo se è un canale centrale. Conta più la costanza della quantità: meglio un ritmo che riesci a tenere per mesi.**
+
+Una premessa importante: quasi tutti gli studi su frequenza e orari sono basati su dati internazionali, non italiani. Li useremo come punto di partenza, non come regola, e ti spieghiamo come verificarli sul tuo profilo in quattro settimane.
+
+**In breve**
+
+- In Italia 41,2 milioni di persone hanno un'identità social (69,7% della popolazione), secondo DataReportal.
+- Frequenze di partenza secondo Buffer: Instagram 3-5 post a settimana, TikTok 2-5, LinkedIn 2-5, Facebook 1-2 al giorno, YouTube 1 video a settimana.
+- Il mercoledì è il giorno forte per Facebook, Instagram e LinkedIn; TikTok e YouTube vanno meglio nel weekend.
+- La costanza conta più del volume: chi pubblica con regolarità ottiene in media 5 volte più engagement (dati Buffer).
+- Contenuti fatti da persone e originali: lo chiedono i consumatori e, su Facebook, lo premia l'algoritmo.
+
+## Il quadro in Italia: dove sono le persone nel 2026
+
+Partiamo dai numeri italiani. Il report ["Digital 2026: Italy"](https://datareportal.com/reports/digital-2026-italy) di DataReportal, pubblicato il 5 novembre 2025 con dati di ottobre 2025, fotografa un Paese di 59,1 milioni di abitanti, con un'età mediana di 48,2 anni. Gli utenti internet sono 53,1 milioni (89,9%) e le identità social 41,2 milioni (69,7%).
+
+Per le singole piattaforme DataReportal riporta la **copertura pubblicitaria**, cioè quante persone si possono raggiungere con gli annunci. Non è il numero di utenti attivi, ma dà un'idea chiara delle proporzioni:
+
+| Piattaforma | Copertura pubblicitaria | Variazione annua |
+|---|---|---|
+| YouTube | 41,2 milioni | -2,4% |
+| Instagram | 29,9 milioni | +4,2% |
+| Facebook | 28,5 milioni | -2,6% |
+| LinkedIn | 25,0 milioni | +13,6% |
+| TikTok (18+) | 22,0 milioni | +6,9% |
+| Reddit | 14,8 milioni | n.d. |
+| Pinterest | 10,9 milioni | n.d. |
+
+Due letture utili. LinkedIn è la piattaforma che cresce di più (+13,6%), un segnale da non ignorare per professionisti e aziende B2B. Facebook e YouTube calano leggermente ma restano tra i canali più ampi, soprattutto considerando un'età mediana vicina ai 48 anni.
+
+## Quanto pubblicare: le frequenze per piattaforma
+
+La [guida di Buffer sulla frequenza](https://buffer.com/resources/social-media-frequency-guide/), aggiornata il 13 gennaio 2026 e basata su dati interni della piattaforma, dà queste indicazioni:
+
+- **Instagram: 3-5 post a settimana.** Rispetto a 1-2 post, porta in media circa il 12% di reach in più per ogni post.
+- **TikTok: 2-5 video a settimana.** Fino al 17% di visualizzazioni in più per post rispetto a un solo video.
+- **LinkedIn: 2-5 post a settimana.** Il salto vero si vede passando da 1 post a 2-5.
+- **Facebook: 1-2 post al giorno**, secondo uno studio HubSpot citato da Buffer.
+- **YouTube: 1 video a settimana.**
+- **Pinterest: 15-25 pin al giorno.** Una frequenza alta, pensata per chi usa Pinterest come canale principale.
+
+C'è poi un dato che per noi è il più importante di tutti: in un'analisi su oltre 100.000 utenti, Buffer ha rilevato che **pubblicare con regolarità si associa a un engagement 5 volte superiore**. Tradotto: meglio costante che tanto.
+
+![Frequenza consigliata di pubblicazione per Instagram, TikTok, LinkedIn, Facebook, YouTube e Pinterest](/blog/quante-volte-pubblicare-social/frequenza-piattaforme.webp)
+
+*Le frequenze di partenza per piattaforma secondo Buffer (dati non italiani, gennaio 2026).*
+
+## Gli orari migliori per pubblicare nel 2026
+
+Buffer ha analizzato oltre 52 milioni di post, considerando l'ora locale di chi pubblica. Ecco le fasce migliori emerse dalla sua [analisi sugli orari](https://buffer.com/resources/best-time-to-post-social-media/):
+
+- **Facebook**: mercoledì, tra le 8 e le 12.
+- **Instagram**: mercoledì alle 9 e alle 18.
+- **LinkedIn**: mercoledì, tra le 15 e le 18.
+- **TikTok**: sabato, tra le 18 e le 23.
+- **YouTube Shorts**: venerdì, tra le 16 e le 19.
+- **YouTube (video lunghi)**: domenica, tra le 18 e le 22.
+
+In generale il weekend è in calo, tranne per TikTok e YouTube.
+
+### Il caso LinkedIn
+
+Su LinkedIn Buffer ha pubblicato un [approfondimento aggiornato al 9 settembre 2026](https://buffer.com/resources/best-time-to-post-on-linkedin/), basato su 4,8 milioni di post. La fascia migliore è **15-20 nei giorni feriali**, con un picco il mercoledì alle 16. Lunedì e martedì risultano i giorni più deboli. E i **caroselli** (post a più slide da scorrere) funzionano meglio dei post di solo testo.
+
+## Perché la quantità da sola non basta
+
+Pubblicare di più non serve se i contenuti sono deboli o copiati. Due segnali del 2026 vanno nella stessa direzione.
+
+Il primo arriva dal [2026 Content Strategy Report di Sprout Social](https://sproutsocial.com/insights/data/2026-social-media-content-strategy-report/), che ha coinvolto oltre 2.300 consumatori tra USA, Regno Unito e Australia e 1.200 marketer. La priorità numero uno dei consumatori sono i **contenuti fatti da persone**, con l'intelligenza artificiale in un ruolo di supporto. Anche qui, dati non italiani.
+
+Il secondo arriva da Meta: da marzo 2026, su Facebook [i contenuti non originali vengono declassati](https://about.fb.com/news/2026/03/rewarding-original-creators-on-facebook/), cioè i post ripubblicati senza un apporto proprio ricevono meno visibilità. Ne parliamo anche nell'articolo su [Meta One e originalità dei contenuti](/blog/meta-one-aziende).
+
+Secondo noi il punto è semplice: foto vere del tuo locale, video girati con il tuo team, la tua voce. Un buon [shooting fotografico](/shooting) e qualche sessione dedicata a [reel e video](/video) possono alimentare settimane di contenuti originali.
+
+## Cosa significa per PMI, attività locali e professionisti
+
+Le frequenze di Buffer sono pensate per chi ha tempo e risorse. Una PMI deve scegliere dove concentrarsi.
+
+- **Ristorante o bar**: Instagram è il canale centrale, con reel dei piatti e stories quotidiane. Facebook resta utile per una clientela più adulta, visto che l'età mediana italiana è di 48,2 anni.
+- **Negozio**: Instagram per prodotti e novità, stories per raccontare arrivi e offerte. TikTok solo se hai le energie per produrre video con regolarità.
+- **Studio professionale** (commercialista, avvocato, dentista, consulente): LinkedIn, che in Italia cresce più di tutti. Due o tre post a settimana, meglio se caroselli.
+- **E-commerce**: Instagram e TikTok per la scoperta dei prodotti; Pinterest solo se il tuo settore è visivo (arredo, moda, food). Su TikTok vale anche la logica di ricerca, di cui parliamo nell'articolo su [TikTok come motore di ricerca](/blog/seo-tiktok-search-ads).
+
+## Cosa fare in pratica: un piano editoriale minimo e sostenibile
+
+### La settimana tipo per un'attività locale
+
+Il nostro consiglio è partire da qui e crescere solo quando il ritmo è diventato un'abitudine:
+
+- **3 post su Instagram** (per esempio lunedì, mercoledì e venerdì), di cui uno pubblicato il mercoledì mattina o alle 18;
+- **2 reel** a settimana, anche brevi, girati nel locale;
+- **stories ogni giorno**: dietro le quinte, prodotto del giorno, orari, sondaggi;
+- **Facebook**: condividi i contenuti più forti, adattandoli e aggiungendo un testo pensato per quel pubblico.
+
+### La settimana tipo per un professionista
+
+- **2-3 post su LinkedIn**, nei giorni centrali della settimana, nella fascia 15-18;
+- almeno **un carosello** a settimana (una checklist, un errore comune, una domanda frequente dei clienti);
+- evita di concentrare tutto il lunedì e il martedì.
+
+### Come testare gli orari in 4 settimane
+
+1. **Settimana 1**: pubblica negli orari consigliati da Buffer e annota i risultati di ogni post.
+2. **Settimana 2**: sposta gli stessi tipi di contenuto in una fascia diversa (per esempio dalla mattina alla sera).
+3. **Settimana 3**: prova gli orari suggeriti dagli insight del tuo profilo, cioè quando i tuoi follower sono più attivi.
+4. **Settimana 4**: ripeti la fascia che ha funzionato meglio e confronta.
+
+Cambia una sola variabile alla volta: se modifichi insieme orario, formato e argomento, non saprai cosa ha fatto la differenza.
+
+### Cosa misurare
+
+- **Copertura (reach)**: quante persone diverse hanno visto il contenuto.
+- **Interazioni**: commenti, condivisioni, salvataggi. Salvataggi e condivisioni dicono più dei "mi piace".
+- **Visualizzazioni dei reel** e tempo di visione, se disponibile.
+- **Azioni concrete**: messaggi, clic al sito, chiamate, richieste di prenotazione.
+- **Costanza**: quante settimane hai rispettato il piano. Sembra banale, ma è il primo indicatore da guardare.
+
+## Un esempio: una pizzeria che smette di pubblicare "a caso"
+
+Facciamo un esempio ipotetico. Una pizzeria di Taranto pubblica quando capita: tre post in un giorno, poi due settimane di silenzio. Decide di passare al piano minimo: 3 post, 2 reel e stories quotidiane, preparati la domenica in un'ora di lavoro con le foto di uno shooting fatto a inizio mese.
+
+Per quattro settimane segue il test degli orari e annota reach e messaggi ricevuti. Alla fine non ha "la formula perfetta", ma sa quali giorni e fasce funzionano per il suo pubblico e ha un ritmo che riesce a mantenere. È esattamente questo il risultato che conta.
+
+## Come costruiamo un piano editoriale
+
+Quando costruiamo un piano editoriale per un'attività locale non partiamo dal numero di post: partiamo da quanto materiale si riesce a produrre ogni mese. Una giornata di riprese ben organizzata può coprire settimane di contenuti. Pubblicare ogni giorno materiale improvvisato, invece, stanca il titolare e anche chi guarda.
+
+Il secondo criterio è la stagionalità, che in provincia di Taranto conta molto. Facciamo un esempio: uno stabilimento o un ristorante di Castellaneta Marina avrà un ritmo estivo molto più fitto di quello invernale. Un negozio di Taranto città, invece, avrà i suoi picchi tra dicembre e i saldi. Il piano segue il calendario reale dell'attività, non una regola uguale per tutti.
+
+## Domande frequenti
+
+### Quante volte a settimana pubblicare su Instagram?
+
+Secondo i dati interni di Buffer, 3-5 post a settimana portano in media circa il 12% di reach in più per post rispetto a 1-2. Per una PMI è un buon obiettivo, a patto di riuscire a mantenerlo nel tempo.
+
+### Qual è l'orario migliore per pubblicare sui social?
+
+Dall'analisi Buffer su oltre 52 milioni di post emergono alcune fasce, per esempio mercoledì alle 9 e alle 18 per Instagram e mercoledì tra le 15 e le 18 per LinkedIn. Sono dati non italiani: usali come punto di partenza e verificali con gli insight del tuo profilo.
+
+### Quante volte pubblicare su LinkedIn?
+
+Buffer indica 2-5 post a settimana, con il salto più evidente quando si passa da 1 a 2-5. La fascia oraria migliore nei feriali è 15-20, con un picco il mercoledì alle 16, e i caroselli funzionano meglio del solo testo.
+
+### È meglio pubblicare tanto o con costanza?
+
+Con costanza. Un'analisi di Buffer su oltre 100.000 utenti associa la pubblicazione regolare a un engagement 5 volte superiore. Un piano più leggero ma rispettato ogni settimana vale più di un periodo intenso seguito da settimane di silenzio.
+
+### Posso usare l'intelligenza artificiale per i post?
+
+Sì, come supporto. Secondo il 2026 Content Strategy Report di Sprout Social, la priorità numero uno dei consumatori sono i contenuti fatti da persone. E su Facebook Meta declassa i contenuti non originali, ripubblicati senza un apporto proprio.
+
+## Meglio costante che tanto: da dove partire
+
+Non esiste un numero magico valido per tutti. Esistono frequenze di partenza, orari da testare e soprattutto un ritmo che puoi mantenere. Il punto pratico: scegli una o due piattaforme, adotta il piano minimo, fai il test di quattro settimane e decidi in base ai tuoi dati, non a quelli di qualcun altro.
+
+Se ti serve una mano a costruire un piano editoriale realistico e a produrre contenuti originali, la nostra [gestione social](/gestione-social) nasce proprio per questo, anche per le attività della provincia con la [gestione social a Taranto](/gestione-social-taranto). Vuoi capire quale ritmo è giusto per te? [Parliamone](/contatti).
+
+## Fonti
+
+- [Digital 2026: Italy](https://datareportal.com/reports/digital-2026-italy) – DataReportal, 5 novembre 2025
+- [How Often Should You Post on Social Media](https://buffer.com/resources/social-media-frequency-guide/) – Buffer, 13 gennaio 2026
+- [The Best Time to Post on Social Media](https://buffer.com/resources/best-time-to-post-social-media/) – Buffer, 2026
+- [The Best Time to Post on LinkedIn](https://buffer.com/resources/best-time-to-post-on-linkedin/) – Buffer, aggiornato il 9 settembre 2026
+- [2026 Social Media Content Strategy Report](https://sproutsocial.com/insights/data/2026-social-media-content-strategy-report/) – Sprout Social, 2026
+- [Rewarding Original Creators on Facebook](https://about.fb.com/news/2026/03/rewarding-original-creators-on-facebook/) – Meta, marzo 2026`,
   },
 ];
