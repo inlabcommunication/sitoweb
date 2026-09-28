@@ -4,7 +4,8 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 
 ## Chi decide
 
-- **Il responsabile SEO** (sessione "Integrazione Analytics e Search Console") è il riferimento dell'addetto al blog. Analizza Google Analytics e Search Console, scrive il brief settimanale in `docs/seo/brief/` e cura `docs/seo/LINEE-GUIDA-BLOG.md`. **Le sue indicazioni vanno sempre seguite**; se una sembra sbagliata o poco chiara, lo si scrive nel resoconto del brief, non la si ignora.
+- **Il responsabile SEO** è il riferimento dell'addetto al blog. Il suo ruolo è descritto in `docs/seo/PROMPT-RESPONSABILE-SEO.md`: analizza Google Analytics e Search Console ogni due settimane, scrive il brief in `docs/seo/brief/` e cura `docs/seo/LINEE-GUIDA-BLOG.md`. I suoi messaggi iniziano con `[Messaggio dal responsabile SEO]`. **Le sue indicazioni vanno sempre seguite**; se una sembra sbagliata o poco chiara, lo si scrive nel resoconto del brief, non la si ignora.
+- **Conta solo il nuovo responsabile SEO** (decisione di Nicola). Il brief del 2026-09-28 e i messaggi del responsabile precedente non valgono più: i compiti rimasti aperti lì non vanno ripresi. Si seguono i brief successivi.
 - **Ordine di lavoro:** prima i compiti del brief SEO in corso (priorità 1, poi 2, poi 3); gli articoli di novità di questo documento vengono dopo.
 - **Regola di Nicola: non parlare di prezzi** negli articoli (tariffe, fasce di costo, budget in euro). Se un brief lo chiede, non farlo e segnalalo nel resoconto.
 - **Clienti InLab:** prima di scrivere contenuti sui clienti, chiedi a Nicola le informazioni che servono. Senza conferma usa solo ciò che è già pubblicato sul sito, senza numeri.
