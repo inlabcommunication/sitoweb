@@ -1,6 +1,25 @@
+import { cld } from '../lib/media';
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
+
+// Calcola la larghezza (su 12 colonne) di ogni card in modo che ogni riga sia piena:
+// se una card non entra nello spazio rimasto, la precedente si allarga; l'ultima riempie la riga.
+const computeSpans = (items: { large?: boolean }[]) => {
+  const spans: number[] = [];
+  let used = 0;
+  items.forEach((it) => {
+    const span = it.large ? 8 : 4;
+    if (used + span > 12 && spans.length) {
+      spans[spans.length - 1] += 12 - used;
+      used = 0;
+    }
+    spans.push(span);
+    used = (used + span) % 12;
+  });
+  if (used && spans.length) spans[spans.length - 1] += 12 - used;
+  return spans;
+};
 
 export type PortfolioProject = {
   id: string;
@@ -55,6 +74,7 @@ export const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({
     const base = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.category === filter);
     return maxItems ? base.slice(0, maxItems) : base;
   }, [filter, maxItems]);
+  const spans = useMemo(() => computeSpans(filtered), [filtered]);
 
   return (
     <section style={{ padding: '8rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative' }}>
@@ -168,7 +188,7 @@ export const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({
                   whileHover={{ y: -4 }}
                   onClick={() => onProjectClick(p.id)}
                   style={{
-                    gridColumn: p.large ? 'span 8' : 'span 4',
+                    gridColumn: `span ${spans[i]}`,
                     minHeight: p.large ? 380 : 280,
                     background: p.image ? '#111' : '#252525',
                     borderRadius: 24,
@@ -184,7 +204,8 @@ export const PortfolioGallery: React.FC<PortfolioGalleryProps> = ({
                 >
                   {p.image && (
                     <img
-                      src={p.image}
+                      src={cld(p.image, 900)}
+                      decoding="async"
                       alt={p.client}
                       loading="lazy"
                       style={{

@@ -10,6 +10,7 @@ import { Chatbot } from "./components/Chatbot";
 import { initAnalytics } from "./lib/analytics";
 import { loadContent, useContent } from "./lib/content";
 import { getClientId, normalizeClients } from "./lib/clientUtils";
+import { cld, cldPoster } from "./lib/media";
 
 // Nuove sezioni modulari
 import { HeroFlow } from "./sections/HeroFlow";
@@ -26,7 +27,6 @@ import { CaseParesteta, CaseImh, CaseRicciardi } from "./pages/CaseStudyPages";
 ═══════════════════════════════════════════════════════════════ */
 const G = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
       --a:#cdb2ff; --bg:#1e1d1d; --s:#262525; --b:rgba(255,255,255,0.07);
@@ -72,7 +72,18 @@ const G = () => (
     @keyframes marq{to{transform:translateX(-50%)}}
     .marq-inner{display:inline-flex;gap:2.5rem;align-items:center;padding-left:2.5rem;animation:marq 28s linear infinite}
  
+    .method-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:5rem;align-items:start}
+    .method-head{position:sticky;top:120px}
+    .reel-grid{display:grid;grid-template-columns:minmax(0,540px) auto;justify-content:center;gap:clamp(3rem,8vw,7rem);align-items:center}
+    .reel-frame{position:relative;width:min(400px,calc((100vh - 8rem) * 9 / 16));aspect-ratio:9/16;border-radius:28px;overflow:hidden;background:#111;border:.5px solid rgba(255,255,255,0.1);box-shadow:0 40px 120px -30px rgba(205,178,255,0.25),0 20px 60px -20px rgba(0,0,0,0.6)}
+    .reel-audio{position:absolute;bottom:18px;left:18px;z-index:2;width:48px;height:48px;border-radius:50%;background:rgba(20,20,20,0.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:.5px solid rgba(255,255,255,0.2);color:var(--t);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .25s,border-color .25s}
+    .reel-audio:hover{background:rgba(205,178,255,0.2);border-color:rgba(205,178,255,0.5)}
     @media(max-width:768px){
+      .method-grid{grid-template-columns:1fr;gap:3.5rem}
+      .method-head{position:static}
+      .reel-grid{grid-template-columns:1fr;gap:2.5rem;text-align:center}
+      .reel-text p{margin-left:auto;margin-right:auto}
+      .reel-frame{width:min(100%,360px);margin:0 auto}
       .hide-mob{display:none!important}
       .show-mob{display:flex!important}
       .grid-1-mob{grid-template-columns:1fr!important}
@@ -251,7 +262,7 @@ const Footer = () => {
           </div>
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-          <p style={{fontSize:11,fontFamily:"monospace",color:"rgba(255,255,255,.15)",letterSpacing:".08em"}}>© 2025 InLab Communication — Taranto, Puglia</p>
+          <p style={{fontSize:11,fontFamily:"monospace",color:"rgba(255,255,255,.15)",letterSpacing:".08em"}}>© {new Date().getFullYear()} InLab Communication — Taranto, Puglia</p>
           <div style={{display:"flex",gap:"1.5rem"}}>
             {[
               {label:"Instagram",url:"https://www.instagram.com/inlab.communication/"},
@@ -364,7 +375,7 @@ const ClientLogos = () => {
           >
             <div style={{width:160,height:80,display:"flex",alignItems:"center",justifyContent:"center"}}>
               {c.logo ? (
-                <img src={c.logo} alt={c.name}
+                <img src={cld(c.logo,400)} loading="lazy" decoding="async" alt={c.name}
                   style={{maxWidth:"100%",maxHeight:"100%",objectFit:"contain",filter:"brightness(0) invert(1)",opacity:.45,transition:"opacity .25s"}}
                   onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
                   onMouseLeave={e=>e.currentTarget.style.opacity="0.45"}
@@ -428,21 +439,19 @@ const VideoReel = ({
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
-  // Play quando il video entra in viewport, pausa quando esce
+  // Il video non viene scaricato finché non si avvicina allo schermo (preload="none"):
+  // parte quando è visibile per il 35%, si mette in pausa quando esce.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            v.play().catch(() => {});
-          } else {
-            v.pause();
-          }
+          if (entry.isIntersecting) v.play().catch(() => {});
+          else v.pause();
         });
       },
-      { threshold: 0.35 } // parte quando il 35% del video è visibile
+      { threshold: 0.35 }
     );
     observer.observe(v);
     return () => observer.disconnect();
@@ -459,86 +468,55 @@ const VideoReel = ({
   return (
     <section style={{padding:"7rem 2rem 8rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
       {/* Glow di sfondo coerente col resto del sito */}
-      <div style={{position:"absolute",top:"30%",right:"-5%",width:520,height:520,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(120px)",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",top:"20%",right:"10%",width:520,height:520,background:"rgba(205,178,255,0.07)",borderRadius:"50%",filter:"blur(120px)",pointerEvents:"none"}}/>
       <div style={{position:"absolute",bottom:"5%",left:"-5%",width:380,height:380,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
 
-      <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-        {/* Header */}
-        <motion.div initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
-          style={{marginBottom:"3.5rem",textAlign:"center"}}>
+      <div className="reel-grid" style={{maxWidth:1180,margin:"0 auto",position:"relative",zIndex:1}}>
+        {/* Testo */}
+        <motion.div className="reel-text" initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
           <p className="section-label" style={{display:"inline-flex",alignItems:"center",gap:8,marginBottom:"1rem"}}>
             <span style={{width:6,height:6,background:"var(--a)",borderRadius:"50%",display:"inline-block"}}/>
             {tag}
           </p>
-          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5rem)",lineHeight:.9,marginBottom:"1rem"}}>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,6vw,6rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
             {title1}<br/>
             <span className="stroke">{title2}</span>
-            {italic && <> <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontSize:".55em",color:"var(--a)",fontWeight:400,verticalAlign:"middle",marginLeft:8}}>{italic}</span></>}
+            {italic && <><br/><span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontSize:".5em",color:"var(--a)",fontWeight:400}}>{italic}</span></>}
           </h2>
-          {subtitle && <p style={{fontSize:15,color:"var(--m)",maxWidth:520,margin:"0 auto",lineHeight:1.7}}>{subtitle}</p>}
+          {subtitle && <p style={{fontSize:16,color:"var(--m)",maxWidth:420,lineHeight:1.75}}>{subtitle}</p>}
         </motion.div>
 
-        {/* Video con maschera sfumata sui 4 lati */}
+        {/* Video verticale 9:16 */}
         <motion.div
-          initial={{opacity:0,scale:.97}}
-          whileInView={{opacity:1,scale:1}}
+          initial={{opacity:0,y:30}}
+          whileInView={{opacity:1,y:0}}
           viewport={{once:true,margin:"-80px"}}
           transition={{duration:.8,ease:[0.16,1,0.3,1]}}
-          style={{position:"relative",maxWidth:1000,margin:"0 auto"}}
+          className="reel-frame"
         >
-          {/* Wrapper con mask radiale: il video sfuma sui bordi e si fonde col bg */}
-          <div style={{
-            position:"relative",
-            aspectRatio:"16/9",
-            // Mask radiale: opaco al centro, trasparente ai bordi
-            WebkitMaskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
-            maskImage:"radial-gradient(ellipse 95% 90% at center, #000 55%, rgba(0,0,0,0.85) 70%, rgba(0,0,0,0.3) 88%, transparent 100%)",
-          }}>
-            <video
-              ref={videoRef}
-              src={src}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="metadata"
-              style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
-            />
-          </div>
+          <video
+            ref={videoRef}
+            src={cld(src, 720)}
+            poster={cldPoster(src, 720)}
+            loop
+            muted
+            playsInline
+            preload="none"
+            style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",display:"block"}}
+          />
 
-          {/* Bottone audio — fuori dal wrapper sfumato così resta nitido */}
           <button
             onClick={toggleAudio}
             aria-label={muted?"Attiva audio":"Disattiva audio"}
-            style={{
-              position:"absolute",bottom:"6%",right:"6%",zIndex:2,
-              width:52,height:52,borderRadius:"50%",
-              background:"rgba(20,20,20,0.7)",
-              backdropFilter:"blur(10px)",
-              border:".5px solid rgba(255,255,255,0.18)",
-              color:"var(--t)",
-              display:"flex",alignItems:"center",justifyContent:"center",
-              cursor:"pointer",
-              transition:"all .25s",
-            }}
-            onMouseEnter={e=>{
-              e.currentTarget.style.background="rgba(205,178,255,0.18)";
-              e.currentTarget.style.borderColor="rgba(205,178,255,0.45)";
-            }}
-            onMouseLeave={e=>{
-              e.currentTarget.style.background="rgba(20,20,20,0.7)";
-              e.currentTarget.style.borderColor="rgba(255,255,255,0.18)";
-            }}
+            className="reel-audio"
           >
             {muted ? (
-              // icona muto
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M11 5L6 9H2v6h4l5 4V5z"/>
                 <line x1="23" y1="9" x2="17" y2="15"/>
                 <line x1="17" y1="9" x2="23" y2="15"/>
               </svg>
             ) : (
-              // icona audio attivo
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M11 5L6 9H2v6h4l5 4V5z"/>
                 <path d="M15.54 8.46a5 5 0 010 7.07"/>
@@ -649,7 +627,7 @@ const PageHome = () => {
               Lavoriamo con chi vuole una comunicazione professionale, riconoscibile e pensata per crescere.
             </p>
           </motion.div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"1rem"}} className="grid-1-mob">
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:"1rem"}} className="grid-1-mob">
             {[
               {emoji:"🍽️",label:"Ristoranti e locali",desc:"Comunicazione che fa venir voglia di prenotare."},
               {emoji:"🛍️",label:"Negozi e attività",desc:"Contenuti che portano persone in negozio e online."},
@@ -680,7 +658,7 @@ const PageHome = () => {
               LE PAROLE<br/><span className="stroke">DEI CLIENTI.</span>
             </h2>
           </motion.div>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"1.5rem"}} className="grid-1-mob">
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(340px,1fr))",gap:"1.5rem"}} className="grid-1-mob">
             {[
               {text:"Finalmente i nostri social hanno un'immagine coerente. Prima pubblicavamo a caso, ora ogni contenuto ha un senso.",role:"Titolare, attività locale"},
               {text:"Ci hanno aiutato a raccontare meglio il nostro evento. La risposta del pubblico è stata ben oltre le aspettative.",role:"Organizzatore, evento locale"},
@@ -1329,7 +1307,7 @@ const PageLavori = () => {
                   onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
                 >
                   {p.image&&(
-                    <img src={p.image} alt={p.title}
+                    <img src={cld(p.image,900)} loading="lazy" decoding="async" alt={p.title}
                       style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",opacity:.5,transition:"opacity .3s"}}
                       onMouseEnter={e=>(e.currentTarget.style.opacity="0.65")}
                       onMouseLeave={e=>(e.currentTarget.style.opacity="0.5")}
@@ -1382,7 +1360,7 @@ const PageContatti = () => {
     setSending(true);
     try {
       const { db } = await import('./lib/firebase');
-      const { collection, addDoc } = await import('firebase/firestore');
+      const { collection, addDoc } = await import('firebase/firestore/lite');
       if(!db) {
         setError("Servizio momentaneamente non disponibile. Scrivici direttamente a inlab.communication@gmail.com");
         setSending(false);
@@ -1625,7 +1603,7 @@ const PageProgetto = ({id}: {id: string}) => {
       {/* HERO FULL SCREEN */}
       <section style={{height:"100vh",position:"relative",display:"flex",flexDirection:"column",justifyContent:"flex-end",overflow:"hidden"}}>
         {p.image
-          ? <img src={p.image} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}}/>
+          ? <img src={cld(p.image,1600)} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#2a2828 0%,#1a1a2e 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,0.5) 50%,rgba(30,29,29,0.1) 100%)"}}/>
@@ -1677,7 +1655,7 @@ const PageProgetto = ({id}: {id: string}) => {
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"start"}} className="grid-1-mob">
             <div>
               {p.clientLogo&&(
-                <img src={p.clientLogo} alt={p.client} style={{maxHeight:70,maxWidth:220,objectFit:"contain",marginBottom:"3rem",opacity:.85,filter:"brightness(0) invert(1)"}}/>
+                <img src={cld(p.clientLogo,500)} loading="lazy" decoding="async" alt={p.client} style={{maxHeight:70,maxWidth:220,objectFit:"contain",marginBottom:"3rem",opacity:.85,filter:"brightness(0) invert(1)"}}/>
               )}
               <h2 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontSize:"clamp(2rem,3.5vw,3.5rem)",lineHeight:1.2,marginBottom:"2rem",color:"var(--t)"}}>
                 {p.title}
@@ -1717,7 +1695,7 @@ const PageProgetto = ({id}: {id: string}) => {
                   )}
                 </div>
               ):p.gallery&&p.gallery[0]?(
-                <img src={p.gallery[0]} alt="" style={{width:"100%",borderRadius:24,objectFit:"cover",maxHeight:500}}/>
+                <img src={cld(p.gallery[0],1400)} loading="lazy" decoding="async" alt="" style={{width:"100%",borderRadius:24,objectFit:"cover",maxHeight:500}}/>
               ):null}
             </div>
           </div>
@@ -1728,7 +1706,7 @@ const PageProgetto = ({id}: {id: string}) => {
       {p.gallery&&p.gallery.filter(Boolean).length>0&&(
         <section style={{borderBottom:".5px solid var(--b)"}}>
           {p.gallery.filter(Boolean).length===1?(
-            <img src={p.gallery[0]} alt="" style={{width:"100%",maxHeight:600,objectFit:"cover",objectPosition:"center",display:"block"}}/>
+            <img src={cld(p.gallery[0],1600)} loading="lazy" decoding="async" alt="" style={{width:"100%",maxHeight:600,objectFit:"cover",objectPosition:"center",display:"block"}}/>
           ):(
             <div style={{display:"grid",gridTemplateColumns:"repeat(12,1fr)",gap:2}}>
               {p.gallery.filter(Boolean).map((img: string,gi: number)=>{
@@ -1737,7 +1715,7 @@ const PageProgetto = ({id}: {id: string}) => {
                 return (
                   <motion.div key={gi} initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:gi*.06}}
                     style={{gridColumn:`span ${span}`,aspectRatio:gi===0?"16/9":"4/3",overflow:"hidden",background:"#111"}}>
-                    <img src={img} alt={`${p.title} ${gi+1}`} style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .6s"}}
+                    <img src={cld(img,900)} loading="lazy" decoding="async" alt={`${p.title} ${gi+1}`} style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .6s"}}
                       onMouseEnter={e=>e.currentTarget.style.transform="scale(1.06)"}
                       onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}/>
                   </motion.div>
@@ -1756,7 +1734,7 @@ const PageProgetto = ({id}: {id: string}) => {
             <motion.div onClick={()=>go(`/progetto/${nextP.id}`)}
               style={{position:"relative",minHeight:320,borderRadius:32,overflow:"hidden",cursor:"pointer",border:".5px solid var(--b)",background:nextP.image?"#111":"#252525"}}
               whileHover={{scale:1.01}} transition={{type:"spring",stiffness:300}}>
-              {nextP.image&&<img src={nextP.image} alt={nextP.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.45,objectPosition:"center"}}/>}
+              {nextP.image&&<img src={cld(nextP.image,1200)} loading="lazy" decoding="async" alt={nextP.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.45,objectPosition:"center"}}/>}
               <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,.95) 0%,transparent 70%)"}}/>
               <div style={{position:"relative",zIndex:1,padding:"3rem",height:"100%",display:"flex",flexDirection:"column",justifyContent:"flex-end"}}>
                 <div style={{display:"flex",gap:8,marginBottom:"1rem"}}>
@@ -1813,7 +1791,7 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={heroImage} alt={client.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
+          ? <img src={cld(heroImage,1600)} alt={client.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
@@ -1847,7 +1825,7 @@ const PageCliente = ({id}: {id: string}) => {
       <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
           <div>
-            {client.logo&&<img src={client.logo} alt={client.name} style={{maxHeight:74,maxWidth:240,objectFit:"contain",filter:"brightness(0) invert(1)",opacity:.75,marginBottom:"2rem"}}/>}
+            {client.logo&&<img src={cld(client.logo,500)} loading="lazy" decoding="async" alt={client.name} style={{maxHeight:74,maxWidth:240,objectFit:"contain",filter:"brightness(0) invert(1)",opacity:.75,marginBottom:"2rem"}}/>}
             <p className="section-label">Scheda cliente</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>INFORMAZIONI<br/><span className="stroke">E CONTESTO</span></h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Aggiungi una descrizione dalla dashboard per completare questa scheda cliente."}</p>
@@ -1897,7 +1875,7 @@ const PageCliente = ({id}: {id: string}) => {
               {relatedProjects.map((project: any)=>(
                 <motion.button key={project.id} type="button" onClick={()=>go(`/progetto/${project.id}`)} whileHover={{y:-4}}
                   style={{position:"relative",minHeight:260,border:".5px solid var(--b)",borderRadius:24,overflow:"hidden",background:project.image?"#111":"var(--s)",color:"inherit",textAlign:"left",padding:0,font:"inherit"}}>
-                  {project.image&&<img src={project.image} alt={project.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.38}}/>}
+                  {project.image&&<img src={cld(project.image,900)} loading="lazy" decoding="async" alt={project.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.38}}/>}
                   <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,.94),rgba(30,29,29,.25))"}}/>
                   <div style={{position:"relative",zIndex:1,height:"100%",padding:"1.5rem",display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
                     <span className="tag tag-a">{project.category}</span>
@@ -1916,7 +1894,7 @@ const PageCliente = ({id}: {id: string}) => {
       {client.gallery?.length>0&&(
         <section style={{borderBottom:".5px solid var(--b)"}}>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:2}}>
-            {client.gallery.map((img: string,i: number)=><img key={i} src={img} alt={`${client.name} ${i+1}`} style={{width:"100%",aspectRatio:"4/3",objectFit:"cover",display:"block"}}/>)}
+            {client.gallery.map((img: string,i: number)=><img key={i} src={cld(img,900)} loading="lazy" decoding="async" alt={`${client.name} ${i+1}`} style={{width:"100%",aspectRatio:"4/3",objectFit:"cover",display:"block"}}/>)}
           </div>
         </section>
       )}

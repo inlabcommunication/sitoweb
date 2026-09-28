@@ -3,7 +3,7 @@ import type React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, Calendar, Download, Search, Trash2, MessageSquare, Tag, X } from 'lucide-react';
 import { db } from '../lib/firebase';
-import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore/lite';
 
 type Lead = {
   id: string;

@@ -20,13 +20,15 @@ export const MethodTimeline: React.FC = () => {
 
   return (
     <section style={{ padding: '8rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative' }}>
-      <div style={{ maxWidth: 1120, margin: '0 auto' }}>
+      {/* Desktop: titolo fisso a sinistra, passaggi a destra. Mobile: una colonna. */}
+      <div className="method-grid" style={{ maxWidth: 1280, margin: '0 auto' }}>
         {/* Header */}
         <motion.div
+          className="method-head"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          style={{ marginBottom: '5rem', maxWidth: 720 }}
+          style={{ maxWidth: 720 }}
         >
           <p className="section-label">Il nostro metodo</p>
           <h2 style={{

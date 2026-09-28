@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import type React from 'react';
 import { Bot, Key, Save, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { db } from '../lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore/lite';
 
 type Settings = {
   aiProvider: 'gemini' | 'anthropic';

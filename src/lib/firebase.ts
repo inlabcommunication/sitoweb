@@ -1,6 +1,7 @@
 import { initializeApp, getApps } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+// Firestore Lite (solo REST, niente listener realtime): molto più leggera della versione completa.
+// Il sito non usa onSnapshot, quindi basta questa sia per il sito pubblico sia per l'admin.
+import { getFirestore } from 'firebase/firestore/lite';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -12,8 +13,7 @@ const firebaseConfig = {
 };
 
 const isConfigured = !!firebaseConfig.apiKey && !!firebaseConfig.projectId;
-const app = isConfigured && !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
+export const app = isConfigured && !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
 
-export const auth = isConfigured ? getAuth(app) : null;
 export const db = isConfigured ? getFirestore(app) : null;
 export const isFirebaseConfigured = () => isConfigured;

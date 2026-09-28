@@ -1,8 +1,10 @@
-import { StrictMode, useEffect, useState } from 'react';
+import { StrictMode, Suspense, lazy, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
-import { AdminApp } from './admin/AdminApp.tsx';
 import './index.css';
+
+// Sito e pannello admin in file separati: chi visita il sito non scarica il codice dell'admin.
+const App = lazy(() => import('./App.tsx'));
+const AdminApp = lazy(() => import('./admin/AdminApp.tsx').then((m) => ({ default: m.AdminApp })));
 
 // ════════════════════════════════════════════════════════════════
 // Routing top-level: /admin → dashboard, tutto il resto → sito
@@ -26,7 +28,7 @@ const Root = () => {
       window.removeEventListener('popstate', update);
     };
   }, []);
-  return admin ? <AdminApp /> : <App />;
+  return <Suspense fallback={null}>{admin ? <AdminApp /> : <App />}</Suspense>;
 };
 
 createRoot(document.getElementById('root')!).render(

@@ -1,5 +1,5 @@
 import { db } from './firebase';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, addDoc, Timestamp } from 'firebase/firestore/lite';
 
 const SESSION_KEY = 'inlab_sid';
 const SESSION_START_KEY = 'inlab_sst';

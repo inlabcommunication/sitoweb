@@ -6,7 +6,7 @@ import {
   Film, FileImage, Plus, AlertCircle, Download, Link2,
 } from 'lucide-react';
 import { db } from '../lib/firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore/lite';
 
 // ═══════════════════════════════════════════════════════════════
 // CONFIG CLOUDINARY

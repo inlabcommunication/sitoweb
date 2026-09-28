@@ -1,31 +1,38 @@
 import { useEffect, useState } from 'react';
 import { db } from './firebase';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore/lite';
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId, normalizeClients } from './clientUtils';
 
 export type SiteContent = typeof WEBSITE_CONTENT;
 
 let cached: SiteContent | null = null;
+let inflight: Promise<SiteContent> | null = null;
 const listeners = new Set<(c: SiteContent) => void>();
 
 export const getContent = (): SiteContent => cached ?? normalizeSiteContent(WEBSITE_CONTENT);
 
-export const loadContent = async (forceRefresh = false): Promise<SiteContent> => {
-  if (cached && !forceRefresh) return cached;
-  if (!db) { cached = normalizeSiteContent(WEBSITE_CONTENT); return cached; }
+// Una sola lettura dal database per visita: le chiamate successive riusano la stessa promessa.
+export const loadContent = (forceRefresh = false): Promise<SiteContent> => {
+  if (cached && !forceRefresh) return Promise.resolve(cached);
+  if (inflight) return inflight;
+  inflight = fetchContent().then((c) => {
+    cached = c;
+    listeners.forEach((fn) => fn(c));
+    return c;
+  }).finally(() => { inflight = null; });
+  return inflight;
+};
+
+const fetchContent = async (): Promise<SiteContent> => {
+  if (!db) return normalizeSiteContent(WEBSITE_CONTENT);
   try {
     const snap = await getDoc(doc(db, 'app', 'site_content'));
-    if (snap.exists()) {
-      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, snap.data() as any));
-    } else {
-      cached = normalizeSiteContent(WEBSITE_CONTENT);
-    }
+    return normalizeSiteContent(snap.exists() ? deepMerge(WEBSITE_CONTENT, snap.data() as any) : WEBSITE_CONTENT);
   } catch (e) {
     console.warn('[content] fallback ai contenuti statici', e);
-    cached = normalizeSiteContent(WEBSITE_CONTENT);
+    return normalizeSiteContent(WEBSITE_CONTENT);
   }
-  return cached;
 };
 
 export const saveContent = async (newContent: SiteContent): Promise<boolean> => {
@@ -50,8 +57,9 @@ export const subscribeContent = (fn: (c: SiteContent) => void) => {
 export const useContent = (): SiteContent => {
   const [content, setContent] = useState<SiteContent>(cached ?? normalizeSiteContent(WEBSITE_CONTENT));
   useEffect(() => {
-    loadContent(true).then(c => { setContent(c); });
-    return subscribeContent(setContent);
+    const unsub = subscribeContent(setContent);
+    loadContent().then(setContent);
+    return unsub;
   }, []);
   return content;
 };

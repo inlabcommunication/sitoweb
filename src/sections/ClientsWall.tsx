@@ -1,3 +1,4 @@
+import { cld } from '../lib/media';
 import React from 'react';
 import { motion } from 'motion/react';
 import { useContent } from '../lib/content';
@@ -55,7 +56,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick }) => {
         {/* Grid loghi */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))',
           gap: 1,
           background: 'var(--b)',
           borderRadius: 24,
@@ -92,7 +93,8 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick }) => {
             >
               {client.logo ? (
                 <img
-                  src={client.logo}
+                  src={cld(client.logo, 400)}
+                  decoding="async"
                   alt={client.name}
                   loading="lazy"
                   style={{ maxWidth: 140, maxHeight: 54, objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.55 }}
