@@ -75,6 +75,15 @@ Serve per canonical, sitemap, robots.txt e anteprime social. Senza questa variab
 
 Tutti i passaggi (regole Firestore, admin, chiavi, Cloudinary) sono in **[SECURITY.md](SECURITY.md)**.
 
+## Casi studio, clienti ed esempi
+
+Dashboard → Editor:
+- **Casi studio → Progetti raccontati**: schede clienti (aggiungi, modifica, riordina, elimina), con logo, immagine hero, foto e reel. Per ogni reel carichi il video, che si guarda sul sito, e il link Instagram.
+- **Casi studio → Non solo contenuti**: casi studio a blocchi (testo, fasi, sito web, numeri, reel, foto, citazione). La pagina mostra solo i blocchi compilati.
+- **Servizi → Esempi per servizio**: i lavori mostrati in fondo a ogni pagina servizio (siti e web app, schede clienti, casi studio).
+
+I valori iniziali sono in `src/constants.ts`, `src/data/caseStudies.ts` e `src/data/serviceExamples.ts`. Dopo il primo salvataggio dalla dashboard vale quello che è salvato in Firestore.
+
 ## Blog
 
 - Pagine: `/blog` e `/blog/<indirizzo>`. Gli articoli iniziali sono in `src/data/blogSeed.ts`; quelli nuovi si scrivono in dashboard → **Blog** (salvati in Firestore `blog_posts`).

@@ -3,14 +3,15 @@ import type React from 'react';
 import { Save, RotateCcw, Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronRight } from 'lucide-react';
 import { WEBSITE_CONTENT } from '../constants';
 import { loadContent, saveContent, SiteContent } from '../lib/content';
-import { useMediaLibrary } from './MediaLibrary';
+import { inputStyle, Field, ImageField, CardBlock, AddBtn, SectionTitle, Note } from './editorUi';
+import { ClientsEditor, CasesEditor, ServiceExamplesEditor } from './CollectionsEditor';
 
 // ─── Struttura pagine + blocchi ────────────────────────────────
 
-type Page = 'home' | 'studio' | 'contatti';
+type Page = 'home' | 'casi' | 'servizi' | 'studio' | 'contatti';
 
-// Solo le sezioni che il sito legge davvero da qui. Le pagine dei singoli
-// servizi e dei casi studio hanno testi lunghi e strutturati: si modificano nel codice.
+// Solo le sezioni che il sito legge davvero da qui. I testi lunghi delle
+// pagine servizio restano nel codice; i loro esempi si gestiscono in "Servizi".
 const PAGES: { key: Page; label: string; icon: string; blocks: { key: string; label: string }[] }[] = [
   {
     key: 'home', label: 'Home', icon: '🏠',
@@ -18,10 +19,22 @@ const PAGES: { key: Page; label: string; icon: string; blocks: { key: string; la
       { key: 'hero',            label: '① Hero' },
       { key: 'marquee',         label: '② Fascia scorrevole' },
       { key: 'manifesto',       label: '③ Manifesto' },
-      { key: 'clients',         label: '④ Clienti' },
-      { key: 'metodo',          label: '⑤ Metodo' },
-      { key: 'stats',           label: '⑥ Numeri' },
-      { key: 'cta_home',        label: '⑦ CTA finale' },
+      { key: 'metodo',          label: '④ Metodo' },
+      { key: 'stats',           label: '⑤ Numeri' },
+      { key: 'cta_home',        label: '⑥ CTA finale' },
+    ],
+  },
+  {
+    key: 'casi', label: 'Casi studio', icon: '📂',
+    blocks: [
+      { key: 'clients', label: 'Progetti raccontati (schede clienti)' },
+      { key: 'cases',   label: 'Non solo contenuti (casi studio)' },
+    ],
+  },
+  {
+    key: 'servizi', label: 'Servizi', icon: '🧩',
+    blocks: [
+      { key: 'service_examples', label: 'Esempi per servizio' },
     ],
   },
   {
@@ -40,86 +53,6 @@ const PAGES: { key: Page; label: string; icon: string; blocks: { key: string; la
     ],
   },
 ];
-
-// ─── Stili riusabili ────────────────────────────────────────────
-
-const inputStyle: React.CSSProperties = {
-  width: '100%', padding: '9px 12px',
-  background: 'rgba(255,255,255,0.04)',
-  border: '.5px solid #2a2a2a', borderRadius: 8,
-  color: '#fff', fontSize: 12, fontFamily: 'inherit',
-  outline: 'none', boxSizing: 'border-box', resize: 'vertical' as any,
-};
-
-// ─── Componenti base ────────────────────────────────────────────
-
-const Field = ({ label, value, onChange, multiline = false, hint, placeholder, rows = 3 }: any) => (
-  <div style={{ marginBottom: 12 }}>
-    <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 4 }}>{label}</div>
-    {hint && <div style={{ fontSize: 10, color: '#444', marginBottom: 4, lineHeight: 1.4 }}>{hint}</div>}
-    {multiline
-      ? <textarea value={value ?? ''} onChange={e => onChange(e.target.value)} rows={rows} style={inputStyle} placeholder={placeholder} />
-      : <input value={value ?? ''} onChange={e => onChange(e.target.value)} style={inputStyle} placeholder={placeholder} />}
-  </div>
-);
-
-const ImageField = ({ label, value, onChange, type = 'image' }: any) => {
-  const { pick, Modal } = useMediaLibrary();
-  return (
-    <div style={{ marginBottom: 12 }}>
-      <div style={{ fontSize: 9, letterSpacing: '.18em', textTransform: 'uppercase', color: '#666', marginBottom: 4 }}>{label}</div>
-      <div style={{ display: 'flex', gap: 8 }}>
-        <input value={value ?? ''} onChange={e => onChange(e.target.value)} style={{ ...inputStyle, flex: 1 }} placeholder="https://res.cloudinary.com/..." />
-        <button onClick={async () => { const url = await pick(type); if (url) onChange(url); }}
-          style={{ padding: '0 12px', background: 'rgba(205,178,255,0.1)', border: '.5px solid #cdb2ff44', borderRadius: 8, color: '#cdb2ff', cursor: 'pointer', fontSize: 11, whiteSpace: 'nowrap', flexShrink: 0 }}>
-          📁
-        </button>
-      </div>
-      {value && (
-        <div style={{ marginTop: 6, borderRadius: 8, overflow: 'hidden', background: '#111', border: '.5px solid #2a2a2a', maxHeight: 100 }}>
-          {type === 'video'
-            ? <video src={value} style={{ width: '100%', maxHeight: 100, display: 'block' }} />
-            : <img src={value} alt="" style={{ width: '100%', maxHeight: 100, objectFit: 'cover', display: 'block' }} onError={e => (e.currentTarget.style.display = 'none')} />}
-        </div>
-      )}
-      {Modal}
-    </div>
-  );
-};
-
-const CardBlock = ({ title, onDelete, children, collapsed = false, accent }: any) => {
-  const [open, setOpen] = useState(!collapsed);
-  return (
-    <div style={{ background: 'rgba(255,255,255,0.03)', border: `.5px solid ${accent ? '#cdb2ff33' : '#2a2a2a'}`, borderRadius: 10, marginBottom: 8, overflow: 'hidden' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', cursor: 'pointer', background: accent ? 'rgba(205,178,255,0.04)' : 'transparent' }}
-        onClick={() => setOpen(o => !o)}>
-        <div style={{ fontSize: 11, fontWeight: 600, color: accent ? '#cdb2ff' : '#aaa' }}>{title}</div>
-        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          {onDelete && <button onClick={e => { e.stopPropagation(); onDelete(); }}
-            style={{ background: 'none', border: 'none', color: '#ff8888', cursor: 'pointer', padding: 2, lineHeight: 1 }}>
-            <Trash2 size={12} />
-          </button>}
-          {open ? <ChevronDown size={12} color="#555" /> : <ChevronRight size={12} color="#555" />}
-        </div>
-      </div>
-      {open && <div style={{ padding: '0 14px 14px' }}>{children}</div>}
-    </div>
-  );
-};
-
-const AddBtn = ({ onClick, label }: any) => (
-  <button onClick={onClick} style={{ width: '100%', padding: '9px', background: 'rgba(205,178,255,0.06)', border: '.5px dashed #cdb2ff44', borderRadius: 9, color: '#cdb2ff', fontSize: 10, cursor: 'pointer', letterSpacing: '.12em', textTransform: 'uppercase', marginTop: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-    <Plus size={11} /> {label}
-  </button>
-);
-
-const SectionTitle = ({ children }: any) => (
-  <div style={{ fontSize: 9, letterSpacing: '.2em', textTransform: 'uppercase', color: '#cdb2ff', marginBottom: 12, paddingBottom: 6, borderBottom: '.5px solid #cdb2ff22' }}>{children}</div>
-);
-
-const Note = ({ children }: any) => (
-  <div style={{ fontSize: 11, color: '#555', background: 'rgba(205,178,255,0.05)', border: '.5px solid #cdb2ff22', borderRadius: 8, padding: '10px 12px', marginBottom: 12, lineHeight: 1.5 }}>{children}</div>
-);
 
 // ─── Helper per aggiornare array annidati ───────────────────────
 
@@ -361,56 +294,10 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
     </div>
   );
 
-  // ── CLIENTI / BRAND ─────────────────────────────────────────
-  if (block === 'clients') return (
-    <div>
-      <SectionTitle>Brand & Clienti</SectionTitle>
-      <Field label="Tag / didascalia sezione" value={content.clients?.tag} onChange={(v: string) => set('clients.tag', v)}
-        placeholder="Brand e progetti con cui abbiamo lavorato" />
-      {(content.clients?.items || []).map((c: any, i: number) => (
-        <CardBlock key={i} title={c.name}
-          onDelete={() => setContent((p: any) => { const n = JSON.parse(JSON.stringify(p)); n.clients.items.splice(i, 1); return n; })}>
-          <Field label="ID scheda" value={c.id} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].id = v; set('clients.items', a); }}
-            hint="Usato nell'URL della scheda cliente, es: nunzio-putignano" />
-          <Field label="Nome cliente" value={c.name} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].name = v; set('clients.items', a); }} />
-          <Field label="Settore" value={c.sector} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].sector = v; set('clients.items', a); }} placeholder="Ristorazione, beauty, hospitality..." />
-          <Field label="Località" value={c.location} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].location = v; set('clients.items', a); }} placeholder="Taranto, Puglia..." />
-          <Field label="Riassunto card / hero" value={c.summary} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].summary = v; set('clients.items', a); }} multiline rows={2} />
-          <Field label="Descrizione scheda" value={c.description} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].description = v; set('clients.items', a); }} multiline rows={4} />
-          <Field label="Servizi (separati da virgola)" value={(c.services || []).join(', ')} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].services = v.split(',').map((s: string) => s.trim()).filter(Boolean); set('clients.items', a); }} placeholder="Gestione Social, Reels, Branding" />
-          <Field label="Risultati (uno per riga)" value={(c.results || []).join('\n')} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].results = v.split('\n').map((s: string) => s.trim()).filter(Boolean); set('clients.items', a); }} multiline rows={3} />
-          <Field label="Sito web" value={c.website || c.url} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].website = v; a[i].url = v; set('clients.items', a); }}
-            hint="Link esterno mostrato nella scheda cliente" />
-          <Field label="Instagram" value={c.instagram} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].instagram = v; set('clients.items', a); }} placeholder="https://instagram.com/..." />
-          <Field label="Facebook" value={c.facebook} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].facebook = v; set('clients.items', a); }} placeholder="https://facebook.com/..." />
-          <Field label="Telefono" value={c.phone} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].phone = v; set('clients.items', a); }} placeholder="+39 ..." />
-          <Field label="Indirizzo" value={c.address} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].address = v; set('clients.items', a); }} placeholder="Via ..., Città (TA)" />
-          <ImageField label="Logo (Cloudinary)" value={c.logo} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].logo = v; set('clients.items', a); }} />
-          <ImageField label="Immagine hero scheda" value={c.image} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.clients.items)); a[i].image = v; set('clients.items', a); }} />
-        </CardBlock>
-      ))}
-      <AddBtn onClick={() => setContent((p: any) => {
-        const n = JSON.parse(JSON.stringify(p));
-        if (!n.clients) n.clients = { tag: '', items: [] };
-        n.clients.items.push({
-          id: `cliente-${Date.now()}`,
-          name: 'Nuovo cliente',
-          sector: '',
-          location: '',
-          summary: '',
-          description: '',
-          services: [],
-          results: [],
-          url: '',
-          logo: '',
-          image: '',
-          website: '',
-          instagram: '',
-          gallery: []
-        }); return n;
-      })} label="Aggiungi cliente" />
-    </div>
-  );
+  // ── CASI STUDIO / SERVIZI (raccolte) ─────────────────────────
+  if (block === 'clients') return <ClientsEditor content={content} set={set} />;
+  if (block === 'cases') return <CasesEditor content={content} set={set} />;
+  if (block === 'service_examples') return <ServiceExamplesEditor content={content} set={set} />;
 
   // ── PER CHI LAVORIAMO ────────────────────────────────────────
   if (block === 'per_chi') return (
@@ -700,8 +587,8 @@ export const ContentEditor = () => {
   if (loading) return <div style={{ padding: '4rem', textAlign: 'center', color: '#555', fontSize: 13 }}>Caricamento contenuti...</div>;
 
   const pageUrl = {
-    home: '/', studio: '/chi-siamo', lavori: '/portfolio',
-    servizi: '/servizi', contatti: '/contatti',
+    home: '/', studio: '/chi-siamo', casi: '/casi-studio',
+    servizi: '/siti-web', contatti: '/contatti',
   }[page] ?? '/';
 
   const currentPageDef = PAGES.find(p => p.key === page);
@@ -738,7 +625,7 @@ export const ContentEditor = () => {
       </div>
 
       {/* ── Panel editor ── */}
-      <div style={{ width: 340, borderRight: '.5px solid #1e1e1e', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <div style={{ width: ['clients', 'cases', 'service_examples'].includes(block) ? 480 : 340, borderRight: '.5px solid #1e1e1e', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
         {/* Header editor */}
         <div style={{ padding: '10px 16px', borderBottom: '.5px solid #1e1e1e', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#0a0a0a' }}>
           <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: '#cdb2ff' }}>

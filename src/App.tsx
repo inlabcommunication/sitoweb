@@ -24,11 +24,12 @@ import { ServicesGrid } from "./sections/ServicesGrid";
 import { MethodTimeline } from "./sections/MethodTimeline";
 import { PortfolioGallery } from "./sections/PortfolioGallery";
 import { ClientsWall } from "./sections/ClientsWall";
-import { CaseStudiesSection, CASE_STUDIES } from "./sections/CaseStudiesSection";
+import { CaseStudiesSection } from "./sections/CaseStudiesSection";
+import { ReelsGrid, Gallery } from "./components/ReelCard";
+import { registerContent } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
-const CaseParesteta = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseParesteta })));
-const CaseRicciardi = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CaseRicciardi })));
+const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
 const PageBlog = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageBlog })));
 const PageArticolo = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageArticolo })));
  
@@ -669,8 +670,9 @@ const PageHome = () => {
 ═══════════════════════════════════════════════════════════════ */
 const ServiceExamples = ({ slug }: { slug: string }) => {
   const content = useContent();
-  const examples = SERVICE_EXAMPLES[slug] || [];
+  const examples = (((content as any).serviceExamples || SERVICE_EXAMPLES)[slug] || []) as ServiceExample[];
   if (!examples.length) return null;
+  const cases = ((content as any).cases?.items || []) as any[];
   const clients = normalizeClients(((content as any).clients?.items || []) as any[]);
   const sites = examples.filter((e): e is Extract<ServiceExample, { kind: 'site' }> => e.kind === 'site');
   const cards = examples.filter(e => e.kind !== 'site');
@@ -684,8 +686,8 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
         </h2>
 
         {sites.map(site => (
-          <div key={site.url} style={{display:"grid",gridTemplateColumns:"1.4fr 1fr",gap:"3rem",alignItems:"center",marginBottom:cards.length?"3rem":0}} className="grid-1-mob">
-            <BrowserMockup url={site.url} label={site.title}/>
+          <div key={site.url+site.title} style={{display:"grid",gridTemplateColumns:"1.4fr 1fr",gap:"3rem",alignItems:"center",marginBottom:cards.length?"3rem":0}} className="grid-1-mob">
+            <BrowserMockup url={site.url} label={site.title} image={site.image}/>
             <div>
               {site.tags && <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:"1rem"}}>{site.tags.map(t=><span key={t} className="tag tag-g" style={{fontSize:10}}>{t}</span>)}</div>}
               <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase"}}>{site.title}</h3>
@@ -703,6 +705,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
             {cards.map((e,i) => {
               const c = e.kind === 'client' ? clients.find((x: any) => x.id === e.clientId) : null;
               if (e.kind === 'client' && !c) return null;
+              if (e.kind === 'case' && !cases.some((x: any) => x.id === e.caseId)) return null;
               const to = e.kind === 'client' ? `/cliente/${e.clientId}` : `/casi-studio/${(e as any).caseId}`;
               const title = e.kind === 'client' ? c.name : (e as any).title;
               const desc = e.kind === 'client' ? c.summary : (e as any).desc;
@@ -1775,6 +1778,9 @@ const PageCliente = ({id}: {id: string}) => {
     ? allProjects.filter((project: any)=>String(project.client||"").toLowerCase()===String(client.name||"").toLowerCase())
     : [];
   const heroImage=client?.image || client?.gallery?.[0] || relatedProjects.find((project: any)=>project.image)?.image;
+  const reels=((client?.reels || []) as any[]).filter((r: any)=>/^https:\/\//.test(r?.video||"") || /^https:\/\//.test(r?.instagram||""));
+  const gallery=((client?.gallery || []) as string[]).filter((u)=>/^https:\/\//.test(u));
+  const linkedCase=(((c as any).cases?.items || []) as any[]).find((x: any)=>x.id===client?.caseStudy || x.clientId===client?.id);
   const links=[
     {label:"Sito web", href:client?.website || client?.url},
     {label:"Instagram", href:client?.instagram},
@@ -1807,9 +1813,9 @@ const PageCliente = ({id}: {id: string}) => {
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-          <button onClick={()=>go("/")} className="btn btn-g" style={{marginBottom:"2rem",fontSize:10,padding:"8px 16px"}}>
+          <Link to="/casi-studio" className="btn btn-g" style={{marginBottom:"2rem",fontSize:10,padding:"8px 16px"}}>
             <ArrowLeft size={12}/> Clienti
-          </button>
+          </Link>
           <div style={{display:"grid",gridTemplateColumns:"1.25fr .75fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <div>
               <p className="section-label">{client.sector || "Cliente InLab"}</p>
@@ -1820,8 +1826,8 @@ const PageCliente = ({id}: {id: string}) => {
               {[
                 ["Settore", client.sector],
                 ["Area", client.address || client.location],
-                ["Servizi", `${client.services?.length || relatedProjects.length || 0}`],
-                ["Lavori", `${relatedProjects.length}`],
+                ["Servizi", client.services?.length ? `${client.services.length}` : ""],
+                ["Contenuti", reels.length || gallery.length ? [reels.length && `${reels.length} reel`, gallery.length && `${gallery.length} foto`].filter(Boolean).join(" · ") : ""],
               ].map(([label,value])=>(
                 <div key={label} style={{background:"rgba(255,255,255,.03)",padding:"1.2rem"}}>
                   <p style={{fontSize:9,letterSpacing:".18em",textTransform:"uppercase",color:"var(--m)",marginBottom:8}}>{label}</p>
@@ -1836,14 +1842,14 @@ const PageCliente = ({id}: {id: string}) => {
       <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
           <div>
-            {client.logo&&<img src={client.logo} alt={client.name} style={{maxHeight:74,maxWidth:240,objectFit:"contain",filter:"brightness(0) invert(1)",opacity:.75,marginBottom:"2rem"}}/>}
+            {client.logo&&<img src={client.logo} alt={`Logo ${client.name}`} style={{maxHeight:74,maxWidth:240,objectFit:"contain",marginBottom:"2rem",display:"block"}}/>}
             <p className="section-label">Scheda cliente</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>INFORMAZIONI<br/><span className="stroke">E CONTESTO</span></h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Aggiungi una descrizione dalla dashboard per completare questa scheda cliente."}</p>
-            {client.caseStudy&&(
-              <button className="btn btn-p" onClick={()=>go(`/casi-studio/${client.caseStudy}`)} style={{marginBottom:"1rem"}}>
+            {linkedCase&&(
+              <Link to={`/casi-studio/${linkedCase.id}`} className="btn btn-p" style={{marginBottom:"1rem"}}>
                 Leggi il caso studio <ArrowRight size={14}/>
-              </button>
+              </Link>
             )}
             {links.length>0&&(
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
@@ -1907,13 +1913,28 @@ const PageCliente = ({id}: {id: string}) => {
         </section>
       )}
 
-      {client.gallery?.length>0&&(
-        <section style={{borderBottom:".5px solid var(--b)"}}>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:2}}>
-            {client.gallery.map((img: string,i: number)=><img key={i} src={img} alt={`${client.name} ${i+1}`} style={{width:"100%",aspectRatio:"4/3",objectFit:"cover",display:"block"}}/>)}
+      {reels.length>0&&(
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">Reel</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">CHE HANNO GIRATO</span></h2>
+            <ReelsGrid reels={reels}/>
           </div>
         </section>
       )}
+
+      {gallery.length>0&&(
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">Foto</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>DIETRO<br/><span className="stroke">L'OBIETTIVO</span></h2>
+            <Gallery images={gallery} alt={client.name}/>
+          </div>
+        </section>
+      )}
+
+      <ClientsWall excludeId={client.id} compact onClientClick={(cid) => go(`/cliente/${cid}`)}
+        heading={{label:"Scopri altri clienti",title:"ALTRI BRAND",accent:"CHE HANNO SCELTO INLAB",text:"Ogni scheda racconta un progetto diverso: apri quella che ti incuriosisce."}}/>
 
       <ServiceCTA title={`VUOI UN PROGETTO COME ${client.name.toUpperCase()}?`} sub="Raccontaci cosa vuoi ottenere e capiamo insieme la direzione migliore." btn="Parliamone"/>
     </>
@@ -1997,9 +2018,9 @@ const PageCaso = ({id}: {id:string}) => {
 
   const page = (el: React.ReactNode) => <Suspense fallback={<div style={{minHeight:"100vh"}}/>}>{el}</Suspense>;
 
-  switch(id){
-    case "paresteta": return page(<CaseParesteta onBack={onBack} onContact={onContact}/>);
-    case "ricciardi": return page(<CaseRicciardi onBack={onBack} onContact={onContact}/>);
+  const cs = (((useContent() as any).cases?.items || []) as any[]).find((x: any) => x.id === id);
+  switch(Boolean(cs)){
+    case true: return page(<CasePage cs={cs} onBack={onBack} onContact={onContact} onClient={(cid: string) => go(`/cliente/${cid}`)}/>);
     default:
       return (
         <section style={{padding:"10rem 2rem 8rem",minHeight:"60vh"}}>
@@ -2008,7 +2029,7 @@ const PageCaso = ({id}: {id:string}) => {
             <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,4rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
               QUESTO PROGETTO<br/><span className="stroke">NON ESISTE.</span>
             </h1>
-            <p style={{color:"var(--m)",marginBottom:"2rem"}}>Forse stavi cercando un altro lavoro nel nostro portfolio.</p>
+            <p style={{color:"var(--m)",marginBottom:"2rem"}}>Forse stavi cercando un altro dei nostri progetti.</p>
             <button className="btn btn-p" onClick={() => go("/casi-studio")}>
               Torna ai casi studio <ArrowRight size={14}/>
             </button>
@@ -2165,7 +2186,9 @@ export default function App() {
   const go=useCallback((to)=>navigate(to),[]);
 
   // SEO: titolo, description, canonical e dati strutturati della pagina corrente
-  useEffect(() => { applySeo(getSeo(route)); }, [route]);
+  // (ricalcolati quando arrivano i contenuti salvati dalla dashboard)
+  const siteContent = useContent();
+  useEffect(() => { registerContent(siteContent); applySeo(getSeo(route)); }, [route, siteContent]);
  
   const pageInfo=parseRoute(route);
  
