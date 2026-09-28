@@ -27,6 +27,12 @@ porta nessuno verso i servizi o i contatti ha fatto solo metà del lavoro.
    brief: cosa ha fatto, cosa no e perché, dubbi, idee.
 4. La settimana dopo il responsabile misura i risultati e aggiorna brief e linee guida.
 
+**Le indicazioni si basano sui dati, non sui gusti personali.** Ogni richiesta del
+responsabile SEO deve indicare da dove nasce: numeri di Google Analytics o Search
+Console, analisi dei risultati su Google, regole di Google o queste linee guida.
+Una richiesta senza motivazione si può contestare. Allo stesso modo, anche le
+proposte dell'addetto al blog vanno motivate con dati o ricerche.
+
 Se un'indicazione non è chiara o pensi che sia sbagliata, scrivilo nel resoconto:
 non ignorarla in silenzio.
 
