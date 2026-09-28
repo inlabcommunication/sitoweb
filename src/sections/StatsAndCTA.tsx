@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
-import { STATS as AGENCY_STATS } from '../data/stats';
-
-const STATS = AGENCY_STATS.map(s => ({ value: s.value, suffix: s.display.endsWith('+') ? '+' : '', label: s.label }));
+import { useAgencyStats } from '../data/stats';
+import { useContent } from '../lib/content';
 
 interface CounterProps {
   to: number;
@@ -36,7 +35,7 @@ const Counter: React.FC<CounterProps> = ({ to, suffix = '', prefix = '', duratio
     }
     if (to >= 1000) {
       const k = val / 1000;
-      return k.toFixed(k < 10 ? 1 : 0) + 'k';
+      return k.toFixed(k < 10 ? 1 : 0) + 'K';
     }
     return Math.round(val).toString();
   })();
@@ -46,6 +45,7 @@ const Counter: React.FC<CounterProps> = ({ to, suffix = '', prefix = '', duratio
 
 
 export const AnimatedStats: React.FC = () => {
+  const STATS = useAgencyStats();
   return (
     <section style={{ padding: '6rem 2rem', position: 'relative', overflow: 'hidden', background: 'var(--a)', color: '#000' }}>
 
@@ -83,7 +83,7 @@ export const AnimatedStats: React.FC = () => {
                 lineHeight: 1, color: '#000',
                 marginBottom: '0.6rem', letterSpacing: '-0.02em',
               }}>
-                <Counter to={s.value} suffix={s.suffix} />
+                <Counter to={s.value} prefix={s.prefix} suffix={s.suffix} />
               </div>
               <p style={{ fontSize: 12, fontWeight: 500, letterSpacing: '.12em', textTransform: 'uppercase', color: 'rgba(0,0,0,0.68)', lineHeight: 1.4 }}>
                 {s.label}
@@ -101,6 +101,7 @@ interface FinalCTAProps {
 }
 
 export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
+  const cta = ((useContent() as any).cta?.home) || {};
   return (
     <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, var(--bg) 0%, #241e30 40%, #3a2d56 100%)' }}>
       {/* Glow animato */}
@@ -131,23 +132,22 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           style={{ textAlign: 'center', maxWidth: 820, margin: '0 auto' }}
         >
-          <p className="section-label" style={{ marginBottom: '1.5rem', color: 'rgba(240,237,230,0.5)' }}>Iniziamo</p>
+          <p className="section-label" style={{ marginBottom: '1.5rem', color: 'rgba(240,237,230,0.5)' }}>{cta.tag || 'Iniziamo'}</p>
           <h2 style={{
             fontFamily: 'var(--fd)', fontSize: 'clamp(2.5rem, 6vw, 5.5rem)',
             lineHeight: 0.92, marginBottom: '1.5rem', color: '#F0EDE6',
           }}>
-            HAI UN'ATTIVITÀ,<br />UN BRAND O UN PROGETTO<br />
+            {cta.title || "HAI UN'ATTIVITÀ,"}<br />{cta.title2 || 'UN BRAND O UN PROGETTO'}<br />
             <span style={{
               fontFamily: 'var(--fs)', fontStyle: 'italic',
               fontWeight: 400, fontSize: '0.7em', color: 'var(--a)',
-            }}>da raccontare meglio?</span>
+            }}>{cta.accent || 'da raccontare meglio?'}</span>
           </h2>
           <p style={{
             fontSize: 16, color: 'rgba(240,237,230,0.6)', lineHeight: 1.75,
             marginBottom: '2.5rem', maxWidth: 600, margin: '0 auto 2.5rem',
           }}>
-            Partiamo da una chiacchierata. Ti aiutiamo a capire quali contenuti, canali e strategie
-            possono valorizzare davvero la tua comunicazione.
+            {cta.subtitle || 'Partiamo da una chiacchierata. Ti aiutiamo a capire quali contenuti, canali e strategie possono valorizzare davvero la tua comunicazione.'}
           </p>
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
             <button
@@ -155,7 +155,7 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
               onClick={onClick}
               style={{ fontSize: 13, padding: '18px 38px', background: 'var(--a)', color: '#000' }}
             >
-              Parla con InLab <ArrowRight size={15} />
+              {cta.btn1 || 'Parla con InLab'} <ArrowRight size={15} />
             </button>
           </div>
         </motion.div>

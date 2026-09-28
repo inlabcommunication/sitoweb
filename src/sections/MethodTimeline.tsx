@@ -1,6 +1,9 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { Search, Compass, Wand2, Send, BarChart3 } from 'lucide-react';
+import { useContent } from '../lib/content';
+
+const ICONS = [Search, Compass, Wand2, Send, BarChart3];
 
 const STEPS = [
   { icon: Search,   title: 'Analisi',                desc: 'Studiamo brand, pubblico, mercato e obiettivi. Niente parte se non capiamo dove stai andando.' },
@@ -11,6 +14,10 @@ const STEPS = [
 ];
 
 export const MethodTimeline: React.FC = () => {
+  // Testi modificabili da dashboard → Home → Metodo (valori predefiniti in constants.ts)
+  const metodo = ((useContent() as any).metodo) || {};
+  const steps = (Array.isArray(metodo.steps) && metodo.steps.length ? metodo.steps : STEPS)
+    .map((st: any, i: number) => ({ icon: ICONS[i % ICONS.length], title: st.title, desc: st.desc }));
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -28,24 +35,24 @@ export const MethodTimeline: React.FC = () => {
           viewport={{ once: true, margin: '-80px' }}
           style={{ marginBottom: '5rem', maxWidth: 720 }}
         >
-          <p className="section-label">Il nostro metodo</p>
+          <p className="section-label">{metodo.tag || 'Il nostro metodo'}</p>
           <h2 style={{
             fontFamily: 'var(--fd)',
             fontSize: 'clamp(2.5rem, 5vw, 4.8rem)',
             lineHeight: 0.9,
             marginBottom: '1.2rem',
           }}>
-            DAL CAOS DEI CONTENUTI<br />
+            {metodo.title || 'DAL CAOS DEI CONTENUTI'}<br />
             <span style={{
               fontFamily: 'var(--fs)',
               fontStyle: 'italic',
               fontWeight: 400,
               fontSize: '0.85em',
               color: 'var(--a)',
-            }}>a una strategia chiara.</span>
+            }}>{metodo.accent || 'a una strategia chiara.'}</span>
           </h2>
           <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.7 }}>
-            Cinque passaggi. Nessuno saltato. Così trasformiamo idee sparse in comunicazione che produce risultati.
+            {metodo.subtitle || 'Cinque passaggi. Nessuno saltato. Così trasformiamo idee sparse in comunicazione che produce risultati.'}
           </p>
         </motion.div>
 
@@ -74,7 +81,7 @@ export const MethodTimeline: React.FC = () => {
             }}
           />
 
-          {STEPS.map((s, i) => {
+          {steps.map((s: any, i: number) => {
             const Icon = s.icon;
             return (
               <motion.div
@@ -86,7 +93,7 @@ export const MethodTimeline: React.FC = () => {
                 style={{
                   position: 'relative',
                   paddingLeft: 56,
-                  paddingBottom: i === STEPS.length - 1 ? 0 : '3.5rem',
+                  paddingBottom: i === steps.length - 1 ? 0 : '3.5rem',
                 }}
               >
                 {/* Nodo */}

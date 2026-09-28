@@ -44,23 +44,25 @@ export const WEBSITE_CONTENT = {
     ]
   },
 
+  // Numeri dell'agenzia: usati da hero (primi 3), sezione "I numeri" e pagine Studio/Servizi/città
   stats: [
-    { num: "3.2M+", label: "Visualizzazioni generate" },
-    { num: "47", label: "Clienti soddisfatti" },
-    { num: "9", label: "Città servite in Puglia" },
-    { num: "100%", label: "Progetti consegnati in tempo" },
+    { value: 3200000, prefix: "", suffix: "+", label: "Visualizzazioni generate", short: "visualizzazioni" },
+    { value: 47, prefix: "", suffix: "+", label: "Brand e attività seguiti", short: "brand seguiti" },
+    { value: 7, prefix: "", suffix: "", label: "Servizi integrati", short: "servizi integrati" },
+    { value: 840000, prefix: "", suffix: "", label: "Record su un singolo video", short: "record su un video" },
   ],
 
   metodo: {
-    tag: "Come lavoriamo",
-    title: ["IL NOSTRO", "METODO"],
-    subtitle: "Non lavoriamo a caso. Ogni progetto segue un percorso preciso, costruito per produrre risultati misurabili e comunicazione riconoscibile.",
+    tag: "Il nostro metodo",
+    title: "DAL CAOS DEI CONTENUTI",
+    accent: "a una strategia chiara.",
+    subtitle: "Cinque passaggi. Nessuno saltato. Così trasformiamo idee sparse in comunicazione che produce risultati.",
     steps: [
-      { n: "01", title: "Analisi", desc: "Partiamo dal brand, dal pubblico, dal mercato e dagli obiettivi. Prima di creare qualsiasi contenuto, capiamo chi sei, a chi parli e cosa vuoi ottenere." },
-      { n: "02", title: "Direzione creativa", desc: "Definiamo tono di voce, stile visivo, contenuti e messaggi chiave. Ogni progetto ha un'identità precisa, non un template." },
-      { n: "03", title: "Produzione", desc: "Realizziamo foto, video, grafiche, copy e materiali digitali con cura artigianale. Ogni contenuto deve avere un motivo per esistere." },
-      { n: "04", title: "Pubblicazione & campagne", desc: "Gestiamo i canali social, pubblichiamo con strategia e attiviamo campagne quando servono per amplificare i risultati." },
-      { n: "05", title: "Ottimizzazione", desc: "Leggiamo i dati, capiamo cosa funziona e miglioriamo la strategia ogni mese. La comunicazione è un processo, non un prodotto." },
+      { title: "Analisi", desc: "Studiamo brand, pubblico, mercato e obiettivi. Niente parte se non capiamo dove stai andando." },
+      { title: "Strategia", desc: "Definiamo direzione, tono di voce, canali e messaggi. Un piano chiaro, non un calendario riempitivo." },
+      { title: "Produzione contenuti", desc: "Foto, video, grafiche, copy. Ogni contenuto è costruito con un perché preciso." },
+      { title: "Pubblicazione e campagne", desc: "Gestiamo canali e attiviamo campagne ads per amplificare ciò che funziona." },
+      { title: "Report e ottimizzazione", desc: "Misuriamo, leggiamo i dati, miglioriamo. La strategia evolve con i risultati reali." },
     ]
   },
 
@@ -310,35 +312,42 @@ export const WEBSITE_CONTENT = {
 
   studio: {
     tag: "Il laboratorio",
-    title: ["NON SIAMO", "Semplici", "CONSULENTI."],
-    description1: "InLab nasce dall'incontro tra due prospettive complementari: la mente analitica di chi studia il comportamento delle persone, e la visione creativa di chi le sa emozionare.",
-    description2: "Lavoriamo da Castellaneta con clienti in tutta la Puglia e non solo, collaborando con sviluppatori, fotografi e professionisti selezionati per ogni progetto.",
+    title: ["NON SIAMO", "CONSULENTI", "siamo partner."],
+    description1: "InLab nasce dall'incontro tra due prospettive complementari. La mente che analizza. La voce che emoziona. Un laboratorio dove strategia e creatività si incontrano ogni giorno.",
     team: [
       {
-        name: "Strategia & Analisi",
-        role: "Psicologo del marketing",
-        bio: "Studio il comportamento d'acquisto delle persone da oltre 5 anni. Prima di creare qualsiasi contenuto, analizzo chi è il tuo cliente, perché compra, cosa lo frena. La strategia non è un'opinione — è una conclusione basata su dati.",
+        name: "Nicola Carpignano",
+        role: "Social media manager, comunicazione e marketing",
+        bio: "Si occupa di strategia editoriale, copy, gestione social e posizionamento dei contenuti. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",
+        edu: ["Psicologia della comunicazione e del marketing — Sapienza Università di Roma", "Master in Digital Marketing"],
         photo: "",
-        skills: ["Analisi comportamentale", "Posizionamento brand", "Strategia di comunicazione", "Ricerca di mercato"]
+        skills: ["Social media strategy", "Copywriting", "Piano editoriale", "Community management", "Posizionamento brand"]
       },
       {
-        name: "Creatività & Visual",
-        role: "Content Creator & Direttrice Artistica",
-        bio: "Trasformo strategie in contenuti che le persone vogliono davvero guardare. Dalla regia di un reel alla direzione fotografica di uno shooting, mi occupo di tutto ciò che appare.",
+        name: "Ilaria Gemma",
+        role: "Content creator e comunicazione visiva",
+        bio: "Lavora sulla creazione di contenuti, immagini, video e racconto visivo dei brand. Dalla direzione artistica di uno shooting alla regia di un reel, cura ogni dettaglio estetico.",
+        edu: ["Laurea in Scienze della Comunicazione", "Corsi di specializzazione in video editing"],
         photo: "",
-        skills: ["Produzione video & reels", "Direzione artistica", "Fotografia di brand", "Script & storytelling"]
+        skills: ["Produzione video & reels", "Direzione artistica", "Fotografia di brand", "Script & storytelling", "Visual identity"]
       }
+    ],
+    collaboratori: [
+      { title: "Web Developer", desc: "Sviluppatori front-end e back-end selezionati per ogni tipo di progetto. React, Next.js, WordPress." },
+      { title: "Fotografi partner", desc: "Professionisti locali per shooting che richiedono attrezzatura specifica o copertura estesa." },
+      { title: "AI & Automation specialist", desc: "Esperti di Make, Zapier e sviluppo custom per automazioni complesse." },
+      { title: "Copywriter", desc: "Per progetti che richiedono copy specializzato in settori tecnici o legali." }
     ]
   },
 
   cta: {
     home: {
-      title: "HAI UN BRAND,",
-      title2: "MA NON SAI COME",
-      title3: "RACCONTARLO ONLINE?",
-      subtitle: "Partiamo da una consulenza: capiamo dove sei, cosa vuoi comunicare e quale direzione può renderti più riconoscibile.",
-      btn1: "Parliamone",
-      btn2: "Vedi i lavori"
+      tag: "Iniziamo",
+      title: "HAI UN'ATTIVITÀ,",
+      title2: "UN BRAND O UN PROGETTO",
+      accent: "da raccontare meglio?",
+      subtitle: "Partiamo da una chiacchierata. Ti aiutiamo a capire quali contenuti, canali e strategie possono valorizzare davvero la tua comunicazione.",
+      btn1: "Parla con InLab"
     }
   },
 
@@ -354,7 +363,6 @@ export const WEBSITE_CONTENT = {
     subtitle: "Una chiamata di 30 minuti è sufficiente per capire cosa ti serve e come possiamo aiutarti. Senza slide inutili, senza promesse vuote.",
     emails: [{ label: "Email", value: "inlab.communication@gmail.com" }],
     phones: [{ label: "Telefono", value: "+39 329 565 4319" }],
-    location: "Castellaneta (TA), Puglia",
-    socials: ["Instagram", "LinkedIn", "Behance"]
+    location: "Castellaneta (TA), Puglia"
   }
 };

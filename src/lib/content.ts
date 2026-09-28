@@ -5,6 +5,21 @@ import { getClientId, normalizeClients } from './clientUtils';
 
 export type SiteContent = typeof WEBSITE_CONTENT;
 
+// Versione dello schema dei contenuti. Le sezioni sotto sono collegate alla
+// dashboard dalla v2: i valori salvati con versioni precedenti (testi vecchi,
+// sede "Taranto", profilo Prince…) vengono ignorati finché un admin non salva
+// di nuovo dalla dashboard aggiornata.
+export const CONTENT_SCHEMA = 2;
+const V2_SECTIONS = ['manifesto', 'metodo', 'stats', 'cta', 'studio', 'contact'];
+
+function dropStaleSections(saved: any) {
+  if (!saved || saved.schemaVersion >= CONTENT_SCHEMA) return saved;
+  const clean = { ...saved };
+  for (const k of V2_SECTIONS) delete clean[k];
+  if (clean.hero) { clean.hero = { ...clean.hero }; delete clean.hero.mini_stats; }
+  return clean;
+}
+
 let cached: SiteContent | null = null;
 const listeners = new Set<(c: SiteContent) => void>();
 
@@ -18,7 +33,7 @@ export const loadContent = async (forceRefresh = false): Promise<SiteContent> =>
     const { doc, getDoc } = await liteFirestore();
     const snap = await getDoc(doc(db, 'app', 'site_content'));
     if (snap.exists()) {
-      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, snap.data() as any));
+      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, dropStaleSections(snap.data() as any)));
     } else {
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
@@ -35,7 +50,7 @@ export const saveContent = async (newContent: SiteContent): Promise<boolean> => 
   const [{ db }, { doc, setDoc }] = await Promise.all([import('./firebase'), import('firebase/firestore')]);
   if (!db) return false;
   try {
-    const prepared = normalizeSiteContent(newContent);
+    const prepared = { ...normalizeSiteContent(newContent), schemaVersion: CONTENT_SCHEMA } as SiteContent;
     await setDoc(doc(db, 'app', 'site_content'), prepared);
     cached = prepared;
     listeners.forEach((fn) => fn(prepared));

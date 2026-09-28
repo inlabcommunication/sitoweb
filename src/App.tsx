@@ -10,7 +10,7 @@ import {
 import { Chatbot } from "./components/Chatbot";
 import { initAnalytics, trackPageview } from "./lib/analytics";
 import { getCurrentPath, linkClick, navigate } from "./lib/router";
-import { STATS } from "./data/stats";
+import { useAgencyStats } from "./data/stats";
 import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
 import { BrowserMockup } from "./components/BrowserMockup";
 import { getSeo } from "./seo/routes";
@@ -159,7 +159,11 @@ const SERVICES = [
 const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
  
 const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento","Aleph Caffè"];
-const STATS_GLOBAL = STATS.map(s => ({ n: s.display, l: s.label }));
+// Riga di numeri dell'agenzia (modificabili da dashboard → Home → Numeri)
+const AgencyStatsRow = () => {
+  const stats = useAgencyStats();
+  return <StatsRow stats={stats.map(s => ({ n: s.display, l: s.label }))}/>;
+};
  
 /* ═══════════════════════════════════════════════════════════════
    NAVBAR
@@ -237,6 +241,7 @@ const Navbar = () => {
 ═══════════════════════════════════════════════════════════════ */
 const Footer = () => {
   const { go } = useRouter();
+  const location = ((useContent() as any).contact?.location) || "Castellaneta (TA), Puglia";
   return (
     <footer style={{borderTop:".5px solid var(--b)",padding:"4rem 2rem 2.5rem"}}>
       <div style={{maxWidth:1280,margin:"0 auto"}}>
@@ -250,7 +255,7 @@ const Footer = () => {
             </div>
             <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione con sede a Castellaneta (TA). Strategia, creatività e tecnologia per far crescere il tuo brand.</p>
             <div style={{display:"flex",alignItems:"center",gap:6,marginTop:"1rem",fontSize:12,color:"var(--m)"}}>
-              <MapPin size={12}/> Castellaneta (TA), Puglia
+              <MapPin size={12}/> {location}
             </div>
           </div>
           <div>
@@ -591,6 +596,7 @@ const PageHome = () => {
   const { go } = useRouter();
   const content = useContent();
   const hero = (content as any).hero || {};
+  const manifesto = (content as any).manifesto || {};
 
   return (
     <>
@@ -610,12 +616,12 @@ const PageHome = () => {
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1.1fr 1fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <motion.div initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}} viewport={{once:true,margin:"-80px"}}>
-              <p className="section-label">Il nostro manifesto</p>
+              <p className="section-label">{manifesto.tag}</p>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,4.5rem)",lineHeight:.92,marginBottom:"1.5rem"}}>
-                NON CREIAMO CONTENUTI<br/>
-                <span className="stroke">PER RIEMPIRE</span><br/>
-                UN CALENDARIO.{" "}
-                <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,color:"var(--a)",fontSize:".75em"}}>Costruiamo direzioni.</span>
+                {manifesto.title?.line1}<br/>
+                <span className="stroke">{manifesto.title?.line2}</span><br/>
+                {manifesto.title?.line3}{" "}
+                <span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,color:"var(--a)",fontSize:".75em"}}>{manifesto.title?.accent}</span>
               </h2>
             </motion.div>
             <motion.p
@@ -625,7 +631,7 @@ const PageHome = () => {
               transition={{delay:.15}}
               style={{fontSize:18,lineHeight:1.8,color:"rgba(240,237,230,0.78)",fontWeight:300,maxWidth:560,paddingBottom:"1.4rem",borderLeft:"2px solid var(--a)",paddingLeft:"1.6rem"}}
             >
-              Ogni post, video, foto o campagna deve avere un motivo per esistere: raccontare il valore del brand, parlare alle persone giuste, creare fiducia e rendere la comunicazione più riconoscibile. Non vendiamo pacchetti. Costruiamo identità.
+              {manifesto.text}
             </motion.p>
           </div>
         </div>
@@ -1098,7 +1104,7 @@ const PageServizi = () => {
         sub="Dalla strategia all'esecuzione. Dal brand alla conversione. Lavoriamo su ogni touchpoint della tua comunicazione digitale."
         cta1="Parliamo del tuo progetto" cta1to="/contatti"
       />
-      <StatsRow stats={STATS_GLOBAL}/>
+      <AgencyStatsRow/>
       <section style={{padding:"7rem 2rem"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(320px,1fr))",gap:"1.2rem"}} className="grid-1-mob">
           {SERVICES.map((s,i)=>(
@@ -1122,12 +1128,23 @@ const PageServizi = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageChiSiamo = () => {
   const {go}=useRouter();
+  // Testi, team e collaboratori modificabili da dashboard → Chi siamo
+  const studio = ((useContent() as any).studio) || {};
+  const title = Array.isArray(studio.title) ? studio.title : [];
+  const initialsOf = (name = "") => name.split(/\s+/).filter(Boolean).slice(0, 2).map((w: string) => w[0]).join("").toUpperCase();
+  const team = (Array.isArray(studio.team) ? studio.team : [])
+    .filter((m: any) => m?.name && m.name !== "Prince")
+    .map((m: any) => ({ ...m, initials: initialsOf(m.name), skills: Array.isArray(m.skills) ? m.skills : [], edu: Array.isArray(m.edu) ? m.edu.filter(Boolean) : [] }));
+  const collabIcons = [<Globe size={18}/>, <Camera size={18}/>, <Zap size={18}/>, <Star size={18}/>];
+  const collaboratori = (Array.isArray(studio.collaboratori) ? studio.collaboratori : [])
+    .filter((c: any) => c?.title)
+    .map((c: any, i: number) => ({ icon: collabIcons[i % collabIcons.length], t: c.title, d: c.desc }));
   return (
     <>
-      <PageHero tag="Il laboratorio"
-        h1="NON SIAMO" h1b="CONSULENTI" italic="siamo partner."
-        sub="InLab nasce dall'incontro tra due prospettive complementari. La mente che analizza. La voce che emoziona. Un laboratorio dove strategia e creatività si incontrano ogni giorno."
-        cta1="Vedi i nostri lavori" cta1to="/lavori" cta2="Contattaci" cta2to="/contatti"
+      <PageHero tag={studio.tag || "Il laboratorio"}
+        h1={title[0] || "NON SIAMO"} h1b={title[1] || "CONSULENTI"} italic={title[2] || "siamo partner."}
+        sub={studio.description1}
+        cta1="Vedi i casi studio" cta1to="/casi-studio" cta2="Contattaci" cta2to="/contatti"
       />
  
       {/* Team */}
@@ -1136,15 +1153,12 @@ const PageChiSiamo = () => {
           <p className="section-label">Le persone dietro InLab</p>
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,6vw,6rem)",lineHeight:.9,marginBottom:"4rem"}}>IL TEAM<br/><span className="stroke">INLAB</span></h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"2rem",maxWidth:980}} className="grid-1-mob">
-            {[
-              {initials:"NC",name:"Nicola Carpignano",role:"Social media manager, comunicazione e marketing",bio:"Si occupa di strategia editoriale, copy, gestione social e posizionamento dei contenuti. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",edu:["Psicologia della comunicazione e del marketing — Sapienza Università di Roma","Master in Digital Marketing"],skills:["Social media strategy","Copywriting","Piano editoriale","Community management","Posizionamento brand"]},
-              {initials:"IG",name:"Ilaria Gemma",role:"Content creator e comunicazione visiva",bio:"Lavora sulla creazione di contenuti, immagini, video e racconto visivo dei brand. Dalla direzione artistica di uno shooting alla regia di un reel, cura ogni dettaglio estetico.",edu:["Laurea in Scienze della Comunicazione","Corsi di specializzazione in video editing"],skills:["Produzione video & reels","Direzione artistica","Fotografia di brand","Script & storytelling","Visual identity"]},
-            ].map((p,i)=>(
+            {team.map((p: any,i: number)=>(
               <motion.div key={i} className="card" initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.1}}
                 style={{padding:"2.5rem"}}>
                 <div style={{display:"flex",alignItems:"center",gap:"1rem",marginBottom:"1.5rem"}}>
                   <div style={{width:56,height:56,background:"rgba(205,178,255,0.12)",border:".5px solid rgba(205,178,255,.3)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"var(--fd)",fontSize:22,color:"var(--a)"}}>
-                    {p.initials}
+                    {p.photo ? <img src={p.photo} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",borderRadius:"50%"}}/> : p.initials}
                   </div>
                   <div>
                     <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
@@ -1157,11 +1171,11 @@ const PageChiSiamo = () => {
                     <div style={{display:"flex",alignItems:"center",gap:6,fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
                       <GraduationCap size={13}/> Formazione
                     </div>
-                    {p.edu.map(e=><p key={e} style={{fontSize:13.5,color:"var(--t)",lineHeight:1.55,marginBottom:4}}>{e}</p>)}
+                    {p.edu.map((e: string)=><p key={e} style={{fontSize:13.5,color:"var(--t)",lineHeight:1.55,marginBottom:4}}>{e}</p>)}
                   </div>
                 )}
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                  {p.skills.map(s=><span key={s} className="tag tag-g" style={{fontSize:11}}>{s}</span>)}
+                  {p.skills.map((s: string)=><span key={s} className="tag tag-g" style={{fontSize:11}}>{s}</span>)}
                 </div>
               </motion.div>
             ))}
@@ -1171,12 +1185,7 @@ const PageChiSiamo = () => {
           <div style={{marginTop:"3rem"}}>
             <p className="section-label" style={{marginBottom:"1.5rem"}}>La nostra rete di collaboratori</p>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:"1rem"}}>
-              {[
-                {icon:<Globe size={18}/>,t:"Web Developer",d:"Sviluppatori front-end e back-end selezionati per ogni tipo di progetto. React, Next.js, WordPress."},
-                {icon:<Camera size={18}/>,t:"Fotografi partner",d:"Professionisti locali per shooting che richiedono attrezzatura specifica o copertura estesa."},
-                {icon:<Zap size={18}/>,t:"AI & Automation specialist",d:"Esperti di Make, Zapier e sviluppo custom per automazioni complesse."},
-                {icon:<Star size={18}/>,t:"Copywriter",d:"Per progetti che richiedono copy specializzato in settori tecnici o legali."},
-              ].map((c,i)=>(
+              {collaboratori.map((c: any,i: number)=>(
                 <motion.div key={i} className="card" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
                   style={{padding:"1.5rem"}}>
                   <div style={{color:"var(--a)",marginBottom:".7rem"}}>{c.icon}</div>
@@ -1189,7 +1198,7 @@ const PageChiSiamo = () => {
         </div>
       </section>
  
-      <StatsRow stats={STATS_GLOBAL}/>
+      <AgencyStatsRow/>
       <ServiceCTA title="LAVORIAMO INSIEME?" sub="Raccontaci il tuo progetto. Valutiamo come possiamo aiutarti." btn="Contattaci"/>
     </>
   );
@@ -1350,6 +1359,7 @@ const PageLavori = () => {
    PAGE: CONTATTI
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
+  const contact = ((useContent() as any).contact) || {};
   const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
   // Anti-bot: campo nascosto (le persone non lo vedono) e ora di apertura del modulo
   const [honeypot,setHoneypot]=useState("");
@@ -1387,10 +1397,10 @@ const PageContatti = () => {
  
   return (
     <>
-      <PageHero tag="Parliamo del tuo progetto"
-        h1="INIZIAMO" h1b="INSIEME"
-        italic="senza impegno."
-        sub="Una chiamata di 30 minuti è sufficiente per capire cosa ti serve e come possiamo aiutarti. Senza slide inutili, senza promesse vuote."
+      <PageHero tag={contact.tag || "Parliamo del tuo progetto"}
+        h1={contact.title?.[0] || "INIZIAMO"} h1b={contact.title?.[1] || "INSIEME"}
+        italic={contact.accent || "senza impegno."}
+        sub={contact.subtitle}
       />
  
       <section style={{padding:"6rem 2rem"}}>
@@ -1400,16 +1410,16 @@ const PageContatti = () => {
           <div>
             <p className="section-label" style={{marginBottom:"2rem"}}>Come raggiungerci</p>
             {[
-              {icon:<Mail size={18}/>,label:"Email",val:"inlab.communication@gmail.com"},
-              {icon:<Phone size={18}/>,label:"Telefono",val:"+39 329 565 4319"},
-              {icon:<MapPin size={18}/>,label:"Sede",val:"Castellaneta (TA), Puglia"},
-            ].map((c,i)=>(
+              ...(contact.emails || []).map((e: any) => ({icon:<Mail size={18}/>,label:e.label || "Email",val:e.value,href:`mailto:${e.value}`})),
+              ...(contact.phones || []).map((p: any) => ({icon:<Phone size={18}/>,label:p.label || "Telefono",val:p.value,href:`tel:${String(p.value).replace(/[^\d+]/g,"")}`})),
+              ...(contact.location ? [{icon:<MapPin size={18}/>,label:"Sede",val:contact.location,href:""}] : []),
+            ].filter((c: any) => c.val).map((c: any,i: number)=>(
               <motion.div key={i} initial={{opacity:0,x:-16}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.1}}
                 style={{display:"flex",gap:"1rem",alignItems:"flex-start",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
                 <div style={{width:40,height:40,background:"rgba(205,178,255,0.08)",border:".5px solid rgba(205,178,255,.2)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",flexShrink:0}}>{c.icon}</div>
                 <div>
                   <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:2}}>{c.label}</div>
-                  <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>
+                  {c.href ? <a href={c.href} style={{fontSize:16,fontWeight:400,color:"var(--t)",textDecoration:"none"}}>{c.val}</a> : <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>}
                 </div>
               </motion.div>
             ))}
@@ -1527,7 +1537,7 @@ const PageCittaSEO = ({city, service}) => {
         </div>
       </section>
  
-      <StatsRow stats={STATS_GLOBAL}/>
+      <AgencyStatsRow/>
  
       {/* Local content */}
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
