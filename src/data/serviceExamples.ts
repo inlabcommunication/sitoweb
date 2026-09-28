@@ -2,11 +2,12 @@
 // servizio × città). Per aggiungere un lavoro basta aggiungere una voce qui.
 //
 //   site   → anteprima del sito in una cornice browser + link al sito
+//            (image: screenshot caricato a mano, altrimenti generato dall'URL)
 //   client → card che apre la scheda cliente (/cliente/<id>, dati da constants.ts)
 //   case   → card che apre il caso studio (/casi-studio/<id>)
 
 export type ServiceExample =
-  | { kind: 'site'; title: string; url: string; desc: string; tags?: string[]; caseStudy?: string }
+  | { kind: 'site'; title: string; url: string; desc: string; tags?: string[]; caseStudy?: string; image?: string }
   | { kind: 'client'; clientId: string }
   | { kind: 'case'; caseId: string; title: string; desc: string };
 

@@ -4,6 +4,7 @@
 // Nessun import di React qui: deve poter girare anche in Node.
 
 import { WEBSITE_CONTENT } from '../constants';
+import { getClientId } from '../lib/clientUtils';
 import { BLOG_SEED, type BlogPost } from '../data/blogSeed';
 
 /** Dominio del sito. Impostalo su Vercel con VITE_SITE_URL (es. https://www.inlabcommunication.it). */
@@ -48,12 +49,19 @@ export const SERVICES_SEO = [
     description: 'Branding e identità visiva: nome, logo, palette e tono di voce per un brand riconoscibile e coerente su ogni canale.' },
 ];
 
-const CASES = [
-  { id: 'paresteta', title: 'Paresteta: dal rebranding all\'inaugurazione',
-    description: 'Caso studio Paresteta: campagna in 5 fasi tra teaser, QR code, video lancio e attività offline per trasformare un cambio insegna in un evento locale.' },
-  { id: 'ricciardi', title: 'Studio Dentistico Ricciardi: sito web e lead generation',
-    description: 'Caso studio Studio Dentistico Ricciardi: nuovo sito Lumina, campagne di lead generation e social per trasformare la fiducia online in prenotazioni.' },
-];
+// Clienti e casi studio: predefiniti dal codice, sostituiti da quelli salvati in
+// dashboard quando disponibili (browser dopo il caricamento, build via REST).
+let siteClients: any[] = ((WEBSITE_CONTENT as any).clients?.items || []) as any[];
+let siteCases: any[] = ((WEBSITE_CONTENT as any).cases?.items || []) as any[];
+export const registerContent = (content: any) => {
+  if (Array.isArray(content?.clients?.items)) siteClients = content.clients.items;
+  if (Array.isArray(content?.cases?.items)) siteCases = content.cases.items;
+};
+const caseSeo = (c: any) => ({
+  id: String(c.id),
+  title: c.seoTitle || `${c.client}: ${c.title}`,
+  description: c.seoDescription || c.problem || c.hero?.intro || c.title || '',
+});
 
 export type Seo = {
   path: string;
@@ -124,7 +132,8 @@ export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filt
 export const getBlogPosts = () => blogPosts;
 const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
 
-const clients = () => ((WEBSITE_CONTENT as any).clients?.items || []) as any[];
+const clients = () => siteClients.filter((c) => c && c.name).map((c, i) => ({ ...c, id: getClientId(c, i) }));
+const cases = () => siteCases.filter((c) => c && c.id && c.client).map(caseSeo);
 
 const page = (path: string, title: string, description: string, extra: Partial<Seo> = {}, crumbs?: [string, string][]): Seo => {
   const desc = clip(description);
@@ -144,7 +153,7 @@ export const listRoutes = (): string[] => [
   '/', '/servizi', '/chi-siamo', '/casi-studio', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
   ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${c.toLowerCase()}`)),
-  ...CASES.map((c) => '/casi-studio/' + c.id),
+  ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
   '/blog',
   ...blogPosts.map((p) => '/blog/' + p.slug),
@@ -215,7 +224,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   if (path.startsWith('/casi-studio/')) {
-    const cs = CASES.find((c) => path === '/casi-studio/' + c.id);
+    const cs = cases().find((c) => path === '/casi-studio/' + c.id);
     if (cs) {
       return page(path, `${cs.title} | InLab`, cs.description, {
         sitemap: { priority: 0.7, changefreq: 'monthly' },

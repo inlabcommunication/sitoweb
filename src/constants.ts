@@ -3,6 +3,9 @@
  * Tutti i testi e contenuti del sito sono modificabili dalla dashboard.
  */
 
+import { DEFAULT_CASES } from './data/caseStudies';
+import { SERVICE_EXAMPLES } from './data/serviceExamples';
+
 export const WEBSITE_CONTENT = {
   brand: {
     name: "INLAB",
@@ -364,5 +367,8 @@ export const WEBSITE_CONTENT = {
     emails: [{ label: "Email", value: "inlab.communication@gmail.com" }],
     phones: [{ label: "Telefono", value: "+39 329 565 4319" }],
     location: "Castellaneta (TA), Puglia"
-  }
+  },
+  // Casi studio "Non solo contenuti" (pagine a blocchi) ed esempi per servizio
+  cases: { items: DEFAULT_CASES },
+  serviceExamples: SERVICE_EXAMPLES,
 };

@@ -2,6 +2,8 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { BrowserMockup } from '../components/BrowserMockup';
+import { ReelsGrid, Gallery } from '../components/ReelCard';
+import type { CaseBlock, CaseStudy } from '../data/caseStudies';
 
 // ──────────────────────────────────────────────────────────────
 // Componenti helper riutilizzabili tra le pagine caso studio
@@ -58,530 +60,262 @@ const Counter: React.FC<{ to: number; suffix?: string }> = ({ to, suffix = '' })
 };
 
 // ──────────────────────────────────────────────────────────────
-// Caso 1 — PARESTETA
+// Pagina caso studio a blocchi: mostra solo i blocchi compilati
 // ──────────────────────────────────────────────────────────────
 
-interface CasePageProps {
-  onBack: () => void;
-  onContact: () => void;
-}
+const Title: React.FC<{ b: { tag?: string; title?: string; titleAccent?: string }; italic?: boolean }> = ({ b, italic }) =>
+  (b.tag || b.title || b.titleAccent) ? (
+    <SectionTitle tag={b.tag || ''} title={<>{b.title}{b.title && b.titleAccent && <br />}{b.titleAccent && (italic
+      ? <span style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400, color: 'var(--a)', textTransform: 'none' }}>{b.titleAccent}</span>
+      : <span className="stroke">{b.titleAccent}</span>)}</>} />
+  ) : null;
 
-export const CaseParesteta: React.FC<CasePageProps> = ({ onBack, onContact }) => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
-  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+const Lead: React.FC<{ text?: string; mb?: string }> = ({ text, mb = '2.5rem' }) =>
+  text ? <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, maxWidth: 760, marginBottom: mb, whiteSpace: 'pre-line' }}>{text}</p> : null;
 
-  const phases = [
-    { n: '01', title: 'Prima — Il cambio insegna',     desc: 'Il rebranding da H28 a Paresteta richiedeva di non disperdere il pubblico esistente, ma di trasformarlo in attesa per qualcosa di nuovo.' },
-    { n: '02', title: 'Curiosità — Teaser e offline',  desc: 'Comunicazione divisa in fasi: teaser visivi sui social e attività di comunicazione locale per generare attenzione prima dell\'apertura.' },
-    { n: '03', title: 'Raccolta lead — QR code',       desc: 'QR code dedicati per intercettare contatti e costruire una base di pubblico interessata fin dal lancio.' },
-    { n: '04', title: 'Lancio — Contenuti social e video', desc: 'Video lancio e contenuti progressivi per portare il pubblico digitale verso il momento fisico dell\'inaugurazione.' },
-    { n: '05', title: 'Evento — Inaugurazione',         desc: 'Comunicazione integrata online e offline il giorno dell\'apertura: presenza in città e amplificazione digitale.' },
-    { n: '06', title: 'Risultato — Attenzione e brand', desc: 'Curiosità, partecipazione fisica e percezione del brand cresciuti in modo coordinato.' },
-  ];
+const Section: React.FC<{ children: React.ReactNode; glow?: boolean }> = ({ children, glow }) => (
+  <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
+    {glow && <div style={{ position: 'absolute', top: '50%', left: '50%', width: 600, height: 600, transform: 'translate(-50%, -50%)', background: 'rgba(205,178,255,0.04)', borderRadius: '50%', filter: 'blur(120px)', pointerEvents: 'none' }} />}
+    <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1 }}>{children}</div>
+  </section>
+);
 
-  return (
-    <>
-      {/* HERO scenografico */}
-      <section ref={heroRef} style={{
-        minHeight: '90vh',
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: '8rem 2rem 4rem',
-        overflow: 'hidden',
-        borderBottom: '.5px solid var(--b)',
-      }}>
-        <motion.div style={{
-          position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 70% 30%, rgba(205,178,255,0.18) 0%, transparent 50%), linear-gradient(135deg, #1e1d1d 0%, #2a1f3d 100%)',
-          y: heroY,
-          opacity: heroOpacity,
-        }} />
+const fadeUp = (i = 0) => ({
+  initial: { opacity: 0, y: 16 }, whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-40px' }, transition: { duration: 0.5, delay: Math.min(i, 8) * 0.05 },
+});
 
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', width: '100%' }}>
-          <div style={{ marginBottom: '2rem' }}>
-            <CaseHeroBack onBack={onBack} />
-          </div>
+const StatValue: React.FC<{ value: string }> = ({ value }) => {
+  const m = value.trim().match(/^(\d{1,9})(\+?)$/);
+  return m ? <Counter to={Number(m[1])} suffix={m[2]} /> : <>{value}</>;
+};
 
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="section-label"
-            style={{ marginBottom: '1rem' }}
-          >Caso 01 — Eventi · Branding · Lead generation</motion.p>
+const safeUrl = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.8 }}
-            style={{
-              fontFamily: 'var(--fd)',
-              fontSize: 'clamp(3rem, 9vw, 9rem)',
-              lineHeight: 0.85,
-              textTransform: 'uppercase',
-              marginBottom: '1.5rem',
-              letterSpacing: '-0.01em',
-            }}
-          >PARESTETA</motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5 }}
-            style={{
-              fontFamily: 'var(--fs)',
-              fontStyle: 'italic',
-              fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)',
-              color: 'var(--a)',
-              maxWidth: 720,
-              lineHeight: 1.3,
-              marginBottom: '1.5rem',
-            }}
-          >Dal rebranding all'inaugurazione.</motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            style={{
-              fontSize: 16,
-              color: 'var(--m)',
-              maxWidth: 640,
-              lineHeight: 1.7,
-            }}
-          >
-            Una strategia integrata online e offline per trasformare un cambio insegna in un evento locale.
-          </motion.p>
-        </div>
-      </section>
-
-      {/* OBIETTIVO + STRATEGIA */}
-      <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '5rem' }} className="grid-1-mob">
-          <SectionTitle tag="Obiettivo" title={<>L'INSEGNA<br /><span className="stroke">DIVENTA EVENTO.</span></>} />
-          <div>
-            <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, marginBottom: '2rem' }}>
-              Accompagnare il passaggio da H28 a Paresteta, generando attenzione prima dell'apertura e portando persone fisicamente in negozio nel giorno dell'inaugurazione.
-            </p>
-            <div style={{
-              padding: '1.5rem',
-              background: 'rgba(205,178,255,0.05)',
-              border: '.5px solid rgba(205,178,255,0.2)',
-              borderRadius: 18,
-            }}>
-              <p className="section-label" style={{ marginBottom: 8, color: 'var(--a)' }}>Strategia</p>
-              <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75 }}>
-                Una campagna divisa in più fasi: teaser iniziale, QR code per la raccolta lead, contenuti social progressivi, video di lancio, attività offline e comunicazione locale.
-              </p>
+const Block: React.FC<{ b: CaseBlock; name: string }> = ({ b, name }) => {
+  switch (b.type) {
+    case 'text':
+      if (!b.body && !b.boxBody) return null;
+      return (
+        <Section>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '5rem' }} className="grid-1-mob">
+            <Title b={b} />
+            <div>
+              {b.body && <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, marginBottom: b.boxBody ? '2rem' : 0, whiteSpace: 'pre-line' }}>{b.body}</p>}
+              {b.boxBody && (
+                <div style={{ padding: '1.5rem', background: 'rgba(205,178,255,0.05)', border: '.5px solid rgba(205,178,255,0.2)', borderRadius: 18 }}>
+                  {b.boxTitle && <p className="section-label" style={{ marginBottom: 8, color: 'var(--a)' }}>{b.boxTitle}</p>}
+                  <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, whiteSpace: 'pre-line' }}>{b.boxBody}</p>
+                </div>
+              )}
             </div>
           </div>
-        </div>
-      </section>
+        </Section>
+      );
 
-      {/* TIMELINE NARRATIVA */}
-      <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto' }}>
-          <SectionTitle tag="Il racconto" title={<>SEI FASI,<br /><span className="stroke">UNA STORIA.</span></>} />
-
+    case 'timeline': {
+      const items = (b.items || []).filter((x) => x.title);
+      if (!items.length) return null;
+      return (
+        <Section>
+          <Title b={b} />
           <div style={{ position: 'relative', paddingLeft: 30, marginTop: '3rem' }}>
-            <div style={{
-              position: 'absolute', left: 29, top: 0, bottom: 0, width: 1,
-              background: 'linear-gradient(180deg, var(--a) 0%, rgba(205,178,255,0.1) 100%)',
-            }} />
-            {phases.map((ph, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-                style={{ position: 'relative', paddingLeft: 50, paddingBottom: '2.5rem' }}
-              >
-                <div style={{
-                  position: 'absolute', left: -1, top: 0,
-                  width: 60, height: 60, borderRadius: '50%',
-                  background: 'var(--bg)',
-                  border: '.5px solid rgba(205,178,255,0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontFamily: 'var(--fd)', fontSize: 18, color: 'var(--a)',
-                }}>{ph.n}</div>
-
-                <h3 style={{
-                  fontFamily: 'var(--fd)',
-                  fontSize: 'clamp(1.4rem, 2.2vw, 2rem)',
-                  lineHeight: 1,
-                  textTransform: 'uppercase',
-                  marginBottom: 10,
-                  marginTop: 14,
-                }}>{ph.title}</h3>
-                <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.75, maxWidth: 580 }}>{ph.desc}</p>
+            <div style={{ position: 'absolute', left: 29, top: 0, bottom: 0, width: 1, background: 'linear-gradient(180deg, var(--a) 0%, rgba(205,178,255,0.1) 100%)' }} />
+            {items.map((ph, i) => (
+              <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-80px' }}
+                transition={{ duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }} style={{ position: 'relative', paddingLeft: 50, paddingBottom: '2.5rem' }}>
+                <div style={{ position: 'absolute', left: -1, top: 0, width: 60, height: 60, borderRadius: '50%', background: 'var(--bg)', border: '.5px solid rgba(205,178,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--fd)', fontSize: 18, color: 'var(--a)' }}>
+                  {String(i + 1).padStart(2, '0')}
+                </div>
+                <h3 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(1.4rem, 2.2vw, 2rem)', lineHeight: 1, textTransform: 'uppercase', marginBottom: 10, marginTop: 14 }}>{ph.title}</h3>
+                {ph.desc && <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.75, maxWidth: 580 }}>{ph.desc}</p>}
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </Section>
+      );
+    }
 
-      {/* COSA ABBIAMO REALIZZATO */}
-      <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto' }}>
-          <SectionTitle tag="Cosa abbiamo realizzato" title={<>OGNI ELEMENTO<br /><span className="stroke">DI UN LANCIO.</span></>} />
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-            gap: 12,
-            marginTop: '2rem',
-          }}>
-            {[
-              'Concept creativo del lancio',
-              'Comunicazione social',
-              'Contenuti teaser',
-              'Video di lancio',
-              'Strategia QR code',
-              'Raccolta contatti',
-              'Attività offline in città',
-              'Supporto comunicazione inaugurazione',
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: i * 0.04 }}
-                style={{
-                  padding: '1.2rem 1.5rem',
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '.5px solid var(--b)',
-                  borderRadius: 14,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 12,
-                }}
-              >
-                <span style={{
-                  width: 24, height: 24, borderRadius: '50%',
-                  background: 'rgba(205,178,255,0.12)',
-                  border: '.5px solid rgba(205,178,255,0.3)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0,
-                  color: 'var(--a)',
-                }}>
-                  <Check size={12} />
-                </span>
+    case 'checklist': {
+      const items = (b.items || []).filter(Boolean);
+      if (!items.length) return null;
+      return (
+        <Section>
+          <Title b={b} />
+          <div style={{ display: 'grid', gridTemplateColumns: `repeat(auto-fit, minmax(${b.numbered ? 260 : 240}px, 1fr))`, gap: 12, marginTop: '2rem' }}>
+            {items.map((item, i) => b.numbered ? (
+              <motion.div key={i} {...fadeUp(i)} style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.02)', border: '.5px solid var(--b)', borderRadius: 16 }}>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: 24, color: 'var(--a)', marginBottom: 8 }}>{String(i + 1).padStart(2, '0')}</div>
+                <p style={{ fontSize: 14, color: 'var(--t)' }}>{item}</p>
+              </motion.div>
+            ) : (
+              <motion.div key={i} {...fadeUp(i)} style={{ padding: '1.2rem 1.5rem', background: 'rgba(255,255,255,0.02)', border: '.5px solid var(--b)', borderRadius: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(205,178,255,0.12)', border: '.5px solid rgba(205,178,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--a)' }}><Check size={12} /></span>
                 <span style={{ fontSize: 14, color: 'var(--t)' }}>{item}</span>
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </Section>
+      );
+    }
 
-      {/* RISULTATI con counter */}
-      <section style={{ padding: '8rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
-        <div style={{
-          position: 'absolute', top: '50%', left: '50%',
-          width: 600, height: 600, transform: 'translate(-50%, -50%)',
-          background: 'rgba(205,178,255,0.04)', borderRadius: '50%', filter: 'blur(120px)',
-          pointerEvents: 'none',
-        }} />
-
-        <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          <SectionTitle tag="Risultato" title={<>UN CAMBIO INSEGNA<br /><span style={{
-            fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400, color: 'var(--a)',
-          }}>diventato esperienza.</span></>} />
-
-          <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, maxWidth: 720, marginBottom: '3.5rem' }}>
-            Una campagna capace di trasformare un semplice cambio insegna in un vero evento locale, aumentando curiosità, partecipazione e percezione del brand.
-          </p>
-
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: 16,
-          }}>
-            {[
-              { num: 200, suffix: '+',  label: 'Contatti raccolti' },
-              { num: 100000, suffix: '+', label: 'Visualizzazioni' },
-              { num: null, custom: 'Crescita', label: 'Social del brand' },
-              { num: null, custom: 'Evento', label: 'Locale trasformato in esperienza' },
-            ].map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-30px' }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
-                style={{
-                  padding: '2rem 1.5rem',
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '.5px solid var(--b)',
-                  borderRadius: 18,
-                }}
-              >
-                <div style={{
-                  fontFamily: 'var(--fd)',
-                  fontSize: 'clamp(2.2rem, 4vw, 3.5rem)',
-                  lineHeight: 1,
-                  color: i === 0 || i === 1 ? 'var(--a)' : 'var(--t)',
-                  marginBottom: 8,
-                }}>
-                  {s.num !== null ? <Counter to={s.num} suffix={s.suffix} /> : s.custom}
-                </div>
-                <p style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--m)', lineHeight: 1.4 }}>
-                  {s.label}
-                </p>
+    case 'steps': {
+      const items = (b.items || []).filter((x) => x.title);
+      if (!items.length) return null;
+      const hi = Math.min(2, items.length - 1);
+      return (
+        <Section>
+          <Title b={b} />
+          <Lead text={b.body} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 12 }}>
+            {items.map((f, i) => (
+              <motion.div key={i} {...fadeUp(i)} style={{ padding: '1.6rem', background: i === hi ? 'rgba(205,178,255,0.08)' : 'rgba(255,255,255,0.02)', border: i === hi ? '.5px solid rgba(205,178,255,0.3)' : '.5px solid var(--b)', borderRadius: 16 }}>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: 24, color: 'var(--a)', marginBottom: 6 }}>{String(i + 1).padStart(2, '0')}</div>
+                <p style={{ fontFamily: 'var(--fd)', fontSize: 22, letterSpacing: '.03em', marginBottom: 8 }}>{f.title}</p>
+                {f.desc && <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7 }}>{f.desc}</p>}
               </motion.div>
             ))}
           </div>
+        </Section>
+      );
+    }
 
-          <p style={{
-            marginTop: '2rem',
-            fontSize: 11,
-            color: 'rgba(255,255,255,0.2)',
-            fontStyle: 'italic',
-            textAlign: 'center',
-          }}>
-            {/* TODO: metriche placeholder, da confermare prima della pubblicazione */}
-            Metriche indicative — da confermare prima della pubblicazione.
-          </p>
-        </div>
-      </section>
+    case 'website': {
+      const url = safeUrl(b.url);
+      if (!url) return null;
+      const pages = (b.pages || []).filter((p) => safeUrl(p.url) && p.label);
+      return (
+        <Section>
+          <Title b={b} />
+          <Lead text={b.body} mb="3rem" />
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}>
+            <BrowserMockup url={url} label={`il sito ${url.replace(/^https?:\/\//, '').replace(/\/$/, '')}`} image={safeUrl(b.image)} />
+          </motion.div>
+          {pages.length > 0 && (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginTop: 24 }}>
+              {pages.map((pg, i) => (
+                <motion.div key={i} {...fadeUp(i)}>
+                  <BrowserMockup url={pg.url} label={pg.label} w={1280} h={900} />
+                  <p style={{ fontFamily: 'var(--fd)', fontSize: 20, letterSpacing: '.03em', margin: '1rem 0 .4rem' }}>{pg.label}</p>
+                  {pg.text && <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7 }}>{pg.text}</p>}
+                </motion.div>
+              ))}
+            </div>
+          )}
+          <div style={{ marginTop: '2rem' }}>
+            <a className="btn btn-g" href={url} target="_blank" rel="noopener noreferrer">Visita il sito <ArrowUpRight size={13} /></a>
+          </div>
+        </Section>
+      );
+    }
 
-      <CTABottom onClick={onContact} />
-    </>
-  );
+    case 'stats': {
+      const items = (b.items || []).filter((x) => x.value || x.label);
+      if (!items.length && !b.body) return null;
+      return (
+        <Section glow>
+          <Title b={b} italic />
+          <Lead text={b.body} mb="3.5rem" />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(190px, 1fr))', gap: 16 }}>
+            {items.map((s, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-30px' }} transition={{ duration: 0.6, delay: i * 0.08 }}
+                style={{ padding: '2rem 1.5rem', background: 'rgba(255,255,255,0.02)', border: '.5px solid var(--b)', borderRadius: 18 }}>
+                <div style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', lineHeight: 1, color: i < 2 ? 'var(--a)' : 'var(--t)', marginBottom: 8 }}>
+                  <StatValue value={s.value} />
+                </div>
+                <p style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--m)', lineHeight: 1.4 }}>{s.label}</p>
+              </motion.div>
+            ))}
+          </div>
+          {b.note && <p style={{ marginTop: '2rem', fontSize: 11, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic', textAlign: 'center' }}>{b.note}</p>}
+        </Section>
+      );
+    }
+
+    case 'reels': {
+      const items = (b.items || []).filter((r) => safeUrl(r.video) || safeUrl(r.instagram));
+      if (!items.length) return null;
+      return (
+        <Section>
+          <Title b={b} />
+          <div style={{ marginTop: '2rem' }}><ReelsGrid reels={items} /></div>
+        </Section>
+      );
+    }
+
+    case 'gallery': {
+      const images = (b.images || []).filter((u) => safeUrl(u));
+      if (!images.length) return null;
+      return (
+        <Section>
+          <Title b={b} />
+          <div style={{ marginTop: '2rem' }}><Gallery images={images} alt={name} /></div>
+        </Section>
+      );
+    }
+
+    case 'quote':
+      if (!b.text) return null;
+      return (
+        <Section>
+          <motion.blockquote {...fadeUp()} style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
+            <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.5rem, 3vw, 2.4rem)', lineHeight: 1.35, color: 'var(--t)' }}>“{b.text}”</p>
+            {b.author && <footer style={{ marginTop: '1.5rem', fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--a)' }}>— {b.author}</footer>}
+          </motion.blockquote>
+        </Section>
+      );
+  }
+  return null;
 };
 
-// ──────────────────────────────────────────────────────────────
-// Caso 2 — STUDIO RICCIARDI
-// ──────────────────────────────────────────────────────────────
+interface CasePageProps {
+  cs: CaseStudy;
+  onBack: () => void;
+  onContact: () => void;
+  onClient?: (id: string) => void;
+}
 
-export const CaseRicciardi: React.FC<CasePageProps> = ({ onBack, onContact }) => {
-  const SITE = 'https://luminaricciardi.it/';
-  const actions = [
-    'Sito web luminaricciardi.it',
-    'Pagine dedicate ai trattamenti',
-    'Campagne di lead generation',
-    'Piano editoriale',
-    'Contenuti social e caroselli informativi',
-    'Gestione recensioni',
-    'Copywriting',
-    'Brand Lumina',
-  ];
-  const pages = [
-    { url: SITE + 'servizi/', label: 'Servizi', text: 'Tutti i trattamenti in un unico punto: dalla prevenzione all\'estetica, spiegati in modo semplice per aiutare il paziente a orientarsi.' },
-    { url: SITE + 'about/', label: 'Lo Studio', text: 'Lo studio, il team e l\'approccio Lumina: più di una visita, un\'esperienza di cura che costruisce fiducia prima del primo appuntamento.' },
-    { url: SITE + 'implantologia-computer-guidata/', label: 'Implantologia computer guidata', text: 'Pagine verticali sui trattamenti ad alto valore, pensate come landing: spiegano il percorso e portano alla richiesta di una visita.' },
-  ];
-  const funnel = [
-    { t: 'Attenzione', d: 'Contenuti social educativi, recensioni e campagne mirate intercettano chi cerca un dentista in zona.' },
-    { t: 'Approfondimento', d: 'Il traffico arriva sul sito e sulle pagine dei trattamenti, dove trova risposte chiare e rassicuranti.' },
-    { t: 'Contatto', d: 'Inviti all\'azione chiari trasformano l\'interesse in una richiesta di appuntamento.' },
-    { t: 'Fiducia', d: 'Recensioni e contenuti costanti mantengono viva la relazione e rafforzano la reputazione dello studio.' },
-  ];
+export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onClient }) => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const heroOpacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
+  const hero = cs.hero || {};
+  const heroImage = safeUrl(hero.image || cs.cover);
+  const cta = safeUrl(hero.ctaUrl);
 
   return (
     <>
-      <section style={{
-        minHeight: '85vh',
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
-        padding: '8rem 2rem 4rem',
-        overflow: 'hidden',
-        borderBottom: '.5px solid var(--b)',
-      }}>
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse at 50% 70%, rgba(205,178,255,0.1) 0%, transparent 50%), linear-gradient(135deg, #1e1d1d 0%, #28232f 100%)',
-        }} />
-
+      <section ref={heroRef} style={{ minHeight: '88vh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '8rem 2rem 4rem', overflow: 'hidden', borderBottom: '.5px solid var(--b)' }}>
+        <motion.div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 30%, rgba(205,178,255,0.18) 0%, transparent 50%), linear-gradient(135deg, #1e1d1d 0%, #2a1f3d 100%)', y: heroY, opacity: heroOpacity }} />
+        {heroImage && (
+          <>
+            <motion.img src={heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, y: heroY }} />
+            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(30,29,29,1) 0%, rgba(30,29,29,.6) 50%, rgba(30,29,29,.25) 100%)' }} />
+          </>
+        )}
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '2rem' }}><CaseHeroBack onBack={onBack} /></div>
-          <p className="section-label" style={{ marginBottom: '1rem' }}>Caso 02 — Sito web · Lead generation · Social</p>
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            style={{
-              fontFamily: 'var(--fd)',
-              fontSize: 'clamp(2.5rem, 7vw, 7rem)',
-              lineHeight: 0.85,
-              textTransform: 'uppercase',
-              marginBottom: '1.5rem',
-            }}
-          >STUDIO DENTISTICO<br />RICCIARDI</motion.h1>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            style={{
-              fontFamily: 'var(--fs)',
-              fontStyle: 'italic',
-              fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)',
-              color: 'var(--a)',
-              maxWidth: 720,
-              marginBottom: '1.5rem',
-            }}
-          >Lumina: dalla fiducia online alle prenotazioni.</motion.p>
-          <p style={{ fontSize: 16, color: 'var(--m)', maxWidth: 640, lineHeight: 1.7, marginBottom: '2rem' }}>
-            Un progetto completo per lo studio del Dott. Francesco Ricciardi a Palagiano: il nuovo sito Lumina, campagne di lead generation e una comunicazione social chiara, professionale e rassicurante.
-          </p>
-          <a className="btn btn-p" href={SITE} target="_blank" rel="noreferrer">
-            Visita luminaricciardi.it <ArrowUpRight size={14} />
-          </a>
-        </div>
-      </section>
-
-      <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: '5rem' }} className="grid-1-mob">
-          <SectionTitle tag="Obiettivo" title={<>AFFIDABILITÀ<br /><span className="stroke">PERCEPITA.</span></>} />
-          <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85 }}>
-            Aumentare la percezione di affidabilità dello studio e trasformarla in richieste concrete: un sito che presenta trattamenti e team in modo professionale, campagne che portano pazienti in target e contenuti che costruiscono fiducia prima ancora del primo appuntamento.
-          </p>
-        </div>
-      </section>
-
-      {/* IL SITO */}
-      <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto' }}>
-          <SectionTitle tag="Il sito web" title={<>LUMINARICCIARDI.IT<br /><span className="stroke">UNO STUDIO CHE SI MOSTRA.</span></>} />
-          <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, maxWidth: 760, marginBottom: '3rem' }}>
-            Abbiamo progettato il nuovo sito dello studio attorno al brand <span style={{ color: 'var(--a)' }}>Lumina</span>: un'identità più calda e contemporanea, pagine chiare per ogni trattamento, lo studio e il team raccontati con cura, e contatti sempre a portata di mano per prenotare una visita.
-          </p>
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.7 }}>
-            <BrowserMockup url={SITE} label="la home di luminaricciardi.it" />
-          </motion.div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 20, marginTop: 24 }}>
-            {pages.map((pg, i) => (
-              <motion.div key={pg.url} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.5, delay: i * 0.08 }}>
-                <BrowserMockup url={pg.url} label={pg.label} w={1280} h={900} />
-                <p style={{ fontFamily: 'var(--fd)', fontSize: 20, letterSpacing: '.03em', margin: '1rem 0 .4rem' }}>{pg.label}</p>
-                <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7 }}>{pg.text}</p>
-              </motion.div>
-            ))}
+          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="section-label" style={{ marginBottom: '1rem' }}>
+            {hero.label || [`Caso ${cs.number || ''}`.trim(), cs.category].filter(Boolean).join(' — ')}
+          </motion.p>
+          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8 }}
+            style={{ fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
+            {hero.title || cs.client}
+          </motion.h1>
+          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
+            style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', color: 'var(--a)', maxWidth: 720, lineHeight: 1.3, marginBottom: '1.5rem' }}>
+            {hero.subtitle || cs.title}
+          </motion.p>
+          {hero.intro && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} style={{ fontSize: 16, color: 'var(--m)', maxWidth: 640, lineHeight: 1.7, marginBottom: '2rem' }}>{hero.intro}</motion.p>}
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            {cta && <a className="btn btn-p" href={cta} target="_blank" rel="noopener noreferrer">{hero.ctaLabel || 'Visita il sito'} <ArrowUpRight size={14} /></a>}
+            {cs.clientId && onClient && <a className="btn btn-g" href={`/cliente/${cs.clientId}`} onClick={(e) => { if (e.metaKey || e.ctrlKey) return; e.preventDefault(); onClient(cs.clientId!); }}>Scheda cliente <ArrowRight size={13} /></a>}
           </div>
         </div>
       </section>
 
-      {/* LEAD GENERATION */}
-      <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto' }}>
-          <SectionTitle tag="Lead generation" title={<>DAL FEED<br /><span className="stroke">ALLA POLTRONA.</span></>} />
-          <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, maxWidth: 760, marginBottom: '2.5rem' }}>
-            Sito, social e campagne lavorano insieme come un unico percorso: ogni contenuto ha il compito di portare la persona un passo più vicina alla richiesta di appuntamento.
-          </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: 12 }}>
-            {funnel.map((f, i) => (
-              <motion.div key={f.t} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }} transition={{ duration: 0.5, delay: i * 0.06 }}
-                style={{ padding: '1.6rem', background: i === 2 ? 'rgba(205,178,255,0.08)' : 'rgba(255,255,255,0.02)', border: i === 2 ? '.5px solid rgba(205,178,255,0.3)' : '.5px solid var(--b)', borderRadius: 16 }}>
-                <div style={{ fontFamily: 'var(--fd)', fontSize: 24, color: 'var(--a)', marginBottom: 6 }}>{String(i + 1).padStart(2, '0')}</div>
-                <p style={{ fontFamily: 'var(--fd)', fontSize: 22, letterSpacing: '.03em', marginBottom: 8 }}>{f.t}</p>
-                <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7 }}>{f.d}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto' }}>
-          <SectionTitle tag="Cosa abbiamo realizzato" title={<>UN PROGETTO<br /><span className="stroke">A 360 GRADI.</span></>} />
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: 12,
-            marginTop: '2rem',
-          }}>
-            {actions.map((a, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-40px' }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                style={{
-                  padding: '1.5rem',
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '.5px solid var(--b)',
-                  borderRadius: 16,
-                }}
-              >
-                <div style={{
-                  fontFamily: 'var(--fd)',
-                  fontSize: 24,
-                  color: 'var(--a)',
-                  marginBottom: 8,
-                }}>{String(i + 1).padStart(2, '0')}</div>
-                <p style={{ fontSize: 14, color: 'var(--t)' }}>{a}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section style={{ padding: '8rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <div style={{ maxWidth: 1120, margin: '0 auto' }}>
-          <SectionTitle tag="Risultato" title={<>UNO STUDIO<br /><span style={{
-            fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400, color: 'var(--a)',
-          }}>che ispira fiducia.</span></>} />
-          <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, marginBottom: '3rem', maxWidth: 720 }}>
-            Un sito che presenta lo studio al meglio, un flusso costante di richieste di appuntamento e una percezione del brand più solida nel territorio.
-          </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-            gap: 16,
-          }}>
-            {[
-              { num: 30000, suffix: '+', label: 'Persone raggiunte' },
-              { num: null, custom: '★ 4.9', label: 'Reputazione online' },
-              { num: null, custom: '↑', label: 'Engagement contenuti' },
-              { num: null, custom: 'Più', label: 'Richieste appuntamento' },
-            ].map((s, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
-                style={{
-                  padding: '2rem 1.5rem',
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '.5px solid var(--b)',
-                  borderRadius: 18,
-                }}
-              >
-                <div style={{
-                  fontFamily: 'var(--fd)',
-                  fontSize: 'clamp(2.2rem, 4vw, 3.2rem)',
-                  lineHeight: 1,
-                  color: i === 0 || i === 1 ? 'var(--a)' : 'var(--t)',
-                  marginBottom: 8,
-                }}>
-                  {s.num !== null ? <Counter to={s.num} suffix={s.suffix} /> : s.custom}
-                </div>
-                <p style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--m)' }}>
-                  {s.label}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-          <p style={{
-            marginTop: '2rem',
-            fontSize: 11,
-            color: 'rgba(255,255,255,0.2)',
-            fontStyle: 'italic',
-            textAlign: 'center',
-          }}>
-            {/* TODO: metriche placeholder */}
-            Metriche indicative — da confermare prima della pubblicazione.
-          </p>
-        </div>
-      </section>
+      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} />)}
 
       <CTABottom onClick={onContact} />
     </>

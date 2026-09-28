@@ -3,7 +3,7 @@
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
-import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, SITE_URL } from '../src/seo/routes';
+import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SITE_URL } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -51,6 +51,23 @@ const fromValue = (v: any): any => {
   return undefined;
 };
 
+// Contenuti salvati dalla dashboard (documento pubblico app/site_content):
+// dalla versione 3 elenco clienti e casi studio salvati sono quelli definitivi.
+async function fetchSiteContent() {
+  const project = process.env.VITE_FIREBASE_PROJECT_ID;
+  const key = process.env.VITE_FIREBASE_API_KEY;
+  if (!project || !key) return null;
+  try {
+    const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents/app/site_content?key=${encodeURIComponent(key)}`, { signal: AbortSignal.timeout(10000) });
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const doc = (await r.json()) as any;
+    return Object.fromEntries(Object.entries(doc.fields || {}).map(([k, v]) => [k, fromValue(v)])) as any;
+  } catch (e) {
+    console.warn('[prerender] contenuti dashboard non caricati:', (e as Error).message);
+    return null;
+  }
+}
+
 async function fetchRemotePosts() {
   const project = process.env.VITE_FIREBASE_PROJECT_ID;
   const key = process.env.VITE_FIREBASE_API_KEY;
@@ -80,6 +97,11 @@ async function fetchRemotePosts() {
 }
 
 async function main() {
+const saved = await fetchSiteContent();
+if (saved && saved.schemaVersion >= 3) {
+  registerContent(saved);
+  console.log(`[prerender] contenuti dashboard: ${saved.clients?.items?.length ?? 0} clienti, ${saved.cases?.items?.length ?? 0} casi studio`);
+}
 const remotePosts = await fetchRemotePosts();
 registerBlogPosts(mergePosts(BLOG_SEED, remotePosts));
 console.log(`[prerender] blog: ${remotePosts.length} articoli da Firestore`);
