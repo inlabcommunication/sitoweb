@@ -90,6 +90,10 @@ export const organizationJsonLd = () => ({
   '@id': `${SITE_URL}/#organization`,
   name: BRAND,
   description: 'Agenzia di comunicazione con sede a Castellaneta (Taranto): gestione social, video e reel, Meta Ads, siti web, branding e automazioni AI per aziende in Puglia e non solo.',
+  // Distingue l'agenzia da realtà con nomi simili (Google e i sistemi AI le confondevano)
+  disambiguatingDescription: 'InLab Communication è l\'agenzia di comunicazione di Castellaneta, in provincia di Taranto (Puglia), fondata da Nicola Carpignano e Ilaria Gemma. Non è collegata ad altre agenzie con nomi simili in altre città, come InLab Comunicazione di Forlì.',
+  founder: [{ '@type': 'Person', name: 'Nicola Carpignano' }, { '@type': 'Person', name: 'Ilaria Gemma' }],
+  knowsLanguage: 'it',
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/icon-512.png`,
   image: abs(DEFAULT_OG_IMAGE),
