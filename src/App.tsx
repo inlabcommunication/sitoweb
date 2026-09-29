@@ -2207,8 +2207,9 @@ const renderPage = (info) => {
 /* ═══════════════════════════════════════════════════════════════
    APP
 ═══════════════════════════════════════════════════════════════ */
-export default function App() {
-  const [route,setRoute]=useState(getCurrentPath);
+export default function App({ ssrPath }: { ssrPath?: string } = {}) {
+  // ssrPath: usato solo in fase di build per generare l'HTML statico di ogni pagina
+  const [route,setRoute]=useState(() => ssrPath ?? getCurrentPath());
 
   useEffect(() => {
     loadContent();
@@ -2257,8 +2258,8 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
       <Footer/>
-      <Chatbot/>
-      <CookieBanner/>
+      {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
+      {ssrPath === undefined && <><Chatbot/><CookieBanner/></>}
     </RouterCtx.Provider>
   );
 }

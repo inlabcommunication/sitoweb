@@ -3,6 +3,7 @@
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SITE_URL } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
@@ -27,7 +28,7 @@ const GSC = (() => {
 })();
 if (process.env.VITE_GSC_VERIFICATION && !GSC) console.warn('[prerender] VITE_GSC_VERIFICATION non valido: ignorato');
 
-const render = (path: string) => {
+const render = (path: string, body = '') => {
   const seo = getSeo(path);
   let html = template.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(seo.title)}</title>`);
   html = setAttr(html, /(<meta name="description" content=")[^"]*"/, seo.description);
@@ -44,6 +45,7 @@ const render = (path: string) => {
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
+  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
   return html.replace('</head>', `    ${gsc}${pageLd}\n  </head>`);
 };
 
@@ -114,16 +116,38 @@ if (saved && saved.schemaVersion >= 3) {
   console.log(`[prerender] contenuti dashboard: ${saved.clients?.items?.length ?? 0} clienti, ${saved.cases?.items?.length ?? 0} casi studio`);
 }
 const remotePosts = await fetchRemotePosts();
-registerBlogPosts(mergePosts(BLOG_SEED, remotePosts));
+const posts = mergePosts(BLOG_SEED, remotePosts);
+registerBlogPosts(posts);
 console.log(`[prerender] blog: ${remotePosts.length} articoli da Firestore`);
+
+// Testo delle pagine nell'HTML statico (per motori di ricerca e sistemi AI):
+// stesso codice React del sito, compilato da `vite build --ssr`. Se il
+// rendering di una pagina fallisce, la pagina viene scritta come prima
+// (senza testo) e il build continua: il sito non si blocca mai per questo.
+type Ssr = { renderPage: (p: string) => Promise<string>; primeContent: (c: any) => void; primeBlogPosts: (p: any[]) => void };
+let ssr: Ssr | null = null;
+try {
+  ssr = await import(pathToFileURL(join(process.cwd(), 'dist-ssr', 'entry-server.mjs')).href) as Ssr;
+  if (saved) ssr.primeContent(saved);
+  ssr.primeBlogPosts(posts);
+} catch (e) {
+  console.warn('[prerender] HTML statico non disponibile, pagine senza testo:', (e as Error).message);
+}
+let ssrFailed = 0;
+const body = async (path: string) => {
+  if (!ssr) return '';
+  try { return await ssr.renderPage(path); }
+  catch (e) { ssrFailed++; console.warn(`[prerender] testo non generato per ${path}:`, (e as Error).message); return ''; }
+};
 
 const routes = listRoutes();
 for (const path of routes) {
   // cleanUrls di Vercel: /servizi → servizi.html, /casi-studio/paresteta → casi-studio/paresteta.html
   const file = path === '/' ? join(DIST, 'index.html') : join(DIST, `${path.slice(1)}.html`);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, render(path));
+  writeFileSync(file, render(path, await body(path)));
 }
+console.log(`[prerender] HTML statico: ${ssr ? routes.length - ssrFailed : 0}/${routes.length} pagine con testo`);
 
 // Pagine senza HTML dedicato: /admin (dashboard) e 404.html come riserva per
 // indirizzi sconosciuti. Entrambe caricano l'app, che mostra la pagina giusta,
@@ -132,7 +156,8 @@ const noindex = (html: string, title: string) => html
   .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`)
   .replace(/(<meta name="robots" content=")[^"]*"/, '$1noindex, nofollow"');
 writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
-writeFileSync(join(DIST, '404.html'), noindex(template, 'InLab Communication'));
+writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | InLab Communication')
+  .replace('<div id="root"></div>', `<div id="root">${await body('/__pagina-non-trovata__')}</div>`));
 
 // lastmod solo dove la data è reale (articoli del blog): Google ignora le date
 // che cambiano a ogni build senza che la pagina cambi.
