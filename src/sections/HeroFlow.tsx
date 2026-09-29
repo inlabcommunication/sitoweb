@@ -311,7 +311,7 @@ interface HeroFlowProps {
 
 export const HeroFlow: React.FC<HeroFlowProps> = ({
   onPrimaryCta, onSecondaryCta,
-  tag = 'Laboratorio creativo — Castellaneta, Puglia',
+  tag = 'Agenzia di comunicazione a Castellaneta (TA): social, video, siti e Meta Ads',
   headlineLine1 = 'Non ti servono',
   headlineLine2 = 'solo contenuti.',
   description = 'InLab Communication crea strategie, foto, video, reel e campagne digitali per aziende, professionisti e attività locali che vogliono distinguersi davvero.',
@@ -352,10 +352,11 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
 
         {/* Copy */}
         <div>
-          <motion.div
+          {/* H1 della pagina (per Google): l'etichetta con servizio e città, stesso aspetto di prima */}
+          <motion.h1
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: reduced ? 0 : 0.05 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '.5px solid var(--b)', borderRadius: 100, padding: '5px 14px 5px 5px', marginBottom: '2rem' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '.5px solid var(--b)', borderRadius: 100, padding: '5px 14px 5px 5px', marginBottom: '2rem', fontSize: 10, fontWeight: 500, lineHeight: 'normal' }}
           >
             <span style={{ width: 20, height: 20, background: 'var(--a)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <MapPin size={10} color="#000" />
@@ -363,9 +364,10 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             <span style={{ fontSize: 10, fontWeight: 500, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)' }}>
               {tag}
             </span>
-          </motion.div>
+          </motion.h1>
 
-          <motion.h1
+          {/* Slogan: stesso stile, ma non è un'intestazione (un solo H1 per pagina) */}
+          <motion.p
             initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
             transition={{ delay: reduced ? 0 : 0.15, duration: reduced ? 0 : 0.7 }}
             style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.6rem, 5vw, 4.8rem)', lineHeight: 1.0, letterSpacing: '0.01em', marginBottom: '1.5rem', fontWeight: 400, color: 'var(--t)', textTransform: 'uppercase' }}
@@ -375,7 +377,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             <span style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400, fontSize: '0.72em', textTransform: 'none', color: 'var(--t)' }}>
               Ti serve essere <RotatingWord reduced={reduced} />
             </span>
-          </motion.h1>
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}

@@ -74,7 +74,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
       <SectionTitle>Hero Section</SectionTitle>
       <Note>Il testo ruota automaticamente: scelto → ricordato → desiderato → trovato → riconosciuto</Note>
       <Field label="Badge / Tag" value={content.hero?.tag} onChange={(v: string) => set('hero.tag', v)}
-        hint="Piccolo testo sopra il titolo" placeholder="Laboratorio creativo — Castellaneta, Puglia" />
+        hint="Piccolo testo sopra il titolo. È il titolo principale (H1) della home per Google: tieni servizio e città" placeholder="Agenzia di comunicazione a Castellaneta (TA): social, video, siti e Meta Ads" />
       <Field label="CTA principale" value={content.hero?.cta?.primary} onChange={(v: string) => set('hero.cta.primary', v)}
         placeholder="Raccontaci il tuo progetto" />
       <Field label="Descrizione" value={(content.hero as any)?.description} onChange={(v: string) => set('hero.description', v)} multiline

@@ -16,7 +16,8 @@ export const WEBSITE_CONTENT = {
   },
 
   hero: {
-    tag: "Laboratorio creativo — Castellaneta, Puglia",
+    // È l'H1 della home (per Google): servizio e città
+    tag: "Agenzia di comunicazione a Castellaneta (TA): social, video, siti e Meta Ads",
     headline: {
       line1: "COMUNICAZIONE",
       line2: "CHE SI FA",
