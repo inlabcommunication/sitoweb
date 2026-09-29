@@ -85,8 +85,10 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, width: '100%' }}>
                 {client.logo ? (
-                  <img src={client.logo} alt="" loading="lazy"
-                    style={{ maxWidth: 96, maxHeight: 30, objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.8 }} />
+                  // logo con i suoi colori in un riquadro chiaro: funziona con e senza sfondo
+                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: 40, minWidth: 40, maxWidth: 110, padding: 5, borderRadius: 10, background: '#f0ede6', overflow: 'hidden' }}>
+                    <img src={client.logo} alt="" loading="lazy" style={{ maxWidth: '100%', maxHeight: 30, objectFit: 'contain', display: 'block' }} />
+                  </span>
                 ) : (
                   <span style={{ fontFamily: 'var(--fd)', fontSize: 20, color: 'var(--a)', letterSpacing: '.04em', lineHeight: 1 }}>
                     {String(i + 1).padStart(2, '0')}
