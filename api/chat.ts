@@ -6,7 +6,7 @@
 
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import type Anthropic from "@anthropic-ai/sdk";
-import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, securityHeaders, str } from "./_lib/security";
+import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
 
 // Limiti anti-abuso (sovrascrivibili da variabili d'ambiente su Vercel)
 const LIMIT_PER_IP_10MIN = Number(process.env.CHAT_LIMIT_PER_IP_10MIN || 15);
@@ -153,6 +153,19 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
   throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: quotaHit ? "AI_QUOTA" : "AI_MODEL", attempts });
 }
 
+// Tetto giornaliero di riserva per istanza, usato solo se Firestore non è
+// raggiungibile: così il limite di spesa vale anche senza database (più basso
+// di quello normale, perché le istanze attive possono essere più di una)
+const MEM_GLOBAL_DAY = Math.max(20, Math.floor(LIMIT_GLOBAL_DAY / 4));
+let memDay = "";
+let memDayCount = 0;
+function memoryDailyCap(): boolean {
+  const day = new Date().toISOString().slice(0, 10);
+  if (day !== memDay) { memDay = day; memDayCount = 0; }
+  memDayCount += 1;
+  return memDayCount <= MEM_GLOBAL_DAY;
+}
+
 // Limite di riserva per istanza, usato solo se Firestore non è raggiungibile
 const memHits = new Map<string, number[]>();
 function memoryLimit(ip: string): boolean {
@@ -219,6 +232,7 @@ async function handle(req: VercelRequest, res: VercelResponse) {
       console.error("[chat] Firestore non disponibile, uso limiti in memoria:", e);
       db = null;
       if (!memoryLimit(ip)) return res.status(429).json({ error: "Too many requests", code: "RATE", reply: "Hai inviato molti messaggi in poco tempo. Riprova tra qualche minuto 🙂" });
+      if (!memoryDailyCap()) return res.status(429).json({ error: "Daily limit", reply: "L'assistente è molto richiesto oggi. Scrivici a inlab.communication@gmail.com e ti rispondiamo noi 🙂" });
     }
     const provider = (settings.aiProvider || process.env.AI_PROVIDER) === "anthropic" ? "anthropic" : "gemini";
     const maxTokens = 400;
@@ -279,6 +293,8 @@ async function handle(req: VercelRequest, res: VercelResponse) {
   } catch (error: any) {
     console.error("Chat API error:", error);
     // "code" indica solo la fase che ha fallito (nessun dettaglio interno), utile per la diagnosi
-    return res.status(500).json({ error: "Internal error", code: error?.chatCode || "SERVER", reply: FALLBACK_REPLY, ...(Array.isArray(error?.attempts) ? { attempts: error.attempts.slice(0, 8) } : {}) });
+    // Il dettaglio per modello serve solo alla prova dalla dashboard: lo riceve solo un admin autenticato
+    const showAttempts = Array.isArray(error?.attempts) && !!req.headers.authorization && !!(await requireAdmin(req).catch(() => null));
+    return res.status(500).json({ error: "Internal error", code: error?.chatCode || "SERVER", reply: FALLBACK_REPLY, ...(showAttempts ? { attempts: error.attempts.slice(0, 8) } : {}) });
   }
 }
