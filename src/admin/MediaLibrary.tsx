@@ -100,12 +100,54 @@ type UploadTask = {
   result?: MediaItem;
 };
 
+// Limiti del piano Cloudinary: 10 MB per le immagini, 100 MB per i video
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+const MAX_VIDEO_BYTES = 100 * 1024 * 1024;
+const mb = (n: number) => (n / 1024 / 1024).toFixed(1).replace('.', ',');
+
+/**
+ * Foto troppo pesanti (es. da fotocamera): le riduce nel browser prima del
+ * caricamento (lato lungo max 2560 px, JPEG di qualità alta, WebP se c'è
+ * trasparenza). Sul sito le immagini sono comunque ottimizzate da Cloudinary.
+ * Le immagini già sotto il limite restano identiche.
+ */
+async function prepareImage(file: File): Promise<File> {
+  if (!file.type.startsWith('image/') || /gif|svg/.test(file.type) || file.size <= MAX_IMAGE_BYTES * 0.95) return file;
+  const bitmap = await createImageBitmap(file);
+  const keepAlpha = file.type === 'image/png' || file.type === 'image/webp';
+  const type = keepAlpha ? 'image/webp' : 'image/jpeg';
+  const ext = keepAlpha ? 'webp' : 'jpg';
+  for (const [side, quality] of [[2560, 0.85], [2048, 0.8], [1600, 0.75]] as const) {
+    const scale = Math.min(1, side / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    canvas.getContext('2d')!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, type, quality));
+    if (blob && blob.size <= MAX_IMAGE_BYTES * 0.95) {
+      bitmap.close?.();
+      return new File([blob], file.name.replace(/\.[^.]+$/, '') + '.' + ext, { type });
+    }
+  }
+  bitmap.close?.();
+  throw new Error(`La foto pesa ${mb(file.size)} MB e non si riesce a ridurre sotto i 10 MB: esportala più leggera e riprova.`);
+}
+
 const uploadFile = (
-  file: File,
+  original: File,
   folder: string,
   onProgress: (p: number) => void
 ): Promise<MediaItem> =>
   new Promise(async (resolve, reject) => {
+    let file = original;
+    try {
+      if (file.type.startsWith('video/') && file.size > MAX_VIDEO_BYTES) {
+        return reject(new Error(`Il video pesa ${mb(file.size)} MB: il massimo è 100 MB. Esportalo più leggero (per esempio 1080p) e riprova.`));
+      }
+      file = await prepareImage(file);
+    } catch (e: any) {
+      return reject(new Error(e?.message || 'Impossibile preparare la foto per il caricamento.'));
+    }
     const fd = new FormData();
     const targetFolder = `inlab/${folder === 'Tutti' || folder === 'Altro' ? 'generale' : folder.toLowerCase()}`;
     const context = `alt=${file.name.replace(/[|=]/g, ' ').slice(0, 150)}`;
@@ -154,7 +196,13 @@ const uploadFile = (
           alt: '',
         });
       } else {
-        reject(new Error(JSON.parse(xhr.responseText)?.error?.message || 'Upload failed'));
+        let msg = 'Caricamento non riuscito';
+        try { msg = JSON.parse(xhr.responseText)?.error?.message || msg; } catch { /* risposta non JSON */ }
+        // messaggi di Cloudinary più comuni, in italiano
+        if (/File size too large/i.test(msg)) msg = 'Il file supera il limite del piano Cloudinary (10 MB per le foto, 100 MB per i video): esportalo più leggero e riprova.';
+        else if (/Invalid Signature|signature/i.test(msg)) msg = 'Firma non valida: controlla CLOUDINARY_API_SECRET su Vercel e rifai il Redeploy.';
+        else if (/Upload preset/i.test(msg)) msg = 'Preset di caricamento non trovato: su Cloudinary deve esistere il preset ml_default.';
+        reject(new Error(msg));
       }
     };
     xhr.onerror = () => reject(new Error('Errore di rete'));
@@ -703,9 +751,9 @@ export const MediaLibraryPage = () => {
                 {tasks.filter(t => t.status === 'error').map(t => (
                   <div key={t.id} style={{ marginTop: 8, padding: '10px 14px', background: 'rgba(255,100,100,0.08)', border: '.5px solid rgba(255,100,100,0.2)', borderRadius: 10, fontSize: 12, color: '#ff8888' }}>
                     <strong>{t.file.name}</strong>: {t.error}
-                    <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>
+                    {/non configurato|firma|autorizzato|preset/i.test(t.error || '') && <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>
                       Gli upload sono firmati: su Vercel deve esserci <code style={{ color: '#cdb2ff' }}>CLOUDINARY_API_SECRET</code> e il preset <code style={{ color: '#cdb2ff' }}>ml_default</code> su Cloudinary deve essere impostato come <strong>Signed</strong>.
-                    </div>
+                    </div>}
                   </div>
                 ))}
               </div>
