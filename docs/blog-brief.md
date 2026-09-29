@@ -8,7 +8,7 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 - **Conta solo il nuovo responsabile SEO** (decisione di Nicola). Il brief del 2026-09-28 e i messaggi del responsabile precedente non valgono più: i compiti rimasti aperti lì non vanno ripresi. Si seguono i brief successivi.
 - **Ordine di lavoro:** prima i compiti del brief SEO in corso (priorità 1, poi 2, poi 3); gli articoli di novità di questo documento vengono dopo.
 - **Regola di Nicola: niente prezzi dei servizi di gestione** negli articoli: tariffe o fasce di costo di agenzie, freelance o InLab (gestione social, siti, campagne, video…). I prezzi ufficiali delle piattaforme (per esempio abbonamenti Meta One o commissioni di TikTok Shop) si possono citare con la fonte. Se un brief chiede i costi di gestione, non farlo e segnalalo nel resoconto.
-- **Clienti InLab:** prima di scrivere contenuti sui clienti, chiedi a Nicola le informazioni che servono. Senza conferma usa solo ciò che è già pubblicato sul sito, senza numeri.
+- **Clienti InLab:** per ora cita i clienti solo con quello che c'è già nelle schede `/cliente/...` e nei casi studio, senza dettagli o numeri in più. Non chiedere informazioni sui clienti: Nicola preparerà i casi studio completi (linee guida, sezione 7).
 - **Clienti da non citare nel blog:** Aleph Caffè (indicazione di Nicola, 29/09/2026).
 
 ## Contesto e tono
