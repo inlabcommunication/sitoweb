@@ -134,11 +134,12 @@ const noindex = (html: string, title: string) => html
 writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
 writeFileSync(join(DIST, '404.html'), noindex(template, 'InLab Communication'));
 
-const today = new Date().toISOString().slice(0, 10);
+// lastmod solo dove la data è reale (articoli del blog): Google ignora le date
+// che cambiano a ogni build senza che la pagina cambi.
 const urls = routes
   .map((p) => ({ p, seo: getSeo(p) }))
   .filter(({ seo }) => !seo.noindex && seo.sitemap)
-  .map(({ seo }) => `  <url>\n    <loc>${esc(seo.canonical)}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${seo.sitemap!.changefreq}</changefreq>\n    <priority>${seo.sitemap!.priority.toFixed(1)}</priority>\n  </url>`);
+  .map(({ seo }) => `  <url>\n    <loc>${esc(seo.canonical)}</loc>\n${seo.lastmod ? `    <lastmod>${seo.lastmod}</lastmod>\n` : ''}    <changefreq>${seo.sitemap!.changefreq}</changefreq>\n    <priority>${seo.sitemap!.priority.toFixed(1)}</priority>\n  </url>`);
 writeFileSync(join(DIST, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
 
