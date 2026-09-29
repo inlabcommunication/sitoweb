@@ -2151,8 +2151,26 @@ const parseRoute = (route) => {
       if(route===expected) return {page:"city",service:svc.slug,city:city.toLowerCase()};
     }
   }
-  return {page:"home"};
+  return {page:"notfound"};
 };
+
+/* Pagina 404: indirizzo inesistente (il server risponde con stato 404) */
+const PageNotFound = () => (
+  <section style={{padding:"11rem 2rem 8rem",minHeight:"70vh"}}>
+    <div style={{maxWidth:720,margin:"0 auto",textAlign:"center"}}>
+      <p className="section-label">Errore 404</p>
+      <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,6rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
+        PAGINA<br/><span className="stroke">NON TROVATA.</span>
+      </h1>
+      <p style={{color:"var(--m)",lineHeight:1.7,marginBottom:"2rem"}}>L'indirizzo che hai aperto non esiste o è stato spostato. Da qui puoi tornare alle pagine principali.</p>
+      <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+        <Link to="/" className="btn btn-p">Torna alla home <ArrowRight size={14}/></Link>
+        <Link to="/servizi" className="btn btn-g">Servizi</Link>
+        <Link to="/contatti" className="btn btn-g">Contatti</Link>
+      </div>
+    </div>
+  </section>
+);
  
 const renderPage = (info) => {
   switch(info.page){
@@ -2181,6 +2199,7 @@ const renderPage = (info) => {
         default: return <PageHome/>;
       }
     case "city": return <PageCittaSEO city={info.city} service={info.service}/>;
+    case "notfound": return <PageNotFound/>;
     default: return <PageHome/>;
   }
 };
