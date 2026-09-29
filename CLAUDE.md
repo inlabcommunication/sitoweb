@@ -9,7 +9,7 @@ Più sessioni lavorano su questo repository. Ognuna ha un'area precisa: **fuori 
 | **Sito Inlab** (sviluppo, responsabile tecnico) | **l'unica sessione che modifica il codice**: `src/`, `api/`, `scripts/`, `public/`, `vercel.json`, `package.json`, `firestore.rules`, `index.html`, documentazione tecnica | — |
 | **Addetto SEO** | solo `docs/seo/` (analisi, brief, linee guida, prompt) | tutto il resto, compreso `src/seo/routes.ts` |
 | **Addetto al Blog** | solo gli articoli: `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/` | tutto il resto |
-| **Analista sicurezza / controlli** | niente: **solo lettura**. Controlla che non ci siano problemi (sicurezza, errori, sito non raggiungibile…) e **avvisa il titolare** con un report in chat; le correzioni le fa la sessione Sito Inlab | tutto, compresi i file di documentazione |
+| **Analista sicurezza / controlli** | niente: **solo lettura**. Controlla che non ci siano problemi (sicurezza, errori, sito non raggiungibile…) e li segnala alla sessione Sito Inlab e al titolare (vedi "Flusso sicurezza") | tutto, compresi i file di documentazione |
 
 Se serve una modifica al codice (titoli e descrizioni per Google, sitemap, pagine, componenti, sicurezza…), **non farla**: scrivila come richiesta nel proprio brief o report, in una sezione **"Richieste per lo sviluppo"**, con file, motivo e testo proposto. La applica la sessione Sito Inlab.
 
@@ -19,6 +19,14 @@ Se serve una modifica al codice (titoli e descrizioni per Google, sitemap, pagin
 2. La sessione **Sito Inlab** le applica. **Non valuta se le scelte SEO sono giuste** (è compito dell'addetto SEO, che ne è l'esperto): fa solo il **controllo tecnico**, cioè verifica che la modifica non possa bloccare, rompere o danneggiare il sito (build, pagine, redirect, sitemap, robots, canonical, dati strutturati, prestazioni, sicurezza).
 3. Se una richiesta è tecnicamente rischiosa, la sessione Sito Inlab non la applica così com'è: spiega il problema e propone un'alternativa sicura con lo stesso obiettivo SEO.
 4. La responsabilità tecnica del sito è della sessione Sito Inlab.
+
+## Flusso sicurezza
+
+1. L'**analista** trova un problema e lo segnala alla sessione **Sito Inlab** (messaggio tra sessioni, oppure tramite il titolare), con priorità, file e riga, e cosa può succedere.
+2. **Sito Inlab** verifica la segnalazione e valuta le possibili soluzioni.
+3. Le due sessioni **si confrontano** per trovare la soluzione migliore: deve risolvere il problema **senza danneggiare il sito**.
+4. Si procede **solo quando entrambe sono d'accordo** che è la mossa giusta. La correzione la fa Sito Inlab, un commit per punto, poi comunica i commit all'analista, che ricontrolla.
+5. Il titolare viene informato dell'esito; se non c'è accordo, decide lui.
 
 ## Pubblicazione
 
