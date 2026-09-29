@@ -28,7 +28,7 @@ import { PortfolioGallery } from "./sections/PortfolioGallery";
 import { ClientsWall } from "./sections/ClientsWall";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery } from "./components/ReelCard";
-import { registerContent } from "./seo/routes";
+import { registerContent, CITIES, citySlug } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
@@ -162,7 +162,7 @@ const SERVICES = [
   { slug: "branding", icon: <Star size={22}/>, label: "Branding & Identità", short: "Nome, logo, palette, tono di voce. Diamo forma al modo in cui il tuo brand viene percepito dal primo sguardo." },
 ];
  
-const CITIES = ["Taranto","Palagiano","Palagianello","Massafra","Mottola","Castellaneta","Laterza","Ginosa"];
+// Città delle pagine locali: un solo elenco, in src/seo/routes.ts
  
 const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento","Aleph Caffè"];
 // Riga di numeri dell'agenzia (modificabili da dashboard → Home → Numeri)
@@ -1534,8 +1534,13 @@ const PageContatti = () => {
 const PageCittaSEO = ({city, service}) => {
   const {go}=useRouter();
   const svc=SERVICES.find(s=>s.slug===service)||SERVICES[0];
-  const cityName=CITIES.find(c=>c.toLowerCase()===city)||city;
+  const cityName=CITIES.find(c=>citySlug(c)===city)||city;
   const otherCities=CITIES.filter(c=>c!==cityName);
+  const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
+    .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
+  const localCases=(((useContent() as any).cases?.items||[]) as any[])
+    .filter((cs: any)=>Array.isArray(cs.locations)&&cs.locations.some((l: string)=>norm(l)===norm(cityName)));
  
   return (
     <>
@@ -1601,13 +1606,41 @@ const PageCittaSEO = ({city, service}) => {
         </div>
       </section>
  
+      {/* Lavori reali in questa città: contenuto diverso per ogni pagina locale */}
+      {(localClients.length>0||localCases.length>0)&&(
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">Clienti a {cityName}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>I NOSTRI LAVORI<br/><span className="stroke">A {cityName.toUpperCase()}</span></h2>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(270px,1fr))",gap:14}}>
+              {localCases.map((cs: any)=>(
+                <Link key={"caso-"+cs.id} to={`/casi-studio/${cs.id}`} className="client-card" style={{minHeight:220}}>
+                  <span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>Caso studio</span>
+                  <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18,fontWeight:400}}>{cs.client}</h3>
+                  {(cs.problem||cs.title)&&<span className="client-card-summary">{cs.problem||cs.title}</span>}
+                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>Leggi il caso studio <ArrowUpRight size={13}/></span>
+                </Link>
+              ))}
+              {localClients.map((cl: any)=>(
+                <Link key={cl.id} to={`/cliente/${cl.id}`} className="client-card" style={{minHeight:220}}>
+                  {cl.sector&&<span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>{cl.sector}</span>}
+                  <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18,fontWeight:400}}>{cl.name}</h3>
+                  {cl.summary&&<span className="client-card-summary">{cl.summary}</span>}
+                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>Scheda cliente <ArrowUpRight size={13}/></span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Other cities */}
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Operiamo anche in queste città</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
             {otherCities.map(c=>(
-              <Link key={c} to={`/${svc.slug}-${c.toLowerCase()}`} className="tag tag-g city-link" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}>{svc.label} a {c}</Link>
+              <Link key={c} to={`/${svc.slug}-${citySlug(c)}`} className="tag tag-g city-link" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}>{svc.label} a {c}</Link>
             ))}
           </div>
         </div>
@@ -2147,8 +2180,8 @@ const parseRoute = (route) => {
   // city SEO pages
   for(const svc of SERVICES){
     for(const city of CITIES){
-      const expected=`/${svc.slug}-${city.toLowerCase()}`;
-      if(route===expected) return {page:"city",service:svc.slug,city:city.toLowerCase()};
+      const expected=`/${svc.slug}-${citySlug(city)}`;
+      if(route===expected) return {page:"city",service:svc.slug,city:citySlug(city)};
     }
   }
   return {page:"notfound"};
@@ -2207,8 +2240,9 @@ const renderPage = (info) => {
 /* ═══════════════════════════════════════════════════════════════
    APP
 ═══════════════════════════════════════════════════════════════ */
-export default function App() {
-  const [route,setRoute]=useState(getCurrentPath);
+export default function App({ ssrPath }: { ssrPath?: string } = {}) {
+  // ssrPath: usato solo in fase di build per generare l'HTML statico di ogni pagina
+  const [route,setRoute]=useState(() => ssrPath ?? getCurrentPath());
 
   useEffect(() => {
     loadContent();
@@ -2257,8 +2291,8 @@ export default function App() {
         </motion.div>
       </AnimatePresence>
       <Footer/>
-      <Chatbot/>
-      <CookieBanner/>
+      {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
+      {ssrPath === undefined && <><Chatbot/><CookieBanner/></>}
     </RouterCtx.Provider>
   );
 }

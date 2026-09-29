@@ -17,6 +17,11 @@
       "source": "/landing-page-:city",
       "destination": "/siti-web-:city",
       "permanent": true
+    },
+    {
+      "source": "/:svc(gestione-social|meta-ads|siti-web|automazioni-ai|shooting|video|branding)-massafra",
+      "destination": "/:svc",
+      "statusCode": 301
     }
   ],
   "headers": [

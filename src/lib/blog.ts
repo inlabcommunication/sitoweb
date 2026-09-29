@@ -44,6 +44,9 @@ export const loadBlogPosts = (): Promise<BlogPost[]> => {
   return pending;
 };
 
+/** Solo per la generazione dell'HTML statico: articoli già uniti (codice + Firestore). */
+export const primeBlogPosts = (posts: BlogPost[]) => { cache = posts; };
+
 export const useBlogPosts = () => {
   const [posts, setPosts] = useState<BlogPost[]>(cache ?? mergePosts(BLOG_SEED, []));
   const [loading, setLoading] = useState(!cache);

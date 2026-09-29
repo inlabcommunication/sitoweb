@@ -25,6 +25,12 @@ function dropStaleSections(saved: any) {
 let cached: SiteContent | null = null;
 const listeners = new Set<(c: SiteContent) => void>();
 
+/** Solo per la generazione dell'HTML statico: contenuti salvati in dashboard letti al build. */
+export const primeContent = (saved: any) => {
+  const clean = dropStaleSections(saved);
+  cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, clean), clean?.schemaVersion >= 3);
+};
+
 export const getContent = (): SiteContent => cached ?? normalizeSiteContent(WEBSITE_CONTENT);
 
 export const loadContent = async (forceRefresh = false): Promise<SiteContent> => {
