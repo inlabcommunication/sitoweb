@@ -137,7 +137,8 @@ export const organizationJsonLd = () => ({
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
   address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, postalCode: '74011', addressRegion: 'TA', addressCountry: 'IT' },
-  areaServed: [{ '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
+  // città con clienti reali (CITIES) più Puglia e Italia: si lavora anche fuori regione
+  areaServed: [...CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
   sameAs: BUSINESS.sameAs,
   knowsAbout: SERVICES_SEO.map((s) => s.label),
   hasOfferCatalog: {
