@@ -141,8 +141,10 @@ Il sito supporta **solo** questa sintassi (il resto viene mostrato come testo):
 - `![descrizione dell'immagine](https://...)` **su una riga da sola**
 - `---` per una linea di separazione
 
-**Non supportati:** tabelle, codice, HTML. Al posto delle tabelle usa elenchi
-come "**Opzione A:** … / **Opzione B:** …".
+**Non supportati:** tabelle, codice, HTML. Una tabella in Markdown (`| … |`) sul
+sito compare come righe di testo con le barre verticali: è un errore visibile.
+Al posto delle tabelle usa elenchi come "**YouTube:** 41,2 milioni (-2,4%)" oppure
+"**Opzione A:** … / **Opzione B:** …".
 
 Paragrafi corti (2-4 righe da telefono). Il grassetto va sui concetti chiave,
 non su frasi intere ogni due righe.
@@ -162,8 +164,8 @@ non su frasi intere ogni due righe.
 | `tags` | 3-6 tag, in minuscolo, riutilizzando quelli già esistenti quando possibile. |
 | `author` | `Nicola Carpignano` (strategia, social, advertising, dati) o `Ilaria Gemma` (video, foto, contenuti visivi). |
 | `date` | data **reale** di pubblicazione (`AAAA-MM-GG`). Non pubblicare più articoli con la stessa data se non sono usciti davvero insieme. **Non si cambia** quando si aggiorna l'articolo. |
-| `updated` | data dell'ultimo aggiornamento **sostanziale** (`AAAA-MM-GG`): nuove sezioni, dati aggiornati, riscrittura. Non per un refuso. Google la legge come data di modifica. |
-| `cover` | **obbligatoria.** Percorso (es. `/blog/<slug>/hero.webp`) o URL. WebP 1200×630 generata con `tools/blog-images`, < 250 KB. Il sito la mostra ritagliata in 16:9: tieni testo e soggetto **lontani dai bordi sinistro e destro** (circa 40 px). |
+| `updated` | data dell'ultimo aggiornamento **sostanziale** (`AAAA-MM-GG`): nuove sezioni, dati aggiornati, riscrittura. Non per un refuso. **Non si mette sugli articoli nuovi.** Google la legge come data di modifica e la sitemap la usa come data dell'ultima modifica. |
+| `cover` | **obbligatoria.** Percorso (es. `/blog/<slug>/cover.jpg`) o URL. **JPG 1600×900 (16:9)** generata con `tools/blog-images`, < 250 KB. È anche l'immagine di anteprima sui social: il JPG è letto da tutte le piattaforme e Google consiglia immagini larghe almeno 1200 px. Tieni testo e soggetto lontani dai bordi (circa 40 px). |
 | `coverAlt` | descrizione concreta della copertina (cosa si vede), 8-15 parole. Se manca si usa il titolo, ma va sempre compilata. |
 
 Conta sempre i caratteri di `seoTitle` e `seoDescription` prima di consegnare.
@@ -203,8 +205,12 @@ Google premia i contenuti scritti da chi ha **esperienza vera**. Quindi:
 - **Esempi del territorio:** "un bar a Castellaneta", "uno studio a Massafra", la
   stagionalità del turismo sulla costa di Castellaneta Marina e Ginosa Marina,
   gli eventi locali. Rende l'articolo utile e rafforza la SEO locale.
-- **Prezzi:** quando si parla di costi, dai **fasce realistiche** e spiega da cosa
-  dipendono. Evitare l'argomento dei prezzi fa perdere lettori e fiducia.
+- **Prezzi: niente cifre dei nostri servizi.** Indicazione del titolare (Nicola
+  Carpignano, settembre 2026): negli articoli non si pubblicano prezzi né fasce
+  di prezzo di InLab o del mercato. Quando il lettore si chiede "quanto costa",
+  spiega **da cosa dipende il costo** e **come confrontare due preventivi**,
+  poi invita a chiedere un preventivo. I prezzi ufficiali di piattaforme terze
+  (per esempio un abbonamento Meta) si possono citare con la fonte.
 - **Aggiornamento:** se una piattaforma cambia (nuove funzioni di Instagram, nuove
   regole di Meta Ads), l'articolo va aggiornato. Scrivi l'anno nel testo solo
   se lo aggiorneremo davvero.
@@ -229,7 +235,7 @@ Google premia i contenuti scritti da chi ha **esperienza vera**. Quindi:
 ## 9. Checklist prima di pubblicare
 
 - [ ] Parola chiave principale assegnata e **non già usata** da un altro articolo
-- [ ] Parola chiave nel `title`, nel `seoTitle`, nello `slug`, nelle prime 2 frasi e in almeno un `##`
+- [ ] Parola chiave nel `title`, nel `seoTitle`, nello `slug`, nelle prime 2 frasi e in almeno un `##` (la frase esatta o quasi, non solo una parola)
 - [ ] `seoTitle` ≤ 60 caratteri, `seoDescription` 140-155 caratteri
 - [ ] Almeno 1.200 parole, 5-8 sezioni `##`
 - [ ] Risposta breve all'inizio (se l'articolo risponde a una domanda)
@@ -238,8 +244,8 @@ Google premia i contenuti scritti da chi ha **esperienza vera**. Quindi:
 - [ ] Link al servizio collegato + 1-3 articoli + `/contatti`
 - [ ] Aggiunto un link verso il nuovo articolo in un articolo esistente
 - [ ] Articolo inserito in `src/data/blogSeed.ts` (non solo in `content/blog/`)
-- [ ] Copertina presente con `coverAlt`, immagini con descrizione
-- [ ] Se è un aggiornamento: `updated` compilato, `date` e `slug` invariati
+- [ ] Copertina presente con `coverAlt` di 8-15 parole, immagini con descrizione
+- [ ] Se è un aggiornamento: `updated` compilato, `date` e `slug` invariati. Se è nuovo: niente `updated`
 - [ ] Nessun dato inventato, nessuna promessa di risultati garantiti
 - [ ] Solo la sintassi supportata (niente `#`, tabelle, HTML)
 - [ ] Data reale, autore giusto, categoria e tag corretti
@@ -259,8 +265,17 @@ coperte" evita i doppioni: aggiornala ogni volta che pubblichi.
 | Siti Web & Web App | `/siti-web` | costi di un sito, sito vs social, SEO locale, scheda Google, e-commerce, landing page | *sito web per attività locali* → `sito-web-o-solo-social-attivita-locale`; *Google Business Profile GA4* → `google-business-profile-ga4`; *report AI Overviews Search Console* → `ai-overviews-search-console-report`; *SEO per AI Overviews / GEO* → `seo-ai-overviews-geo-google` |
 | Meta Ads | `/meta-ads` | quanto investire, sponsorizzate Instagram, errori comuni, campagne per attività locali | *sponsorizzate Instagram per attività locali* → `sponsorizzate-instagram-attivita-locali`; *Meta Ads 2026* → `meta-ads-creativita-advantage` |
 | Automazioni AI | `/automazioni-ai` | chatbot per attività locali, risposte automatiche WhatsApp/Instagram, AI per piccole imprese | *WhatsApp Business AI* → `whatsapp-business-ai`; *contenuti AI obblighi / AI Act* → `contenuti-ai-obblighi-ai-act` |
+| Email e newsletter (nessuna pagina dedicata) | `/siti-web` come servizio principale, `/automazioni-ai` come secondario | newsletter, privacy delle email, moduli di iscrizione | *tracking pixel email Garante* → `tracking-pixel-email-garante` |
 | Foto & Shooting | `/shooting` | shooting per ristoranti/prodotti, foto per i social, come prepararsi a uno shooting | — |
 | Branding & Identità | `/branding` | logo, rebranding, identità visiva, nome dell'attività (caso Paresteta) | — |
+
+**Coppie da tenere distinte** (argomenti vicini: ognuna ha il suo intento, non
+scrivere un terzo articolo sullo stesso tema senza chiederlo nel resoconto):
+- `sponsorizzate-instagram-attivita-locali` (guida pratica) ↔ `meta-ads-creativita-advantage` (novità 2026);
+- `ai-overviews-search-console-report` (misurare) ↔ `seo-ai-overviews-geo-google` (ottimizzare);
+- `gestione-social-attivita-locale-cosa-include` contiene già "come scegliere" e
+  "domande da fare prima di scegliere": un articolo nuovo su *come scegliere un
+  social media manager* rischia di fargli concorrenza.
 
 Casi studio da citare: `/casi-studio/paresteta` (rebranding e lancio di un'attività
 locale), `/casi-studio/ricciardi` (sito, lead generation e social per uno studio
@@ -268,6 +283,27 @@ dentistico).
 
 ---
 
-*Ultimo aggiornamento: 28 settembre 2026, responsabile SEO. Versione 1: scritta
-sulla base dell'analisi del sito e degli articoli pubblicati. Dalla prossima
-versione le priorità saranno basate sui dati di Google Analytics e Search Console.*
+## 11. Cosa abbiamo imparato (da dati, ricerche e regole di Google)
+
+- **FAQ e risultati di Google.** Dall'agosto 2023 Google mostra le FAQ come
+  risultato arricchito solo per siti governativi e sanitari autorevoli (Google
+  Search Central, annuncio sui risultati FAQ e HowTo). Per questo il sito non
+  genera lo schema FAQPage. La sezione `## Domande frequenti` resta
+  obbligatoria: risponde alle domande reali dei lettori e aiuta a comparire
+  nelle risposte AI e nella sezione "Altre domande".
+- **Siti creati dalla scheda Google.** Google li ha chiusi nel 2024: alcuni
+  risultati tra i primi lo danno ancora per possibile. Controlla sempre la
+  data delle informazioni che trovi nei primi risultati (segnalato
+  dall'addetto al blog, 28/09/2026).
+- **Il nostro vantaggio sui primi risultati.** Per i temi social e ads i primi
+  risultati italiani sono blog di agenzie e freelance con consigli generici. Ci
+  distinguiamo con esempi del territorio e casi reali con clienti nominati
+  (segnalato dall'addetto al blog, 28/09/2026). Da confermare con i dati di
+  Search Console.
+
+---
+
+*Ultimo aggiornamento: 29 settembre 2026, responsabile SEO. Versione 2: regola
+sui prezzi, copertine JPG 16:9, tabelle, `updated` solo sugli aggiornamenti,
+coppie di articoli vicini, sezione 11. Google Analytics e Search Console sono
+collegati dal 28/09/2026: le priorità dei prossimi brief nasceranno dai loro dati.*
