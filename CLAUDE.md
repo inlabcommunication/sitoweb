@@ -9,7 +9,7 @@ Più sessioni lavorano su questo repository. Ognuna ha un'area precisa: **fuori 
 | **Sito Inlab** (sviluppo, responsabile tecnico) | **l'unica sessione che modifica il codice**: `src/`, `api/`, `scripts/`, `public/`, `vercel.json`, `package.json`, `firestore.rules`, `index.html`, documentazione tecnica | — |
 | **Addetto SEO** | solo `docs/seo/` (analisi, brief, linee guida, prompt) | tutto il resto, compreso `src/seo/routes.ts` |
 | **Addetto al Blog** | solo gli articoli: `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/` | tutto il resto |
-| **Analista sicurezza / controlli** | niente: legge e produce report | tutto |
+| **Analista sicurezza / controlli** | niente: **solo lettura**. Controlla che non ci siano problemi (sicurezza, errori, sito non raggiungibile…) e **avvisa il titolare** con un report in chat; le correzioni le fa la sessione Sito Inlab | tutto, compresi i file di documentazione |
 
 Se serve una modifica al codice (titoli e descrizioni per Google, sitemap, pagine, componenti, sicurezza…), **non farla**: scrivila come richiesta nel proprio brief o report, in una sezione **"Richieste per lo sviluppo"**, con file, motivo e testo proposto. La applica la sessione Sito Inlab.
 
