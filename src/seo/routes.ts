@@ -30,7 +30,12 @@ export const BUSINESS = {
   ],
 };
 
-export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Massafra', 'Mottola', 'Castellaneta', 'Laterza', 'Ginosa'];
+// Città con clienti reali (indicazione del titolare, 29/09/2026). Massafra è
+// stata tolta (redirect 301 in vercel.json). Ginosa resta: Paresteta ha un
+// negozio lì (in attesa di conferma del responsabile SEO).
+export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Castellaneta', 'Laterza', 'Ginosa', 'Gravina in Puglia'];
+/** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
+export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 export const SERVICES_SEO = [
   { slug: 'gestione-social', label: 'Gestione Social', keyword: 'gestione social media',
@@ -90,6 +95,10 @@ export const organizationJsonLd = () => ({
   '@id': `${SITE_URL}/#organization`,
   name: BRAND,
   description: 'Agenzia di comunicazione con sede a Castellaneta (Taranto): gestione social, video e reel, Meta Ads, siti web, branding e automazioni AI per aziende in Puglia e non solo.',
+  // Distingue l'agenzia da realtà con nomi simili (Google e i sistemi AI le confondevano)
+  disambiguatingDescription: 'InLab Communication è l\'agenzia di comunicazione di Castellaneta, in provincia di Taranto (Puglia), fondata da Nicola Carpignano e Ilaria Gemma. Non è collegata ad altre agenzie con nomi simili in altre città, come InLab Comunicazione di Forlì.',
+  founder: [{ '@type': 'Person', name: 'Nicola Carpignano' }, { '@type': 'Person', name: 'Ilaria Gemma' }],
+  knowsLanguage: 'it',
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/icon-512.png`,
   image: abs(DEFAULT_OG_IMAGE),
@@ -156,7 +165,7 @@ const page = (path: string, title: string, description: string, extra: Partial<S
 export const listRoutes = (): string[] => [
   '/', '/servizi', '/chi-siamo', '/casi-studio', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
-  ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${c.toLowerCase()}`)),
+  ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
   '/blog', '/privacy',
@@ -214,7 +223,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   for (const s of SERVICES_SEO) {
-    const city = CITIES.find((c) => path === `/${s.slug}-${c.toLowerCase()}`);
+    const city = CITIES.find((c) => path === `/${s.slug}-${citySlug(c)}`);
     if (city) {
       // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
       const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;

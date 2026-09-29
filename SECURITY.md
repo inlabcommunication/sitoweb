@@ -44,10 +44,11 @@ Google Cloud Console → APIs & Services → Credentials → chiave "Browser key
 ### 7. Cloudinary
 1. Settings → Upload → preset `ml_default` → **Signing mode: Signed**.
 2. Su Vercel aggiungi `CLOUDINARY_API_SECRET` (Settings → API Keys di Cloudinary) e Redeploy.
-Finché il preset resta "Unsigned", chiunque conosca il nome del cloud può caricare file.
+La dashboard carica i file **solo** con upload firmati: senza `CLOUDINARY_API_SECRET` l'archivio media mostra un errore invece di ripiegare su upload non firmati.
+Finché il preset resta "Unsigned", chiunque conosca il nome del cloud può caricare file: impostalo su "Signed".
 
 ### 8. Pulizia automatica dei contatori (consigliato)
 Firestore → **TTL** → aggiungi una policy sul campo `expireAt` della raccolta `_ratelimits`.
 
 ### 9. Variabile consigliata
-`RATE_LIMIT_SALT` su Vercel con una stringa casuale lunga (rende anonimi gli IP nei contatori).
+`RATE_LIMIT_SALT` su Vercel con una stringa casuale lunga (almeno 16 caratteri): rende anonimi gli IP nei contatori e firma il token anti-bot del modulo contatti. Senza, il server usa un segreto derivato dalla chiave dell'account di servizio (nessun valore fisso nel codice).

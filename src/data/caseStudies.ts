@@ -28,6 +28,8 @@ export type CaseStudy = {
   cover?: string;
   /** scheda cliente collegata (id) */
   clientId?: string;
+  /** città in cui il cliente è presente: il caso compare nelle pagine locali */
+  locations?: string[];
   /** pagina */
   hero?: { label?: string; title?: string; subtitle?: string; intro?: string; image?: string; ctaLabel?: string; ctaUrl?: string };
   blocks: CaseBlock[];
@@ -45,6 +47,7 @@ export const DEFAULT_CASES: CaseStudy[] = [
     client: 'Paresteta',
     title: 'Dal rebranding all\'inaugurazione',
     category: 'Eventi · Branding · Lead generation',
+    locations: ['Palagianello', 'Palagiano', 'Laterza', 'Ginosa'],
     problem: 'Trasformare un cambio insegna da H28 a Paresteta in un evento locale capace di generare attenzione e presenza fisica in negozio.',
     result: 'Campagna in 5 fasi tra teaser, QR code, video lancio e attività offline. Lead raccolti, partecipazione all\'inaugurazione, percezione del brand rafforzata.',
     seoTitle: 'Paresteta: dal rebranding all\'inaugurazione',

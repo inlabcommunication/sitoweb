@@ -1,7 +1,7 @@
 // Utility di sicurezza condivise dalle funzioni /api (Vercel non espone come
 // endpoint i file dentro cartelle che iniziano con "_").
 import type { VercelRequest, VercelResponse } from "./types";
-import { createHash } from "node:crypto";
+import { createHash, createHmac, randomBytes, timingSafeEqual } from "node:crypto";
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore, FieldValue, type Firestore } from "firebase-admin/firestore";
 
@@ -19,10 +19,30 @@ export function clientIp(req: VercelRequest): string {
   return (fwd.split(",")[0] || req.socket?.remoteAddress || "unknown").trim();
 }
 
+/**
+ * Segreto del server per hash e firme. Nessun valore predefinito nel codice:
+ * RATE_LIMIT_SALT se impostato, altrimenti derivato dalla chiave dell'account
+ * di servizio (segreta anche lei), altrimenti casuale per istanza.
+ */
+let cachedSecret: string | null = null;
+export function serverSecret(): string {
+  if (cachedSecret) return cachedSecret;
+  const explicit = process.env.RATE_LIMIT_SALT;
+  const sa = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
+  cachedSecret = explicit && explicit.length >= 16 ? explicit
+    : sa ? createHash("sha256").update("inlab-salt:" + sa).digest("hex")
+    : randomBytes(32).toString("hex");
+  return cachedSecret;
+}
+
 /** Hash dell'IP con salt: per i limiti non serve (e non conserviamo) l'IP in chiaro. */
 export function hashKey(value: string): string {
-  const salt = process.env.RATE_LIMIT_SALT || "inlab-default-salt";
-  return createHash("sha256").update(salt + value).digest("hex").slice(0, 32);
+  return createHash("sha256").update(serverSecret() + value).digest("hex").slice(0, 32);
+}
+
+/** Firma HMAC (per token emessi dal server, es. inizio compilazione del modulo). */
+export function sign(value: string): string {
+  return createHmac("sha256", serverSecret()).update(value).digest("base64url").slice(0, 32);
 }
 
 /**
@@ -96,3 +116,9 @@ export function securityHeaders(res: VercelResponse) {
 
 export const str = (v: unknown, max: number): string =>
   typeof v === "string" ? v.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "").trim().slice(0, max) : "";
+
+/** Confronto a tempo costante tra due stringhe. */
+export function safeEqual(a: string, b: string): boolean {
+  const x = Buffer.from(a); const y = Buffer.from(b);
+  return x.length === y.length && timingSafeEqual(x, y);
+}

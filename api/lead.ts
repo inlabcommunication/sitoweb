@@ -4,20 +4,29 @@
  * più scrivere direttamente nel database.
  */
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, securityHeaders, str } from "./_lib/security";
+import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   securityHeaders(res);
+  // GET: il server emette un token firmato con l'ora di apertura del modulo,
+  // così il tempo di compilazione non dipende da un valore scelto dal browser
+  if (req.method === "GET") {
+    const ts = String(Date.now());
+    return res.status(200).json({ token: `${ts}.${sign("lead:" + ts)}` });
+  }
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   if (!isAllowedOrigin(req)) return res.status(403).json({ error: "Forbidden" });
 
   const b = req.body || {};
 
-  // Anti-bot: campo nascosto che le persone non compilano, e tempo minimo di compilazione
-  const elapsed = Date.now() - Number(b.startedAt || 0);
-  if (str(b.website, 200) || !Number.isFinite(elapsed) || elapsed < 3000) {
+  // Anti-bot: campo nascosto che le persone non compilano, e tempo minimo di
+  // compilazione misurato dal token firmato (min 3 secondi, max 24 ore)
+  const [ts = "", mac = ""] = str(b.formToken, 80).split(".");
+  const elapsed = Date.now() - Number(ts);
+  const validToken = /^\d{13}$/.test(ts) && safeEqual(mac, sign("lead:" + ts));
+  if (str(b.website, 200) || !validToken || !Number.isFinite(elapsed) || elapsed < 3000 || elapsed > 86_400_000) {
     return res.status(200).json({ ok: true }); // risposta neutra: il bot non capisce di essere stato scartato
   }
 

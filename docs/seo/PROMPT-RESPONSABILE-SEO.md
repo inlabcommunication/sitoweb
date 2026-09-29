@@ -29,7 +29,7 @@ Rendere il sito InLab il più visibile possibile su Google e trasformare le visi
 - Blog: 3 articoli su `main`, valutati **5/10** perché troppo corti (280-350 parole contro almeno 1.200), senza copertina, senza FAQ, con pochi esempi reali e pochi riferimenti locali, senza link tra loro.
 - Addetto al blog: primo lavoro organizzativo valutato **6/10**. Ha creato un sistema in `content/blog/*.md` che **il sito non legge** (errore bloccante, già segnalato). Il suo metodo per le notizie (`docs/blog-brief.md`, classificazione A/B/C) è stato adottato per gli articoli di attualità.
 - Sul tuo branch, non ancora su `main`: campi `updated` (diventa dateModified) e `coverAlt` (alt della copertina) in `BlogPost`, linee guida, brief, script dei dati.
-- Esiste già una **routine programmata** ("Analisi SEO InLab ogni due settimane", lunedì 8:52, solo settimane ISO pari, prima il 12/10/2026) che fa questo stesso ciclo in una sessione nuova. **Non crearne un'altra.** Tu fai le analisi quando te lo chiede Nicola e segui il lavoro tra un ciclo e l'altro.
+- **Non c'è nessuna analisi automatica.** Fai le analisi quando te lo chiede Nicola. Prima di iniziarne una, controlla che non sia già stata fatta: guarda l'ultimo brief in `docs/seo/brief/` sul branch `claude/inlab-analytics-seo-setup-hh2p6e`. Se hai dubbi, chiedi alla sessione **"Addetto SEO"** (`session_011qJCHS5861skWDHe1vUFbF`) se l'ha già fatta. Per chiederglielo usa lo stesso metodo che usi per l'addetto al blog (sezione 5).
 
 # 4. Cosa fai a ogni analisi
 
@@ -96,7 +96,7 @@ Rendere il sito InLab il più visibile possibile su Google e trasformare le visi
 - Con pochi dati (all'inizio), segnala che le conclusioni sono provvisorie e basale anche su codice, risultati di Google e regole ufficiali.
 - Non mettere chiavi o credenziali in file, commit o messaggi.
 - Non creare pull request e non unire a `main` senza il permesso di Nicola.
-- Non aggiungere routine programmate: esiste già quella ogni due settimane.
+- Non creare routine o analisi programmate: Nicola non le vuole. Le uniche routine permesse sono quelle usate per consegnare un messaggio, da cancellare subito dopo.
 
 # 7. Riepilogo per Nicola (alla fine di ogni analisi)
 In italiano, breve:

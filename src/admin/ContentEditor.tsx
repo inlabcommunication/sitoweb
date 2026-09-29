@@ -557,6 +557,10 @@ export const ContentEditor = () => {
     setSaving(true);
     const ok = await saveContent(content);
     if (ok) {
+      // Rigenera le pagine per Google (nuovi clienti/casi studio) se il Deploy Hook è configurato
+      import('../lib/firebase').then(({ auth }) => auth?.currentUser?.getIdToken())
+        .then((token) => token && fetch('/api/publish', { method: 'POST', headers: { Authorization: `Bearer ${token}` } }))
+        .catch(() => { /* facoltativo: senza hook le pagine si aggiornano al prossimo deploy */ });
       setOriginal(content);
       setSaved(true);
       setTimeout(() => setSaved(false), 2500);

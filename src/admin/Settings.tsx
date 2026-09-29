@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
 import { Bot, Key, Save, CheckCircle, AlertCircle, Zap } from 'lucide-react';
-import { db } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
 // Le chiavi API NON si salvano qui: stanno solo nelle variabili d'ambiente di
@@ -55,7 +55,9 @@ export const Settings = () => {
   const testChat = async () => {
     setTesting(true); setTest(null);
     try {
-      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      // Il token admin permette al server di restituire anche l'esito per modello
+      const token = await auth?.currentUser?.getIdToken().catch(() => '');
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
         body: JSON.stringify({ messages: [{ role: 'user', content: 'Ciao, quali servizi offrite? (test dalla dashboard)' }], sessionId: 'dashboard-test' }) });
       const d = await r.json().catch(() => ({}));
       if (r.ok) setTest({ ok: true, text: `Funziona. Risposta: "${String(d.reply || '').slice(0, 220)}"` });

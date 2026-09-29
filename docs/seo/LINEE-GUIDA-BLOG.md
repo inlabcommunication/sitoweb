@@ -183,7 +183,7 @@ Conta sempre i caratteri di `seoTitle` e `seoDescription` prima di consegnare.
     `/casi-studio/ricciardi`).
   - 1 link a `/contatti` nella chiusura.
   - Quando parli di una città, puoi linkare la pagina locale del servizio:
-    `/gestione-social-taranto`, `/siti-web-massafra`, ecc. (formato
+    `/gestione-social-taranto`, `/siti-web-mottola`, ecc. (formato
     `/{servizio}-{città}`, città in minuscolo).
 - **Quando pubblichi un articolo nuovo, aggiungi un link verso di lui in almeno
   1 articolo già esistente** dello stesso argomento. Un articolo senza link che
@@ -205,12 +205,18 @@ Google premia i contenuti scritti da chi ha **esperienza vera**. Quindi:
 - **Esempi del territorio:** "un bar a Castellaneta", "uno studio a Massafra", la
   stagionalità del turismo sulla costa di Castellaneta Marina e Ginosa Marina,
   gli eventi locali. Rende l'articolo utile e rafforza la SEO locale.
-- **Prezzi: niente cifre dei nostri servizi.** Indicazione del titolare (Nicola
-  Carpignano, settembre 2026): negli articoli non si pubblicano prezzi né fasce
-  di prezzo di InLab o del mercato. Quando il lettore si chiede "quanto costa",
-  spiega **da cosa dipende il costo** e **come confrontare due preventivi**,
-  poi invita a chiedere un preventivo. I prezzi ufficiali di piattaforme terze
-  (per esempio un abbonamento Meta) si possono citare con la fonte.
+- **Prezzi: mai i prezzi dei nostri pacchetti.** Indicazione del titolare (Nicola
+  Carpignano, 29/09/2026): negli articoli non si pubblicano prezzi, fasce o
+  "a partire da" dei servizi InLab. **Si possono citare i prezzi generici**:
+  abbonamenti e tariffe di piattaforme e strumenti (Meta One, messaggi WhatsApp
+  Business, un software) e dati di mercato, sempre con la fonte e la data.
+  Quando il lettore si chiede quanto costa un nostro servizio, spiega **da cosa
+  dipende il costo** e **come confrontare due preventivi**, poi invita a
+  chiedere un preventivo.
+- **Casi dei clienti: per ora restano come sono.** Il titolare preparerà casi
+  studio completi (29/09/2026). Fino ad allora cita i clienti solo con quello
+  che c'è già nelle schede `/cliente/...` e nei casi studio, senza aggiungere
+  dettagli o numeri, e non chiedere informazioni sui clienti.
 - **Aggiornamento:** se una piattaforma cambia (nuove funzioni di Instagram, nuove
   regole di Meta Ads), l'articolo va aggiornato. Scrivi l'anno nel testo solo
   se lo aggiorneremo davvero.

@@ -222,6 +222,8 @@ export const CasesEditor = ({ content, set }: Props) => {
           <Field label="Categorie" value={cs.category} onChange={(v: string) => updCase(i, { category: v })} placeholder="Sito web · Lead generation · Social" />
           <Field label="Il problema" value={cs.problem} onChange={(v: string) => updCase(i, { problem: v })} multiline rows={2} />
           <Field label="Il risultato" value={cs.result} onChange={(v: string) => updCase(i, { result: v })} multiline rows={2} />
+          <Field label="Città in cui è presente (separate da virgola)" value={(cs.locations || []).join(', ')} onChange={(v: string) => updCase(i, { locations: v.split(',').map((t) => t.trim()).filter(Boolean) })}
+            hint="Il caso studio compare nella sezione 'I nostri lavori a…' delle pagine locali di queste città" placeholder="Palagianello, Palagiano" />
           <Select label="Scheda cliente collegata" value={cs.clientId || ''} onChange={(v) => updCase(i, { clientId: v })}
             options={[['', '— Nessuna —'], ...clients.map((c: any) => [c.id, c.name] as [string, string])]} />
 
