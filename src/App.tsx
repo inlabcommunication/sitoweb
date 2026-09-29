@@ -27,13 +27,14 @@ import { MethodTimeline } from "./sections/MethodTimeline";
 import { ClientsWall } from "./sections/ClientsWall";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
 const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ default: m.PagePrivacy })));
 const PageBlog = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageBlog })));
 const PageArticolo = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageArticolo })));
+const PageAutore = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageAutore })));
  
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -1174,7 +1175,7 @@ const PageChiSiamo = () => {
                   </div>
                   <div>
                     <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
-                    <div style={{fontSize:16,fontWeight:500}}>{p.name}</div>
+                    <div style={{fontSize:16,fontWeight:500}}>{authorByName(p.name) ? <Link to={authorPath(authorByName(p.name)!.slug)} style={{color:"inherit"}}>{p.name}</Link> : p.name}</div>
                   </div>
                 </div>
                 <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}</p>
@@ -1781,6 +1782,7 @@ const parseRoute = (route) => {
   if(route==="/privacy") return {page:"privacy"};
   if(route==="/blog") return {page:"blog"};
   if(route.startsWith("/blog/")) return {page:"articolo",id:route.replace("/blog/","")};
+  if(route.startsWith("/autori/")) return {page:"autore",id:route.replace("/autori/","")};
   // case study detail pages: /casi-studio/paresteta
   if(route.startsWith("/casi-studio/")) return {page:"caso",id:route.replace("/casi-studio/","")};
   // client detail pages: /cliente/nunzio-putignano
@@ -1829,6 +1831,7 @@ const renderPage = (info) => {
     case "contatti": return <PageContatti/>;
     case "privacy": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PagePrivacy/></Suspense>;
     case "blog": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageBlog go={navigate}/></Suspense>;
+    case "autore": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageAutore slug={info.id} go={navigate}/></Suspense>;
     case "articolo": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageArticolo slug={info.id} go={navigate}/></Suspense>;
     case "service":
       switch(info.slug){

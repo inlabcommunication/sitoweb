@@ -6,7 +6,8 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
 import { useBlogPosts, readingMinutes, formatDate, type BlogPost } from '../lib/blog';
 import { Markdown } from '../components/Markdown';
 import { applySeo } from '../seo/head';
-import { getSeo } from '../seo/routes';
+import { getSeo, AUTHORS, authorByName, authorPath } from '../seo/routes';
+import { useContent } from '../lib/content';
 
 type Go = (to: string) => void;
 
@@ -182,7 +183,9 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
                 {post.author.split(' ').map((w) => w[0]).slice(0, 2).join('')}
               </div>
               <div style={{ fontSize: 13 }}>
-                <div style={{ fontWeight: 500 }}>{post.author}</div>
+                <div style={{ fontWeight: 500 }}>{authorByName(post.author)
+                  ? <a href={authorPath(authorByName(post.author)!.slug)} onClick={linkTo(go, authorPath(authorByName(post.author)!.slug))} rel="author" style={{ color: 'inherit' }}>{post.author}</a>
+                  : post.author}</div>
                 <div style={{ color: 'var(--m)', fontSize: 12 }}>InLab Communication</div>
               </div>
             </div>
@@ -224,6 +227,84 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
           </div>
         </section>
       )}
+    </>
+  );
+};
+
+// Pagina autore (/autori/:slug): chi è, cosa fa e gli articoli che ha firmato.
+// Usa solo informazioni già presenti nel sito (team in /chi-siamo e dati SEO).
+export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
+  const author = AUTHORS.find((a) => a.slug === slug);
+  const { posts, loading } = useBlogPosts();
+  const team = (((useContent() as any).studio?.team) || []) as any[];
+  useEffect(() => { if (author) applySeo(getSeo(authorPath(author.slug))); }, [loading, slug]);
+
+  if (!author) {
+    return (
+      <section style={{ padding: '10rem 2rem 8rem', minHeight: '60vh' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+          <p className="section-label">Autore non trovato</p>
+          <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.5rem,5vw,4rem)', lineHeight: 0.9, marginBottom: '1.5rem' }}>PAGINA<br /><span className="stroke">NON TROVATA.</span></h1>
+          <a href="/chi-siamo" onClick={linkTo(go, '/chi-siamo')} className="btn btn-p">Chi siamo <ArrowRight size={14} /></a>
+        </div>
+      </section>
+    );
+  }
+  const member = team.find((m) => String(m?.name || '').toLowerCase() === author.name.toLowerCase()) || {};
+  const edu = (Array.isArray(member.edu) ? member.edu : []).filter(Boolean) as string[];
+  const mine = posts.filter((p) => authorByName(p.author)?.slug === author.slug);
+
+  return (
+    <>
+      <BlogStyles />
+      <section style={{ padding: '10rem 2rem 4rem', borderBottom: '.5px solid var(--b)' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: member.photo ? '220px 1fr' : '1fr', gap: '3rem', alignItems: 'center' }} className="grid-1-mob">
+          {member.photo && <img src={member.photo} alt={author.name} style={{ width: 220, height: 220, borderRadius: '50%', objectFit: 'cover', border: '.5px solid var(--b)' }} />}
+          <div>
+            <p className="section-label">Autore · InLab Communication</p>
+            <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(3rem,8vw,6.5rem)', lineHeight: 0.9, marginBottom: '1rem', textTransform: 'uppercase' }}>{author.name}</h1>
+            <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.2rem,2.2vw,1.7rem)', color: 'var(--a)', marginBottom: '1.4rem' }}>{author.jobTitle}</p>
+            {member.bio && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640 }}>{member.bio}</p>}
+          </div>
+        </div>
+      </section>
+
+      <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '1.2rem' }}>
+          {edu.length > 0 && (
+            <div className="card">
+              <h2 className="section-label" style={{ fontWeight: 500 }}>Formazione</h2>
+              <ul style={{ paddingLeft: '1.1rem', margin: 0 }}>{edu.map((e) => <li key={e} style={{ fontSize: 14, lineHeight: 1.7, marginBottom: 6 }}>{e}</li>)}</ul>
+            </div>
+          )}
+          <div className="card">
+            <h2 className="section-label" style={{ fontWeight: 500 }}>Di cosa si occupa</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {author.knowsAbout.map((k) => <span key={k} className="tag tag-a">{k}</span>)}
+            </div>
+            <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '1rem' }}>Lavora in InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA).</p>
+          </div>
+        </div>
+      </section>
+
+      {mine.length > 0 && (
+        <section style={{ padding: '5rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+            <p className="section-label">Articoli</p>
+            <h2 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.2rem,4vw,3.6rem)', lineHeight: 0.9, marginBottom: '2rem' }}>SCRITTI DA <span className="stroke">{author.name.toUpperCase()}</span></h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))', gap: '1.2rem' }}>
+              {mine.map((p, i) => <PostCard key={p.slug} post={p} go={go} i={i} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section style={{ padding: '4rem 2rem 6rem' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <a href="/chi-siamo" onClick={linkTo(go, '/chi-siamo')} className="btn btn-g">Chi siamo</a>
+          <a href="/contatti" onClick={linkTo(go, '/contatti')} className="btn btn-p">Contatta InLab <ArrowUpRight size={14} /></a>
+        </div>
+      </section>
     </>
   );
 };
