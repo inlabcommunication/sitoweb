@@ -1539,6 +1539,8 @@ const PageCittaSEO = ({city, service}) => {
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
     .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
+  const localCases=(((useContent() as any).cases?.items||[]) as any[])
+    .filter((cs: any)=>Array.isArray(cs.locations)&&cs.locations.some((l: string)=>norm(l)===norm(cityName)));
  
   return (
     <>
@@ -1605,12 +1607,20 @@ const PageCittaSEO = ({city, service}) => {
       </section>
  
       {/* Lavori reali in questa città: contenuto diverso per ogni pagina locale */}
-      {localClients.length>0&&(
+      {(localClients.length>0||localCases.length>0)&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Clienti a {cityName}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>I NOSTRI LAVORI<br/><span className="stroke">A {cityName.toUpperCase()}</span></h2>
             <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(270px,1fr))",gap:14}}>
+              {localCases.map((cs: any)=>(
+                <Link key={"caso-"+cs.id} to={`/casi-studio/${cs.id}`} className="client-card" style={{minHeight:220}}>
+                  <span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>Caso studio</span>
+                  <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18,fontWeight:400}}>{cs.client}</h3>
+                  {(cs.problem||cs.title)&&<span className="client-card-summary">{cs.problem||cs.title}</span>}
+                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>Leggi il caso studio <ArrowUpRight size={13}/></span>
+                </Link>
+              ))}
               {localClients.map((cl: any)=>(
                 <Link key={cl.id} to={`/cliente/${cl.id}`} className="client-card" style={{minHeight:220}}>
                   {cl.sector&&<span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>{cl.sector}</span>}

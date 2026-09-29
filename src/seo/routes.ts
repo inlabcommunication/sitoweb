@@ -30,9 +30,10 @@ export const BUSINESS = {
   ],
 };
 
-// Città con clienti reali (indicazione del titolare, 29/09/2026). Massafra e
-// Ginosa sono state tolte: i vecchi indirizzi fanno redirect 301 (vercel.json).
-export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Castellaneta', 'Laterza', 'Gravina in Puglia'];
+// Città con clienti reali (indicazione del titolare, 29/09/2026). Massafra è
+// stata tolta (redirect 301 in vercel.json). Ginosa resta: Paresteta ha un
+// negozio lì (in attesa di conferma del responsabile SEO).
+export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Castellaneta', 'Laterza', 'Ginosa', 'Gravina in Puglia'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 

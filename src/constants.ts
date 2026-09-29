@@ -356,7 +356,7 @@ export const WEBSITE_CONTENT = {
 
   cities: {
     tag: "Aree servite in Puglia",
-    list: ["Taranto", "Palagiano", "Palagianello", "Mottola", "Castellaneta", "Laterza", "Gravina in Puglia"]
+    list: ["Taranto", "Palagiano", "Palagianello", "Mottola", "Castellaneta", "Laterza", "Ginosa", "Gravina in Puglia"]
   },
 
   contact: {
