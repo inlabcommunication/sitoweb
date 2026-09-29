@@ -1376,7 +1376,21 @@ const PageContatti = () => {
   const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
   // Anti-bot: campo nascosto (le persone non lo vedono) e ora di apertura del modulo
   const [honeypot,setHoneypot]=useState("");
-  const formStartedAt=React.useRef(Date.now());
+  // Token firmato dal server all'apertura del modulo (anti-bot sul tempo di compilazione)
+  const formToken=React.useRef("");
+  const getFormToken=async()=>{
+    if(formToken.current) return formToken.current;
+    try{ const r=await fetch('/api/lead'); const d=await r.json(); formToken.current=String(d.token||""); }catch{ /* riprova all'invio */ }
+    return formToken.current;
+  };
+  useEffect(()=>{ getFormToken(); },[]);
+  // Se il token non era arrivato all'apertura, lo chiede ora e attende il tempo minimo
+  const tokenForSubmit=async()=>{
+    if(formToken.current) return formToken.current;
+    const t=await getFormToken();
+    await new Promise(r=>setTimeout(r,3200));
+    return t;
+  };
   const [sent,setSent]=useState(false);
   const [error,setError]=useState("");
   const [sending,setSending]=useState(false);
@@ -1394,7 +1408,7 @@ const PageContatti = () => {
         body: JSON.stringify({
           name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
           service: form.servizio, message: form.msg, privacy: form.privacy,
-          website: honeypot, startedAt: formStartedAt.current,
+          website: honeypot, formToken: await tokenForSubmit(),
         }),
       });
       if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
