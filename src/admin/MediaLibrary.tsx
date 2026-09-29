@@ -123,10 +123,8 @@ const uploadFile = (
         const signed = await r.json();
         for (const k of ['folder', 'timestamp', 'upload_preset', 'context', 'signature']) if (signed[k]) fd.append(k, signed[k]);
       } else if (r.status === 501) {
-        // Firma non ancora configurata su Vercel: upload con preset non firmato (vedi SECURITY.md)
-        fd.append('upload_preset', 'ml_default');
-        fd.append('folder', targetFolder);
-        fd.append('context', context);
+        // Nessun ripiego su upload non firmati: la firma va configurata su Vercel
+        return reject(new Error('Upload non configurato: manca CLOUDINARY_API_SECRET su Vercel (vedi SECURITY.md)'));
       } else {
         return reject(new Error('Upload non autorizzato'));
       }
@@ -706,7 +704,7 @@ export const MediaLibraryPage = () => {
                   <div key={t.id} style={{ marginTop: 8, padding: '10px 14px', background: 'rgba(255,100,100,0.08)', border: '.5px solid rgba(255,100,100,0.2)', borderRadius: 10, fontSize: 12, color: '#ff8888' }}>
                     <strong>{t.file.name}</strong>: {t.error}
                     <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>
-                      Assicurati che il preset <code style={{ color: '#cdb2ff' }}>ml_default</code> sia attivo su Cloudinary come <strong>Unsigned</strong>.
+                      Gli upload sono firmati: su Vercel deve esserci <code style={{ color: '#cdb2ff' }}>CLOUDINARY_API_SECRET</code> e il preset <code style={{ color: '#cdb2ff' }}>ml_default</code> su Cloudinary deve essere impostato come <strong>Signed</strong>.
                     </div>
                   </div>
                 ))}

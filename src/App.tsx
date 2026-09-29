@@ -1376,7 +1376,21 @@ const PageContatti = () => {
   const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
   // Anti-bot: campo nascosto (le persone non lo vedono) e ora di apertura del modulo
   const [honeypot,setHoneypot]=useState("");
-  const formStartedAt=React.useRef(Date.now());
+  // Token firmato dal server all'apertura del modulo (anti-bot sul tempo di compilazione)
+  const formToken=React.useRef("");
+  const getFormToken=async()=>{
+    if(formToken.current) return formToken.current;
+    try{ const r=await fetch('/api/lead'); const d=await r.json(); formToken.current=String(d.token||""); }catch{ /* riprova all'invio */ }
+    return formToken.current;
+  };
+  useEffect(()=>{ getFormToken(); },[]);
+  // Se il token non era arrivato all'apertura, lo chiede ora e attende il tempo minimo
+  const tokenForSubmit=async()=>{
+    if(formToken.current) return formToken.current;
+    const t=await getFormToken();
+    await new Promise(r=>setTimeout(r,3200));
+    return t;
+  };
   const [sent,setSent]=useState(false);
   const [error,setError]=useState("");
   const [sending,setSending]=useState(false);
@@ -1394,7 +1408,7 @@ const PageContatti = () => {
         body: JSON.stringify({
           name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
           service: form.servizio, message: form.msg, privacy: form.privacy,
-          website: honeypot, startedAt: formStartedAt.current,
+          website: honeypot, formToken: await tokenForSubmit(),
         }),
       });
       if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
@@ -2137,8 +2151,26 @@ const parseRoute = (route) => {
       if(route===expected) return {page:"city",service:svc.slug,city:city.toLowerCase()};
     }
   }
-  return {page:"home"};
+  return {page:"notfound"};
 };
+
+/* Pagina 404: indirizzo inesistente (il server risponde con stato 404) */
+const PageNotFound = () => (
+  <section style={{padding:"11rem 2rem 8rem",minHeight:"70vh"}}>
+    <div style={{maxWidth:720,margin:"0 auto",textAlign:"center"}}>
+      <p className="section-label">Errore 404</p>
+      <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,6rem)",lineHeight:.9,marginBottom:"1.5rem"}}>
+        PAGINA<br/><span className="stroke">NON TROVATA.</span>
+      </h1>
+      <p style={{color:"var(--m)",lineHeight:1.7,marginBottom:"2rem"}}>L'indirizzo che hai aperto non esiste o è stato spostato. Da qui puoi tornare alle pagine principali.</p>
+      <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap"}}>
+        <Link to="/" className="btn btn-p">Torna alla home <ArrowRight size={14}/></Link>
+        <Link to="/servizi" className="btn btn-g">Servizi</Link>
+        <Link to="/contatti" className="btn btn-g">Contatti</Link>
+      </div>
+    </div>
+  </section>
+);
  
 const renderPage = (info) => {
   switch(info.page){
@@ -2167,6 +2199,7 @@ const renderPage = (info) => {
         default: return <PageHome/>;
       }
     case "city": return <PageCittaSEO city={info.city} service={info.service}/>;
+    case "notfound": return <PageNotFound/>;
     default: return <PageHome/>;
   }
 };
