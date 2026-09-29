@@ -30,7 +30,11 @@ export const BUSINESS = {
   ],
 };
 
-export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Massafra', 'Mottola', 'Castellaneta', 'Laterza', 'Ginosa'];
+// Città con clienti reali (indicazione del titolare, 29/09/2026). Massafra e
+// Ginosa sono state tolte: i vecchi indirizzi fanno redirect 301 (vercel.json).
+export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Castellaneta', 'Laterza', 'Gravina in Puglia'];
+/** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
+export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 export const SERVICES_SEO = [
   { slug: 'gestione-social', label: 'Gestione Social', keyword: 'gestione social media',
@@ -160,7 +164,7 @@ const page = (path: string, title: string, description: string, extra: Partial<S
 export const listRoutes = (): string[] => [
   '/', '/servizi', '/chi-siamo', '/casi-studio', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
-  ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${c.toLowerCase()}`)),
+  ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
   '/blog', '/privacy',
@@ -218,7 +222,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   for (const s of SERVICES_SEO) {
-    const city = CITIES.find((c) => path === `/${s.slug}-${c.toLowerCase()}`);
+    const city = CITIES.find((c) => path === `/${s.slug}-${citySlug(c)}`);
     if (city) {
       // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
       const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;
