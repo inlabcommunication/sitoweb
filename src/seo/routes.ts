@@ -5,7 +5,9 @@
 
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
-import { BLOG_SEED, type BlogPost } from '../data/blogSeed';
+// Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
+// si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
+import type { BlogPost } from '../data/blogSeed';
 
 /** Dominio del sito. Impostalo su Vercel con VITE_SITE_URL (es. https://www.inlabcommunication.it). */
 export const SITE_URL = (
@@ -140,7 +142,7 @@ const webPage = (path: string, title: string, description: string) => ({
 
 // Articoli del blog: quelli nel codice + quelli pubblicati dalla dashboard
 // (registrati dal browser dopo il caricamento e dallo script di build).
-let blogPosts: BlogPost[] = BLOG_SEED.filter((p) => p.published);
+let blogPosts: BlogPost[] = [];
 export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filter((p) => p.published); };
 export const getBlogPosts = () => blogPosts;
 const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
