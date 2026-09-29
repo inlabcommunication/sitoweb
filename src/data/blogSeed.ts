@@ -161,7 +161,7 @@ Non esiste la scelta giusta per tutti. Dipende dal tempo che hai e da quanto con
 
 Lavorando con attività della provincia di Taranto abbiamo visto che il contenuto che funziona segue la vita reale dell'attività. Per [Sublime Tentazione](/cliente/sublime-tentazione), gelateria e pasticceria di Palagianello, i contenuti seguono le stagioni del laboratorio: il gelato d'estate, i panettoni a Natale. Per [Masseria Sacramento](/cliente/masseria-sacramento) la comunicazione accompagna ogni appuntamento del calendario, dalla festa della birra alle serate con musica live.
 
-Il caso più completo è quello di [Paresteta](/casi-studio/paresteta): un cambio insegna trasformato in un evento locale, con teaser sui social, QR code per raccogliere contatti, video di lancio e attività in città. I social, da soli, fanno una parte del lavoro. Collegati a quello che succede offline, fanno la differenza.
+Il caso più completo è quello di [Paresteta](/casi-studio/paresteta): un cambio insegna trasformato in un evento locale, con teaser sui social, QR code per raccogliere contatti, video di lancio e attività in città. I social, da soli, fanno una parte del lavoro. Collegati a quello che succede offline, fanno la differenza. Se anche tu stai pensando a un cambio di nome o di insegna, leggi la guida al [rebranding di un'attività commerciale](/blog/rebranding-attivita-commerciale).
 
 Se vuoi capire quale formato usare per ogni contenuto, leggi anche [reel o post: cosa pubblicare su Instagram](/blog/reel-o-post-cosa-pubblicare-instagram).
 
@@ -215,7 +215,7 @@ Vuoi capire come potrebbe funzionare per la tua attività? [Scopri il servizio d
 
 Nessun formato è "il migliore" in assoluto. Ognuno ha un lavoro preciso da fare. Capire quale lavoro ti serve in un certo momento è il primo passo per pubblicare con meno fatica e più risultati.
 
-## Reel, carosello, post singolo e storie: a cosa serve ciascuno
+## Reel o post su Instagram: a cosa serve ogni formato
 
 ### Reel: per farti scoprire
 
@@ -480,7 +480,7 @@ Se la tua attività è in provincia di Taranto, trovi i dettagli nella pagina su
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/tracking-pixel-email-garante/cover.jpg',
-    coverAlt: 'Illustrazione di una busta email aperta con un piccolo pixel di tracciamento evidenziato in lilla e un interruttore del consenso',
+    coverAlt: 'Busta email con un pixel di tracciamento e l\'interruttore del consenso',
     published: true,
     seoTitle: 'Tracking pixel email e Garante: cosa fare ora | InLab',
     seoDescription: 'Tracking pixel email Garante: cosa prevedono le linee guida, quando serve il consenso e la checklist per adeguare la newsletter entro ottobre 2026.',
@@ -548,7 +548,7 @@ Queste sanzioni non riguardano i pixel, ma ribadiscono principi che chi fa email
 - Perdere le disiscrizioni quando cambi piattaforma o CRM: devono restare valide anche dopo la migrazione.
 - Rispondere in ritardo a chi chiede accesso o cancellazione dei propri dati.
 
-## Cosa cambia per PMI, attività locali e professionisti
+## Chi deve adeguare la newsletter: ristoranti, negozi, studi ed e-commerce
 
 L'impatto dipende da come usi le email. Qualche scenario tipico, a titolo di esempio.
 
@@ -566,7 +566,7 @@ C'è un effetto collaterale che riguarda tutti: l'**open rate** perderà valore 
 
 Secondo noi è un'occasione per misurare meglio. Clic, risposte, prenotazioni, vendite e visite al sito dicono molto di più sul valore di una newsletter rispetto a un'apertura, che non garantisce nemmeno che il messaggio sia stato letto. Se il tuo obiettivo è portare persone sul sito, ti conviene [misurare cosa arriva dal sito in GA4](/blog/google-business-profile-ga4) e collegare le campagne ai risultati reali.
 
-## Cosa fare in pratica entro fine ottobre 2026
+## Tracking pixel nelle email: cosa fare entro fine ottobre 2026
 
 Ecco una checklist operativa. Non sostituisce il parere del tuo consulente privacy, ma ti aiuta a non arrivare impreparato.
 
@@ -631,7 +631,7 @@ Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti ge
 
 *Questo articolo ha scopo informativo e non sostituisce una consulenza legale. Per valutare il tuo caso specifico rivolgiti a un professionista della protezione dei dati.*
 
-## Fonti
+**Fonti**
 
 - [Linee guida sui tracking pixel nelle comunicazioni di posta elettronica, provvedimento del 17 aprile 2026 – Garante per la protezione dei dati personali, aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943)
 - [Comunicato sulle linee guida sui tracking pixel nelle email – Garante per la protezione dei dati personali, 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241977)
@@ -648,7 +648,7 @@ Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti ge
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/contenuti-ai-obblighi-ai-act/cover.jpg',
-    coverAlt: 'Illustrazione di un post social con immagine realistica e un\'etichetta \'Generato con AI\' evidenziata in lilla, accanto a una chat di un assistente virtuale',
+    coverAlt: 'Post social con l\'etichetta "Creato con AI" su un\'immagine generata',
     published: true,
     seoTitle: 'Contenuti AI: obblighi AI Act e legge italiana | InLab',
     seoDescription: 'Contenuti generati con AI: obblighi dell\'AI Act art. 50 dal 2 agosto 2026 e della legge 132/2025. Cosa etichettare, chatbot, deepfake e checklist per PMI.',
@@ -664,7 +664,7 @@ In Italia, poi, è già in vigore dal 10 ottobre 2025 la legge 132/2025 sull'int
 - La legge italiana 132/2025 obbliga i professionisti a informare i clienti sull'uso dell'AI e punisce i deepfake dannosi con la reclusione da 1 a 5 anni.
 - Un logo o un'immagine generati al 100% dall'AI potrebbero non essere tutelati dal diritto d'autore.
 
-## Cosa è cambiato: l'articolo 50 dell'AI Act
+## Contenuti generati con AI: cosa chiede l'articolo 50 dell'AI Act
 
 L'AI Act (Regolamento UE 2024/1689) è la normativa europea sull'intelligenza artificiale. L'**articolo 50** riguarda la trasparenza: in parole semplici, le persone devono sapere quando parlano con una macchina o guardano un contenuto creato da una macchina. Questi obblighi si applicano dal **2 agosto 2026**. Il 20 luglio 2026 la Commissione europea ha adottato le [linee guida finali](https://digital-strategy.ec.europa.eu/en/news/commission-publishes-guidelines-transparency-obligations-providers-and-deployers-certain-ai-systems) per interpretarli.
 
@@ -714,13 +714,13 @@ La [legge 23 settembre 2025, n. 132](https://www.gazzettaufficiale.it/eli/id/202
 - **Diritto d'autore**: sono protette solo le opere con un apporto creativo umano.
 - **Minori**: sotto i 14 anni serve il consenso dei genitori.
 
-## Perché è importante anche per una piccola attività
+## Sanzioni e fiducia: perché riguarda anche una piccola attività
 
 Le sanzioni previste dall'AI Act per le violazioni della trasparenza arrivano fino a **15 milioni di euro o al 3% del fatturato mondiale**. Ma secondo noi il rischio più concreto per una PMI è un altro: la fiducia.
 
 Un cliente che scopre che la "recensione video" o il "prima e dopo" erano generati con l'AI senza dirlo difficilmente torna. La trasparenza, al contrario, può diventare un segno di serietà. E la tendenza delle piattaforme va nella stessa direzione, come mostra l'adesione annunciata da Meta al codice di condotta.
 
-## Cosa cambia per PMI, attività locali e professionisti
+### Esempi per settore: quando serve l'etichetta e quando no
 
 Qualche scenario, a titolo di esempio.
 
@@ -732,7 +732,7 @@ Qualche scenario, a titolo di esempio.
 
 **Qualsiasi attività con un chatbot.** L'assistente sul sito o su WhatsApp deve presentarsi come AI. Se stai valutando di introdurne uno, conviene progettarlo così fin dall'inizio: è quello che facciamo quando sviluppiamo [chatbot e automazioni AI](/automazioni-ai).
 
-## Cosa fare in pratica: la checklist
+## Contenuti generati con AI: la checklist per social, sito e annunci
 
 1. **Scrivi una policy interna "contenuti AI".** Anche una pagina: quali strumenti usate, per cosa, chi rivede i contenuti e quando si etichetta.
 2. **Etichetta immagini, video e audio realistici.** Se un contenuto AI rappresenta persone, luoghi o eventi che sembrano reali, aggiungi una dichiarazione visibile, ad esempio "Immagine generata con AI" sul visual o all'inizio della didascalia.
@@ -786,7 +786,7 @@ Se hai una newsletter, dai un'occhiata anche alle nuove regole sui [tracking pix
 
 *Questo articolo ha scopo informativo e non sostituisce una consulenza legale. Per valutare il tuo caso specifico rivolgiti a un professionista.*
 
-## Fonti
+**Fonti**
 
 - [Commission publishes guidelines on transparency obligations for providers and deployers of certain AI systems – Commissione europea, 20 luglio 2026](https://digital-strategy.ec.europa.eu/en/news/commission-publishes-guidelines-transparency-obligations-providers-and-deployers-certain-ai-systems)
 - [AI Act, Article 50: Transparency obligations – AI Act Service Desk, Commissione europea](https://ai-act-service-desk.ec.europa.eu/en/ai-act/article-50)
@@ -820,7 +820,7 @@ Se hai una newsletter, dai un'occhiata anche alle nuove regole sui [tracking pix
 - Per una PMI escludersi quasi sempre non conviene: meglio usare i dati per capire quali pagine funzionano.
 - Foto originali e dati strutturati prodotto diventano ancora più importanti.
 
-## Cosa è cambiato in Search Console
+## Il report AI Overviews in Search Console: cosa c'è di nuovo
 
 Search Console è lo strumento gratuito di Google che mostra come il tuo sito si comporta nella Ricerca: per quali parole compare, quanti clic riceve, eventuali errori. Nel 2026 si è arricchito di tre novità legate all'intelligenza artificiale.
 
@@ -868,7 +868,7 @@ Finora molti siti vedevano calare i clic senza capire perché. Il report non ris
 
 È un'informazione che prima dovevi indovinare. Ora puoi usarla per decidere su cosa investire.
 
-## Cosa cambia per PMI, attività locali e professionisti
+### Cosa guardare nel report se hai un ristorante, un negozio o uno studio
 
 Il report è uguale per tutti, ma cosa guardare cambia in base al tipo di attività. Qualche esempio.
 
@@ -888,7 +888,7 @@ Il nostro consiglio: **per una PMI quasi mai**. Escludersi significa rinunciare 
 
 Può avere senso valutarlo in casi molto specifici, per esempio se vendi contenuti a pagamento che l'AI rischia di riassumere al posto tuo. Ma per un'attività locale o un professionista, che vive di visibilità, di solito è un autogol. Ricorda comunque che la scelta è reversibile.
 
-## Come leggere il report: la procedura passo passo
+## Come leggere il report AI Overviews passo passo
 
 Ecco un metodo semplice, che puoi seguire anche se non sei un esperto di SEO.
 
@@ -950,7 +950,7 @@ Il report AI Overviews in Search Console non ti dà tutte le risposte, perché m
 
 Il primo passo è semplice: apri Search Console questa settimana, guarda le prime dieci pagine del report e confrontale con i clic. Se vuoi un aiuto a leggere i dati o a sistemare il tuo sito, dai un'occhiata a come lavoriamo sui [siti web](/siti-web) oppure [parliamone](/contatti).
 
-## Fonti
+**Fonti**
 
 - [New controls for website owners – Google, The Keyword, 3 giugno 2026](https://blog.google/products-and-platforms/products/search/new-controls-website-owners/)
 - [Generative AI performance reports in Search Console – Google Search Central Blog, giugno 2026](https://developers.google.com/search/blog/2026/06/gen-ai-performance-reports)
@@ -969,7 +969,7 @@ Il primo passo è semplice: apri Search Console questa settimana, guarda le prim
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/seo-ai-overviews-geo-google/cover.jpg',
-    coverAlt: 'Barra di ricerca stilizzata con risposta AI che si scompone in più ricerche correlate, a illustrare la SEO per AI Overviews',
+    coverAlt: 'Una ricerca su Google scomposta in più domande e la risposta AI con fonte',
     published: true,
     seoTitle: 'SEO per AI Overviews e GEO: cosa dice Google | InLab',
     seoDescription: 'SEO per AI Overviews e GEO: la guida ufficiale di Google spiega cosa conta davvero, perché llms.txt non serve e come riconoscere le offerte GEO fuffa.',
@@ -987,7 +987,7 @@ Il 15 maggio 2026 Google ha pubblicato una guida dedicata all'ottimizzazione dei
 - Creare pagine per ogni variante di domanda viola le regole contro lo spam.
 - Per attività locali ed e-commerce contano Google Business Profile e Merchant Center.
 
-## Cosa è cambiato: la guida ufficiale di Google sulla SEO per l'AI
+## SEO per AI Overviews: cosa dice la guida ufficiale di Google
 
 Il [15 maggio 2026](https://developers.google.com/search/blog/2026/05/a-new-resource-for-optimizing) John Mueller, di Google, ha annunciato la guida "[Optimizing your website for generative AI features on Google Search](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)". È il primo documento ufficiale che spiega cosa fare (e cosa no) per comparire nelle risposte AI della Ricerca.
 
@@ -1009,7 +1009,7 @@ L'esempio di Google è chiaro: un articolo "7 consigli per chi compra casa per l
 
 Creare una pagina per ogni variante di una domanda, o per ogni possibile query di fan-out, con lo scopo di manipolare i risultati viola la policy sullo **scaled content abuse**, cioè la produzione di contenuti in massa per scalare le classifiche. Non è una zona grigia: è spam.
 
-## Cosa puoi ignorare (anche se te lo vendono)
+## GEO, llms.txt e le altre tattiche che puoi ignorare
 
 Qui la guida è preziosa, perché smonta diverse tattiche vendute come "GEO". Per Google Search puoi ignorare:
 
@@ -1024,7 +1024,7 @@ I requisiti tecnici sono pochi: la pagina deve essere **indicizzata** e **idonea
 
 ![Confronto tra le tattiche GEO che Google dice di poter ignorare e i fattori che contano davvero per le AI Overviews](/blog/seo-ai-overviews-geo-google/serve-non-serve.webp)
 
-## Perché è importante: il contesto dei core update 2026
+## I core update 2026 e la fine dei contenuti commodity
 
 La guida arriva in un anno movimentato. I core update sono aggiornamenti generali degli algoritmi di Google, e possono spostare molto traffico.
 
@@ -1036,7 +1036,7 @@ C'è poi un dato ufficiale: il [Discover core update del 5 febbraio 2026](https:
 
 Il filo rosso è sempre lo stesso: **originalità e competenza reale**.
 
-## Cosa significa per PMI, attività locali e professionisti
+## Il vantaggio delle piccole imprese: esperienza e territorio
 
 La buona notizia: una piccola impresa ha spesso più materiale non-commodity di un grande portale. Ha clienti veri, casi veri, un territorio. Basta usarlo.
 
@@ -1048,7 +1048,7 @@ La buona notizia: una piccola impresa ha spesso più materiale non-commodity di 
 
 **Attività locali in generale.** Google cita esplicitamente **Google Business Profile** tra gli strumenti che aiutano la visibilità nelle risposte AI. Se non l'hai ancora curato, parti da lì: trovi i dettagli nel nostro articolo su [Google Business Profile e la SEO locale](/blog/google-business-profile-ga4).
 
-## Cosa fare in pratica
+## Come ottimizzare i contenuti per le risposte AI di Google
 
 ### Come rendere un contenuto non-commodity
 
@@ -1072,7 +1072,7 @@ Prima di firmare, fai queste domande al fornitore:
 
 Il nostro consiglio: se un'offerta promette di "farti comparire su ChatGPT e Google AI in 30 giorni", è un campanello d'allarme. Nessuno può garantirlo.
 
-## Un esempio pratico (ipotetico)
+### Un esempio pratico (ipotetico)
 
 Facciamo un esempio: un centro di fisioterapia di Castellaneta ha un blog con articoli generici tipo "10 esercizi per il mal di schiena", simili a quelli di mille altri siti.
 
@@ -1114,7 +1114,7 @@ La SEO per AI Overviews non è una disciplina segreta. È buona SEO con un'atten
 
 Il passo pratico da fare oggi: prendi le tre pagine più importanti del tuo sito e chiediti cosa contengono che un concorrente non potrebbe copiare. Se la risposta è "niente", sai da dove partire. Se vuoi un sito costruito su questi principi, scopri come lavoriamo sui [siti web](/siti-web) oppure [parliamone](/contatti).
 
-## Fonti
+**Fonti**
 
 - [A new resource for optimizing your website for generative AI features – Google Search Central Blog, 15 maggio 2026](https://developers.google.com/search/blog/2026/05/a-new-resource-for-optimizing)
 - [Optimizing your website for generative AI features on Google Search – Google Search Central, maggio 2026](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide)
@@ -1130,7 +1130,7 @@ Il passo pratico da fare oggi: prendi le tre pagine più importanti del tuo sito
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/google-business-profile-ga4/cover.jpg',
-    coverAlt: 'Scheda Google Business Profile di un\'attività locale collegata a un report GA4 con chiamate, indicazioni stradali e clic al sito',
+    coverAlt: 'Scheda Google di una pasticceria collegata a un report di GA4',
     published: true,
     seoTitle: 'Google Business Profile in GA4: SEO locale 2026 | InLab',
     seoDescription: 'Come collegare Google Business Profile a GA4, quali metriche guardare ogni mese e come leggere il traffico da ChatGPT: guida pratica per attività locali.',
@@ -1146,7 +1146,7 @@ Non è l'unico cambiamento. Google Analytics 4 ha introdotto anche un canale ded
 - Secondo Google, una scheda curata aiuta anche la visibilità nelle risposte generate dall'AI.
 - Il nostro consiglio: tre metriche da controllare ogni mese e una scheda sempre aggiornata valgono più di cento report.
 
-## Cosa è cambiato in GA4 per le attività locali
+## Google Business Profile e GA4: le novità del 2026
 
 Tutte le novità che seguono sono elencate nella pagina ufficiale ["Novità di Google Analytics"](https://support.google.com/analytics/answer/9164320), che abbiamo consultato a settembre 2026.
 
@@ -1193,7 +1193,7 @@ Il secondo motivo riguarda l'intelligenza artificiale. Nella sua [guida di maggi
 
 Secondo noi il messaggio è chiaro: la scheda Google non è più un "extra". È una delle fonti da cui Google, Maps e gli assistenti AI prendono le informazioni sulla tua attività. Se è incompleta o vecchia, rischi di essere raccontato male o di non essere raccontato affatto.
 
-## Cosa significa per PMI, attività locali e professionisti
+### Quali metriche contano per ristoranti, negozi e studi
 
 Le 7 metriche non pesano allo stesso modo per tutti. Ecco come leggerle in base al tipo di attività.
 
@@ -1205,7 +1205,7 @@ Le 7 metriche non pesano allo stesso modo per tutti. Ecco come leggerle in base 
 
 Il canale AI Assistant, per ora, porterà numeri piccoli a molte attività locali. Non è un problema: l'importante è iniziare a osservarlo, così saprai se e quando cresce.
 
-## Cosa fare in pratica: collegamento, metriche e scheda
+## Come collegare Google Business Profile a GA4 e cosa controllare
 
 ### 1. Collega Google Business Profile a GA4
 
@@ -1297,7 +1297,7 @@ Se ti chiedi se ti serve ancora un sito quando hai già la scheda e i social, le
 
 Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, sito e misurazione, possiamo aiutarti con i [siti web a Taranto](/siti-web-taranto) e con la [gestione social a Taranto](/gestione-social-taranto), così che le informazioni siano coerenti ovunque. Se vuoi partire da un controllo della tua scheda, [parliamone](/contatti).
 
-## Fonti
+**Fonti**
 
 - [Novità di Google Analytics (What's new in Google Analytics)](https://support.google.com/analytics/answer/9164320) – Google Analytics Help, consultata a settembre 2026
 - [Ask Maps e navigazione immersiva in Google Maps](https://blog.google/products-and-platforms/products/maps/ask-maps-immersive-navigation/) – Google The Keyword, 12 marzo 2026
@@ -1312,7 +1312,7 @@ Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, si
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/whatsapp-business-ai/cover.jpg',
-    coverAlt: 'Smartphone con chat WhatsApp Business in cui un assistente AI risponde a un cliente e propone una prenotazione',
+    coverAlt: 'Chat WhatsApp di una trattoria in cui l\'assistente AI prenota un tavolo',
     published: true,
     seoTitle: 'WhatsApp Business AI: guida a Meta Business Agent | InLab',
     seoDescription: 'WhatsApp Business AI e Meta Business Agent: cosa fa l\'assistente, username, annunci negli Stati e costi dei messaggi. Guida pratica per attività locali.',
@@ -1330,7 +1330,7 @@ In questa guida vediamo cosa fa davvero l'assistente, cosa cambia con username, 
 - Per chi usa la piattaforma API, in Italia dal 1° luglio 2026 i messaggi marketing costano di più: servono liste segmentate.
 - Prima di attivare l'AI prepara informazioni, regole di passaggio all'operatore e attenzione ai dati sensibili.
 
-## Cosa è cambiato: l'assistente AI entra nelle chat aziendali
+## WhatsApp Business con l'AI: cosa fa Meta Business Agent
 
 ### Cosa fa Meta Business Agent
 
@@ -1376,7 +1376,7 @@ Il problema è noto a chiunque gestisca un'attività: i messaggi arrivano quando
 
 Ma c'è un rovescio. Un assistente che risponde male, inventa un prezzo o promette un orario che non esiste fa più danni del silenzio. Il valore non sta nell'attivare l'AI, sta nel **prepararla bene**.
 
-## Cosa cambia per ristoranti, studi, negozi ed e-commerce
+### Come usarlo in un ristorante, in uno studio, in un negozio o in un e-commerce
 
 **Ristorante o pizzeria.** Le domande sono sempre le stesse: siete aperti lunedì, avete opzioni senza glutine, c'è posto sabato. L'assistente può rispondere e raccogliere prenotazioni anche a servizio in corso, lasciando a te solo i casi particolari (gruppi numerosi, eventi).
 
@@ -1388,7 +1388,7 @@ Ma c'è un rovescio. Un assistente che risponde male, inventa un prezzo o promet
 
 **E-commerce.** Domande su spedizioni, taglie, stato dell'ordine. Qui entrano in gioco anche i prezzi della piattaforma API: i messaggi di servizio nella finestra di conversazione sono gratuiti, quelli promozionali in Italia costano di più. Inviare offerte a tutta la lista senza criterio diventa una spesa, oltre che un fastidio per i clienti.
 
-## Cosa fare in pratica: come prepararti
+## Come preparare WhatsApp Business prima di attivare l'assistente
 
 1. **Costruisci la base informativa.** Scrivi in modo chiaro orari, listini, servizi, FAQ, politiche di reso o disdetta, zone di consegna. L'assistente risponde bene solo se ha informazioni aggiornate e complete.
 2. **Definisci quando passa la mano.** Decidi in quali casi la conversazione deve arrivare a una persona: reclami, richieste complesse, preventivi su misura, qualunque tema sanitario o legale.
@@ -1445,7 +1445,7 @@ Se vuoi un assistente su misura, collegato ai tuoi strumenti e costruito sulle r
 
 *Questo articolo ha scopo informativo e non sostituisce una consulenza legale, in particolare sul trattamento dei dati personali.*
 
-## Fonti
+**Fonti**
 
 - [Meta Business Agent, annuncio ufficiale](https://about.fb.com/news/2026/06/meta-business-agent/) – Meta, 3 giugno 2026
 - [Meta Enterprise Platform, annuncio di lancio](https://about.fb.com/news/2026/09/launching-meta-enterprise-platform/) – Meta, 28 settembre 2026
@@ -1464,7 +1464,7 @@ Se vuoi un assistente su misura, collegato ai tuoi strumenti e costruito sulle r
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/meta-ads-creativita-advantage/cover.jpg',
-    coverAlt: 'Griglia di creatività pubblicitarie in formati diversi analizzate da un sistema AI che le distribuisce agli utenti',
+    coverAlt: 'Tre creatività diverse che l\'AI di Meta distribuisce a pubblici diversi',
     published: true,
     seoTitle: 'Meta Ads 2026: creatività, AI e Advantage+ | InLab',
     seoDescription: 'Meta Ads 2026: come l\'AI decide chi vede i tuoi annunci, cosa cambia con verifica inserzionisti e regole UE, e come impostare creatività e segnali.',
@@ -1516,7 +1516,7 @@ Poi ci sono le regole UE:
 - **Annunci meno personalizzati.** A quanto risulta, in base a un impegno preso con la Commissione europea a dicembre 2025 nell'ambito del Digital Markets Act, da gennaio 2026 gli utenti UE possono scegliere tra annunci personalizzati, abbonamento senza pubblicità e annunci "meno personalizzati". Se confermato, una parte del pubblico riceve annunci basati su meno dati, e la creatività deve funzionare anche senza un targeting preciso.
 - **Etichette AI.** Il 28 luglio 2026 Meta ha firmato il Codice di condotta UE sulla trasparenza dei contenuti AI: è ragionevole aspettarsi più etichette sulle creatività generate con l'AI.
 
-## Perché è importante: il tuo lavoro si sposta
+## Con l'AI il tuo lavoro si sposta: le leve che restano a te
 
 Secondo noi il messaggio è chiaro. Se l'AI decide chi vede cosa, il vantaggio competitivo non sta più nel conoscere le impostazioni nascoste del pannello, ma in cinque cose:
 
@@ -1528,7 +1528,7 @@ Secondo noi il messaggio è chiaro. Se l'AI decide chi vede cosa, il vantaggio c
 
 L'algoritmo impara da quello che gli dai. Creatività scarse e dati sporchi producono risultati scarsi, anche con il sistema più avanzato.
 
-## Cosa cambia per PMI, attività locali e professionisti
+### Le creatività giuste per ristoranti, negozi e studi
 
 **Ristorante o bar.** Un solo annuncio con la foto del locale non basta più. Servono varianti: il piatto in primo piano, un breve video della preparazione, una recensione letta da un cliente. Il sistema capisce da solo a chi mostrare cosa.
 
@@ -1540,7 +1540,7 @@ L'algoritmo impara da quello che gli dai. Creatività scarse e dati sporchi prod
 
 **Associazioni, liste civiche, enti.** Dal 6 ottobre 2025 nell'UE non è più possibile sponsorizzare contenuti politici, elettorali o su temi sociali. Resta la comunicazione organica, su cui conviene investire con più costanza.
 
-## Cosa fare in pratica: la checklist per il 2026
+## Meta Ads 2026: la checklist per le piccole imprese
 
 1. **Costruisci una griglia creativa.** Per esempio 3 angoli di messaggio (prezzo, qualità, esperienza del cliente) per 3 formati (video verticale, immagine statica, carosello). Nove annunci da cui l'AI può scegliere.
 2. **Cura foto e video.** Materiale autentico, girato bene, dà all'algoritmo qualcosa su cui lavorare. È il motivo per cui abbiniamo spesso le campagne a [shooting fotografici](/shooting) e produzione di [video e reel](/video).
@@ -1595,7 +1595,7 @@ Se vuoi impostare così le tue campagne, la nostra [gestione delle campagne Meta
 
 *Le parti su regole UE e verifica degli inserzionisti hanno scopo informativo e non sostituiscono una consulenza legale.*
 
-## Fonti
+**Fonti**
 
 - [Come l'AI guida le performance pubblicitarie nel 2026](https://about.fb.com/news/2026/01/2026-ai-drives-performance/) – Meta, 28 gennaio 2026
 - [Nuovi strumenti e AI contro le truffe](https://about.fb.com/news/2026/03/meta-launches-new-anti-scam-tools-deploys-ai-technology-to-fight-scammers-and-protect-people/) – Meta, 11 marzo 2026
@@ -1610,7 +1610,7 @@ Se vuoi impostare così le tue campagne, la nostra [gestione delle campagne Meta
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/meta-one-aziende/cover.jpg',
-    coverAlt: 'Illustrazione di uno smartphone con profilo aziendale Instagram, badge verificato e link nel post, accanto ai piani dell\'abbonamento Meta One',
+    coverAlt: 'Profilo Instagram aziendale con badge verificato e i piani di Meta One',
     published: true,
     seoTitle: 'Meta One per aziende: prezzi e se conviene | InLab',
     seoDescription: 'Meta One aziende: prezzi dei piani, link nei post Instagram, badge verificato e 4 domande per capire se l\'abbonamento conviene alla tua PMI.',
@@ -1628,7 +1628,7 @@ La risposta onesta è "dipende". In questo articolo trovi cosa includono i piani
 - L'abbonamento non sostituisce la leva più importante: su Facebook Meta premia i contenuti originali e declassa quelli ripubblicati.
 - Prima di abbonarti, verifica il prezzo in euro nell'app e confrontalo con quello che otterresti investendo la stessa cifra in sponsorizzate.
 
-## Cosa è cambiato: Meta One in parole semplici
+## Meta One per aziende: piani e funzioni in parole semplici
 
 Con l'[annuncio del 15 settembre 2026](https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/) Meta ha riunito sotto un unico nome gli abbonamenti alle sue app. Il servizio è presentato come disponibile a livello globale, ma Meta specifica che piani, prezzi e disponibilità possono cambiare in base alla regione, all'app e al tipo di account.
 
@@ -1650,7 +1650,7 @@ Tra le funzioni business annunciate ci sono anche un profilo arricchito con sito
 
 La pagina ufficiale non riporta prezzi in euro. Secondo alcune testate di settore i bundle business in Europa partirebbero da 16,99 €, ma è un dato da confermare. Il nostro consiglio: la cifra che conta è quella che vedi nell'app, sul tuo account, al momento dell'acquisto.
 
-## Perché è importante (e cosa non cambia)
+## Link nei post e originalità: cosa cambia davvero e cosa no
 
 Per anni la regola su Instagram è stata "link in bio", perché i link nei post organici non erano cliccabili. Meta One cambia questo punto, ma solo per chi paga il piano Advanced. È una novità concreta per chi vive di traffico verso il sito.
 
@@ -1667,7 +1667,7 @@ Secondo Meta, visualizzazioni e tempo di visione dei Reels originali sono circa 
 
 C'è un possibile equivoco. A luglio 2026 Meta ha lanciato [Facebook Verified](https://about.fb.com/news/2026/07/introducing-facebook-verified/), un badge gratuito per persone maggiorenni che si verificano con un video-selfie, in mercati selezionati. Però non è disponibile per le Pagine né per i profili in modalità professionale. Per una Pagina aziendale, quindi, il badge verificato passa dai bundle business di Meta One.
 
-## Cosa significa per PMI, attività locali e professionisti
+## A chi conviene Meta One: e-commerce, negozi e attività locali
 
 Non tutte le attività traggono lo stesso vantaggio da Meta One. Vediamo alcuni casi tipici.
 
@@ -1739,7 +1739,7 @@ Meta One porta funzioni utili, soprattutto i link nei post organici e la protezi
 
 Se vuoi capire se l'abbonamento ha senso per la tua attività, guardando i tuoi dati e non quelli medi, [parliamone](/contatti).
 
-## Fonti
+**Fonti**
 
 - [Introducing Meta One: A Subscription Service With More Features and AI – Meta Newsroom, 15 settembre 2026](https://about.fb.com/news/2026/09/introducing-meta-one-subscription-service-more-features-ai/)
 - [Rewarding Original Creators on Facebook – Meta Newsroom, marzo 2026](https://about.fb.com/news/2026/03/rewarding-original-creators-on-facebook/)
@@ -1756,7 +1756,7 @@ Se vuoi capire se l'abbonamento ha senso per la tua attività, guardando i tuoi 
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/seo-tiktok-search-ads/cover.jpg',
-    coverAlt: 'Illustrazione di uno smartphone con barra di ricerca TikTok, la query parrucchiere Massafra e risultati video con un annuncio sponsorizzato in evidenza',
+    coverAlt: 'Ricerca su TikTok di un parrucchiere a Massafra con un video sponsorizzato',
     published: true,
     seoTitle: 'SEO su TikTok e Search Ads per attività locali | InLab',
     seoDescription: 'SEO su TikTok e TikTok Search Ads in Italia: come ottimizzare i video per la ricerca, usare keyword locali e valutare TikTok Shop con i conti giusti.',
@@ -1771,7 +1771,7 @@ Questo cambia il modo di pensare i contenuti: non basta intrattenere, serve anch
 - Un video si ottimizza per la ricerca dicendo e scrivendo la parola chiave, con una didascalia descrittiva e la località.
 - TikTok Shop in Italia conta oltre 21.000 venditori attivi: può valere la pena, ma solo facendo bene i conti dei margini.
 
-## Cosa è cambiato: TikTok come motore di ricerca
+## TikTok come motore di ricerca: numeri e Search Ads in Italia
 
 I numeri che TikTok comunica sono chiari, anche se vanno letti per quello che sono: **dati globali, non italiani**. Secondo TikTok, il 57% degli utenti usa la ricerca, il 23% cerca qualcosa entro 30 secondi dall'apertura dell'app e oltre la metà preferisce cercare prodotti su video e social piuttosto che sui browser.
 
@@ -1793,7 +1793,7 @@ Come spiega TikTok nella [presentazione del formato](https://ads.tiktok.com/busi
 
 Nella [Product Preview del terzo trimestre 2026](https://ads.tiktok.com/business/en-US/blog/tiktok-product-preview) TikTok ha annunciato le "Smart+ Search Ads", cioè una versione più automatizzata delle campagne di ricerca. A [TikTok World '26](https://newsroom.tiktok.com/tiktok-world-26?lang=it-IT) sono stati presentati anche i Search Hubs, pagine del brand che compaiono in cima ai risultati di ricerca: un prodotto premium, pensato più per grandi marchi che per le PMI.
 
-## Perché è importante per chi fa marketing
+## Perché chi cerca su TikTok è già pronto a scegliere
 
 Chi cerca ha già un'intenzione. Chi scorre il feed, invece, si sta distraendo. È la stessa differenza che c'è tra una ricerca su Google e un annuncio visto per caso.
 
@@ -1801,7 +1801,7 @@ TikTok sostiene che usare Search Ads insieme agli annunci In-Feed (quelli che co
 
 Il punto per noi è un altro: se i tuoi video non sono pensati per essere trovati, stai lasciando fuori proprio le persone più vicine a scegliere.
 
-## Cosa significa per PMI, attività locali e professionisti
+## Cosa cercano le persone su TikTok: ristoranti, parrucchieri, negozi
 
 **Ristoranti e bar.** Le ricerche con città e tipo di locale ("brunch Taranto", "pizzeria Castellaneta") sono il terreno ideale. Un video che mostra il piatto e dice chiaramente dove sei può comparire per mesi.
 
@@ -1890,7 +1890,7 @@ Se hai un ristorante o un bar e cerchi spunti su cosa girare, trovi 15 esempi pr
 
 Se vuoi impostare una strategia TikTok per la tua attività, con una [gestione dei social](/gestione-social) pensata per il tuo territorio (lavoriamo anche con la [gestione social a Taranto](/gestione-social-taranto) e provincia), [parliamone](/contatti).
 
-## Fonti
+**Fonti**
 
 - [Search Ads Campaign availability – TikTok Ads Manager Help Center, aprile 2026](https://ads.tiktok.com/help/article/search-ads-campaign-availability?lang=en)
 - [Introducing Search Ads Campaign – TikTok for Business](https://ads.tiktok.com/business/en-US/blog/introducing-search-ads-campaign)
@@ -1907,7 +1907,7 @@ Se vuoi impostare una strategia TikTok per la tua attività, con una [gestione d
     author: 'Nicola Carpignano',
     date: '2026-09-28',
     cover: '/blog/quante-volte-pubblicare-social/cover.jpg',
-    coverAlt: 'Calendario editoriale settimanale con post, reel e stories distribuiti sui giorni e orari consigliati per pubblicare sui social',
+    coverAlt: 'Calendario settimanale dei contenuti social con post, reel e storie',
     published: true,
     seoTitle: 'Quante volte pubblicare sui social: guida 2026 | InLab',
     seoDescription: 'Quante volte pubblicare sui social e a che ora: frequenze per piattaforma, orari migliori 2026, dati Italia e un piano editoriale sostenibile per PMI.',
@@ -1931,19 +1931,17 @@ Partiamo dai numeri italiani. Il report ["Digital 2026: Italy"](https://datarepo
 
 Per le singole piattaforme DataReportal riporta la **copertura pubblicitaria**, cioè quante persone si possono raggiungere con gli annunci. Non è il numero di utenti attivi, ma dà un'idea chiara delle proporzioni:
 
-| Piattaforma | Copertura pubblicitaria | Variazione annua |
-|---|---|---|
-| YouTube | 41,2 milioni | -2,4% |
-| Instagram | 29,9 milioni | +4,2% |
-| Facebook | 28,5 milioni | -2,6% |
-| LinkedIn | 25,0 milioni | +13,6% |
-| TikTok (18+) | 22,0 milioni | +6,9% |
-| Reddit | 14,8 milioni | n.d. |
-| Pinterest | 10,9 milioni | n.d. |
+- **YouTube:** 41,2 milioni (-2,4%)
+- **Instagram:** 29,9 milioni (+4,2%)
+- **Facebook:** 28,5 milioni (-2,6%)
+- **LinkedIn:** 25,0 milioni (+13,6%)
+- **TikTok (18+):** 22,0 milioni (+6,9%)
+- **Reddit:** 14,8 milioni
+- **Pinterest:** 10,9 milioni
 
 Due letture utili. LinkedIn è la piattaforma che cresce di più (+13,6%), un segnale da non ignorare per professionisti e aziende B2B. Facebook e YouTube calano leggermente ma restano tra i canali più ampi, soprattutto considerando un'età mediana vicina ai 48 anni.
 
-## Quanto pubblicare: le frequenze per piattaforma
+## Quante volte pubblicare sui social: le frequenze per piattaforma
 
 La [guida di Buffer sulla frequenza](https://buffer.com/resources/social-media-frequency-guide/), aggiornata il 13 gennaio 2026 e basata su dati interni della piattaforma, dà queste indicazioni:
 
@@ -1987,7 +1985,7 @@ Il secondo arriva da Meta: da marzo 2026, su Facebook [i contenuti non originali
 
 Secondo noi il punto è semplice: foto vere del tuo locale, video girati con il tuo team, la tua voce. Un buon [shooting fotografico](/shooting) e qualche sessione dedicata a [reel e video](/video) possono alimentare settimane di contenuti originali.
 
-## Cosa significa per PMI, attività locali e professionisti
+### Quali canali scegliere: ristoranti, negozi e professionisti
 
 Le frequenze di Buffer sono pensate per chi ha tempo e risorse. Una PMI deve scegliere dove concentrarsi.
 
@@ -2030,7 +2028,7 @@ Cambia una sola variabile alla volta: se modifichi insieme orario, formato e arg
 - **Azioni concrete**: messaggi, clic al sito, chiamate, richieste di prenotazione.
 - **Costanza**: quante settimane hai rispettato il piano. Sembra banale, ma è il primo indicatore da guardare.
 
-## Un esempio: una pizzeria che smette di pubblicare "a caso"
+### Un esempio: una pizzeria che smette di pubblicare "a caso"
 
 Facciamo un esempio ipotetico. Una pizzeria di Taranto pubblica quando capita: tre post in un giorno, poi due settimane di silenzio. Decide di passare al piano minimo: 3 post, 2 reel e stories quotidiane, preparati la domenica in un'ora di lavoro con le foto di uno shooting fatto a inizio mese.
 
@@ -2070,7 +2068,7 @@ Non esiste un numero magico valido per tutti. Esistono frequenze di partenza, or
 
 Se ti serve una mano a costruire un piano editoriale realistico e a produrre contenuti originali, la nostra [gestione social](/gestione-social) nasce proprio per questo, anche per le attività della provincia con la [gestione social a Taranto](/gestione-social-taranto). Vuoi capire quale ritmo è giusto per te? [Parliamone](/contatti).
 
-## Fonti
+**Fonti**
 
 - [Digital 2026: Italy](https://datareportal.com/reports/digital-2026-italy) – DataReportal, 5 novembre 2025
 - [How Often Should You Post on Social Media](https://buffer.com/resources/social-media-frequency-guide/) – Buffer, 13 gennaio 2026
@@ -2087,7 +2085,6 @@ Se ti serve una mano a costruire un piano editoriale realistico e a produrre con
     tags: ['sponsorizzate', 'instagram', 'meta ads', 'attività locali', 'facebook'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
-    updated: '2026-09-28',
     cover: '/blog/sponsorizzate-instagram-attivita-locali/cover.jpg',
     coverAlt: 'Mappa con un raggio intorno a un\'attività locale e i risultati messaggi, chiamate e prenotazioni',
     published: true,
@@ -2099,7 +2096,7 @@ Se ti serve una mano a costruire un piano editoriale realistico e a produrre con
 
 Instagram e Facebook fanno parte dello stesso sistema pubblicitario di Meta. Quello che leggi qui vale quindi per entrambi: una campagna ben fatta può mostrare lo stesso annuncio su tutti e due.
 
-## "Metti in evidenza" o Gestione inserzioni: qual è la differenza
+## Sponsorizzate su Instagram: "Metti in evidenza" o Gestione inserzioni
 
 Ci sono due strade per sponsorizzare un contenuto.
 
@@ -2227,7 +2224,6 @@ Se preferisci affidarti a chi lo fa ogni giorno, scopri il servizio di [campagne
     tags: ['reel', 'ristoranti', 'instagram', 'video', 'contenuti'],
     author: 'Ilaria Gemma',
     date: '2026-09-28',
-    updated: '2026-09-28',
     cover: '/blog/idee-reel-ristoranti/cover.jpg',
     coverAlt: 'Smartphone che mostra il reel di una pizza del giorno appena sfornata',
     published: true,
@@ -2300,7 +2296,7 @@ Non serve girare tutti i giorni. Con un po' di organizzazione, una mattina di ri
 3. **Riprendi più del necessario**: dettagli, mani, vapore, facce. Serviranno per più video.
 4. **Monta subito i primi due reel** e programma gli altri nei giorni successivi.
 
-Se vuoi immagini curate anche per il menu, il sito e le campagne, uno [shooting fotografico](/shooting) nella stessa giornata ti fa risparmiare tempo.
+Se vuoi immagini curate anche per il menu, il sito e le campagne, uno [shooting fotografico](/shooting) nella stessa giornata ti fa risparmiare tempo. Come prepararlo e cosa fotografare lo spieghiamo nella guida al [servizio fotografico per ristoranti](/blog/servizio-fotografico-ristoranti).
 
 ## Quanti reel pubblicare e quando
 
@@ -2341,5 +2337,273 @@ Sì, se la tua clientela è anche lì. Molti usano TikTok per cercare dove mangi
 Scegli tre idee da questa lista, gira questa settimana e pubblica la prossima. Poi guarda quali reel portano messaggi, prenotazioni e commenti, e fai di più di quelli.
 
 Se vuoi reel che raccontano davvero il tuo locale, scopri il nostro servizio di [video e reel per attività](/video). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'servizio-fotografico-ristoranti',
+    title: 'Servizio fotografico per ristoranti: come prepararlo e cosa fotografare',
+    excerpt: 'Come preparare il locale, quali piatti e scatti fare, come usare le foto su menu, Instagram e scheda Google e da cosa dipende il costo di uno shooting per ristoranti.',
+    category: 'Social media',
+    tags: ['shooting', 'ristoranti', 'foto', 'instagram', 'google business profile'],
+    author: 'Ilaria Gemma',
+    date: '2026-09-29',
+    cover: '/blog/servizio-fotografico-ristoranti/cover.jpg',
+    coverAlt: 'Macchina fotografica che inquadra un piatto con le foto della sala e dello staff',
+    published: true,
+    seoTitle: 'Servizio fotografico per ristoranti: guida pratica | InLab',
+    seoDescription: 'Servizio fotografico per ristoranti: come preparare il locale, cosa fotografare, come usare le foto su menu, Instagram e scheda Google e come scegliere.',
+    content: `Un **servizio fotografico per ristoranti** è una delle cose che si notano di più online: le foto dei piatti e della sala sono spesso il primo motivo per cui qualcuno sceglie di prenotare. In questa guida trovi come preparare il locale, cosa fotografare, come usare le stesse foto per menu, Instagram e scheda Google, e da cosa dipende il costo di uno shooting.
+
+**Risposta breve: per un servizio fotografico riuscito servono tre cose. Un obiettivo chiaro (menu, social, sito o scheda Google), una lista precisa di piatti e scatti preparata prima, e un locale pulito, con buona luce naturale e lo staff pronto. Le foto migliori mostrano i tuoi piatti veri, il tuo locale e le persone che ci lavorano.**
+
+Una buona foto non deve essere "perfetta" in astratto. Deve far venire fame e far capire com'è stare da te. È questo che trasforma chi scorre in un cliente che prenota.
+
+## Perché un servizio fotografico per ristoranti fa la differenza
+
+Chi cerca dove mangiare guarda prima le immagini e poi, forse, legge. Succede su Google Maps, su Instagram, sulle app di consegna e sul tuo sito. Foto scure, sfocate o tutte diverse tra loro comunicano poca cura, anche quando la cucina è ottima.
+
+Le foto professionali servono a tre scopi:
+
+- **far scegliere il piatto**: nel menu e sulle piattaforme di consegna, una foto chiara aiuta a decidere;
+- **raccontare l'esperienza**: la sala, la luce, la terrazza d'estate, il bancone al mattino;
+- **dare coerenza al marchio**: le stesse luci e gli stessi colori su sito, social e scheda Google rendono il locale riconoscibile.
+
+C'è anche un tema di fiducia. Le persone vogliono vedere quello che troveranno davvero nel piatto. Per questo le foto dei tuoi piatti reali valgono più di qualsiasi immagine di repertorio o generata con l'intelligenza artificiale.
+
+## Prima dello shooting: come preparare il ristorante
+
+### Decidi a cosa serviranno le foto
+
+Prima di tutto chiarisci dove verranno usate: menu stampato, menu digitale, Instagram, sito, scheda Google, piattaforme di consegna, campagne sponsorizzate. Ogni uso ha formati e inquadrature diversi, e il fotografo deve saperlo prima.
+
+### Scegli giorno e orario giusti
+
+Meglio un giorno di chiusura o una fascia tranquilla, per lavorare con calma. Se vuoi foto con la luce del giorno, organizza lo shooting nelle ore in cui la sala è più luminosa. Se il locale vive soprattutto la sera, prevedi anche qualche scatto con le luci accese e l'atmosfera serale.
+
+### Prepara la lista dei piatti
+
+Scrivi l'elenco dei piatti da fotografare, partendo da quelli che vendi di più e da quelli che ti rappresentano. Per i piatti che si rovinano in fretta (fritti, gelati, semifreddi, piatti con salse) conviene prepararne due porzioni: una per sistemare la luce, una per lo scatto.
+
+### Pulizia e dettagli
+
+Tovaglie stirate, bicchieri senza aloni, piatti puliti sui bordi. Togli dalla vista quello che distrae: cartelli, fili, scatoloni, avvisi attaccati ai vetri. Sono dettagli che dal vivo non noti, ma in foto si vedono subito.
+
+### Avvisa lo staff
+
+Se vuoi foto con le persone, e dovresti, avvisa lo staff qualche giorno prima: divise in ordine, disponibilità a farsi riprendere. Chi non vuole comparire va rispettato. Se nelle foto compaiono clienti riconoscibili, serve il loro consenso.
+
+![Checklist per preparare un servizio fotografico per ristoranti: obiettivo, orario, lista piatti, pulizia e staff](/blog/servizio-fotografico-ristoranti/preparazione.webp)
+
+## Cosa fotografare: la lista degli scatti
+
+### I piatti
+
+Sono i protagonisti. Per ogni piatto importante conviene avere almeno due inquadrature: una dall'alto, utile per il menu e per i piatti "piatti" come pizze e taglieri, e una a circa 45 gradi, più vicina a come lo vede chi è seduto al tavolo. Aggiungi qualche dettaglio ravvicinato: la crosta, il ripieno, il filo d'olio.
+
+### L'ambiente
+
+La sala vuota e apparecchiata, la sala viva durante il servizio, l'esterno con l'insegna, la terrazza o il dehors. Queste foto rispondono a una domanda precisa: "com'è il posto?". Sono fondamentali per la scheda Google e per chi deve organizzare una cena o un evento.
+
+### Le persone
+
+Lo chef che impiatta, il pizzaiolo davanti al forno, il personale di sala che serve, il titolare. Le persone rendono il locale familiare prima ancora di entrarci.
+
+### Ingredienti e territorio
+
+I prodotti del territorio, il fornitore di fiducia, la farina, l'olio, il pescato del giorno. Sono foto che raccontano la qualità senza bisogno di scriverla.
+
+## Foto per il menu, per Instagram e per la scheda Google
+
+Le stesse foto possono lavorare su più canali, ma non tutte vanno bene ovunque.
+
+- **Menu e piattaforme di consegna.** Serve coerenza: stessa luce, stesso sfondo, stessa inquadratura per tutti i piatti. Altrimenti il menu sembra composto da foto di locali diversi.
+- **Instagram.** Meglio formati verticali: 4:5 per il feed, 9:16 per storie e reel. Qui funzionano anche foto più "vive": mani, movimento, atmosfera.
+- **Scheda Google (Google Business Profile).** Carica foto reali e aggiornate di piatti, sala, esterno e insegna. Chi ti cerca su Maps vuole capire subito com'è il locale e dove si trova l'ingresso.
+- **Sito web.** Foto orizzontali ampie per la home e per la pagina del menu, con spazio per i testi.
+
+Il consiglio pratico è organizzare **foto e video nella stessa giornata**. Mentre si fotografano i piatti si possono girare anche le clip per i reel: trovi 15 spunti nella guida alle [idee di reel per ristoranti e bar](/blog/idee-reel-ristoranti).
+
+![Come usare le foto del servizio fotografico del ristorante su menu, Instagram, scheda Google e sito](/blog/servizio-fotografico-ristoranti/formati.webp)
+
+## Da cosa dipende il costo di un servizio fotografico
+
+Ogni shooting è diverso, e il preventivo cambia in base a poche voci. Quando confronti due proposte, controlla:
+
+- **quanti piatti e quanti scatti finali** sono inclusi;
+- **la durata** della sessione e se è previsto più di un orario (giorno e sera);
+- **il fotoritocco**: correzione di luce e colore su tutte le foto o solo su alcune;
+- **i formati consegnati**: versioni per stampa, sito e social;
+- **i diritti d'uso**: dove e per quanto tempo puoi usare le foto, anche nelle campagne sponsorizzate;
+- **i video**, se sono compresi o sono un servizio a parte;
+- **food styling**: se c'è qualcuno che cura la presentazione dei piatti o se se ne occupa la cucina.
+
+Più il preventivo è dettagliato su queste voci, più è facile capire cosa stai comprando.
+
+## Cosa abbiamo imparato fotografando locali della provincia di Taranto
+
+Con [Sottoscala](/cliente/sottoscala), bar di Mottola con una proposta ampia tra sushi, cocktail, focacce, insalate e poke, abbiamo lavorato su shooting e contenuti video per costruire un'immagine food riconoscibile, che valorizza piatti e atmosfera. Con una proposta così varia, la coerenza di luce e stile è quello che tiene tutto insieme.
+
+Per [Aleph Caffè](/cliente/aleph-caffe) a Palagianello abbiamo realizzato shooting di prodotto e contenuti social che raccontano il rituale del caffè, con immagini curate che rendono il locale riconoscibile e invitante. In entrambi i casi il punto di partenza è stato lo stesso: fotografare quello che il cliente trova davvero, nel modo più bello possibile.
+
+Un'ultima lezione riguarda la stagionalità. In provincia di Taranto il menu cambia con le stagioni, e d'estate molti locali tra Castellaneta Marina e Ginosa Marina hanno una clientela diversa. Conviene programmare **due sessioni all'anno**, una per il menu estivo e una per quello invernale, invece di usare le stesse foto per anni.
+
+## Domande frequenti
+
+### Come prepararsi a un servizio fotografico per il ristorante?
+
+Decidi a cosa serviranno le foto, scegli un giorno tranquillo con buona luce, prepara la lista dei piatti e pulisci il locale nei dettagli. Avvisa lo staff se vuoi foto con le persone e prepara due porzioni dei piatti che si rovinano in fretta.
+
+### Quanti piatti fotografare in un servizio per ristoranti?
+
+Parti dai piatti più venduti e da quelli che rappresentano la tua cucina, più qualche foto della sala, dell'esterno e dello staff. Meglio poche foto ben fatte e coerenti tra loro che tante foto diverse per stile e luce.
+
+### Meglio foto con luce naturale o artificiale?
+
+La luce naturale indiretta, vicino a una finestra, dà un risultato morbido e realistico. Un fotografo professionista può ricrearla anche con luci artificiali, utile quando si lavora di sera o in ambienti poco luminosi. Il flash diretto del telefono, invece, va evitato.
+
+### Ogni quanto rifare le foto del ristorante?
+
+Almeno quando cambia il menu, e in generale una o due volte l'anno. Le foto della scheda Google e del sito devono corrispondere a quello che il cliente trova oggi: foto di piatti che non servi più creano aspettative sbagliate.
+
+### Posso usare le foto dello shooting anche per le sponsorizzate?
+
+Sì, se i diritti d'uso concordati con il fotografo lo prevedono. Chiedilo sempre prima: nelle campagne le foto del tuo locale funzionano di solito meglio delle immagini di repertorio.
+
+## Da dove partire
+
+Scrivi oggi la lista dei cinque piatti che ti rappresentano di più e dei tre angoli del locale che vorresti mostrare. È già metà del lavoro di preparazione.
+
+Se vuoi un servizio fotografico pensato per menu, social e scheda Google, scopri i nostri [shooting fotografici per attività](/shooting). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'rebranding-attivita-commerciale',
+    title: 'Rebranding di un\'attività commerciale: quando serve e come farlo senza perdere clienti',
+    excerpt: 'Quando conviene cambiare nome, logo o insegna, cosa aggiornare dall\'insegna alla scheda Google e come comunicare il rebranding ai clienti, con il caso Paresteta.',
+    category: 'Strategia',
+    tags: ['branding', 'rebranding', 'attività locali', 'logo', 'google business profile'],
+    author: 'Nicola Carpignano',
+    date: '2026-09-29',
+    cover: '/blog/rebranding-attivita-commerciale/cover.jpg',
+    coverAlt: 'Passaggio dal vecchio al nuovo marchio con insegna, scheda Google e social da aggiornare',
+    published: true,
+    seoTitle: 'Rebranding attività commerciale: quando e come farlo | InLab',
+    seoDescription: 'Rebranding di un\'attività commerciale: quando serve, cosa cambiare dall\'insegna alla scheda Google e come comunicarlo ai clienti senza perderli.',
+    content: `Il **rebranding di un'attività commerciale** fa paura a molti titolari: cambiare nome, logo o insegna sembra il modo più rapido per perdere i clienti che ti conoscono da anni. Succede solo se il cambiamento non viene preparato e raccontato. In questa guida vediamo quando serve davvero, cosa cambiare, come comunicarlo e cosa abbiamo imparato accompagnando un cambio insegna.
+
+**Risposta breve: un rebranding ha senso quando il nome o l'immagine non rappresentano più l'attività, quando cambia la proprietà o l'offerta, o quando c'è confusione con altri. Per non perdere clienti va preparato per fasi: prima si crea attesa, poi si presenta il nuovo marchio con un momento preciso, e infine si aggiornano con cura insegna, scheda Google, social e materiali.**
+
+Un rebranding ben fatto non cancella la storia dell'attività: la porta avanti con un vestito nuovo. Chi ti conosceva deve riconoscerti, chi non ti conosceva deve trovare un motivo per entrare.
+
+## Quando serve un rebranding di un'attività commerciale (e quando no)
+
+Ci sono situazioni in cui rinnovare l'identità è una scelta sensata:
+
+- **cambia la proprietà o la gestione**, e il nuovo titolare vuole un'identità che lo rappresenti;
+- **cambia l'offerta**: da bar a bistrot, da negozio di un marchio a multimarca, da laboratorio a punto vendita;
+- **il nome crea confusione** con un'altra attività della zona, oppure è difficile da pronunciare, scrivere o cercare;
+- **l'immagine è rimasta ferma** a molti anni fa e non comunica più la qualità di quello che offri;
+- **finisce un franchising** o un'insegna di gruppo e l'attività diventa indipendente.
+
+Ci sono anche casi in cui **non serve**. Se il problema sono le vendite in calo, un nuovo logo da solo non risolve niente: prima bisogna capire se il problema è l'offerta, il prezzo, il servizio o la comunicazione. E se il tuo nome è conosciuto e apprezzato in paese, spesso basta un restyling.
+
+## Rebranding, restyling o solo un nuovo logo: le differenze
+
+Sono tre interventi diversi, con effetti diversi sui clienti.
+
+- **Restyling:** si aggiorna l'aspetto (logo, colori, font) mantenendo il nome. È il più leggero e il meno rischioso.
+- **Nuovo logo:** si cambia il simbolo ma non il nome né il modo di comunicare. Utile quando il logo attuale è datato o poco leggibile.
+- **Rebranding:** cambia l'identità nel suo insieme. Spesso il nome, poi logo, colori, tono di voce, a volte l'offerta e il pubblico. È il più impegnativo e va raccontato.
+
+Capire in quale dei tre casi ti trovi è il primo passo: evita di fare troppo, o troppo poco.
+
+## Come fare un rebranding senza perdere clienti: i passaggi
+
+### 1. Parti da cosa deve restare
+
+Prima di decidere cosa cambiare, chiediti cosa i clienti apprezzano di te e deve restare riconoscibile: un colore, un prodotto simbolo, un modo di accogliere, il volto del titolare. Il nuovo marchio deve tenere un filo con il passato.
+
+### 2. Scegli il nome con criteri pratici
+
+Se cambi nome, verifica che sia facile da dire e da scrivere, che non sia già usato da un'attività simile nella tua zona, che siano liberi il dominio del sito e i nomi utente sui social. Controlla anche la disponibilità come marchio con un professionista, prima di stampare qualsiasi cosa.
+
+### 3. Costruisci l'identità visiva
+
+Logo, colori, caratteri, stile delle foto e dei video. Tutto deve funzionare sull'insegna, sui social, sul sito, sugli scontrini e sul packaging. Un'identità che rende bene solo in un formato creerà problemi alla prima vetrofania.
+
+### 4. Definisci il tono di voce
+
+Come parla il nuovo marchio? Formale o amichevole, ironico o essenziale. Il tono deve essere lo stesso in negozio, nei post, nei messaggi WhatsApp e nelle risposte alle recensioni.
+
+## Checklist: cosa cambiare, dall'insegna alla scheda Google
+
+Il giorno del cambio molte cose devono aggiornarsi insieme. Una dimenticanza crea confusione, soprattutto online.
+
+- **Insegna, vetrofanie, targhe e segnaletica.**
+- **Scheda Google (Google Business Profile):** nome, foto, logo, descrizione. Alcune modifiche, come il nome, possono richiedere una nuova verifica della scheda: tienilo presente nei tempi. Le recensioni restano legate alla scheda.
+- **Profili social:** nome, nome utente, immagine del profilo, copertine, bio, link.
+- **Sito web e dominio:** se cambi dominio, il vecchio indirizzo deve reindirizzare al nuovo, così non perdi le visite e la posizione su Google.
+- **WhatsApp Business:** nome, foto, messaggio di benvenuto.
+- **Materiali:** biglietti da visita, menu, listini, buste, packaging, divise.
+- **Documenti e fornitori:** fatture, contratti, portali delle piattaforme di consegna o prenotazione.
+
+Il nostro consiglio: prepara l'elenco con largo anticipo e assegna a ogni voce una persona e una data.
+
+![Checklist del rebranding di un'attività commerciale: insegna, scheda Google, social, sito, WhatsApp e materiali](/blog/rebranding-attivita-commerciale/checklist.webp)
+
+## Come comunicare il rebranding ai clienti
+
+### Prima: crea attesa
+
+Nelle settimane precedenti annuncia che qualcosa sta cambiando, senza svelare tutto. Teaser sui social, un cartello in vetrina, due parole con i clienti abituali. Chi è coinvolto prima si sente parte del cambiamento, invece di subirlo.
+
+### Il giorno del cambio: dai un momento preciso
+
+Una data, un evento, un motivo per passare: un'inaugurazione, una degustazione, un'offerta di benvenuto. Il cambio diventa una notizia da condividere, non un dettaglio che qualcuno nota per caso.
+
+### Dopo: accompagna la transizione
+
+Per un periodo ricorda il vecchio nome ("prima eravamo…"), soprattutto sulla scheda Google, sui social e in negozio. Rispondi alle domande, ringrazia chi ha partecipato e mostra le novità. Poi, passato qualche mese, smetti di citare il vecchio nome.
+
+![Le tre fasi per comunicare il rebranding di un'attività: prima, il giorno del cambio e dopo](/blog/rebranding-attivita-commerciale/fasi.webp)
+
+## Il caso Paresteta: un cambio insegna diventato evento
+
+Un esempio concreto è il lavoro fatto con [Paresteta](/casi-studio/paresteta). L'obiettivo era accompagnare il passaggio da H28 a Paresteta senza disperdere il pubblico esistente, trasformandolo in attesa per qualcosa di nuovo, e portare persone in negozio il giorno dell'inaugurazione.
+
+La strategia è stata divisa in fasi:
+
+1. **teaser** visivi sui social e attività di comunicazione locale, per generare curiosità prima dell'apertura;
+2. **QR code** dedicati per raccogliere i contatti delle persone interessate fin dal lancio;
+3. **contenuti social progressivi e video di lancio**, per portare il pubblico digitale verso il momento dell'inaugurazione;
+4. **l'evento**, con comunicazione integrata online e offline il giorno dell'apertura.
+
+Il risultato è stato un cambio insegna trasformato in un evento locale, con curiosità, partecipazione e percezione del brand cresciute in modo coordinato. La lezione che portiamo in ogni progetto di [branding e identità visiva](/branding) è semplice: **il cambiamento va raccontato prima, durante e dopo**, online e offline insieme.
+
+## Domande frequenti
+
+### Quando conviene fare un rebranding?
+
+Quando il nome o l'immagine non rappresentano più l'attività: nuova proprietà, nuova offerta, confusione con altre attività o un'immagine rimasta ferma a molti anni fa. Se il problema sono solo le vendite, prima conviene capirne la causa.
+
+### Cambiare nome all'attività fa perdere clienti?
+
+Può succedere se il cambio avviene all'improvviso e senza spiegazioni. Se lo annunci prima, dai un momento preciso al cambio e per un periodo ricordi il vecchio nome, i clienti abituali ti seguono e il cambio può diventare un'occasione per farti conoscere da nuove persone.
+
+### Cosa succede alle recensioni di Google se cambio nome?
+
+Se aggiorni il nome sulla stessa scheda Google, le recensioni restano. Evita invece di creare una scheda nuova per la stessa sede: perderesti lo storico e rischieresti schede doppie. Alcune modifiche possono richiedere una nuova verifica della scheda.
+
+### Meglio un restyling o un rebranding completo?
+
+Se il nome è conosciuto e apprezzato, spesso basta un restyling: si rinnova l'aspetto senza perdere la riconoscibilità. Il rebranding completo ha senso quando cambiano davvero la proprietà, l'offerta o il posizionamento.
+
+### Come comunicare il rebranding ai clienti?
+
+Per fasi: attesa nelle settimane prima, un evento o una data precisa per il cambio, e un periodo di transizione in cui ricordi il vecchio nome. Usa tutti i canali insieme: negozio, social, scheda Google, WhatsApp e passaparola.
+
+## Da dove partire
+
+Prendi un foglio e scrivi tre colonne: cosa deve restare, cosa deve cambiare, dove compare oggi il tuo marchio. È la base per capire se ti serve un restyling o un rebranding, e quanto lavoro c'è da fare. Se il rebranding riguarda anche il sito, leggi perché a un'attività locale servono [sito web e social insieme](/blog/sito-web-o-solo-social-attivita-locale).
+
+Scopri il nostro servizio di [branding e identità visiva](/branding) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
 ];

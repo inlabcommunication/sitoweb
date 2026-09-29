@@ -266,8 +266,8 @@ coperte" evita i doppioni: aggiornala ogni volta che pubblichi.
 | Meta Ads | `/meta-ads` | quanto investire, sponsorizzate Instagram, errori comuni, campagne per attività locali | *sponsorizzate Instagram per attività locali* → `sponsorizzate-instagram-attivita-locali`; *Meta Ads 2026* → `meta-ads-creativita-advantage` |
 | Automazioni AI | `/automazioni-ai` | chatbot per attività locali, risposte automatiche WhatsApp/Instagram, AI per piccole imprese | *WhatsApp Business AI* → `whatsapp-business-ai`; *contenuti AI obblighi / AI Act* → `contenuti-ai-obblighi-ai-act` |
 | Email e newsletter (nessuna pagina dedicata) | `/siti-web` come servizio principale, `/automazioni-ai` come secondario | newsletter, privacy delle email, moduli di iscrizione | *tracking pixel email Garante* → `tracking-pixel-email-garante` |
-| Foto & Shooting | `/shooting` | shooting per ristoranti/prodotti, foto per i social, come prepararsi a uno shooting | — |
-| Branding & Identità | `/branding` | logo, rebranding, identità visiva, nome dell'attività (caso Paresteta) | — |
+| Foto & Shooting | `/shooting` | shooting per ristoranti/prodotti, foto per i social, come prepararsi a uno shooting | *servizio fotografico per ristoranti* → `servizio-fotografico-ristoranti` |
+| Branding & Identità | `/branding` | logo, rebranding, identità visiva, nome dell'attività (caso Paresteta) | *rebranding attività commerciale* → `rebranding-attivita-commerciale` |
 
 **Coppie da tenere distinte** (argomenti vicini: ognuna ha il suo intento, non
 scrivere un terzo articolo sullo stesso tema senza chiederlo nel resoconto):
