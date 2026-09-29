@@ -1542,7 +1542,7 @@ const PageCittaSEO = ({city, service}) => {
           </motion.h1>
           <motion.p initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.22}}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
-            InLab è l'agenzia di comunicazione di riferimento a {cityName} e in tutta la provincia di Taranto. Gestiamo la {svc.label.toLowerCase()} di aziende locali con strategie su misura, risultati misurabili e un approccio orientato alla crescita.
+            InLab è l'agenzia di comunicazione di riferimento a {cityName} e in tutta la provincia di Taranto. Ci occupiamo di {svc.label} per aziende locali, con strategie su misura, risultati misurabili e un approccio orientato alla crescita.
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
             <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>

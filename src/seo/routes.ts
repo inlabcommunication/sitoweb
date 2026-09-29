@@ -36,17 +36,17 @@ export const SERVICES_SEO = [
   { slug: 'gestione-social', label: 'Gestione Social', keyword: 'gestione social media',
     description: 'Gestione social media professionale per aziende: strategia, piano editoriale, contenuti, reel e community su Instagram, Facebook, TikTok e LinkedIn.' },
   { slug: 'meta-ads', label: 'Meta Ads', keyword: 'campagne Meta Ads',
-    description: 'Campagne Meta Ads su Facebook e Instagram progettate per generare contatti e vendite: targeting, creatività, test A/B e report chiari.' },
+    description: 'Campagne Meta Ads su Facebook e Instagram per aziende e attività locali in Puglia: targeting, creatività, test A/B e report chiari per generare contatti.' },
   { slug: 'siti-web', label: 'Siti Web & Web App', keyword: 'realizzazione siti web',
     description: 'Realizzazione siti web, e-commerce e landing page veloci, ottimizzati SEO e pensati per portare clienti: design su misura, sviluppo e gestione.' },
   { slug: 'automazioni-ai', label: 'Automazioni AI', keyword: 'automazioni e chatbot AI',
-    description: 'Chatbot, automazioni e workflow con intelligenza artificiale per risparmiare tempo, gestire i lead e far lavorare il tuo brand 24/7.' },
+    description: 'Chatbot, automazioni e workflow con intelligenza artificiale per aziende in Puglia: risparmi tempo, gestisci i contatti e rispondi ai clienti a ogni ora.' },
   { slug: 'shooting', label: 'Foto & Shooting', keyword: 'shooting fotografico',
-    description: 'Shooting fotografici professionali per brand, prodotti, food ed eventi: immagini curate per social, sito web e campagne.' },
+    description: 'Shooting fotografici professionali per brand, prodotti, food ed eventi in provincia di Taranto: immagini curate per social, sito web e campagne.' },
   { slug: 'video', label: 'Video & Reels', keyword: 'video e reel per social',
     description: 'Produzione video e reel per social: idea, riprese, montaggio e caption. Contenuti che le persone guardano davvero, fino a milioni di views organiche.' },
   { slug: 'branding', label: 'Branding & Identità', keyword: 'branding e identità visiva',
-    description: 'Branding e identità visiva: nome, logo, palette e tono di voce per un brand riconoscibile e coerente su ogni canale.' },
+    description: 'Branding e identità visiva per aziende e attività in Puglia: nome, logo, palette e tono di voce per un brand riconoscibile e coerente su ogni canale.' },
 ];
 
 // Clienti e casi studio: predefiniti dal codice, sostituiti da quelli salvati in
@@ -71,11 +71,15 @@ export type Seo = {
   image: string;
   noindex?: boolean;
   jsonLd: object[];
+  /** ultima modifica reale (AAAA-MM-GG) per la sitemap; assente = non indicata */
+  lastmod?: string;
   /** priorità/frequenza per la sitemap (assente = non in sitemap) */
   sitemap?: { priority: number; changefreq: 'weekly' | 'monthly' };
 };
 
 const abs = (path: string) => SITE_URL + (path === '/' ? '/' : path);
+/** Aggiunge il marchio al titolo restando entro i 60 caratteri che Google mostra. */
+const withBrand = (t: string) => [`${t} | ${BRAND}`, `${t} | InLab`, t].find((x) => x.length <= 60) || t;
 const clip = (s: string, n = 160) => (s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…');
 
 const orgRef = { '@id': `${SITE_URL}/#organization` };
@@ -187,19 +191,19 @@ export const getSeo = (rawPath: string): Seo => {
   }
   if (path === '/casi-studio') {
     return page(path, `Casi studio e clienti | ${BRAND}`,
-      'Progetti raccontati passo per passo: strategie social, siti web, lead generation e contenuti per aziende e attività in Puglia.',
+      'Progetti raccontati passo per passo: strategie social, siti web, lead generation e contenuti per aziende e attività in provincia di Taranto e in Puglia.',
       { sitemap: { priority: 0.8, changefreq: 'monthly' } }, [['Casi studio', '/casi-studio']]);
   }
   if (path === '/contatti') {
     return page(path, `Contatti | Richiedi un preventivo a ${BRAND}`,
-      'Raccontaci il tuo progetto: social media, video, siti web o campagne. Ti rispondiamo entro 24 ore. InLab Communication, Castellaneta (TA).',
+      'Raccontaci il tuo progetto: social media, video, siti web o campagne. Ti rispondiamo entro 24 ore. InLab Communication, agenzia a Castellaneta (TA).',
       { sitemap: { priority: 0.8, changefreq: 'monthly' }, jsonLd: [{ '@context': 'https://schema.org', '@type': 'ContactPage', url: abs(path), about: orgRef }] },
       [['Contatti', '/contatti']]);
   }
 
   const svc = SERVICES_SEO.find((s) => '/' + s.slug === path);
   if (svc) {
-    return page(path, `${svc.label} per aziende in Puglia | ${BRAND}`, svc.description, {
+    return page(path, withBrand(`${svc.label} per aziende in Puglia`), svc.description, {
       sitemap: { priority: 0.9, changefreq: 'monthly' },
       jsonLd: [{
         '@context': 'https://schema.org', '@type': 'Service', name: svc.label, serviceType: svc.keyword,
@@ -212,8 +216,16 @@ export const getSeo = (rawPath: string): Seo => {
   for (const s of SERVICES_SEO) {
     const city = CITIES.find((c) => path === `/${s.slug}-${c.toLowerCase()}`);
     if (city) {
-      const desc = `${s.label} a ${city}: ${s.keyword} su misura per aziende e attività locali, con risultati misurabili. Preventivo gratuito.`;
-      return page(path, `${s.label} a ${city} | ${BRAND}`, desc, {
+      // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
+      const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;
+      const desc = [
+        ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito e risposta in 24 ore.",
+        ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito, risposta in 24 ore.",
+        ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito in 24 ore.",
+        ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito.",
+        ", da un'agenzia di Castellaneta (TA). Preventivo gratuito.",
+      ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';
+      return page(path, withBrand(`${s.label} a ${city}`), desc, {
         sitemap: { priority: 0.6, changefreq: 'monthly' },
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} a ${city}`, serviceType: s.keyword,
@@ -226,7 +238,7 @@ export const getSeo = (rawPath: string): Seo => {
   if (path.startsWith('/casi-studio/')) {
     const cs = cases().find((c) => path === '/casi-studio/' + c.id);
     if (cs) {
-      return page(path, `${cs.title} | InLab`, cs.description, {
+      return page(path, withBrand(cs.title), cs.description, {
         sitemap: { priority: 0.7, changefreq: 'monthly' },
         jsonLd: [{ '@context': 'https://schema.org', '@type': 'CreativeWork', name: cs.title, description: cs.description, url: abs(path), creator: orgRef, inLanguage: 'it-IT' }],
       }, [['Casi studio', '/casi-studio'], [cs.title.split(':')[0], path]]);
@@ -240,9 +252,10 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   if (path === '/blog') {
-    return page(path, `Blog: social media, video e marketing per attività locali | ${BRAND}`,
+    return page(path, withBrand('Blog: social, reel e siti web per attività locali'),
       'Guide pratiche e consigli su social media, reel, siti web e advertising per aziende e attività locali, scritti dal team di InLab Communication.',
-      { sitemap: { priority: 0.7, changefreq: 'weekly' }, jsonLd: [{
+      { lastmod: blogPosts.reduce((m, p) => { const d = p.updated && p.updated > p.date ? p.updated : p.date; return d > m ? d : m; }, '') || undefined,
+        sitemap: { priority: 0.7, changefreq: 'weekly' }, jsonLd: [{
         '@context': 'https://schema.org', '@type': 'Blog', name: `Blog ${BRAND}`, url: abs(path), inLanguage: 'it-IT', publisher: orgRef,
         blogPost: blogPosts.slice(0, 20).map((p) => ({ '@type': 'BlogPosting', headline: p.title, url: abs('/blog/' + p.slug), datePublished: p.date })),
       }] }, [['Blog', '/blog']]);
@@ -254,13 +267,14 @@ export const getSeo = (rawPath: string): Seo => {
       const desc = post.seoDescription || post.excerpt || plain(post.content);
       const image = post.cover ? (post.cover.startsWith('/') ? abs(post.cover) : post.cover) : abs(DEFAULT_OG_IMAGE);
       const words = plain(post.content).split(' ').length;
-      return page(path, post.seoTitle || `${post.title} | ${BRAND}`, desc, {
-        image,
+      const modified = post.updated && post.updated > post.date ? post.updated : post.date;
+      return page(path, post.seoTitle || withBrand(post.title), desc, {
+        image, lastmod: modified,
         sitemap: { priority: 0.6, changefreq: 'monthly' },
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'BlogPosting',
           headline: post.title.slice(0, 110), description: clip(desc), image: [image],
-          datePublished: post.date, dateModified: post.updated && post.updated > post.date ? post.updated : post.date,
+          datePublished: post.date, dateModified: modified,
           author: { '@type': 'Person', name: post.author },
           publisher: orgRef, mainEntityOfPage: abs(path), url: abs(path),
           articleSection: post.category, keywords: post.tags.join(', '), wordCount: words, inLanguage: 'it-IT',
