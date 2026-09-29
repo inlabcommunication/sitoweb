@@ -86,7 +86,9 @@ const PostCard: React.FC<{ post: BlogPost; go: Go; featured?: boolean; i?: numbe
 );
 
 export const PageBlog = ({ go }: { go: Go }) => {
-  const { posts } = useBlogPosts();
+  const { posts, loading } = useBlogPosts();
+  // titolo, descrizione e dati strutturati del blog (gli articoli si caricano con questa pagina)
+  useEffect(() => { applySeo(getSeo('/blog')); }, [loading]);
   const [cat, setCat] = useState('Tutti');
   const cats = useMemo(() => ['Tutti', ...Array.from(new Set(posts.map((p) => p.category)))], [posts]);
   const list = cat === 'Tutti' ? posts : posts.filter((p) => p.category === cat);
@@ -137,7 +139,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
   // Gli articoli scritti dalla dashboard arrivano dopo il caricamento:
   // aggiorna titolo/description/dati strutturati appena disponibili.
-  useEffect(() => { if (!loading) applySeo(getSeo('/blog/' + slug)); }, [loading, slug]);
+  useEffect(() => { applySeo(getSeo('/blog/' + slug)); }, [loading, slug]);
 
   if (!post) {
     if (loading) return <div style={{ minHeight: '100vh' }} />;

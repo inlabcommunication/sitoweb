@@ -17,6 +17,9 @@ export const formatDate = (iso: string) => {
 };
 
 let cache: BlogPost[] | null = null;
+
+// Appena il blog viene aperto, la SEO conosce subito gli articoli inclusi nel codice
+registerBlogPosts(mergePosts(BLOG_SEED, []));
 let pending: Promise<BlogPost[]> | null = null;
 
 export const loadBlogPosts = (): Promise<BlogPost[]> => {
