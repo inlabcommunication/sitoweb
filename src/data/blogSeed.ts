@@ -2442,7 +2442,7 @@ Più il preventivo è dettagliato su queste voci, più è facile capire cosa sta
 
 Con [Sottoscala](/cliente/sottoscala), bar di Mottola con una proposta ampia tra sushi, cocktail, focacce, insalate e poke, abbiamo lavorato su shooting e contenuti video per costruire un'immagine food riconoscibile, che valorizza piatti e atmosfera. Con una proposta così varia, la coerenza di luce e stile è quello che tiene tutto insieme.
 
-Per [Aleph Caffè](/cliente/aleph-caffe) a Palagianello abbiamo realizzato shooting di prodotto e contenuti social che raccontano il rituale del caffè, con immagini curate che rendono il locale riconoscibile e invitante. In entrambi i casi il punto di partenza è stato lo stesso: fotografare quello che il cliente trova davvero, nel modo più bello possibile.
+Per [Villa Natia](/cliente/villa-natia), sala ricevimenti e luxury hotel a Mottola, seguiamo matrimoni ed eventi con servizi fotografici e contenuti video. Lo storytelling visivo mette al centro l'eleganza della location e le emozioni delle giornate più importanti: chi sta scegliendo dove festeggiare vuole vedere com'è la sala nel momento in cui conta. In entrambi i casi il punto di partenza è stato lo stesso: fotografare quello che il cliente trova davvero, nel modo più bello possibile.
 
 Un'ultima lezione riguarda la stagionalità. In provincia di Taranto il menu cambia con le stagioni, e d'estate molti locali tra Castellaneta Marina e Ginosa Marina hanno una clientela diversa. Conviene programmare **due sessioni all'anno**, una per il menu estivo e una per quello invernale, invece di usare le stesse foto per anni.
 
