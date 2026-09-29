@@ -47,6 +47,9 @@
 
     <!-- Dati strutturati dell'agenzia (generati in build da src/seo/routes.ts) -->
     <script type="application/ld+json" data-seo="org">{}</script>
+      <!-- Senza JavaScript (alcuni crawler, browser con JS disattivato) gli
+         elementi animati resterebbero invisibili: li mostra solo in quel caso. -->
+    <noscript><style>#root [style*="opacity:0;transform"],#root [style$="opacity:0"]{opacity:1!important;transform:none!important}</style></noscript>
   </head>
   <body style="margin:0;background:#1e1d1d;color:#F0EDE6">
     <div id="root"></div>
