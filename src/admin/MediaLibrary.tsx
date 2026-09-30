@@ -113,6 +113,12 @@ const mb = (n: number) => (n / 1024 / 1024).toFixed(1).replace('.', ',');
  * limite restano identiche.
  */
 async function prepareImage(file: File): Promise<File> {
+  // Le foto HEIC dell'iPhone i browser (Chrome, Firefox) non le sanno aprire,
+  // quindi non si possono ridurre: se sono sotto il limite vanno bene così.
+  if (/image\/hei[cf]/i.test(file.type) || /\.hei[cf]$/i.test(file.name)) {
+    if (file.size <= MAX_IMAGE_BYTES * 0.95) return file;
+    throw new Error(`La foto HEIC dell'iPhone pesa ${mb(file.size)} MB e non si può ridurre dal browser: esportala in JPEG e riprova (su iPhone: Impostazioni → Fotocamera → Formati → Più compatibile).`);
+  }
   if (!file.type.startsWith('image/') || /gif|svg/.test(file.type) || file.size <= MAX_IMAGE_BYTES * 0.95) return file;
   const bitmap = await createImageBitmap(file);
   const keepAlpha = file.type === 'image/png' || file.type === 'image/webp';
