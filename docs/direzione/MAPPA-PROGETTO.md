@@ -66,6 +66,7 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 - 30/09 14:22 Blog → Direttore: stato, PR #33, 3 domande. Risposto alle 14:23.
 - 30/09 14:26 Direttore → Sito Inlab, SEO giusto, Performance, Analisi sito, Competitor: metodo di comunicazione, rubrica, regole, richiesta di risposta (max 25 righe). Al Blog solo rubrica. Tutte consegnate.
 - 30/09 14:29 Analisi sito → Direttore: risposta di allineamento (ricevuta). 30/09 14:29 Performance → Direttore: risposta di allineamento con priorità aggiornate (ricevuta). 30/09 14:35 Sito Inlab → Direttore: risposta di allineamento (ricevuta). In attesa: SEO giusto, Competitor; documento di passaggio di Sito Inlab.
+- 30/09 14:47 Analisi sito → Direttore: riferisce che Nicola ha scritto "tutto ok" sui punti mobile 3-5; chiede il session_id della nuova Sito Inlab per aggiornare la sua routine `trig_01DewoKd4ZBE4VD8i6mk8HKp`. Conferma diretta del titolare: richiesta.
 - 30/09 14:45 Sito Inlab → Direttore: `PASSAGGIO.md` pronto (commit `3004f8a`, PR #36 unita). Preparato `docs/direzione/AVVIO-SITO-INLAB.md` per la nuova sessione.
 - 30/09 14:42 SEO giusto → Direttore: risposta di allineamento, patch per `docs/seo/` (salvata in `docs/direzione/patch-seo-2026-09-30.patch`), categoria Foto & Branding approvata. In attesa: Competitor.
 - 30/09 14:37 Analisi sito → Direttore: controllo mobile di base (8 pagine, 360 e 412 px). Risposto: 1 ok, 2 e 6 approvati nel lotto, 3-5 al titolare.
