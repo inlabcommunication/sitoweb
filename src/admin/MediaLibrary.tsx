@@ -87,6 +87,14 @@ const isVideo = (item: MediaItem) => item.resource_type === 'video';
 
 const DEFAULT_FOLDERS = ['Tutti', 'Team', 'Portfolio', 'Clienti', 'Servizi', 'Video', 'Altro'];
 
+/** Cartelle predefinite + quelle usate dai file (così le cartelle create restano dopo il ricaricamento). */
+const foldersOf = (items: MediaItem[], extra: string[] = []) =>
+  [...new Set([...DEFAULT_FOLDERS, ...items.map(i => i.folder).filter(Boolean), ...extra])];
+
+/** Sposta un file in un'altra cartella: la cartella è virtuale, l'URL non cambia. */
+const moveItem = (id: string, folder: string) =>
+  persist(_items.map(i => (i.id === id ? { ...i, folder } : i)));
+
 // ═══════════════════════════════════════════════════════════════
 // UPLOAD ENGINE
 // ═══════════════════════════════════════════════════════════════
@@ -345,6 +353,8 @@ const UploadQueue = ({ tasks }: { tasks: UploadTask[] }) => {
 
 const Lightbox = ({ item, onClose }: { item: MediaItem; onClose: () => void }) => {
   const [copied, setCopied] = useState(false);
+  const [folder, setFolder] = useState(item.folder);
+  const move = async (f: string) => { setFolder(f); await moveItem(item.id, f); };
 
   const copy = () => {
     navigator.clipboard.writeText(item.secure_url);
@@ -380,7 +390,13 @@ const Lightbox = ({ item, onClose }: { item: MediaItem; onClose: () => void }) =
               {item.width && <span>{item.width}×{item.height}px</span>}
               <span>{fmt(item.bytes)}</span>
               <span style={{ textTransform: 'uppercase' }}>{item.format}</span>
-              <span style={{ background: '#cdb2ff22', color: '#cdb2ff', padding: '1px 6px', borderRadius: 100, fontSize: 10 }}>{item.folder}</span>
+              <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                Sposta in
+                <select value={folder} onChange={e => move(e.target.value)}
+                  style={{ background: '#cdb2ff22', color: '#cdb2ff', border: '.5px solid #cdb2ff44', padding: '2px 6px', borderRadius: 100, fontSize: 10, cursor: 'pointer' }}>
+                  {foldersOf(_items).filter(f => f !== 'Tutti').map(f => <option key={f} value={f} style={{ background: '#111' }}>{f}</option>)}
+                </select>
+              </label>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
@@ -618,7 +634,7 @@ export const MediaLibraryPage = () => {
   const [customFolders, setCustomFolders] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState('');
 
-  const allFolders = [...DEFAULT_FOLDERS, ...customFolders.filter(f => !DEFAULT_FOLDERS.includes(f))];
+  const allFolders = foldersOf(items, customFolders);
 
   useEffect(() => {
     const update = () => setItems([..._items]);
@@ -994,7 +1010,7 @@ export const MediaLibrary = ({ onSelect, onClose, filter = 'all' }: PickerProps)
     return true;
   });
 
-  const allFolders = [...new Set(['Tutti', ..._items.map(i => i.folder)])];
+  const allFolders = [...new Set(['Tutti', ..._items.map(i => i.folder).filter(Boolean)])];
 
   return (
     <>
@@ -1027,7 +1043,7 @@ export const MediaLibrary = ({ onSelect, onClose, filter = 'all' }: PickerProps)
                 <div style={{ marginBottom: '1rem' }}>
                   <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: '#666', marginBottom: 8 }}>Cartella destinazione</div>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    {DEFAULT_FOLDERS.filter(f => f !== 'Tutti').map(f => (
+                    {foldersOf(_items).filter(f => f !== 'Tutti').map(f => (
                       <button key={f} onClick={() => setUploadFolder(f)}
                         style={{ padding: '5px 10px', background: uploadFolder === f ? 'rgba(205,178,255,0.15)' : 'rgba(255,255,255,0.04)', border: `.5px solid ${uploadFolder === f ? '#cdb2ff44' : '#2a2a2a'}`, borderRadius: 100, color: uploadFolder === f ? '#cdb2ff' : '#666', fontSize: 10, cursor: 'pointer' }}>
                         {f}
