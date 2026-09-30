@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowUpRight, MapPin } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { normalizeClients } from '../lib/clientUtils';
 import { linkClick, navigate } from '../lib/router';
-import { cld } from '../lib/media';
+import { CaseCard, CaseCardGrid } from '../components/CaseCard';
 
 type ClientsWallProps = {
   onClientClick?: (id: string) => void;
@@ -106,72 +106,14 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
         </motion.div>
         )}
 
-        {/* Griglia schede clienti */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(270px, 1fr))',
-          gap: 14,
-        }}>
+        {/* Riquadri clienti, nello stile dei casi studio */}
+        <CaseCardGrid>
           {clients.map((client, i) => (
-            <motion.a
-              href={`/cliente/${client.id}`}
-              key={client.id}
-              aria-label={`Apri scheda cliente ${client.name}`}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-30px' }}
-              transition={{ duration: 0.55, delay: (i % 4) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -4 }}
-              onClick={linkClick(() => openClient(client.id))}
-              className="client-card"
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 12, width: '100%' }}>
-                {client.logo ? (
-                  // logo con i suoi colori in un riquadro chiaro: funziona con e senza sfondo
-                  <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: 40, minWidth: 40, maxWidth: 110, padding: 5, borderRadius: 10, background: '#f0ede6', overflow: 'hidden' }}>
-                    <img src={cld(client.logo, 400)} alt="" loading="lazy" style={{ maxWidth: '100%', maxHeight: 30, objectFit: 'contain', display: 'block' }} />
-                  </span>
-                ) : (
-                  <span style={{ fontFamily: 'var(--fd)', fontSize: 20, color: 'var(--a)', letterSpacing: '.04em', lineHeight: 1 }}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                )}
-                {client.sector && (
-                  <span style={{
-                    fontSize: 9.5, fontWeight: 600, letterSpacing: '.12em', textTransform: 'uppercase',
-                    color: 'var(--a)', background: 'rgba(205,178,255,0.09)', border: '.5px solid rgba(205,178,255,0.25)',
-                    borderRadius: 100, padding: '5px 10px', textAlign: 'right', lineHeight: 1.3, maxWidth: '70%',
-                  }}>
-                    {client.sector}
-                  </span>
-                )}
-              </div>
-
-              <span style={{
-                fontFamily: 'var(--fd)', fontSize: 'clamp(1.7rem, 2.2vw, 2.1rem)', lineHeight: 0.95,
-                letterSpacing: '.02em', color: 'var(--t)', textTransform: 'uppercase', marginTop: 22,
-              }}>
-                {client.name}
-              </span>
-
-              {client.summary && (
-                <span className="client-card-summary">{client.summary}</span>
-              )}
-
-              <span style={{
-                marginTop: 'auto', paddingTop: 18, width: '100%', borderTop: '.5px solid var(--b)',
-                display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10,
-              }}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 11, letterSpacing: '.06em', color: 'rgba(240,237,230,0.55)' }}>
-                  {client.location && <><MapPin size={12} color="var(--a)" /> {client.location}</>}
-                </span>
-                <span className="client-card-cta">
-                  Scheda <ArrowUpRight size={13} />
-                </span>
-              </span>
-            </motion.a>
+            <CaseCard key={client.id} href={`/cliente/${client.id}`} onOpen={() => openClient(client.id)}
+              number={i + 1} kicker="Cliente" title={client.name} italic={client.sector} meta={client.location}
+              desc={client.summary} logo={client.logo} cta="Scheda cliente" />
           ))}
-        </div>
+        </CaseCardGrid>
 
         {hasMore && relatedTo && (
           <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
