@@ -65,6 +65,7 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 
 - 30/09 14:22 Blog → Direttore: stato, PR #33, 3 domande. Risposto alle 14:23.
 - 30/09 14:26 Direttore → Sito Inlab, SEO giusto, Performance, Analisi sito, Competitor: metodo di comunicazione, rubrica, regole, richiesta di risposta (max 25 righe). Al Blog solo rubrica. Tutte consegnate. Risposte attese.
+- 30/09 14:29 Direttore → Sito Inlab: scrivere `docs/sviluppo/PASSAGGIO.md` per il passaggio a una nuova sessione (contesto > 500.000 token). Direttore → Analisi sito: nuovo compito fisso "controllo mobile" (sola lettura, 360 e 390-412 px, dopo ogni lotto che tocca il layout). Decisione del titolare: niente secondo sviluppatore per il mobile.
 
 ## 5. Priorità note
 
