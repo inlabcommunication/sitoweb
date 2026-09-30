@@ -12,6 +12,14 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 - **Pull request:** le apre l'addetto al blog dal proprio branch, solo con file della sua area. Sito Inlab fa il controllo tecnico, Nicola la unisce.
 - **Mappa "Già coperte":** la aggiorna il responsabile SEO. L'addetto al blog scrive le voci nuove nel resoconto, nella sezione "Voci da aggiungere alla mappa".
 - **Crediti:** se in una sessione non ci sono compiti del brief né notizie A o B forti, basta un report breve, senza articolo.
+- **Rubrica delle sessioni** (dal direttore, 30/09/2026). Per scrivere a una sessione: `create_trigger` con `persistent_session_id`, poi `fire_trigger` e `delete_trigger`. Ogni messaggio sveglia l'altra sessione e consuma i suoi limiti: scrivere solo quando serve, con tutto dentro.
+  - Direttore Operativo: `session_01AreWGaDhEeTCs3CDmdifT7`
+  - Sito Inlab (unico che modifica il codice): `session_01U6sW6ykGz4nrdvKnHMQZsF`
+  - Adetto SEO giusto (responsabile strategico del blog): `session_018SfEyMKHa2uSgRSKzdE114`
+  - Addetto performance: `session_012pr6hkmubH9ZAA9gVGN4Gf` (con lui si concorda direttamente l'eventuale conversione WebP delle copertine)
+  - Adetto analisi sito (controlli e sicurezza, sola lettura): `session_01Kim4sfBnoqhrkBJnpGTrHz`
+  - Analisi competitor Inlab: `session_01Si9h5q6bVpPQbAn5BzeiCE`
+  - La vecchia "Addetto SEO" (`session_011qJCHS5861skWDHe1vUFbF`) non si usa più.
 - **Regola di Nicola: niente prezzi dei servizi di gestione** negli articoli: tariffe o fasce di costo di agenzie, freelance o InLab (gestione social, siti, campagne, video…). I prezzi ufficiali delle piattaforme (per esempio abbonamenti Meta One o commissioni di TikTok Shop) si possono citare con la fonte. Se un brief chiede i costi di gestione, non farlo e segnalalo nel resoconto.
 - **Clienti InLab:** per ora cita i clienti solo con quello che c'è già nelle schede `/cliente/...` e nei casi studio, senza dettagli o numeri in più. Non chiedere informazioni sui clienti: Nicola preparerà i casi studio completi (linee guida, sezione 7).
 - **Clienti da non citare nel blog:** Aleph Caffè (indicazione di Nicola, 29/09/2026).
