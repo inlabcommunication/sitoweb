@@ -29,7 +29,7 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 | **Sito Inlab** (sviluppo, responsabile tecnico) | `session_01U6sW6ykGz4nrdvKnHMQZsF` | `claude/github-projects-view-e5dw5i` | **unico che modifica il codice**: `src/`, `api/`, `scripts/`, `public/`, `vercel.json`, `package.json`, `firestore.rules`, `index.html`, doc tecnica | fermo per limite crediti (reset 13:30 UTC); PR fino a #30 unite |
 | **Adetto SEO giusto** (responsabile SEO e **responsabile strategico del blog**) | `session_018SfEyMKHa2uSgRSKzdE114` | `claude/inlab-analytics-seo-setup-hh2p6e` | solo `docs/seo/` | ha inviato a Sito Inlab i documenti SEO dei casi studio; push bloccato dalla policy di sicurezza |
 | Addetto SEO (vecchia sessione) | `session_011qJCHS5861skWDHe1vUFbF` | stesso branch SEO | — | **da archiviare**: sostituita da "Adetto SEO giusto", ambiente diverso |
-| **Addetto al Blog** | `session_017pmD2nGS4KjecYvnyGm8iM` | `claude/optimistic-ritchie-mj87ne` | `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/` | in attesa: chiede se la PR la apre lui o Sito Inlab |
+| **Addetto al Blog** | `session_017pmD2nGS4KjecYvnyGm8iM` | `claude/optimistic-ritchie-mj87ne` | `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/` | PR #33 aperta (metadati IPTC e alt delle 41 immagini, 10 immagini rinominate, resoconto SEO); ultimo voto SEO 8/10; routine mar/ven 8:47 dal 2/10, pubblicazione automatica 11:50 disattivata |
 | **Addetto performance** | `session_012pr6hkmubH9ZAA9gVGN4Gf` | `claude/sleepy-mccarthy-g1a968` | solo `docs/performance/` | report 30/09 fatto, fermo per limite crediti |
 | **Adetto analisi sito** (= analista sicurezza / controlli) | `session_01Kim4sfBnoqhrkBJnpGTrHz` | `claude/serene-noether-l1j2l4` | **niente, solo lettura** | fermo per limite crediti |
 | **Analisi competitor Inlab** | `session_01Si9h5q6bVpPQbAn5BzeiCE` | `claude/trusting-dirac-fhmj15` (non ancora sul remoto) | da definire: proposta `docs/competitor/` | al lavoro (30/09): concorrenti indicati dal titolare + altri 8 da cercare da sola |
@@ -57,9 +57,9 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 
 **Regola SEO ↔ Blog:** Adetto SEO giusto è sempre il responsabile strategico del blog (priorità, keyword, intenti di ricerca, ottimizzazioni, link interni). Il Blog scrive e non sceglie da solo argomenti importanti. Un articolo è pronto solo se rispetta le indicazioni SEO. In caso di conflitto prevale la SEO su posizionamento, keyword, intenti, link interni e priorità organiche. Un futuro Caporedattore curerà qualità, struttura e tono, sempre dentro la strategia SEO.
 
-**Regole fisse del titolare:** niente prezzi negli articoli; sui clienti solo ciò che è già pubblicato, senza numeri, salvo conferma di Nicola; Aleph Caffè non va citato; nessun push su `main`, tutto via PR con anteprima Vercel verde; mai chiavi o dati personali nel repository.
+**Regole fisse del titolare:** niente prezzi dei servizi di gestione negli articoli (sì ai prezzi ufficiali delle piattaforme); ottimizzazione delle immagini a ogni articolo; sui clienti solo ciò che è già pubblicato, senza numeri, salvo conferma di Nicola; Aleph Caffè non va citato; nessun push su `main`, tutto via PR con anteprima Vercel verde; mai chiavi o dati personali nel repository.
 
-**Limite tecnico:** le sessioni cloud non si scambiano messaggi da sole. Oggi il canale è il titolare (incolla i messaggi) oppure i documenti sul proprio branch.
+**Come si scrive a un'altra sessione:** SendMessage non funziona tra sessioni cloud. Funziona una routine: `create_trigger` con `persistent_session_id` della sessione destinataria e prompt che inizia con `[Messaggio da <ruolo>]`, poi `fire_trigger` e `delete_trigger` (provato il 30/09, Direttore → Blog). Ogni messaggio sveglia la sessione e consuma i suoi limiti: scrivere solo quando serve, un messaggio con tutto dentro. Per rispondere al Direttore: stesso metodo con `session_01AreWGaDhEeTCs3CDmdifT7`.
 
 ## 5. Priorità note
 
@@ -70,13 +70,22 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 5. Aggiornare `CLAUDE.md` con i ruoli nuovi (Direttore, Competitor, SEO responsabile del blog).
 6. Minori: `label-content-name-mismatch` del launcher chat, WebP delle cover (da concordare con il Blog, in build), I5 LazyMotion/Chatbot lazy, M1–M6, N2.
 
+## 5-bis. Lotto per Sito Inlab (da mandare in un solo messaggio)
+
+1. C1-bis hero visibile subito (priorità 1).
+2. I2 font in locale (priorità comune di Performance e Analisi sito).
+3. Controllo tecnico della PR #33 del Blog.
+4. Metadati IPTC nel generatore `tools/blog-images`.
+5. Correzioni SEO del commit `4c6ebaf` (titoli, descrizioni, lastmod) dal branch SEO.
+6. `CLAUDE.md`: ruoli Direttore e Competitor, SEO responsabile del blog, passaggio dal Direttore.
+
 ## 6. Problemi aperti
 
 | # | Problema | Chi | Cosa serve |
 |---|---|---|---|
 | P1 | Il branch SEO contiene modifiche al codice (`src/seo/routes.ts`, `scripts/prerender.ts`, `src/App.tsx`, commit `4c6ebaf`) e il prompt SEO dice "fai tu le correzioni tecniche": **in contrasto con `CLAUDE.md`** | SEO giusto → Sito Inlab | la SEO scrive le richieste nel brief; Sito Inlab le applica. Aggiornare il prompt SEO. |
 | P2 | Push della sessione SEO bloccato dalla policy di sicurezza (brief del 30/09 e sezione 8 delle linee guida non sono sul remoto) | SEO giusto, titolare | capire la causa; pubblicare solo `docs/seo/` |
-| P3 | Il Blog aspetta di sapere chi apre la PR | Direttore | **proposta:** la apre il Blog dal suo branch (tocca solo la sua area); la controlla Sito Inlab; la unisce il titolare dopo l'anteprima verde |
+| P3 | ~~Chi apre le PR del Blog~~ **Deciso 30/09:** le apre il Blog dal suo branch; controllo tecnico di Sito Inlab; unione del titolare con anteprima verde. PR #33 da controllare | Sito Inlab | controllo della PR #33 |
 | P4 | `docs/blog-brief.md` indica come responsabile SEO la vecchia sessione "Integrazione Analytics e Search Console" | Blog | aggiornare il nome in "Adetto SEO giusto" |
 | P5 | Due sessioni SEO (vecchia e "giusto"): rischio doppioni e crediti | titolare | archiviare "Addetto SEO" |
 | P6 | Il branch dell'analista (`serene-noether`) contiene vecchie modifiche al codice (25–28/09, prima delle regole), mai unite | analista / titolare | non unire; il branch resta solo come storico |
@@ -84,6 +93,8 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 | P8 | Richiesta del Blog: categoria "Foto & Branding" in `BLOG_CATEGORIES` (codice) | SEO decide → Sito Inlab | decisione SEO, poi richiesta a Sito Inlab |
 | P9 | Attività di sicurezza nelle console esterne (`SECURITY.md`). **Fatto (titolare, 30/09):** chiave Gemini rigenerata, tetto di spesa impostato. **Da confermare:** chiave Anthropic (se usata), chiavi vecchie cancellate dal database ("Salva impostazioni" in dashboard), regole Firestore pubblicate, admin creati, registrazioni pubbliche bloccate | titolare | confermare i punti rimasti |
 | P10 | Competitor: il titolare ha mandato i nomi il 30/09, più altri 8 da cercare alla sessione. Aveva chiesto anche le risposte delle altre sessioni: **doppione** con questa mappa | Direttore | il report deve andare in `docs/competitor/`; i dati utili passano all'Adetto SEO giusto |
+| P12 | Metadati IPTC da aggiungere al generatore `tools/blog-images` (script nel resoconto del Blog del 30/09) | Sito Inlab | nel prossimo lotto |
+| P13 | Mappa "Già coperte" (linee guida SEO, sezione 10): le linee guida dicono che la aggiorna il Blog, ma è in `docs/seo/` | SEO giusto | aggiungere `servizio-fotografico-ristoranti` e `rebranding-attivita-commerciale`; correggere le linee guida |
 | P11 | Paragrafi "metodo InLab" negli articoli senza casi reali | titolare | informazioni sui clienti |
 
 ## 7. Vincoli tecnici
