@@ -110,7 +110,7 @@ Chiedi sempre chi risponde ai messaggi, in quali orari e cosa succede con le ric
 
 Ogni mese si guardano i dati: quali contenuti hanno funzionato, da dove arrivano i contatti, cosa cambiare. **La strategia evolve con i risultati reali**, non con le impressioni. Un report utile non elenca solo like e follower, ma collega i contenuti a qualcosa di concreto: messaggi ricevuti, chiamate, clic al sito, prenotazioni.
 
-![Le cinque voci di una gestione social per attività locali: strategia, piano editoriale, foto e video, community e report](/blog/gestione-social-attivita-locale-cosa-include/cosa-include.webp)
+![Le cinque voci di una gestione social: strategia, piano, contenuti, community e report](/blog/gestione-social-attivita-locale-cosa-include/cosa-include.webp)
 
 ## Un mese tipo di gestione social: un esempio
 
@@ -239,7 +239,7 @@ Le storie durano 24 ore e le vede soprattutto chi ti segue già. Servono per la 
 
 Sono il formato più "vicino" alle persone, e spesso è da una storia che arriva il messaggio privato con una richiesta.
 
-![A cosa servono reel, storie, caroselli e foto singole su Instagram per un'attività locale](/blog/reel-o-post-cosa-pubblicare-instagram/formati.webp)
+![A cosa servono reel, storie, caroselli e foto singole su Instagram per un'attività locale](/blog/reel-o-post-cosa-pubblicare-instagram/formati-instagram-reel-post-storie.webp)
 
 ## Quanto deve durare un reel e come iniziarlo
 
@@ -425,7 +425,7 @@ Dal 2026 puoi anche collegare la scheda a Google Analytics 4 e vedere in un unic
 - **Informativa privacy e cookie** in regola.
 - **Statistiche attive** per sapere da dove arrivano i contatti.
 
-![Checklist del sito web per attività locali: velocità, pagine servizi, contatti, orari, recensioni e scheda Google](/blog/sito-web-o-solo-social-attivita-locale/checklist-sito.webp)
+![Checklist del sito per attività locali: velocità, servizi, contatti, recensioni e scheda Google](/blog/sito-web-o-solo-social-attivita-locale/checklist-sito.webp)
 
 ## Un caso reale: Lumina, il sito dello Studio Dentistico Ricciardi
 
@@ -579,7 +579,7 @@ Ecco una checklist operativa. Non sostituisce il parere del tuo consulente priva
 7. **Gestisci la base iscritti esistente.** Per chi è già in lista e non ha dato un consenso specifico al tracciamento, valuta con il tuo consulente se inviare email senza pixel o chiedere il consenso.
 8. **Rivedi KPI e automazioni.** Sostituisci i flussi basati sulle aperture con trigger legati a clic, acquisti o azioni sul sito. Se usi [automazioni e chatbot AI](/automazioni-ai) collegati al CRM, controlla che rispettino le nuove scelte degli utenti.
 
-![Checklist in sei punti per adeguare la newsletter alle linee guida del Garante sui tracking pixel entro fine ottobre 2026](/blog/tracking-pixel-email-garante/checklist.webp)
+![Checklist in sei punti per adeguare la newsletter ai tracking pixel entro ottobre](/blog/tracking-pixel-email-garante/checklist-newsletter-tracking-pixel.webp)
 
 ## Un esempio concreto: la newsletter di un negozio di arredamento
 
@@ -699,7 +699,7 @@ Il [Digital Omnibus sull'AI](https://digital-strategy.ec.europa.eu/en/news/ai-om
 - gli obblighi per i sistemi ad alto rischio slittano al **2 dicembre 2027** per quelli dell'Allegato III (ad esempio selezione del personale e credit scoring) e al **2 agosto 2028** per quelli dell'Allegato I;
 - l'obbligo di alfabetizzazione AI (art. 4) è stato ammorbidito: ora si chiede di "adottare misure per favorire" le competenze, invece di "garantire un livello sufficiente".
 
-![Timeline delle scadenze: legge italiana sull'AI dal 10 ottobre 2025, articolo 50 AI Act dal 2 agosto 2026, watermark sistemi esistenti 2 dicembre 2026, alto rischio 2 dicembre 2027](/blog/contenuti-ai-obblighi-ai-act/scadenze.webp)
+![Le scadenze di AI Act e legge italiana sull'AI dal 2025 al 2027](/blog/contenuti-ai-obblighi-ai-act/scadenze-ai-act-legge-italiana.webp)
 
 ### Il codice di condotta UE e l'etichetta comune
 
@@ -898,7 +898,7 @@ Ecco un metodo semplice, che puoi seguire anche se non sei un esperto di SEO.
 4. **Segui l'andamento settimanale.** La granularità giornaliera è molto "rumorosa". Quella settimanale ti mostra le tendenze vere, senza farti preoccupare per un calo di un giorno.
 5. **Annota le modifiche.** Ogni volta che pubblichi o aggiorni una pagina, segnalo con le annotazioni di Search Console o in un foglio condiviso. Dopo qualche settimana capirai cosa funziona.
 
-![Checklist in 5 passi per leggere il report Generative AI performance di Search Console](/blog/ai-overviews-search-console-report/checklist.webp)
+![Checklist in 5 passi per leggere il report Generative AI performance di Search Console](/blog/ai-overviews-search-console-report/come-leggere-report-ai-overviews.webp)
 
 ### Tre controlli da fare subito
 
@@ -1022,7 +1022,7 @@ Non serve nemmeno uno schema di dati strutturati speciale. I dati strutturati re
 
 I requisiti tecnici sono pochi: la pagina deve essere **indicizzata** e **idonea a mostrare uno snippet**, e il sito deve essere incluso nel controllo AI di Search Console. Se vuoi capire come verificarlo e come misurare i risultati, leggi la nostra guida su come [misurare la visibilità del sito nelle risposte AI](/blog/ai-overviews-search-console-report).
 
-![Confronto tra le tattiche GEO che Google dice di poter ignorare e i fattori che contano davvero per le AI Overviews](/blog/seo-ai-overviews-geo-google/serve-non-serve.webp)
+![Tattiche GEO che Google dice di ignorare e fattori che contano per le AI Overviews](/blog/seo-ai-overviews-geo-google/serve-non-serve.webp)
 
 ## I core update 2026 e la fine dei contenuti commodity
 
@@ -1247,7 +1247,7 @@ Con i filtri hostname di tipo "Include" puoi dire a GA4 quali sono i tuoi domini
 
 Nome, indirizzo e numero di telefono devono essere **identici** sulla scheda, sul [sito web](/siti-web) e sui social. Sembra un dettaglio, ma informazioni contrastanti confondono i clienti e rendono meno chiaro chi sei a chi legge i tuoi dati.
 
-![Checklist mensile per attività locali con chiamate, indicazioni stradali, clic al sito, canale AI Assistant, recensioni e dati della scheda](/blog/google-business-profile-ga4/checklist-mensile.webp)
+![Checklist mensile per attività locali: chiamate, indicazioni, clic al sito, traffico AI e recensioni](/blog/google-business-profile-ga4/checklist-mensile.webp)
 
 *La checklist da ripetere ogni mese: tre metriche GBP, il canale AI Assistant e la cura della scheda.*
 
@@ -1399,7 +1399,7 @@ Ma c'è un rovescio. Un assistente che risponde male, inventa un prezzo o promet
 7. **Porta traffico in chat con gli annunci click-to-WhatsApp.** Sono annunci su Facebook e Instagram che aprono direttamente una conversazione. Se l'assistente è pronto a rispondere, il contatto non si raffredda. Le impostiamo spesso nelle nostre [campagne Meta Ads](/meta-ads).
 8. **Controlla le conversazioni.** Nelle prime settimane leggi il riepilogo ogni mattina e correggi le risposte sbagliate aggiornando la base informativa.
 
-![Checklist in sei punti da completare prima di attivare l'assistente AI su WhatsApp Business](/blog/whatsapp-business-ai/checklist.webp)
+![Checklist in sei punti da completare prima di attivare l'assistente AI su WhatsApp Business](/blog/whatsapp-business-ai/checklist-assistente-ai-whatsapp.webp)
 
 ## Un esempio: lo studio dentistico e la trattoria
 
@@ -1504,7 +1504,7 @@ Secondo quanto riportato dal Wall Street Journal a giugno 2025, l'obiettivo di M
 
 Tra gli addetti ai lavori (per esempio il consulente statunitense Jon Loomer) si è diffusa una lettura: a quanto risulta Andromeda è il sistema che seleziona quali annunci entrano nella fase di ranking, cioè quali hanno una possibilità di essere mostrati. La conseguenza pratica, secondo questa interpretazione, è che **la creatività pesa più del targeting per interessi**: è l'annuncio stesso a "trovare" il pubblico giusto.
 
-![Confronto tra le campagne Meta Ads basate sul targeting manuale e quelle basate su creatività e segnali di conversione](/blog/meta-ads-creativita-advantage/prima-dopo.webp)
+![Meta Ads prima e ora: dal targeting manuale a creatività e segnali di conversione](/blog/meta-ads-creativita-advantage/prima-dopo.webp)
 
 ### Verifica degli inserzionisti e regole europee
 
@@ -1687,7 +1687,7 @@ Non tutte le attività traggono lo stesso vantaggio da Meta One. Vediamo alcuni 
 4. **Valuta il rischio di profili falsi.** Se hai già avuto casi di imitazione o lavori in un settore dove sono frequenti, l'Essential può valere anche solo per il badge e la protezione.
 5. **Prova per un periodo definito.** Se decidi di abbonarti, fissa un obiettivo (per esempio clic dai post o richieste ricevute) e dopo due o tre mesi verifica se il costo si è ripagato.
 
-![Checklist in 4 domande per capire se l'abbonamento Meta One conviene a un'azienda: clic al sito, profili falsi, team, prezzo in euro](/blog/meta-one-aziende/conviene-4-domande.webp)
+![Quattro domande per capire se l'abbonamento Meta One conviene alla tua azienda](/blog/meta-one-aziende/conviene-4-domande.webp)
 
 ### La leva che resta gratuita: contenuti originali
 
@@ -1830,7 +1830,7 @@ Attenzione però ai costi. Secondo quanto riportato da alcune testate di settore
 
 Le indicazioni che seguono non sono regole ufficiali di TikTok, ma le buone pratiche che applichiamo ogni giorno nella produzione di [video e reel](/video) per i nostri clienti.
 
-![Checklist in 6 passi per ottimizzare un video per la ricerca su TikTok: parola chiave detta, testo a schermo, didascalia con località, sottotitoli, hashtag, serie ricorrenti](/blog/seo-tiktok-search-ads/ottimizzare-video-ricerca.webp)
+![Sei passi per ottimizzare un video per la ricerca su TikTok](/blog/seo-tiktok-search-ads/ottimizzare-video-ricerca.webp)
 
 1. **Di' la parola chiave nei primi secondi.** Se il video parla di "taglio bob", dillo a voce all'inizio. Aiuta chi guarda a capire subito e rende chiaro l'argomento.
 2. **Scrivila anche a schermo.** Un testo in sovrimpressione con la parola chiave rafforza il messaggio, anche per chi guarda senza audio.
@@ -2169,7 +2169,7 @@ Like e visualizzazioni non pagano l'affitto. Guarda i numeri legati all'obiettiv
 
 Tieni un semplice foglio con le richieste ricevute e da dove arrivano. È il modo più affidabile per capire cosa rende davvero.
 
-![Le metriche da guardare nelle sponsorizzate Instagram per attività locali: contatti, chiamate e prenotazioni](/blog/sponsorizzate-instagram-attivita-locali/metriche.webp)
+![Le metriche da guardare nelle sponsorizzate Instagram per attività locali: contatti, chiamate e prenotazioni](/blog/sponsorizzate-instagram-attivita-locali/metriche-sponsorizzate-instagram.webp)
 
 ### Gli errori più comuni
 
@@ -2241,7 +2241,7 @@ Un buon reel non deve per forza diventare virale. Deve far venire voglia a chi a
 2. **Verticale, luce naturale, audio pulito.** Gira vicino a una finestra o all'aperto, tieni il telefono stabile e, se qualcuno parla, avvicinati. Aggiungi sempre i sottotitoli: molti guardano senza audio.
 3. **Un'idea per video.** Un piatto, una persona, una notizia. Se vuoi dire tre cose, fai tre reel.
 
-![Tre regole per girare reel per ristoranti e bar: dove siamo in 3 secondi, formato verticale, un'idea per video](/blog/idee-reel-ristoranti/tre-regole.webp)
+![Tre regole per girare reel per ristoranti: luogo in 3 secondi, verticale, un'idea](/blog/idee-reel-ristoranti/tre-regole.webp)
 
 ## 15 idee di reel per ristoranti e bar
 
@@ -2285,7 +2285,7 @@ Un buon reel non deve per forza diventare virale. Deve far venire voglia a chi a
 
 **15. Il calendario del territorio.** La sagra del paese, le feste patronali, Natale, l'estate al mare. Collega il tuo menu a quello che succede intorno: le persone cercano proprio questi momenti.
 
-![Le 15 idee di reel per ristoranti e bar divise per tema: cucina, persone, locale, informazioni utili e stagioni](/blog/idee-reel-ristoranti/quindici-idee.webp)
+![Le 15 idee di reel per ristoranti e bar divise per tema](/blog/idee-reel-ristoranti/quindici-idee.webp)
 
 ## Come organizzare le riprese in mezza giornata
 
@@ -2391,7 +2391,7 @@ Tovaglie stirate, bicchieri senza aloni, piatti puliti sui bordi. Togli dalla vi
 
 Se vuoi foto con le persone, e dovresti, avvisa lo staff qualche giorno prima: divise in ordine, disponibilità a farsi riprendere. Chi non vuole comparire va rispettato. Se nelle foto compaiono clienti riconoscibili, serve il loro consenso.
 
-![Checklist per preparare un servizio fotografico per ristoranti: obiettivo, orario, lista piatti, pulizia e staff](/blog/servizio-fotografico-ristoranti/preparazione.webp)
+![Checklist per preparare un servizio fotografico per ristoranti: obiettivo, orario, lista piatti, pulizia e staff](/blog/servizio-fotografico-ristoranti/preparare-servizio-fotografico-ristorante.webp)
 
 ## Cosa fotografare: la lista degli scatti
 
@@ -2422,7 +2422,7 @@ Le stesse foto possono lavorare su più canali, ma non tutte vanno bene ovunque.
 
 Il consiglio pratico è organizzare **foto e video nella stessa giornata**. Mentre si fotografano i piatti si possono girare anche le clip per i reel: trovi 15 spunti nella guida alle [idee di reel per ristoranti e bar](/blog/idee-reel-ristoranti).
 
-![Come usare le foto del servizio fotografico del ristorante su menu, Instagram, scheda Google e sito](/blog/servizio-fotografico-ristoranti/formati.webp)
+![Come usare le foto del ristorante su menu, Instagram, scheda Google e sito](/blog/servizio-fotografico-ristoranti/foto-ristorante-menu-instagram-google.webp)
 
 ## Da cosa dipende il costo di un servizio fotografico
 
@@ -2547,7 +2547,7 @@ Il giorno del cambio molte cose devono aggiornarsi insieme. Una dimenticanza cre
 
 Il nostro consiglio: prepara l'elenco con largo anticipo e assegna a ogni voce una persona e una data.
 
-![Checklist del rebranding di un'attività commerciale: insegna, scheda Google, social, sito, WhatsApp e materiali](/blog/rebranding-attivita-commerciale/checklist.webp)
+![Checklist del rebranding di un'attività commerciale: insegna, scheda Google, social, sito, WhatsApp e materiali](/blog/rebranding-attivita-commerciale/checklist-rebranding-insegna-social.webp)
 
 ## Come comunicare il rebranding ai clienti
 
@@ -2563,7 +2563,7 @@ Una data, un evento, un motivo per passare: un'inaugurazione, una degustazione, 
 
 Per un periodo ricorda il vecchio nome ("prima eravamo…"), soprattutto sulla scheda Google, sui social e in negozio. Rispondi alle domande, ringrazia chi ha partecipato e mostra le novità. Poi, passato qualche mese, smetti di citare il vecchio nome.
 
-![Le tre fasi per comunicare il rebranding di un'attività: prima, il giorno del cambio e dopo](/blog/rebranding-attivita-commerciale/fasi.webp)
+![Le tre fasi per comunicare il rebranding: prima, il giorno del cambio, dopo](/blog/rebranding-attivita-commerciale/fasi-comunicare-rebranding.webp)
 
 ## Il caso Paresteta: un cambio insegna diventato evento
 
