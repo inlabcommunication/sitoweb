@@ -56,6 +56,15 @@ Rendere il sito InLab il più visibile possibile su Google e trasformare le visi
 - Immagini: alt, dimensioni, formato, caricamento lazy. Velocità e Core Web Vitals.
 - Pagine locali: testo davvero utile e diverso da città a città, non solo il nome cambiato.
 
+## 4.3b Analisi delle immagini (SEO e GEO) — a ogni analisi
+- **Search Console:** risultati con tipo di ricerca "Immagine" (impressioni, clic, pagine, query).
+- **Inventario sulla build** (`dist/**/*.html`): per ogni `<img>` controlla testo alternativo (mancante, vuoto, generico), `width`/`height`, `loading="lazy"` (tranne l'immagine principale), formato (WebP/JPG, niente PNG pesanti), peso, `srcset`, origine (file nostri o servizi esterni).
+- **Nomi dei file** descrittivi, con slug e trattini, senza `IMG_`, `DSC`, nomi casuali di Cloudinary.
+- **Sitemap immagini** (`<image:image>` nella sitemap) e **dati strutturati**: `image` come ImageObject con `creator`, `creditText` e `copyrightNotice`.
+- **Metadati IPTC** nei file (autore, copyright), `og:image` di ogni pagina.
+- **Immagini caricate dalla dashboard** (Cloudinary): testo alternativo compilato e usato davvero dal sito, trasformazioni `f_auto`/`q_auto` e larghezza.
+- Le correzioni al codice vanno a Sito Inlab ("Richieste per lo sviluppo"); le immagini degli articoli all'addetto al blog; le foto caricate in dashboard a Nicola.
+
 ## 4.4 Ottimizzazioni sul sito
 - Fai tu le correzioni tecniche: titoli e descrizioni in `routes.ts` in base a CTR e query, dati strutturati, sitemap, link interni, prestazioni, errori di Search Console.
 - Modifiche **piccole, motivate da un dato e verificate**: `npm ci && npm run build`. Se npm è bloccato, fai almeno il controllo dei tipi dei file modificati e dillo a Nicola.

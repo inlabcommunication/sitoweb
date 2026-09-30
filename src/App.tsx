@@ -32,6 +32,7 @@ import { ReelsGrid, Gallery } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
+import { workAlt } from "./lib/altText";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
 const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ default: m.PagePrivacy })));
@@ -318,6 +319,7 @@ const Marquee = ({items}) => {
   );
 };
  
+// Hero delle pagine interne: visibile subito, senza dissolvenza (è l'elemento principale della pagina)
 const PageHero = ({tag,h1,h1b,italic,sub,cta1,cta1to,cta2,cta2to,accent=false}: any) => {
   const {go}=useRouter();
   return (
@@ -327,18 +329,18 @@ const PageHero = ({tag,h1,h1b,italic,sub,cta1,cta1to,cta2,cta2to,accent=false}: 
         <div style={{position:"absolute",bottom:"10%",left:"5%",width:320,height:320,background:"rgba(255,255,255,0.018)",borderRadius:"50%",filter:"blur(80px)"}}/>
       </div>
       <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-        {tag && <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.05}}
+        {tag && <motion.div initial={false}
           style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"2rem"}}>
           <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:"#000",fontWeight:700}}>✦</span>
           <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{tag}</span>
         </motion.div>}
-        <motion.h1 initial={{opacity:0,y:36}} animate={{opacity:1,y:0}} transition={{delay:.12}}
+        <motion.h1 initial={false}
           className="hero-h" style={{fontSize:"clamp(3.8rem,11vw,11.5rem)",marginBottom:"2.5rem"}}>
           {h1}<br/>
           <span className="stroke">{h1b}</span>
           {italic && <><br/><span style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"0.76em",color:"var(--a)"}}>{italic}</span></>}
         </motion.h1>
-        <motion.div initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:.22}}
+        <motion.div initial={false}
           style={{display:"flex",flexWrap:"wrap",gap:"1.5rem",alignItems:"flex-end",justifyContent:"space-between"}}>
           {sub && <p style={{maxWidth:440,fontSize:17,lineHeight:1.75,color:"var(--m)",fontWeight:300}}>{sub}</p>}
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
@@ -1373,17 +1375,17 @@ const PageCittaSEO = ({city, service}) => {
           <div style={{position:"absolute",top:"20%",right:"10%",width:450,height:450,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(100px)"}}/>
         </div>
         <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-          <motion.div initial={{opacity:0,y:12}} animate={{opacity:1,y:0}}
+          <motion.div initial={false}
             style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"1.5rem"}}>
             <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
             <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} a {cityName} — InLab Communication</span>
           </motion.div>
-          <motion.h1 initial={{opacity:0,y:32}} animate={{opacity:1,y:0}} transition={{delay:.12}}
+          <motion.h1 initial={false}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,10rem)",lineHeight:.88,marginBottom:"2rem",textTransform:"uppercase"}}>
             {svc.label.toUpperCase()}<br/>
             <span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>A {cityName.toUpperCase()}</span>
           </motion.h1>
-          <motion.p initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{delay:.22}}
+          <motion.p initial={false}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
             InLab è l'agenzia di comunicazione di riferimento a {cityName} e in tutta la provincia di Taranto. Ci occupiamo di {svc.label} per aziende locali, con strategie su misura, risultati misurabili e un approccio orientato alla crescita.
           </motion.p>
@@ -1505,7 +1507,7 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={cld(heroImage, 1600)} alt={client.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
+          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
@@ -1596,7 +1598,7 @@ const PageCliente = ({id}: {id: string}) => {
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Foto</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>DIETRO<br/><span className="stroke">L'OBIETTIVO</span></h2>
-            <Gallery images={gallery} alt={client.name}/>
+            <Gallery images={gallery} alt={workAlt(client)}/>
           </div>
         </section>
       )}
@@ -1618,15 +1620,15 @@ const PageCasiStudio = () => {
     <>
       <section style={{padding:"10rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <motion.p initial={{opacity:0}} animate={{opacity:1}} className="section-label">Casi studio</motion.p>
+          <motion.p initial={false} className="section-label">Casi studio</motion.p>
           <motion.h1
-            initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:.7}}
+            initial={false}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.5rem"}}
           >
             PROGETTI<br/><span className="stroke">RACCONTATI.</span>
           </motion.h1>
           <motion.p
-            initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.2}}
+            initial={false}
             style={{fontSize:16,color:"var(--m)",maxWidth:640,lineHeight:1.75}}
           >
             Non solo contenuti. Progetti costruiti con strategia, direzione creativa e obiettivi concreti — raccontati passo per passo.
@@ -1852,14 +1854,19 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   }, [route]);
  
   const pageInfo=parseRoute(route);
+  const mounted = React.useRef(false);
+  useEffect(() => { mounted.current = true; }, []);
  
   return (
     <RouterCtx.Provider value={{route,go}}>
       <G/>
       <Navbar/>
       <AnimatePresence mode="wait">
+        {/* al primo caricamento la pagina è visibile subito (niente dissolvenza
+            sull'HTML statico); la transizione resta nei cambi di pagina. Le
+            animazioni delle singole sezioni non cambiano. */}
         <motion.div key={route}
-          initial={{opacity:0,y:12}}
+          initial={mounted.current ? {opacity:0,y:12} : false}
           animate={{opacity:1,y:0}}
           exit={{opacity:0,y:-8}}
           transition={{duration:.25}}>

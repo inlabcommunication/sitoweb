@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { BrowserMockup } from '../components/BrowserMockup';
 import { ReelsGrid, Gallery } from '../components/ReelCard';
 import type { CaseBlock, CaseStudy } from '../data/caseStudies';
+import { workAlt } from '../lib/altText';
 
 // ──────────────────────────────────────────────────────────────
 // Componenti helper riutilizzabili tra le pagine caso studio
@@ -92,7 +93,7 @@ const StatValue: React.FC<{ value: string }> = ({ value }) => {
 
 const safeUrl = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
-const Block: React.FC<{ b: CaseBlock; name: string }> = ({ b, name }) => {
+const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, name, photoAlt }) => {
   switch (b.type) {
     case 'text':
       if (!b.body && !b.boxBody) return null;
@@ -249,7 +250,7 @@ const Block: React.FC<{ b: CaseBlock; name: string }> = ({ b, name }) => {
       return (
         <Section>
           <Title b={b} />
-          <div style={{ marginTop: '2rem' }}><Gallery images={images} alt={name} /></div>
+          <div style={{ marginTop: '2rem' }}><Gallery images={images} alt={photoAlt} /></div>
         </Section>
       );
     }
@@ -296,18 +297,18 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
         )}
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 1280, margin: '0 auto', width: '100%' }}>
           <div style={{ marginBottom: '2rem' }}><CaseHeroBack onBack={onBack} /></div>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="section-label" style={{ marginBottom: '1rem' }}>
+          <motion.p initial={false} className="section-label" style={{ marginBottom: '1rem' }}>
             {hero.label || [`Caso ${cs.number || ''}`.trim(), cs.category].filter(Boolean).join(' — ')}
           </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.8 }}
+          <motion.h1 initial={false}
             style={{ fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
             {hero.title || cs.client}
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }}
+          <motion.p initial={false}
             style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', color: 'var(--a)', maxWidth: 720, lineHeight: 1.3, marginBottom: '1.5rem' }}>
             {hero.subtitle || cs.title}
           </motion.p>
-          {hero.intro && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }} style={{ fontSize: 16, color: 'var(--m)', maxWidth: 640, lineHeight: 1.7, marginBottom: '2rem' }}>{hero.intro}</motion.p>}
+          {hero.intro && <motion.p initial={false} style={{ fontSize: 16, color: 'var(--m)', maxWidth: 640, lineHeight: 1.7, marginBottom: '2rem' }}>{hero.intro}</motion.p>}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             {cta && <a className="btn btn-p" href={cta} target="_blank" rel="noopener noreferrer">{hero.ctaLabel || 'Visita il sito'} <ArrowUpRight size={14} /></a>}
             {cs.clientId && onClient && <a className="btn btn-g" href={`/cliente/${cs.clientId}`} onClick={(e) => { if (e.metaKey || e.ctrlKey) return; e.preventDefault(); onClient(cs.clientId!); }}>Scheda cliente <ArrowRight size={13} /></a>}
@@ -315,7 +316,7 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
         </div>
       </section>
 
-      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} />)}
+      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} photoAlt={workAlt({ name: cs.client, location: cs.locations?.[0] })} />)}
 
       <CTABottom onClick={onContact} />
     </>

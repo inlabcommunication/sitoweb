@@ -58,11 +58,12 @@ export const ReelsGrid: React.FC<{ reels: Reel[] }> = ({ reels }) => (
   </div>
 );
 
+/** `alt`: testo alternativo completo, uguale per tutte le foto della galleria (niente "foto 1, 2…"). */
 export const Gallery: React.FC<{ images: string[]; alt: string }> = ({ images, alt }) => (
   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
     {images.filter((u) => safe(u)).map((img, i) => (
       <a key={i} href={img} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: 16, overflow: 'hidden', border: '.5px solid var(--b)' }}>
-        <img src={cld(img, 900)} alt={`${alt} — foto ${i + 1}`} loading="lazy" decoding="async" style={{ width: '100%', aspectRatio: '4 / 5', objectFit: 'cover', display: 'block' }} />
+        <img src={cld(img, 900)} alt={alt} loading="lazy" decoding="async" style={{ width: '100%', aspectRatio: '4 / 5', objectFit: 'cover', display: 'block' }} />
       </a>
     ))}
   </div>

@@ -350,11 +350,11 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
         display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '4rem', alignItems: 'center',
       }} className="grid-1-mob">
 
-        {/* Copy */}
+        {/* Copy: visibile subito, senza dissolvenza (è l'elemento principale della pagina) */}
         <div>
           {/* H1 della pagina (per Google): l'etichetta con servizio e città, stesso aspetto di prima */}
           <motion.h1
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            initial={false}
             transition={{ delay: reduced ? 0 : 0.05 }}
             style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '.5px solid var(--b)', borderRadius: 100, padding: '5px 14px 5px 5px', marginBottom: '2rem', fontSize: 10, fontWeight: 500, lineHeight: 'normal' }}
           >
@@ -368,7 +368,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
 
           {/* Slogan: stesso stile, ma non è un'intestazione (un solo H1 per pagina) */}
           <motion.p
-            initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+            initial={false}
             transition={{ delay: reduced ? 0 : 0.15, duration: reduced ? 0 : 0.7 }}
             style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.6rem, 5vw, 4.8rem)', lineHeight: 1.0, letterSpacing: '0.01em', marginBottom: '1.5rem', fontWeight: 400, color: 'var(--t)', textTransform: 'uppercase' }}
           >
@@ -380,7 +380,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           </motion.p>
 
           <motion.p
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            initial={false}
             transition={{ delay: reduced ? 0 : 0.3 }}
             style={{ maxWidth: 500, fontSize: 16, lineHeight: 1.8, color: 'var(--m)', fontWeight: 300, marginBottom: '2.5rem' }}
           >
@@ -388,7 +388,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+            initial={false}
             transition={{ delay: reduced ? 0 : 0.45 }}
             style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}
           >
@@ -397,7 +397,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            initial={false}
             transition={{ delay: reduced ? 0 : 0.9 }}
             style={{ display: 'flex', gap: '1.5rem', marginTop: '2rem', flexWrap: 'wrap' }}
           >
