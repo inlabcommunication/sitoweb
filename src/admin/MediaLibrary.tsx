@@ -91,9 +91,10 @@ const DEFAULT_FOLDERS = ['Tutti', 'Team', 'Portfolio', 'Clienti', 'Servizi', 'Vi
 const foldersOf = (items: MediaItem[], extra: string[] = []) =>
   [...new Set([...DEFAULT_FOLDERS, ...items.map(i => i.folder).filter(Boolean), ...extra])];
 
-/** Sposta un file in un'altra cartella: la cartella è virtuale, l'URL non cambia. */
-const moveItem = (id: string, folder: string) =>
-  persist(_items.map(i => (i.id === id ? { ...i, folder } : i)));
+/** Sposta uno o più file in un'altra cartella: la cartella è virtuale, l'URL non cambia. */
+const moveItems = (ids: string[], folder: string) =>
+  persist(_items.map(i => (ids.includes(i.id) ? { ...i, folder } : i)));
+const moveItem = (id: string, folder: string) => moveItems([id], folder);
 
 // ═══════════════════════════════════════════════════════════════
 // UPLOAD ENGINE
@@ -432,7 +433,16 @@ type MediaCardProps = {
   onDelete: () => void;
   onCopy: () => void;
   listView: boolean;
+  /** selezione multipla (per spostare più file insieme) */
+  checked?: boolean;
+  onToggle?: () => void;
 };
+
+const SelectBox = ({ checked, onToggle, style }: { checked: boolean; onToggle: () => void; style?: React.CSSProperties }) => (
+  <input type="checkbox" checked={checked} aria-label="Seleziona il file"
+    onClick={e => e.stopPropagation()} onChange={onToggle}
+    style={{ width: 18, height: 18, accentColor: '#cdb2ff', cursor: 'pointer', flexShrink: 0, ...style }} />
+);
 
 const MediaCard: React.FC<MediaCardProps> = ({
   item,
@@ -442,6 +452,8 @@ const MediaCard: React.FC<MediaCardProps> = ({
   onDelete,
   onCopy,
   listView,
+  checked = false,
+  onToggle,
 }) => {
   const [hover, setHover] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -461,10 +473,11 @@ const MediaCard: React.FC<MediaCardProps> = ({
       style={{
         display: 'flex', alignItems: 'center', gap: 12, padding: '10px 14px',
         borderRadius: 10, cursor: onSelect ? 'pointer' : 'default', transition: 'background .15s',
-        background: selected ? 'rgba(205,178,255,0.1)' : hover ? 'rgba(255,255,255,0.03)' : 'transparent',
-        border: selected ? '.5px solid #cdb2ff44' : '.5px solid transparent',
+        background: selected || checked ? 'rgba(205,178,255,0.1)' : hover ? 'rgba(255,255,255,0.03)' : 'transparent',
+        border: selected || checked ? '.5px solid #cdb2ff44' : '.5px solid transparent',
       }}
     >
+      {onToggle && <SelectBox checked={checked} onToggle={onToggle} />}
       {/* Thumb */}
       <div style={{ width: 44, height: 44, borderRadius: 8, background: '#111', overflow: 'hidden', flexShrink: 0 }}>
         {isVideo(item)
@@ -513,7 +526,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
       onMouseLeave={() => setHover(false)}
       style={{
         background: '#1a1a1a', borderRadius: 12, overflow: 'hidden',
-        border: selected ? '.5px solid #cdb2ff' : `.5px solid ${hover ? '#3a3a3a' : '#2a2a2a'}`,
+        border: selected || checked ? '.5px solid #cdb2ff' : `.5px solid ${hover ? '#3a3a3a' : '#2a2a2a'}`,
         transition: 'border-color .15s, transform .15s',
         transform: hover ? 'translateY(-2px)' : 'none',
       }}
@@ -544,6 +557,7 @@ const MediaCard: React.FC<MediaCardProps> = ({
             </button>
           </div>
         )}
+        {onToggle && <SelectBox checked={checked} onToggle={onToggle} style={{ position: 'absolute', top: 8, right: 8, zIndex: 2 }} />}
         {/* Badge tipo */}
         <div style={{ position: 'absolute', top: 8, left: 8, padding: '2px 6px', background: 'rgba(0,0,0,0.6)', borderRadius: 4, fontSize: 9, color: '#aaa', textTransform: 'uppercase', letterSpacing: '.08em' }}>
           {isVideo(item) ? '▶ video' : item.format}
@@ -633,6 +647,8 @@ export const MediaLibraryPage = () => {
   const [newFolderName, setNewFolderName] = useState('');
   const [customFolders, setCustomFolders] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState('');
+  const [sel, setSel] = useState<string[]>([]);
+  const toggleSel = (id: string) => setSel(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
 
   const allFolders = foldersOf(items, customFolders);
 
@@ -876,6 +892,29 @@ export const MediaLibraryPage = () => {
                 </span>
               </div>
 
+              {/* ── Barra selezione multipla ── */}
+              {sel.length > 0 && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', padding: '10px 1.25rem', background: 'rgba(205,178,255,0.08)', borderBottom: '.5px solid #cdb2ff33', fontSize: 11, color: '#cdb2ff' }}>
+                  <b>{sel.length} {sel.length === 1 ? 'file selezionato' : 'file selezionati'}</b>
+                  <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                    Sposta in
+                    <select value="" onChange={async e => { if (!e.target.value) return; await moveItems(sel, e.target.value); setSel([]); }}
+                      style={{ background: '#111', color: '#cdb2ff', border: '.5px solid #cdb2ff44', padding: '5px 8px', borderRadius: 8, fontSize: 11, cursor: 'pointer' }}>
+                      <option value="">Scegli la cartella…</option>
+                      {allFolders.filter(f => f !== 'Tutti').map(f => <option key={f} value={f}>{f}</option>)}
+                    </select>
+                  </label>
+                  <button onClick={() => setSel([...new Set([...sel, ...filtered.map(i => i.id)])])}
+                    style={{ background: 'none', border: '.5px solid #cdb2ff44', borderRadius: 8, color: '#cdb2ff', padding: '5px 10px', fontSize: 11, cursor: 'pointer' }}>
+                    Seleziona tutti quelli visibili ({filtered.length})
+                  </button>
+                  <button onClick={() => setSel([])}
+                    style={{ background: 'none', border: 'none', color: '#888', padding: '5px 6px', fontSize: 11, cursor: 'pointer', marginLeft: 'auto' }}>
+                    Annulla selezione
+                  </button>
+                </div>
+              )}
+
               {/* ── Griglia / Lista ── */}
               <div style={{ flex: 1, overflowY: 'auto', padding: '1.25rem' }}>
                 {loading ? (
@@ -912,6 +951,7 @@ export const MediaLibraryPage = () => {
                     {filtered.map(item => (
                       <MediaCard
                         key={item.id} item={item} listView
+                        checked={sel.includes(item.id)} onToggle={() => toggleSel(item.id)}
                         onPreview={() => setPreview(item)}
                         onDelete={() => handleDelete(item.id)}
                         onCopy={() => copyUrl(item.secure_url, item.id)}
@@ -923,6 +963,7 @@ export const MediaLibraryPage = () => {
                     {filtered.map(item => (
                       <MediaCard
                         key={item.id} item={item} listView={false}
+                        checked={sel.includes(item.id)} onToggle={() => toggleSel(item.id)}
                         onPreview={() => setPreview(item)}
                         onDelete={() => handleDelete(item.id)}
                         onCopy={() => copyUrl(item.secure_url, item.id)}
