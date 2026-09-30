@@ -8,6 +8,7 @@ import { Markdown } from '../components/Markdown';
 import { applySeo } from '../seo/head';
 import { getSeo, AUTHORS, authorByName, authorPath } from '../seo/routes';
 import { useContent } from '../lib/content';
+import { cld } from '../lib/media';
 
 type Go = (to: string) => void;
 
@@ -58,7 +59,7 @@ const linkTo = (go: Go, to: string) => (e: React.MouseEvent) => {
 const Cover = ({ post, priority = false }: { post: BlogPost; priority?: boolean }) => (
   <div className="blog-cover">
     {post.cover
-      ? <img src={post.cover} alt="" width={1600} height={900}
+      ? <img src={cld(post.cover, 900)} alt="" width={1600} height={900}
           loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" />
       : <div className="blog-cover-ph" aria-hidden="true">{post.category}</div>}
   </div>
@@ -197,7 +198,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
         {post.cover && (
           <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 2rem 1rem' }}>
-            <img src={post.cover} alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
+            <img src={cld(post.cover, 1600)} alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
           </div>
         )}
 
@@ -262,7 +263,7 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
       <BlogStyles />
       <section style={{ padding: '10rem 2rem 4rem', borderBottom: '.5px solid var(--b)' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: member.photo ? '220px 1fr' : '1fr', gap: '3rem', alignItems: 'center' }} className="grid-1-mob">
-          {member.photo && <img src={member.photo} alt={author.name} style={{ width: 220, height: 220, borderRadius: '50%', objectFit: 'cover', border: '.5px solid var(--b)' }} />}
+          {member.photo && <img src={cld(member.photo, 600)} alt={author.name} style={{ width: 220, height: 220, borderRadius: '50%', objectFit: 'cover', border: '.5px solid var(--b)' }} />}
           <div>
             <p className="section-label">Autore · InLab Communication</p>
             <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(3rem,8vw,6.5rem)', lineHeight: 0.9, marginBottom: '1rem', textTransform: 'uppercase' }}>{author.name}</h1>

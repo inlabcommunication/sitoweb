@@ -3,6 +3,7 @@
 // iniettare script. Supporta: ## / ### titoli, paragrafi, **grassetto**,
 // *corsivo*, [link](url), ![immagine](url), elenchi - e 1., > citazioni, ---.
 import React from 'react';
+import { cld } from '../lib/media';
 
 const SAFE_URL = /^(https?:\/\/|mailto:|tel:|\/(?!\/))/i;
 const safeUrl = (u: string) => (SAFE_URL.test(u.trim()) ? u.trim() : '');
@@ -56,7 +57,7 @@ export const Markdown = ({ source, onNavigate }: { source: string; onNavigate?: 
     if (/^(-{3,}|\*{3,})$/.test(t)) { blocks.push(<hr key={key} />); i++; continue; }
     if ((m = t.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/))) {
       const src = safeUrl(m[2]);
-      if (src) blocks.push(<figure key={key}><img src={src} alt={m[1]} loading="lazy" decoding="async" />{m[1] && <figcaption>{m[1]}</figcaption>}</figure>);
+      if (src) blocks.push(<figure key={key}><img src={cld(src, 1600)} alt={m[1]} loading="lazy" decoding="async" />{m[1] && <figcaption>{m[1]}</figcaption>}</figure>);
       i++; continue;
     }
     if (t.startsWith('>')) {

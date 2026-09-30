@@ -4,14 +4,15 @@
 import React from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
 import type { Reel } from '../data/caseStudies';
+import { cld, cldVideoPoster } from '../lib/media';
 
 const safe = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
 /** Copertina automatica per i video Cloudinary (primo fotogramma in JPG). */
 export const videoPoster = (url: string) =>
-  /res\.cloudinary\.com\/.+\/video\/upload\//.test(url)
+  cldVideoPoster(url, 900) || (/res\.cloudinary\.com\/.+\/video\/upload\//.test(url)
     ? url.replace('/video/upload/', '/video/upload/so_0/').replace(/\.(mp4|mov|webm|m4v)(\?.*)?$/i, '.jpg')
-    : undefined;
+    : undefined);
 
 export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
   const video = safe(reel.video);
@@ -61,7 +62,7 @@ export const Gallery: React.FC<{ images: string[]; alt: string }> = ({ images, a
   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 10 }}>
     {images.filter((u) => safe(u)).map((img, i) => (
       <a key={i} href={img} target="_blank" rel="noopener noreferrer" style={{ display: 'block', borderRadius: 16, overflow: 'hidden', border: '.5px solid var(--b)' }}>
-        <img src={img} alt={`${alt} — foto ${i + 1}`} loading="lazy" decoding="async" style={{ width: '100%', aspectRatio: '4 / 5', objectFit: 'cover', display: 'block' }} />
+        <img src={cld(img, 900)} alt={`${alt} — foto ${i + 1}`} loading="lazy" decoding="async" style={{ width: '100%', aspectRatio: '4 / 5', objectFit: 'cover', display: 'block' }} />
       </a>
     ))}
   </div>

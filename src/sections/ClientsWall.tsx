@@ -4,6 +4,7 @@ import { ArrowUpRight, MapPin } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { normalizeClients } from '../lib/clientUtils';
 import { linkClick, navigate } from '../lib/router';
+import { cld } from '../lib/media';
 
 type ClientsWallProps = {
   onClientClick?: (id: string) => void;
@@ -87,7 +88,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
                 {client.logo ? (
                   // logo con i suoi colori in un riquadro chiaro: funziona con e senza sfondo
                   <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: 40, minWidth: 40, maxWidth: 110, padding: 5, borderRadius: 10, background: '#f0ede6', overflow: 'hidden' }}>
-                    <img src={client.logo} alt="" loading="lazy" style={{ maxWidth: '100%', maxHeight: 30, objectFit: 'contain', display: 'block' }} />
+                    <img src={cld(client.logo, 400)} alt="" loading="lazy" style={{ maxWidth: '100%', maxHeight: 30, objectFit: 'contain', display: 'block' }} />
                   </span>
                 ) : (
                   <span style={{ fontFamily: 'var(--fd)', fontSize: 20, color: 'var(--a)', letterSpacing: '.04em', lineHeight: 1 }}>

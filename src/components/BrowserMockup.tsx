@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { cld } from '../lib/media';
 
 // Screenshot di una pagina web generato dal servizio mShots di WordPress.com
 // (caricato dal browser del visitatore; al primo accesso può servire qualche
@@ -23,7 +24,7 @@ export const BrowserMockup: React.FC<{ url: string; label: string; w?: number; h
       </div>
       <div style={{ aspectRatio: `${w ?? 1280} / ${h ?? 800}`, background: 'linear-gradient(135deg, #1e1d1d, #2b2440)', position: 'relative' }}>
         {!failed ? (
-          <img src={image || siteShot(url, w, h)} alt={label} loading="lazy" onError={() => setFailed(true)}
+          <img src={image ? cld(image, 1600) : siteShot(url, w, h)} alt={label} loading="lazy" onError={() => setFailed(true)}
             style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', display: 'block' }} />
         ) : (
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, color: 'var(--a)', fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase' }}>
