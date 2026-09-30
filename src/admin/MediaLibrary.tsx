@@ -118,16 +118,33 @@ async function prepareImage(file: File): Promise<File> {
   const keepAlpha = file.type === 'image/png' || file.type === 'image/webp';
   const type = keepAlpha ? 'image/webp' : 'image/jpeg';
   const ext = keepAlpha ? 'webp' : 'jpg';
+  // Safari < 17 non sa creare WebP e restituisce PNG, spesso troppo pesante:
+  // se l'immagine non ha pixel trasparenti si ripiega su JPEG.
+  let opaque: boolean | null = null;
+  const isOpaque = () => {
+    if (opaque !== null) return opaque;
+    const c = document.createElement('canvas'); c.width = 64; c.height = 64;
+    const ctx = c.getContext('2d')!; ctx.drawImage(bitmap, 0, 0, 64, 64);
+    const d = ctx.getImageData(0, 0, 64, 64).data;
+    opaque = true;
+    for (let i = 3; i < d.length; i += 4) if (d[i] < 255) { opaque = false; break; }
+    return opaque;
+  };
   for (const [side, quality] of [[2560, 0.85], [2048, 0.8], [1600, 0.75]] as const) {
     const scale = Math.min(1, side / Math.max(bitmap.width, bitmap.height));
     const canvas = document.createElement('canvas');
     canvas.width = Math.round(bitmap.width * scale);
     canvas.height = Math.round(bitmap.height * scale);
     canvas.getContext('2d')!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, type, quality));
+    let blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, type, quality));
+    let [outType, outExt] = [type, ext];
+    if (blob && blob.type !== type && keepAlpha && isOpaque()) {
+      blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, 'image/jpeg', quality));
+      [outType, outExt] = ['image/jpeg', 'jpg'];
+    }
     if (blob && blob.size <= MAX_IMAGE_BYTES * 0.95) {
       bitmap.close?.();
-      return new File([blob], file.name.replace(/\.[^.]+$/, '') + '.' + ext, { type });
+      return new File([blob], file.name.replace(/\.[^.]+$/, '') + '.' + outExt, { type: blob.type || outType });
     }
   }
   bitmap.close?.();
