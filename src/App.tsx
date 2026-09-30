@@ -54,8 +54,6 @@ const G = () => (
       --fd:'Bebas Neue',sans-serif; --fs:'DM Serif Display',serif; --fb:'DM Sans',sans-serif;
     }
     html{scroll-behavior:smooth}
-    /* clip sull'html: niente allargamento della pagina sul telefono se un elemento sborda (e non rompe gli sticky) */
-    html{overflow-x:clip}
     body{background:var(--bg);color:var(--t);font-family:var(--fb);font-weight:300;overflow-x:hidden}
     ::selection{background:var(--a);color:#000}
     a{color:inherit;text-decoration:none;cursor:pointer}
