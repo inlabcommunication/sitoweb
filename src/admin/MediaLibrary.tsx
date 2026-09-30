@@ -108,8 +108,9 @@ const mb = (n: number) => (n / 1024 / 1024).toFixed(1).replace('.', ',');
 /**
  * Foto troppo pesanti (es. da fotocamera): le riduce nel browser prima del
  * caricamento (lato lungo max 2560 px, JPEG di qualità alta, WebP se c'è
- * trasparenza). Sul sito le immagini sono comunque ottimizzate da Cloudinary.
- * Le immagini già sotto il limite restano identiche.
+ * trasparenza). Sul sito le immagini vengono poi servite ridotte e ottimizzate
+ * da Cloudinary (vedi cld() in src/lib/media.ts). Le immagini già sotto il
+ * limite restano identiche.
  */
 async function prepareImage(file: File): Promise<File> {
   if (!file.type.startsWith('image/') || /gif|svg/.test(file.type) || file.size <= MAX_IMAGE_BYTES * 0.95) return file;
