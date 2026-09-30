@@ -127,6 +127,8 @@ const G = () => (
     @media(max-width:768px){
       .hide-mob{display:none!important}
       .show-mob{display:flex!important}
+      /* "Ti serve essere" + parola lilla sempre sulla riga sotto, qualunque sia la parola */
+      .rot-word{display:block!important}
       .grid-1-mob{grid-template-columns:1fr!important}
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}

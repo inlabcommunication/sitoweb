@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
-  motion, useMotionValueEvent, useScroll, useTransform,
+  motion, useMotionValueEvent, useScroll, useSpring, useTransform,
   useReducedMotion as useFmReducedMotion, type MotionValue,
 } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { useAgencyStats } from '../data/stats';
 import { linkClick, navigate } from '../lib/router';
+import { cldVideo } from '../lib/media';
 
 /* ════════════════════════════════════════════════════════════════
    SCROLL STORY — subito dopo la hero.
@@ -22,7 +23,8 @@ import { linkClick, navigate } from '../lib/router';
    ricompaia dopo la fine della sua animazione.
 ═══════════════════════════════════════════════════════════════ */
 
-const REEL_VIDEO = 'https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4';
+// versione ridotta da Cloudinary (l'originale pesa 46 MB); si scarica solo quando il reel parte
+const REEL_VIDEO = cldVideo('https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4', 720);
 
 const FEED = [
   'idee-reel-ristoranti', 'servizio-fotografico-ristoranti', 'reel-o-post-cosa-pubblicare-instagram',
@@ -92,7 +94,7 @@ const ScreenSocial: React.FC<{ stats: { display: string; short: string }[] }> = 
 
 const ScreenVideo: React.FC<{ videoRef: React.RefObject<HTMLVideoElement | null>; views: string }> = ({ videoRef, views }) => (
   <div className="sps-screen sps-video">
-    <video ref={videoRef} src={REEL_VIDEO} muted loop playsInline preload="metadata" aria-hidden="true" />
+    <video ref={videoRef} src={REEL_VIDEO} muted loop playsInline preload="none" aria-hidden="true" />
     <div className="sps-video-shade" />
     <div className="sps-video-top"><span>Reels</span><span className="sps-live">● In riproduzione</span></div>
     <div className="sps-video-bottom">
@@ -126,7 +128,9 @@ const ScreenWeb: React.FC = () => (
 
 const StoryCopy: React.FC<{ s: Story; p: MotionValue<number>; mobile: boolean }> = ({ s, p, mobile }) => {
   const opacity = useTransform<number, number>(p, s.range, s.opacity);
-  const y = useTransform(p, s.range, [48, 48, 0, 0, -48, -48]);
+  // sul telefono spostamento minimo: il testo cambia in dissolvenza, senza "saltare"
+  const d = mobile ? 12 : 48;
+  const y = useTransform(p, s.range, [d, d, 0, 0, -d, -d]);
   const pe = useTransform(opacity, (o: number) => (o > 0.5 ? 'auto' : 'none'));
   return (
     <motion.div
@@ -173,14 +177,25 @@ const StaticStory: React.FC = () => (
 
 /* ─── Sezione ─────────────────────────────────────────────────── */
 
+// La scena si rimonta quando si passa da telefono a computer (key), così la
+// sorgente del progresso (normale o ammorbidita) non cambia mai durante la vita
+// degli hook.
 export const ScrollPhoneStory: React.FC = () => {
+  const mobile = useIsMobile();
+  return <SpsScene key={mobile ? 'm' : 'd'} mobile={mobile} />;
+};
+
+const SpsScene: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const mobile = useIsMobile();
   const reduced = useReducedMotion() || !!useFmReducedMotion();
   const stats = useAgencyStats();
 
-  const { scrollYProgress: p } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  const { scrollYProgress: raw } = useScroll({ target: ref, offset: ['start start', 'end end'] });
+  // Sul telefono il progresso è ammorbidito: una spinta forte allo scroll non fa
+  // saltare da un servizio all'altro, il passaggio resta graduale.
+  const smooth = useSpring(raw, { stiffness: 90, damping: 26, mass: 0.6 });
+  const p = mobile ? smooth : raw;
 
   // Titolo: pieno all'inizio, poi arretra dietro il telefono
   const hOpacity = useTransform(p, [0, 0.1, 0.19, 1], [1, 1, 0, 0]);
@@ -192,11 +207,11 @@ export const ScrollPhoneStory: React.FC = () => {
   const K = [0, 0.12, 0.2, 0.38, 0.43, 0.48, 0.66, 0.71, 0.76, 1];
   const off = mobile ? 0 : 24;
   const x = useTransform(p, K, [0, 0, off, off, 0, -off, -off, 0, off, off].map((v) => `${v}vw`));
-  const y = useTransform(p, [0, 0.12, 1], mobile ? ['62vh', '-7vh', '-7vh'] : ['62vh', '0vh', '0vh']);
+  const y = useTransform(p, [0, 0.12, 1], mobile ? ['62vh', '-15vh', '-15vh'] : ['62vh', '0vh', '0vh']);
   const rotateY = useTransform(p, K, mobile ? [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] : [0, 0, -14, -14, 0, 14, 14, 0, -14, -14]);
-  const rotateZ = useTransform(p, K, [8, 0, 0, 0, -7, 0, 0, 7, 0, 0]);
+  const rotateZ = useTransform(p, K, mobile ? [8, 0, 0, 0, 0, 0, 0, 0, 0, 0] : [8, 0, 0, 0, -7, 0, 0, 7, 0, 0]);
   const rotateX = useTransform(p, [0, 0.12, 1], [32, 0, 0]);
-  const scale = useTransform(p, K, [0.8, 0.9, 1, 1, 0.92, 1, 1, 0.92, 1, 1]);
+  const scale = useTransform(p, K, mobile ? [0.8, 0.9, 1, 1, 1, 1, 1, 1, 1, 1] : [0.8, 0.9, 1, 1, 0.92, 1, 1, 0.92, 1, 1]);
 
   // Schermate: ognuna "sale" sopra la precedente
   const clip2 = useTransform(p, [0, 0.41, 0.47, 1], ['inset(100% 0% 0% 0%)', 'inset(100% 0% 0% 0%)', 'inset(0% 0% 0% 0%)', 'inset(0% 0% 0% 0%)']);
@@ -351,9 +366,15 @@ const SpsStyles = () => (
     .sps-seg{width:44px;height:2px;border-radius:2px;background:rgba(240,237,230,.14);overflow:hidden}
     .sps-seg i{display:block;height:100%;background:var(--a);transform-origin:left}
     @media(max-width:900px){
-      .sps{height:380vh}
-      .sps-phone{width:min(230px,56vw);border-radius:32px;padding:8px}
-      .sps-display{border-radius:25px}
+      /* più spazio di scroll per ogni servizio: il passaggio è meno sensibile */
+      .sps{height:560vh}
+      .sps-phone{width:min(190px,48vw);border-radius:28px;padding:7px}
+      .sps-notch{width:64px;height:16px;top:7px}
+      /* testo in basso su fondo pieno, più grande e leggibile */
+      .sps-copy.is-mobile{bottom:3.4rem;padding:2.2rem 0 0;background:linear-gradient(to top,var(--bg) 78%,rgba(30,29,29,0))}
+      .sps-copy.is-mobile .sps-copy-title{font-size:clamp(2.1rem,9.5vw,2.8rem)}
+      .sps-copy.is-mobile .sps-copy-body{font-size:15px;line-height:1.6;color:rgba(240,237,230,.78);max-width:34ch;margin-left:auto;margin-right:auto}
+      .sps-display{border-radius:22px}
       .sps-progress{bottom:1.4rem}
       .sps-glow{width:320px;height:320px}
     }
