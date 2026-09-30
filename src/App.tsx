@@ -22,7 +22,9 @@ import { getClientId, normalizeClients } from "./lib/clientUtils";
 
 // Nuove sezioni modulari
 import { HeroFlow } from "./sections/HeroFlow";
-import { ServicesGrid } from "./sections/ServicesGrid";
+import { ScrollPhoneStory } from "./sections/ScrollPhoneStory";
+import { InLabOrbReveal } from "./sections/InLabOrbReveal";
+import { ServicesOrbScroll } from "./sections/ServicesOrbScroll";
 import { MethodTimeline } from "./sections/MethodTimeline";
 import { ClientsWall } from "./sections/ClientsWall";
 import { ClientLogoStrip } from "./sections/ClientLogoStrip";
@@ -91,11 +93,11 @@ const G = () => (
     @keyframes marq{to{transform:translateX(-50%)}}
     /* animazioni infinite in CSS (solo transform/opacity, fuori dal thread principale) */
     @keyframes drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(25px,-15px,0)}}
-    @keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(-1deg)}}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-10px) rotate(1deg)}}
     @keyframes glowA{0%,100%{opacity:.3}50%{opacity:.6}}
     @keyframes glowB{0%,100%{opacity:.2}50%{opacity:.45}}
     .anim-drift{animation:drift 18s ease-in-out infinite;will-change:transform}
-    .anim-float{animation:float 5.5s ease-in-out infinite;will-change:transform}
+    .anim-float{animation:float 5.5s ease-in-out 1.9s infinite;will-change:transform}
     .anim-glowA{animation:glowA 4s ease-in-out infinite;will-change:opacity}
     .anim-glowB{animation:glowB 5s ease-in-out 1.5s infinite;will-change:opacity;opacity:.2}
     @media (prefers-reduced-motion:reduce){.anim-drift,.anim-float,.anim-glowA,.anim-glowB{animation:none}}
@@ -125,6 +127,8 @@ const G = () => (
     @media(max-width:768px){
       .hide-mob{display:none!important}
       .show-mob{display:flex!important}
+      /* "Ti serve essere" + parola lilla sempre sulla riga sotto, qualunque sia la parola */
+      .rot-word{display:block!important}
       .grid-1-mob{grid-template-columns:1fr!important}
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
@@ -183,6 +187,14 @@ const AgencyStatsRow = () => {
 const Navbar = () => {
   const { route, go } = useRouter();
   const [open, setOpen] = useState(false);
+  const menuBtn = React.useRef<HTMLButtonElement>(null);
+  // Esc chiude il menu mobile e riporta il focus al pulsante
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); menuBtn.current?.focus(); } };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30);
@@ -224,7 +236,7 @@ const Navbar = () => {
  
         <div style={{display:"flex",gap:10,alignItems:"center"}}>
           <Link to="/contatti"><button className="btn btn-p" style={{padding:"11px 22px"}}>Parliamo <ArrowUpRight size={13}/></button></Link>
-          <button className="show-mob" aria-label={open?"Chiudi menu":"Apri menu"} aria-expanded={open} aria-controls="menu-mobile"
+          <button ref={menuBtn} className="show-mob" aria-label={open?"Chiudi menu":"Apri menu"} aria-expanded={open} aria-controls="menu-mobile"
             style={{display:"none",background:"none",border:"none",color:"var(--t)",minWidth:44,minHeight:44,padding:10,alignItems:"center",justifyContent:"center",cursor:"pointer"}} onClick={()=>setOpen(!open)}>
             {open?<X size={24}/>:<Menu size={24}/>}
           </button>
@@ -618,8 +630,17 @@ const PageHome = () => {
         ctaPrimary={hero.cta?.primary}
       />
 
+      {/* SCROLL STORY: telefono pinnato con i servizi */}
+      <ScrollPhoneStory />
+
       {/* Marquee servizi */}
       <MarqueeHome />
+
+      {/* UNA STRATEGIA: pallino che si espande */}
+      <InLabOrbReveal />
+
+      {/* SERVIZI: schede orizzontali */}
+      <ServicesOrbScroll onServiceClick={(slug) => go("/" + slug)} />
 
       {/* MANIFESTO */}
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
@@ -648,19 +669,13 @@ const PageHome = () => {
         </div>
       </section>
 
-      {/* SERVIZI */}
-      <ServicesGrid onServiceClick={(slug) => go("/" + slug)} />
-
       {/* VIDEO REEL — dietro le quinte */}
       <VideoReel src="https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4"/>
 
       {/* CLIENTI */}
       <ClientLogoStrip />
 
-      {/* CASI STUDIO */}
-      <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
-
-      {/* METODO timeline */}
+      {/* METODO: timeline con computer, fotocamera e telefono */}
       <MethodTimeline />
 
       {/* NUMERI */}
@@ -1613,8 +1628,7 @@ const PageCliente = ({id}: {id: string}) => {
         </section>
       )}
 
-      <ClientsWall excludeId={client.id} relatedTo={client} limit={4} compact onClientClick={(cid) => go(`/cliente/${cid}`)}
-        heading={{label:"Scopri altri clienti",title:"ALTRI BRAND",accent:"CHE HANNO SCELTO INLAB",text:"Ogni scheda racconta un progetto diverso: apri quella che ti incuriosisce."}}/>
+      <ClientLogoStrip excludeId={client.id} allClients label="Altri brand che hanno scelto InLab" />
 
       <ServiceCTA title={`VUOI UN PROGETTO COME ${client.name.toUpperCase()}?`} sub="Raccontaci cosa vuoi ottenere e capiamo insieme la direzione migliore." btn="Parliamone"/>
     </>

@@ -14,7 +14,6 @@ import { BlogEditor } from './BlogEditor';
 
 const DashboardStyles = () => (
   <style>{`
-    @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap');
     :root {
       --a: #cdb2ff;
       --bg: #1e1d1d;

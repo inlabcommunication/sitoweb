@@ -7,12 +7,22 @@ Più sessioni lavorano su questo repository. Ognuna ha un'area precisa: **fuori 
 | Sessione | Può modificare | Non può modificare |
 |---|---|---|
 | **Sito Inlab** (sviluppo, responsabile tecnico) | **l'unica sessione che modifica il codice**: `src/`, `api/`, `scripts/`, `public/`, `vercel.json`, `package.json`, `firestore.rules`, `index.html`, documentazione tecnica | — |
-| **Addetto SEO** | solo `docs/seo/` (analisi, brief, linee guida, prompt) | tutto il resto, compreso `src/seo/routes.ts` |
-| **Addetto al Blog** | solo gli articoli: `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/` | tutto il resto |
+| **Direttore Operativo** (coordinamento, priorità, memoria del progetto) | solo `docs/direzione/` (mappa del progetto, registro) | tutto il resto, compreso il codice |
+| **Addetto SEO** (anche responsabile strategico del blog) | solo `docs/seo/` (analisi, brief, linee guida, prompt) | tutto il resto, compreso `src/seo/routes.ts` |
+| **Addetto al Blog** | solo gli articoli: `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/`, e lo strumento delle immagini `tools/blog-images/` | tutto il resto |
 | **Addetto performance** (velocità e accessibilità) | solo `docs/performance/` (audit e report datati) | tutto il resto, compreso il codice del sito |
+| **Analisi competitor** | solo `docs/competitor/` (report sui concorrenti) | tutto il resto |
 | **Analista sicurezza / controlli** | niente: **solo lettura**. Controlla che non ci siano problemi (sicurezza, errori, sito non raggiungibile…) e li segnala alla sessione Sito Inlab e al titolare (vedi "Flusso sicurezza") | tutto, compresi i file di documentazione |
 
 Se serve una modifica al codice (titoli e descrizioni per Google, sitemap, pagine, componenti, sicurezza…), **non farla**: scrivila come richiesta nel proprio brief o report, in una sezione **"Richieste per lo sviluppo"**, con file, motivo e testo proposto. La applica la sessione Sito Inlab.
+
+## Coordinamento
+
+- Il **Direttore Operativo** tiene la mappa del progetto, evita lavori doppi, decide le priorità insieme al titolare e raggruppa le richieste per Sito Inlab. Non modifica il codice.
+- Le sessioni possono parlarsi direttamente per dati, chiarimenti e coordinamento. Passano dal Direttore quando serve una modifica visibile o strategica (home, pagine servizio, struttura, SEO locale), quando ci sono opinioni diverse o quando bisogna decidere le priorità. Le correzioni piccole già previste dai flussi qui sotto vanno direttamente a Sito Inlab.
+- L'**Addetto SEO** è responsabile strategico del blog: su keyword, intenti di ricerca, link interni e priorità prevale la SEO. L'Addetto al Blog scrive gli articoli e apre le sue PR; Sito Inlab fa il controllo tecnico.
+- I dati dell'**Analisi competitor** utili alla SEO passano all'Addetto SEO.
+- Le decisioni finali e i conflitti restano del titolare.
 
 ## Flusso SEO
 

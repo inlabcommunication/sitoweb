@@ -1,5 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
+import { MethodDevices, deviceFor } from './MethodDevices';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import { Search, Compass, Wand2, Send, BarChart3 } from 'lucide-react';
 import { useContent } from '../lib/content';
 
@@ -24,10 +26,37 @@ export const MethodTimeline: React.FC = () => {
     offset: ['start 80%', 'end 30%'],
   });
   const lineHeight = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const reduced = useReducedMotion();
+
+  // Fase attiva: lo step che passa al centro dello schermo
+  const [active, setActive] = useState(0);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) setActive(Number((e.target as HTMLElement).dataset.step));
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+    stepRefs.current.forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, [steps.length]);
+  const focus = deviceFor(steps[active]?.title, active);
 
   return (
-    <section style={{ padding: '8rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative' }}>
-      <div style={{ maxWidth: 1120, margin: '0 auto' }}>
+    <section className="mt-sec" style={{ padding: '8rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative' }}>
+      <style>{`
+        .mt-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:4rem;align-items:start}
+        .mt-visual{position:sticky;top:calc(50vh - 250px);height:500px}
+        .mt-step{min-height:34vh}
+        @media(max-width:900px){
+          .mt-grid{grid-template-columns:1fr;gap:0}
+          /* sul telefono niente computer/fotocamera/telefono: solo i passi, più leggibili */
+          .mt-visual{display:none}
+          .mt-step{min-height:auto;padding-bottom:2.5rem;opacity:1!important}
+        }
+      `}</style>
+      <div style={{ maxWidth: 1240, margin: '0 auto' }}>
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -56,6 +85,7 @@ export const MethodTimeline: React.FC = () => {
           </p>
         </motion.div>
 
+        <div className="mt-grid">
         {/* Timeline */}
         <div ref={containerRef} style={{ position: 'relative', paddingLeft: 24 }}>
           {/* Track verticale */}
@@ -86,10 +116,11 @@ export const MethodTimeline: React.FC = () => {
             return (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: '-100px' }}
-                transition={{ duration: 0.6, delay: 0.05 * i, ease: [0.16, 1, 0.3, 1] }}
+                ref={(el: HTMLDivElement | null) => { stepRefs.current[i] = el; }}
+                data-step={i}
+                className="mt-step"
+                animate={{ opacity: active === i ? 1 : 0.35 }}
+                transition={{ duration: reduced ? 0 : 0.4 }}
                 style={{
                   position: 'relative',
                   paddingLeft: 56,
@@ -143,6 +174,12 @@ export const MethodTimeline: React.FC = () => {
               </motion.div>
             );
           })}
+        </div>
+
+        {/* Dispositivi: quello della fase attiva passa davanti */}
+        <div className="mt-visual" aria-hidden="true">
+          <MethodDevices focus={focus} stepLabel={`Step ${String(active + 1).padStart(2, '0')} · ${steps[active]?.title || ''}`} reduced={reduced} />
+        </div>
         </div>
       </div>
     </section>

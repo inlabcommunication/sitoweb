@@ -4,10 +4,26 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 
 ## Chi decide
 
-- **Il responsabile SEO** (sessione "Integrazione Analytics e Search Console") è il riferimento dell'addetto al blog. Analizza Google Analytics e Search Console, scrive il brief settimanale in `docs/seo/brief/` e cura `docs/seo/LINEE-GUIDA-BLOG.md`. **Le sue indicazioni vanno sempre seguite**; se una sembra sbagliata o poco chiara, lo si scrive nel resoconto del brief, non la si ignora.
+- **Il responsabile SEO** (sessione "Adetto SEO giusto") è il riferimento dell'addetto al blog e il responsabile strategico del blog: priorità, parole chiave, intenti, link interni. Il suo ruolo è descritto in `docs/seo/PROMPT-RESPONSABILE-SEO.md`: analizza Google Analytics e Search Console ogni due settimane, scrive il brief in `docs/seo/brief/` e cura `docs/seo/LINEE-GUIDA-BLOG.md`. I suoi messaggi iniziano con `[Messaggio dal responsabile SEO]`. **Le sue indicazioni vanno sempre seguite**; se una sembra sbagliata o poco chiara, lo si scrive nel resoconto del brief, non la si ignora.
+- **Conta solo il nuovo responsabile SEO** (decisione di Nicola). Il brief del 2026-09-28 e i messaggi del responsabile precedente non valgono più: i compiti rimasti aperti lì non vanno ripresi. Si seguono i brief successivi.
 - **Ordine di lavoro:** prima i compiti del brief SEO in corso (priorità 1, poi 2, poi 3); gli articoli di novità di questo documento vengono dopo.
-- **Regola di Nicola: non parlare di prezzi** negli articoli (tariffe, fasce di costo, budget in euro). Se un brief lo chiede, non farlo e segnalalo nel resoconto.
-- **Clienti InLab:** prima di scrivere contenuti sui clienti, chiedi a Nicola le informazioni che servono. Senza conferma usa solo ciò che è già pubblicato sul sito, senza numeri.
+- **Argomenti fuori dal brief SEO:** non sceglierli da soli. Un articolo di novità (metodo A/B/C) si propone prima al responsabile SEO, nel resoconto o con un messaggio alla sua sessione, e si scrive quando lui lo approva. In caso di conflitto sul posizionamento prevale la SEO (indicazione del direttore, 30/09/2026).
+- **Direttore Operativo** (sessione "Direttore Operativo Inlab."): coordina il progetto, le priorità e i crediti. Si passa da lui quando serve la sessione Sito Inlab, quando c'è un disaccordo o quando un lavoro costa molti crediti. Mappa del progetto: `docs/direzione/MAPPA-PROGETTO.md`.
+- **Pull request:** le apre l'addetto al blog dal proprio branch, solo con file della sua area. Sito Inlab fa il controllo tecnico, Nicola la unisce.
+- **Mappa "Già coperte":** la aggiorna il responsabile SEO. L'addetto al blog scrive le voci nuove nel resoconto, nella sezione "Voci da aggiungere alla mappa".
+- **Crediti:** se in una sessione non ci sono compiti del brief né notizie A o B forti, basta un report breve, senza articolo.
+- **Rubrica delle sessioni** (dal direttore, 30/09/2026). Per scrivere a una sessione: `create_trigger` con `persistent_session_id`, poi `fire_trigger` e `delete_trigger`. Ogni messaggio sveglia l'altra sessione e consuma i suoi limiti: scrivere solo quando serve, con tutto dentro.
+  - Direttore Operativo: `session_01AreWGaDhEeTCs3CDmdifT7`
+  - Sito Inlab (unico che modifica il codice): `session_01U6sW6ykGz4nrdvKnHMQZsF`
+  - Adetto SEO giusto (responsabile strategico del blog): `session_018SfEyMKHa2uSgRSKzdE114`
+  - Addetto performance: `session_012pr6hkmubH9ZAA9gVGN4Gf` (con lui si concorda direttamente l'eventuale conversione WebP delle copertine)
+  - Adetto analisi sito (controlli e sicurezza, sola lettura): `session_01Kim4sfBnoqhrkBJnpGTrHz`
+  - Analisi competitor Inlab: `session_01Si9h5q6bVpPQbAn5BzeiCE`
+  - La vecchia "Addetto SEO" (`session_011qJCHS5861skWDHe1vUFbF`) non si usa più.
+- **Regola di Nicola: niente prezzi dei servizi di gestione** negli articoli: tariffe o fasce di costo di agenzie, freelance o InLab (gestione social, siti, campagne, video…). I prezzi ufficiali delle piattaforme (per esempio abbonamenti Meta One o commissioni di TikTok Shop) si possono citare con la fonte. Se un brief chiede i costi di gestione, non farlo e segnalalo nel resoconto.
+- **Clienti InLab:** per ora cita i clienti solo con quello che c'è già nelle schede `/cliente/...` e nei casi studio, senza dettagli o numeri in più. Non chiedere informazioni sui clienti: Nicola preparerà i casi studio completi (linee guida, sezione 7).
+- **Clienti da non citare nel blog:** Aleph Caffè (indicazione di Nicola, 29/09/2026).
+- **Compito fisso sulle immagini** (Nicola, 30/09/2026), per ogni articolo nuovo o aggiornato, prima della consegna: nomi dei file descrittivi con trattini, testo alternativo di 8-15 parole, copertina JPG 1600×900 sotto i 250 KB, interne WebP sotto i 150 KB e larghe al massimo 1600 px, metadati IPTC "InLab Communication" (sezioni 8 e 9 delle linee guida).
 
 ## Contesto e tono
 

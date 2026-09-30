@@ -1,6 +1,7 @@
 import { StrictMode, Suspense, lazy, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
+import './fonts.css';
 import './index.css';
 
 // La dashboard (con Firebase Auth + Firestore completo) è in un chunk separato:

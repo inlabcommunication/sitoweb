@@ -31,7 +31,7 @@ const RotatingWord: React.FC<{ reduced: boolean }> = ({ reduced }) => {
     return () => clearInterval(t);
   }, [reduced]);
   return (
-    <span style={{
+    <span className="rot-word" style={{
       display: 'inline-block', color: 'var(--a)',
       fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400,
       transition: 'opacity .35s, transform .35s',
@@ -207,24 +207,28 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
   );
 };
 
+// Entrata del telefono: sale dal basso sdraiato in prospettiva (rotateX),
+// si raddrizza e si assesta con una leggera inclinazione 3D, poi fluttua.
+const PHONE_EASE = [0.16, 1, 0.3, 1] as const;
+
 const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced, topStat }) => (
+  <div style={{ display: 'flex', justifyContent: 'center', perspective: 1400 }}>
   <motion.div
-    initial={{ opacity: 0, y: 28 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={reduced ? { duration: 0 } : { duration: 0.7, delay: 0.25 }}
-    style={{ perspective: 1200 }}
+    initial={reduced ? false : { opacity: 0, y: 180, scale: 0.82, rotateX: 38, rotateY: -4, rotateZ: -9, filter: 'blur(12px)' }}
+    animate={{ opacity: 1, y: 0, scale: 1, rotateX: 4, rotateY: -10, rotateZ: -2, filter: 'blur(0px)' }}
+    transition={reduced ? { duration: 0 } : { duration: 1.5, delay: 0.35, ease: PHONE_EASE, opacity: { duration: 0.6, delay: 0.35 }, filter: { duration: 0.9, delay: 0.35 } }}
+    style={{ transformStyle: 'preserve-3d', transformOrigin: '50% 100%' }}
   >
   {/* fluttuazione continua in CSS (.anim-float), non in JavaScript */}
-  <div className="anim-float" style={{ display: 'flex', justifyContent: 'center', transform: 'rotate(-2deg)' }}>
+  <div className="anim-float">
     <div style={{
-      width: 'min(360px, 78vw)',
+      width: 'min(300px, 68vw)',
       aspectRatio: '9 / 18.5',
-      borderRadius: 42,
-      padding: 12,
+      borderRadius: 38,
+      padding: 10,
       background: 'linear-gradient(145deg,#0d0c10 0%,#26222d 52%,#0b0b0d 100%)',
       border: '1px solid rgba(255,255,255,.16)',
       boxShadow: '0 34px 90px rgba(0,0,0,.5), 0 0 0 8px rgba(205,178,255,.04)',
-      transform: 'rotateY(-10deg) rotateX(4deg)',
       position: 'relative',
     }}>
       <div style={{
@@ -232,8 +236,8 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
         top: 10,
         left: '50%',
         transform: 'translateX(-50%)',
-        width: 110,
-        height: 25,
+        width: 92,
+        height: 22,
         borderRadius: '0 0 18px 18px',
         background: '#0b0b0d',
         zIndex: 3,
@@ -241,7 +245,7 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
 
       <div style={{
         height: '100%',
-        borderRadius: 32,
+        borderRadius: 29,
         overflow: 'hidden',
         background: 'linear-gradient(180deg,#17151b 0%,#24202b 46%,#101013 100%)',
         border: '1px solid rgba(255,255,255,.08)',
@@ -256,7 +260,7 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
           </div>
 
           <div style={{
-            minHeight: 210,
+            minHeight: 176,
             borderRadius: 24,
             overflow: 'hidden',
             position: 'relative',
@@ -265,12 +269,12 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
           }}>
             <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(circle at 70% 25%,rgba(255,255,255,.34),transparent 18%), linear-gradient(to top,rgba(10,10,12,.9),transparent 55%)' }} />
             <div style={{ position: 'absolute', left: 18, bottom: 18 }}>
-              <div style={{ fontFamily: 'var(--fd)', fontSize: 56, lineHeight: .85, letterSpacing: '.02em' }}>{topStat}</div>
+              <div style={{ fontFamily: 'var(--fd)', fontSize: 46, lineHeight: .85, letterSpacing: '.02em' }}>{topStat}</div>
               <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'rgba(240,237,230,.68)' }}>visualizzazioni</div>
             </div>
             <div style={{ position: 'absolute', right: 14, top: 14, display: 'grid', gap: 8 }}>
               {['IG', 'ADS', 'SEO'].map((item) => (
-                <span key={item} style={{ width: 42, height: 42, borderRadius: 14, display: 'grid', placeItems: 'center', background: 'rgba(10,10,12,.58)', border: '1px solid rgba(255,255,255,.12)', color: 'var(--a)', fontSize: 10, fontWeight: 700 }}>{item}</span>
+                <span key={item} style={{ width: 34, height: 34, borderRadius: 12, display: 'grid', placeItems: 'center', background: 'rgba(10,10,12,.58)', border: '1px solid rgba(255,255,255,.12)', color: 'var(--a)', fontSize: 10, fontWeight: 700 }}>{item}</span>
               ))}
             </div>
           </div>
@@ -282,7 +286,7 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
               ['Lead', 'Campagne Meta'],
               ['Report', 'Dati chiari'],
             ].map(([title, sub]) => (
-              <div key={title} style={{ minHeight: 72, borderRadius: 18, padding: 12, background: 'rgba(255,255,255,.045)', border: '1px solid rgba(255,255,255,.08)' }}>
+              <div key={title} style={{ minHeight: 60, borderRadius: 16, padding: 10, background: 'rgba(255,255,255,.045)', border: '1px solid rgba(255,255,255,.08)' }}>
                 <div style={{ fontFamily: 'var(--fd)', fontSize: 18, letterSpacing: '.04em', lineHeight: 1 }}>{title}</div>
                 <div style={{ marginTop: 5, color: 'rgba(240,237,230,.45)', fontSize: 10, lineHeight: 1.35 }}>{sub}</div>
               </div>
@@ -298,6 +302,7 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
     </div>
   </div>
   </motion.div>
+  </div>
 );
 
 interface HeroFlowProps {
@@ -332,7 +337,8 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
       borderBottom: '.5px solid var(--b)',
     }}>
       {/* Background */}
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+      {/* sfondo: overflow/contain così il cerchio che si muove non sposta il layout (CLS) */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', contain: 'layout paint' }}>
         <div style={{
           position: 'absolute', inset: 0,
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
@@ -410,8 +416,8 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           </motion.div>
         </div>
 
-        {/* Phone mockup */}
-        <div>
+        {/* Phone mockup: solo su computer (sul telefono ripeteva quello della sezione dopo) */}
+        <div className="hide-mob">
           <PhoneMockup reduced={reduced} topStat={agencyStats[0]?.display || ''} />
         </div>
       </div>

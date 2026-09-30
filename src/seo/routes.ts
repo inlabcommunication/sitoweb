@@ -139,7 +139,7 @@ export const organizationJsonLd = () => ({
   founder: AUTHORS.map(personRef),
   knowsLanguage: 'it',
   url: `${SITE_URL}/`,
-  logo: `${SITE_URL}/icon-512.png`,
+  logo: `${SITE_URL}/logo.png`,
   image: abs(DEFAULT_OG_IMAGE),
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
