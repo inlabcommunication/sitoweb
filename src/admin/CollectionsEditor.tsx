@@ -95,11 +95,29 @@ export const ClientsEditor = ({ content, set }: Props) => {
   const items: any[] = content.clients?.items || [];
   const cases: any[] = content.cases?.items || [];
   const upd = (i: number, key: string, val: any) => { const a = clone(items); a[i] = { ...a[i], [key]: val }; set('clients.items', a); };
+  const homeIds: string[] | undefined = Array.isArray(content.clients?.homeIds) ? content.clients.homeIds : undefined;
 
   return (
     <div>
       <SectionTitle>Progetti raccontati — schede clienti</SectionTitle>
-      <Note>Le schede compaiono in Casi studio e in home; ognuna ha la sua pagina (/cliente/…). Usa le frecce per cambiare l'ordine. Le modifiche vanno online con <b>Salva</b>.</Note>
+      <Note>Le schede compaiono in Casi studio e nelle pagine dei servizi; ognuna ha la sua pagina (/cliente/…). Usa le frecce per cambiare l'ordine. Le modifiche vanno online con <b>Salva</b>.</Note>
+
+      <SectionTitle>Loghi in home</SectionTitle>
+      <Note>In home compaiono solo i loghi, uno accanto all'altro (da 6 in su scorrono). Spunta i clienti da mostrare: servono il logo caricato nella scheda. {homeIds ? '' : 'Finché non ne scegli nessuno, compaiono tutti quelli con il logo.'}</Note>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(220px,1fr))', gap: '0 12px', marginBottom: 18 }}>
+        {items.map((c, i) => (
+          <label key={c.id || i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, color: c.logo ? '#aaa' : '#555', marginBottom: 8, cursor: c.logo ? 'pointer' : 'not-allowed' }}
+            title={c.logo ? '' : 'Carica prima il logo nella scheda'}>
+            <input type="checkbox" disabled={!c.logo}
+              checked={!!c.logo && (homeIds ? homeIds.includes(c.id) : true)}
+              onChange={(e) => {
+                const current = homeIds ?? items.filter((x) => x.logo).map((x) => x.id);
+                set('clients.homeIds', e.target.checked ? [...new Set([...current, c.id])] : current.filter((id: string) => id !== c.id));
+              }} />
+            {c.name}{!c.logo && ' (senza logo)'}
+          </label>
+        ))}
+      </div>
       {items.map((c, i) => (
         <CardBlock key={c.id || i} title={c.name || 'Nuovo cliente'} collapsed
           confirmDelete={`Eliminare la scheda "${c.name}"? Dopo il salvataggio non sarà più visibile sul sito.`}

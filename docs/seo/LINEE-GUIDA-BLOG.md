@@ -226,13 +226,33 @@ Google premia i contenuti scritti da chi ha **esperienza vera**. Quindi:
 
 ## 8. Immagini
 
+**Compito fisso dell'addetto al blog, a ogni articolo nuovo o aggiornato**, prima
+della consegna e senza aspettare l'analisi del responsabile SEO: tutte le
+immagini dell'articolo (copertina e interne) rispettano le regole qui sotto,
+cioè nome del file, testo alternativo, peso e metadati IPTC. Il responsabile
+SEO lo controlla a ogni analisi.
+
 - **Copertina obbligatoria** per ogni articolo (vedi sezione 5).
 - 1 immagine ogni ~400 parole negli articoli lunghi: screenshot di esempio,
   schemi, foto dei nostri lavori (con autorizzazione del cliente).
 - Il testo tra le parentesi quadre `![...]` diventa la **didascalia e il testo
   alternativo**: descrivi davvero l'immagine e, quando è naturale, includi la
   parola chiave. Es. `![Esempio di piano editoriale mensile per un ristorante](…)`.
-- Nomi dei file descrittivi: `piano-editoriale-ristorante.webp`, non `IMG_2034.jpg`.
+- **Nomi dei file descrittivi**, in minuscolo con i trattini:
+  `piano-editoriale-ristorante.webp`, non `IMG_2034.jpg` né `immagine1.webp`.
+  La copertina può restare `cover.jpg` perché la cartella ha già lo slug
+  (`/blog/<slug>/cover.jpg`).
+- **Testo alternativo** (`coverAlt` e `![...]`): descrive cosa si vede, 8-15
+  parole, in italiano, senza "immagine di" o "foto di" all'inizio e senza
+  ripetere la stessa parola chiave in ogni immagine. Se nell'immagine c'è del
+  testo (un'infografica), il testo alternativo ne riassume il contenuto.
+- **Didascalia utile:** il testo attorno all'immagine conta quanto il testo
+  alternativo. Metti l'immagine vicino al paragrafo che la spiega.
+- **Formato e peso:** copertina JPG 1600×900 sotto i 250 KB; immagini interne
+  in WebP sotto i 150 KB, larghe al massimo 1600 px.
+- **Dati dell'autore nel file** (metadati IPTC: autore "InLab Communication",
+  copyright "© InLab Communication"): Google Immagini li mostra come crediti.
+  Li inserisce lo strumento `tools/blog-images`.
 - Solo immagini nostre, create da noi o con licenza libera. Mai immagini prese
   da Google.
 
@@ -250,7 +270,7 @@ Google premia i contenuti scritti da chi ha **esperienza vera**. Quindi:
 - [ ] Link al servizio collegato + 1-3 articoli + `/contatti`
 - [ ] Aggiunto un link verso il nuovo articolo in un articolo esistente
 - [ ] Articolo inserito in `src/data/blogSeed.ts` (non solo in `content/blog/`)
-- [ ] Copertina presente con `coverAlt` di 8-15 parole, immagini con descrizione
+- [ ] Copertina presente con `coverAlt` di 8-15 parole, immagini con descrizione, nomi dei file descrittivi, pesi nei limiti (sezione 8)
 - [ ] Se è un aggiornamento: `updated` compilato, `date` e `slug` invariati. Se è nuovo: niente `updated`
 - [ ] Nessun dato inventato, nessuna promessa di risultati garantiti
 - [ ] Solo la sintassi supportata (niente `#`, tabelle, HTML)

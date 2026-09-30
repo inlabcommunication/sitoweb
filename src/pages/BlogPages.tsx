@@ -59,7 +59,7 @@ const linkTo = (go: Go, to: string) => (e: React.MouseEvent) => {
 const Cover = ({ post, priority = false }: { post: BlogPost; priority?: boolean }) => (
   <div className="blog-cover">
     {post.cover
-      ? <img src={cld(post.cover, 900)} alt="" width={1600} height={900}
+      ? <img src={cld(post.cover, 900)} alt={post.coverAlt || post.title} width={1600} height={900}
           loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" />
       : <div className="blog-cover-ph" aria-hidden="true">{post.category}</div>}
   </div>
@@ -104,12 +104,12 @@ export const PageBlog = ({ go }: { go: Go }) => {
       <BlogStyles />
       <section style={{ padding: '10rem 2rem 3.5rem', borderBottom: '.5px solid var(--b)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="section-label">Blog</motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}
+          <motion.p initial={false} className="section-label">Blog</motion.p>
+          <motion.h1 initial={false}
             style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(3rem,8vw,7rem)', lineHeight: 0.9, marginBottom: '1.5rem' }}>
             IDEE CHE<br /><span className="stroke">FUNZIONANO.</span>
           </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
+          <motion.p initial={false}
             style={{ fontSize: 16, color: 'var(--m)', maxWidth: 640, lineHeight: 1.75 }}>
             Guide pratiche su social media, video, siti web e advertising per aziende e attività locali. Quello che impariamo ogni giorno lavorando con i nostri clienti.
           </motion.p>
@@ -177,7 +177,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
               <ArrowLeft size={11} /> Blog
             </a>
             <Meta post={post} />
-            <motion.h1 initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+            <motion.h1 initial={false}
               style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.6rem,6vw,5rem)', lineHeight: 0.92, margin: '1.2rem 0 1.4rem', textTransform: 'uppercase' }}>
               {post.title}
             </motion.h1>

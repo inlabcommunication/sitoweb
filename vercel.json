@@ -24,6 +24,11 @@
       "statusCode": 301
     },
     {
+      "source": "/cliente/aleph-caffe",
+      "destination": "/casi-studio",
+      "permanent": true
+    },
+    {
       "source": "/lavori",
       "destination": "/casi-studio",
       "statusCode": 301
