@@ -29,6 +29,7 @@ import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
+import { cldVideo, cldVideoPoster } from "./lib/media";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
 const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ default: m.PagePrivacy })));
@@ -464,14 +465,24 @@ const VideoReel = ({
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
-  // Play quando il video entra in viewport, pausa quando esce
+  // Il video si scarica solo quando entra nello schermo, nella versione
+  // ridotta da Cloudinary (720 px sul telefono, 1280 px sul computer).
+  // Con "Riduci movimento" o "Risparmio dati" non parte da solo: resta il
+  // poster e si avvia col pulsante audio.
+  const load = (v: HTMLVideoElement) => {
+    if (!v.getAttribute('src')) v.src = cldVideo(src, window.innerWidth <= 800 ? 720 : 1280);
+  };
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+      || (navigator as any).connection?.saveData === true;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            if (reduce) return;
+            load(v);
             v.play().catch(() => {});
           } else {
             v.pause();
@@ -482,13 +493,13 @@ const VideoReel = ({
     );
     observer.observe(v);
     return () => observer.disconnect();
-  }, []);
+  }, [src]);
 
   const toggleAudio = () => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = !v.muted;
-    if (!v.muted) v.play().catch(()=>{});
+    if (!v.muted) { load(v); v.play().catch(()=>{}); }
     setMuted(v.muted);
   };
 
@@ -535,12 +546,11 @@ const VideoReel = ({
           }}>
             <video
               ref={videoRef}
-              src={src}
-              autoPlay
+              poster={cldVideoPoster(src, 1280) || undefined}
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="none"
               style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
             />
           </div>
