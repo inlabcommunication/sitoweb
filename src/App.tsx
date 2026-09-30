@@ -550,6 +550,8 @@ const VideoReel = ({
             <video
               ref={videoRef}
               poster={cldVideoPoster(src, 1280) || undefined}
+              // se la versione ridotta non è ancora pronta su Cloudinary, ripiega una volta sull'originale
+              onError={e=>{ const v=e.currentTarget; if (v.getAttribute('src') && v.getAttribute('src')!==src) { v.src=src; v.play().catch(()=>{}); } }}
               loop
               muted
               playsInline
