@@ -54,10 +54,14 @@ Il brief del 30/09 e la sezione 8 aggiornata delle linee guida non sono ancora s
   - **Pesi e dimensioni:** copertine JPG 1600×900 fino a 118 KB (limite 250); infografiche WebP larghe 1200 px, fino a 62 KB (limite 150).
 - **Non fatto e perché:**
   - **Metadati nel generatore `tools/blog-images`:** la cartella non è nella mia area (`CLAUDE.md`). Ho aggiunto i metadati ai file già generati; per le immagini future serve la modifica al generatore, vedi "Richieste per lo sviluppo".
-  - **Nomi dei file:** quasi tutti sono già descrittivi (`piano-settimanale.webp`, `ottimizzare-video-ricerca.webp`…). Restano generici i 4 `checklist.webp` e i due `formati.webp`, anche se stanno nella cartella con lo slug. Non li ho rinominati: cambierebbe l'indirizzo delle immagini già pubblicate. Se la sezione 8 aggiornata lo richiede, li rinomino con la prossima consegna.
+  - **Nomi dei file** (aggiunta del 30/09, dopo il messaggio sul compito fisso): 10 immagini con nomi generici sono state rinominate con nomi descrittivi, per esempio `checklist.webp` → `checklist-newsletter-tracking-pixel.webp` e `formati.webp` → `foto-ristorante-menu-instagram-google.webp`. Riferimenti aggiornati negli articoli, nessuna immagine mancante. Gli spec in `tools/blog-images/specs/` usano ancora i vecchi nomi: se si rigenerano quelle immagini, i nomi vanno ripresi dagli articoli.
 - **Dubbi o proposte:**
   1. `CLAUDE.md` e le linee guida sono in contrasto su due punti: il resoconto "nel brief" e l'aggiornamento della mappa da parte dell'addetto al blog. Propongo che il resoconto stia sempre in `docs/blog-reports/AAAA-MM-GG-resoconto.md` e che tu lo riporti o lo linki nel brief.
   2. La consegna è sul mio branch `claude/optimistic-ritchie-mj87ne`. Per andare online serve la pull request verso `main`, come previsto da `CLAUDE.md`.
+
+## Compito fisso sulle immagini
+
+Da ora, prima di ogni consegna, per ogni articolo nuovo o aggiornato controllo: nomi dei file descrittivi, testo alternativo di 8-15 parole, copertina JPG sotto i 250 KB e interne WebP sotto i 150 KB (larghe al massimo 1600 px), metadati IPTC InLab Communication. Stato al 30/09: tutti i 17 articoli e le 41 immagini sono in regola.
 
 ## Richieste per lo sviluppo
 

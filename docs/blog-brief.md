@@ -10,6 +10,7 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 - **Regola di Nicola: niente prezzi dei servizi di gestione** negli articoli: tariffe o fasce di costo di agenzie, freelance o InLab (gestione social, siti, campagne, video…). I prezzi ufficiali delle piattaforme (per esempio abbonamenti Meta One o commissioni di TikTok Shop) si possono citare con la fonte. Se un brief chiede i costi di gestione, non farlo e segnalalo nel resoconto.
 - **Clienti InLab:** per ora cita i clienti solo con quello che c'è già nelle schede `/cliente/...` e nei casi studio, senza dettagli o numeri in più. Non chiedere informazioni sui clienti: Nicola preparerà i casi studio completi (linee guida, sezione 7).
 - **Clienti da non citare nel blog:** Aleph Caffè (indicazione di Nicola, 29/09/2026).
+- **Compito fisso sulle immagini** (Nicola, 30/09/2026), per ogni articolo nuovo o aggiornato, prima della consegna: nomi dei file descrittivi con trattini, testo alternativo di 8-15 parole, copertina JPG 1600×900 sotto i 250 KB, interne WebP sotto i 150 KB e larghe al massimo 1600 px, metadati IPTC "InLab Communication" (sezioni 8 e 9 delle linee guida).
 
 ## Contesto e tono
 

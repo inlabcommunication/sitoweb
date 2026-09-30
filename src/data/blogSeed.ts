@@ -239,7 +239,7 @@ Le storie durano 24 ore e le vede soprattutto chi ti segue già. Servono per la 
 
 Sono il formato più "vicino" alle persone, e spesso è da una storia che arriva il messaggio privato con una richiesta.
 
-![A cosa servono reel, storie, caroselli e foto singole su Instagram per un'attività locale](/blog/reel-o-post-cosa-pubblicare-instagram/formati.webp)
+![A cosa servono reel, storie, caroselli e foto singole su Instagram per un'attività locale](/blog/reel-o-post-cosa-pubblicare-instagram/formati-instagram-reel-post-storie.webp)
 
 ## Quanto deve durare un reel e come iniziarlo
 
@@ -579,7 +579,7 @@ Ecco una checklist operativa. Non sostituisce il parere del tuo consulente priva
 7. **Gestisci la base iscritti esistente.** Per chi è già in lista e non ha dato un consenso specifico al tracciamento, valuta con il tuo consulente se inviare email senza pixel o chiedere il consenso.
 8. **Rivedi KPI e automazioni.** Sostituisci i flussi basati sulle aperture con trigger legati a clic, acquisti o azioni sul sito. Se usi [automazioni e chatbot AI](/automazioni-ai) collegati al CRM, controlla che rispettino le nuove scelte degli utenti.
 
-![Checklist in sei punti per adeguare la newsletter ai tracking pixel entro ottobre](/blog/tracking-pixel-email-garante/checklist.webp)
+![Checklist in sei punti per adeguare la newsletter ai tracking pixel entro ottobre](/blog/tracking-pixel-email-garante/checklist-newsletter-tracking-pixel.webp)
 
 ## Un esempio concreto: la newsletter di un negozio di arredamento
 
@@ -699,7 +699,7 @@ Il [Digital Omnibus sull'AI](https://digital-strategy.ec.europa.eu/en/news/ai-om
 - gli obblighi per i sistemi ad alto rischio slittano al **2 dicembre 2027** per quelli dell'Allegato III (ad esempio selezione del personale e credit scoring) e al **2 agosto 2028** per quelli dell'Allegato I;
 - l'obbligo di alfabetizzazione AI (art. 4) è stato ammorbidito: ora si chiede di "adottare misure per favorire" le competenze, invece di "garantire un livello sufficiente".
 
-![Le scadenze di AI Act e legge italiana sull'AI dal 2025 al 2027](/blog/contenuti-ai-obblighi-ai-act/scadenze.webp)
+![Le scadenze di AI Act e legge italiana sull'AI dal 2025 al 2027](/blog/contenuti-ai-obblighi-ai-act/scadenze-ai-act-legge-italiana.webp)
 
 ### Il codice di condotta UE e l'etichetta comune
 
@@ -898,7 +898,7 @@ Ecco un metodo semplice, che puoi seguire anche se non sei un esperto di SEO.
 4. **Segui l'andamento settimanale.** La granularità giornaliera è molto "rumorosa". Quella settimanale ti mostra le tendenze vere, senza farti preoccupare per un calo di un giorno.
 5. **Annota le modifiche.** Ogni volta che pubblichi o aggiorni una pagina, segnalo con le annotazioni di Search Console o in un foglio condiviso. Dopo qualche settimana capirai cosa funziona.
 
-![Checklist in 5 passi per leggere il report Generative AI performance di Search Console](/blog/ai-overviews-search-console-report/checklist.webp)
+![Checklist in 5 passi per leggere il report Generative AI performance di Search Console](/blog/ai-overviews-search-console-report/come-leggere-report-ai-overviews.webp)
 
 ### Tre controlli da fare subito
 
@@ -1399,7 +1399,7 @@ Ma c'è un rovescio. Un assistente che risponde male, inventa un prezzo o promet
 7. **Porta traffico in chat con gli annunci click-to-WhatsApp.** Sono annunci su Facebook e Instagram che aprono direttamente una conversazione. Se l'assistente è pronto a rispondere, il contatto non si raffredda. Le impostiamo spesso nelle nostre [campagne Meta Ads](/meta-ads).
 8. **Controlla le conversazioni.** Nelle prime settimane leggi il riepilogo ogni mattina e correggi le risposte sbagliate aggiornando la base informativa.
 
-![Checklist in sei punti da completare prima di attivare l'assistente AI su WhatsApp Business](/blog/whatsapp-business-ai/checklist.webp)
+![Checklist in sei punti da completare prima di attivare l'assistente AI su WhatsApp Business](/blog/whatsapp-business-ai/checklist-assistente-ai-whatsapp.webp)
 
 ## Un esempio: lo studio dentistico e la trattoria
 
@@ -2169,7 +2169,7 @@ Like e visualizzazioni non pagano l'affitto. Guarda i numeri legati all'obiettiv
 
 Tieni un semplice foglio con le richieste ricevute e da dove arrivano. È il modo più affidabile per capire cosa rende davvero.
 
-![Le metriche da guardare nelle sponsorizzate Instagram per attività locali: contatti, chiamate e prenotazioni](/blog/sponsorizzate-instagram-attivita-locali/metriche.webp)
+![Le metriche da guardare nelle sponsorizzate Instagram per attività locali: contatti, chiamate e prenotazioni](/blog/sponsorizzate-instagram-attivita-locali/metriche-sponsorizzate-instagram.webp)
 
 ### Gli errori più comuni
 
@@ -2391,7 +2391,7 @@ Tovaglie stirate, bicchieri senza aloni, piatti puliti sui bordi. Togli dalla vi
 
 Se vuoi foto con le persone, e dovresti, avvisa lo staff qualche giorno prima: divise in ordine, disponibilità a farsi riprendere. Chi non vuole comparire va rispettato. Se nelle foto compaiono clienti riconoscibili, serve il loro consenso.
 
-![Checklist per preparare un servizio fotografico per ristoranti: obiettivo, orario, lista piatti, pulizia e staff](/blog/servizio-fotografico-ristoranti/preparazione.webp)
+![Checklist per preparare un servizio fotografico per ristoranti: obiettivo, orario, lista piatti, pulizia e staff](/blog/servizio-fotografico-ristoranti/preparare-servizio-fotografico-ristorante.webp)
 
 ## Cosa fotografare: la lista degli scatti
 
@@ -2422,7 +2422,7 @@ Le stesse foto possono lavorare su più canali, ma non tutte vanno bene ovunque.
 
 Il consiglio pratico è organizzare **foto e video nella stessa giornata**. Mentre si fotografano i piatti si possono girare anche le clip per i reel: trovi 15 spunti nella guida alle [idee di reel per ristoranti e bar](/blog/idee-reel-ristoranti).
 
-![Come usare le foto del ristorante su menu, Instagram, scheda Google e sito](/blog/servizio-fotografico-ristoranti/formati.webp)
+![Come usare le foto del ristorante su menu, Instagram, scheda Google e sito](/blog/servizio-fotografico-ristoranti/foto-ristorante-menu-instagram-google.webp)
 
 ## Da cosa dipende il costo di un servizio fotografico
 
@@ -2547,7 +2547,7 @@ Il giorno del cambio molte cose devono aggiornarsi insieme. Una dimenticanza cre
 
 Il nostro consiglio: prepara l'elenco con largo anticipo e assegna a ogni voce una persona e una data.
 
-![Checklist del rebranding di un'attività commerciale: insegna, scheda Google, social, sito, WhatsApp e materiali](/blog/rebranding-attivita-commerciale/checklist.webp)
+![Checklist del rebranding di un'attività commerciale: insegna, scheda Google, social, sito, WhatsApp e materiali](/blog/rebranding-attivita-commerciale/checklist-rebranding-insegna-social.webp)
 
 ## Come comunicare il rebranding ai clienti
 
@@ -2563,7 +2563,7 @@ Una data, un evento, un motivo per passare: un'inaugurazione, una degustazione, 
 
 Per un periodo ricorda il vecchio nome ("prima eravamo…"), soprattutto sulla scheda Google, sui social e in negozio. Rispondi alle domande, ringrazia chi ha partecipato e mostra le novità. Poi, passato qualche mese, smetti di citare il vecchio nome.
 
-![Le tre fasi per comunicare il rebranding: prima, il giorno del cambio, dopo](/blog/rebranding-attivita-commerciale/fasi.webp)
+![Le tre fasi per comunicare il rebranding: prima, il giorno del cambio, dopo](/blog/rebranding-attivita-commerciale/fasi-comunicare-rebranding.webp)
 
 ## Il caso Paresteta: un cambio insegna diventato evento
 
