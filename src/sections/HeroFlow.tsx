@@ -31,7 +31,7 @@ const RotatingWord: React.FC<{ reduced: boolean }> = ({ reduced }) => {
     return () => clearInterval(t);
   }, [reduced]);
   return (
-    <span style={{
+    <span className="rot-word" style={{
       display: 'inline-block', color: 'var(--a)',
       fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400,
       transition: 'opacity .35s, transform .35s',
@@ -416,8 +416,8 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           </motion.div>
         </div>
 
-        {/* Phone mockup */}
-        <div>
+        {/* Phone mockup: solo su computer (sul telefono ripeteva quello della sezione dopo) */}
+        <div className="hide-mob">
           <PhoneMockup reduced={reduced} topStat={agencyStats[0]?.display || ''} />
         </div>
       </div>

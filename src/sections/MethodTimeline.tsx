@@ -51,8 +51,9 @@ export const MethodTimeline: React.FC = () => {
         .mt-step{min-height:34vh}
         @media(max-width:900px){
           .mt-grid{grid-template-columns:1fr;gap:0}
-          .mt-visual{order:-1;top:64px;height:290px;z-index:3;margin:0 -2rem 1.5rem;background:linear-gradient(180deg,var(--bg) 82%,transparent)}
-          .mt-step{min-height:46vh}
+          /* sul telefono niente computer/fotocamera/telefono: solo i passi, più leggibili */
+          .mt-visual{display:none}
+          .mt-step{min-height:auto;padding-bottom:2.5rem;opacity:1!important}
         }
       `}</style>
       <div style={{ maxWidth: 1240, margin: '0 auto' }}>
