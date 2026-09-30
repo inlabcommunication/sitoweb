@@ -25,6 +25,8 @@ import { HeroFlow } from "./sections/HeroFlow";
 import { ServicesGrid } from "./sections/ServicesGrid";
 import { MethodTimeline } from "./sections/MethodTimeline";
 import { ClientsWall } from "./sections/ClientsWall";
+import { ClientLogoStrip } from "./sections/ClientLogoStrip";
+import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
@@ -86,34 +88,25 @@ const G = () => (
     .section-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
  
     @keyframes marq{to{transform:translateX(-50%)}}
-    /* card cliente / esempio (griglia clienti, esempi nei servizi) */
-    .client-card{
-    text-decoration:none;
-    display:flex;flex-direction:column;align-items:flex-start;text-align:left;
-    min-height:250px;padding:1.6rem 1.5rem 1.3rem;border-radius:22px;cursor:pointer;
-    font:inherit;color:inherit;
-    background:linear-gradient(160deg,rgba(255,255,255,0.035),rgba(255,255,255,0.01));
-    border:.5px solid var(--b);
-    transition:border-color .3s, background .3s, box-shadow .3s;
+    /* riquadri di clienti ed esempi: stesso stile dei casi studio */
+    .case-card{
+    position:relative;overflow:hidden;text-decoration:none;color:inherit;font:inherit;
+    display:flex;flex-direction:column;min-height:300px;
+    padding:clamp(1.8rem,3vw,2.4rem);border-radius:28px;cursor:pointer;
+    background:linear-gradient(135deg,rgba(205,178,255,0.06),rgba(255,255,255,0.02));
+    border:.5px solid var(--b);transition:border-color .3s,transform .3s;
     }
-    .client-card:hover,.client-card:focus-visible{
-    border-color:rgba(205,178,255,0.45);
-    background:linear-gradient(160deg,rgba(205,178,255,0.10),rgba(205,178,255,0.02));
-    box-shadow:0 18px 50px rgba(205,178,255,0.10);
-    outline:none;
-    }
+    .case-card:hover{border-color:rgba(205,178,255,0.3);transform:scale(1.005)}
+    .case-card:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+    .case-card-num{position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);font-family:var(--fd);font-size:clamp(8rem,14vw,12rem);line-height:.85;color:rgba(205,178,255,0.05);pointer-events:none;user-select:none;letter-spacing:-.04em}
+    .case-card-desc{font-size:14px;line-height:1.7;color:var(--m);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:1.4rem}
+    .case-card-cta{margin-top:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);display:inline-flex;align-items:center;gap:6px;transition:gap .25s}
+    .case-card:hover .case-card-cta{gap:10px}
+    .logo-strip{display:flex;width:max-content;gap:1.2rem;animation:marq 40s linear infinite}
+    .logo-strip-wrap:hover .logo-strip{animation-play-state:paused}
+    @media (prefers-reduced-motion:reduce){.logo-strip{animation:none;flex-wrap:wrap;width:auto;justify-content:center;padding:0 2rem}.logo-copy{display:none!important}}
     .form-field:focus{outline:none}
     .form-field:focus-visible{outline:2px solid var(--a);outline-offset:2px}
-    .client-card-summary{
-    margin-top:12px;font-size:13.5px;line-height:1.6;color:rgba(240,237,230,0.66);
-    display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
-    }
-    .client-card-cta{
-    display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;
-    letter-spacing:.15em;text-transform:uppercase;color:var(--a);
-    transition:gap .25s;
-    }
-    .client-card:hover .client-card-cta{gap:8px}
     .foot-link:hover{color:var(--t)!important}
     .city-link:hover{border-color:rgba(205,178,255,.35)!important;color:var(--a)!important}
     .marq-inner{display:inline-flex;gap:2.5rem;align-items:center;padding-left:2.5rem;animation:marq 28s linear infinite}
@@ -167,7 +160,6 @@ const SERVICES = [
  
 // Città delle pagine locali: un solo elenco, in src/seo/routes.ts
  
-const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento"];
 // Riga di numeri dell'agenzia (modificabili da dashboard → Home → Numeri)
 const AgencyStatsRow = () => {
   const stats = useAgencyStats();
@@ -372,56 +364,6 @@ const StatsRow = ({stats}) => (
     </div>
   </section>
 );
- 
-const ClientLogos = () => {
-  const content = useContent();
-  const {go} = useRouter();
-  const clients = normalizeClients((content.clients?.items || CLIENTS.map(c => ({ name: c, url: '', logo: '' }))) as any[]);
-  const tag = content.clients?.tag || 'Brand e progetti con cui abbiamo lavorato';
-  return (
-  <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
-    <div style={{maxWidth:1280,margin:"0 auto"}}>
-      <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",marginBottom:"3rem",flexWrap:"wrap",gap:"1rem"}}>
-        <div>
-          <p className="section-label" style={{marginBottom:8}}>{tag}</p>
-          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,5vw,5rem)",lineHeight:.9}}>
-            BRAND CHE<br/><span className="stroke">CI HANNO SCELTO</span>
-          </h2>
-        </div>
-        <span style={{fontSize:11,color:"var(--m)",letterSpacing:".1em",textTransform:"uppercase"}}>{clients.length} clienti</span>
-      </div>
-
-      <div style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:"1px",background:"var(--b)",borderRadius:24,overflow:"hidden"}} className="grid-1-mob">
-        {clients.map((c: any,i: number)=>(
-          <motion.div key={i}
-            initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:i*.04}}
-            onClick={()=>go(`/cliente/${getClientId(c, i)}`)}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e)=>{ if(e.key==="Enter"||e.key===" ") go(`/cliente/${getClientId(c, i)}`); }}
-            style={{background:"var(--bg)",padding:"2.5rem 2rem",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",gap:16,minHeight:180,cursor:"pointer",transition:"background .25s",position:"relative",overflow:"hidden"}}
-            whileHover={{backgroundColor:"rgba(205,178,255,0.06)"}}
-          >
-            <div style={{width:160,height:80,display:"flex",alignItems:"center",justifyContent:"center"}}>
-              {c.logo ? (
-                <img src={cld(c.logo, 400)} alt={c.name}
-                  style={{maxWidth:"100%",maxHeight:"100%",objectFit:"contain",filter:"brightness(0) invert(1)",opacity:.45,transition:"opacity .25s"}}
-                  onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
-                  onMouseLeave={e=>e.currentTarget.style.opacity="0.45"}
-                />
-              ) : (
-                <span style={{fontFamily:"var(--fd)",fontSize:28,color:"rgba(255,255,255,0.18)",letterSpacing:".05em",textAlign:"center",lineHeight:1.1}}>{c.name}</span>
-              )}
-            </div>
-            <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",textAlign:"center"}}>{c.name}</span>
-            <div style={{position:"absolute",bottom:-40,right:-40,width:120,height:120,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(30px)",pointerEvents:"none"}}/>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  </section>
-  );
-};
  
 const ServiceCTA = ({title="Vuoi questo servizio?",sub="Parliamo del tuo progetto senza impegno.",btn="Richiedi un preventivo",to="/contatti"}) => {
   const {go}=useRouter();
@@ -668,7 +610,7 @@ const PageHome = () => {
       <VideoReel src="https://res.cloudinary.com/dp2l14rly/video/upload/v1779320623/0521_m03plf.mp4"/>
 
       {/* CLIENTI */}
-      <ClientsWall onClientClick={(id) => go(`/cliente/${id}`)} />
+      <ClientLogoStrip />
 
       {/* CASI STUDIO */}
       <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
@@ -721,27 +663,17 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
         ))}
 
         {cards.length>0 && (
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(260px,1fr))",gap:14}}>
+          <CaseCardGrid>
             {cards.map((e,i) => {
               const c = e.kind === 'client' ? clients.find((x: any) => x.id === e.clientId) : null;
               if (e.kind === 'client' && !c) return null;
               if (e.kind === 'case' && !cases.some((x: any) => x.id === e.caseId)) return null;
               const to = e.kind === 'client' ? `/cliente/${e.clientId}` : `/casi-studio/${(e as any).caseId}`;
-              const title = e.kind === 'client' ? c.name : (e as any).title;
-              const desc = e.kind === 'client' ? c.summary : (e as any).desc;
-              const label = e.kind === 'client' ? (c.sector || 'Cliente') : 'Caso studio';
-              return (
-                <Link key={i} to={to} className="client-card" style={{minHeight:220}}>
-                  <span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>{label}</span>
-                  <span style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18}}>{title}</span>
-                  {desc && <span className="client-card-summary">{desc}</span>}
-                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>
-                    {e.kind === 'client' ? 'Scheda cliente' : 'Leggi il caso studio'} <ArrowUpRight size={13}/>
-                  </span>
-                </Link>
-              );
+              return e.kind === 'client'
+                ? <CaseCard key={i} href={to} number={i+1} kicker="Cliente" title={c.name} italic={c.sector} meta={c.location} desc={c.summary} logo={c.logo} cta="Scheda cliente"/>
+                : <CaseCard key={i} href={to} number={i+1} kicker="Caso" title={(e as any).title} desc={(e as any).desc} cta="Leggi il caso studio"/>;
             })}
-          </div>
+          </CaseCardGrid>
         )}
       </div>
     </section>
@@ -810,7 +742,6 @@ const PageGestioneSocial = () => (
       </div>
     </section>
  
-    <ClientLogos/>
     <ServiceExamples slug="gestione-social"/>
     <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito"/>
   </>
@@ -871,7 +802,6 @@ const PageMetaAds = () => (
       </div>
     </section>
  
-    <ClientLogos/>
     <ServiceExamples slug="meta-ads"/>
     <ServiceCTA title="PAGA SOLO I RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
   </>
@@ -932,7 +862,6 @@ const PageSitiWeb = () => (
       </div>
     </section>
  
-    <ClientLogos/>
     <ServiceExamples slug="siti-web"/>
     <ServiceCTA title="IL TUO SITO ATTUALE TI PORTA CLIENTI?" sub="Se la risposta è no, possiamo cambiarlo." btn="Richiedi un'analisi gratuita"/>
   </>
@@ -1474,24 +1403,14 @@ const PageCittaSEO = ({city, service}) => {
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Clienti a {cityName}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>I NOSTRI LAVORI<br/><span className="stroke">A {cityName.toUpperCase()}</span></h2>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(270px,1fr))",gap:14}}>
-              {localCases.map((cs: any)=>(
-                <Link key={"caso-"+cs.id} to={`/casi-studio/${cs.id}`} className="client-card" style={{minHeight:220}}>
-                  <span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>Caso studio</span>
-                  <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18,fontWeight:400}}>{cs.client}</h3>
-                  {(cs.problem||cs.title)&&<span className="client-card-summary">{cs.problem||cs.title}</span>}
-                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>Leggi il caso studio <ArrowUpRight size={13}/></span>
-                </Link>
+            <CaseCardGrid>
+              {localCases.map((cs: any, i: number)=>(
+                <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
               ))}
-              {localClients.map((cl: any)=>(
-                <Link key={cl.id} to={`/cliente/${cl.id}`} className="client-card" style={{minHeight:220}}>
-                  {cl.sector&&<span style={{fontSize:9.5,fontWeight:600,letterSpacing:".12em",textTransform:"uppercase",color:"var(--a)",background:"rgba(205,178,255,0.09)",border:".5px solid rgba(205,178,255,0.25)",borderRadius:100,padding:"5px 10px"}}>{cl.sector}</span>}
-                  <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.6rem,2vw,1.9rem)",lineHeight:.95,letterSpacing:".02em",color:"var(--t)",textTransform:"uppercase",marginTop:18,fontWeight:400}}>{cl.name}</h3>
-                  {cl.summary&&<span className="client-card-summary">{cl.summary}</span>}
-                  <span className="client-card-cta" style={{marginTop:"auto",paddingTop:16}}>Scheda cliente <ArrowUpRight size={13}/></span>
-                </Link>
+              {localClients.map((cl: any, i: number)=>(
+                <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"/>
               ))}
-            </div>
+            </CaseCardGrid>
           </div>
         </section>
       )}
@@ -1508,7 +1427,6 @@ const PageCittaSEO = ({city, service}) => {
         </div>
       </section>
  
-      <ClientLogos/>
       <ServiceExamples slug={svc.slug}/>
       <ServiceCTA title={`VUOI CRESCERE A ${cityName.toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
@@ -1778,7 +1696,6 @@ const PageBranding = () => (
       </div>
     </section>
 
-    <ClientLogos/>
     <ServiceExamples slug="branding"/>
     <ServiceCTA title="IL TUO BRAND MERITA UN'IDENTITÀ VERA." sub="Costruiamola insieme, con metodo e visione." btn="Parliamo del tuo brand"/>
   </>
