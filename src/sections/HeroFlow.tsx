@@ -332,7 +332,8 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
       borderBottom: '.5px solid var(--b)',
     }}>
       {/* Background */}
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+      {/* sfondo: overflow/contain così il cerchio che si muove non sposta il layout (CLS) */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden', contain: 'layout paint' }}>
         <div style={{
           position: 'absolute', inset: 0,
           backgroundImage: 'linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)',
