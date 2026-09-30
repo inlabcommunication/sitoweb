@@ -189,7 +189,7 @@ export const MethodDevices: React.FC<{ focus: Focus; stepLabel: string; reduced?
         <motion.div className="md-slot md-slot-phone" animate={pose('phone')} transition={t}><Phone on={focus.device === 'phone'} /></motion.div>
       </div>
       <AnimatePresence mode="wait">
-        <motion.div key={stepLabel} className="md-label" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.25 }}>
+        <motion.div key={stepLabel} className="md-label" initial={{ opacity: 0, x: '-50%', y: 8 }} animate={{ opacity: 1, x: '-50%', y: 0 }} exit={{ opacity: 0, x: '-50%', y: -8 }} transition={{ duration: 0.25 }}>
           {stepLabel}
         </motion.div>
       </AnimatePresence>
@@ -206,7 +206,8 @@ const MdStyles = () => (
     .md-slot-pc{left:90px;top:70px}
     .md-slot-cam{left:10px;top:270px}
     .md-slot-phone{left:390px;top:200px}
-    .md-label{position:absolute;left:50%;bottom:0;transform:translateX(-50%);white-space:nowrap;padding:7px 14px;border-radius:100px;border:.5px solid rgba(205,178,255,.35);background:rgba(30,29,29,.8);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
+    /* centrata con x:'-50%' di motion (un transform nel CSS verrebbe sovrascritto e l'etichetta uscirebbe a destra) */
+    .md-label{position:absolute;left:50%;bottom:0;white-space:nowrap;padding:7px 14px;border-radius:100px;border:.5px solid rgba(205,178,255,.35);background:rgba(30,29,29,.8);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
 
     .md-laptop{width:340px}
     .md-lid{padding:9px;border-radius:14px 14px 4px 4px;background:linear-gradient(160deg,#2c2932,#121115);border:1px solid rgba(255,255,255,.14);box-shadow:0 30px 70px rgba(0,0,0,.5)}
