@@ -83,7 +83,7 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 | P7 | Articolo AGCOM influencer bloccato: agcom.it non è raggiungibile dall'ambiente | Blog | verifica manuale del titolare o fonte alternativa |
 | P8 | Richiesta del Blog: categoria "Foto & Branding" in `BLOG_CATEGORIES` (codice) | SEO decide → Sito Inlab | decisione SEO, poi richiesta a Sito Inlab |
 | P9 | Attività di sicurezza nelle console esterne (`SECURITY.md`). **Fatto (titolare, 30/09):** chiave Gemini rigenerata, tetto di spesa impostato. **Da confermare:** chiave Anthropic (se usata), chiavi vecchie cancellate dal database ("Salva impostazioni" in dashboard), regole Firestore pubblicate, admin creati, registrazioni pubbliche bloccate | titolare | confermare i punti rimasti |
-| P10 | La sessione Competitor è ferma: il titolare deve ancora mandarle i nomi dei concorrenti. Inoltre ha chiesto ha le risposte delle altre sessioni: **doppione** con questa mappa | Direttore | le passo io la mappa: non serve rifare la raccolta |
+| P10 | La sessione Competitor è ferma: il titolare deve ancora mandarle i nomi dei concorrenti. Inoltre aveva chiesto le risposte delle altre sessioni: **doppione** con questa mappa | Direttore | le passo io la mappa: non serve rifare la raccolta |
 | P11 | Paragrafi "metodo InLab" negli articoli senza casi reali | titolare | informazioni sui clienti |
 
 ## 7. Vincoli tecnici
