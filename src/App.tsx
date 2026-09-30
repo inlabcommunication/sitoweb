@@ -1652,7 +1652,7 @@ const PageCliente = ({id}: {id: string}) => {
         </section>
       )}
 
-      <ClientsWall excludeId={client.id} compact onClientClick={(cid) => go(`/cliente/${cid}`)}
+      <ClientsWall excludeId={client.id} relatedTo={client} limit={4} compact onClientClick={(cid) => go(`/cliente/${cid}`)}
         heading={{label:"Scopri altri clienti",title:"ALTRI BRAND",accent:"CHE HANNO SCELTO INLAB",text:"Ogni scheda racconta un progetto diverso: apri quella che ti incuriosisce."}}/>
 
       <ServiceCTA title={`VUOI UN PROGETTO COME ${client.name.toUpperCase()}?`} sub="Raccontaci cosa vuoi ottenere e capiamo insieme la direzione migliore." btn="Parliamone"/>

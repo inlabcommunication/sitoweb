@@ -16,11 +16,52 @@ type ClientsWallProps = {
   heading?: { label: string; title: string; accent: string; text?: string };
   /** nasconde la frase finale */
   compact?: boolean;
+  /** mostra solo i `limit` clienti più simili a questo (stesso settore, poi stessa città) */
+  relatedTo?: any;
+  limit?: number;
 };
 
-export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHeader = true, excludeId, heading, compact = false }) => {
+const words = (v?: string) =>
+  String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .split(/[^a-z0-9]+/).filter((w) => w.length >= 4);
+
+// Settori affini, per avvicinare per esempio un bar a una gelateria anche se
+// il nome del settore è diverso.
+const GROUPS: string[][] = [
+  ['bar', 'food', 'caffe', 'caffetteria', 'gelateria', 'pasticceria', 'ristorante', 'pizzeria', 'pub', 'panificio', 'forno', 'enoteca', 'cibo'],
+  ['ricevimenti', 'hotel', 'masseria', 'eventi', 'villa', 'sala', 'matrimoni', 'agriturismo', 'resort'],
+  ['auto', 'moto', 'autofficina', 'officina', 'ricambi', 'carrozzeria', 'gommista', 'concessionaria'],
+  ['dentistico', 'dentista', 'ottica', 'medico', 'farmacia', 'fisioterapia', 'estetica', 'salute', 'studio'],
+  ['immobiliare', 'fotovoltaico', 'edilizia', 'impianti', 'arredamento', 'casa', 'energia', 'servizi'],
+];
+const groupsOf = (sector?: string) => {
+  const ws = String(sector || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^a-z0-9]+/);
+  return GROUPS.map((g, i) => (ws.some((w) => g.includes(w)) ? i : -1)).filter((i) => i >= 0);
+};
+
+/** Somiglianza con il cliente di riferimento: settore, poi città, poi servizi in comune. */
+const similarity = (ref: any, c: any) => {
+  let score = 0;
+  const rs = words(ref.sector), cs = words(c.sector);
+  if (rs.length && rs.join(' ') === cs.join(' ')) score += 4;
+  else if (rs.some((w) => cs.includes(w))) score += 3;
+  else if (groupsOf(ref.sector).some((g) => groupsOf(c.sector).includes(g))) score += 3;
+  if (ref.location && c.location && words(ref.location).join(' ') === words(c.location).join(' ')) score += 2;
+  const rsv = (ref.services || []).map((x: string) => x.toLowerCase());
+  score += Math.min(1, (c.services || []).filter((x: string) => rsv.includes(x.toLowerCase())).length * 0.5);
+  return score;
+};
+
+export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHeader = true, excludeId, heading, compact = false, relatedTo, limit }) => {
   const content = useContent();
-  const clients = normalizeClients((content as any).clients?.items || []).filter((c) => c.id !== excludeId);
+  const all = normalizeClients((content as any).clients?.items || []).filter((c) => c.id !== excludeId);
+  // Sempre lo stesso risultato per la stessa scheda (niente casualità): a parità
+  // di somiglianza vale l'ordine scelto in dashboard.
+  const clients = relatedTo
+    ? all.map((c, i) => ({ c, i, s: similarity(relatedTo, c) }))
+        .sort((a, b) => b.s - a.s || a.i - b.i).map((x) => x.c).slice(0, limit ?? 4)
+    : limit ? all.slice(0, limit) : all;
+  const hasMore = clients.length < all.length;
   const openClient = (id: string) => {
     if (onClientClick) onClientClick(id);
     else navigate(`/cliente/${id}`);
@@ -61,7 +102,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
           <span style={{
             fontSize: 11, color: 'var(--m)',
             letterSpacing: '.1em', textTransform: 'uppercase',
-          }}>{heading ? `${clients.length} schede` : `${clients.length}+ clienti`}</span>
+          }}>{relatedTo ? '' : heading ? `${clients.length} schede` : `${clients.length}+ clienti`}</span>
         </motion.div>
         )}
 
@@ -132,6 +173,13 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
           ))}
         </div>
 
+        {hasMore && relatedTo && (
+          <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+            <a href="/casi-studio" onClick={linkClick(() => navigate('/casi-studio'))} className="btn btn-g">
+              Vedi tutti i clienti <ArrowUpRight size={13} />
+            </a>
+          </div>
+        )}
 
         {/* Frase finale */}
         {!compact && <motion.p
