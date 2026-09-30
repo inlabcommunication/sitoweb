@@ -10,10 +10,19 @@ import { cld } from '../lib/media';
 
 const SCROLL_FROM = 6; // da quanti loghi in su la striscia scorre
 
-export const ClientLogoStrip: React.FC = () => {
+type Props = {
+  /** cliente da non mostrare (es. nella sua stessa scheda) */
+  excludeId?: string;
+  /** true = tutti i clienti con logo, ignorando la scelta "Loghi in home" */
+  allClients?: boolean;
+  /** testo sopra la striscia */
+  label?: string;
+};
+
+export const ClientLogoStrip: React.FC<Props> = ({ excludeId, allClients = false, label }) => {
   const content = useContent() as any;
-  const all = normalizeClients(content.clients?.items || []);
-  const ids: string[] | undefined = Array.isArray(content.clients?.homeIds) ? content.clients.homeIds : undefined;
+  const all = normalizeClients(content.clients?.items || []).filter((c) => c.id !== excludeId);
+  const ids: string[] | undefined = !allClients && Array.isArray(content.clients?.homeIds) ? content.clients.homeIds : undefined;
   const clients = all.filter((c) => c.logo && (!ids || ids.includes(c.id)));
   if (!clients.length) return null;
   const scroll = clients.length >= SCROLL_FROM;
@@ -30,7 +39,7 @@ export const ClientLogoStrip: React.FC = () => {
   return (
     <section style={{ padding: '4.5rem 0', borderBottom: '.5px solid var(--b)' }} aria-label="Clienti">
       <p className="section-label" style={{ textAlign: 'center', marginBottom: '2rem', padding: '0 2rem' }}>
-        {content.clients?.tag || 'Brand che hanno scelto InLab'}
+        {label || content.clients?.tag || 'Brand che hanno scelto InLab'}
       </p>
       {scroll ? (
         <div className="logo-strip-wrap" style={{ overflow: 'hidden', WebkitMaskImage: 'linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)', maskImage: 'linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)' }}>
