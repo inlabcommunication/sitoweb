@@ -111,13 +111,11 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
         const qy = my + (dx / len) * 10;
         const path = `M ${n.x} ${n.y} Q ${qx} ${qy} ${cx} ${cy}`;
         return (
-          <motion.circle key={`dot-${i}`} r="1" fill="rgba(205,178,255,0.9)"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 1, 0] }}
-            transition={{ duration: 2, delay: 2.2 + i * 0.5, repeat: Infinity, repeatDelay: 2 }}
-          >
+          // SVG nativo (niente JavaScript a ogni fotogramma): visibile nei primi 2 s di ogni ciclo di 4 s
+          <circle key={`dot-${i}`} r="1" fill="rgba(205,178,255,0.9)" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;0.1;0.4;0.5;1" dur="4s" begin={`${2.2 + i * 0.5}s`} repeatCount="indefinite" />
             <animateMotion dur="2s" begin={`${2.2 + i * 0.5}s`} repeatCount="indefinite" path={path} />
-          </motion.circle>
+          </circle>
         );
       })}
 
@@ -172,14 +170,15 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
       >
         {/* Alone pulsante */}
         {!reduced && (
-          <motion.rect
+          <rect
             x="62" y="72" width="76" height="56" rx="12"
             fill="none"
             stroke="rgba(205,178,255,0.3)"
             strokeWidth="0.8"
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          />
+            opacity="0.3"
+          >
+            <animate attributeName="opacity" values="0.3;0.7;0.3" dur="3s" repeatCount="indefinite" />
+          </rect>
         )}
         {/* Box sfondo */}
         <rect
@@ -210,11 +209,13 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
 
 const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced, topStat }) => (
   <motion.div
-    initial={{ opacity: 0, y: 28, rotate: -2 }}
-    animate={reduced ? { opacity: 1, y: 0, rotate: -2 } : { opacity: 1, y: [0, -10, 0], rotate: [-2, -1, -2] }}
-    transition={reduced ? { duration: 0 } : { opacity: { duration: 0.7, delay: 0.25 }, y: { duration: 5.5, repeat: Infinity, ease: 'easeInOut' }, rotate: { duration: 5.5, repeat: Infinity, ease: 'easeInOut' } }}
-    style={{ display: 'flex', justifyContent: 'center', perspective: 1200 }}
+    initial={{ opacity: 0, y: 28 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={reduced ? { duration: 0 } : { duration: 0.7, delay: 0.25 }}
+    style={{ perspective: 1200 }}
   >
+  {/* fluttuazione continua in CSS (.anim-float), non in JavaScript */}
+  <div className="anim-float" style={{ display: 'flex', justifyContent: 'center', transform: 'rotate(-2deg)' }}>
     <div style={{
       width: 'min(360px, 78vw)',
       aspectRatio: '9 / 18.5',
@@ -295,6 +296,7 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
         </div>
       </div>
     </div>
+  </div>
   </motion.div>
 );
 
@@ -338,9 +340,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           maskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%)',
           WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%)',
         }} />
-        <motion.div
-          animate={reduced ? {} : { x: [0, 25, 0], y: [0, -15, 0] }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
+        <div className="anim-drift"
           style={{ position: 'absolute', top: '10%', right: '5%', width: 500, height: 500, background: 'rgba(205,178,255,0.06)', borderRadius: '50%', filter: 'blur(120px)' }}
         />
       </div>
