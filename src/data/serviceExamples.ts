@@ -39,7 +39,6 @@ export const SERVICE_EXAMPLES: Record<string, ServiceExample[]> = {
   'shooting': [
     { kind: 'client', clientId: 'villa-natia' },
     { kind: 'client', clientId: 'sottoscala' },
-    { kind: 'client', clientId: 'aleph-caffe' },
   ],
   'meta-ads': [
     { kind: 'case', caseId: 'ricciardi', title: 'Studio Dentistico Ricciardi', desc: 'Campagne di lead generation collegate al nuovo sito per portare richieste di appuntamento qualificate.' },

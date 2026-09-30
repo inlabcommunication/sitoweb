@@ -167,7 +167,7 @@ const SERVICES = [
  
 // Città delle pagine locali: un solo elenco, in src/seo/routes.ts
  
-const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento","Aleph Caffè"];
+const CLIENTS = ["Nunzio Putignano Autofficina","DIRAM","Sottoscala","Studio Dentistico Ricciardi","Villa Natia","Studio Ventimiglia Solution","Emmesse","Sublime Tentazione","Ottica Occhi Blu","Masseria Sacramento"];
 // Riga di numeri dell'agenzia (modificabili da dashboard → Home → Numeri)
 const AgencyStatsRow = () => {
   const stats = useAgencyStats();
