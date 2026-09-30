@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { BrowserMockup } from '../components/BrowserMockup';
 import { ReelsGrid, Gallery } from '../components/ReelCard';
 import type { CaseBlock, CaseStudy } from '../data/caseStudies';
+import { workAlt } from '../lib/altText';
 
 // ──────────────────────────────────────────────────────────────
 // Componenti helper riutilizzabili tra le pagine caso studio
@@ -92,7 +93,7 @@ const StatValue: React.FC<{ value: string }> = ({ value }) => {
 
 const safeUrl = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
-const Block: React.FC<{ b: CaseBlock; name: string }> = ({ b, name }) => {
+const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, name, photoAlt }) => {
   switch (b.type) {
     case 'text':
       if (!b.body && !b.boxBody) return null;
@@ -249,7 +250,7 @@ const Block: React.FC<{ b: CaseBlock; name: string }> = ({ b, name }) => {
       return (
         <Section>
           <Title b={b} />
-          <div style={{ marginTop: '2rem' }}><Gallery images={images} alt={name} /></div>
+          <div style={{ marginTop: '2rem' }}><Gallery images={images} alt={photoAlt} /></div>
         </Section>
       );
     }
@@ -315,7 +316,7 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
         </div>
       </section>
 
-      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} />)}
+      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} photoAlt={workAlt({ name: cs.client, location: cs.locations?.[0] })} />)}
 
       <CTABottom onClick={onContact} />
     </>

@@ -32,6 +32,7 @@ import { ReelsGrid, Gallery } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
+import { workAlt } from "./lib/altText";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
 const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ default: m.PagePrivacy })));
@@ -1506,7 +1507,7 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={cld(heroImage, 1600)} alt={client.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
+          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
@@ -1597,7 +1598,7 @@ const PageCliente = ({id}: {id: string}) => {
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Foto</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>DIETRO<br/><span className="stroke">L'OBIETTIVO</span></h2>
-            <Gallery images={gallery} alt={client.name}/>
+            <Gallery images={gallery} alt={workAlt(client)}/>
           </div>
         </section>
       )}

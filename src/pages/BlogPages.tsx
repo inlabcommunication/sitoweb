@@ -59,7 +59,7 @@ const linkTo = (go: Go, to: string) => (e: React.MouseEvent) => {
 const Cover = ({ post, priority = false }: { post: BlogPost; priority?: boolean }) => (
   <div className="blog-cover">
     {post.cover
-      ? <img src={cld(post.cover, 900)} alt="" width={1600} height={900}
+      ? <img src={cld(post.cover, 900)} alt={post.coverAlt || post.title} width={1600} height={900}
           loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" />
       : <div className="blog-cover-ph" aria-hidden="true">{post.category}</div>}
   </div>
