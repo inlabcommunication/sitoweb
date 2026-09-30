@@ -66,6 +66,7 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 - 30/09 14:22 Blog → Direttore: stato, PR #33, 3 domande. Risposto alle 14:23.
 - 30/09 14:26 Direttore → Sito Inlab, SEO giusto, Performance, Analisi sito, Competitor: metodo di comunicazione, rubrica, regole, richiesta di risposta (max 25 righe). Al Blog solo rubrica. Tutte consegnate.
 - 30/09 14:29 Analisi sito → Direttore: risposta di allineamento (ricevuta). 30/09 14:29 Performance → Direttore: risposta di allineamento con priorità aggiornate (ricevuta). 30/09 14:35 Sito Inlab → Direttore: risposta di allineamento (ricevuta). In attesa: SEO giusto, Competitor; documento di passaggio di Sito Inlab.
+- 30/09 14:37 Analisi sito → Direttore: controllo mobile di base (8 pagine, 360 e 412 px). Risposto: 1 ok, 2 e 6 approvati nel lotto, 3-5 al titolare.
 - 30/09 14:29 Direttore → Sito Inlab: scrivere `docs/sviluppo/PASSAGGIO.md` per il passaggio a una nuova sessione (contesto > 500.000 token). Direttore → Analisi sito: nuovo compito fisso "controllo mobile" (sola lettura, 360 e 390-412 px, dopo ogni lotto che tocca il layout). Decisione del titolare: niente secondo sviluppatore per il mobile.
 
 ## 5. Priorità note
@@ -90,7 +91,9 @@ Già fatto (30/09): **I2 font in locale (PR #35, da rimisurare e da far verifica
 5. `CLAUDE.md`: ruoli Direttore e Competitor, SEO responsabile del blog, passaggio dal Direttore.
 6. Metadati IPTC nel generatore `tools/blog-images` (prima decidere chi può modificare `tools/`: non è nell'area di nessuno in `CLAUDE.md`; proposta: Sito Inlab).
 7. Alt dall'Archivio Media verso il sito (serve l'elenco dalla SEO).
-8. Minori noti a Sito Inlab: anteprime mshots esterne in `BrowserMockup`, `persist()` dell'archivio Media.
+8. Mobile (controllo di base dell'analista, 30/09, main `56d1690`): campo del chatbot a 16 px (niente zoom iOS) e chiusura del menu mobile con Esc. **Approvati dal Direttore.** Il bug ALTA della home che si allarga (etichetta animata di MethodDevices) l'analista l'ha già passato a Sito Inlab.
+9. **In attesa del titolare (visibili):** pulsanti e link alti almeno 44 px (PARLIAMO nell'header, CTA 32-37 px, link del footer 17 px); contrasto di alcuni testi della home e di un paragrafo da 11 px nel caso studio; etichette da 10-11 px.
+10. Minori noti a Sito Inlab: anteprime mshots esterne in `BrowserMockup`, `persist()` dell'archivio Media.
 
 ## 6. Problemi aperti
 
