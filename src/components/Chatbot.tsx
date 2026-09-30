@@ -30,7 +30,7 @@ const getSessionId = (): string => {
 // MASCOTTE — Personaggio SVG stilizzato per il chatbot
 // ════════════════════════════════════════════════════════════════
 const MascotSVG = () => (
-  <svg width="72" height="88" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', filter: 'drop-shadow(0 8px 24px rgba(205,178,255,0.5))' }}>
+  <svg aria-hidden="true" focusable="false" width="72" height="88" viewBox="0 0 72 88" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block', filter: 'drop-shadow(0 8px 24px rgba(205,178,255,0.5))' }}>
     {/* Corpo */}
     <rect x="12" y="32" width="48" height="44" rx="16" fill="#cdb2ff"/>
     {/* Testa */}
