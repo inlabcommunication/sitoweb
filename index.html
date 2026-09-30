@@ -39,10 +39,9 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Font: caricati subito (prima erano importati dal CSS, più lenti) -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" />
+    <!-- Font ospitati da noi (src/fonts.css): precaricati i due usati sopra la piega -->
+    <link rel="preload" as="font" type="font/woff2" href="/src/assets/fonts/bebas-neue-latin.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/src/assets/fonts/dm-sans-latin.woff2" crossorigin />
     <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
 
     <!-- Dati strutturati dell'agenzia (generati in build da src/seo/routes.ts) -->
