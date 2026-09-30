@@ -53,10 +53,13 @@ const linkTo = (go: Go, to: string) => (e: React.MouseEvent) => {
   e.preventDefault(); go(to);
 };
 
-const Cover = ({ post }: { post: BlogPost }) => (
+// La prima card (in evidenza) è l'immagine principale della pagina: si carica
+// subito e con priorità alta; le altre solo quando stanno per entrare nello schermo.
+const Cover = ({ post, priority = false }: { post: BlogPost; priority?: boolean }) => (
   <div className="blog-cover">
     {post.cover
-      ? <img src={post.cover} alt="" loading="lazy" decoding="async" />
+      ? <img src={post.cover} alt="" width={1600} height={900}
+          loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" />
       : <div className="blog-cover-ph" aria-hidden="true">{post.category}</div>}
   </div>
 );
@@ -74,8 +77,8 @@ const Meta = ({ post }: { post: BlogPost }) => (
 const PostCard: React.FC<{ post: BlogPost; go: Go; featured?: boolean; i?: number }> = ({ post, go, featured = false, i = 0 }) => (
   <motion.a href={`/blog/${post.slug}`} onClick={linkTo(go, `/blog/${post.slug}`)}
     className={`blog-card${featured ? ' blog-feat' : ''}`}
-    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(i, 6) * 0.06 }}>
-    <Cover post={post} />
+    initial={featured ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(i, 6) * 0.06 }}>
+    <Cover post={post} priority={featured} />
     <div style={{ padding: featured ? '2.4rem' : '1.6rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: featured ? 'center' : 'flex-start' }}>
       {featured && <p className="section-label" style={{ color: 'var(--a)' }}>Ultimo articolo</p>}
       <Meta post={post} />
@@ -194,7 +197,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
         {post.cover && (
           <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 2rem 1rem' }}>
-            <img src={post.cover} alt={post.coverAlt || post.title} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
+            <img src={post.cover} alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
           </div>
         )}
 

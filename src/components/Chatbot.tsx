@@ -179,6 +179,8 @@ export const Chatbot = () => {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 1.2, type: 'spring', stiffness: 200 }}
           onClick={() => setOpen(!open)}
+          aria-label={open ? 'Chiudi la chat' : 'Apri la chat'}
+          aria-expanded={open}
           data-track="chatbot_toggle"
           style={{
             background: 'none',
@@ -267,7 +269,7 @@ export const Chatbot = () => {
                   {loading ? '✦ sta scrivendo...' : '✦ online · risponde subito'}
                 </div>
               </div>
-              <button onClick={() => setOpen(false)} style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'var(--m)', cursor: 'pointer', padding: 4 }}>
+              <button onClick={() => setOpen(false)} aria-label="Chiudi la chat" style={{ margin: '-9px -9px -9px auto', background: 'none', border: 'none', color: 'var(--m)', cursor: 'pointer', padding: 13 }}>
                 <X size={18} />
               </button>
             </div>
@@ -366,6 +368,7 @@ export const Chatbot = () => {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && send()}
                 placeholder="Scrivi un messaggio..."
+                aria-label="Scrivi un messaggio"
                 disabled={loading}
                 style={{
                   flex: 1,
@@ -382,9 +385,10 @@ export const Chatbot = () => {
               <button
                 onClick={send}
                 disabled={loading || !input.trim()}
+                aria-label="Invia messaggio"
                 style={{
-                  width: 40,
-                  height: 40,
+                  width: 44,
+                  height: 44,
                   borderRadius: '50%',
                   background: input.trim() ? 'var(--a)' : 'rgba(255,255,255,0.06)',
                   color: input.trim() ? '#000' : 'var(--m)',

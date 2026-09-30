@@ -29,6 +29,7 @@ import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
+import { cldVideo, cldVideoPoster } from "./lib/media";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
 const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ default: m.PagePrivacy })));
@@ -101,6 +102,8 @@ const G = () => (
     box-shadow:0 18px 50px rgba(205,178,255,0.10);
     outline:none;
     }
+    .form-field:focus{outline:none}
+    .form-field:focus-visible{outline:2px solid var(--a);outline-offset:2px}
     .client-card-summary{
     margin-top:12px;font-size:13.5px;line-height:1.6;color:rgba(240,237,230,0.66);
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
@@ -122,7 +125,7 @@ const G = () => (
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
-      .chat-launcher{transform:scale(.72);transform-origin:bottom right;bottom:12px!important;right:12px!important}
+      .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
     }
     @media(max-width:480px){
@@ -218,7 +221,8 @@ const Navbar = () => {
  
         <div style={{display:"flex",gap:10,alignItems:"center"}}>
           <Link to="/contatti"><button className="btn btn-p" style={{padding:"11px 22px"}}>Parliamo <ArrowUpRight size={13}/></button></Link>
-          <button className="show-mob" style={{display:"none",background:"none",border:"none",color:"var(--t)",padding:4}} onClick={()=>setOpen(!open)}>
+          <button className="show-mob" aria-label={open?"Chiudi menu":"Apri menu"} aria-expanded={open} aria-controls="menu-mobile"
+            style={{display:"none",background:"none",border:"none",color:"var(--t)",minWidth:44,minHeight:44,padding:10,alignItems:"center",justifyContent:"center",cursor:"pointer"}} onClick={()=>setOpen(!open)}>
             {open?<X size={24}/>:<Menu size={24}/>}
           </button>
         </div>
@@ -226,7 +230,7 @@ const Navbar = () => {
  
       <AnimatePresence>
         {open && (
-          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
+          <motion.div id="menu-mobile" initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
             style={{overflow:"hidden",borderTop:".5px solid var(--b)",background:"rgba(10,10,8,0.97)"}}>
             <div style={{padding:"2rem",display:"flex",flexDirection:"column",gap:"1.2rem"}}>
               {navLinks.map(l=>(
@@ -464,14 +468,24 @@ const VideoReel = ({
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
-  // Play quando il video entra in viewport, pausa quando esce
+  // Il video si scarica solo quando entra nello schermo, nella versione
+  // ridotta da Cloudinary (720 px sul telefono, 1280 px sul computer).
+  // Con "Riduci movimento" o "Risparmio dati" non parte da solo: resta il
+  // poster e si avvia col pulsante audio.
+  const load = (v: HTMLVideoElement) => {
+    if (!v.getAttribute('src')) v.src = cldVideo(src, window.innerWidth <= 800 ? 720 : 1280);
+  };
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+      || (navigator as any).connection?.saveData === true;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            if (reduce) return;
+            load(v);
             v.play().catch(() => {});
           } else {
             v.pause();
@@ -482,13 +496,13 @@ const VideoReel = ({
     );
     observer.observe(v);
     return () => observer.disconnect();
-  }, []);
+  }, [src]);
 
   const toggleAudio = () => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = !v.muted;
-    if (!v.muted) v.play().catch(()=>{});
+    if (!v.muted) { load(v); v.play().catch(()=>{}); }
     setMuted(v.muted);
   };
 
@@ -535,12 +549,11 @@ const VideoReel = ({
           }}>
             <video
               ref={videoRef}
-              src={src}
-              autoPlay
+              poster={cldVideoPoster(src, 1280) || undefined}
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="none"
               style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
             />
           </div>
@@ -1314,35 +1327,35 @@ const PageContatti = () => {
                 <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.5vw,3rem)",lineHeight:.9,marginBottom:"2rem"}}>RACCONTACI<br/><span className="stroke">IL PROGETTO</span></h2>
                 <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
                   {[
-                    {id:"nome",label:"Nome e cognome *",type:"text",ph:"Mario Rossi"},
-                    {id:"email",label:"Email *",type:"email",ph:"mario@azienda.it"},
-                    {id:"tel",label:"Telefono",type:"tel",ph:"+39 329 565 4319"},
-                    {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività"},
+                    {id:"nome",label:"Nome e cognome *",type:"text",ph:"Mario Rossi",ac:"name",req:true},
+                    {id:"email",label:"Email *",type:"email",ph:"mario@azienda.it",ac:"email",req:true},
+                    {id:"tel",label:"Telefono",type:"tel",ph:"+39 329 565 4319",ac:"tel",req:false},
+                    {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività",ac:"organization",req:false},
                   ].map(f=>(
                     <div key={f.id}>
-                      <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
-                      <input type={f.type} placeholder={f.ph} value={(form as any)[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
-                        style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",transition:"border-color .2s"}}
+                      <label htmlFor={"f-"+f.id} style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
+                      <input id={"f-"+f.id} className="form-field" autoComplete={f.ac} required={f.req} aria-required={f.req} type={f.type} placeholder={f.ph} value={(form as any)[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
+                        style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:16,fontFamily:"var(--fb)",transition:"border-color .2s"}}
                         onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
                         onBlur={e=>e.target.style.borderColor="var(--b)"}
                       />
                     </div>
                   ))}
                   <div>
-                    <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
-                    <select value={form.servizio} onChange={e=>setForm({...form,servizio:e.target.value})}
-                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:14,fontFamily:"var(--fb)",outline:"none"}}>
+                    <label htmlFor="f-servizio" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
+                    <select id="f-servizio" className="form-field" value={form.servizio} onChange={e=>setForm({...form,servizio:e.target.value})}
+                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
                       <option value="">Seleziona un servizio</option>
                       {["Strategia social","Gestione social","Foto & video","Branding","Campagne Meta Ads","Sito o landing page","Organizzazione eventi","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
+                    <label htmlFor="f-msg" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
                     {/* campo trappola anti-bot: invisibile alle persone */}
                     <input type="text" name="website" value={honeypot} onChange={e=>setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true"
                       style={{position:"absolute",left:"-10000px",width:1,height:1,opacity:0}}/>
-                    <textarea rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
-                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",resize:"vertical",transition:"border-color .2s"}}
+                    <textarea id="f-msg" className="form-field" required aria-required="true" rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
+                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:16,fontFamily:"var(--fb)",resize:"vertical",transition:"border-color .2s"}}
                       onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
                       onBlur={e=>e.target.style.borderColor="var(--b)"}
                     />
@@ -1354,7 +1367,7 @@ const PageContatti = () => {
                       Ho letto e accetto la <a href="/privacy" target="_blank" rel="noopener" style={{color:"var(--a)",textDecoration:"underline"}}>privacy policy</a>. I dati forniti saranno utilizzati esclusivamente per rispondere alla richiesta.
                     </label>
                   </div>
-                  {error && <div style={{fontSize:12,color:"#ff8888",padding:"10px 14px",background:"rgba(255,100,100,0.08)",borderRadius:10,border:".5px solid rgba(255,100,100,0.2)"}}>{error}</div>}
+                  {error && <div role="alert" style={{fontSize:12,color:"#ff8888",padding:"10px 14px",background:"rgba(255,100,100,0.08)",borderRadius:10,border:".5px solid rgba(255,100,100,0.2)"}}>{error}</div>}
                   <button className="btn btn-p" style={{width:"100%",justifyContent:"center",padding:"16px",fontSize:12,marginTop:"0.5rem",opacity:sending?0.6:1,pointerEvents:sending?"none":"auto"}} onClick={submit} disabled={sending}>
                     {sending ? "Invio in corso…" : <>Invia messaggio <ArrowRight size={15}/></>}
                   </button>
