@@ -409,6 +409,9 @@ const VideoReel = ({
 }: any) => {
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
+  const [playing, setPlaying] = useState(false);
+  // se il visitatore mette in pausa, il video non riparte da solo quando torna nello schermo
+  const userPaused = React.useRef(false);
 
   // Il video si scarica solo quando entra nello schermo, nella versione
   // ridotta da Cloudinary (720 px sul telefono, 1280 px sul computer).
@@ -426,7 +429,7 @@ const VideoReel = ({
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            if (reduce) return;
+            if (reduce || userPaused.current) return;
             load(v);
             v.play().catch(() => {});
           } else {
@@ -444,8 +447,15 @@ const VideoReel = ({
     const v = videoRef.current;
     if (!v) return;
     v.muted = !v.muted;
-    if (!v.muted) { load(v); v.play().catch(()=>{}); }
+    if (!v.muted) { userPaused.current = false; load(v); v.play().catch(()=>{}); }
     setMuted(v.muted);
+  };
+
+  const togglePlay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (v.paused) { userPaused.current = false; load(v); v.play().catch(()=>{}); }
+    else { userPaused.current = true; v.pause(); }
   };
 
   return (
@@ -496,9 +506,32 @@ const VideoReel = ({
               muted
               playsInline
               preload="none"
+              onPlay={()=>setPlaying(true)}
+              onPause={()=>setPlaying(false)}
               style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
             />
           </div>
+
+          {/* Pausa / riproduci (WCAG 2.2.2: il video è in loop) */}
+          <button
+            onClick={togglePlay}
+            aria-label={playing?"Metti in pausa il video":"Riproduci il video"}
+            style={{
+              position:"absolute",bottom:"14%",right:"calc(4% + 64px)",zIndex:2,
+              width:52,height:52,borderRadius:"50%",
+              background:"rgba(20,20,20,0.7)",backdropFilter:"blur(10px)",
+              border:".5px solid rgba(255,255,255,0.18)",color:"var(--t)",
+              display:"flex",alignItems:"center",justifyContent:"center",cursor:"pointer",transition:"all .25s",
+            }}
+            onMouseEnter={e=>{ e.currentTarget.style.background="rgba(205,178,255,0.18)"; e.currentTarget.style.borderColor="rgba(205,178,255,0.45)"; }}
+            onMouseLeave={e=>{ e.currentTarget.style.background="rgba(20,20,20,0.7)"; e.currentTarget.style.borderColor="rgba(255,255,255,0.18)"; }}
+          >
+            {playing ? (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+            ) : (
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+            )}
+          </button>
 
           {/* Bottone audio — fuori dal wrapper sfumato così resta nitido */}
           <button
