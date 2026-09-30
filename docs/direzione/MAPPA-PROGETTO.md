@@ -61,6 +61,11 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 
 **Come si scrive a un'altra sessione:** SendMessage non funziona tra sessioni cloud. Funziona una routine: `create_trigger` con `persistent_session_id` della sessione destinataria e prompt che inizia con `[Messaggio da <ruolo>]`, poi `fire_trigger` e `delete_trigger` (provato il 30/09, Direttore → Blog). Ogni messaggio sveglia la sessione e consuma i suoi limiti: scrivere solo quando serve, un messaggio con tutto dentro. Per rispondere al Direttore: stesso metodo con `session_01AreWGaDhEeTCs3CDmdifT7`.
 
+## 4-bis. Registro messaggi
+
+- 30/09 14:22 Blog → Direttore: stato, PR #33, 3 domande. Risposto alle 14:23.
+- 30/09 14:26 Direttore → Sito Inlab, SEO giusto, Performance, Analisi sito, Competitor: metodo di comunicazione, rubrica, regole, richiesta di risposta (max 25 righe). Al Blog solo rubrica. Tutte consegnate. Risposte attese.
+
 ## 5. Priorità note
 
 1. **C1-bis — hero visibile subito** (critico, performance): home e /siti-web con LCP 3,3–4,6 s per l'hero che parte da `opacity:0`. Obiettivo render delay < 0,5 s, LCP < 2,5 s. → Sito Inlab.
