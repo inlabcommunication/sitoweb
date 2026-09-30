@@ -30,15 +30,15 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 | **Adetto SEO giusto** (responsabile SEO e **responsabile strategico del blog**) | `session_018SfEyMKHa2uSgRSKzdE114` | `claude/inlab-analytics-seo-setup-hh2p6e` | solo `docs/seo/` | ha inviato a Sito Inlab i documenti SEO dei casi studio; push bloccato dalla policy di sicurezza |
 | Addetto SEO (vecchia sessione) | `session_011qJCHS5861skWDHe1vUFbF` | stesso branch SEO | — | **da archiviare**: sostituita da "Adetto SEO giusto", ambiente diverso |
 | **Addetto al Blog** | `session_017pmD2nGS4KjecYvnyGm8iM` | `claude/optimistic-ritchie-mj87ne` | `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/` | PR #33 aperta (metadati IPTC e alt delle 41 immagini, 10 immagini rinominate, resoconto SEO); ultimo voto SEO 8/10; routine mar/ven 8:47 dal 2/10, pubblicazione automatica 11:50 disattivata |
-| **Addetto performance** | `session_012pr6hkmubH9ZAA9gVGN4Gf` | `claude/sleepy-mccarthy-g1a968` | solo `docs/performance/` | report 30/09 fatto, fermo per limite crediti |
-| **Adetto analisi sito** (= analista sicurezza / controlli) | `session_01Kim4sfBnoqhrkBJnpGTrHz` | `claude/serene-noether-l1j2l4` | **niente, solo lettura** | fermo per limite crediti |
+| **Addetto performance** | `session_012pr6hkmubH9ZAA9gVGN4Gf` | `claude/sleepy-mccarthy-g1a968` | solo `docs/performance/` | attivo; ultima misura 30/09 14:05 (home Perf 67/88/96, LCP 3,8/3,0/2,1 s; /siti-web 95/98). Aspetta il prossimo lotto di Sito Inlab per rimisurare. Non ha chiave PageSpeed: CrUX lo legge il titolare |
+| **Adetto analisi sito** (= analista sicurezza / controlli) | `session_01Kim4sfBnoqhrkBJnpGTrHz` | `claude/serene-noether-l1j2l4` | **niente, solo lettura** | attivo. Non raggiunge il sito online (rete 403): lavora su codice, build e test Playwright in locale; per i controlli dal vivo si appoggia alla Performance. Routine automatica ogni 2 giorni alle 8:56 (`trig_01DewoKd4ZBE4VD8i6mk8HKp`). Nuovo compito: controllo mobile. Nessun report su file: tutto in chat e messaggi |
 | **Analisi competitor Inlab** | `session_01Si9h5q6bVpPQbAn5BzeiCE` | `claude/trusting-dirac-fhmj15` (non ancora sul remoto) | da definire: proposta `docs/competitor/` | al lavoro (30/09): concorrenti indicati dal titolare + altri 8 da cercare da sola |
 
 ### Dati che possiede ogni agente
 - **SEO giusto:** accesso API a GA4 e Search Console (`tools/seo/google-data.mjs`, variabili `GOOGLE_SA_KEY`, `GA4_PROPERTY_ID`, `GSC_SITE`), brief `docs/seo/brief/2026-09-28.md` e `2026-09-29.md`, linee guida blog v2 (`docs/seo/LINEE-GUIDA-BLOG.md`), prompt del ruolo (`docs/seo/PROMPT-RESPONSABILE-SEO.md`).
 - **Blog:** `docs/blog-brief.md` (fonti, classificazione A/B/C, formato), report `docs/blog-reports/2026-09-28.md` e `2026-09-30-resoconto.md`, generatore immagini `tools/blog-images/`.
-- **Performance:** report `docs/performance/2026-09-30.md` e artifact "Audit prestazioni InLab" (https://claude.ai/artifact/4JMeBKCCjNsomDzJpsVQQ8). Lighthouse, PageSpeed.
-- **Analista:** controlli su intestazioni, redirect, console, sicurezza (vedi `SECURITY.md`).
+- **Performance:** report `docs/performance/2026-09-30.md` (ultimo commit `6ff3791`) e artifact "Audit prestazioni InLab" (https://claude.ai/artifact/4JMeBKCCjNsomDzJpsVQQ8). Lighthouse, PageSpeed.
+- **Analista:** codice e branch, build, tsc, npm audit, test Playwright con server che imita Vercel, prove da anonimo sulle regole Firestore via REST. Nessuna credenziale. Ha verificato: 6 punti di sicurezza del 29/09, redirect e 404, upload Cloudinary firmati, PR #13–#32.
 - **Sito Inlab:** tutto il codice, accesso ai deploy Vercel, PR.
 - **Competitor:** nulla ancora; aspetta i nomi dei concorrenti.
 
@@ -64,26 +64,31 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 ## 4-bis. Registro messaggi
 
 - 30/09 14:22 Blog → Direttore: stato, PR #33, 3 domande. Risposto alle 14:23.
-- 30/09 14:26 Direttore → Sito Inlab, SEO giusto, Performance, Analisi sito, Competitor: metodo di comunicazione, rubrica, regole, richiesta di risposta (max 25 righe). Al Blog solo rubrica. Tutte consegnate. Risposte attese.
+- 30/09 14:26 Direttore → Sito Inlab, SEO giusto, Performance, Analisi sito, Competitor: metodo di comunicazione, rubrica, regole, richiesta di risposta (max 25 righe). Al Blog solo rubrica. Tutte consegnate.
+- 30/09 14:29 Analisi sito → Direttore: risposta di allineamento (ricevuta). 30/09 14:29 Performance → Direttore: risposta di allineamento con priorità aggiornate (ricevuta). In attesa: Sito Inlab, SEO giusto, Competitor.
 - 30/09 14:29 Direttore → Sito Inlab: scrivere `docs/sviluppo/PASSAGGIO.md` per il passaggio a una nuova sessione (contesto > 500.000 token). Direttore → Analisi sito: nuovo compito fisso "controllo mobile" (sola lettura, 360 e 390-412 px, dopo ogni lotto che tocca il layout). Decisione del titolare: niente secondo sviluppatore per il mobile.
 
 ## 5. Priorità note
 
-1. **C1-bis — hero visibile subito** (critico, performance): home e /siti-web con LCP 3,3–4,6 s per l'hero che parte da `opacity:0`. Obiettivo render delay < 0,5 s, LCP < 2,5 s. → Sito Inlab.
-2. **Portare su main il lavoro del blog** (correzioni brief 29/09 + 2 articoli + metadati IPTC) via PR dal branch del blog, dopo controllo SEO.
-3. **Correzioni SEO tecniche del commit `4c6ebaf`** (titoli ≤ 60, descrizioni 140–155, lastmod reale in sitemap): sono codice, vanno rifatte o riviste da Sito Inlab.
-4. **I2 font in locale** e risorse che bloccano il rendering (~1,1 s risparmiabili su mobile).
+Già fatto e verificato dal vivo (Performance, 30/09): video della home (PR #22, #29), cover del blog eager (blog 74 → 98), accessibilità di menu e form (100), N1 script inline, **C1-bis hero visibile subito (PR #31)**, I5 animazioni in CSS (PR #32).
+
+1. **I2 font in locale** (priorità comune di Performance e Analisi sito). File: `index.html` (togliere il link a Google Fonts), `@font-face` in `src/App.tsx`, `public/fonts/*.woff2`, `vercel.json` (CSP: togliere fonts.googleapis.com e fonts.gstatic.com). Obiettivo: nessuna risorsa esterna che blocca il rendering (oggi ~860 ms), LCP home stabile < 2,5 s. Dopo: l'analista verifica la CSP.
+2. **Portare su main il lavoro del blog**: PR #33, controllo tecnico di Sito Inlab.
+3. **Correzioni SEO tecniche del commit `4c6ebaf`** (titoli ≤ 60, descrizioni 140–155, lastmod reale in sitemap): sono codice, le rivede e applica Sito Inlab.
+4. **CLS del cerchio viola** `.anim-drift` (`src/sections/HeroFlow.tsx:343`): `overflow:hidden` o `contain: layout paint` sul contenitore. Obiettivo CLS home da 0,051 a < 0,02.
 5. Aggiornare `CLAUDE.md` con i ruoli nuovi (Direttore, Competitor, SEO responsabile del blog).
-6. Minori: `label-content-name-mismatch` del launcher chat, WebP delle cover (da concordare con il Blog, in build), I5 LazyMotion/Chatbot lazy, M1–M6, N2.
+6. **Cover in WebP in build** (`public/blog/`): decide il Blog con la Performance. Obiettivo LCP articolo stabile < 2,5 s (oggi 1,7–5,0 s).
+7. Minori, insieme quando si tocca il Chatbot: LazyMotion (`src/sections/*`, ~15–20 KB), Chatbot lazy e `label-content-name-mismatch` del launcher (`src/components/Chatbot.tsx`), M1–M6, N2. Metadati IPTC nel generatore `tools/blog-images`.
+8. Bassa (analista): `persist()` dell'archivio Media riscrive tutto il documento; con due schede o due admin vince l'ultimo salvataggio.
 
-## 5-bis. Lotto per Sito Inlab (da mandare in un solo messaggio)
+## 5-bis. Lotto per Sito Inlab (da mandare in un solo messaggio, dopo l'ok del titolare e preferibilmente alla nuova sessione)
 
-1. C1-bis hero visibile subito (priorità 1).
-2. I2 font in locale (priorità comune di Performance e Analisi sito).
-3. Controllo tecnico della PR #33 del Blog.
-4. Metadati IPTC nel generatore `tools/blog-images`.
-5. Correzioni SEO del commit `4c6ebaf` (titoli, descrizioni, lastmod) dal branch SEO.
-6. `CLAUDE.md`: ruoli Direttore e Competitor, SEO responsabile del blog, passaggio dal Direttore.
+1. I2 font in locale.
+2. Controllo tecnico della PR #33 del Blog.
+3. Correzioni SEO del commit `4c6ebaf` dal branch SEO.
+4. CLS del cerchio viola.
+5. `CLAUDE.md`: ruoli Direttore e Competitor, SEO responsabile del blog, passaggio dal Direttore.
+6. Metadati IPTC nel generatore `tools/blog-images`.
 
 ## 6. Problemi aperti
 
@@ -94,13 +99,15 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 | P3 | ~~Chi apre le PR del Blog~~ **Deciso 30/09:** le apre il Blog dal suo branch; controllo tecnico di Sito Inlab; unione del titolare con anteprima verde. PR #33 da controllare | Sito Inlab | controllo della PR #33 |
 | P4 | `docs/blog-brief.md` indica come responsabile SEO la vecchia sessione "Integrazione Analytics e Search Console" | Blog | aggiornare il nome in "Adetto SEO giusto" |
 | P5 | Due sessioni SEO (vecchia e "giusto"): rischio doppioni e crediti | titolare | archiviare "Addetto SEO" |
-| P6 | Il branch dell'analista (`serene-noether`) contiene vecchie modifiche al codice (25–28/09, prima delle regole), mai unite | analista / titolare | non unire; il branch resta solo come storico |
+| P6 | ~~Branch dell'analista con vecchie modifiche al codice~~ **Confermato dall'analista 30/09:** `serene-noether` NON va unito, resta solo come storico | — | nulla |
 | P7 | Articolo AGCOM influencer bloccato: agcom.it non è raggiungibile dall'ambiente | Blog | verifica manuale del titolare o fonte alternativa |
 | P8 | Richiesta del Blog: categoria "Foto & Branding" in `BLOG_CATEGORIES` (codice) | SEO decide → Sito Inlab | decisione SEO, poi richiesta a Sito Inlab |
-| P9 | Attività di sicurezza nelle console esterne (`SECURITY.md`). **Fatto (titolare, 30/09):** chiave Gemini rigenerata, tetto di spesa impostato. **Da confermare:** chiave Anthropic (se usata), chiavi vecchie cancellate dal database ("Salva impostazioni" in dashboard), regole Firestore pubblicate, admin creati, registrazioni pubbliche bloccate | titolare | confermare i punti rimasti |
+| P9 | Attività di sicurezza nelle console esterne (`SECURITY.md`). **Fatto (titolare, 30/09):** chiave Gemini rigenerata, tetto di spesa impostato. **Fatto (verificato dall'analista):** regole Firestore pubblicate (dal vivo: tutto 403 tranne `site_content`), Cloudinary Signed + `CLOUDINARY_API_SECRET`, Deploy Hook. **Da confermare:** chiave Anthropic (se usata) e suo tetto, "Salva impostazioni" in dashboard per cancellare le vecchie chiavi dal database, registrazioni Firebase disattivate, restrizione HTTP referrer sulla browser key, TTL su `_ratelimits.expireAt`, `RATE_LIMIT_SALT` (facoltativo) | titolare | confermare i punti rimasti |
 | P10 | Competitor: il titolare ha mandato i nomi il 30/09, più altri 8 da cercare alla sessione. Aveva chiesto anche le risposte delle altre sessioni: **doppione** con questa mappa | Direttore | il report deve andare in `docs/competitor/`; i dati utili passano all'Adetto SEO giusto |
 | P12 | Metadati IPTC da aggiungere al generatore `tools/blog-images` (script nel resoconto del Blog del 30/09) | Sito Inlab | nel prossimo lotto |
 | P13 | Mappa "Già coperte" (linee guida SEO, sezione 10): le linee guida dicono che la aggiorna il Blog, ma è in `docs/seo/` | SEO giusto | aggiungere `servizio-fotografico-ristoranti` e `rebranding-attivita-commerciale`; correggere le linee guida |
+| P14 | Aleph Caffè è ancora nella lista clienti in Firestore | titolare | toglierlo dalla dashboard |
+| P15 | Routine dell'analista ogni 2 giorni: consuma crediti anche quando non cambia niente | titolare | decidere se passarla a settimanale |
 | P11 | Paragrafi "metodo InLab" negli articoli senza casi reali | titolare | informazioni sui clienti |
 
 ## 7. Vincoli tecnici
