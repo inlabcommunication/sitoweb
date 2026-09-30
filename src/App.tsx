@@ -54,6 +54,8 @@ const G = () => (
       --fd:'Bebas Neue',sans-serif; --fs:'DM Serif Display',serif; --fb:'DM Sans',sans-serif;
     }
     html{scroll-behavior:smooth}
+    /* clip sull'html: niente allargamento della pagina sul telefono se un elemento sborda (e non rompe gli sticky) */
+    html{overflow-x:clip}
     body{background:var(--bg);color:var(--t);font-family:var(--fb);font-weight:300;overflow-x:hidden}
     ::selection{background:var(--a);color:#000}
     a{color:inherit;text-decoration:none;cursor:pointer}
@@ -187,6 +189,14 @@ const AgencyStatsRow = () => {
 const Navbar = () => {
   const { route, go } = useRouter();
   const [open, setOpen] = useState(false);
+  const menuBtn = React.useRef<HTMLButtonElement>(null);
+  // Esc chiude il menu mobile e riporta il focus al pulsante
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') { setOpen(false); menuBtn.current?.focus(); } };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 30);
@@ -228,7 +238,7 @@ const Navbar = () => {
  
         <div style={{display:"flex",gap:10,alignItems:"center"}}>
           <Link to="/contatti"><button className="btn btn-p" style={{padding:"11px 22px"}}>Parliamo <ArrowUpRight size={13}/></button></Link>
-          <button className="show-mob" aria-label={open?"Chiudi menu":"Apri menu"} aria-expanded={open} aria-controls="menu-mobile"
+          <button ref={menuBtn} className="show-mob" aria-label={open?"Chiudi menu":"Apri menu"} aria-expanded={open} aria-controls="menu-mobile"
             style={{display:"none",background:"none",border:"none",color:"var(--t)",minWidth:44,minHeight:44,padding:10,alignItems:"center",justifyContent:"center",cursor:"pointer"}} onClick={()=>setOpen(!open)}>
             {open?<X size={24}/>:<Menu size={24}/>}
           </button>
