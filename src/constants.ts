@@ -263,25 +263,6 @@ export const WEBSITE_CONTENT = {
         phone: "099 844 4802",
         address: "C.da Sacramento, SS7 km 621, Palagianello (TA)",
         gallery: []
-      },
-      {
-        id: "aleph-caffe",
-        name: "Aleph Caffè",
-        sector: "Caffetteria",
-        location: "Palagianello (TA)",
-        summary: "Shooting di prodotto e contenuti social per raccontare il rituale del caffè.",
-        description: "Per Aleph Caffè abbiamo realizzato shooting di prodotto e contenuti social che raccontano il rituale del caffè, con immagini curate pensate per rendere il locale riconoscibile e invitante.",
-        services: ["Shooting", "Gestione Social"],
-        results: [],
-        url: "",
-        logo: "",
-        image: "",
-        website: "",
-        instagram: "",
-        facebook: "https://www.facebook.com/61556237727358/",
-        phone: "",
-        address: "",
-        gallery: []
       }
     ]
   },
