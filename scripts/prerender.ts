@@ -140,12 +140,32 @@ const body = async (path: string) => {
   catch (e) { ssrFailed++; console.warn(`[prerender] testo non generato per ${path}:`, (e as Error).message); return ''; }
 };
 
+// Immagini di ogni pagina per la sitemap immagini: prese dall'HTML statico
+// appena generato, solo quelle con testo alternativo (le decorative hanno alt=""),
+// solo file del nostro dominio o di Cloudinary, al massimo 20 per pagina.
+const pageImages = new Map<string, string[]>();
+const imagesOf = (html: string): string[] => {
+  const out = new Set<string>();
+  for (const m of html.matchAll(/<img\b[^>]*>/g)) {
+    const tag = m[0];
+    const src = /\ssrc="([^"]+)"/.exec(tag)?.[1]?.replace(/&amp;/g, '&');
+    const alt = /\salt="([^"]*)"/.exec(tag)?.[1] ?? '';
+    if (!src || !alt.trim()) continue;
+    if (src.startsWith('/') && !src.startsWith('//')) out.add(SITE_URL + src);
+    else if (src.startsWith('https://res.cloudinary.com/')) out.add(src);
+    if (out.size >= 20) break;
+  }
+  return [...out];
+};
+
 const routes = listRoutes();
 for (const path of routes) {
   // cleanUrls di Vercel: /servizi → servizi.html, /casi-studio/paresteta → casi-studio/paresteta.html
   const file = path === '/' ? join(DIST, 'index.html') : join(DIST, `${path.slice(1)}.html`);
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, render(path, await body(path)));
+  const html = await body(path);
+  pageImages.set(path, imagesOf(html));
+  writeFileSync(file, render(path, html));
 }
 console.log(`[prerender] HTML statico: ${ssr ? routes.length - ssrFailed : 0}/${routes.length} pagine con testo`);
 
@@ -164,9 +184,9 @@ writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | In
 const urls = routes
   .map((p) => ({ p, seo: getSeo(p) }))
   .filter(({ seo }) => !seo.noindex && seo.sitemap)
-  .map(({ seo }) => `  <url>\n    <loc>${esc(seo.canonical)}</loc>\n${seo.lastmod ? `    <lastmod>${seo.lastmod}</lastmod>\n` : ''}    <changefreq>${seo.sitemap!.changefreq}</changefreq>\n    <priority>${seo.sitemap!.priority.toFixed(1)}</priority>\n  </url>`);
+  .map(({ p, seo }) => `  <url>\n    <loc>${esc(seo.canonical)}</loc>\n${seo.lastmod ? `    <lastmod>${seo.lastmod}</lastmod>\n` : ''}    <changefreq>${seo.sitemap!.changefreq}</changefreq>\n    <priority>${seo.sitemap!.priority.toFixed(1)}</priority>\n${(pageImages.get(p) || []).map((u) => `    <image:image><image:loc>${esc(u)}</image:loc></image:image>\n`).join('')}  </url>`);
 writeFileSync(join(DIST, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join('\n')}\n</urlset>\n`);
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`);
 
 writeFileSync(join(DIST, 'robots.txt'),
   `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);

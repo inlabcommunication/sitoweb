@@ -90,6 +90,13 @@ const withBrand = (t: string) => [`${t} | ${BRAND}`, `${t} | InLab`, t].find((x)
 const clip = (s: string, n = 160) => (s.length <= n ? s : s.slice(0, n - 1).replace(/\s+\S*$/, '') + '…');
 
 const orgRef = { '@id': `${SITE_URL}/#organization` };
+/** Immagine nei dati strutturati con autore e copyright (brief SEO 2026-09-30, richiesta 7). */
+const imageObject = (url: string, caption?: string, size?: { width: number; height: number }) => ({
+  '@type': 'ImageObject', url, contentUrl: url,
+  ...(size ? { width: size.width, height: size.height } : {}),
+  ...(caption ? { caption } : {}),
+  creator: orgRef, creditText: 'InLab Communication', copyrightNotice: '© InLab Communication',
+});
 
 // Fondatori/autori: una sola identità (Person con @id) usata in /chi-siamo,
 // nelle pagine autore, in Organization.founder e negli articoli.
@@ -315,7 +322,9 @@ export const getSeo = (rawPath: string): Seo => {
         sitemap: { priority: 0.6, changefreq: 'monthly' },
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'BlogPosting',
-          headline: post.title.slice(0, 110), description: clip(desc), image: [image],
+          headline: post.title.slice(0, 110), description: clip(desc),
+          // le copertine del blog sono JPG 1600×900 (linee guida blog, §8)
+          image: [imageObject(image, post.coverAlt || post.title, post.cover?.startsWith('/') ? { width: 1600, height: 900 } : undefined)],
           datePublished: post.date, dateModified: modified,
           author: authorByName(post.author) ? personRef(authorByName(post.author)!) : { '@type': 'Person', name: post.author },
           publisher: orgRef, mainEntityOfPage: abs(path), url: abs(path),

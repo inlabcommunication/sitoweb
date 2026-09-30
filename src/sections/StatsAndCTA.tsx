@@ -105,18 +105,14 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
   return (
     <section style={{ padding: '8rem 2rem', position: 'relative', overflow: 'hidden', background: 'linear-gradient(180deg, var(--bg) 0%, #241e30 40%, #3a2d56 100%)' }}>
       {/* Glow animato */}
-      <motion.div
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+      <div className="anim-glowA"
         style={{
           position: 'absolute', top: '-20%', right: '-10%', width: 600, height: 600,
           background: 'rgba(205,178,255,0.08)', borderRadius: '50%', filter: 'blur(120px)',
           pointerEvents: 'none',
         }}
       />
-      <motion.div
-        animate={{ opacity: [0.2, 0.45, 0.2] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+      <div className="anim-glowB"
         style={{
           position: 'absolute', bottom: '-20%', left: '-10%', width: 500, height: 500,
           background: 'rgba(205,178,255,0.18)', borderRadius: '50%', filter: 'blur(100px)',

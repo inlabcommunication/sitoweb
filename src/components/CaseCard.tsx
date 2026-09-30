@@ -34,7 +34,7 @@ export const CaseCard: React.FC<Props> = ({ href, number, kicker, title, italic,
           <span style={{ height: 1, flex: 1, background: 'var(--b)' }} />
           {logo && (
             <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: 36, maxWidth: 96, padding: 5, borderRadius: 9, background: '#f0ede6' }}>
-              <img src={cld(logo, 400)} alt="" loading="lazy" style={{ maxWidth: '100%', maxHeight: 26, objectFit: 'contain', display: 'block' }} />
+              <img src={cld(logo, 400)} alt={`Logo ${title}`} loading="lazy" style={{ maxWidth: '100%', maxHeight: 26, objectFit: 'contain', display: 'block' }} />
             </span>
           )}
         </span>
