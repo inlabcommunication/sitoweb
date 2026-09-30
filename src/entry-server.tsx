@@ -12,7 +12,11 @@ export { primeContent, primeBlogPosts };
 export type { BlogPost };
 
 export async function renderPage(path: string): Promise<string> {
-  const { prelude } = await prerenderToNodeStream(<App ssrPath={path} />);
+  // Senza limite di dimensione React scrive ogni blocco <Suspense> già al suo
+  // posto. Con il limite predefinito (~12 KB) le pagine lunghe caricate con
+  // lazy() (blog, casi studio, privacy) finivano in un <div hidden> rivelato da
+  // script inline, che la CSP blocca e che chi non esegue JS non vede.
+  const { prelude } = await prerenderToNodeStream(<App ssrPath={path} />, { progressiveChunkSize: Number.POSITIVE_INFINITY });
   const chunks: Buffer[] = [];
   for await (const c of prelude) chunks.push(Buffer.isBuffer(c) ? c : Buffer.from(c));
   return Buffer.concat(chunks).toString('utf8');
