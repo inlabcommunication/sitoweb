@@ -89,6 +89,16 @@ const G = () => (
     .section-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
  
     @keyframes marq{to{transform:translateX(-50%)}}
+    /* animazioni infinite in CSS (solo transform/opacity, fuori dal thread principale) */
+    @keyframes drift{0%,100%{transform:translate3d(0,0,0)}50%{transform:translate3d(25px,-15px,0)}}
+    @keyframes float{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(-1deg)}}
+    @keyframes glowA{0%,100%{opacity:.3}50%{opacity:.6}}
+    @keyframes glowB{0%,100%{opacity:.2}50%{opacity:.45}}
+    .anim-drift{animation:drift 18s ease-in-out infinite;will-change:transform}
+    .anim-float{animation:float 5.5s ease-in-out infinite;will-change:transform}
+    .anim-glowA{animation:glowA 4s ease-in-out infinite;will-change:opacity}
+    .anim-glowB{animation:glowB 5s ease-in-out 1.5s infinite;will-change:opacity;opacity:.2}
+    @media (prefers-reduced-motion:reduce){.anim-drift,.anim-float,.anim-glowA,.anim-glowB{animation:none}}
     /* riquadri di clienti ed esempi: stesso stile dei casi studio */
     .case-card{
     position:relative;overflow:hidden;text-decoration:none;color:inherit;font:inherit;
