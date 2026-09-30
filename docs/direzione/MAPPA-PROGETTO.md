@@ -32,7 +32,7 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 | **Addetto al Blog** | `session_017pmD2nGS4KjecYvnyGm8iM` | `claude/optimistic-ritchie-mj87ne` | `src/data/blogSeed.ts`, `public/blog/`, `docs/blog-brief.md`, `docs/blog-reports/` | in attesa: chiede se la PR la apre lui o Sito Inlab |
 | **Addetto performance** | `session_012pr6hkmubH9ZAA9gVGN4Gf` | `claude/sleepy-mccarthy-g1a968` | solo `docs/performance/` | report 30/09 fatto, fermo per limite crediti |
 | **Adetto analisi sito** (= analista sicurezza / controlli) | `session_01Kim4sfBnoqhrkBJnpGTrHz` | `claude/serene-noether-l1j2l4` | **niente, solo lettura** | fermo per limite crediti |
-| **Analisi competitor Inlab** | `session_01Si9h5q6bVpPQbAn5BzeiCE` | `claude/trusting-dirac-fhmj15` (non ancora sul remoto) | da definire: proposta `docs/competitor/` | in attesa dei nomi dei concorrenti dal titolare |
+| **Analisi competitor Inlab** | `session_01Si9h5q6bVpPQbAn5BzeiCE` | `claude/trusting-dirac-fhmj15` (non ancora sul remoto) | da definire: proposta `docs/competitor/` | al lavoro (30/09): ha i concorrenti indicati dal titolare e ne cerca altri da solo |
 
 ### Dati che possiede ogni agente
 - **SEO giusto:** accesso API a GA4 e Search Console (`tools/seo/google-data.mjs`, variabili `GOOGLE_SA_KEY`, `GA4_PROPERTY_ID`, `GSC_SITE`), brief `docs/seo/brief/2026-09-28.md` e `2026-09-29.md`, linee guida blog v2 (`docs/seo/LINEE-GUIDA-BLOG.md`), prompt del ruolo (`docs/seo/PROMPT-RESPONSABILE-SEO.md`).
@@ -83,7 +83,7 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 | P7 | Articolo AGCOM influencer bloccato: agcom.it non è raggiungibile dall'ambiente | Blog | verifica manuale del titolare o fonte alternativa |
 | P8 | Richiesta del Blog: categoria "Foto & Branding" in `BLOG_CATEGORIES` (codice) | SEO decide → Sito Inlab | decisione SEO, poi richiesta a Sito Inlab |
 | P9 | Attività di sicurezza nelle console esterne (`SECURITY.md`). **Fatto (titolare, 30/09):** chiave Gemini rigenerata, tetto di spesa impostato. **Da confermare:** chiave Anthropic (se usata), chiavi vecchie cancellate dal database ("Salva impostazioni" in dashboard), regole Firestore pubblicate, admin creati, registrazioni pubbliche bloccate | titolare | confermare i punti rimasti |
-| P10 | La sessione Competitor è ferma: il titolare deve ancora mandarle i nomi dei concorrenti. Inoltre aveva chiesto le risposte delle altre sessioni: **doppione** con questa mappa | Direttore | le passo io la mappa: non serve rifare la raccolta |
+| P10 | Competitor: il titolare ha mandato i nomi il 30/09, gli altri li cerca la sessione (**attenzione ai crediti**: la ricerca libera costa). Aveva chiesto anche le risposte delle altre sessioni: **doppione** con questa mappa | Direttore | il report deve andare in `docs/competitor/`; i dati utili passano all'Adetto SEO giusto |
 | P11 | Paragrafi "metodo InLab" negli articoli senza casi reali | titolare | informazioni sui clienti |
 
 ## 7. Vincoli tecnici
