@@ -24,17 +24,18 @@ import { getClientId, normalizeClients } from "./lib/clientUtils";
 import { HeroFlow } from "./sections/HeroFlow";
 import { ServicesGrid } from "./sections/ServicesGrid";
 import { MethodTimeline } from "./sections/MethodTimeline";
-import { PortfolioGallery } from "./sections/PortfolioGallery";
 import { ClientsWall } from "./sections/ClientsWall";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
+import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 // Pagine dei casi studio caricate solo quando servono (chunk separato)
 const CasePage = lazy(() => import("./pages/CaseStudyPages").then(m => ({ default: m.CasePage })));
 const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ default: m.PagePrivacy })));
 const PageBlog = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageBlog })));
 const PageArticolo = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageArticolo })));
+const PageAutore = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageAutore })));
  
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -101,6 +102,8 @@ const G = () => (
     box-shadow:0 18px 50px rgba(205,178,255,0.10);
     outline:none;
     }
+    .form-field:focus{outline:none}
+    .form-field:focus-visible{outline:2px solid var(--a);outline-offset:2px}
     .client-card-summary{
     margin-top:12px;font-size:13.5px;line-height:1.6;color:rgba(240,237,230,0.66);
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
@@ -122,7 +125,7 @@ const G = () => (
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
-      .chat-launcher{transform:scale(.72);transform-origin:bottom right;bottom:12px!important;right:12px!important}
+      .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
     }
     @media(max-width:480px){
@@ -218,7 +221,8 @@ const Navbar = () => {
  
         <div style={{display:"flex",gap:10,alignItems:"center"}}>
           <Link to="/contatti"><button className="btn btn-p" style={{padding:"11px 22px"}}>Parliamo <ArrowUpRight size={13}/></button></Link>
-          <button className="show-mob" style={{display:"none",background:"none",border:"none",color:"var(--t)",padding:4}} onClick={()=>setOpen(!open)}>
+          <button className="show-mob" aria-label={open?"Chiudi menu":"Apri menu"} aria-expanded={open} aria-controls="menu-mobile"
+            style={{display:"none",background:"none",border:"none",color:"var(--t)",minWidth:44,minHeight:44,padding:10,alignItems:"center",justifyContent:"center",cursor:"pointer"}} onClick={()=>setOpen(!open)}>
             {open?<X size={24}/>:<Menu size={24}/>}
           </button>
         </div>
@@ -226,7 +230,7 @@ const Navbar = () => {
  
       <AnimatePresence>
         {open && (
-          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
+          <motion.div id="menu-mobile" initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
             style={{overflow:"hidden",borderTop:".5px solid var(--b)",background:"rgba(10,10,8,0.97)"}}>
             <div style={{padding:"2rem",display:"flex",flexDirection:"column",gap:"1.2rem"}}>
               {navLinks.map(l=>(
@@ -400,7 +404,7 @@ const ClientLogos = () => {
           >
             <div style={{width:160,height:80,display:"flex",alignItems:"center",justifyContent:"center"}}>
               {c.logo ? (
-                <img src={c.logo} alt={c.name}
+                <img src={cld(c.logo, 400)} alt={c.name}
                   style={{maxWidth:"100%",maxHeight:"100%",objectFit:"contain",filter:"brightness(0) invert(1)",opacity:.45,transition:"opacity .25s"}}
                   onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
                   onMouseLeave={e=>e.currentTarget.style.opacity="0.45"}
@@ -464,14 +468,24 @@ const VideoReel = ({
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const [muted, setMuted] = useState(true);
 
-  // Play quando il video entra in viewport, pausa quando esce
+  // Il video si scarica solo quando entra nello schermo, nella versione
+  // ridotta da Cloudinary (720 px sul telefono, 1280 px sul computer).
+  // Con "Riduci movimento" o "Risparmio dati" non parte da solo: resta il
+  // poster e si avvia col pulsante audio.
+  const load = (v: HTMLVideoElement) => {
+    if (!v.getAttribute('src')) v.src = cldVideo(src, window.innerWidth <= 800 ? 720 : 1280);
+  };
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+      || (navigator as any).connection?.saveData === true;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
+            if (reduce) return;
+            load(v);
             v.play().catch(() => {});
           } else {
             v.pause();
@@ -482,13 +496,13 @@ const VideoReel = ({
     );
     observer.observe(v);
     return () => observer.disconnect();
-  }, []);
+  }, [src]);
 
   const toggleAudio = () => {
     const v = videoRef.current;
     if (!v) return;
     v.muted = !v.muted;
-    if (!v.muted) v.play().catch(()=>{});
+    if (!v.muted) { load(v); v.play().catch(()=>{}); }
     setMuted(v.muted);
   };
 
@@ -535,12 +549,13 @@ const VideoReel = ({
           }}>
             <video
               ref={videoRef}
-              src={src}
-              autoPlay
+              poster={cldVideoPoster(src, 1280) || undefined}
+              // se la versione ridotta non è ancora pronta su Cloudinary, ripiega una volta sull'originale
+              onError={e=>{ const v=e.currentTarget; if (v.getAttribute('src') && v.getAttribute('src')!==src) { v.src=src; v.play().catch(()=>{}); } }}
               loop
               muted
               playsInline
-              preload="metadata"
+              preload="none"
               style={{width:"100%",height:"100%",objectFit:"cover",display:"block"}}
             />
           </div>
@@ -747,7 +762,7 @@ const PageGestioneSocial = () => (
       italic="con la giusta comunicazione social."
       sub="Non pubblichiamo solo post. Costruiamo una presenza digitale strategica che trasforma follower in clienti reali."
       cta1="Richiedi un preventivo" cta1to="/contatti"
-      cta2="Vedi i risultati" cta2to="/lavori"
+      cta2="Vedi i risultati" cta2to="/casi-studio"
     />
     <Marquee items={["Analisi","✦","Strategia","✦","Contenuti","✦","Pubblicazione","✦","Ottimizzazione","✦","Crescita","✦"]}/>
     <StatsRow stats={[{n:"3.2M+",l:"Views generate"},{n:"47",l:"Brand gestiti"},{n:"+280%",l:"Crescita media follower"},{n:"94%",l:"Clienti rinnovano"}]}/>
@@ -811,7 +826,7 @@ const PageMetaAds = () => (
     <PageHero tag="Servizio — Meta Ads & Facebook Advertising"
       h1="CAMPAGNE CHE" h1b="CONVERTONO" italic="non solo che impressionano."
       sub="Gestiamo le tue campagne su Facebook e Instagram con metodo: obiettivi chiari, budget ottimizzato, risultati misurabili."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi case study" cta2to="/lavori"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi case study" cta2to="/casi-studio"
     />
     <Marquee items={["Facebook Ads","✦","Instagram Ads","✦","Retargeting","✦","Lead Generation","✦","E-commerce","✦","Brand Awareness","✦"]}/>
     <StatsRow stats={[{n:"3.2×",l:"ROAS medio clienti"},{n:"-42%",l:"Costo per lead medio"},{n:"28",l:"Campagne attive ora"},{n:"€2M+",l:"Budget gestito"}]}/>
@@ -872,7 +887,7 @@ const PageSitiWeb = () => (
     <PageHero tag="Servizio — Siti Web & Web App"
       h1="SITI WEB CHE" h1b="LAVORANO" italic="anche di notte."
       sub="Design curato, codice pulito, ottimizzazione SEO. Il tuo sito non è una brochure — è il miglior venditore che hai."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi portfolio web" cta2to="/lavori"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi portfolio web" cta2to="/casi-studio"
     />
     <Marquee items={["Design","✦","Sviluppo","✦","SEO","✦","Performance","✦","CMS","✦","E-commerce","✦","Web App","✦"]}/>
     <StatsRow stats={[{n:"<2s",l:"Tempo di caricamento medio"},{n:"98",l:"Score PageSpeed medio"},{n:"Top 3",l:"Posizione Google media"},{n:"100%",l:"Siti mobile-first"}]}/>
@@ -933,7 +948,7 @@ const PageAutomazioniAI = () => (
     <PageHero tag="Servizio — Automazioni con Intelligenza Artificiale"
       h1="LAVORA DI" h1b="MENO" italic="ottieni di più."
       sub="Integriamo strumenti AI nei tuoi processi aziendali. Risposte automatiche, flussi di lavoro intelligenti, chatbot. Tu ti concentri su quello che conta."
-      cta1="Scopri le possibilità" cta1to="/contatti" cta2="Vedi esempi" cta2to="/lavori"
+      cta1="Scopri le possibilità" cta1to="/contatti" cta2="Vedi esempi" cta2to="/casi-studio"
     />
     <Marquee items={["ChatGPT","✦","Make","✦","Zapier","✦","WhatsApp Business","✦","CRM","✦","Email automatiche","✦","Chatbot","✦"]}/>
     <StatsRow stats={[{n:"-60%",l:"Tempo su task ripetitivi"},{n:"24/7",l:"Risposte automatiche attive"},{n:"+180%",l:"Lead gestiti senza effort"},{n:"3 sett.",l:"Tempo medio implementazione"}]}/>
@@ -994,7 +1009,7 @@ const PageShooting = () => (
     <PageHero tag="Servizio — Shooting Fotografico Professionale"
       h1="IMMAGINI CHE" h1b="RACCONTANO" italic="la tua storia."
       sub="La fotografia professionale non è un lusso — è un investimento. Foto mediocri costano clienti. Foto straordinarie li conquistano."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi il portfolio" cta2to="/lavori"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi il portfolio" cta2to="/casi-studio"
     />
     <Marquee items={["Brand Photography","✦","Product Shooting","✦","Food Photography","✦","Corporate","✦","Reportage","✦","Social Content","✦"]}/>
     <StatsRow stats={[{n:"200+",l:"Shooting completati"},{n:"47",l:"Brand fotografati"},{n:"100%",l:"Clienti soddisfatti"},{n:"48h",l:"Consegna materiale"}]}/>
@@ -1053,7 +1068,7 @@ const PageVideo = () => (
     <PageHero tag="Servizio — Video Production & Reels"
       h1="VIDEO CHE" h1b="FERMANO" italic="lo scroll."
       sub="Abbiamo portato brand locali a milioni di visualizzazioni organiche. Non con la fortuna — con metodo, script e produzione professionale."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i video" cta2to="/lavori"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i video" cta2to="/casi-studio"
     />
     <Marquee items={["Reel Instagram","✦","TikTok","✦","YouTube","✦","Video Istituzionale","✦","Spot Pubblicitario","✦","Documentario","✦"]}/>
     <StatsRow stats={[{n:"3.2M+",l:"Views organiche generate"},{n:"840K",l:"Record su singolo video"},{n:"12",l:"Reel virali prodotti"},{n:"×8",l:"Engagement medio vs media"}]}/>
@@ -1171,11 +1186,11 @@ const PageChiSiamo = () => {
                 style={{padding:"2.5rem"}}>
                 <div style={{display:"flex",alignItems:"center",gap:"1rem",marginBottom:"1.5rem"}}>
                   <div style={{width:56,height:56,background:"rgba(205,178,255,0.12)",border:".5px solid rgba(205,178,255,.3)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontFamily:"var(--fd)",fontSize:22,color:"var(--a)"}}>
-                    {p.photo ? <img src={p.photo} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",borderRadius:"50%"}}/> : p.initials}
+                    {p.photo ? <img src={cld(p.photo, 400)} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",borderRadius:"50%"}}/> : p.initials}
                   </div>
                   <div>
                     <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
-                    <div style={{fontSize:16,fontWeight:500}}>{p.name}</div>
+                    <div style={{fontSize:16,fontWeight:500}}>{authorByName(p.name) ? <Link to={authorPath(authorByName(p.name)!.slug)} style={{color:"inherit"}}>{p.name}</Link> : p.name}</div>
                   </div>
                 </div>
                 <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}</p>
@@ -1216,157 +1231,6 @@ const PageChiSiamo = () => {
     </>
   );
 };
- 
-/* ═══════════════════════════════════════════════════════════════
-   PAGE: LAVORI
-═══════════════════════════════════════════════════════════════ */
-const PageLavori = () => {
-  const {go}=useRouter();
-  const c=useContent();
-  const portfolio=(c.portfolio as any)||{tag:"",subtitle:"",categories:[],projects:[]};
-  const allProjects=portfolio.projects||[];
-  const cats=portfolio.categories&&portfolio.categories.length>0
-    ?portfolio.categories
-    :["tutti","social","video","foto","web","brand","ads","eventi"];
-  const [filter,setFilter]=useState("tutti");
-  const [videoOverlay,setVideoOverlay]=useState<string|null>(null);
-  const visible=filter==="tutti"?allProjects:allProjects.filter((p:any)=>p.category===filter);
-
-  const isInstagram=(url:string)=>url.includes("instagram.com");
-  const isCloudinaryVideo=(url:string)=>url.includes("cloudinary.com")&&(url.includes(".mp4")||url.includes(".mov")||url.includes(".webm")||url.includes("/video/"));
-
-  return (
-    <>
-      {/* Video Overlay */}
-      <AnimatePresence>
-        {videoOverlay&&(
-          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
-            onClick={()=>setVideoOverlay(null)}
-            style={{position:"fixed",inset:0,background:"rgba(0,0,0,0.92)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center",padding:"2rem"}}>
-            <motion.div initial={{scale:.9,y:20}} animate={{scale:1,y:0}} exit={{scale:.9,y:20}}
-              onClick={e=>e.stopPropagation()}
-              style={{width:"100%",maxWidth:560,background:"#111",borderRadius:20,overflow:"hidden",position:"relative"}}>
-              <button onClick={()=>setVideoOverlay(null)}
-                style={{position:"absolute",top:12,right:12,zIndex:1,background:"rgba(0,0,0,0.6)",border:"none",borderRadius:"50%",width:36,height:36,display:"flex",alignItems:"center",justifyContent:"center",color:"#fff",cursor:"pointer"}}>
-                <X size={18}/>
-              </button>
-              {isInstagram(videoOverlay)?(
-                <iframe src={`${videoOverlay}embed/`} width="100%" height="500" frameBorder="0" scrolling="no" allowTransparency style={{display:"block"}}/>
-              ):isCloudinaryVideo(videoOverlay)?(
-                <video src={videoOverlay} controls autoPlay style={{width:"100%",display:"block",maxHeight:"70vh"}}/>
-              ):(
-                <iframe src={videoOverlay} width="100%" height="500" frameBorder="0" allowFullScreen style={{display:"block"}}/>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <PageHero tag="Portfolio & Case Study"
-        h1="RISULTATI" h1b="REALI" italic="non solo belle immagini."
-        sub="Ogni progetto ha una storia. Un problema da risolvere, una strategia da applicare, un risultato da misurare. Ecco i nostri."
-        cta1="Inizia un progetto" cta1to="/contatti"
-      />
-
-      <StatsRow stats={[{n:"3.2M+",l:"Views generate"},{n:"47",l:"Clienti"},{n:"12",l:"Reel virali"},{n:"€2M+",l:"Budget ads gestito"}]}/>
-
-      {/* Portfolio grid */}
-      <section style={{padding:"6rem 2rem"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <div style={{marginBottom:"2.5rem"}}>
-            <p className="section-label" style={{marginBottom:"1rem"}}>{portfolio.tag||"Progetti selezionati"}</p>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4vw,4rem)",lineHeight:.9}}>TUTTI I<br/><span className="stroke">PROGETTI</span></h2>
-              <div style={{display:"flex",gap:6,flexWrap:"wrap"}}>
-                {cats.map((cat:string)=>(
-                  <button key={cat} onClick={()=>setFilter(cat)}
-                    style={{padding:"7px 16px",borderRadius:100,border:".5px solid",borderColor:filter===cat?"var(--a)":"var(--b)",
-                    background:filter===cat?"rgba(205,178,255,0.1)":"transparent",color:filter===cat?"var(--a)":"var(--m)",
-                    fontSize:10,fontWeight:500,letterSpacing:".12em",textTransform:"uppercase",fontFamily:"var(--fb)",transition:"all .2s"}}>
-                    {cat==="tutti"?"Tutti":cat.charAt(0).toUpperCase()+cat.slice(1)}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {visible.length===0?(
-            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
-              {[
-                {title:"Inaugurazione negozio",cat:"eventi",desc:"Lancio di un'attività locale con contenuti pre e post evento.",stat:"📍 Taranto"},
-                {title:"Campagna social ristorante",cat:"social",desc:"Gestione social e reel mensili per un ristorante locale.",stat:"↗ +180% reach"},
-                {title:"Reel storytelling brand",cat:"video",desc:"Serie di reel narrativi per costruire identità e fiducia.",stat:"▷ 40k views"},
-                {title:"Shooting prodotti",cat:"foto",desc:"Fotografia professionale per e-commerce e social.",stat:"📸 200 scatti"},
-                {title:"Landing page lead gen",cat:"web",desc:"Pagina ottimizzata per raccolta contatti qualificati.",stat:"⚡ 12% conv."},
-                {title:"Identità visiva brand emergente",cat:"branding",desc:"Logo, palette, tono di voce e template social.",stat:"✦ Brand completo"},
-              ].map((p,i)=>(
-                <motion.div key={i} layout initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
-                  style={{gridColumn:i===0?"span 2":"span 1",minHeight:i===0?320:220,background:"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",position:"relative"}}
-                  onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(205,178,255,.25)"}
-                  onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
-                >
-                  <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,rgba(205,178,255,0.04),rgba(255,255,255,0.01))"}}/>
-                  <div style={{position:"relative",zIndex:1,padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%"}}>
-                    <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
-                      <span className="tag tag-a">{p.cat}</span>
-                      <span className="tag tag-g">{p.stat}</span>
-                    </div>
-                    <div>
-                      <h3 style={{fontFamily:"var(--fd)",fontSize:i===0?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
-                      <p style={{fontSize:12,color:"var(--m)",lineHeight:1.6}}>{p.desc}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          ):(
-            <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:"1rem"}} className="grid-1-mob">
-              {visible.map((p:any,i:number)=>(
-                <motion.div key={p.id||i} layout initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.06}}
-                  onClick={()=>{
-                    if(p.videoUrl) setVideoOverlay(p.videoUrl);
-                    else go(`/progetto/${p.id}`);
-                  }}
-                  style={{gridColumn:p.large?"span 2":"span 1",minHeight:p.large?340:240,background:p.image?"#111":"#252525",borderRadius:24,border:".5px solid var(--b)",overflow:"hidden",display:"flex",flexDirection:"column",justifyContent:"space-between",cursor:(p.videoUrl||p.link)?"pointer":"default",transition:"border-color .3s",position:"relative"}}
-                  onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(255,255,255,.2)"}
-                  onMouseLeave={e=>e.currentTarget.style.borderColor="var(--b)"}
-                >
-                  {p.image&&(
-                    <img src={p.image} alt={p.title}
-                      style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center",opacity:.5,transition:"opacity .3s"}}
-                      onMouseEnter={e=>(e.currentTarget.style.opacity="0.65")}
-                      onMouseLeave={e=>(e.currentTarget.style.opacity="0.5")}
-                    />
-                  )}
-                  {p.videoUrl&&(
-                    <div style={{position:"absolute",top:"50%",left:"50%",transform:"translate(-50%,-50%)",width:52,height:52,background:"rgba(205,178,255,0.25)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",fontSize:20,border:".5px solid rgba(205,178,255,.4)",backdropFilter:"blur(4px)",zIndex:2,pointerEvents:"none"}}>▷</div>
-                  )}
-                  <div style={{position:"relative",zIndex:1,padding:"2rem",display:"flex",flexDirection:"column",justifyContent:"space-between",height:"100%"}}>
-                    <div style={{display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:8}}>
-                      <span className="tag tag-a">{p.tags?.[0]||p.category}</span>
-                      <span className="tag tag-g">{p.stat}</span>
-                    </div>
-                    <div>
-                      {p.client&&<div style={{fontSize:11,color:"var(--m)",letterSpacing:".1em",textTransform:"uppercase",marginBottom:6}}>{p.client} · {p.year}</div>}
-                      <h3 style={{fontFamily:"var(--fd)",fontSize:p.large?"clamp(1.8rem,3.5vw,3rem)":"clamp(1.4rem,2.5vw,2rem)",lineHeight:.95,textTransform:"uppercase",marginBottom:".7rem"}}>{p.title}</h3>
-                      {p.description&&<p style={{fontSize:12,color:"var(--m)",lineHeight:1.6,marginBottom:"0.75rem"}}>{p.description}</p>}
-                      {p.result&&<p style={{fontSize:12,color:"var(--a)",lineHeight:1.5,marginBottom:"0.75rem"}}>→ {p.result}</p>}
-                      {p.link&&<span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",display:"flex",alignItems:"center",gap:4}}>Scopri il progetto <ArrowUpRight size={11}/></span>}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      <ClientLogos/>
-
-      <ServiceCTA title="IL TUO PROGETTO È IL PROSSIMO." sub="Raccontaci cosa vuoi ottenere." btn="Iniziamo insieme"/>
-    </>
-  );
-};
-
  
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CONTATTI
@@ -1465,35 +1329,35 @@ const PageContatti = () => {
                 <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.5vw,3rem)",lineHeight:.9,marginBottom:"2rem"}}>RACCONTACI<br/><span className="stroke">IL PROGETTO</span></h2>
                 <div style={{display:"flex",flexDirection:"column",gap:"1rem"}}>
                   {[
-                    {id:"nome",label:"Nome e cognome *",type:"text",ph:"Mario Rossi"},
-                    {id:"email",label:"Email *",type:"email",ph:"mario@azienda.it"},
-                    {id:"tel",label:"Telefono",type:"tel",ph:"+39 329 565 4319"},
-                    {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività"},
+                    {id:"nome",label:"Nome e cognome *",type:"text",ph:"Mario Rossi",ac:"name",req:true},
+                    {id:"email",label:"Email *",type:"email",ph:"mario@azienda.it",ac:"email",req:true},
+                    {id:"tel",label:"Telefono",type:"tel",ph:"+39 329 565 4319",ac:"tel",req:false},
+                    {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività",ac:"organization",req:false},
                   ].map(f=>(
                     <div key={f.id}>
-                      <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
-                      <input type={f.type} placeholder={f.ph} value={(form as any)[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
-                        style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",transition:"border-color .2s"}}
+                      <label htmlFor={"f-"+f.id} style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
+                      <input id={"f-"+f.id} className="form-field" autoComplete={f.ac} required={f.req} aria-required={f.req} type={f.type} placeholder={f.ph} value={(form as any)[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
+                        style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:16,fontFamily:"var(--fb)",transition:"border-color .2s"}}
                         onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
                         onBlur={e=>e.target.style.borderColor="var(--b)"}
                       />
                     </div>
                   ))}
                   <div>
-                    <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
-                    <select value={form.servizio} onChange={e=>setForm({...form,servizio:e.target.value})}
-                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:14,fontFamily:"var(--fb)",outline:"none"}}>
+                    <label htmlFor="f-servizio" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
+                    <select id="f-servizio" className="form-field" value={form.servizio} onChange={e=>setForm({...form,servizio:e.target.value})}
+                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
                       <option value="">Seleziona un servizio</option>
                       {["Strategia social","Gestione social","Foto & video","Branding","Campagne Meta Ads","Sito o landing page","Organizzazione eventi","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
                     </select>
                   </div>
                   <div>
-                    <label style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
+                    <label htmlFor="f-msg" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
                     {/* campo trappola anti-bot: invisibile alle persone */}
                     <input type="text" name="website" value={honeypot} onChange={e=>setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true"
                       style={{position:"absolute",left:"-10000px",width:1,height:1,opacity:0}}/>
-                    <textarea rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
-                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:14,fontFamily:"var(--fb)",outline:"none",resize:"vertical",transition:"border-color .2s"}}
+                    <textarea id="f-msg" className="form-field" required aria-required="true" rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
+                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:16,fontFamily:"var(--fb)",resize:"vertical",transition:"border-color .2s"}}
                       onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
                       onBlur={e=>e.target.style.borderColor="var(--b)"}
                     />
@@ -1505,7 +1369,7 @@ const PageContatti = () => {
                       Ho letto e accetto la <a href="/privacy" target="_blank" rel="noopener" style={{color:"var(--a)",textDecoration:"underline"}}>privacy policy</a>. I dati forniti saranno utilizzati esclusivamente per rispondere alla richiesta.
                     </label>
                   </div>
-                  {error && <div style={{fontSize:12,color:"#ff8888",padding:"10px 14px",background:"rgba(255,100,100,0.08)",borderRadius:10,border:".5px solid rgba(255,100,100,0.2)"}}>{error}</div>}
+                  {error && <div role="alert" style={{fontSize:12,color:"#ff8888",padding:"10px 14px",background:"rgba(255,100,100,0.08)",borderRadius:10,border:".5px solid rgba(255,100,100,0.2)"}}>{error}</div>}
                   <button className="btn btn-p" style={{width:"100%",justifyContent:"center",padding:"16px",fontSize:12,marginTop:"0.5rem",opacity:sending?0.6:1,pointerEvents:sending?"none":"auto"}} onClick={submit} disabled={sending}>
                     {sending ? "Invio in corso…" : <>Invia messaggio <ArrowRight size={15}/></>}
                   </button>
@@ -1654,173 +1518,6 @@ const PageCittaSEO = ({city, service}) => {
 };
  
 /* ═══════════════════════════════════════════════════════════════
-   PAGE: PROGETTO — Stile Brainpull adattato a InLab
-═══════════════════════════════════════════════════════════════ */
-const PageProgetto = ({id}: {id: string}) => {
-  const {go}=useRouter();
-  const c=useContent();
-  const projects=(c.portfolio as any)?.projects||[];
-  const p=projects.find((pr: any)=>pr.id===id)||projects[0];
-  const nextP=projects.find((pr: any)=>pr.id===p?.nextProject);
-
-  if(!p) return <div style={{padding:"8rem 2rem",textAlign:"center",color:"var(--m)"}}>Progetto non trovato.</div>;
-
-  return (
-    <>
-      {/* HERO FULL SCREEN */}
-      <section style={{height:"100vh",position:"relative",display:"flex",flexDirection:"column",justifyContent:"flex-end",overflow:"hidden"}}>
-        {p.image
-          ? <img src={p.image} alt={p.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"center"}}/>
-          : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#2a2828 0%,#2b2440 100%)"}}/>
-        }
-        <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,0.5) 50%,rgba(30,29,29,0.1) 100%)"}}/>
-
-        {/* Info hero in alto a sinistra */}
-        <div style={{position:"absolute",top:"6rem",left:"2rem",zIndex:2,display:"flex",alignItems:"center",gap:12}}>
-          <button onClick={()=>go("/lavori")} style={{background:"rgba(255,255,255,0.08)",backdropFilter:"blur(8px)",border:".5px solid rgba(255,255,255,0.15)",borderRadius:100,color:"var(--t)",fontSize:10,letterSpacing:".15em",textTransform:"uppercase",padding:"8px 16px",cursor:"pointer",display:"flex",alignItems:"center",gap:6}}>
-            <ArrowLeft size={11}/> Portfolio
-          </button>
-        </div>
-
-        {/* Info in alto a destra */}
-        <div style={{position:"absolute",top:"6rem",right:"2rem",zIndex:2,textAlign:"right"}}>
-          <p style={{fontSize:9,letterSpacing:".2em",textTransform:"uppercase",color:"rgba(255,255,255,0.4)",marginBottom:4}}>What we've done</p>
-          <div style={{display:"flex",gap:6,justifyContent:"flex-end",flexWrap:"wrap"}}>
-            {(p.tags||[p.category]).map((t: string,i: number)=><span key={i} className="tag tag-a">{t}</span>)}
-            <span className="tag tag-g">{p.year}</span>
-          </div>
-        </div>
-
-        {/* Contenuto bottom */}
-        <div style={{position:"relative",zIndex:2,padding:"4rem 2rem",maxWidth:1280,margin:"0 auto",width:"100%"}}>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"flex-end"}} className="grid-1-mob">
-            <div>
-              <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(4rem,8vw,9rem)",lineHeight:.85,marginBottom:"1.5rem",textTransform:"uppercase"}}>{p.client}</h1>
-              <p style={{fontSize:14,color:"rgba(255,255,255,0.6)",maxWidth:400,lineHeight:1.7}}>{p.description?.slice(0,120)}</p>
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"2rem"}}>
-              <div>
-                <p style={{fontSize:9,letterSpacing:".2em",textTransform:"uppercase",color:"rgba(255,255,255,0.35)",marginBottom:10}}>Il cliente</p>
-                <p style={{fontSize:13,color:"rgba(255,255,255,0.7)",lineHeight:1.6}}>{p.client}</p>
-              </div>
-              {p.whoWorked&&p.whoWorked.length>0&&(
-                <div>
-                  <p style={{fontSize:9,letterSpacing:".2em",textTransform:"uppercase",color:"rgba(255,255,255,0.35)",marginBottom:10}}>Chi ci ha lavorato</p>
-                  <div style={{display:"flex",flexDirection:"column",gap:3}}>
-                    {p.whoWorked.map((w: string,i: number)=><span key={i} style={{fontSize:12,color:"rgba(255,255,255,0.7)"}}>{w}</span>)}
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* LOGO + DESCRIZIONE */}
-      <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"6rem",alignItems:"start"}} className="grid-1-mob">
-            <div>
-              {p.clientLogo&&(
-                <img src={p.clientLogo} alt={p.client} style={{maxHeight:70,maxWidth:220,objectFit:"contain",marginBottom:"3rem",opacity:.85,filter:"brightness(0) invert(1)"}}/>
-              )}
-              <h2 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontSize:"clamp(2rem,3.5vw,3.5rem)",lineHeight:1.2,marginBottom:"2rem",color:"var(--t)"}}>
-                {p.title}
-              </h2>
-              <p style={{fontSize:16,lineHeight:1.9,color:"var(--m)",marginBottom:"2.5rem"}}>{p.description}</p>
-
-              {p.result&&(
-                <div style={{padding:"1.75rem",background:"rgba(205,178,255,0.05)",border:".5px solid rgba(205,178,255,0.2)",borderRadius:20,marginBottom:"2rem"}}>
-                  <p style={{fontSize:9,letterSpacing:".2em",textTransform:"uppercase",color:"var(--a)",marginBottom:10}}>Risultato</p>
-                  <p style={{fontSize:16,color:"var(--t)",lineHeight:1.7,fontWeight:500}}>→ {p.result}</p>
-                </div>
-              )}
-
-              <div style={{display:"flex",alignItems:"center",gap:8,flexWrap:"wrap"}}>
-                <span className="tag tag-g">{p.stat}</span>
-                <span className="tag tag-g">{p.year}</span>
-              </div>
-
-              {(p.instagram||p.facebook||p.tiktok||p.website)&&(
-                <div style={{marginTop:"2rem",display:"flex",gap:8,flexWrap:"wrap"}}>
-                  {p.instagram&&<a href={p.instagram} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>Instagram ↗</a>}
-                  {p.facebook&&<a href={p.facebook} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>Facebook ↗</a>}
-                  {p.tiktok&&<a href={p.tiktok} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>TikTok ↗</a>}
-                  {p.website&&<a href={p.website} target="_blank" rel="noreferrer" className="btn btn-g" style={{fontSize:10,padding:"8px 16px"}}>Sito ↗</a>}
-                </div>
-              )}
-            </div>
-
-            {/* Video o seconda immagine */}
-            <div>
-              {p.videoUrl?(
-                <div style={{borderRadius:24,overflow:"hidden",background:"#111",border:".5px solid var(--b)"}}>
-                  {p.videoUrl.includes("instagram.com")?(
-                    <iframe src={`${p.videoUrl}embed/`} width="100%" height="560" frameBorder="0" scrolling="no" allowTransparency style={{display:"block"}}/>
-                  ):(
-                    <video src={p.videoUrl} controls style={{width:"100%",display:"block",maxHeight:560}}/>
-                  )}
-                </div>
-              ):p.gallery&&p.gallery[0]?(
-                <img src={p.gallery[0]} alt="" style={{width:"100%",borderRadius:24,objectFit:"cover",maxHeight:500}}/>
-              ):null}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* GALLERIA */}
-      {p.gallery&&p.gallery.filter(Boolean).length>0&&(
-        <section style={{borderBottom:".5px solid var(--b)"}}>
-          {p.gallery.filter(Boolean).length===1?(
-            <img src={p.gallery[0]} alt="" style={{width:"100%",maxHeight:600,objectFit:"cover",objectPosition:"center",display:"block"}}/>
-          ):(
-            <div style={{display:"grid",gridTemplateColumns:"repeat(12,1fr)",gap:2}}>
-              {p.gallery.filter(Boolean).map((img: string,gi: number)=>{
-                const spans=[8,4,4,4,4,6,6,4,8];
-                const span=spans[gi%spans.length]||4;
-                return (
-                  <motion.div key={gi} initial={{opacity:0}} whileInView={{opacity:1}} viewport={{once:true}} transition={{delay:gi*.06}}
-                    style={{gridColumn:`span ${span}`,aspectRatio:gi===0?"16/9":"4/3",overflow:"hidden",background:"#111"}}>
-                    <img src={img} alt={`${p.title} ${gi+1}`} style={{width:"100%",height:"100%",objectFit:"cover",transition:"transform .6s"}}
-                      onMouseEnter={e=>e.currentTarget.style.transform="scale(1.06)"}
-                      onMouseLeave={e=>e.currentTarget.style.transform="scale(1)"}/>
-                  </motion.div>
-                );
-              })}
-            </div>
-          )}
-        </section>
-      )}
-
-      {/* PROSSIMO PROGETTO */}
-      {nextP&&(
-        <section style={{padding:"6rem 2rem"}}>
-          <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p style={{fontSize:10,letterSpacing:".2em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1.5rem",textAlign:"right"}}>Prossimo articolo</p>
-            <motion.div onClick={()=>go(`/progetto/${nextP.id}`)}
-              style={{position:"relative",minHeight:320,borderRadius:32,overflow:"hidden",cursor:"pointer",border:".5px solid var(--b)",background:nextP.image?"#111":"#252525"}}
-              whileHover={{scale:1.01}} transition={{type:"spring",stiffness:300}}>
-              {nextP.image&&<img src={nextP.image} alt={nextP.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.45,objectPosition:"center"}}/>}
-              <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,.95) 0%,transparent 70%)"}}/>
-              <div style={{position:"relative",zIndex:1,padding:"3rem",height:"100%",display:"flex",flexDirection:"column",justifyContent:"flex-end"}}>
-                <div style={{display:"flex",gap:8,marginBottom:"1rem"}}>
-                  {(nextP.tags||[]).slice(0,2).map((t: string,i: number)=><span key={i} className="tag tag-a">{t}</span>)}
-                </div>
-                <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5rem)",lineHeight:.9,textTransform:"uppercase",marginBottom:8}}>{nextP.client}</h3>
-                <p style={{fontSize:13,color:"var(--m)"}}>{nextP.title}</p>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      )}
-
-      <ServiceCTA title="IL TUO PROGETTO È IL PROSSIMO." sub="Raccontaci cosa vuoi ottenere." btn="Iniziamo insieme"/>
-    </>
-  );
-};
-
-/* ═══════════════════════════════════════════════════════════════
    PAGE: CLIENTE
 ═══════════════════════════════════════════════════════════════ */
 const PageCliente = ({id}: {id: string}) => {
@@ -1828,11 +1525,7 @@ const PageCliente = ({id}: {id: string}) => {
   const c=useContent();
   const clients=normalizeClients(((c as any).clients?.items || []) as any[]);
   const client=clients.find((item: any)=>getClientId(item)===id);
-  const allProjects=((c.portfolio as any)?.projects||[]) as any[];
-  const relatedProjects=client
-    ? allProjects.filter((project: any)=>String(project.client||"").toLowerCase()===String(client.name||"").toLowerCase())
-    : [];
-  const heroImage=client?.image || client?.gallery?.[0] || relatedProjects.find((project: any)=>project.image)?.image;
+  const heroImage=client?.image || client?.gallery?.[0];
   const reels=((client?.reels || []) as any[]).filter((r: any)=>/^https:\/\//.test(r?.video||"") || /^https:\/\//.test(r?.instagram||""));
   const gallery=((client?.gallery || []) as string[]).filter((u)=>/^https:\/\//.test(u));
   const linkedCase=(((c as any).cases?.items || []) as any[]).find((x: any)=>x.id===client?.caseStudy || x.clientId===client?.id);
@@ -1863,7 +1556,7 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={heroImage} alt={client.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
+          ? <img src={cld(heroImage, 1600)} alt={client.name} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
@@ -1897,7 +1590,7 @@ const PageCliente = ({id}: {id: string}) => {
       <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
           <div>
-            {client.logo&&<img src={client.logo} alt={`Logo ${client.name}`} style={{maxHeight:74,maxWidth:240,objectFit:"contain",marginBottom:"2rem",display:"block"}}/>}
+            {client.logo&&<img src={cld(client.logo, 400)} alt={`Logo ${client.name}`} style={{maxHeight:74,maxWidth:240,objectFit:"contain",marginBottom:"2rem",display:"block"}}/>}
             <p className="section-label">Scheda cliente</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>INFORMAZIONI<br/><span className="stroke">E CONTESTO</span></h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Aggiungi una descrizione dalla dashboard per completare questa scheda cliente."}</p>
@@ -1939,35 +1632,6 @@ const PageCliente = ({id}: {id: string}) => {
         </div>
       </section>
 
-      {relatedProjects.length>0&&(
-        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
-          <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-end",gap:"1rem",flexWrap:"wrap",marginBottom:"2rem"}}>
-              <div>
-                <p className="section-label">Lavori collegati</p>
-                <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9}}>PROGETTI<br/><span className="stroke">PER {client.name.toUpperCase()}</span></h2>
-              </div>
-            </div>
-            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:"1rem"}}>
-              {relatedProjects.map((project: any)=>(
-                <motion.button key={project.id} type="button" onClick={()=>go(`/progetto/${project.id}`)} whileHover={{y:-4}}
-                  style={{position:"relative",minHeight:260,border:".5px solid var(--b)",borderRadius:24,overflow:"hidden",background:project.image?"#111":"var(--s)",color:"inherit",textAlign:"left",padding:0,font:"inherit"}}>
-                  {project.image&&<img src={project.image} alt={project.title} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.38}}/>}
-                  <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,.94),rgba(30,29,29,.25))"}}/>
-                  <div style={{position:"relative",zIndex:1,height:"100%",padding:"1.5rem",display:"flex",flexDirection:"column",justifyContent:"space-between"}}>
-                    <span className="tag tag-a">{project.category}</span>
-                    <div>
-                      <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.7rem,3vw,2.6rem)",lineHeight:.95,marginBottom:8}}>{project.title}</h3>
-                      <p style={{fontSize:12,color:"var(--m)",lineHeight:1.55}}>{project.result || project.stat}</p>
-                    </div>
-                  </div>
-                </motion.button>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {reels.length>0&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
@@ -1992,39 +1656,6 @@ const PageCliente = ({id}: {id: string}) => {
         heading={{label:"Scopri altri clienti",title:"ALTRI BRAND",accent:"CHE HANNO SCELTO INLAB",text:"Ogni scheda racconta un progetto diverso: apri quella che ti incuriosisce."}}/>
 
       <ServiceCTA title={`VUOI UN PROGETTO COME ${client.name.toUpperCase()}?`} sub="Raccontaci cosa vuoi ottenere e capiamo insieme la direzione migliore." btn="Parliamone"/>
-    </>
-  );
-};
-
-/* ═══════════════════════════════════════════════════════════════
-   PAGE: PORTFOLIO (dedicata)
-═══════════════════════════════════════════════════════════════ */
-const PagePortfolio = () => {
-  const { go } = useRouter();
-  return (
-    <>
-      <section style={{padding:"10rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <motion.p initial={{opacity:0}} animate={{opacity:1}} className="section-label">Portfolio</motion.p>
-          <motion.h1
-            initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{duration:.7}}
-            style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.5rem"}}
-          >
-            I NOSTRI<br/><span className="stroke">LAVORI</span>
-          </motion.h1>
-          <motion.p
-            initial={{opacity:0}} animate={{opacity:1}} transition={{delay:.2}}
-            style={{fontSize:16,color:"var(--m)",maxWidth:640,lineHeight:1.75}}
-          >
-            Strategia, contenuti, eventi, campagne e identità visive realizzate per brand, attività locali e professionisti.
-          </motion.p>
-        </div>
-      </section>
-      <PortfolioGallery
-        showHeader={false}
-        onProjectClick={(id) => go("/casi-studio/" + id)}
-      />
-      <FinalCTA onClick={() => go("/contatti")} />
     </>
   );
 };
@@ -2158,20 +1789,19 @@ const PageBranding = () => (
 const parseRoute = (route) => {
   if(route==="/") return {page:"home"};
   if(route==="/chi-siamo") return {page:"chi-siamo"};
-  if(route==="/lavori") return {page:"lavori"};
-  if(route==="/portfolio") return {page:"portfolio"};
+  // Vecchie pagine del portfolio dimostrativo: come il redirect 301 del server
+  if(route==="/lavori"||route==="/portfolio"||route.startsWith("/progetto/")) return {page:"casi-studio"};
   if(route==="/casi-studio") return {page:"casi-studio"};
   if(route==="/servizi") return {page:"servizi"};
   if(route==="/contatti") return {page:"contatti"};
   if(route==="/privacy") return {page:"privacy"};
   if(route==="/blog") return {page:"blog"};
   if(route.startsWith("/blog/")) return {page:"articolo",id:route.replace("/blog/","")};
+  if(route.startsWith("/autori/")) return {page:"autore",id:route.replace("/autori/","")};
   // case study detail pages: /casi-studio/paresteta
   if(route.startsWith("/casi-studio/")) return {page:"caso",id:route.replace("/casi-studio/","")};
   // client detail pages: /cliente/nunzio-putignano
   if(route.startsWith("/cliente/")) return {page:"cliente",id:route.replace("/cliente/","")};
-  // project detail pages: /progetto/1
-  if(route.startsWith("/progetto/")) return {page:"progetto",id:route.replace("/progetto/","")};
   // "Landing Page" non è più un servizio a sé (è dentro Siti Web)
   if(route==="/landing-page"||route.startsWith("/landing-page-")) return parseRoute(route.replace("/landing-page","/siti-web"));
   // service pages
@@ -2207,18 +1837,16 @@ const PageNotFound = () => (
  
 const renderPage = (info) => {
   switch(info.page){
-    case "progetto": return <PageProgetto id={info.id}/>;
     case "cliente": return <PageCliente id={info.id}/>;
     case "caso": return <PageCaso id={info.id}/>;
     case "home": return <PageHome/>;
     case "chi-siamo": return <PageChiSiamo/>;
-    case "lavori": return <PageLavori/>;
-    case "portfolio": return <PagePortfolio/>;
     case "casi-studio": return <PageCasiStudio/>;
     case "servizi": return <PageServizi/>;
     case "contatti": return <PageContatti/>;
     case "privacy": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PagePrivacy/></Suspense>;
     case "blog": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageBlog go={navigate}/></Suspense>;
+    case "autore": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageAutore slug={info.id} go={navigate}/></Suspense>;
     case "articolo": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageArticolo slug={info.id} go={navigate}/></Suspense>;
     case "service":
       switch(info.slug){

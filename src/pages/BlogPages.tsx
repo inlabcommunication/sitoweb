@@ -6,7 +6,9 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
 import { useBlogPosts, readingMinutes, formatDate, type BlogPost } from '../lib/blog';
 import { Markdown } from '../components/Markdown';
 import { applySeo } from '../seo/head';
-import { getSeo } from '../seo/routes';
+import { getSeo, AUTHORS, authorByName, authorPath } from '../seo/routes';
+import { useContent } from '../lib/content';
+import { cld } from '../lib/media';
 
 type Go = (to: string) => void;
 
@@ -52,10 +54,13 @@ const linkTo = (go: Go, to: string) => (e: React.MouseEvent) => {
   e.preventDefault(); go(to);
 };
 
-const Cover = ({ post }: { post: BlogPost }) => (
+// La prima card (in evidenza) è l'immagine principale della pagina: si carica
+// subito e con priorità alta; le altre solo quando stanno per entrare nello schermo.
+const Cover = ({ post, priority = false }: { post: BlogPost; priority?: boolean }) => (
   <div className="blog-cover">
     {post.cover
-      ? <img src={post.cover} alt="" loading="lazy" decoding="async" />
+      ? <img src={cld(post.cover, 900)} alt="" width={1600} height={900}
+          loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" />
       : <div className="blog-cover-ph" aria-hidden="true">{post.category}</div>}
   </div>
 );
@@ -73,8 +78,8 @@ const Meta = ({ post }: { post: BlogPost }) => (
 const PostCard: React.FC<{ post: BlogPost; go: Go; featured?: boolean; i?: number }> = ({ post, go, featured = false, i = 0 }) => (
   <motion.a href={`/blog/${post.slug}`} onClick={linkTo(go, `/blog/${post.slug}`)}
     className={`blog-card${featured ? ' blog-feat' : ''}`}
-    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(i, 6) * 0.06 }}>
-    <Cover post={post} />
+    initial={featured ? false : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: Math.min(i, 6) * 0.06 }}>
+    <Cover post={post} priority={featured} />
     <div style={{ padding: featured ? '2.4rem' : '1.6rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: featured ? 'center' : 'flex-start' }}>
       {featured && <p className="section-label" style={{ color: 'var(--a)' }}>Ultimo articolo</p>}
       <Meta post={post} />
@@ -86,7 +91,9 @@ const PostCard: React.FC<{ post: BlogPost; go: Go; featured?: boolean; i?: numbe
 );
 
 export const PageBlog = ({ go }: { go: Go }) => {
-  const { posts } = useBlogPosts();
+  const { posts, loading } = useBlogPosts();
+  // titolo, descrizione e dati strutturati del blog (gli articoli si caricano con questa pagina)
+  useEffect(() => { applySeo(getSeo('/blog')); }, [loading]);
   const [cat, setCat] = useState('Tutti');
   const cats = useMemo(() => ['Tutti', ...Array.from(new Set(posts.map((p) => p.category)))], [posts]);
   const list = cat === 'Tutti' ? posts : posts.filter((p) => p.category === cat);
@@ -137,7 +144,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
   // Gli articoli scritti dalla dashboard arrivano dopo il caricamento:
   // aggiorna titolo/description/dati strutturati appena disponibili.
-  useEffect(() => { if (!loading) applySeo(getSeo('/blog/' + slug)); }, [loading, slug]);
+  useEffect(() => { applySeo(getSeo('/blog/' + slug)); }, [loading, slug]);
 
   if (!post) {
     if (loading) return <div style={{ minHeight: '100vh' }} />;
@@ -180,7 +187,9 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
                 {post.author.split(' ').map((w) => w[0]).slice(0, 2).join('')}
               </div>
               <div style={{ fontSize: 13 }}>
-                <div style={{ fontWeight: 500 }}>{post.author}</div>
+                <div style={{ fontWeight: 500 }}>{authorByName(post.author)
+                  ? <a href={authorPath(authorByName(post.author)!.slug)} onClick={linkTo(go, authorPath(authorByName(post.author)!.slug))} rel="author" style={{ color: 'inherit' }}>{post.author}</a>
+                  : post.author}</div>
                 <div style={{ color: 'var(--m)', fontSize: 12 }}>InLab Communication</div>
               </div>
             </div>
@@ -189,7 +198,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
         {post.cover && (
           <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 2rem 1rem' }}>
-            <img src={post.cover} alt={post.coverAlt || post.title} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
+            <img src={cld(post.cover, 1600)} alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
           </div>
         )}
 
@@ -222,6 +231,84 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
           </div>
         </section>
       )}
+    </>
+  );
+};
+
+// Pagina autore (/autori/:slug): chi è, cosa fa e gli articoli che ha firmato.
+// Usa solo informazioni già presenti nel sito (team in /chi-siamo e dati SEO).
+export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
+  const author = AUTHORS.find((a) => a.slug === slug);
+  const { posts, loading } = useBlogPosts();
+  const team = (((useContent() as any).studio?.team) || []) as any[];
+  useEffect(() => { if (author) applySeo(getSeo(authorPath(author.slug))); }, [loading, slug]);
+
+  if (!author) {
+    return (
+      <section style={{ padding: '10rem 2rem 8rem', minHeight: '60vh' }}>
+        <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
+          <p className="section-label">Autore non trovato</p>
+          <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.5rem,5vw,4rem)', lineHeight: 0.9, marginBottom: '1.5rem' }}>PAGINA<br /><span className="stroke">NON TROVATA.</span></h1>
+          <a href="/chi-siamo" onClick={linkTo(go, '/chi-siamo')} className="btn btn-p">Chi siamo <ArrowRight size={14} /></a>
+        </div>
+      </section>
+    );
+  }
+  const member = team.find((m) => String(m?.name || '').toLowerCase() === author.name.toLowerCase()) || {};
+  const edu = (Array.isArray(member.edu) ? member.edu : []).filter(Boolean) as string[];
+  const mine = posts.filter((p) => authorByName(p.author)?.slug === author.slug);
+
+  return (
+    <>
+      <BlogStyles />
+      <section style={{ padding: '10rem 2rem 4rem', borderBottom: '.5px solid var(--b)' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: member.photo ? '220px 1fr' : '1fr', gap: '3rem', alignItems: 'center' }} className="grid-1-mob">
+          {member.photo && <img src={cld(member.photo, 600)} alt={author.name} style={{ width: 220, height: 220, borderRadius: '50%', objectFit: 'cover', border: '.5px solid var(--b)' }} />}
+          <div>
+            <p className="section-label">Autore · InLab Communication</p>
+            <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(3rem,8vw,6.5rem)', lineHeight: 0.9, marginBottom: '1rem', textTransform: 'uppercase' }}>{author.name}</h1>
+            <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.2rem,2.2vw,1.7rem)', color: 'var(--a)', marginBottom: '1.4rem' }}>{author.jobTitle}</p>
+            {member.bio && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640 }}>{member.bio}</p>}
+          </div>
+        </div>
+      </section>
+
+      <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '1.2rem' }}>
+          {edu.length > 0 && (
+            <div className="card">
+              <h2 className="section-label" style={{ fontWeight: 500 }}>Formazione</h2>
+              <ul style={{ paddingLeft: '1.1rem', margin: 0 }}>{edu.map((e) => <li key={e} style={{ fontSize: 14, lineHeight: 1.7, marginBottom: 6 }}>{e}</li>)}</ul>
+            </div>
+          )}
+          <div className="card">
+            <h2 className="section-label" style={{ fontWeight: 500 }}>Di cosa si occupa</h2>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {author.knowsAbout.map((k) => <span key={k} className="tag tag-a">{k}</span>)}
+            </div>
+            <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '1rem' }}>Lavora in InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA).</p>
+          </div>
+        </div>
+      </section>
+
+      {mine.length > 0 && (
+        <section style={{ padding: '5rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+            <p className="section-label">Articoli</p>
+            <h2 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.2rem,4vw,3.6rem)', lineHeight: 0.9, marginBottom: '2rem' }}>SCRITTI DA <span className="stroke">{author.name.toUpperCase()}</span></h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(300px,1fr))', gap: '1.2rem' }}>
+              {mine.map((p, i) => <PostCard key={p.slug} post={p} go={go} i={i} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      <section style={{ padding: '4rem 2rem 6rem' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <a href="/chi-siamo" onClick={linkTo(go, '/chi-siamo')} className="btn btn-g">Chi siamo</a>
+          <a href="/contatti" onClick={linkTo(go, '/contatti')} className="btn btn-p">Contatta InLab <ArrowUpRight size={14} /></a>
+        </div>
+      </section>
     </>
   );
 };

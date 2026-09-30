@@ -87,6 +87,14 @@ const isVideo = (item: MediaItem) => item.resource_type === 'video';
 
 const DEFAULT_FOLDERS = ['Tutti', 'Team', 'Portfolio', 'Clienti', 'Servizi', 'Video', 'Altro'];
 
+/** Cartelle predefinite + quelle usate dai file (così le cartelle create restano dopo il ricaricamento). */
+const foldersOf = (items: MediaItem[], extra: string[] = []) =>
+  [...new Set([...DEFAULT_FOLDERS, ...items.map(i => i.folder).filter(Boolean), ...extra])];
+
+/** Sposta un file in un'altra cartella: la cartella è virtuale, l'URL non cambia. */
+const moveItem = (id: string, folder: string) =>
+  persist(_items.map(i => (i.id === id ? { ...i, folder } : i)));
+
 // ═══════════════════════════════════════════════════════════════
 // UPLOAD ENGINE
 // ═══════════════════════════════════════════════════════════════
@@ -100,12 +108,78 @@ type UploadTask = {
   result?: MediaItem;
 };
 
+// Limiti del piano Cloudinary: 10 MB per le immagini, 100 MB per i video
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+const MAX_VIDEO_BYTES = 100 * 1024 * 1024;
+const mb = (n: number) => (n / 1024 / 1024).toFixed(1).replace('.', ',');
+
+/**
+ * Foto troppo pesanti (es. da fotocamera): le riduce nel browser prima del
+ * caricamento (lato lungo max 2560 px, JPEG di qualità alta, WebP se c'è
+ * trasparenza). Sul sito le immagini vengono poi servite ridotte e ottimizzate
+ * da Cloudinary (vedi cld() in src/lib/media.ts). Le immagini già sotto il
+ * limite restano identiche.
+ */
+async function prepareImage(file: File): Promise<File> {
+  // Le foto HEIC dell'iPhone i browser (Chrome, Firefox) non le sanno aprire,
+  // quindi non si possono ridurre: se sono sotto il limite vanno bene così.
+  if (/image\/hei[cf]/i.test(file.type) || /\.hei[cf]$/i.test(file.name)) {
+    if (file.size <= MAX_IMAGE_BYTES * 0.95) return file;
+    throw new Error(`La foto HEIC dell'iPhone pesa ${mb(file.size)} MB e non si può ridurre dal browser: esportala in JPEG e riprova (su iPhone: Impostazioni → Fotocamera → Formati → Più compatibile).`);
+  }
+  if (!file.type.startsWith('image/') || /gif|svg/.test(file.type) || file.size <= MAX_IMAGE_BYTES * 0.95) return file;
+  const bitmap = await createImageBitmap(file);
+  const keepAlpha = file.type === 'image/png' || file.type === 'image/webp';
+  const type = keepAlpha ? 'image/webp' : 'image/jpeg';
+  const ext = keepAlpha ? 'webp' : 'jpg';
+  // Safari < 17 non sa creare WebP e restituisce PNG, spesso troppo pesante:
+  // se l'immagine non ha pixel trasparenti si ripiega su JPEG.
+  let opaque: boolean | null = null;
+  const isOpaque = () => {
+    if (opaque !== null) return opaque;
+    const c = document.createElement('canvas'); c.width = 64; c.height = 64;
+    const ctx = c.getContext('2d')!; ctx.drawImage(bitmap, 0, 0, 64, 64);
+    const d = ctx.getImageData(0, 0, 64, 64).data;
+    opaque = true;
+    for (let i = 3; i < d.length; i += 4) if (d[i] < 255) { opaque = false; break; }
+    return opaque;
+  };
+  for (const [side, quality] of [[2560, 0.85], [2048, 0.8], [1600, 0.75]] as const) {
+    const scale = Math.min(1, side / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement('canvas');
+    canvas.width = Math.round(bitmap.width * scale);
+    canvas.height = Math.round(bitmap.height * scale);
+    canvas.getContext('2d')!.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    let blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, type, quality));
+    let [outType, outExt] = [type, ext];
+    if (blob && blob.type !== type && keepAlpha && isOpaque()) {
+      blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, 'image/jpeg', quality));
+      [outType, outExt] = ['image/jpeg', 'jpg'];
+    }
+    if (blob && blob.size <= MAX_IMAGE_BYTES * 0.95) {
+      bitmap.close?.();
+      return new File([blob], file.name.replace(/\.[^.]+$/, '') + '.' + outExt, { type: blob.type || outType });
+    }
+  }
+  bitmap.close?.();
+  throw new Error(`La foto pesa ${mb(file.size)} MB e non si riesce a ridurre sotto i 10 MB: esportala più leggera e riprova.`);
+}
+
 const uploadFile = (
-  file: File,
+  original: File,
   folder: string,
   onProgress: (p: number) => void
 ): Promise<MediaItem> =>
   new Promise(async (resolve, reject) => {
+    let file = original;
+    try {
+      if (file.type.startsWith('video/') && file.size > MAX_VIDEO_BYTES) {
+        return reject(new Error(`Il video pesa ${mb(file.size)} MB: il massimo è 100 MB. Esportalo più leggero (per esempio 1080p) e riprova.`));
+      }
+      file = await prepareImage(file);
+    } catch (e: any) {
+      return reject(new Error(e?.message || 'Impossibile preparare la foto per il caricamento.'));
+    }
     const fd = new FormData();
     const targetFolder = `inlab/${folder === 'Tutti' || folder === 'Altro' ? 'generale' : folder.toLowerCase()}`;
     const context = `alt=${file.name.replace(/[|=]/g, ' ').slice(0, 150)}`;
@@ -154,7 +228,13 @@ const uploadFile = (
           alt: '',
         });
       } else {
-        reject(new Error(JSON.parse(xhr.responseText)?.error?.message || 'Upload failed'));
+        let msg = 'Caricamento non riuscito';
+        try { msg = JSON.parse(xhr.responseText)?.error?.message || msg; } catch { /* risposta non JSON */ }
+        // messaggi di Cloudinary più comuni, in italiano
+        if (/File size too large/i.test(msg)) msg = 'Il file supera il limite del piano Cloudinary (10 MB per le foto, 100 MB per i video): esportalo più leggero e riprova.';
+        else if (/Invalid Signature|signature/i.test(msg)) msg = 'Firma non valida: controlla CLOUDINARY_API_SECRET su Vercel e rifai il Redeploy.';
+        else if (/Upload preset/i.test(msg)) msg = 'Preset di caricamento non trovato: su Cloudinary deve esistere il preset ml_default.';
+        reject(new Error(msg));
       }
     };
     xhr.onerror = () => reject(new Error('Errore di rete'));
@@ -273,6 +353,8 @@ const UploadQueue = ({ tasks }: { tasks: UploadTask[] }) => {
 
 const Lightbox = ({ item, onClose }: { item: MediaItem; onClose: () => void }) => {
   const [copied, setCopied] = useState(false);
+  const [folder, setFolder] = useState(item.folder);
+  const move = async (f: string) => { setFolder(f); await moveItem(item.id, f); };
 
   const copy = () => {
     navigator.clipboard.writeText(item.secure_url);
@@ -308,7 +390,13 @@ const Lightbox = ({ item, onClose }: { item: MediaItem; onClose: () => void }) =
               {item.width && <span>{item.width}×{item.height}px</span>}
               <span>{fmt(item.bytes)}</span>
               <span style={{ textTransform: 'uppercase' }}>{item.format}</span>
-              <span style={{ background: '#cdb2ff22', color: '#cdb2ff', padding: '1px 6px', borderRadius: 100, fontSize: 10 }}>{item.folder}</span>
+              <label style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                Sposta in
+                <select value={folder} onChange={e => move(e.target.value)}
+                  style={{ background: '#cdb2ff22', color: '#cdb2ff', border: '.5px solid #cdb2ff44', padding: '2px 6px', borderRadius: 100, fontSize: 10, cursor: 'pointer' }}>
+                  {foldersOf(_items).filter(f => f !== 'Tutti').map(f => <option key={f} value={f} style={{ background: '#111' }}>{f}</option>)}
+                </select>
+              </label>
             </div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
@@ -546,7 +634,7 @@ export const MediaLibraryPage = () => {
   const [customFolders, setCustomFolders] = useState<string[]>([]);
   const [copiedId, setCopiedId] = useState('');
 
-  const allFolders = [...DEFAULT_FOLDERS, ...customFolders.filter(f => !DEFAULT_FOLDERS.includes(f))];
+  const allFolders = foldersOf(items, customFolders);
 
   useEffect(() => {
     const update = () => setItems([..._items]);
@@ -703,9 +791,9 @@ export const MediaLibraryPage = () => {
                 {tasks.filter(t => t.status === 'error').map(t => (
                   <div key={t.id} style={{ marginTop: 8, padding: '10px 14px', background: 'rgba(255,100,100,0.08)', border: '.5px solid rgba(255,100,100,0.2)', borderRadius: 10, fontSize: 12, color: '#ff8888' }}>
                     <strong>{t.file.name}</strong>: {t.error}
-                    <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>
+                    {/non configurato|firma|autorizzato|preset/i.test(t.error || '') && <div style={{ fontSize: 11, color: '#888', marginTop: 4 }}>
                       Gli upload sono firmati: su Vercel deve esserci <code style={{ color: '#cdb2ff' }}>CLOUDINARY_API_SECRET</code> e il preset <code style={{ color: '#cdb2ff' }}>ml_default</code> su Cloudinary deve essere impostato come <strong>Signed</strong>.
-                    </div>
+                    </div>}
                   </div>
                 ))}
               </div>
@@ -922,7 +1010,7 @@ export const MediaLibrary = ({ onSelect, onClose, filter = 'all' }: PickerProps)
     return true;
   });
 
-  const allFolders = [...new Set(['Tutti', ..._items.map(i => i.folder)])];
+  const allFolders = [...new Set(['Tutti', ..._items.map(i => i.folder).filter(Boolean)])];
 
   return (
     <>
@@ -955,7 +1043,7 @@ export const MediaLibrary = ({ onSelect, onClose, filter = 'all' }: PickerProps)
                 <div style={{ marginBottom: '1rem' }}>
                   <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: '#666', marginBottom: 8 }}>Cartella destinazione</div>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    {DEFAULT_FOLDERS.filter(f => f !== 'Tutti').map(f => (
+                    {foldersOf(_items).filter(f => f !== 'Tutti').map(f => (
                       <button key={f} onClick={() => setUploadFolder(f)}
                         style={{ padding: '5px 10px', background: uploadFolder === f ? 'rgba(205,178,255,0.15)' : 'rgba(255,255,255,0.04)', border: `.5px solid ${uploadFolder === f ? '#cdb2ff44' : '#2a2a2a'}`, borderRadius: 100, color: uploadFolder === f ? '#cdb2ff' : '#666', fontSize: 10, cursor: 'pointer' }}>
                         {f}

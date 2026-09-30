@@ -5,7 +5,9 @@
 
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
-import { BLOG_SEED, type BlogPost } from '../data/blogSeed';
+// Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
+// si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
+import type { BlogPost } from '../data/blogSeed';
 
 /** Dominio del sito. Impostalo su Vercel con VITE_SITE_URL (es. https://www.inlabcommunication.it). */
 export const SITE_URL = (
@@ -89,6 +91,36 @@ const clip = (s: string, n = 160) => (s.length <= n ? s : s.slice(0, n - 1).repl
 
 const orgRef = { '@id': `${SITE_URL}/#organization` };
 
+// Fondatori/autori: una sola identità (Person con @id) usata in /chi-siamo,
+// nelle pagine autore, in Organization.founder e negli articoli.
+export const AUTHORS = [
+  { slug: 'nicola-carpignano', name: 'Nicola Carpignano', jobTitle: 'Social media manager, comunicazione e marketing',
+    title: 'Nicola Carpignano: social media e marketing a Castellaneta',
+    description: 'Nicola Carpignano, social media manager e co-fondatore di InLab Communication a Castellaneta (TA): strategia, contenuti e marketing per attività locali.',
+    alumniOf: 'Sapienza Università di Roma',
+    knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati'],
+    sameAs: [] as string[] },
+  { slug: 'ilaria-gemma', name: 'Ilaria Gemma', jobTitle: 'Content creator e comunicazione visiva',
+    title: 'Ilaria Gemma: content creator, foto e video a Castellaneta',
+    description: 'Ilaria Gemma, content creator e co-fondatrice di InLab Communication a Castellaneta (TA): foto, video, reel e comunicazione visiva per i brand locali.',
+    alumniOf: '',
+    knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'],
+    sameAs: [] as string[] },
+];
+export type Author = (typeof AUTHORS)[number];
+export const authorPath = (slug: string) => `/autori/${slug}`;
+/** Autore da nome visualizzato (es. firma di un articolo); undefined se non è un fondatore. */
+export const authorByName = (name?: string) => AUTHORS.find((a) => a.name.toLowerCase() === String(name || '').trim().toLowerCase());
+const personId = (a: Author) => `${SITE_URL}${authorPath(a.slug)}#person`;
+const personRef = (a: Author) => ({ '@type': 'Person', '@id': personId(a), name: a.name, url: SITE_URL + authorPath(a.slug) });
+const personJsonLd = (a: Author) => ({
+  '@context': 'https://schema.org', '@type': 'Person', '@id': personId(a), name: a.name,
+  url: SITE_URL + authorPath(a.slug), jobTitle: a.jobTitle, worksFor: orgRef,
+  workLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Castellaneta', addressRegion: 'TA', addressCountry: 'IT' } },
+  ...(a.alumniOf ? { alumniOf: { '@type': 'CollegeOrUniversity', name: a.alumniOf } } : {}),
+  knowsAbout: a.knowsAbout, sameAs: a.sameAs,
+});
+
 export const organizationJsonLd = () => ({
   '@context': 'https://schema.org',
   '@type': ['ProfessionalService', 'LocalBusiness'],
@@ -97,7 +129,7 @@ export const organizationJsonLd = () => ({
   description: 'Agenzia di comunicazione con sede a Castellaneta (Taranto): gestione social, video e reel, Meta Ads, siti web, branding e automazioni AI per aziende in Puglia e non solo.',
   // Distingue l'agenzia da realtà con nomi simili (Google e i sistemi AI le confondevano)
   disambiguatingDescription: 'InLab Communication è l\'agenzia di comunicazione di Castellaneta, in provincia di Taranto (Puglia), fondata da Nicola Carpignano e Ilaria Gemma. Non è collegata ad altre agenzie con nomi simili in altre città, come InLab Comunicazione di Forlì.',
-  founder: [{ '@type': 'Person', name: 'Nicola Carpignano' }, { '@type': 'Person', name: 'Ilaria Gemma' }],
+  founder: AUTHORS.map(personRef),
   knowsLanguage: 'it',
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/icon-512.png`,
@@ -105,7 +137,8 @@ export const organizationJsonLd = () => ({
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
   address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, postalCode: '74011', addressRegion: 'TA', addressCountry: 'IT' },
-  areaServed: [{ '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
+  // città con clienti reali (CITIES) più Puglia e Italia: si lavora anche fuori regione
+  areaServed: [...CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
   sameAs: BUSINESS.sameAs,
   knowsAbout: SERVICES_SEO.map((s) => s.label),
   hasOfferCatalog: {
@@ -140,7 +173,7 @@ const webPage = (path: string, title: string, description: string) => ({
 
 // Articoli del blog: quelli nel codice + quelli pubblicati dalla dashboard
 // (registrati dal browser dopo il caricamento e dallo script di build).
-let blogPosts: BlogPost[] = BLOG_SEED.filter((p) => p.published);
+let blogPosts: BlogPost[] = [];
 export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filter((p) => p.published); };
 export const getBlogPosts = () => blogPosts;
 const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
@@ -169,6 +202,7 @@ export const listRoutes = (): string[] => [
   ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
   '/blog', '/privacy',
+  ...AUTHORS.map((a) => authorPath(a.slug)),
   ...blogPosts.map((p) => '/blog/' + p.slug),
 ];
 
@@ -186,17 +220,16 @@ export const getSeo = (rawPath: string): Seo => {
       { sitemap: { priority: 0.9, changefreq: 'monthly' } }, [['Servizi', '/servizi']]);
   }
   if (path === '/chi-siamo') {
-    return page(path, `Chi siamo | ${BRAND}, agenzia creativa in Puglia`,
-      'InLab Communication è un laboratorio creativo con sede a Castellaneta (TA): strategia, contenuti e tecnologia per far crescere brand e aziende.',
-      { sitemap: { priority: 0.7, changefreq: 'monthly' }, jsonLd: [
-        { '@context': 'https://schema.org', '@type': 'Person', name: 'Nicola Carpignano',
-          jobTitle: 'Social media manager, comunicazione e marketing', worksFor: orgRef,
-          alumniOf: { '@type': 'CollegeOrUniversity', name: 'Sapienza Università di Roma' },
-          knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati'] },
-        { '@context': 'https://schema.org', '@type': 'Person', name: 'Ilaria Gemma',
-          jobTitle: 'Content creator e comunicazione visiva', worksFor: orgRef,
-          knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'] },
-      ] }, [['Chi siamo', '/chi-siamo']]);
+    return page(path, 'Chi siamo: Nicola Carpignano e Ilaria Gemma | InLab',
+      'Nicola Carpignano e Ilaria Gemma, i fondatori di InLab Communication: comunicazione, social media, foto e video per le attività di Castellaneta (TA).',
+      { sitemap: { priority: 0.7, changefreq: 'monthly' }, jsonLd: AUTHORS.map(personJsonLd) }, [['Chi siamo', '/chi-siamo']]);
+  }
+  const author = AUTHORS.find((a) => path === authorPath(a.slug));
+  if (author) {
+    return page(path, withBrand(author.title), author.description, {
+      sitemap: { priority: 0.6, changefreq: 'monthly' },
+      jsonLd: [{ '@context': 'https://schema.org', '@type': 'ProfilePage', url: abs(path), inLanguage: 'it-IT', mainEntity: personJsonLd(author) }],
+    }, [['Chi siamo', '/chi-siamo'], [author.name, path]]);
   }
   if (path === '/casi-studio') {
     return page(path, `Casi studio e clienti | ${BRAND}`,
@@ -284,7 +317,7 @@ export const getSeo = (rawPath: string): Seo => {
           '@context': 'https://schema.org', '@type': 'BlogPosting',
           headline: post.title.slice(0, 110), description: clip(desc), image: [image],
           datePublished: post.date, dateModified: modified,
-          author: { '@type': 'Person', name: post.author },
+          author: authorByName(post.author) ? personRef(authorByName(post.author)!) : { '@type': 'Person', name: post.author },
           publisher: orgRef, mainEntityOfPage: abs(path), url: abs(path),
           articleSection: post.category, keywords: post.tags.join(', '), wordCount: words, inLanguage: 'it-IT',
         }],

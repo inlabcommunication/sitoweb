@@ -22,6 +22,21 @@
       "source": "/:svc(gestione-social|meta-ads|siti-web|automazioni-ai|shooting|video|branding)-massafra",
       "destination": "/:svc",
       "statusCode": 301
+    },
+    {
+      "source": "/lavori",
+      "destination": "/casi-studio",
+      "statusCode": 301
+    },
+    {
+      "source": "/portfolio",
+      "destination": "/casi-studio",
+      "statusCode": 301
+    },
+    {
+      "source": "/progetto/:id",
+      "destination": "/casi-studio",
+      "statusCode": 301
     }
   ],
   "headers": [

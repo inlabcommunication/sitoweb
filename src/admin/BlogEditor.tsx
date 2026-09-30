@@ -154,16 +154,21 @@ export const BlogEditor = () => {
   };
 
   const redeploy = async () => {
-    setBusy(true);
+    setBusy(true); setStatus(null);
+    let msg: { kind: 'ok' | 'err' | 'info'; msg: string };
     try {
       const token = await auth?.currentUser?.getIdToken();
       const r = await fetch('/api/publish', { method: 'POST', headers: { Authorization: `Bearer ${token}` } });
-      if (r.ok) setStatus({ kind: 'ok', msg: 'Aggiornamento avviato: tra 1-2 minuti sitemap e pagine per Google includono i nuovi articoli.' });
-      else if (r.status === 501) setStatus({ kind: 'info', msg: 'Aggiornamento automatico non configurato (VERCEL_DEPLOY_HOOK_URL). Gli articoli sono comunque già visibili; la sitemap si aggiorna al prossimo deploy.' });
-      else setStatus({ kind: 'err', msg: 'Aggiornamento non avviato, riprova più tardi.' });
+      msg = r.ok ? { kind: 'ok', msg: 'Aggiornamento avviato: tra 1-2 minuti sitemap e pagine per Google includono le novità. Lo vedi partire su Vercel → Deployments.' }
+        : r.status === 501 ? { kind: 'info', msg: 'Aggiornamento automatico non configurato: su Vercel manca VERCEL_DEPLOY_HOOK_URL (o non è stato fatto il Redeploy dopo averla aggiunta).' }
+        : r.status === 401 ? { kind: 'err', msg: 'Non autorizzato: esci e rientra nella dashboard, poi riprova.' }
+        : r.status === 429 ? { kind: 'err', msg: 'Troppe richieste in poco tempo: riprova tra un\'ora.' }
+        : r.status === 502 ? { kind: 'err', msg: 'Vercel ha rifiutato la richiesta: controlla che VERCEL_DEPLOY_HOOK_URL sia il link completo del Deploy Hook.' }
+        : { kind: 'err', msg: `Aggiornamento non avviato (errore ${r.status}), riprova più tardi.` };
     } catch {
-      setStatus({ kind: 'err', msg: 'Aggiornamento non avviato, riprova più tardi.' });
+      msg = { kind: 'err', msg: 'Aggiornamento non avviato: connessione non riuscita, riprova.' };
     }
+    setStatus(msg);
     setBusy(false);
   };
 
@@ -184,7 +189,7 @@ export const BlogEditor = () => {
           <p style={{ fontSize: 13, color: 'var(--m)' }}>Scrivi, modifica e pubblica gli articoli. Quelli pubblicati compaiono subito su <a href="/blog" target="_blank" rel="noreferrer" style={{ color: 'var(--a)' }}>/blog</a>.</p>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          <button className="btn btn-g" onClick={redeploy} disabled={busy} title="Rigenera sitemap e pagine per Google" style={{ display: 'flex', alignItems: 'center', gap: 6 }}><RefreshCw size={13} /> Aggiorna per Google</button>
+          <button className="btn btn-g" onClick={redeploy} disabled={busy} title="Rigenera sitemap e pagine per Google" style={{ display: 'flex', alignItems: 'center', gap: 6, opacity: busy ? 0.6 : 1 }}><RefreshCw size={13} /> {busy ? 'Avvio in corso…' : 'Aggiorna per Google'}</button>
           <button className="btn btn-p" onClick={() => open(emptyPost(), true)} style={{ display: 'flex', alignItems: 'center', gap: 6 }}><Plus size={14} /> Nuovo articolo</button>
         </div>
       </div>
