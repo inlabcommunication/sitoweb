@@ -123,7 +123,7 @@ const G = () => (
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
-      .chat-launcher{transform:scale(.72);transform-origin:bottom right;bottom:12px!important;right:12px!important}
+      .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
     }
     @media(max-width:480px){
@@ -219,7 +219,8 @@ const Navbar = () => {
  
         <div style={{display:"flex",gap:10,alignItems:"center"}}>
           <Link to="/contatti"><button className="btn btn-p" style={{padding:"11px 22px"}}>Parliamo <ArrowUpRight size={13}/></button></Link>
-          <button className="show-mob" style={{display:"none",background:"none",border:"none",color:"var(--t)",padding:4}} onClick={()=>setOpen(!open)}>
+          <button className="show-mob" aria-label={open?"Chiudi menu":"Apri menu"} aria-expanded={open} aria-controls="menu-mobile"
+            style={{display:"none",background:"none",border:"none",color:"var(--t)",minWidth:44,minHeight:44,padding:10,alignItems:"center",justifyContent:"center",cursor:"pointer"}} onClick={()=>setOpen(!open)}>
             {open?<X size={24}/>:<Menu size={24}/>}
           </button>
         </div>
@@ -227,7 +228,7 @@ const Navbar = () => {
  
       <AnimatePresence>
         {open && (
-          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
+          <motion.div id="menu-mobile" initial={{opacity:0,height:0}} animate={{opacity:1,height:"auto"}} exit={{opacity:0,height:0}}
             style={{overflow:"hidden",borderTop:".5px solid var(--b)",background:"rgba(10,10,8,0.97)"}}>
             <div style={{padding:"2rem",display:"flex",flexDirection:"column",gap:"1.2rem"}}>
               {navLinks.map(l=>(
