@@ -5,6 +5,25 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 
 ---
 
+## ⏸ PAUSA CREDITI (dal 30/09 14:53, decisa dal titolare)
+
+Lavora **solo Sito Inlab**. Tutte le altre sessioni sono ferme (SEO giusto interrotta, le altre già inattive). Routine **disattivate, non cancellate** (per riprendere: `update_trigger enabled=true`; quelle una tantum vanno riprogrammate con `run_once_at` nuovo):
+
+| Trigger | Cosa fa | Destinatario |
+|---|---|---|
+| `trig_012dfTrC8k7qjQL3cXyHXZnm` | Blog mar/ven 8:47 (ricorrente) | nuova sessione Blog |
+| `trig_01DewoKd4ZBE4VD8i6mk8HKp` | Controllo sito ogni 2 giorni 8:56 (ricorrente; da passare a settimanale e alla nuova Sito Inlab) | Analisi sito |
+| `trig_01HkqQu5Vwhj2VkyoKJruVN4` | Analisi sito → Performance: verifica font locali | Performance |
+| `trig_01Fz93E3XgYgeA8vFPKHUVTE` | Sito Inlab → Analisi sito: punti mobile 1 e 6 fatti (PR #38) | Analisi sito |
+| `trig_01EXgqn42VWTyVzRAzwj53DJ` | Sito Inlab → Direttore: PR #33 unita, PR #37, `CLAUDE.md` aggiornato | Direttore (letto) |
+| `trig_01KtTcYjV7nXwxfaZ86rEEsE` | SEO: promemoria per consegnare a Sito Inlab `trig_01UkQtsoku3LzrPKVAEKdKCH` (contatori + llms.txt) | SEO |
+| `trig_016G3JQ1DNf3qwkd2DXtpKKa` | Competitor: leggere risposte 01/10 | Competitor |
+| `trig_0168wHUSYW5xLRJ3vN8Buo8S`, `trig_01RZgbSofJ4cbG4RNHusWTkv`, `trig_01EBcaCvojKv1gco8ZLZaknA`, `trig_01QKW8TKRc8NZHdCNcLcDwyU` | Competitor → Blog, Performance, Sito Inlab, SEO (domande 01/10) | vari |
+
+Rimasta attiva solo `trig_01UkQtsoku3LzrPKVAEKdKCH` (senza orario, non parte da sola): richiesta SEO ALTA a Sito Inlab sui **contatori della home a zero nell'HTML statico** + `llms.txt`. Si può consegnare con `fire_trigger` se il titolare vuole che Sito Inlab la faccia durante la pausa.
+
+Fatti riportati da Sito Inlab (14:42, da verificare alla ripresa): PR #37 (home mobile più leggibile, reel a 720 px, `CLAUDE.md` con Direttore, Competitor, SEO responsabile del blog, `tools/blog-images` al Blog, sezione "Coordinamento"); PR #33 del Blog unita; PR #38 (bug mobile MethodDevices, Esc sul menu, `overflow-x:clip`).
+
 ## 1. Il sito
 
 - **Azienda:** InLab Communication, agenzia di comunicazione a Castellaneta (TA). Titolare: Nicola Carpignano (autori del blog: Nicola Carpignano, Ilaria Gemma).
