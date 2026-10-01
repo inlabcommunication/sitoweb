@@ -188,8 +188,13 @@ const urls = routes
 writeFileSync(join(DIST, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`);
 
+// Bot AI scritti per nome (richiesta SEO 01/10). Un gruppo dedicato sostituisce
+// "*" per quei bot, quindi ripete gli stessi Disallow: /admin e /api/ restano esclusi.
+const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'bingbot'];
+const RULES = 'Allow: /\nDisallow: /admin\nDisallow: /api/\n';
 writeFileSync(join(DIST, 'robots.txt'),
-  `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+  `User-agent: *\n${RULES}\n${AI_BOTS.map((b) => `User-agent: ${b}`).join('\n')}\n${RULES}\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
 // llms.txt (richiesta SEO 01/10): sommario in Markdown per i sistemi AI, solo
 // pagine indicizzabili con indirizzo assoluto. Non va in sitemap.
