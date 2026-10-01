@@ -81,11 +81,10 @@ const Images = ({ label, value = [], onChange }: { label: string; value: string[
 
 const REEL_FIELDS: FieldDef[] = [
   { key: 'title', label: 'Titolo del reel', placeholder: 'Es. Il cambio gomme in 30 secondi' },
-  { key: 'video', label: 'Video del reel (caricalo dall\'archivio)', kind: 'video' },
-  { key: 'instagram', label: 'Link al reel su Instagram', placeholder: 'https://www.instagram.com/reel/...' },
+  { key: 'embed', label: 'Embed Instagram del reel', kind: 'textarea', rows: 4, placeholder: '<blockquote class="instagram-media" ...> oppure https://www.instagram.com/reel/...', hint: 'Su Instagram: ··· sul reel → Incorpora → Copia codice di incorporamento. Va bene anche il solo link del reel.' },
   { key: 'views', label: 'Etichetta visualizzazioni (facoltativa)', placeholder: 'Es. 1,2M views' },
 ];
-const newReel = () => ({ title: '', video: '', instagram: '', views: '' });
+const newReel = () => ({ title: '', embed: '', views: '' });
 
 // ═══════════════════════════════════════════════════════════════
 // PROGETTI RACCONTATI — schede clienti
@@ -143,7 +142,7 @@ export const ClientsEditor = ({ content, set }: Props) => {
           <Images label="Foto (galleria)" value={c.gallery || []} onChange={(a) => upd(i, 'gallery', a)} />
 
           <SectionTitle>Reel</SectionTitle>
-          <Note>Carica il video del reel: si guarda direttamente sul sito. Con il link Instagram compare anche il pulsante per aprirlo su Instagram. Se metti solo il link, la card apre Instagram.</Note>
+          <Note>Incolla il codice di incorporamento del reel (su Instagram: ··· → Incorpora) oppure il suo link: il reel si guarda direttamente sul sito.</Note>
           <ObjList items={c.reels || []} onChange={(a) => upd(i, 'reels', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel"
             titleOf={(r, j) => r.title || `Reel ${j + 1}`} />
 

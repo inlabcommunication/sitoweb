@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { BrowserMockup } from '../components/BrowserMockup';
-import { ReelsGrid, Gallery } from '../components/ReelCard';
+import { ReelsGrid, Gallery, hasReel } from '../components/ReelCard';
 import type { CaseBlock, CaseStudy } from '../data/caseStudies';
 import { workAlt } from '../lib/altText';
 
@@ -243,7 +243,7 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
     }
 
     case 'reels': {
-      const items = (b.items || []).filter((r) => safeUrl(r.video) || safeUrl(r.instagram));
+      const items = (b.items || []).filter((r) => hasReel(r));
       if (!items.length) return null;
       return (
         <Section>

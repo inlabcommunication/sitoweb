@@ -30,7 +30,7 @@ import { ClientsWall } from "./sections/ClientsWall";
 import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
-import { ReelsGrid, Gallery } from "./components/ReelCard";
+import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
@@ -1502,7 +1502,7 @@ const PageCliente = ({id}: {id: string}) => {
   const clients=normalizeClients(((c as any).clients?.items || []) as any[]);
   const client=clients.find((item: any)=>getClientId(item)===id);
   const heroImage=client?.image || client?.gallery?.[0];
-  const reels=((client?.reels || []) as any[]).filter((r: any)=>/^https:\/\//.test(r?.video||"") || /^https:\/\//.test(r?.instagram||""));
+  const reels=((client?.reels || []) as any[]).filter((r: any)=>hasReel(r));
   const gallery=((client?.gallery || []) as string[]).filter((u)=>/^https:\/\//.test(u));
   const linkedCase=(((c as any).cases?.items || []) as any[]).find((x: any)=>x.id===client?.caseStudy || x.clientId===client?.id);
   const links=[

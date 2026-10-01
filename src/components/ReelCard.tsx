@@ -1,6 +1,6 @@
-// Card di un reel: il video caricato si guarda direttamente sul sito, il
-// pulsante apre il post originale su Instagram. Senza video, la card porta
-// direttamente al reel su Instagram.
+// Card di un reel: l'embed Instagram (codice di incorporamento o link del reel)
+// si guarda direttamente sul sito dentro l'iframe ufficiale di Instagram.
+// I reel salvati prima con video caricato / link restano visibili come prima.
 import React from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
 import type { Reel } from '../data/caseStudies';
@@ -14,10 +14,40 @@ export const videoPoster = (url: string) =>
     ? url.replace('/video/upload/', '/video/upload/so_0/').replace(/\.(mp4|mov|webm|m4v)(\?.*)?$/i, '.jpg')
     : undefined);
 
+/** Dal codice di incorporamento (o dal link) ricava l'indirizzo dell'iframe Instagram. */
+export const instagramEmbedSrc = (embed?: string) => {
+  const m = (embed || '').match(/instagram\.com\/(?:[\w.]+\/)?(reels?|p|tv)\/([\w-]+)/i);
+  if (!m) return '';
+  const kind = m[1].toLowerCase() === 'p' ? 'p' : m[1].toLowerCase() === 'tv' ? 'tv' : 'reel';
+  return `https://www.instagram.com/${kind}/${m[2]}/embed/`;
+};
+
+/** Un reel è mostrabile se ha un embed valido o (vecchi reel) un video / link https. */
+export const hasReel = (r?: Reel) => !!r && !!(instagramEmbedSrc(r.embed) || safe(r.video) || safe(r.instagram));
+
 export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
+  const embedSrc = instagramEmbedSrc(reel.embed);
   const video = safe(reel.video);
   const ig = safe(reel.instagram);
-  if (!video && !ig) return null;
+  if (!embedSrc && !video && !ig) return null;
+
+  if (embedSrc) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ position: 'relative', borderRadius: 20, overflow: 'hidden', border: '.5px solid var(--b)', background: '#fff' }}>
+          <iframe src={embedSrc} title={reel.title || 'Reel Instagram'} loading="lazy" scrolling="no" allowFullScreen
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            style={{ display: 'block', width: '100%', aspectRatio: '9 / 19', minHeight: 480, border: 0 }} />
+          {reel.views && (
+            <span style={{ position: 'absolute', top: 12, right: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
+              {reel.views}
+            </span>
+          )}
+        </div>
+        {reel.title && <span style={{ fontSize: 13, color: 'var(--t)', lineHeight: 1.4 }}>{reel.title}</span>}
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -53,7 +83,7 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
 };
 
 export const ReelsGrid: React.FC<{ reels: Reel[] }> = ({ reels }) => (
-  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(210px, 1fr))', gap: '1.2rem' }}>
+  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.2rem' }}>
     {reels.map((r, i) => <ReelCard key={i} reel={r} />)}
   </div>
 );

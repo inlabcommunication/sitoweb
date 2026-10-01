@@ -3,7 +3,8 @@
 // solo i blocchi inseriti, nell'ordine scelto dalla dashboard.
 // File senza React: usato anche dalla SEO e dallo script di build.
 
-export type Reel = { title?: string; video?: string; instagram?: string; views?: string };
+/** `embed`: codice di incorporamento Instagram (o link del reel). `video`/`instagram` restano per i reel già salvati. */
+export type Reel = { title?: string; embed?: string; video?: string; instagram?: string; views?: string };
 
 export type CaseBlock =
   | { type: 'text'; tag?: string; title?: string; titleAccent?: string; body?: string; boxTitle?: string; boxBody?: string }
@@ -177,7 +178,7 @@ export const emptyBlock = (type: CaseBlock['type']): CaseBlock => {
     case 'steps': return { type, tag: 'Il percorso', title: '', titleAccent: '', body: '', items: [{ title: '', desc: '' }] };
     case 'website': return { type, tag: 'Il sito web', title: '', titleAccent: '', body: '', url: 'https://', pages: [] };
     case 'stats': return { type, tag: 'Risultati', title: '', titleAccent: '', body: '', items: [{ value: '', label: '' }] };
-    case 'reels': return { type, tag: 'I reel', title: 'Contenuti', titleAccent: 'che girano.', items: [{ title: '', video: '', instagram: '', views: '' }] };
+    case 'reels': return { type, tag: 'I reel', title: 'Contenuti', titleAccent: 'che girano.', items: [{ title: '', embed: '', views: '' }] };
     case 'gallery': return { type, tag: 'Foto', title: '', titleAccent: '', images: [] };
     case 'quote': return { type, text: '', author: '' };
   }
