@@ -5,6 +5,12 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 
 ---
 
+## Regola del titolare (01/10): resoconti completi
+
+Quando il titolare chiede cosa hanno fatto gli agenti, il Direttore dà **tutto** (lavoro, esiti, problemi, decisioni richieste) per ogni agente, così il titolare non deve aprire le varie chat. Il Direttore non può leggere le chat degli altri: vede solo commit, PR, documenti sui branch, il breve riassunto di stato di ogni sessione e i messaggi che riceve. Per avere tutto, ogni agente deve mandare al Direttore il proprio resoconto alla fine di ogni lavoro (in attesa dell'ok del titolare per chiederlo agli agenti).
+
+Esito del controllo automatico dell'Analisi sito del 01/10 (dal riassunto della sessione): sito ok, correzione di sicurezza di Sito Inlab online, 101 pagine verdi, Aleph Caffè tolto dal sito online; resta un riferimento ad Aleph nel database, negli esempi della pagina Shooting, da togliere dalla dashboard.
+
 ## ⏸ PAUSA CREDITI (dal 30/09 14:53, decisa dal titolare)
 
 Lavora **solo Sito Inlab**; le altre sessioni non ricevono nuovi compiti dal Direttore. **Le routine programmate restano attive** (correzione del titolare alle 15:15: servono e partono nei prossimi giorni): Blog mar/ven 8:47, controllo sito ogni 2 giorni 8:56, messaggi del Competitor del 01/10 alle 8:50, promemoria del Competitor del 01/10 alle 12:00.
