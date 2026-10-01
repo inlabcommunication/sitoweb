@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "motion/react";
 import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
-  MapPin, Phone, Mail, Check,
+  MapPin, Phone, Mail, Check, MessageCircle,
   TrendingUp, Target, FileText, Video, Camera,
   Globe, Zap, Layout, Users, BarChart2, Star,
   GraduationCap,
@@ -32,6 +32,7 @@ import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS } from "./seo/routes";
+import { whatsappUrl } from "./lib/whatsapp";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 import { workAlt } from "./lib/altText";
@@ -290,6 +291,9 @@ const Footer = () => {
             <a href={`mailto:${BUSINESS.email}`} className="foot-link" style={{display:"flex",alignItems:"center",gap:6,minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
               <Mail size={12}/> {BUSINESS.email}
             </a>
+            <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"flex",alignItems:"center",gap:6,minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
+              <MessageCircle size={12}/> Scrivici su WhatsApp
+            </a>
           </div>
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
@@ -406,7 +410,10 @@ const ServiceCTA = ({title="Vuoi questo servizio?",sub="Parliamo del tuo progett
           <div style={{position:"relative",zIndex:1}}>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5rem)",lineHeight:.9,marginBottom:"1rem"}}>{title}</h2>
             <p style={{fontSize:16,color:"var(--m)",marginBottom:"2rem"}}>{sub}</p>
-            <button className="btn btn-p" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go(to)}>{btn} <ArrowRight size={15}/></button>
+            <div style={{display:"flex",gap:12,justifyContent:"center",flexWrap:"wrap"}}>
+              <button className="btn btn-p" style={{fontSize:13,padding:"16px 36px"}} onClick={()=>go(to)}>{btn} <ArrowRight size={15}/></button>
+              <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="btn btn-g" style={{fontSize:13,padding:"16px 28px"}}><MessageCircle size={15}/> Scrivici su WhatsApp</a>
+            </div>
           </div>
         </div>
       </div>
@@ -1298,6 +1305,7 @@ const PageContatti = () => {
             {[
               ...(contact.emails || []).map((e: any) => ({icon:<Mail size={18}/>,label:e.label || "Email",val:e.value,href:`mailto:${e.value}`})),
               ...(contact.phones || []).map((p: any) => ({icon:<Phone size={18}/>,label:p.label || "Telefono",val:p.value,href:`tel:${String(p.value).replace(/[^\d+]/g,"")}`})),
+              {icon:<MessageCircle size={18}/>,label:"WhatsApp",val:"Scrivici su WhatsApp",href:whatsappUrl()},
               ...(contact.location ? [{icon:<MapPin size={18}/>,label:"Sede",val:contact.location,href:""}] : []),
             ].filter((c: any) => c.val).map((c: any,i: number)=>(
               <motion.div key={i} initial={{opacity:0,x:-16}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:i*.1}}
@@ -1305,7 +1313,7 @@ const PageContatti = () => {
                 <div style={{width:40,height:40,background:"rgba(205,178,255,0.08)",border:".5px solid rgba(205,178,255,.2)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",flexShrink:0}}>{c.icon}</div>
                 <div>
                   <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:2}}>{c.label}</div>
-                  {c.href ? <a href={c.href} style={{fontSize:16,fontWeight:400,color:"var(--t)",textDecoration:"none"}}>{c.val}</a> : <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>}
+                  {c.href ? <a href={c.href} {...(c.href.startsWith("https:") ? {target:"_blank",rel:"noopener noreferrer"} : {})} style={{fontSize:16,fontWeight:400,color:"var(--t)",textDecoration:"none"}}>{c.val}</a> : <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>}
                 </div>
               </motion.div>
             ))}

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
+import { whatsappUrl } from '../lib/whatsapp';
 
 // ════════════════════════════════════════════════════════════════
 // CHATBOT v3 — Backend serverless /api/chat
@@ -352,6 +353,16 @@ export const Chatbot = () => {
                 </motion.div>
               )}
             </div>
+
+            {/* Alternativa: WhatsApp (solo un link, nessun widget esterno) */}
+            <a
+              href={whatsappUrl('Ciao InLab, vi scrivo dal sito.')}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, minHeight: 36, padding: '0 1.25rem', borderTop: '.5px solid var(--b)', fontSize: 12, color: 'var(--m)', textDecoration: 'none' }}
+            >
+              Preferisci scriverci su WhatsApp? <span style={{ color: 'var(--a)', fontWeight: 500 }}>Apri la chat</span>
+            </a>
 
             {/* Input */}
             <div
