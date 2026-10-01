@@ -1340,8 +1340,10 @@ const PageContatti = () => {
                   </div>
                   <div>
                     <label htmlFor="f-msg" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
-                    {/* campo trappola anti-bot: invisibile alle persone */}
-                    <input type="text" name="website" value={honeypot} onChange={e=>setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true"
+                    {/* campo trappola anti-bot: invisibile alle persone. Nome senza significato
+                        apposta: con "website" la compilazione automatica (es. Safari) lo riempiva
+                        e il server scartava in silenzio richieste vere */}
+                    <input type="text" name="inlab_hp_field" value={honeypot} onChange={e=>setHoneypot(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true"
                       style={{position:"absolute",left:"-10000px",width:1,height:1,opacity:0}}/>
                     <textarea id="f-msg" className="form-field" required aria-required="true" rows={4} placeholder="Cosa stai cercando? Qual è il tuo obiettivo?" value={form.msg} onChange={e=>setForm({...form,msg:e.target.value})}
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:16,fontFamily:"var(--fb)",resize:"vertical",transition:"border-color .2s"}}
