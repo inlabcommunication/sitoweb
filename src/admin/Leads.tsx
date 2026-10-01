@@ -8,7 +8,7 @@ import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from '
 
 type Lead = {
   id: string;
-  email: string;
+  email: string | null;
   name: string | null;
   phone: string | null;
   intent: string | null;
@@ -18,6 +18,9 @@ type Lead = {
   conversation: any[] | null;
   created_at: string;
 };
+
+/** Titolo del lead: email, altrimenti telefono o nome (la chat può raccogliere solo il telefono). */
+const leadTitle = (l: Lead) => l.email || l.phone || l.name || 'Contatto senza recapito';
 
 const STATUS_LABEL: Record<Lead['status'], string> = { new: 'Nuovo', contacted: 'Contattato', qualified: 'Qualificato', closed: 'Chiuso' };
 const STATUS_COLOR: Record<Lead['status'], string> = { new: '#cdb2ff', contacted: '#ffd699', qualified: '#a3e4a3', closed: 'rgba(255,255,255,0.3)' };
@@ -85,7 +88,7 @@ export const Leads = () => {
 
   const exportCsv = () => {
     const rows = [['Email', 'Nome', 'Telefono', 'Intento', 'Stato', 'Data', 'Note']];
-    leads.forEach((l) => rows.push([l.email, l.name ?? '', l.phone ?? '', l.intent ?? '', STATUS_LABEL[l.status], new Date(l.created_at).toLocaleString('it'), (l.notes ?? '').replace(/\n/g, ' ')]));
+    leads.forEach((l) => rows.push([l.email ?? '', l.name ?? '', l.phone ?? '', l.intent ?? '', STATUS_LABEL[l.status], new Date(l.created_at).toLocaleString('it'), (l.notes ?? '').replace(/\n/g, ' ')]));
     const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -95,7 +98,7 @@ export const Leads = () => {
 
   const filtered = leads.filter((l) => {
     if (filter !== 'all' && l.status !== filter) return false;
-    if (search) { const q = search.toLowerCase(); if (!l.email.toLowerCase().includes(q) && !(l.intent ?? '').toLowerCase().includes(q) && !(l.name ?? '').toLowerCase().includes(q)) return false; }
+    if (search) { const q = search.toLowerCase(); if (!(l.email ?? '').toLowerCase().includes(q) && !(l.phone ?? '').includes(q) && !(l.intent ?? '').toLowerCase().includes(q) && !(l.name ?? '').toLowerCase().includes(q)) return false; }
     return true;
   });
 
@@ -157,7 +160,7 @@ export const Leads = () => {
               style={{ padding: '1rem 1.25rem', background: 'var(--s)', border: '.5px solid var(--b)', borderRadius: 14, cursor: 'pointer', display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: 16, alignItems: 'center', transition: 'border-color .2s' }}
               whileHover={{ borderColor: 'rgba(205,178,255,0.3)', x: 2 }}>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: STATUS_COLOR[l.status] }} />
-              <div><div style={{ fontSize: 14, color: 'var(--t)', marginBottom: 2 }}>{l.email}</div><div style={{ fontSize: 12, color: 'var(--m)' }}>{l.intent ?? 'Contatto generico'}</div></div>
+              <div><div style={{ fontSize: 14, color: 'var(--t)', marginBottom: 2 }}>{leadTitle(l)}</div><div style={{ fontSize: 12, color: 'var(--m)' }}>{l.intent ?? 'Contatto generico'}</div></div>
               <div style={{ fontSize: 11, color: 'var(--m)', textAlign: 'right' }}>{new Date(l.created_at).toLocaleDateString('it', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
               <div style={{ fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: STATUS_COLOR[l.status], fontWeight: 500 }}>{STATUS_LABEL[l.status]}</div>
             </motion.div>
@@ -172,7 +175,7 @@ export const Leads = () => {
             <motion.div initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ type: 'spring', damping: 28, stiffness: 280 }}
               style={{ position: 'fixed', top: 0, right: 0, bottom: 0, width: 'min(500px, 100vw)', background: 'var(--bg)', borderLeft: '.5px solid var(--b)', zIndex: 101, overflowY: 'auto', padding: '2rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                <div><div className="section-label" style={{ marginBottom: 6 }}>Lead</div><h3 style={{ fontFamily: 'var(--fs)', fontSize: '1.6rem' }}>{selected.email}</h3></div>
+                <div><div className="section-label" style={{ marginBottom: 6 }}>Lead</div><h3 style={{ fontFamily: 'var(--fs)', fontSize: '1.6rem' }}>{leadTitle(selected)}</h3></div>
                 <button onClick={() => setSelected(null)} style={{ background: 'none', border: 'none', color: 'var(--m)', cursor: 'pointer', padding: 4 }}><X size={20} /></button>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
