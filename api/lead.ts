@@ -4,7 +4,8 @@
  * più scrivere direttamente nel database.
  */
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, safeEqual, securityHeaders, sign, str } from "./_lib/security";
+import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
+import { getApps } from "firebase-admin/app";
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
@@ -13,6 +14,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   // GET: il server emette un token firmato con l'ora di apertura del modulo,
   // così il tempo di compilazione non dipende da un valore scelto dal browser
   if (req.method === "GET") {
+    // Con il login admin: verifica del collegamento per la sezione Lead della
+    // dashboard (in quale progetto scrive il server e quanti lead vede).
+    // Nessun dato personale: solo ID del progetto, conteggio, data e origine dell'ultimo.
+    if (req.headers.authorization) {
+      if (!(await requireAdmin(req))) return res.status(401).json({ error: "Non autorizzato" });
+      try {
+        const db = getAdminDb();
+        let project = "";
+        try { project = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY || "{}").project_id || ""; } catch { /* chiave non leggibile */ }
+        project = project || String(getApps()[0]?.options.projectId || process.env.GOOGLE_CLOUD_PROJECT || "");
+        const total = (await db.collection("leads").count().get()).data().count;
+        const last = await db.collection("leads").orderBy("created_at", "desc").limit(1).get();
+        const l = last.docs[0]?.data();
+        return res.status(200).json({ project, total, last: l ? { created_at: str(l.created_at, 40), source: str(l.source, 40) } : null });
+      } catch (e) {
+        console.error("Lead check error:", e);
+        return res.status(500).json({ error: "Database del server non raggiungibile" });
+      }
+    }
     const ts = String(Date.now());
     return res.status(200).json({ token: `${ts}.${sign("lead:" + ts)}` });
   }

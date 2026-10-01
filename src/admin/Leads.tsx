@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import type React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, Calendar, Download, Search, Trash2, MessageSquare, Tag, X } from 'lucide-react';
-import { db } from '../lib/firebase';
+import { auth, db } from '../lib/firebase';
+import { firebaseConfig } from '../lib/firebaseConfig';
 import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 type Lead = {
@@ -27,14 +28,43 @@ export const Leads = () => {
   const [selected, setSelected] = useState<Lead | null>(null);
   const [filter, setFilter] = useState<'all' | Lead['status']>('all');
   const [search, setSearch] = useState('');
+  const [loadError, setLoadError] = useState('');
+  const [check, setCheck] = useState<{ project?: string; total?: number; last?: { created_at: string; source: string } | null; error?: string } | null>(null);
+  const [checking, setChecking] = useState(false);
 
   const load = async () => {
     if (!db) { setLoading(false); return; }
     setLoading(true);
-    const snap = await getDocs(query(collection(db, 'leads'), orderBy('created_at', 'desc')));
-    setLeads(snap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead)));
-    setLoading(false);
+    setLoadError('');
+    try {
+      const snap = await getDocs(query(collection(db, 'leads'), orderBy('created_at', 'desc')));
+      setLeads(snap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead)));
+    } catch (e: any) {
+      console.error('Caricamento lead non riuscito', e);
+      setLoadError(e?.code === 'permission-denied'
+        ? 'Permesso negato: questo account non è tra gli admin del database oppure le regole Firestore non sono aggiornate.'
+        : `Caricamento non riuscito (${e?.code || e?.message || 'errore sconosciuto'}).`);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Confronta il progetto in cui il server salva i lead con quello letto dalla dashboard
+  const runCheck = async () => {
+    setChecking(true);
+    try {
+      const token = await auth?.currentUser?.getIdToken();
+      const r = await fetch('/api/lead', { headers: { Authorization: `Bearer ${token || ''}` } });
+      const d = await r.json().catch(() => ({}));
+      setCheck(r.ok ? d : { error: d.error || `HTTP ${r.status}` });
+    } catch (e: any) {
+      setCheck({ error: e?.message || 'Verifica non riuscita' });
+    } finally {
+      setChecking(false);
+    }
+    load();
+  };
+  const dashboardProject = firebaseConfig.projectId || '';
 
   useEffect(() => { load(); }, []);
 
@@ -75,8 +105,30 @@ export const Leads = () => {
     <div style={{ padding: '2rem', maxWidth: 1280, margin: '0 auto' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '2rem', flexWrap: 'wrap', gap: '1rem' }}>
         <div><div className="section-label" style={{ marginBottom: 8 }}>Lead raccolti</div><h2 style={{ fontFamily: 'var(--fd)', fontSize: '2.5rem', letterSpacing: '.02em' }}>CONTATTI</h2></div>
-        <button onClick={exportCsv} disabled={leads.length === 0} className="btn btn-g" style={{ opacity: leads.length === 0 ? 0.4 : 1 }}><Download size={14} /> Esporta CSV</button>
+        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+          <button onClick={runCheck} disabled={checking} className="btn btn-g">{checking ? 'Verifico…' : 'Aggiorna e verifica'}</button>
+          <button onClick={exportCsv} disabled={leads.length === 0} className="btn btn-g" style={{ opacity: leads.length === 0 ? 0.4 : 1 }}><Download size={14} /> Esporta CSV</button>
+        </div>
       </div>
+
+      {loadError && <div role="alert" style={{ padding: '12px 16px', marginBottom: '1rem', borderRadius: 12, border: '.5px solid #ff9b9b', color: '#ffb4b4', fontSize: 13 }}>{loadError}</div>}
+      {check && (() => {
+        const mismatch = !!(check.project && dashboardProject && check.project !== dashboardProject);
+        const missing = !check.error && (check.total ?? 0) > leads.length;
+        const ok = !check.error && !mismatch && !missing;
+        return (
+          <div role="status" style={{ padding: '12px 16px', marginBottom: '1rem', borderRadius: 12, border: `.5px solid ${ok ? '#a3e4a3' : '#ffd699'}`, color: 'var(--t)', fontSize: 13, lineHeight: 1.6 }}>
+            {check.error ? <>Il server non riesce a leggere il database: <b>{check.error}</b>. Controlla la variabile FIREBASE_SERVICE_ACCOUNT_KEY su Vercel.</> : <>
+              Il server salva nel progetto <b>{check.project || 'sconosciuto'}</b>, la dashboard legge dal progetto <b>{dashboardProject || 'sconosciuto'}</b>.
+              {' '}Lead visti dal server: <b>{check.total}</b>; dalla dashboard: <b>{leads.length}</b>.
+              {check.last && <> Ultimo salvato: {new Date(check.last.created_at).toLocaleString('it')} ({check.last.source === 'chatbot' ? 'chatbot' : 'modulo'}).</>}
+              {mismatch && <><br /><b>I due progetti sono diversi:</b> la chiave FIREBASE_SERVICE_ACCOUNT_KEY su Vercel appartiene a un altro progetto Firebase. Va sostituita con una chiave del progetto {dashboardProject}.</>}
+              {!mismatch && missing && <><br /><b>Il server vede più lead della dashboard:</b> controlla che il tuo account sia tra gli admin e che le regole Firestore siano pubblicate.</>}
+              {ok && <> Collegamento corretto.</>}
+            </>}
+          </div>
+        );
+      })()}
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: '1rem' }}>
         {(['all', 'new', 'contacted', 'qualified', 'closed'] as const).map((s) => (
