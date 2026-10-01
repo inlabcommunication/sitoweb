@@ -32,6 +32,8 @@ import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS } from "./seo/routes";
+import { cityInfo } from "./data/cities";
+import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 import { workAlt } from "./lib/altText";
@@ -1394,6 +1396,36 @@ const PageContatti = () => {
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CITTÀ SEO (template)
 ═══════════════════════════════════════════════════════════════ */
+// Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
+// caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto)
+const caseLocations = (cs: any): string[] =>
+  Array.isArray(cs?.locations) && cs.locations.length ? cs.locations
+    : ((DEFAULT_CASES.find((d: any)=>d.id===cs?.id) as any)?.locations || []);
+
+// Settori e domanda frequente della città (testi in src/data/cities.ts)
+const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) => (
+  <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+    <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"start"}} className="grid-1-mob">
+      <div>
+        <p className="section-label">Settori</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase"}}>Le attività con cui lavoriamo a {info.name}</h2>
+        <ul style={{listStyle:"none",padding:0,margin:0}}>
+          {info.settori.map(t=>(
+            <li key={t} style={{display:"flex",gap:"1rem",padding:"1rem 0",borderBottom:".5px solid var(--b)",fontSize:15,color:"var(--m)",lineHeight:1.6}}>
+              <Check size={16} style={{color:"var(--a)",flexShrink:0,marginTop:4}}/>{t.charAt(0).toUpperCase()+t.slice(1)}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p className="section-label">Domanda frequente</p>
+        <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",marginBottom:"1rem"}}>{info.faq.q}</h3>
+        <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq.a}</p>
+      </div>
+    </div>
+  </section>
+);
+
 const PageCittaSEO = ({city, service}) => {
   const {go}=useRouter();
   const svc=SERVICES.find(s=>s.slug===service)||SERVICES[0];
@@ -1403,7 +1435,9 @@ const PageCittaSEO = ({city, service}) => {
   const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
     .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
   const localCases=(((useContent() as any).cases?.items||[]) as any[])
-    .filter((cs: any)=>Array.isArray(cs.locations)&&cs.locations.some((l: string)=>norm(l)===norm(cityName)));
+    .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
+  const info=cityInfo(cityName);
+  const provincia=info?.provincia||"provincia di Taranto";
  
   return (
     <>
@@ -1443,12 +1477,11 @@ const PageCittaSEO = ({city, service}) => {
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase"}}>
               CONOSCIAMO<br/><span className="stroke">IL TERRITORIO</span>
             </h2>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8,marginBottom:"1.5rem"}}>
-              Non siamo un'agenzia milanese che non ha mai messo piede in Puglia. Lavoriamo ogni giorno con aziende di {cityName} e della provincia di Taranto — conosciamo il mercato locale, i comportamenti d'acquisto del territorio, i competitor che devi battere.
-            </p>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>
-              Questo si traduce in campagne e contenuti che parlano la lingua giusta alle persone giuste, nel posto giusto.
-            </p>
+            {info ? (
+              <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
+            ) : (
+              <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>Lavoriamo con attività di {cityName} e della {provincia}: campagne e contenuti che parlano la lingua giusta alle persone giuste, nel posto giusto.</p>
+            )}
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:0}}>
             {[
@@ -1486,6 +1519,8 @@ const PageCittaSEO = ({city, service}) => {
           </div>
         </section>
       )}
+
+      {info && <CityDetails info={info}/>}
 
       {/* Other cities */}
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
