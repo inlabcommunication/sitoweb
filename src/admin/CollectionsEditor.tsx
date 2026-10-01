@@ -86,7 +86,7 @@ const REEL_FIELDS: FieldDef[] = [
   { key: 'title', label: 'Titolo del reel', placeholder: 'Es. Il cambio gomme in 30 secondi' },
   { key: 'embed', label: 'Embed Instagram del reel', kind: 'textarea', rows: 4, placeholder: '<blockquote class="instagram-media" ...> oppure https://www.instagram.com/reel/...', hint: 'Su Instagram: ··· sul reel → Incorpora → Copia codice di incorporamento. Va bene anche il solo link del reel.' },
   { key: 'showViews', label: 'Mostra visualizzazioni', kind: 'check', showIf: (r) => !!(r.embed || '').trim(), getValue: (r) => r.showViews ?? !!r.views },
-  { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M views', hint: 'Il numero da mostrare sul video (Instagram non lo passa nell\'embed)',
+  { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M', hint: 'Scrivi solo il numero: "visualizzazioni" lo aggiunge il sito (Instagram non lo passa nell\'embed)',
     showIf: (r) => !(r.embed || '').trim() || (r.showViews ?? !!r.views) },
 ];
 const newReel = () => ({ title: '', embed: '', showViews: false, views: '' });

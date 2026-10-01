@@ -35,7 +35,8 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
   if (!embedSrc && !video && !ig) return null;
 
   if (embedSrc) {
-    const views = (reel.showViews ?? !!reel.views) ? reel.views : '';
+    // Si scrive solo il numero: "visualizzazioni" lo aggiunge il sito (tolto se già scritto).
+    const count = (reel.showViews ?? !!reel.views) ? (reel.views || '').replace(/\s*(views?|visualizzazioni|visual\.?)\s*$/i, '').trim() : '';
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {/* Solo il video: nell'embed Instagram il reel sta in un riquadro 4:5 con bande nere
@@ -45,9 +46,9 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
           <iframe src={embedSrc} title={reel.title || 'Reel Instagram'} loading="lazy" scrolling="no" allowFullScreen
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
             style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: '-21.11%', width: '142.22%', height: `calc(100% + ${INSTAGRAM_HEADER + 300}px)`, border: 0, display: 'block' }} />
-          {views && (
-            <span style={{ position: 'absolute', top: 12, left: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
-              {views}
+          {count && (
+            <span style={{ position: 'absolute', bottom: 12, left: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
+              {count} visualizzazioni
             </span>
           )}
         </div>
