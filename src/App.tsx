@@ -31,7 +31,9 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath } from "./seo/routes";
+import { cityInfo } from "./data/cities";
+import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 import { workAlt } from "./lib/altText";
@@ -72,7 +74,7 @@ const G = () => (
     .card{background:var(--s);border:.5px solid var(--b);border-radius:24px;padding:2rem;transition:border-color .3s,transform .3s}
     .card:hover{border-color:rgba(205,178,255,0.3);transform:translateY(-3px)}
  
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:100px;font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:all .2s;border:none}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:13px 26px;border-radius:100px;font-size:12px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:all .2s;border:none}
     .btn-p{background:var(--a);color:#000}.btn-p:hover{box-shadow:0 0 28px rgba(205,178,255,.28);transform:scale(1.03)}
     .btn-g{background:transparent;color:var(--t);border:.5px solid var(--b)}.btn-g:hover{border-color:rgba(255,255,255,.3)}
  
@@ -82,13 +84,13 @@ const G = () => (
  
     .divider{border:none;border-top:.5px solid var(--b);margin:0}
  
-    .nav-link{font-size:10px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--m);transition:color .25s;position:relative;padding-bottom:2px}
+    .nav-link{font-size:12px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--m);transition:color .25s;position:relative;padding-bottom:2px}
     .nav-link::after{content:'';position:absolute;bottom:-1px;left:0;width:0;height:1px;background:var(--a);transition:width .25s}
     .nav-link:hover,.nav-link.active{color:var(--t)}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
  
     .hero-h{font-family:var(--fd);line-height:.88;letter-spacing:.02em}
-    .section-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
+    .section-label{font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
  
     @keyframes marq{to{transform:translateX(-50%)}}
     /* animazioni infinite in CSS (solo transform/opacity, fuori dal thread principale) */
@@ -135,9 +137,12 @@ const G = () => (
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
       .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
+      /* area di tocco di almeno 44 px per i link del footer (richiesta analista, approvata) */
+      footer .foot-link{display:inline-flex;align-items:center;min-height:44px}
+      .foot-list{gap:0!important}
     }
     @media(max-width:480px){
-      .btn{padding:11px 20px!important;font-size:10px!important}
+      .btn{padding:11px 20px!important;font-size:12px!important}
     }
   `}</style>
 );
@@ -292,16 +297,16 @@ const Footer = () => {
             </a>
           </div>
           <div>
-            <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
-            <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+            <div style={{fontSize:12,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
+            <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {SERVICES.map(s=>(
                 <Link key={s.slug} to={"/"+s.slug} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{s.label}</Link>
               ))}
             </div>
           </div>
           <div>
-            <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
-            <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+            <div style={{fontSize:12,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
+            <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Blog","/blog"],["Contatti","/contatti"]].map(([l,r])=>(
                 <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
               ))}
@@ -309,10 +314,10 @@ const Footer = () => {
           </div>
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
+          <p style={{fontSize:12,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
             <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano — Agenzia di comunicazione — Castellaneta (TA), 74011 — P.IVA 03411970738</span>
             <Link to="/privacy" className="foot-link" style={{color:"var(--m)"}}>Privacy e cookie</Link>
-            {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:11,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
+            {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:12,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
           </p>
           <div style={{display:"flex",gap:"1.5rem"}}>
             {[
@@ -320,7 +325,7 @@ const Footer = () => {
               {label:"LinkedIn",url:"https://www.linkedin.com/company/inlab-communication/"},
               {label:"Facebook",url:"https://www.facebook.com/inlab.communication"},
             ].map(s=>(
-              <a key={s.label} href={s.url} target="_blank" rel="noreferrer noopener" style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
+              <a key={s.label} href={s.url} target="_blank" rel="noreferrer noopener" className="foot-link" style={{fontSize:12,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
                 onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
                 onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
               >{s.label}</a>
@@ -361,7 +366,7 @@ const PageHero = ({tag,h1,h1b,italic,sub,cta1,cta1to,cta2,cta2to,accent=false}: 
         {tag && <motion.div initial={false}
           style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"2rem"}}>
           <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:"#000",fontWeight:700}}>✦</span>
-          <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{tag}</span>
+          <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{tag}</span>
         </motion.div>}
         <motion.h1 initial={false}
           className="hero-h" style={{fontSize:"clamp(3.8rem,11vw,11.5rem)",marginBottom:"2.5rem"}}>
@@ -389,7 +394,7 @@ const StatsRow = ({stats}) => (
         <motion.div key={i} initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
           style={{borderLeft:".5px solid var(--b)",paddingLeft:"1.5rem"}}>
           <div style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,4vw,3.2rem)",lineHeight:1,color:i===0?"var(--a)":"var(--t)"}}>{s.n}</div>
-          <div style={{fontSize:11,letterSpacing:".1em",textTransform:"uppercase",color:"var(--m)",marginTop:6}}>{s.l}</div>
+          <div style={{fontSize:12,letterSpacing:".1em",textTransform:"uppercase",color:"var(--m)",marginTop:6}}>{s.l}</div>
         </motion.div>
       ))}
     </div>
@@ -718,7 +723,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
           <div key={site.url+site.title} style={{display:"grid",gridTemplateColumns:"1.4fr 1fr",gap:"3rem",alignItems:"center",marginBottom:cards.length?"3rem":0}} className="grid-1-mob">
             <BrowserMockup url={site.url} label={site.title} image={site.image}/>
             <div>
-              {site.tags && <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:"1rem"}}>{site.tags.map(t=><span key={t} className="tag tag-g" style={{fontSize:10}}>{t}</span>)}</div>}
+              {site.tags && <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:"1rem"}}>{site.tags.map(t=><span key={t} className="tag tag-g" style={{fontSize:12}}>{t}</span>)}</div>}
               <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase"}}>{site.title}</h3>
               <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
               <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
@@ -1135,9 +1140,19 @@ const PageServizi = () => {
               <div style={{color:"var(--a)",marginBottom:"1.2rem"}}>{s.icon}</div>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.5rem)",lineHeight:.95,marginBottom:".6rem",textTransform:"uppercase"}}>{s.label}</h2>
               <p style={{fontSize:14,color:"var(--m)",lineHeight:1.7,marginBottom:"1.5rem"}}>{s.short}</p>
-              <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri il servizio <ArrowUpRight size={11}/></span>
+              <span style={{fontSize:12,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri il servizio <ArrowUpRight size={11}/></span>
             </motion.a>
           ))}
+        </div>
+      </section>
+      <section style={{padding:"4rem 2rem",borderTop:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia di comunicazione e marketing nella tua città</p>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+            {AGENCY_CITIES.map(c=>(
+              <Link key={c} to={agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
+            ))}
+          </div>
         </div>
       </section>
       <ServiceCTA title="NON SAI DA DOVE INIZIARE?" sub="Una chiamata di 30 minuti e ti diciamo esattamente cosa ti serve." btn="Chiamata gratuita"/>
@@ -1183,21 +1198,21 @@ const PageChiSiamo = () => {
                     {p.photo ? <img src={cld(p.photo, 400)} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",borderRadius:"50%"}}/> : p.initials}
                   </div>
                   <div>
-                    <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
+                    <div style={{fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
                     <div style={{fontSize:16,fontWeight:500}}>{authorByName(p.name) ? <Link to={authorPath(authorByName(p.name)!.slug)} style={{color:"inherit"}}>{p.name}</Link> : p.name}</div>
                   </div>
                 </div>
                 <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}</p>
                 {p.edu?.length>0&&(
                   <div style={{marginBottom:"1.5rem",padding:"1rem 1.1rem",borderRadius:14,background:"rgba(205,178,255,0.06)",border:".5px solid rgba(205,178,255,0.2)"}}>
-                    <div style={{display:"flex",alignItems:"center",gap:6,fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
+                    <div style={{display:"flex",alignItems:"center",gap:6,fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
                       <GraduationCap size={13}/> Formazione
                     </div>
                     {p.edu.map((e: string)=><p key={e} style={{fontSize:13.5,color:"var(--t)",lineHeight:1.55,marginBottom:4}}>{e}</p>)}
                   </div>
                 )}
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                  {p.skills.map((s: string)=><span key={s} className="tag tag-g" style={{fontSize:11}}>{s}</span>)}
+                  {p.skills.map((s: string)=><span key={s} className="tag tag-g" style={{fontSize:12}}>{s}</span>)}
                 </div>
               </motion.div>
             ))}
@@ -1304,7 +1319,7 @@ const PageContatti = () => {
                 style={{display:"flex",gap:"1rem",alignItems:"flex-start",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
                 <div style={{width:40,height:40,background:"rgba(205,178,255,0.08)",border:".5px solid rgba(205,178,255,.2)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",flexShrink:0}}>{c.icon}</div>
                 <div>
-                  <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:2}}>{c.label}</div>
+                  <div style={{fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:2}}>{c.label}</div>
                   {c.href ? <a href={c.href} style={{fontSize:16,fontWeight:400,color:"var(--t)",textDecoration:"none"}}>{c.val}</a> : <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>}
                 </div>
               </motion.div>
@@ -1329,7 +1344,7 @@ const PageContatti = () => {
                     {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività",ac:"organization",req:false},
                   ].map(f=>(
                     <div key={f.id}>
-                      <label htmlFor={"f-"+f.id} style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
+                      <label htmlFor={"f-"+f.id} style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
                       <input id={"f-"+f.id} className="form-field" autoComplete={f.ac} required={f.req} aria-required={f.req} type={f.type} placeholder={f.ph} value={(form as any)[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
                         style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:16,fontFamily:"var(--fb)",transition:"border-color .2s"}}
                         onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
@@ -1338,7 +1353,7 @@ const PageContatti = () => {
                     </div>
                   ))}
                   <div>
-                    <label htmlFor="f-servizio" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
+                    <label htmlFor="f-servizio" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
                     <select id="f-servizio" className="form-field" value={form.servizio} onChange={e=>setForm({...form,servizio:e.target.value})}
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
                       <option value="">Seleziona un servizio</option>
@@ -1346,7 +1361,7 @@ const PageContatti = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="f-msg" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
+                    <label htmlFor="f-msg" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
                     {/* campo trappola anti-bot: invisibile alle persone. Nome senza significato
                         apposta: con "website" la compilazione automatica (es. Safari) lo riempiva
                         e il server scartava in silenzio richieste vere */}
@@ -1361,7 +1376,7 @@ const PageContatti = () => {
                   <div style={{display:"flex",alignItems:"flex-start",gap:10}}>
                     <input type="checkbox" id="privacy" checked={form.privacy} onChange={e=>setForm({...form,privacy:e.target.checked})}
                       style={{marginTop:3,accentColor:"var(--a)",width:14,height:14,flexShrink:0}}/>
-                    <label htmlFor="privacy" style={{fontSize:11,color:"var(--m)",lineHeight:1.6,cursor:"pointer"}}>
+                    <label htmlFor="privacy" style={{fontSize:12,color:"var(--m)",lineHeight:1.6,cursor:"pointer"}}>
                       Ho letto e accetto la <a href="/privacy" target="_blank" rel="noopener" style={{color:"var(--a)",textDecoration:"underline"}}>privacy policy</a>. I dati forniti saranno utilizzati esclusivamente per rispondere alla richiesta.
                     </label>
                   </div>
@@ -1391,6 +1406,120 @@ const PageContatti = () => {
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CITTÀ SEO (template)
 ═══════════════════════════════════════════════════════════════ */
+/* Pagina "Agenzia di comunicazione e marketing a {città}" (brief SEO 01/10) */
+const PageAgenziaCitta = ({city}: {city: string}) => {
+  const {go}=useRouter();
+  const info=cityInfo(city);
+  const provincia=info?.provincia||"provincia di Taranto";
+  const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const content=useContent() as any;
+  const localClients=normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(city)));
+  const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
+  return (
+    <>
+      <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
+          <p className="section-label">Agenzia a {city} — {provincia}</p>
+          <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>
+            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>a {city}</span>
+          </h1>
+          <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
+            InLab Communication segue social, video, campagne, siti web e branding per attività di {city} e della {provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.
+          </p>
+          <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
+        </div>
+      </section>
+
+      {info && (
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:900,margin:"0 auto"}}>
+            <p className="section-label">Il territorio</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare a {city}</h2>
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
+          </div>
+        </section>
+      )}
+
+      <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <p className="section-label">Servizi a {city}</p>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
+            {SERVICES.map(s=>(
+              <Link key={s.slug} to={`/${s.slug}-${citySlug(city)}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
+                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{s.label} a {city}</span></span>
+                <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{s.short}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {(localClients.length>0||localCases.length>0)&&(
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">Clienti a {city}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>I nostri lavori a {city}</h2>
+            <CaseCardGrid>
+              {localCases.map((cs: any, i: number)=>(
+                <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
+              ))}
+              {localClients.map((cl: any, i: number)=>(
+                <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"/>
+              ))}
+            </CaseCardGrid>
+          </div>
+        </section>
+      )}
+
+      {info && <CityDetails info={info}/>}
+
+      <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia anche in queste città</p>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+            {CITIES.filter(c=>c!==city).map(c=>(
+              <Link key={c} to={c==="Castellaneta"?"/":agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO A ${city.toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
+    </>
+  );
+};
+
+// Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
+// caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto)
+const caseLocations = (cs: any): string[] =>
+  Array.isArray(cs?.locations) && cs.locations.length ? cs.locations
+    : ((DEFAULT_CASES.find((d: any)=>d.id===cs?.id) as any)?.locations || []);
+
+// Settori e domanda frequente della città (testi in src/data/cities.ts)
+const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) => (
+  <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+    <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"start"}} className="grid-1-mob">
+      <div>
+        <p className="section-label">Settori</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase"}}>Le attività con cui lavoriamo a {info.name}</h2>
+        <ul style={{listStyle:"none",padding:0,margin:0}}>
+          {info.settori.map(t=>(
+            <li key={t} style={{display:"flex",gap:"1rem",padding:"1rem 0",borderBottom:".5px solid var(--b)",fontSize:15,color:"var(--m)",lineHeight:1.6}}>
+              <Check size={16} style={{color:"var(--a)",flexShrink:0,marginTop:4}}/>{t.charAt(0).toUpperCase()+t.slice(1)}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p className="section-label">Domanda frequente</p>
+        <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",marginBottom:"1rem"}}>{info.faq.q}</h3>
+        <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq.a}</p>
+      </div>
+    </div>
+  </section>
+);
+
 const PageCittaSEO = ({city, service}) => {
   const {go}=useRouter();
   const svc=SERVICES.find(s=>s.slug===service)||SERVICES[0];
@@ -1400,7 +1529,9 @@ const PageCittaSEO = ({city, service}) => {
   const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
     .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
   const localCases=(((useContent() as any).cases?.items||[]) as any[])
-    .filter((cs: any)=>Array.isArray(cs.locations)&&cs.locations.some((l: string)=>norm(l)===norm(cityName)));
+    .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
+  const info=cityInfo(cityName);
+  const provincia=info?.provincia||"provincia di Taranto";
  
   return (
     <>
@@ -1412,7 +1543,7 @@ const PageCittaSEO = ({city, service}) => {
           <motion.div initial={false}
             style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"1.5rem"}}>
             <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
-            <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} a {cityName} — InLab Communication</span>
+            <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} a {cityName} — InLab Communication</span>
           </motion.div>
           <motion.h1 initial={false}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,10rem)",lineHeight:.88,marginBottom:"2rem",textTransform:"uppercase"}}>
@@ -1421,7 +1552,7 @@ const PageCittaSEO = ({city, service}) => {
           </motion.h1>
           <motion.p initial={false}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
-            InLab è l'agenzia di comunicazione di riferimento a {cityName} e in tutta la provincia di Taranto. Ci occupiamo di {svc.label} per aziende locali, con strategie su misura, risultati misurabili e un approccio orientato alla crescita.
+            InLab Communication segue {svc.label} per attività di {cityName} e della {provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
             <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
@@ -1440,19 +1571,18 @@ const PageCittaSEO = ({city, service}) => {
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase"}}>
               CONOSCIAMO<br/><span className="stroke">IL TERRITORIO</span>
             </h2>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8,marginBottom:"1.5rem"}}>
-              Non siamo un'agenzia milanese che non ha mai messo piede in Puglia. Lavoriamo ogni giorno con aziende di {cityName} e della provincia di Taranto — conosciamo il mercato locale, i comportamenti d'acquisto del territorio, i competitor che devi battere.
-            </p>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>
-              Questo si traduce in campagne e contenuti che parlano la lingua giusta alle persone giuste, nel posto giusto.
-            </p>
+            {info ? (
+              <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
+            ) : (
+              <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>Lavoriamo con attività di {cityName} e della {provincia}: campagne e contenuti che parlano la lingua giusta alle persone giuste, nel posto giusto.</p>
+            )}
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:0}}>
             {[
-              {t:"Conoscenza del mercato locale",d:`Sappiamo come si comportano i consumatori a ${cityName}. Le stagionalità, le abitudini, le opportunità locali che un'agenzia esterna non può conoscere.`},
+              {t:"Conoscenza del mercato locale",d:`Lavoriamo da Castellaneta con attività della ${provincia}: conosciamo stagionalità e abitudini del territorio.`},
               {t:"Presenza sul territorio",d:"Possiamo venire da voi per shooting, riprese o riunioni. La qualità del lavoro è superiore quando lavoriamo di persona."},
               {t:"Risultati misurabili",d:"Non vendiamo aria fritta. Definiamo insieme KPI chiari e ti mostriamo ogni mese se stiamo raggiungendo gli obiettivi."},
-              {t:"Supporto continuo",d:`Un referente dedicato per la tua azienda a ${cityName}. Risposta garantita entro 24 ore, sempre.`},
+              {t:"Supporto continuo",d:"Parli direttamente con noi, Nicola e Ilaria."},
             ].map((item,i)=>(
               <div key={i} style={{display:"flex",gap:"1rem",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
                 <Check size={16} style={{color:"var(--a)",flexShrink:0,marginTop:3}}/>
@@ -1480,6 +1610,17 @@ const PageCittaSEO = ({city, service}) => {
                 <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"/>
               ))}
             </CaseCardGrid>
+          </div>
+        </section>
+      )}
+
+      {info && <CityDetails info={info}/>}
+
+      {AGENCY_CITIES.includes(cityName) && (
+        <section style={{padding:"3rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:"1rem",flexWrap:"wrap"}}>
+            <p style={{fontSize:15,color:"var(--m)"}}>Ti serve più di un servizio a {cityName}?</p>
+            <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi a {cityName} <ArrowUpRight size={13}/></Link>
           </div>
         </section>
       )}
@@ -1546,7 +1687,7 @@ const PageCliente = ({id}: {id: string}) => {
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-          <Link to="/casi-studio" className="btn btn-g" style={{marginBottom:"2rem",fontSize:10,padding:"8px 16px"}}>
+          <Link to="/casi-studio" className="btn btn-g" style={{marginBottom:"2rem",fontSize:12,padding:"8px 16px"}}>
             <ArrowLeft size={12}/> Clienti
           </Link>
           <div style={{display:"grid",gridTemplateColumns:"1.25fr .75fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
@@ -1586,7 +1727,7 @@ const PageCliente = ({id}: {id: string}) => {
             )}
             {links.length>0&&(
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:10,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
+                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:12,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
               </div>
             )}
           </div>
@@ -1621,7 +1762,7 @@ const PageCliente = ({id}: {id: string}) => {
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Reel</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">CHE HANNO GIRATO</span></h2>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">VIRALI</span></h2>
             <ReelsGrid reels={reels}/>
           </div>
         </section>
@@ -1790,6 +1931,9 @@ const parseRoute = (route) => {
   // service pages
   const svcSlugs=SERVICES.map(s=>s.slug);
   if(svcSlugs.includes(route.slice(1))) return {page:"service",slug:route.slice(1)};
+  // "Agenzia di comunicazione e marketing a {città}"
+  const agencyCity=AGENCY_CITIES.find(c=>route===agencyPath(c));
+  if(agencyCity) return {page:"agency",city:agencyCity};
   // city SEO pages
   for(const svc of SERVICES){
     for(const city of CITIES){
@@ -1843,6 +1987,7 @@ const renderPage = (info) => {
         default: return <PageHome/>;
       }
     case "city": return <PageCittaSEO city={info.city} service={info.service}/>;
+    case "agency": return <PageAgenziaCitta city={info.city}/>;
     case "notfound": return <PageNotFound/>;
     default: return <PageHome/>;
   }

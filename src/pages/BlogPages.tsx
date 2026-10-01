@@ -14,7 +14,7 @@ type Go = (to: string) => void;
 
 const BlogStyles = () => (
   <style>{`
-    .blog-chip{padding:8px 16px;border-radius:100px;border:.5px solid var(--b);background:transparent;color:var(--m);font-size:11px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:all .2s}
+    .blog-chip{padding:8px 16px;border-radius:100px;border:.5px solid var(--b);background:transparent;color:var(--m);font-size:12px;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;font-family:inherit;transition:all .2s}
     .blog-chip:hover{color:var(--t);border-color:rgba(255,255,255,.25)}
     .blog-chip.on{background:var(--a);border-color:var(--a);color:#000}
     .blog-card{display:flex;flex-direction:column;background:var(--s);border:.5px solid var(--b);border-radius:24px;overflow:hidden;color:inherit;text-decoration:none;transition:border-color .3s,transform .3s;height:100%}
@@ -26,7 +26,7 @@ const BlogStyles = () => (
     .blog-cover-ph{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.4rem;font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.4rem);line-height:.9;color:rgba(240,237,230,.18);letter-spacing:.02em;text-transform:uppercase}
     .blog-feat{display:grid;grid-template-columns:1.25fr 1fr}
     .blog-feat .blog-cover{aspect-ratio:auto;min-height:340px}
-    .blog-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--m)}
+    .blog-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--m)}
     .blog-cat{color:var(--a)}
     .blog-read{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--t);transition:color .2s;margin-top:auto;padding-top:1.2rem}
     .md{font-size:17px;line-height:1.8;color:rgba(240,237,230,.86)}
@@ -173,7 +173,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
         <header style={{ padding: '9rem 2rem 2.5rem' }}>
           <div style={{ maxWidth: 820, margin: '0 auto' }}>
             <a href="/blog" onClick={linkTo(go, '/blog')}
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.05)', border: '.5px solid var(--b)', borderRadius: 100, color: 'var(--m)', fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', padding: '8px 16px', marginBottom: '2rem' }}>
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'rgba(255,255,255,0.05)', border: '.5px solid var(--b)', borderRadius: 100, color: 'var(--m)', fontSize: 12, letterSpacing: '.15em', textTransform: 'uppercase', padding: '8px 16px', marginBottom: '2rem' }}>
               <ArrowLeft size={11} /> Blog
             </a>
             <Meta post={post} />
@@ -207,7 +207,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
           {post.tags.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: '3rem', paddingTop: '2rem', borderTop: '.5px solid var(--b)' }}>
               {post.tags.map((t) => (
-                <span key={t} style={{ fontSize: 11, padding: '6px 12px', borderRadius: 100, background: 'rgba(205,178,255,0.08)', color: 'var(--a)', border: '.5px solid rgba(205,178,255,0.2)' }}>#{t}</span>
+                <span key={t} style={{ fontSize: 12, padding: '6px 12px', borderRadius: 100, background: 'rgba(205,178,255,0.08)', color: 'var(--a)', border: '.5px solid rgba(205,178,255,0.2)' }}>#{t}</span>
               ))}
             </div>
           )}

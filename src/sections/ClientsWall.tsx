@@ -100,7 +100,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
             </p>
           </div>
           <span style={{
-            fontSize: 11, color: 'var(--m)',
+            fontSize: 12, color: 'var(--m)',
             letterSpacing: '.1em', textTransform: 'uppercase',
           }}>{relatedTo ? '' : heading ? `${clients.length} schede` : `${clients.length}+ clienti`}</span>
         </motion.div>

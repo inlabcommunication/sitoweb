@@ -138,7 +138,7 @@ const ServicesStyles = () => (
     .svc-track{display:flex;align-items:center;gap:3.2vw;padding:0 7vw;width:max-content;will-change:transform}
     .svc-intro{flex:0 0 min(34vw,460px);padding-right:3vw;color:#171619}
     .svc-intro h2{font-family:var(--fd);font-weight:400;font-size:clamp(3.6rem,6.4vw,7rem);line-height:.84;text-transform:uppercase}
-    .svc-intro h2 span{color:rgba(23,22,25,.45)}
+    .svc-intro h2 span{color:rgba(23,22,25,.6)}
     .svc-intro p{max-width:320px;margin-top:1.6rem;font-size:15px;line-height:1.6;color:rgba(23,22,25,.7)}
     .svc-card{
       position:relative;flex:0 0 min(34vw,520px);height:min(66svh,620px);
@@ -153,10 +153,10 @@ const ServicesStyles = () => (
     .svc-card-1{background:#2b2733}
     .svc-card-2{background:#f0ede6;color:#171619}
     .svc-card-3{background:#141316}
-    .svc-card-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.16em;opacity:.7}
+    .svc-card-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.16em;opacity:.7}
     .svc-card h3{max-width:420px;font-family:var(--fd);font-weight:400;font-size:clamp(3rem,4.6vw,5.4rem);line-height:.84;text-transform:uppercase}
     .svc-card p{max-width:340px;margin-top:1.2rem;font-size:15px;line-height:1.55;opacity:.72}
-    .svc-card-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
+    .svc-card-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
     .svc-card-2 .svc-card-link{color:#6d52c4}
     .svc-progress{position:absolute;left:7vw;right:7vw;bottom:5svh;height:2px;background:rgba(23,22,25,.15)}
     .svc-progress i{position:absolute;inset:0;background:#171619;transform-origin:left center}

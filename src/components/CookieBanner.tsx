@@ -12,7 +12,7 @@ export const CookieBanner: React.FC = () => {
   if (!GA_ID || !open) return null;
 
   const choose = (c: 'granted' | 'denied') => { setConsent(c); setOpen(false); };
-  const btn: React.CSSProperties = { flex: 1, padding: '11px 14px', borderRadius: 100, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit' };
+  const btn: React.CSSProperties = { flex: 1, padding: '11px 14px', borderRadius: 100, fontSize: 12, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer', fontFamily: 'inherit' };
 
   return (
     <div role="dialog" aria-live="polite" aria-label="Preferenze cookie"

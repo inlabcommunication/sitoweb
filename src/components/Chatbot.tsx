@@ -265,7 +265,7 @@ export const Chatbot = () => {
               </div>
               <div>
                 <div style={{ fontFamily: 'var(--fd)', fontSize: 16, letterSpacing: '.1em' }}>INLAB AI</div>
-                <div style={{ fontSize: 10, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>
+                <div style={{ fontSize: 12, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>
                   {loading ? '✦ sta scrivendo...' : '✦ online · risponde subito'}
                 </div>
               </div>
@@ -341,7 +341,7 @@ export const Chatbot = () => {
                     background: 'rgba(205,178,255,0.12)',
                     border: '.5px solid rgba(205,178,255,0.3)',
                     color: 'var(--a)',
-                    fontSize: 11,
+                    fontSize: 12,
                     fontWeight: 500,
                     letterSpacing: '.1em',
                     textTransform: 'uppercase',

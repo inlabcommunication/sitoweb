@@ -17,7 +17,7 @@ const CaseHeroBack: React.FC<{ onBack: () => void }> = ({ onBack }) => (
       display: 'inline-flex', alignItems: 'center', gap: 6,
       background: 'rgba(255,255,255,0.05)',
       border: '.5px solid var(--b)', borderRadius: 100,
-      color: 'var(--m)', fontSize: 10, letterSpacing: '.15em',
+      color: 'var(--m)', fontSize: 12, letterSpacing: '.15em',
       textTransform: 'uppercase', padding: '8px 16px',
       cursor: 'pointer', fontFamily: 'inherit',
     }}
@@ -233,11 +233,11 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
                 <div style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', lineHeight: 1, color: i < 2 ? 'var(--a)' : 'var(--t)', marginBottom: 8 }}>
                   <StatValue value={s.value} />
                 </div>
-                <p style={{ fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--m)', lineHeight: 1.4 }}>{s.label}</p>
+                <p style={{ fontSize: 12, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--m)', lineHeight: 1.4 }}>{s.label}</p>
               </motion.div>
             ))}
           </div>
-          {b.note && <p style={{ marginTop: '2rem', fontSize: 11, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic', textAlign: 'center' }}>{b.note}</p>}
+          {b.note && <p style={{ marginTop: '2rem', fontSize: 12, color: 'var(--m)', fontStyle: 'italic', textAlign: 'center' }}>{b.note}</p>}
         </Section>
       );
     }
@@ -270,7 +270,7 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
         <Section>
           <motion.blockquote {...fadeUp()} style={{ maxWidth: 860, margin: '0 auto', textAlign: 'center' }}>
             <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.5rem, 3vw, 2.4rem)', lineHeight: 1.35, color: 'var(--t)' }}>“{b.text}”</p>
-            {b.author && <footer style={{ marginTop: '1.5rem', fontSize: 11, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--a)' }}>— {b.author}</footer>}
+            {b.author && <footer style={{ marginTop: '1.5rem', fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--a)' }}>— {b.author}</footer>}
           </motion.blockquote>
         </Section>
       );
