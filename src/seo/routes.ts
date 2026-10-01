@@ -270,9 +270,6 @@ export const getSeo = (rawPath: string): Seo => {
       // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
       const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;
       const desc = [
-        ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito e risposta in 24 ore.",
-        ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito, risposta in 24 ore.",
-        ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito in 24 ore.",
         ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito.",
         ", da un'agenzia di Castellaneta (TA). Preventivo gratuito.",
       ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';

@@ -1458,7 +1458,7 @@ const PageCittaSEO = ({city, service}) => {
           </motion.h1>
           <motion.p initial={false}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
-            InLab è l'agenzia di comunicazione di riferimento a {cityName} e in tutta la provincia di Taranto. Ci occupiamo di {svc.label} per aziende locali, con strategie su misura, risultati misurabili e un approccio orientato alla crescita.
+            InLab Communication segue {svc.label} per attività di {cityName} e della {provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
             <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
@@ -1485,10 +1485,10 @@ const PageCittaSEO = ({city, service}) => {
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:0}}>
             {[
-              {t:"Conoscenza del mercato locale",d:`Sappiamo come si comportano i consumatori a ${cityName}. Le stagionalità, le abitudini, le opportunità locali che un'agenzia esterna non può conoscere.`},
+              {t:"Conoscenza del mercato locale",d:`Lavoriamo da Castellaneta con attività della ${provincia}: conosciamo stagionalità e abitudini del territorio.`},
               {t:"Presenza sul territorio",d:"Possiamo venire da voi per shooting, riprese o riunioni. La qualità del lavoro è superiore quando lavoriamo di persona."},
               {t:"Risultati misurabili",d:"Non vendiamo aria fritta. Definiamo insieme KPI chiari e ti mostriamo ogni mese se stiamo raggiungendo gli obiettivi."},
-              {t:"Supporto continuo",d:`Un referente dedicato per la tua azienda a ${cityName}. Risposta garantita entro 24 ore, sempre.`},
+              {t:"Supporto continuo",d:"Parli direttamente con noi, Nicola e Ilaria."},
             ].map((item,i)=>(
               <div key={i} style={{display:"flex",gap:"1rem",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
                 <Check size={16} style={{color:"var(--a)",flexShrink:0,marginTop:3}}/>
