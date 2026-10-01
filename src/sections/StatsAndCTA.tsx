@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useAgencyStats } from '../data/stats';
@@ -14,10 +14,21 @@ interface CounterProps {
 const Counter: React.FC<CounterProps> = ({ to, suffix = '', prefix = '', duration = 1.8 }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-50px' });
-  const [val, setVal] = useState(0);
+  // Valore finale già nell'HTML statico (Google, crawler AI, chi non usa JS).
+  // Nel browser, prima del primo disegno, si riparte da 0 per l'animazione,
+  // ma solo se la sezione non è ancora visibile e senza "Riduci movimento".
+  const [val, setVal] = useState(to);
+  const fromZero = useRef(false);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (!el || reduce || el.getBoundingClientRect().top < window.innerHeight) return;
+    fromZero.current = true;
+    setVal(0);
+  }, []);
 
   useEffect(() => {
-    if (!inView) return;
+    if (!inView || !fromZero.current) return;
     const start = performance.now();
     const animate = (now: number) => {
       const t = Math.min(1, (now - start) / (duration * 1000));
