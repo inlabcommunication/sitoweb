@@ -144,6 +144,7 @@ export const organizationJsonLd = () => ({
   image: abs(DEFAULT_OG_IMAGE),
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
+  contactPoint: { '@type': 'ContactPoint', telephone: BUSINESS.telephone, email: BUSINESS.email, contactType: 'customer service', areaServed: 'IT', availableLanguage: 'Italian' },
   address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, postalCode: '74011', addressRegion: 'TA', addressCountry: 'IT' },
   // città con clienti reali (CITIES) più Puglia e Italia: si lavora anche fuori regione
   areaServed: [...CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
