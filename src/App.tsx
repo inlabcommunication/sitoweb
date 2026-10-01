@@ -31,7 +31,7 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS } from "./seo/routes";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 import { workAlt } from "./lib/altText";
@@ -280,9 +280,16 @@ const Footer = () => {
               <span style={{fontFamily:"var(--fd)",fontSize:19,letterSpacing:".15em"}}>INLAB</span>
             </div>
             <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione con sede a Castellaneta (TA). Strategia, creatività e tecnologia per far crescere il tuo brand.</p>
-            <div style={{display:"flex",alignItems:"center",gap:6,marginTop:"1rem",fontSize:12,color:"var(--m)"}}>
+            <div style={{display:"flex",alignItems:"center",gap:6,marginTop:"0.5rem",minHeight:44,fontSize:12,color:"var(--m)"}}>
               <MapPin size={12}/> {location}
             </div>
+            {/* NAP visibile su ogni pagina (richiesta SEO 01/10): stessi valori del JSON-LD */}
+            <a href={`tel:${BUSINESS.telephone}`} className="foot-link" style={{display:"flex",alignItems:"center",gap:6,minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
+              <Phone size={12}/> {BUSINESS.telephone.replace(/^\+39(\d{3})(\d{3})(\d{4})$/, "+39 $1 $2 $3")}
+            </a>
+            <a href={`mailto:${BUSINESS.email}`} className="foot-link" style={{display:"flex",alignItems:"center",gap:6,minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
+              <Mail size={12}/> {BUSINESS.email}
+            </a>
           </div>
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
@@ -303,7 +310,7 @@ const Footer = () => {
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
           <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
-            <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano — P.IVA 03411970738 — Castellaneta (TA)</span>
+            <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano — Agenzia di comunicazione — Castellaneta (TA), 74011 — P.IVA 03411970738</span>
             <Link to="/privacy" className="foot-link" style={{color:"var(--m)"}}>Privacy e cookie</Link>
             {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:11,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
           </p>
