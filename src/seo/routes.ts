@@ -38,6 +38,10 @@ export const BUSINESS = {
 export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Castellaneta', 'Laterza', 'Ginosa', 'Gravina in Puglia'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+/** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città
+ *  tranne Castellaneta, dove la pagina di riferimento è la home. */
+export const AGENCY_CITIES = CITIES.filter((c) => c !== 'Castellaneta');
+export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
 export const SERVICES_SEO = [
   { slug: 'gestione-social', label: 'Gestione Social', keyword: 'gestione social media',
@@ -208,6 +212,7 @@ export const listRoutes = (): string[] => [
   '/', '/servizi', '/chi-siamo', '/casi-studio', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
   ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${citySlug(c)}`)),
+  ...AGENCY_CITIES.map(agencyPath),
   ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
   '/blog', '/privacy',
@@ -281,6 +286,26 @@ export const getSeo = (rawPath: string): Seo => {
         }],
       }, [['Servizi', '/servizi'], [s.label, '/' + s.slug], [city, path]]);
     }
+  }
+
+  const agencyCity = AGENCY_CITIES.find((c) => path === agencyPath(c));
+  if (agencyCity) {
+    const c = agencyCity;
+    const title = [
+      `Agenzia di comunicazione e marketing a ${c} | InLab`,
+      `Agenzia comunicazione e marketing a ${c} | InLab`,
+      `Agenzia di comunicazione e marketing a ${c}`,
+    ].find((t) => t.length <= 60) || `Agenzia di comunicazione a ${c} | InLab`;
+    const desc = [
+      `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta (TA), preventivo gratuito.`,
+      `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta, preventivo gratuito.`,
+      `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Preventivo gratuito.`,
+    ].find((d) => d.length <= 155)!;
+    return page(path, title, desc, {
+      sitemap: { priority: 0.7, changefreq: 'monthly' },
+      jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing a ${c}`,
+        serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }],
+    }, [['Servizi', '/servizi'], [`Agenzia a ${c}`, path]]);
   }
 
   if (path.startsWith('/casi-studio/')) {

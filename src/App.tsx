@@ -31,7 +31,7 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath } from "./seo/routes";
 import { cityInfo } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
@@ -1145,6 +1145,16 @@ const PageServizi = () => {
           ))}
         </div>
       </section>
+      <section style={{padding:"4rem 2rem",borderTop:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia di comunicazione e marketing nella tua città</p>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+            {AGENCY_CITIES.map(c=>(
+              <Link key={c} to={agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
+            ))}
+          </div>
+        </div>
+      </section>
       <ServiceCTA title="NON SAI DA DOVE INIZIARE?" sub="Una chiamata di 30 minuti e ti diciamo esattamente cosa ti serve." btn="Chiamata gratuita"/>
     </>
   );
@@ -1396,6 +1406,90 @@ const PageContatti = () => {
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CITTÀ SEO (template)
 ═══════════════════════════════════════════════════════════════ */
+/* Pagina "Agenzia di comunicazione e marketing a {città}" (brief SEO 01/10) */
+const PageAgenziaCitta = ({city}: {city: string}) => {
+  const {go}=useRouter();
+  const info=cityInfo(city);
+  const provincia=info?.provincia||"provincia di Taranto";
+  const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const content=useContent() as any;
+  const localClients=normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(city)));
+  const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
+  return (
+    <>
+      <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
+          <p className="section-label">Agenzia a {city} — {provincia}</p>
+          <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>
+            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>a {city}</span>
+          </h1>
+          <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
+            InLab Communication segue social, video, campagne, siti web e branding per attività di {city} e della {provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.
+          </p>
+          <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
+        </div>
+      </section>
+
+      {info && (
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:900,margin:"0 auto"}}>
+            <p className="section-label">Il territorio</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare a {city}</h2>
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
+          </div>
+        </section>
+      )}
+
+      <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <p className="section-label">Servizi a {city}</p>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
+            {SERVICES.map(s=>(
+              <Link key={s.slug} to={`/${s.slug}-${citySlug(city)}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
+                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{s.label} a {city}</span></span>
+                <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{s.short}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {(localClients.length>0||localCases.length>0)&&(
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">Clienti a {city}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>I nostri lavori a {city}</h2>
+            <CaseCardGrid>
+              {localCases.map((cs: any, i: number)=>(
+                <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
+              ))}
+              {localClients.map((cl: any, i: number)=>(
+                <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"/>
+              ))}
+            </CaseCardGrid>
+          </div>
+        </section>
+      )}
+
+      {info && <CityDetails info={info}/>}
+
+      <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia anche in queste città</p>
+          <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+            {CITIES.filter(c=>c!==city).map(c=>(
+              <Link key={c} to={c==="Castellaneta"?"/":agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO A ${city.toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
+    </>
+  );
+};
+
 // Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
 // caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto)
 const caseLocations = (cs: any): string[] =>
@@ -1521,6 +1615,15 @@ const PageCittaSEO = ({city, service}) => {
       )}
 
       {info && <CityDetails info={info}/>}
+
+      {AGENCY_CITIES.includes(cityName) && (
+        <section style={{padding:"3rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:"1rem",flexWrap:"wrap"}}>
+            <p style={{fontSize:15,color:"var(--m)"}}>Ti serve più di un servizio a {cityName}?</p>
+            <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi a {cityName} <ArrowUpRight size={13}/></Link>
+          </div>
+        </section>
+      )}
 
       {/* Other cities */}
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
@@ -1828,6 +1931,9 @@ const parseRoute = (route) => {
   // service pages
   const svcSlugs=SERVICES.map(s=>s.slug);
   if(svcSlugs.includes(route.slice(1))) return {page:"service",slug:route.slice(1)};
+  // "Agenzia di comunicazione e marketing a {città}"
+  const agencyCity=AGENCY_CITIES.find(c=>route===agencyPath(c));
+  if(agencyCity) return {page:"agency",city:agencyCity};
   // city SEO pages
   for(const svc of SERVICES){
     for(const city of CITIES){
@@ -1881,6 +1987,7 @@ const renderPage = (info) => {
         default: return <PageHome/>;
       }
     case "city": return <PageCittaSEO city={info.city} service={info.service}/>;
+    case "agency": return <PageAgenziaCitta city={info.city}/>;
     case "notfound": return <PageNotFound/>;
     default: return <PageHome/>;
   }
