@@ -1,7 +1,8 @@
 // Immagini del blog (hero 1200x630 + infografiche) generate da uno spec JS,
 // nello stile del sito. Uso:
 //   NODE_PATH=$(npm root -g) node tools/blog-images/gen.cjs tools/blog-images/specs/<slug>.cjs [...]
-// Output: public/blog/<slug>/cover.jpg (copertina 1600x900) e <name>.webp per ogni infografica.
+// Output: public/blog/<slug>/cover.jpg (copertina 1600x900) e <name>.webp per ogni infografica,
+// con i metadati IPTC/XMP "InLab Communication" (metadata.cjs).
 // Serve Playwright con Chromium (preinstallato negli ambienti cloud).
 const fs = require('fs'); const path = require('path'); const os = require('os');
 const OUT = path.join(__dirname, '../../public/blog');

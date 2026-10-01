@@ -25,7 +25,7 @@ module.exports = {
 </svg>`
   },
   inline: [
-    { type: 'steps', name: 'checklist', tag: 'SEARCH CONSOLE · METODO', title: 'Come leggere il report <span class="acc">in 5 passi</span>', cols: 2, items: [
+    { type: 'steps', name: 'come-leggere-report-ai-overviews', tag: 'SEARCH CONSOLE · METODO', title: 'Come leggere il report <span class="acc">in 5 passi</span>', cols: 2, items: [
       ['Apri il report', 'Trova Generative AI performance e verifica l\'impostazione AI'],
       ['Guarda le pagine', 'Ordina per impressioni: sono le pagine usate nelle risposte AI'],
       ['Confronta con i clic', 'Nel report Prestazioni: tante impressioni e pochi clic?'],

@@ -22,7 +22,7 @@ module.exports = {
 </svg>`
   },
   inline: [
-    { type: 'timeline', name: 'scadenze', tag: 'AI ACT · LEGGE 132/2025', title: 'Le date da <span class="acc">ricordare</span>', items: [
+    { type: 'timeline', name: 'scadenze-ai-act-legge-italiana', tag: 'AI ACT · LEGGE 132/2025', title: 'Le date da <span class="acc">ricordare</span>', items: [
       ['10 ott 2025', 'Legge italiana sull\'AI', 'In vigore la L. 132/2025: professioni, deepfake, diritto d\'autore'],
       ['2 ago 2026', 'Trasparenza AI Act', 'Art. 50: chatbot dichiarati, deepfake etichettati', 1],
       ['2 dic 2026', 'Watermark', 'Termine per i sistemi già sul mercato prima del 2 agosto'],

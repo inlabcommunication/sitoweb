@@ -23,7 +23,7 @@ module.exports = {
 </svg>`
   },
   inline: [
-    { type: 'steps', name: 'checklist', tag: 'NEWSLETTER · CHECKLIST', title: 'Da fare entro <span class="acc">fine ottobre 2026</span>', check: true, cols: 2, items: [
+    { type: 'steps', name: 'checklist-newsletter-tracking-pixel', tag: 'NEWSLETTER · CHECKLIST', title: 'Da fare entro <span class="acc">fine ottobre 2026</span>', check: true, cols: 2, items: [
       ['Mappa i pixel', 'Newsletter, DEM, automazioni: dove registri le aperture?'],
       ['Controlla la piattaforma', 'Il dato di apertura è legato al singolo indirizzo?'],
       ['Consenso separato', 'Una casella dedicata al tracciamento, non preselezionata'],
