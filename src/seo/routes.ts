@@ -140,6 +140,7 @@ export const organizationJsonLd = () => ({
   knowsLanguage: 'it',
   url: `${SITE_URL}/`,
   logo: `${SITE_URL}/logo.png`,
+  vatID: 'IT03411970738',
   image: abs(DEFAULT_OG_IMAGE),
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
