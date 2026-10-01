@@ -41,9 +41,18 @@ const SectionTitle: React.FC<{ tag: string; title: React.ReactNode }> = ({ tag, 
 const Counter: React.FC<{ to: number; suffix?: string }> = ({ to, suffix = '' }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, margin: '-50px' });
-  const [val, setVal] = React.useState(0);
+  // valore finale nell'HTML statico; da 0 solo nel browser, se non ancora visibile (vedi StatsAndCTA)
+  const [val, setVal] = React.useState(to);
+  const fromZero = useRef(false);
+  React.useLayoutEffect(() => {
+    const el = ref.current;
+    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (!el || reduce || el.getBoundingClientRect().top < window.innerHeight) return;
+    fromZero.current = true;
+    setVal(0);
+  }, []);
   React.useEffect(() => {
-    if (!inView) return;
+    if (!inView || !fromZero.current) return;
     const start = performance.now();
     const dur = 1800;
     const animate = (now: number) => {
