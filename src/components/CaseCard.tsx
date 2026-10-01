@@ -40,7 +40,7 @@ export const CaseCard: React.FC<Props> = ({ href, number, kicker, title, italic,
         </span>
         <Title style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(1.9rem, 3vw, 2.6rem)', lineHeight: 0.95, textTransform: 'uppercase', color: 'var(--t)', marginBottom: '0.7rem', fontWeight: 400, display: 'block' }}>{title}</Title>
         {italic && <span style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.05rem, 1.6vw, 1.3rem)', color: 'var(--a)', lineHeight: 1.3, marginBottom: '0.8rem' }}>{italic}</span>}
-        {meta && <span style={{ fontSize: 11, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: '1rem' }}>{meta}</span>}
+        {meta && <span style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: '1rem' }}>{meta}</span>}
         {desc && <span className="case-card-desc">{desc}</span>}
         <span className="case-card-cta">{cta} <ArrowUpRight size={13} /></span>
       </span>

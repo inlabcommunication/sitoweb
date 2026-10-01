@@ -47,7 +47,7 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
             style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: '-21.11%', width: '142.22%', height: `calc(100% + ${INSTAGRAM_HEADER + 300}px)`, border: 0, display: 'block' }} />
           {count && (
-            <span style={{ position: 'absolute', bottom: 12, left: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
+            <span style={{ position: 'absolute', bottom: 12, left: 12, pointerEvents: 'none', fontSize: 12, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
               {count} visualizzazioni
             </span>
           )}
@@ -69,11 +69,11 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
             <span style={{ width: 58, height: 58, borderRadius: '50%', background: 'rgba(205,178,255,0.14)', border: '.5px solid rgba(205,178,255,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Play size={22} fill="currentColor" />
             </span>
-            <span style={{ fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase' }}>Guarda su Instagram</span>
+            <span style={{ fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase' }}>Guarda su Instagram</span>
           </a>
         )}
         {reel.views && (
-          <span style={{ position: 'absolute', top: 12, left: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
+          <span style={{ position: 'absolute', top: 12, left: 12, pointerEvents: 'none', fontSize: 12, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
             {reel.views}
           </span>
         )}
@@ -81,7 +81,7 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10 }}>
         <span style={{ fontSize: 13, color: 'var(--t)', lineHeight: 1.4 }}>{reel.title}</span>
         {ig && video && (
-          <a href={ig} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 10, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--a)', whiteSpace: 'nowrap' }}>
+          <a href={ig} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 4, fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--a)', whiteSpace: 'nowrap' }}>
             Instagram <ArrowUpRight size={12} />
           </a>
         )}

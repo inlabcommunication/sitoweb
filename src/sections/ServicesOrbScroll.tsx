@@ -153,10 +153,10 @@ const ServicesStyles = () => (
     .svc-card-1{background:#2b2733}
     .svc-card-2{background:#f0ede6;color:#171619}
     .svc-card-3{background:#141316}
-    .svc-card-top{display:flex;justify-content:space-between;align-items:center;font-size:11px;letter-spacing:.16em;opacity:.7}
+    .svc-card-top{display:flex;justify-content:space-between;align-items:center;font-size:12px;letter-spacing:.16em;opacity:.7}
     .svc-card h3{max-width:420px;font-family:var(--fd);font-weight:400;font-size:clamp(3rem,4.6vw,5.4rem);line-height:.84;text-transform:uppercase}
     .svc-card p{max-width:340px;margin-top:1.2rem;font-size:15px;line-height:1.55;opacity:.72}
-    .svc-card-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
+    .svc-card-link{display:inline-flex;align-items:center;gap:6px;margin-top:1.5rem;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--a)}
     .svc-card-2 .svc-card-link{color:#6d52c4}
     .svc-progress{position:absolute;left:7vw;right:7vw;bottom:5svh;height:2px;background:rgba(23,22,25,.15)}
     .svc-progress i{position:absolute;inset:0;background:#171619;transform-origin:left center}

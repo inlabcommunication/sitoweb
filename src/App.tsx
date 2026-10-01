@@ -74,7 +74,7 @@ const G = () => (
     .card{background:var(--s);border:.5px solid var(--b);border-radius:24px;padding:2rem;transition:border-color .3s,transform .3s}
     .card:hover{border-color:rgba(205,178,255,0.3);transform:translateY(-3px)}
  
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:13px 26px;border-radius:100px;font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:all .2s;border:none}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:13px 26px;border-radius:100px;font-size:12px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:all .2s;border:none}
     .btn-p{background:var(--a);color:#000}.btn-p:hover{box-shadow:0 0 28px rgba(205,178,255,.28);transform:scale(1.03)}
     .btn-g{background:transparent;color:var(--t);border:.5px solid var(--b)}.btn-g:hover{border-color:rgba(255,255,255,.3)}
  
@@ -84,13 +84,13 @@ const G = () => (
  
     .divider{border:none;border-top:.5px solid var(--b);margin:0}
  
-    .nav-link{font-size:10px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--m);transition:color .25s;position:relative;padding-bottom:2px}
+    .nav-link{font-size:12px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;color:var(--m);transition:color .25s;position:relative;padding-bottom:2px}
     .nav-link::after{content:'';position:absolute;bottom:-1px;left:0;width:0;height:1px;background:var(--a);transition:width .25s}
     .nav-link:hover,.nav-link.active{color:var(--t)}
     .nav-link:hover::after,.nav-link.active::after{width:100%}
  
     .hero-h{font-family:var(--fd);line-height:.88;letter-spacing:.02em}
-    .section-label{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
+    .section-label{font-size:12px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--m);margin-bottom:14px}
  
     @keyframes marq{to{transform:translateX(-50%)}}
     /* animazioni infinite in CSS (solo transform/opacity, fuori dal thread principale) */
@@ -142,7 +142,7 @@ const G = () => (
       .foot-list{gap:0!important}
     }
     @media(max-width:480px){
-      .btn{padding:11px 20px!important;font-size:10px!important}
+      .btn{padding:11px 20px!important;font-size:12px!important}
     }
   `}</style>
 );
@@ -297,7 +297,7 @@ const Footer = () => {
             </a>
           </div>
           <div>
-            <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
+            <div style={{fontSize:12,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
             <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {SERVICES.map(s=>(
                 <Link key={s.slug} to={"/"+s.slug} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{s.label}</Link>
@@ -305,7 +305,7 @@ const Footer = () => {
             </div>
           </div>
           <div>
-            <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
+            <div style={{fontSize:12,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Blog","/blog"],["Contatti","/contatti"]].map(([l,r])=>(
                 <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
@@ -314,10 +314,10 @@ const Footer = () => {
           </div>
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
-          <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
+          <p style={{fontSize:12,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
             <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano — Agenzia di comunicazione — Castellaneta (TA), 74011 — P.IVA 03411970738</span>
             <Link to="/privacy" className="foot-link" style={{color:"var(--m)"}}>Privacy e cookie</Link>
-            {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:11,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
+            {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:12,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
           </p>
           <div style={{display:"flex",gap:"1.5rem"}}>
             {[
@@ -325,7 +325,7 @@ const Footer = () => {
               {label:"LinkedIn",url:"https://www.linkedin.com/company/inlab-communication/"},
               {label:"Facebook",url:"https://www.facebook.com/inlab.communication"},
             ].map(s=>(
-              <a key={s.label} href={s.url} target="_blank" rel="noreferrer noopener" className="foot-link" style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
+              <a key={s.label} href={s.url} target="_blank" rel="noreferrer noopener" className="foot-link" style={{fontSize:12,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
                 onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
                 onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
               >{s.label}</a>
@@ -366,7 +366,7 @@ const PageHero = ({tag,h1,h1b,italic,sub,cta1,cta1to,cta2,cta2to,accent=false}: 
         {tag && <motion.div initial={false}
           style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"2rem"}}>
           <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:"#000",fontWeight:700}}>✦</span>
-          <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{tag}</span>
+          <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{tag}</span>
         </motion.div>}
         <motion.h1 initial={false}
           className="hero-h" style={{fontSize:"clamp(3.8rem,11vw,11.5rem)",marginBottom:"2.5rem"}}>
@@ -394,7 +394,7 @@ const StatsRow = ({stats}) => (
         <motion.div key={i} initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:i*.07}}
           style={{borderLeft:".5px solid var(--b)",paddingLeft:"1.5rem"}}>
           <div style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,4vw,3.2rem)",lineHeight:1,color:i===0?"var(--a)":"var(--t)"}}>{s.n}</div>
-          <div style={{fontSize:11,letterSpacing:".1em",textTransform:"uppercase",color:"var(--m)",marginTop:6}}>{s.l}</div>
+          <div style={{fontSize:12,letterSpacing:".1em",textTransform:"uppercase",color:"var(--m)",marginTop:6}}>{s.l}</div>
         </motion.div>
       ))}
     </div>
@@ -723,7 +723,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
           <div key={site.url+site.title} style={{display:"grid",gridTemplateColumns:"1.4fr 1fr",gap:"3rem",alignItems:"center",marginBottom:cards.length?"3rem":0}} className="grid-1-mob">
             <BrowserMockup url={site.url} label={site.title} image={site.image}/>
             <div>
-              {site.tags && <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:"1rem"}}>{site.tags.map(t=><span key={t} className="tag tag-g" style={{fontSize:10}}>{t}</span>)}</div>}
+              {site.tags && <div style={{display:"flex",flexWrap:"wrap",gap:6,marginBottom:"1rem"}}>{site.tags.map(t=><span key={t} className="tag tag-g" style={{fontSize:12}}>{t}</span>)}</div>}
               <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase"}}>{site.title}</h3>
               <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
               <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
@@ -1140,7 +1140,7 @@ const PageServizi = () => {
               <div style={{color:"var(--a)",marginBottom:"1.2rem"}}>{s.icon}</div>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.5rem)",lineHeight:.95,marginBottom:".6rem",textTransform:"uppercase"}}>{s.label}</h2>
               <p style={{fontSize:14,color:"var(--m)",lineHeight:1.7,marginBottom:"1.5rem"}}>{s.short}</p>
-              <span style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri il servizio <ArrowUpRight size={11}/></span>
+              <span style={{fontSize:12,letterSpacing:".14em",textTransform:"uppercase",color:"var(--a)",display:"flex",alignItems:"center",gap:4}}>Scopri il servizio <ArrowUpRight size={11}/></span>
             </motion.a>
           ))}
         </div>
@@ -1198,21 +1198,21 @@ const PageChiSiamo = () => {
                     {p.photo ? <img src={cld(p.photo, 400)} alt={p.name} style={{width:"100%",height:"100%",objectFit:"cover",borderRadius:"50%"}}/> : p.initials}
                   </div>
                   <div>
-                    <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
+                    <div style={{fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:3}}>{p.role}</div>
                     <div style={{fontSize:16,fontWeight:500}}>{authorByName(p.name) ? <Link to={authorPath(authorByName(p.name)!.slug)} style={{color:"inherit"}}>{p.name}</Link> : p.name}</div>
                   </div>
                 </div>
                 <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}</p>
                 {p.edu?.length>0&&(
                   <div style={{marginBottom:"1.5rem",padding:"1rem 1.1rem",borderRadius:14,background:"rgba(205,178,255,0.06)",border:".5px solid rgba(205,178,255,0.2)"}}>
-                    <div style={{display:"flex",alignItems:"center",gap:6,fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
+                    <div style={{display:"flex",alignItems:"center",gap:6,fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
                       <GraduationCap size={13}/> Formazione
                     </div>
                     {p.edu.map((e: string)=><p key={e} style={{fontSize:13.5,color:"var(--t)",lineHeight:1.55,marginBottom:4}}>{e}</p>)}
                   </div>
                 )}
                 <div style={{display:"flex",flexWrap:"wrap",gap:6}}>
-                  {p.skills.map((s: string)=><span key={s} className="tag tag-g" style={{fontSize:11}}>{s}</span>)}
+                  {p.skills.map((s: string)=><span key={s} className="tag tag-g" style={{fontSize:12}}>{s}</span>)}
                 </div>
               </motion.div>
             ))}
@@ -1319,7 +1319,7 @@ const PageContatti = () => {
                 style={{display:"flex",gap:"1rem",alignItems:"flex-start",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
                 <div style={{width:40,height:40,background:"rgba(205,178,255,0.08)",border:".5px solid rgba(205,178,255,.2)",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",color:"var(--a)",flexShrink:0}}>{c.icon}</div>
                 <div>
-                  <div style={{fontSize:10,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:2}}>{c.label}</div>
+                  <div style={{fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)",marginBottom:2}}>{c.label}</div>
                   {c.href ? <a href={c.href} style={{fontSize:16,fontWeight:400,color:"var(--t)",textDecoration:"none"}}>{c.val}</a> : <div style={{fontSize:16,fontWeight:400}}>{c.val}</div>}
                 </div>
               </motion.div>
@@ -1344,7 +1344,7 @@ const PageContatti = () => {
                     {id:"azienda",label:"Azienda / Brand",type:"text",ph:"Nome della tua attività",ac:"organization",req:false},
                   ].map(f=>(
                     <div key={f.id}>
-                      <label htmlFor={"f-"+f.id} style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
+                      <label htmlFor={"f-"+f.id} style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>{f.label}</label>
                       <input id={"f-"+f.id} className="form-field" autoComplete={f.ac} required={f.req} aria-required={f.req} type={f.type} placeholder={f.ph} value={(form as any)[f.id]} onChange={e=>setForm({...form,[f.id]:e.target.value})}
                         style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:"var(--t)",fontSize:16,fontFamily:"var(--fb)",transition:"border-color .2s"}}
                         onFocus={e=>e.target.style.borderColor="rgba(205,178,255,.4)"}
@@ -1353,7 +1353,7 @@ const PageContatti = () => {
                     </div>
                   ))}
                   <div>
-                    <label htmlFor="f-servizio" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
+                    <label htmlFor="f-servizio" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Servizio di interesse</label>
                     <select id="f-servizio" className="form-field" value={form.servizio} onChange={e=>setForm({...form,servizio:e.target.value})}
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
                       <option value="">Seleziona un servizio</option>
@@ -1361,7 +1361,7 @@ const PageContatti = () => {
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="f-msg" style={{fontSize:10,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
+                    <label htmlFor="f-msg" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
                     {/* campo trappola anti-bot: invisibile alle persone. Nome senza significato
                         apposta: con "website" la compilazione automatica (es. Safari) lo riempiva
                         e il server scartava in silenzio richieste vere */}
@@ -1376,7 +1376,7 @@ const PageContatti = () => {
                   <div style={{display:"flex",alignItems:"flex-start",gap:10}}>
                     <input type="checkbox" id="privacy" checked={form.privacy} onChange={e=>setForm({...form,privacy:e.target.checked})}
                       style={{marginTop:3,accentColor:"var(--a)",width:14,height:14,flexShrink:0}}/>
-                    <label htmlFor="privacy" style={{fontSize:11,color:"var(--m)",lineHeight:1.6,cursor:"pointer"}}>
+                    <label htmlFor="privacy" style={{fontSize:12,color:"var(--m)",lineHeight:1.6,cursor:"pointer"}}>
                       Ho letto e accetto la <a href="/privacy" target="_blank" rel="noopener" style={{color:"var(--a)",textDecoration:"underline"}}>privacy policy</a>. I dati forniti saranno utilizzati esclusivamente per rispondere alla richiesta.
                     </label>
                   </div>
@@ -1543,7 +1543,7 @@ const PageCittaSEO = ({city, service}) => {
           <motion.div initial={false}
             style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"1.5rem"}}>
             <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
-            <span style={{fontSize:10,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} a {cityName} — InLab Communication</span>
+            <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} a {cityName} — InLab Communication</span>
           </motion.div>
           <motion.h1 initial={false}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,10rem)",lineHeight:.88,marginBottom:"2rem",textTransform:"uppercase"}}>
@@ -1687,7 +1687,7 @@ const PageCliente = ({id}: {id: string}) => {
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-          <Link to="/casi-studio" className="btn btn-g" style={{marginBottom:"2rem",fontSize:10,padding:"8px 16px"}}>
+          <Link to="/casi-studio" className="btn btn-g" style={{marginBottom:"2rem",fontSize:12,padding:"8px 16px"}}>
             <ArrowLeft size={12}/> Clienti
           </Link>
           <div style={{display:"grid",gridTemplateColumns:"1.25fr .75fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
@@ -1727,7 +1727,7 @@ const PageCliente = ({id}: {id: string}) => {
             )}
             {links.length>0&&(
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:10,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
+                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:12,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
               </div>
             )}
           </div>

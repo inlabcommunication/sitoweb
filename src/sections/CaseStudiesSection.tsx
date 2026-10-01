@@ -139,7 +139,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                       {cs.title}
                     </p>
                     <p style={{
-                      fontSize: 11,
+                      fontSize: 12,
                       letterSpacing: '.12em',
                       textTransform: 'uppercase',
                       color: 'var(--m)',
@@ -174,7 +174,7 @@ export const CaseStudiesSection: React.FC<CaseStudiesSectionProps> = ({ onCaseCl
                       </p>
                     </div>)}
                     <span style={{
-                      fontSize: 11,
+                      fontSize: 12,
                       letterSpacing: '.14em',
                       textTransform: 'uppercase',
                       color: 'var(--a)',
