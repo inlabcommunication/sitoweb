@@ -202,7 +202,7 @@ const org = organizationJsonLd() as any;
 const caseRoutes = routes.filter((p) => p.startsWith('/casi-studio/'));
 const llms = [
   `# ${org.name}`, '',
-  `> ${getSeo('/').description}`, '',
+  '> Agenzia di comunicazione con sede a Castellaneta (TA), Puglia, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
   org.disambiguatingDescription, '',
   '## Servizi', '',
   ...SERVICES_SEO.map((s) => '/' + s.slug).filter(indexable).map((p) => line(p)),
@@ -210,7 +210,7 @@ const llms = [
   ...['/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug))].filter(indexable).map((p) => line(p)),
   '', '## Casi studio', '',
   ...['/casi-studio', ...caseRoutes].filter(indexable).map((p) => line(p)),
-  '', '## Città', '',
+  '', '## Città in cui lavoriamo', '',
   `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta.`,
   '', '## Blog', '',
   ...(indexable('/blog') ? [line('/blog')] : []),
