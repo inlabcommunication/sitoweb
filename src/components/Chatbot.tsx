@@ -377,7 +377,7 @@ export const Chatbot = () => {
                   borderRadius: 100,
                   padding: '10px 16px',
                   color: 'var(--t)',
-                  fontSize: 14,
+                  fontSize: 16, // 16 px: su iPhone il campo non fa zoom quando lo tocchi
                   fontFamily: 'var(--fb)',
                   outline: 'none',
                 }}
