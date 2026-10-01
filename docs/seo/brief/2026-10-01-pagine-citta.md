@@ -129,3 +129,54 @@ Risposta all'idea di Nicola, "marketing a {città}".
 - Gravina: 0 occorrenze di "provincia di Taranto".
 - Ginosa: sezione clienti presente.
 - Search Console, dopo 4-6 settimane: pagine città indicizzate e impressioni per "agenzia comunicazione {città}" e "{servizio} {città}".
+
+---
+
+## Aggiornamento 01/10 sera — testi in più per arrivare a 200 parole diverse
+
+Verifica sul sito online dopo la PR #53 (unione ea226d0):
+- le 7 pagine `/agenzia-comunicazione-{città}` rispondono 200, hanno 1 H1 e sono in sitemap;
+- Gravina dice "provincia di Bari";
+- Paresteta compare a Ginosa.
+
+Tra due città dello stesso servizio, però, cambiano circa 90 parole su 550 (misura di Sito Inlab), non 200.
+
+### Richiesta per lo sviluppo (per Sito Inlab), priorità media
+- **File:** aggiungere a ogni città in `src/data/cities.ts` due campi:
+  - `metodo`: un paragrafo, sotto "settori", con il titolo "Come lavoriamo a {città}";
+  - `faq2`: una seconda domanda, sotto la prima.
+- **Dove compaiono:** nelle pagine servizio-città e nelle pagine `/agenzia-comunicazione-{città}`.
+
+**Taranto**
+- *metodo:* "A Taranto lavoriamo soprattutto su visibilità e differenza dalla concorrenza: in città ci sono molte attività dello stesso settore, quindi contano una scheda Google curata, recensioni, contenuti riconoscibili e campagne mirate per quartiere o per zona, dal Borgo al lungomare. Partiamo da un'analisi di come ti trovano oggi i clienti e di cosa fanno le attività vicine a te."
+- *faq2:* "Si possono fare sponsorizzate solo per alcune zone di Taranto?" → "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te."
+
+**Castellaneta**
+- *metodo:* "A Castellaneta il lavoro segue due stagioni: d'estate il pubblico arriva da fuori, con turisti e famiglie a Castellaneta Marina, mentre il resto dell'anno contano i clienti del paese e dei paesi vicini. Per questo prepariamo i contenuti in anticipo sulla stagione e teniamo viva la comunicazione anche d'inverno."
+- *faq2:* "Lavorate anche per strutture di Castellaneta Marina?" → "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate."
+
+**Mottola**
+- *metodo:* "A Mottola molte attività vivono di eventi, cerimonie e passaparola. Per una location o un ristorante contano le immagini: foto degli spazi, video delle serate, recensioni e un profilo Instagram che faccia venire voglia di prenotare una visita. Lavoriamo sul posto per raccontare gli ambienti come li vede un ospite."
+- *faq2:* "Fate anche video di matrimoni o eventi a Mottola?" → "Facciamo video e reel per la comunicazione della location e dell'attività: contenuti che mostrano gli spazi e l'atmosfera, da usare su social, sito e campagne."
+
+**Palagianello**
+- *metodo:* "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti."
+- *faq2:* "Serve un sito se ho già la pagina Facebook?" → "Spesso sì: il sito e la scheda Google fanno trovare l'attività su Google, mentre i social tengono il contatto con chi ti conosce già. Insieme funzionano meglio."
+
+**Palagiano**
+- *metodo:* "A Palagiano lavoriamo spesso con chi produce: aziende agricole, produttori di agrumi e attività che vendono prodotti del territorio. Fotografiamo i prodotti e le fasi del lavoro, prepariamo schede chiare per il sito o per la vendita online e raccontiamo la filiera sui social, perché chi compra vuole sapere da dove arriva quello che mangia."
+- *faq2:* "Fate foto dei prodotti direttamente in azienda?" → "Sì, facciamo gli shooting sul posto: in campo, in magazzino o in negozio, per avere foto vere e non immagini di repertorio."
+
+**Laterza**
+- *metodo:* "A Laterza il valore sta nel saper fare: forni, botteghe, ceramisti e produttori. Lavoriamo con video brevi del lavoro, foto curate dei prodotti e testi che spiegano la tradizione senza retorica. Così anche chi non è del posto capisce perché vale la pena comprare o fare una deviazione per venire a trovarti."
+- *faq2:* "Si possono vendere online prodotti artigianali di Laterza?" → "Sì: con un piccolo e-commerce o con un catalogo collegato a WhatsApp e Instagram. Ti aiutiamo a scegliere la soluzione più semplice da gestire."
+
+**Ginosa**
+- *metodo:* "A Ginosa lavoriamo su due pubblici diversi: chi vive in paese tutto l'anno e chi arriva d'estate a Ginosa Marina. Per i negozi del centro contano costanza e riconoscibilità, come nel caso di Paresteta; per le attività della marina conta farsi trovare prima della stagione, con contenuti e campagne pronti già in primavera."
+- *faq2:* "Quando conviene iniziare a promuovere un'attività di Ginosa Marina?" → "Qualche mese prima dell'estate: i turisti scelgono dove andare in anticipo, quindi contenuti, scheda Google e sponsorizzate devono essere pronti prima dell'arrivo della stagione."
+
+**Gravina in Puglia**
+- *metodo:* "A Gravina in Puglia lavoriamo per attività che guardano sia alla Murgia sia al resto della Puglia. Molte hanno clienti anche nei comuni del barese e del materano: per questo impostiamo social e campagne su un'area più ampia del solo paese e curiamo la scheda Google, perché chi arriva da fuori cerca prima di tutto lì."
+- *faq2:* "Venite anche a Gravina in Puglia per shooting e riprese?" → "Sì, ci spostiamo da Castellaneta per incontri, foto e video. Il resto del lavoro lo seguiamo a distanza, con un contatto diretto."
+
+**Cosa misuro dopo:** almeno 200 parole diverse tra /gestione-social-laterza e /gestione-social-mottola; 1 H1; nessun errore di build.
