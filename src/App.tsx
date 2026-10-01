@@ -303,7 +303,7 @@ const Footer = () => {
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
           <p style={{fontSize:11,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
-            <span>© {new Date().getFullYear()} InLab Communication — Castellaneta (TA)</span>
+            <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano — P.IVA 03411970738 — Castellaneta (TA)</span>
             <Link to="/privacy" className="foot-link" style={{color:"var(--m)"}}>Privacy e cookie</Link>
             {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:11,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
           </p>

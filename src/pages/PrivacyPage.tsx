@@ -23,7 +23,7 @@ export const PagePrivacy: React.FC = () => (
       <P>Questa pagina spiega quali dati raccoglie il sito, perché e come puoi esercitare i tuoi diritti, ai sensi del Regolamento UE 2016/679 (GDPR) e delle linee guida del Garante Privacy sui cookie.</P>
 
       <H>Titolare del trattamento</H>
-      <P>InLab Communication — Castellaneta (TA), Puglia. Email: <a href="mailto:inlab.communication@gmail.com" style={{ color: 'var(--a)' }}>inlab.communication@gmail.com</a> · Telefono: <a href="tel:+393295654319" style={{ color: 'var(--a)' }}>+39 329 565 4319</a>.</P>
+      <P>InLab Communication di Nicola Carpignano — P.IVA 03411970738 — Castellaneta (TA), Puglia. Email: <a href="mailto:inlab.communication@gmail.com" style={{ color: 'var(--a)' }}>inlab.communication@gmail.com</a> · Telefono: <a href="tel:+393295654319" style={{ color: 'var(--a)' }}>+39 329 565 4319</a>.</P>
 
       <H>Quali dati raccogliamo</H>
       <ul style={{ paddingLeft: '1.2rem' }}>
