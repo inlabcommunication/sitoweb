@@ -28,7 +28,7 @@ const INSTAGRAM_HEADER = 54;
 /** Un reel è mostrabile se ha un embed valido o (vecchi reel) un video / link https. */
 export const hasReel = (r?: Reel) => !!r && !!(instagramEmbedSrc(r.embed) || safe(r.video) || safe(r.instagram));
 
-export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
+export const ReelCard: React.FC<{ reel: Reel; resetKey?: number }> = ({ reel, resetKey = 0 }) => {
   const embedSrc = instagramEmbedSrc(reel.embed);
   const video = safe(reel.video);
   const ig = safe(reel.instagram);
@@ -43,7 +43,7 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
             ai lati. L'iframe è allargato (142,2%) e centrato così il video 9:16 riempie la card,
             e sale di INSTAGRAM_HEADER px: intestazione, like e commenti restano fuori. */}
         <div style={{ position: 'relative', aspectRatio: '9 / 16', borderRadius: 20, overflow: 'hidden', border: '.5px solid var(--b)', background: '#000' }}>
-          <iframe src={embedSrc} title={reel.title || 'Reel Instagram'} loading="lazy" scrolling="no" allowFullScreen
+          <iframe key={resetKey} src={embedSrc} title={reel.title || 'Reel Instagram'} loading="lazy" scrolling="no" allowFullScreen
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
             style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: '-21.11%', width: '142.22%', height: `calc(100% + ${INSTAGRAM_HEADER + 300}px)`, border: 0, display: 'block' }} />
           {count && (
@@ -90,11 +90,53 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
   );
 };
 
-export const ReelsGrid: React.FC<{ reels: Reel[] }> = ({ reels }) => (
-  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.2rem' }}>
-    {reels.map((r, i) => <ReelCard key={i} reel={r} />)}
-  </div>
-);
+/** Griglia dei reel: ne suona uno alla volta. Gli embed Instagram non si possono
+ *  mettere in pausa dal sito, quindi quando tocchi un altro reel quello di prima
+ *  viene ricaricato (si ferma). I video caricati vengono semplicemente messi in pausa. */
+export const ReelsGrid: React.FC<{ reels: Reel[] }> = ({ reels }) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const active = React.useRef<number | null>(null);
+  const [keys, setKeys] = React.useState<number[]>(() => reels.map(() => 0));
+
+  const activate = React.useCallback((i: number) => {
+    const prev = active.current;
+    if (prev === i) return;
+    active.current = i;
+    if (prev !== null) setKeys((k) => k.map((v, j) => (j === prev ? v + 1 : v)));
+  }, []);
+
+  React.useEffect(() => {
+    const root = ref.current;
+    if (!root) return;
+    // Un clic dentro un iframe porta il focus all'iframe: il sito se ne accorge così
+    const check = () => {
+      const el = document.activeElement;
+      if (el instanceof HTMLIFrameElement && root.contains(el)) {
+        const idx = Number(el.closest('[data-reel]')?.getAttribute('data-reel'));
+        if (Number.isFinite(idx)) activate(idx);
+      }
+    };
+    const onBlur = () => setTimeout(check, 0);
+    window.addEventListener('blur', onBlur);
+    // passando da un iframe all'altro la finestra non riceve un nuovo "blur"
+    const timer = window.setInterval(() => { if (!document.hasFocus()) check(); }, 400);
+    // video caricati: quando uno parte, gli altri vanno in pausa
+    const onPlay = (e: Event) => {
+      const v = e.target as HTMLVideoElement;
+      root.querySelectorAll('video').forEach((o) => { if (o !== v) o.pause(); });
+      const idx = Number(v.closest('[data-reel]')?.getAttribute('data-reel'));
+      if (Number.isFinite(idx)) activate(idx);
+    };
+    root.addEventListener('play', onPlay, true);
+    return () => { window.removeEventListener('blur', onBlur); window.clearInterval(timer); root.removeEventListener('play', onPlay, true); };
+  }, [activate]);
+
+  return (
+    <div ref={ref} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.2rem' }}>
+      {reels.map((r, i) => <div key={i} data-reel={i}><ReelCard reel={r} resetKey={keys[i] || 0} /></div>)}
+    </div>
+  );
+};
 
 /** `alt`: testo alternativo completo, uguale per tutte le foto della galleria (niente "foto 1, 2…"). */
 export const Gallery: React.FC<{ images: string[]; alt: string }> = ({ images, alt }) => (
