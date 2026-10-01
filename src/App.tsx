@@ -72,7 +72,7 @@ const G = () => (
     .card{background:var(--s);border:.5px solid var(--b);border-radius:24px;padding:2rem;transition:border-color .3s,transform .3s}
     .card:hover{border-color:rgba(205,178,255,0.3);transform:translateY(-3px)}
  
-    .btn{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:100px;font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:all .2s;border:none}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:13px 26px;border-radius:100px;font-size:11px;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:all .2s;border:none}
     .btn-p{background:var(--a);color:#000}.btn-p:hover{box-shadow:0 0 28px rgba(205,178,255,.28);transform:scale(1.03)}
     .btn-g{background:transparent;color:var(--t);border:.5px solid var(--b)}.btn-g:hover{border-color:rgba(255,255,255,.3)}
  
@@ -135,6 +135,9 @@ const G = () => (
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
       .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
+      /* area di tocco di almeno 44 px per i link del footer (richiesta analista, approvata) */
+      footer .foot-link{display:inline-flex;align-items:center;min-height:44px}
+      .foot-list{gap:0!important}
     }
     @media(max-width:480px){
       .btn{padding:11px 20px!important;font-size:10px!important}
@@ -293,7 +296,7 @@ const Footer = () => {
           </div>
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Servizi</div>
-            <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+            <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {SERVICES.map(s=>(
                 <Link key={s.slug} to={"/"+s.slug} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{s.label}</Link>
               ))}
@@ -301,7 +304,7 @@ const Footer = () => {
           </div>
           <div>
             <div style={{fontSize:10,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
-            <div style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
+            <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
               {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Blog","/blog"],["Contatti","/contatti"]].map(([l,r])=>(
                 <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
               ))}
@@ -320,7 +323,7 @@ const Footer = () => {
               {label:"LinkedIn",url:"https://www.linkedin.com/company/inlab-communication/"},
               {label:"Facebook",url:"https://www.facebook.com/inlab.communication"},
             ].map(s=>(
-              <a key={s.label} href={s.url} target="_blank" rel="noreferrer noopener" style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
+              <a key={s.label} href={s.url} target="_blank" rel="noreferrer noopener" className="foot-link" style={{fontSize:10,letterSpacing:".14em",textTransform:"uppercase",color:"var(--m)",transition:"color .2s"}}
                 onMouseEnter={e=>e.currentTarget.style.color="var(--t)"}
                 onMouseLeave={e=>e.currentTarget.style.color="var(--m)"}
               >{s.label}</a>
