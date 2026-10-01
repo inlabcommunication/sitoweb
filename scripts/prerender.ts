@@ -4,7 +4,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SITE_URL } from '../src/seo/routes';
+import { AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -190,6 +190,39 @@ writeFileSync(join(DIST, 'sitemap.xml'),
 
 writeFileSync(join(DIST, 'robots.txt'),
   `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+
+// llms.txt (richiesta SEO 01/10): sommario in Markdown per i sistemi AI, solo
+// pagine indicizzabili con indirizzo assoluto. Non va in sitemap.
+const indexable = (p: string) => routes.includes(p) && !getSeo(p).noindex;
+const line = (p: string, label?: string) => {
+  const seo = getSeo(p);
+  return `- [${label || seo.title}](${seo.canonical}): ${seo.description}`;
+};
+const org = organizationJsonLd() as any;
+const caseRoutes = routes.filter((p) => p.startsWith('/casi-studio/'));
+const llms = [
+  `# ${org.name}`, '',
+  `> ${getSeo('/').description}`, '',
+  org.disambiguatingDescription, '',
+  '## Servizi', '',
+  ...SERVICES_SEO.map((s) => '/' + s.slug).filter(indexable).map((p) => line(p)),
+  '', '## Chi siamo', '',
+  ...['/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug))].filter(indexable).map((p) => line(p)),
+  '', '## Casi studio', '',
+  ...['/casi-studio', ...caseRoutes].filter(indexable).map((p) => line(p)),
+  '', '## Città', '',
+  `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta.`,
+  '', '## Blog', '',
+  ...(indexable('/blog') ? [line('/blog')] : []),
+  ...getBlogPosts().map((p) => '/blog/' + p.slug).filter(indexable).map((p) => line(p)),
+  '', '## Contatti', '',
+  ...(indexable('/contatti') ? [line('/contatti')] : []),
+  `- Email: ${BUSINESS.email}`,
+  `- Telefono: ${BUSINESS.telephone}`,
+  `- P.IVA: 03411970738 (InLab Communication di Nicola Carpignano)`,
+  `- Sede: ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
+].join('\n');
+writeFileSync(join(DIST, 'llms.txt'), llms);
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
 }
