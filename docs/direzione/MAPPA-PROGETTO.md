@@ -5,6 +5,13 @@ Aggiornata al **30/09/2026**. Fonte: repository (main e branch di ogni sessione)
 
 ---
 
+## Regola del titolare (01/10): lavori automatici di notte
+
+Le routine automatiche degli agenti devono partire **entro le 3 di notte** (ora italiana), mai dopo. Aggiornate il 01/10 alle 14:19:
+- Blog "monitoraggio e articolo": martedì e venerdì alle **2:47** (prima 8:47), `trig_012dfTrC8k7qjQL3cXyHXZnm`;
+- Analisi sito "Controllo sito InLab": ogni 2 giorni alle **2:56** (prima 8:56), `trig_01DewoKd4ZBE4VD8i6mk8HKp`.
+La routine "Blog InLab: pubblicazione ore 11:50" è disattivata e resta così. Ogni nuova routine ricorrente va programmata tra mezzanotte e le 3.
+
 ## Regola del titolare (01/10): resoconti completi
 
 Quando il titolare chiede cosa hanno fatto gli agenti, il Direttore dà **tutto** (lavoro, esiti, problemi, decisioni richieste) per ogni agente, così il titolare non deve aprire le varie chat. Il Direttore non può leggere le chat degli altri: vede solo commit, PR, documenti sui branch, il breve riassunto di stato di ogni sessione e i messaggi che riceve. Per avere tutto, ogni agente deve mandare al Direttore il proprio resoconto alla fine di ogni lavoro (**approvato dal titolare il 01/10**: messaggio mandato a tutti e 6 gli agenti alle 08:38 UTC; prefisso `[Resoconto da <ruolo>]`; routine del Blog mar/ven aggiornata dal Direttore con il punto 6; la routine dell'Analisi sito `trig_01DewoKd4ZBE4VD8i6mk8HKp` la aggiorna l'analista stessa, perché il Direttore non può modificarla). Primi resoconti chiesti: Sito Inlab (dal 30/09 15:00), SEO (dal 30/09 14:40), Analisi sito (controllo del 01/10 8:56), Competitor (a fine lavoro, dopo le 12:00).
