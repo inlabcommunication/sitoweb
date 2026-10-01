@@ -22,6 +22,9 @@ export const instagramEmbedSrc = (embed?: string) => {
   return `https://www.instagram.com/${kind}/${m[2]}/embed/`;
 };
 
+/** Altezza dell'intestazione dell'embed Instagram (avatar + nome profilo), nascosta. */
+const INSTAGRAM_HEADER = 54;
+
 /** Un reel è mostrabile se ha un embed valido o (vecchi reel) un video / link https. */
 export const hasReel = (r?: Reel) => !!r && !!(instagramEmbedSrc(r.embed) || safe(r.video) || safe(r.instagram));
 
@@ -32,15 +35,18 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
   if (!embedSrc && !video && !ig) return null;
 
   if (embedSrc) {
+    const views = (reel.showViews ?? !!reel.views) ? reel.views : '';
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        <div style={{ position: 'relative', borderRadius: 20, overflow: 'hidden', border: '.5px solid var(--b)', background: '#fff' }}>
+        {/* Solo il video: il riquadro è in 9:16 e l'iframe sale di INSTAGRAM_HEADER px,
+            così intestazione (profilo) e parte bassa (like, didascalia) restano fuori. */}
+        <div style={{ position: 'relative', aspectRatio: '9 / 16', borderRadius: 20, overflow: 'hidden', border: '.5px solid var(--b)', background: '#000' }}>
           <iframe src={embedSrc} title={reel.title || 'Reel Instagram'} loading="lazy" scrolling="no" allowFullScreen
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            style={{ display: 'block', width: '100%', aspectRatio: '9 / 19', minHeight: 480, border: 0 }} />
-          {reel.views && (
-            <span style={{ position: 'absolute', top: 12, right: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
-              {reel.views}
+            style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: -1, width: 'calc(100% + 2px)', height: `calc(100% + ${INSTAGRAM_HEADER + 240}px)`, border: 0, display: 'block' }} />
+          {views && (
+            <span style={{ position: 'absolute', top: 12, left: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
+              {views}
             </span>
           )}
         </div>

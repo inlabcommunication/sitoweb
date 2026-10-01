@@ -9,7 +9,9 @@ import { SERVICES_SEO } from '../seo/routes';
 const slugify = (v: string) => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').slice(0, 80);
 
 type Props = { content: any; set: (path: string, value: any) => void };
-type FieldDef = { key: string; label: string; kind?: 'text' | 'textarea' | 'image' | 'video'; placeholder?: string; hint?: string; rows?: number };
+type FieldDef = { key: string; label: string; kind?: 'text' | 'textarea' | 'image' | 'video' | 'check'; placeholder?: string; hint?: string; rows?: number;
+  /** Il campo compare solo se la condizione è vera per la voce. */
+  showIf?: (item: any) => boolean; valueOf?: (item: any) => any };
 
 const clone = <T,>(x: T): T => JSON.parse(JSON.stringify(x));
 const moved = <T,>(arr: T[], i: number, d: number) => {
@@ -36,7 +38,8 @@ const Check = ({ label, value, onChange }: { label: string; value: boolean; onCh
 );
 
 const FieldFor: React.FC<{ f: FieldDef; value: any; onChange: (v: any) => void }> = ({ f, value, onChange }) =>
-  f.kind === 'image' || f.kind === 'video'
+  f.kind === 'check' ? <Check label={f.label} value={!!value} onChange={onChange} />
+  : f.kind === 'image' || f.kind === 'video'
     ? <ImageField label={f.label} value={value} type={f.kind} onChange={onChange} />
     : <Field label={f.label} value={value} onChange={onChange} multiline={f.kind === 'textarea'} rows={f.rows} placeholder={f.placeholder} hint={f.hint} />;
 
@@ -50,8 +53,8 @@ const ObjList = ({ items = [], onChange, fields, newItem, addLabel, titleOf }: {
         onUp={i > 0 ? () => onChange(moved(items, i, -1)) : undefined}
         onDown={i < items.length - 1 ? () => onChange(moved(items, i, 1)) : undefined}
         onDelete={() => { const a = clone(items); a.splice(i, 1); onChange(a); }}>
-        {fields.map((f) => (
-          <FieldFor key={f.key} f={f} value={it?.[f.key]} onChange={(v) => { const a = clone(items); a[i] = { ...a[i], [f.key]: v }; onChange(a); }} />
+        {fields.filter((f) => !f.showIf || f.showIf(it || {})).map((f) => (
+          <FieldFor key={f.key} f={f} value={f.valueOf ? f.valueOf(it || {}) : it?.[f.key]} onChange={(v) => { const a = clone(items); a[i] = { ...a[i], [f.key]: v }; onChange(a); }} />
         ))}
       </CardBlock>
     ))}
@@ -82,9 +85,11 @@ const Images = ({ label, value = [], onChange }: { label: string; value: string[
 const REEL_FIELDS: FieldDef[] = [
   { key: 'title', label: 'Titolo del reel', placeholder: 'Es. Il cambio gomme in 30 secondi' },
   { key: 'embed', label: 'Embed Instagram del reel', kind: 'textarea', rows: 4, placeholder: '<blockquote class="instagram-media" ...> oppure https://www.instagram.com/reel/...', hint: 'Su Instagram: ··· sul reel → Incorpora → Copia codice di incorporamento. Va bene anche il solo link del reel.' },
-  { key: 'views', label: 'Etichetta visualizzazioni (facoltativa)', placeholder: 'Es. 1,2M views' },
+  { key: 'showViews', label: 'Mostra visualizzazioni', kind: 'check', showIf: (r) => !!(r.embed || '').trim(), valueOf: (r) => r.showViews ?? !!r.views },
+  { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M views', hint: 'Il numero da mostrare sul video (Instagram non lo passa nell\'embed)',
+    showIf: (r) => !(r.embed || '').trim() || (r.showViews ?? !!r.views) },
 ];
-const newReel = () => ({ title: '', embed: '', views: '' });
+const newReel = () => ({ title: '', embed: '', showViews: false, views: '' });
 
 // ═══════════════════════════════════════════════════════════════
 // PROGETTI RACCONTATI — schede clienti
