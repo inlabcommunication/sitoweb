@@ -129,7 +129,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
                   {s.desc}
                 </p>
                 <span style={{
-                  fontSize: 10, letterSpacing: '.14em', textTransform: 'uppercase',
+                  fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase',
                   color: 'var(--a)', display: 'inline-flex', alignItems: 'center', gap: 4,
                 }}>
                   Scopri <ArrowUpRight size={11} />

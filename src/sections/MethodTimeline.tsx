@@ -149,7 +149,7 @@ export const MethodTimeline: React.FC = () => {
 
                 <div style={{ paddingTop: 4 }}>
                   <div style={{
-                    fontSize: 10,
+                    fontSize: 12,
                     letterSpacing: '.2em',
                     textTransform: 'uppercase',
                     color: 'var(--m)',

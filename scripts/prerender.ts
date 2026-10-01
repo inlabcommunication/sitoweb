@@ -4,7 +4,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SITE_URL } from '../src/seo/routes';
+import { AGENCY_CITIES, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -188,8 +188,47 @@ const urls = routes
 writeFileSync(join(DIST, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`);
 
+// Bot AI scritti per nome (richiesta SEO 01/10). Un gruppo dedicato sostituisce
+// "*" per quei bot, quindi ripete gli stessi Disallow: /admin e /api/ restano esclusi.
+const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'bingbot'];
+const RULES = 'Allow: /\nDisallow: /admin\nDisallow: /api/\n';
 writeFileSync(join(DIST, 'robots.txt'),
-  `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+  `User-agent: *\n${RULES}\n${AI_BOTS.map((b) => `User-agent: ${b}`).join('\n')}\n${RULES}\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+
+// llms.txt (richiesta SEO 01/10): sommario in Markdown per i sistemi AI, solo
+// pagine indicizzabili con indirizzo assoluto. Non va in sitemap.
+const indexable = (p: string) => routes.includes(p) && !getSeo(p).noindex;
+const line = (p: string, label?: string) => {
+  const seo = getSeo(p);
+  return `- [${label || seo.title}](${seo.canonical}): ${seo.description}`;
+};
+const org = organizationJsonLd() as any;
+const caseRoutes = routes.filter((p) => p.startsWith('/casi-studio/'));
+const llms = [
+  `# ${org.name}`, '',
+  '> Agenzia di comunicazione con sede a Castellaneta (TA), Puglia, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
+  org.disambiguatingDescription, '',
+  '## Servizi', '',
+  ...SERVICES_SEO.map((s) => '/' + s.slug).filter(indexable).map((p) => line(p)),
+  '', '## Chi siamo', '',
+  ...['/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug))].filter(indexable).map((p) => line(p)),
+  '', '## Casi studio', '',
+  ...['/casi-studio', ...caseRoutes].filter(indexable).map((p) => line(p)),
+  '', '## Città in cui lavoriamo', '',
+  `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta.`,
+  '', ...AGENCY_CITIES.map(agencyPath).filter(indexable).map((p) => line(p)),
+  '', '## Blog', '',
+  ...(indexable('/blog') ? [line('/blog')] : []),
+  ...getBlogPosts().map((p) => '/blog/' + p.slug).filter(indexable).map((p) => line(p)),
+  '', '## Contatti', '',
+  ...(indexable('/contatti') ? [line('/contatti')] : []),
+  `- Email: ${BUSINESS.email}`,
+  `- Telefono: ${BUSINESS.telephone}`,
+  `- P.IVA: 03411970738 (InLab Communication di Nicola Carpignano)`,
+  `- Sede: ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
+].join('\n');
+writeFileSync(join(DIST, 'llms.txt'), llms);
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
 }

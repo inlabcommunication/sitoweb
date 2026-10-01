@@ -23,7 +23,7 @@ export const PagePrivacy: React.FC = () => (
       <P>Questa pagina spiega quali dati raccoglie il sito, perché e come puoi esercitare i tuoi diritti, ai sensi del Regolamento UE 2016/679 (GDPR) e delle linee guida del Garante Privacy sui cookie.</P>
 
       <H>Titolare del trattamento</H>
-      <P>InLab Communication — Castellaneta (TA), Puglia. Email: <a href="mailto:inlab.communication@gmail.com" style={{ color: 'var(--a)' }}>inlab.communication@gmail.com</a> · Telefono: <a href="tel:+393295654319" style={{ color: 'var(--a)' }}>+39 329 565 4319</a>.</P>
+      <P>InLab Communication di Nicola Carpignano — P.IVA 03411970738 — Castellaneta (TA), Puglia. Email: <a href="mailto:inlab.communication@gmail.com" style={{ color: 'var(--a)' }}>inlab.communication@gmail.com</a> · Telefono: <a href="tel:+393295654319" style={{ color: 'var(--a)' }}>+39 329 565 4319</a>.</P>
 
       <H>Quali dati raccogliamo</H>
       <ul style={{ paddingLeft: '1.2rem' }}>
@@ -38,7 +38,7 @@ export const PagePrivacy: React.FC = () => (
       <P><b>Tecnici</b> (sempre attivi): necessari al funzionamento del sito, per esempio per ricordare la tua scelta sui cookie o la sessione della chat. Non richiedono consenso.</P>
       <P><b>Statistici di terze parti</b>{GA_ID ? '' : ' (al momento non attivi)'}: cookie di Google Analytics (<code>_ga</code>, <code>_ga_*</code>, durata fino a 2 anni), installati solo se premi «Accetta» nel banner. Se rifiuti o chiudi il banner non vengono installati. Google Ireland Ltd. tratta i dati come responsabile; eventuali trasferimenti verso gli USA avvengono nell'ambito dell'EU-US Data Privacy Framework.</P>
       {GA_ID && (
-        <P><button onClick={() => reopenConsent()} className="btn btn-g" style={{ fontSize: 10, padding: '10px 18px' }}>Modifica le preferenze cookie</button></P>
+        <P><button onClick={() => reopenConsent()} className="btn btn-g" style={{ fontSize: 12, padding: '10px 18px' }}>Modifica le preferenze cookie</button></P>
       )}
 
       <H>A chi affidiamo i dati</H>
