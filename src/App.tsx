@@ -1762,7 +1762,7 @@ const PageCliente = ({id}: {id: string}) => {
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Reel</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">CHE HANNO GIRATO</span></h2>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">VIRALI</span></h2>
             <ReelsGrid reels={reels}/>
           </div>
         </section>
