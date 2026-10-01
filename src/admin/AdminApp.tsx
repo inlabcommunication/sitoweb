@@ -51,7 +51,11 @@ export const AdminApp = () => {
     const robots = document.createElement('meta');
     robots.name = 'robots'; robots.content = 'noindex, nofollow';
     document.head.appendChild(robots);
-    return () => robots.remove();
+    // Manifest della dashboard: aggiunta alla schermata Home si apre su /admin (push dei lead)
+    const manifest = document.querySelector<HTMLLinkElement>('link[rel="manifest"]');
+    const prevManifest = manifest?.getAttribute('href');
+    manifest?.setAttribute('href', '/admin.webmanifest');
+    return () => { robots.remove(); if (manifest && prevManifest) manifest.setAttribute('href', prevManifest); };
   }, []);
 
   useEffect(() => {

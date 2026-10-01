@@ -175,7 +175,10 @@ console.log(`[prerender] HTML statico: ${ssr ? routes.length - ssrFailed : 0}/${
 const noindex = (html: string, title: string) => html
   .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`)
   .replace(/(<meta name="robots" content=")[^"]*"/, '$1noindex, nofollow"');
-writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
+// La dashboard ha un manifest suo: aggiunta alla schermata Home si apre su /admin
+// (necessario per le notifiche push dei lead su iPhone)
+writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication')
+  .replace('href="/site.webmanifest"', 'href="/admin.webmanifest"'));
 writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | InLab Communication')
   .replace('<div id="root"></div>', `<div id="root">${await body('/__pagina-non-trovata__')}</div>`));
 

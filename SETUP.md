@@ -45,6 +45,30 @@ RATE_LIMIT_SALT=...           # stringa casuale lunga
 CHAT_DAILY_LIMIT=400          # opzionale: tetto giornaliero di messaggi al chatbot
 ```
 
+### Avvisi nuove lead (solo server)
+
+A ogni nuova lead (modulo contatti o chatbot) il server manda un avviso su ogni canale configurato. Un canale senza variabili resta spento; se uno fallisce, la lead è comunque salvata. Stato e prova: dashboard → **Lead → Avvisi nuove lead → Invia prova**.
+
+```
+# Telegram: crea il bot con @BotFather (/newbot) e copia il token.
+# Poi scrivi un messaggio al bot e apri https://api.telegram.org/bot<TOKEN>/getUpdates: "chat":{"id":...} è il tuo chat id.
+TELEGRAM_BOT_TOKEN=123456:ABC...
+TELEGRAM_CHAT_ID=123456789          # più destinatari separati da virgola
+
+# Email con Resend (resend.com → API Keys). Senza dominio verificato su Resend
+# il mittente di prova onboarding@resend.dev scrive solo all'email dell'account Resend.
+RESEND_API_KEY=re_...
+LEAD_NOTIFY_EMAIL=info@tuodominio.it  # più indirizzi separati da virgola
+LEAD_NOTIFY_FROM="Sito InLab <lead@tuodominio.it>"  # opzionale, dominio verificato su Resend
+
+# Push sulla dashboard: genera le chiavi una volta con  npx web-push generate-vapid-keys
+VAPID_PUBLIC_KEY=B...
+VAPID_PRIVATE_KEY=...
+VAPID_SUBJECT=mailto:info@tuodominio.it  # opzionale
+```
+
+Push: apri la dashboard sul dispositivo → **Lead → Attiva notifiche qui**. Su **iPhone** (iOS 16.4+) prima aggiungi la dashboard alla schermata Home (Safari → Condividi → Aggiungi alla schermata Home), aprila da lì e attiva. Si attiva ogni dispositivo separatamente.
+
 ### Dominio del sito (SEO)
 
 ```
@@ -79,6 +103,7 @@ VITE_GSC_VERIFICATION=...         # Search Console → metodo "Tag HTML" (codice
 | `blog_posts` | articoli del blog (pubblici solo se `published`) | admin |
 | `app/settings` | provider/modello AI e informazioni per il chatbot | admin |
 | `leads` | contatti da form e chatbot | solo server: `/api/lead`, `/api/chat` |
+| `admin_push_subscriptions` | dispositivi iscritti alle notifiche push dei lead | solo server: `/api/notify` |
 | `admins` | UID degli amministratori | a mano dalla console |
 | `analytics_events` | pageview, scroll, click | sito pubblico |
 

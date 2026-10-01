@@ -1,0 +1,16 @@
+{
+  "name": "InLab Dashboard",
+  "short_name": "InLab Admin",
+  "description": "Dashboard InLab: lead, contenuti e statistiche.",
+  "id": "/admin",
+  "start_url": "/admin",
+  "scope": "/admin",
+  "display": "standalone",
+  "background_color": "#1e1d1d",
+  "theme_color": "#1e1d1d",
+  "lang": "it",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

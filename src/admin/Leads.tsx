@@ -5,6 +5,7 @@ import { Mail, Phone, Calendar, Download, Search, Trash2, MessageSquare, Tag, X 
 import { auth, db } from '../lib/firebase';
 import { firebaseConfig } from '../lib/firebaseConfig';
 import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { LeadAlerts } from './LeadAlerts';
 
 type Lead = {
   id: string;
@@ -113,6 +114,8 @@ export const Leads = () => {
           <button onClick={exportCsv} disabled={leads.length === 0} className="btn btn-g" style={{ opacity: leads.length === 0 ? 0.4 : 1 }}><Download size={14} /> Esporta CSV</button>
         </div>
       </div>
+
+      <LeadAlerts />
 
       {loadError && <div role="alert" style={{ padding: '12px 16px', marginBottom: '1rem', borderRadius: 12, border: '.5px solid #ff9b9b', color: '#ffb4b4', fontSize: 13 }}>{loadError}</div>}
       {check && (() => {

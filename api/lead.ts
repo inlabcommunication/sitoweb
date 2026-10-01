@@ -6,6 +6,7 @@
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
+import { notifyNewLead } from "./_lib/notify";
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
@@ -77,6 +78,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       status: "new",
       notes: lead.message,
       created_at: new Date().toISOString(),
+    });
+    // Avviso su Telegram, email e push (il lead è già salvato: un errore qui non cambia la risposta)
+    await notifyNewLead(db, {
+      source: "contact_form", name: lead.name, email: lead.email, phone: lead.phone,
+      company: lead.company, intent: lead.service || "Contatto dal sito", message: lead.message,
     });
     return res.status(200).json({ ok: true });
   } catch (e) {

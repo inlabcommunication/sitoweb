@@ -76,6 +76,8 @@ service cloud.firestore {
     // Contatori anti-abuso usati dalle funzioni /api: mai accessibili dal browser
     match /_ratelimits/{id} { allow read, write: if false; }
     match /_usage/{id} { allow read, write: if false; }
+    // Dispositivi iscritti alle notifiche push dei lead: li gestisce solo /api/notify
+    match /admin_push_subscriptions/{id} { allow read, write: if false; }
 
     // Tutto il resto è chiuso
     match /{document=**} { allow read, write: if false; }

@@ -7,6 +7,7 @@
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import type Anthropic from "@anthropic-ai/sdk";
 import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
+import { notifyNewLead } from "./_lib/notify";
 
 // Limiti anti-abuso (sovrascrivibili da variabili d'ambiente su Vercel)
 const LIMIT_PER_IP_10MIN = Number(process.env.CHAT_LIMIT_PER_IP_10MIN || 15);
@@ -296,6 +297,11 @@ async function handle(req: VercelRequest, res: VercelResponse) {
             intent: `[${classification.toUpperCase()}] ${tags.join(", ")}`,
             conversation, source: "chatbot", status: "new",
             session_id: sessionId, created_at: new Date().toISOString(),
+          });
+          await notifyNewLead(db, {
+            source: "chatbot", name, email, phone,
+            intent: `${classification}${tags.length ? ` · ${tags.join(", ")}` : ""}`,
+            message: lastUserMsg,
           });
         }
       } catch (e) {
