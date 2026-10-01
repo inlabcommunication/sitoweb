@@ -38,12 +38,13 @@ export const ReelCard: React.FC<{ reel: Reel }> = ({ reel }) => {
     const views = (reel.showViews ?? !!reel.views) ? reel.views : '';
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-        {/* Solo il video: il riquadro è in 9:16 e l'iframe sale di INSTAGRAM_HEADER px,
-            così intestazione (profilo) e parte bassa (like, didascalia) restano fuori. */}
+        {/* Solo il video: nell'embed Instagram il reel sta in un riquadro 4:5 con bande nere
+            ai lati. L'iframe è allargato (142,2%) e centrato così il video 9:16 riempie la card,
+            e sale di INSTAGRAM_HEADER px: intestazione, like e commenti restano fuori. */}
         <div style={{ position: 'relative', aspectRatio: '9 / 16', borderRadius: 20, overflow: 'hidden', border: '.5px solid var(--b)', background: '#000' }}>
           <iframe src={embedSrc} title={reel.title || 'Reel Instagram'} loading="lazy" scrolling="no" allowFullScreen
             allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: -1, width: 'calc(100% + 2px)', height: `calc(100% + ${INSTAGRAM_HEADER + 240}px)`, border: 0, display: 'block' }} />
+            style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: '-21.11%', width: '142.22%', height: `calc(100% + ${INSTAGRAM_HEADER + 300}px)`, border: 0, display: 'block' }} />
           {views && (
             <span style={{ position: 'absolute', top: 12, left: 12, pointerEvents: 'none', fontSize: 10, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
               {views}
