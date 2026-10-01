@@ -53,7 +53,7 @@ const G = () => (
     :root{
       --a:#cdb2ff; --bg:#1e1d1d; --s:#262525; --b:rgba(255,255,255,0.07);
       --t:#F0EDE6; --m:rgba(240,237,230,0.64);
-      --fd:'Bebas Neue',sans-serif; --fs:'DM Serif Display',serif; --fb:'DM Sans',sans-serif;
+      --fd:'Bebas Neue','Bebas Neue Fallback',sans-serif; --fs:'DM Serif Display','DM Serif Display Fallback',serif; --fb:'DM Sans','DM Sans Fallback',sans-serif;
     }
     html{scroll-behavior:smooth}
     body{background:var(--bg);color:var(--t);font-family:var(--fb);font-weight:300;overflow-x:hidden}
