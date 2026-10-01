@@ -138,7 +138,7 @@ const ServicesStyles = () => (
     .svc-track{display:flex;align-items:center;gap:3.2vw;padding:0 7vw;width:max-content;will-change:transform}
     .svc-intro{flex:0 0 min(34vw,460px);padding-right:3vw;color:#171619}
     .svc-intro h2{font-family:var(--fd);font-weight:400;font-size:clamp(3.6rem,6.4vw,7rem);line-height:.84;text-transform:uppercase}
-    .svc-intro h2 span{color:rgba(23,22,25,.45)}
+    .svc-intro h2 span{color:rgba(23,22,25,.6)}
     .svc-intro p{max-width:320px;margin-top:1.6rem;font-size:15px;line-height:1.6;color:rgba(23,22,25,.7)}
     .svc-card{
       position:relative;flex:0 0 min(34vw,520px);height:min(66svh,620px);

@@ -237,7 +237,7 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
               </motion.div>
             ))}
           </div>
-          {b.note && <p style={{ marginTop: '2rem', fontSize: 12, color: 'rgba(255,255,255,0.3)', fontStyle: 'italic', textAlign: 'center' }}>{b.note}</p>}
+          {b.note && <p style={{ marginTop: '2rem', fontSize: 12, color: 'var(--m)', fontStyle: 'italic', textAlign: 'center' }}>{b.note}</p>}
         </Section>
       );
     }
