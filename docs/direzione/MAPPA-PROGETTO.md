@@ -19,6 +19,14 @@ Quattro messaggi una tantum tra sessioni sono rimasti disattivati perché il lor
 
 Fatti riportati da Sito Inlab (14:42, da verificare alla ripresa): PR #37 (home mobile più leggibile, reel a 720 px, `CLAUDE.md` con Direttore, Competitor, SEO responsabile del blog, `tools/blog-images` al Blog, sezione "Coordinamento"); PR #33 del Blog unita; PR #38 (bug mobile MethodDevices, Esc sul menu, `overflow-x:clip`).
 
+## Lavori del 01/10 mattina (partiti dalle routine del Competitor alle 8:50)
+
+- **Sito Inlab** (PR #41, #42, #43, unite su main 8:54–9:27): P.IVA di Nicola in privacy, footer e dati strutturati; risposte tecniche al Competitor (`docs/risposte-competitor-2026-10-01.md`); `npm audit` di nuovo a 0 (override `@grpc/grpc-js`); **contatori della home con il valore finale nell'HTML** (richiesta SEO ALTA: fatta, quindi `trig_01KtTcYjV7nXwxfaZ86rEEsE` non serve più); **`llms.txt`** generato al build.
+- **Performance:** confronto di velocità con 5 concorrenti (`docs/performance/competitor-2026-10-01.md`, branch `sleepy-mccarthy`): InLab il più veloce su mobile insieme a Forte e Chiaro; unico punto debole il peso della home (1,5 MB, griglia Instagram).
+- **Blog:** risposte al Competitor (`docs/blog-reports/risposte-competitor-2026-10-01.md`): nessun articolo in bozza, 17 pubblicati con parola chiave.
+- **SEO:** nessun commit (push bloccato). **Analisi sito:** controllo delle 8:56, esito solo nella sua chat.
+- Sera del 30/09: PR #38 (Metodo + Esc), fix urgente che toglie `html{overflow-x:clip}` (bloccava le sezioni sticky su telefono), PR #39–#40 (icone del sito con il logo InLab).
+
 ## 1. Il sito
 
 - **Azienda:** InLab Communication, agenzia di comunicazione a Castellaneta (TA). Titolare: Nicola Carpignano (autori del blog: Nicola Carpignano, Ilaria Gemma).
