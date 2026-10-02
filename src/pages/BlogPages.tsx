@@ -307,6 +307,7 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
               {author.knowsAbout.map((k) => <span key={k} className="tag tag-a">{k}</span>)}
             </div>
             <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '1rem' }}>Lavora in InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA).</p>
+            {author.vatID && <p style={{ fontSize: 13, color: 'var(--m)', marginTop: '.5rem' }}>P.IVA {author.vatID}</p>}
             {author.sameAs.length > 0 && (
               <p style={{ fontSize: 13, color: 'var(--m)', marginTop: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 1rem' }}>
                 <span>Profili:</span>
