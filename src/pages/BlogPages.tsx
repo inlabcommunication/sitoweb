@@ -289,6 +289,17 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
             <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.2rem,2.2vw,1.7rem)', color: 'var(--a)', marginBottom: '1.4rem' }}>{author.jobTitle}</p>
             {member.bio && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640 }}>{member.bio}</p>}
             {author.facts && author.facts.length > 0 && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640, marginTop: member.bio ? '1rem' : 0 }}>{author.facts.join(' ')}</p>}
+            {/* Ricerca dentro la bio (richiesta di Nicola, 02/10) */}
+            {author.researchIntro && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640, marginTop: '1rem' }}>{author.researchIntro}</p>}
+            {author.research && author.research.length > 0 && (
+              <ul style={{ paddingLeft: '1.1rem', margin: '1rem 0 0', maxWidth: 640 }}>
+                {author.research.map((r) => (
+                  <li key={r.url} style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7, marginBottom: 6 }}>
+                    {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>{r.title.startsWith('"') ? r.title : `"${r.title}"`}</a>{r.book ? <>, in <em>{r.book}</em></> : null}, {r.publisher}{r.pages ? `, pp. ${r.pages}` : ''}.
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </section>
@@ -319,22 +330,6 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
           </div>
         </div>
       </section>
-
-      {author.research && author.research.length > 0 && (
-        <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-          <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-            <h2 className="section-label" style={{ fontWeight: 500 }}>Ricerca</h2>
-            {author.researchIntro && <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820, marginBottom: '1rem' }}>{author.researchIntro}</p>}
-            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-              {author.research.map((r) => (
-                <li key={r.url} style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820 }}>
-                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>{r.title.startsWith('"') ? r.title : `"${r.title}"`}</a>{r.book ? <>, in <em>{r.book}</em></> : null}, {r.publisher}{r.pages ? `, pp. ${r.pages}` : ''}.
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-      )}
 
       {mine.length > 0 && (
         <section style={{ padding: '5rem 2rem', borderBottom: '.5px solid var(--b)' }}>
