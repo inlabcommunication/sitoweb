@@ -107,15 +107,38 @@ const imageObject = (url: string, caption?: string, size?: { width: number; heig
 export const AUTHORS = [
   { slug: 'nicola-carpignano', name: 'Nicola Carpignano', jobTitle: 'Social media manager, comunicazione e marketing',
     title: 'Nicola Carpignano: social media e marketing a Castellaneta',
-    description: 'Nicola Carpignano, social media manager e co-fondatore di InLab Communication a Castellaneta (TA): strategia, contenuti e marketing per attività locali.',
-    alumniOf: 'Sapienza Università di Roma',
-    knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati'],
+    description: 'Nicola Carpignano, social media manager e co-fondatore di InLab Communication a Castellaneta (TA). Psicologo della comunicazione e docente di marketing.',
+    alumniOf: ['Università degli Studi di Bari Aldo Moro', 'Sapienza Università di Roma'],
+    homeLocation: 'Palagianello',
+    knowsAbout: ['Social media marketing', 'Strategia editoriale', 'Copywriting', 'Posizionamento dei contenuti', 'Psicologia della comunicazione', 'Psicologia del marketing', 'Digital marketing', 'Analisi dati'],
+    // Pagina autore: biografia estesa, docenze e pubblicazioni (indicazioni del titolare, 02/10/2026)
+    bio: [
+      'Nicola Carpignano è social media manager e co-fondatore di InLab Communication, agenzia di comunicazione di Castellaneta (TA). Originario di Palagianello, segue strategia editoriale, copywriting, gestione dei social e posizionamento dei contenuti per aziende e attività locali in Puglia.',
+      'Si è laureato in Psicologia all\'Università degli Studi di Bari Aldo Moro e si è specializzato in Psicologia della comunicazione e del marketing alla Sapienza Università di Roma. Da qui nasce il suo metodo: prima capire come le persone leggono un messaggio e decidono se fidarsi, poi costruire contenuti che le facciano fermare, ricordare il brand e scegliere.',
+      'Ha portato questa esperienza anche in aula, come docente di Marketing e Social Media in due master di EA Formazione a Bari. Nel lavoro con i clienti trasforma gli obiettivi di business in piani di comunicazione concreti, misurabili e riconoscibili.',
+    ],
+    teaching: [
+      'Docente di Marketing e Social Media — Master in Management degli Eventi, EA Formazione (Bari)',
+      'Docente di Marketing e Social Media — Master in Social Media, EA Formazione (Bari)',
+    ],
+    publications: [
+      { title: '"#Melomerito": a Netnographic Study on Communication in Digital Recruiting',
+        citation: 'Studio netnografico sulla comunicazione nel recruiting digitale, con l\'Università degli Studi di Bari Aldo Moro.',
+        url: 'https://www.researchgate.net/publication/331529739_Melomerito_a_Netnographic_Study_on_Communication_in_Digital_Recruiting' },
+      { title: 'Polemical social representations about "immigration" in journal articles of different political positioning via Facebook',
+        citation: 'De Rosa A. M. S., Bocci E., Carpignano N. (2020), in Political and economic self-constitution: media, political culture and democracy, Institute of Social Sciences (Belgrado), pp. 58-64. Con la Sapienza Università di Roma.',
+        url: '' },
+    ],
     sameAs: [] as string[] },
   { slug: 'ilaria-gemma', name: 'Ilaria Gemma', jobTitle: 'Content creator e comunicazione visiva',
     title: 'Ilaria Gemma: content creator, foto e video a Castellaneta',
     description: 'Ilaria Gemma, content creator e co-fondatrice di InLab Communication a Castellaneta (TA): foto, video, reel e comunicazione visiva per i brand locali.',
-    alumniOf: '',
+    alumniOf: [] as string[],
+    homeLocation: '',
     knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'],
+    bio: [] as string[],
+    teaching: [] as string[],
+    publications: [] as { title: string; citation: string; url: string }[],
     sameAs: [] as string[] },
 ];
 export type Author = (typeof AUTHORS)[number];
@@ -128,7 +151,8 @@ const personJsonLd = (a: Author) => ({
   '@context': 'https://schema.org', '@type': 'Person', '@id': personId(a), name: a.name,
   url: SITE_URL + authorPath(a.slug), jobTitle: a.jobTitle, worksFor: orgRef,
   workLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Castellaneta', addressRegion: 'TA', addressCountry: 'IT' } },
-  ...(a.alumniOf ? { alumniOf: { '@type': 'CollegeOrUniversity', name: a.alumniOf } } : {}),
+  ...(a.alumniOf.length ? { alumniOf: a.alumniOf.map((name) => ({ '@type': 'CollegeOrUniversity', name })) } : {}),
+  ...(a.homeLocation ? { homeLocation: { '@type': 'Place', name: `${a.homeLocation} (TA)` } } : {}),
   knowsAbout: a.knowsAbout, sameAs: a.sameAs,
 });
 
@@ -242,7 +266,13 @@ export const getSeo = (rawPath: string): Seo => {
   if (author) {
     return page(path, withBrand(author.title), author.description, {
       sitemap: { priority: 0.6, changefreq: 'monthly' },
-      jsonLd: [{ '@context': 'https://schema.org', '@type': 'ProfilePage', url: abs(path), inLanguage: 'it-IT', mainEntity: personJsonLd(author) }],
+      jsonLd: [
+        { '@context': 'https://schema.org', '@type': 'ProfilePage', url: abs(path), inLanguage: 'it-IT', mainEntity: personJsonLd(author) },
+        ...author.publications.map((p) => ({
+          '@context': 'https://schema.org', '@type': 'ScholarlyArticle', headline: p.title.slice(0, 110), name: p.title,
+          author: personRef(author), ...(p.url ? { url: p.url } : {}),
+        })),
+      ],
     }, [['Chi siamo', '/chi-siamo'], [author.name, path]]);
   }
   if (path === '/casi-studio') {

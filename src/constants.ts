@@ -303,8 +303,8 @@ export const WEBSITE_CONTENT = {
       {
         name: "Nicola Carpignano",
         role: "Social media manager, comunicazione e marketing",
-        bio: "Si occupa di strategia editoriale, copy, gestione social e posizionamento dei contenuti. Trasforma obiettivi di business in piani di comunicazione concreti e riconoscibili.",
-        edu: ["Psicologia della comunicazione e del marketing — Sapienza Università di Roma", "Master in Digital Marketing"],
+        bio: "Psicologo della comunicazione e social media manager. Cura strategia editoriale, copywriting, gestione social e posizionamento dei contenuti: trasforma gli obiettivi di business in piani di comunicazione concreti, misurabili e riconoscibili. È stato docente di Marketing e Social Media nei master di EA Formazione a Bari.",
+        edu: ["Laurea magistrale in Psicologia della comunicazione e del marketing — Sapienza Università di Roma", "Laurea in Psicologia — Università degli Studi di Bari Aldo Moro", "Master in Digital Marketing"],
         photo: "",
         skills: ["Social media strategy", "Copywriting", "Piano editoriale", "Community management", "Posizionamento brand"]
       },

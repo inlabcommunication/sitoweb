@@ -268,7 +268,9 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
             <p className="section-label">Autore · InLab Communication</p>
             <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(3rem,8vw,6.5rem)', lineHeight: 0.9, marginBottom: '1rem', textTransform: 'uppercase' }}>{author.name}</h1>
             <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.2rem,2.2vw,1.7rem)', color: 'var(--a)', marginBottom: '1.4rem' }}>{author.jobTitle}</p>
-            {member.bio && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640 }}>{member.bio}</p>}
+            {author.bio.length > 0
+              ? author.bio.map((b) => <p key={b} style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 680, marginBottom: '1rem' }}>{b}</p>)
+              : member.bio && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640 }}>{member.bio}</p>}
           </div>
         </div>
       </section>
@@ -288,8 +290,34 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
             </div>
             <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '1rem' }}>Lavora in InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA).</p>
           </div>
+          {author.teaching.length > 0 && (
+            <div className="card">
+              <h2 className="section-label" style={{ fontWeight: 500 }}>Docenze</h2>
+              <ul style={{ paddingLeft: '1.1rem', margin: 0 }}>{author.teaching.map((t) => <li key={t} style={{ fontSize: 14, lineHeight: 1.7, marginBottom: 6 }}>{t}</li>)}</ul>
+            </div>
+          )}
         </div>
       </section>
+
+      {author.publications.length > 0 && (
+        <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+          <div style={{ maxWidth: 1080, margin: '0 auto' }}>
+            <p className="section-label">Ricerca</p>
+            <h2 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(2.2rem,4vw,3.6rem)', lineHeight: 0.9, marginBottom: '1rem' }}>PUBBLICAZIONI <span className="stroke">SCIENTIFICHE</span></h2>
+            <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.8, maxWidth: 720, marginBottom: '2rem' }}>Lo studio della comunicazione sui social è passato anche dalla ricerca universitaria: stili comunicativi, linguaggio e rappresentazioni nei contenuti digitali.</p>
+            <div style={{ display: 'grid', gap: '1rem' }}>
+              {author.publications.map((p) => (
+                <div key={p.title} className="card">
+                  <h3 style={{ fontSize: 17, fontWeight: 500, lineHeight: 1.5, marginBottom: 8 }}>
+                    {p.url ? <a href={p.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>{p.title} <ArrowUpRight size={14} style={{ verticalAlign: 'middle' }} /></a> : p.title}
+                  </h3>
+                  <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.7 }}>{p.citation}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {mine.length > 0 && (
         <section style={{ padding: '5rem 2rem', borderBottom: '.5px solid var(--b)' }}>
