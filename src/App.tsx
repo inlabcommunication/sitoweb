@@ -1338,6 +1338,7 @@ const PageContatti = () => {
             <p style={{marginTop:"2.5rem",fontSize:14,color:"var(--m)",lineHeight:1.7,maxWidth:420}}>
               Sede a Castellaneta (TA). Lavoriamo con aziende e professionisti in tutta la Puglia e non solo: molti progetti si seguono anche da remoto.
             </p>
+            <div style={{marginTop:"2rem"}}><DoveSiamo/></div>
           </div>
  
           {/* Form */}
@@ -1522,6 +1523,12 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
 
       {info && <CityDetails info={info}/>}
 
+      {isHome && (
+        <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}><DoveSiamo/></div>
+        </section>
+      )}
+
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia anche in queste città</p>
@@ -1537,6 +1544,18 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
     </>
   );
 };
+
+// "Dove siamo" (richiesta SEO 02/10): indirizzo come testo e link a Google Maps,
+// senza iframe per non appesantire la pagina.
+const DoveSiamo = () => (
+  <div>
+    <p className="section-label">Dove siamo</p>
+    <p style={{fontSize:16,color:"var(--t)",lineHeight:1.7,marginBottom:".6rem"}}>InLab Communication — {BUSINESS.street}, {BUSINESS.postalCode} {BUSINESS.city} (TA)</p>
+    <a href={BUSINESS.mapsUrl} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>
+      <MapPin size={14}/> Apri in Google Maps <ArrowUpRight size={13}/>
+    </a>
+  </div>
+);
 
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
 const PROVINCE_CITIES=["Castellaneta","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
