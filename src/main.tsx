@@ -1,5 +1,5 @@
 import { StrictMode, Suspense, lazy, useEffect, useState } from 'react';
-import { createRoot } from 'react-dom/client';
+import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App.tsx';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import './fonts.css';
@@ -50,10 +50,19 @@ const Root = () => {
     : <App />;
 };
 
-createRoot(document.getElementById('root')!).render(
+// Le pagine arrivano già disegnate nell'HTML statico (prerender) con gli
+// stessi contenuti del primo render nel browser (blocco #site-content): React
+// le "aggancia" (hydrateRoot) invece di ridisegnarle da zero, quindi meno
+// lavoro per la CPU all'apertura (richiesta Performance 02/10). La dashboard
+// e le pagine senza HTML statico usano createRoot come prima. Se qualcosa non
+// coincide, React ridisegna da solo quella parte (come faceva prima).
+const rootEl = document.getElementById('root')!;
+const tree = (
   <StrictMode>
     <ErrorBoundary>
       <Root />
     </ErrorBoundary>
-  </StrictMode>,
+  </StrictMode>
 );
+if (rootEl.hasChildNodes() && !isAdminRoute()) hydrateRoot(rootEl, tree);
+else createRoot(rootEl).render(tree);

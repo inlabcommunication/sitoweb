@@ -2077,6 +2077,10 @@ const renderPage = (info) => {
 export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   // ssrPath: usato solo in fase di build per generare l'HTML statico di ogni pagina
   const [route,setRoute]=useState(() => ssrPath ?? getCurrentPath());
+  // Chatbot e banner cookie esistono solo nel browser: compaiono dopo il primo
+  // render, così il primo render coincide con l'HTML statico (hydration).
+  const [clientReady,setClientReady]=useState(false);
+  useEffect(()=>{ setClientReady(true); },[]);
 
   useEffect(() => {
     loadContent();
@@ -2131,7 +2135,7 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
       </AnimatePresence>
       <Footer/>
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
-      {ssrPath === undefined && <><Chatbot/><CookieBanner/></>}
+      {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}
     </RouterCtx.Provider>
   );
 }
