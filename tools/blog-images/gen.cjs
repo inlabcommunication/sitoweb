@@ -9,6 +9,8 @@ const OUT = path.join(__dirname, '../../public/blog');
 const TMP = fs.mkdtempSync(path.join(os.tmpdir(), 'blogimg-'));
 // --solo-cover-webp: genera solo cover.webp (per articoli che hanno già le altre immagini)
 const SOLO_COVER_WEBP = process.argv.includes('--solo-cover-webp');
+// --solo-cover-ridotte: genera solo cover-800.webp e cover-480.webp (srcset per il telefono)
+const SOLO_RIDOTTE = process.argv.includes('--solo-cover-ridotte');
 const specs = process.argv.slice(2).filter(a => !a.startsWith('--')).flatMap(f => [].concat(require(path.resolve(f))));
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 const base = (w,h,body) => `<!doctype html><html><head><meta charset="utf-8"><style>
@@ -78,10 +80,12 @@ for (const a of specs){
   const dir = path.join(OUT, a.slug); fs.mkdirSync(dir,{recursive:true});
   const hf = path.join(TMP, a.slug + '_hero.html'); fs.writeFileSync(hf, hero(a.hero));
   // Copertina: JPG (anteprime social e riserva) + WebP (più leggera, per la pagina)
-  const coverOut = [{out:path.join(dir,'cover.webp'),type:'webp',quality:0.78}];
-  if (!SOLO_COVER_WEBP) coverOut.unshift({out:path.join(dir,'cover.jpg'),type:'jpeg',quality:0.88});
+  // e versioni ridotte 800 e 480 px per srcset
+  const ridotte = [800, 480].map((w)=>({out:path.join(dir,`cover-${w}.webp`),type:'webp',quality:0.78,width:w}));
+  const coverOut = SOLO_RIDOTTE ? ridotte : [{out:path.join(dir,'cover.webp'),type:'webp',quality:0.78}, ...ridotte];
+  if (!SOLO_COVER_WEBP && !SOLO_RIDOTTE) coverOut.unshift({out:path.join(dir,'cover.jpg'),type:'jpeg',quality:0.88});
   jobs.push({html:hf,outputs:coverOut,w:1200,h:675,scale:4/3});
-  if (SOLO_COVER_WEBP) continue;
+  if (SOLO_COVER_WEBP || SOLO_RIDOTTE) continue;
   (a.inline||[]).forEach((im)=>{ const [html,h] = ({steps,compare,timeline})[im.type](im);
     const f=path.join(TMP,`${a.slug}_${im.name}.html`); fs.writeFileSync(f,html); jobs.push({html:f,out:path.join(dir,im.name+'.webp'),w:1200,h:200,full:true}); });
 }
