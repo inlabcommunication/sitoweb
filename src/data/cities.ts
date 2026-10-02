@@ -11,6 +11,8 @@ export type CityInfo = {
   /** "Come lavoriamo a {città}" (brief SEO 01/10 sera) */
   metodo?: string;
   faq2?: { q: string; a: string };
+  /** Terza domanda (brief SEO 02/10 pomeriggio) */
+  faq3?: { q: string; a: string };
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   sezione?: { titolo: string; testo: string };
 };
@@ -23,6 +25,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Lavorate con attività di Taranto città?', a: 'Sì. Siamo a Castellaneta, a meno di un\'ora, e veniamo a Taranto per incontri, shooting e riprese. Il resto del lavoro lo seguiamo a distanza, con un contatto diretto con Nicola e Ilaria.' },
     metodo: "A Taranto lavoriamo soprattutto su visibilità e differenza dalla concorrenza: in città ci sono molte attività dello stesso settore, quindi contano una scheda Google curata, recensioni, contenuti riconoscibili e campagne mirate per quartiere o per zona, dal Borgo al lungomare. Partiamo da un'analisi di come ti trovano oggi i clienti e di cosa fanno le attività vicine a te.",
     faq2: { q: "Si possono fare sponsorizzate solo per alcune zone di Taranto?", a: "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te." },
+    faq3: { q: "Che tipo di attività di Taranto seguite?", a: "Soprattutto negozi, locali, studi professionali e attività che vogliono farsi trovare da chi cerca in città. Partiamo spesso da scheda Google, sito e social, poi aggiungiamo campagne mirate per zona quando servono." },
   },
   {
     name: 'Castellaneta', provincia: 'provincia di Taranto',
@@ -32,6 +35,7 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Castellaneta il lavoro segue due stagioni: d'estate il pubblico arriva da fuori, con turisti e famiglie a Castellaneta Marina, mentre il resto dell'anno contano i clienti del paese e dei paesi vicini. Per questo prepariamo i contenuti in anticipo sulla stagione e teniamo viva la comunicazione anche d'inverno.",
     faq2: { q: "Lavorate anche per strutture di Castellaneta Marina?", a: "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate." },
     sezione: { titolo: 'Castellaneta Marina', testo: "Castellaneta Marina, sulla costa ionica, vive di turismo estivo, villaggi, lidi e ristorazione. Per le strutture della costa prepariamo foto, video, social e sponsorizzate prima dell'estate, quando i turisti scelgono dove andare, e le seguiamo durante tutta la stagione." },
+    faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
   },
   {
     name: 'Mottola', provincia: 'provincia di Taranto',
@@ -40,6 +44,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Fate foto e video per location di eventi a Mottola?', a: 'Sì, con shooting e riprese sul posto. Le schede dei nostri clienti di Mottola sono nella sezione qui sopra.' },
     metodo: "A Mottola molte attività vivono di eventi, cerimonie e passaparola. Per una location o un ristorante contano le immagini: foto degli spazi, video delle serate, recensioni e un profilo Instagram che faccia venire voglia di prenotare una visita. Lavoriamo sul posto per raccontare gli ambienti come li vede un ospite.",
     faq2: { q: "Fate anche video di matrimoni o eventi a Mottola?", a: "Facciamo video e reel per la comunicazione della location e dell'attività: contenuti che mostrano gli spazi e l'atmosfera, da usare su social, sito e campagne." },
+    faq3: { q: "Lavorate anche per attività di Mottola che non fanno eventi?", a: "Sì: negozi, ristoranti e servizi del paese. Per loro lavoriamo su presenza costante sui social, foto curate e una scheda Google completa, così chi è di passaggio sulla statale li trova." },
   },
   {
     name: 'Palagianello', provincia: 'provincia di Taranto',
@@ -48,6 +53,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Ha senso fare social per un\'attività di un paese piccolo?', a: 'Sì, se il pubblico è quello giusto: le persone del paese e dei paesi vicini. Con le sponsorizzate si possono raggiungere solo loro, senza sprecare budget.' },
     metodo: "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti.",
     faq2: { q: "Serve un sito se ho già la pagina Facebook?", a: "Spesso sì: il sito e la scheda Google fanno trovare l'attività su Google, mentre i social tengono il contatto con chi ti conosce già. Insieme funzionano meglio." },
+    faq3: { q: "Perché scegliere un'agenzia vicina a Palagianello?", a: "Perché conosciamo il paese e le persone: Nicola è di Palagianello. Possiamo venire in negozio per foto e video senza costi di trasferta importanti e seguirti con incontri di persona quando serve." },
   },
   {
     name: 'Palagiano', provincia: 'provincia di Taranto',
@@ -56,6 +62,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Potete aiutare un\'azienda agricola a vendere online?', a: 'Sì: sito, e-commerce o vetrina sui social, e foto dei prodotti fatte sul posto.' },
     metodo: "A Palagiano lavoriamo spesso con chi produce: aziende agricole, produttori di agrumi e attività che vendono prodotti del territorio. Fotografiamo i prodotti e le fasi del lavoro, prepariamo schede chiare per il sito o per la vendita online e raccontiamo la filiera sui social, perché chi compra vuole sapere da dove arriva quello che mangia.",
     faq2: { q: "Fate foto dei prodotti direttamente in azienda?", a: "Sì, facciamo gli shooting sul posto: in campo, in magazzino o in negozio, per avere foto vere e non immagini di repertorio." },
+    faq3: { q: "Lavorate anche con strutture e attività di Chiatona?", a: "Sì: lidi, ristoranti e strutture della costa. Prepariamo contenuti e campagne prima dell'estate e li seguiamo durante la stagione, insieme alle attività del paese che lavorano tutto l'anno." },
   },
   {
     name: 'Laterza', provincia: 'provincia di Taranto',
@@ -64,6 +71,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Come si raccontano sui social prodotti artigianali?', a: 'Con video brevi del lavoro, foto curate e una storia coerente. Lo facciamo con shooting e reel girati in bottega.' },
     metodo: "A Laterza il valore sta nel saper fare: forni, botteghe, ceramisti e produttori. Lavoriamo con video brevi del lavoro, foto curate dei prodotti e testi che spiegano la tradizione senza retorica. Così anche chi non è del posto capisce perché vale la pena comprare o fare una deviazione per venire a trovarti.",
     faq2: { q: "Si possono vendere online prodotti artigianali di Laterza?", a: "Sì: con un piccolo e-commerce o con un catalogo collegato a WhatsApp e Instagram. Ti aiutiamo a scegliere la soluzione più semplice da gestire." },
+    faq3: { q: "Si può portare più gente a Laterza con i social?", a: "Sì, raccontando bene quello che c'è: la gravina, il pane, la maiolica. Video brevi e foto curate funzionano anche con chi arriva da fuori, per esempio da Matera o dalla costa." },
   },
   {
     name: 'Ginosa', provincia: 'provincia di Taranto',
@@ -73,6 +81,7 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Ginosa lavoriamo su due pubblici diversi: chi vive in paese tutto l'anno e chi arriva d'estate a Ginosa Marina. Per i negozi del centro contano costanza e riconoscibilità, come nel caso di Paresteta; per le attività della marina conta farsi trovare prima della stagione, con contenuti e campagne pronti già in primavera.",
     faq2: { q: "Quando conviene iniziare a promuovere un'attività di Ginosa Marina?", a: "Qualche mese prima dell'estate: i turisti scelgono dove andare in anticipo, quindi contenuti, scheda Google e sponsorizzate devono essere pronti prima dell'arrivo della stagione." },
     sezione: { titolo: 'Ginosa Marina', testo: "Ginosa Marina, sulla costa ionica, d'estate si riempie di turisti. Per lidi, ristoranti e strutture della marina conta farsi trovare prima della stagione: contenuti, scheda Google e sponsorizzate pronti in anticipo, poi seguiti durante l'estate." },
+    faq3: { q: "Seguite attività sia di Ginosa paese sia di Ginosa Marina?", a: "Sì, con due strategie diverse: comunicazione costante tutto l'anno per il paese, campagne e contenuti stagionali per la marina. Spesso la stessa attività ha bisogno di entrambe." },
   },
   {
     name: 'Gravina in Puglia', provincia: 'provincia di Bari',
@@ -81,6 +90,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Lavorate anche fuori dalla provincia di Taranto?', a: 'Sì. Abbiamo clienti a Gravina in Puglia e lavoriamo in tutta la Puglia e anche fuori regione.' },
     metodo: "A Gravina in Puglia lavoriamo per attività che guardano sia alla Murgia sia al resto della Puglia. Molte hanno clienti anche nei comuni del barese e del materano: per questo impostiamo social e campagne su un'area più ampia del solo paese e curiamo la scheda Google, perché chi arriva da fuori cerca prima di tutto lì.",
     faq2: { q: "Venite anche a Gravina in Puglia per shooting e riprese?", a: "Sì, ci spostiamo da Castellaneta per incontri, foto e video. Il resto del lavoro lo seguiamo a distanza, con un contatto diretto." },
+    faq3: { q: "Lavorate anche per attività vicine ad Altamura e alla Murgia?", a: "Sì: impostiamo social e campagne su un'area più ampia del solo paese, perché molte attività di Gravina hanno clienti anche nei comuni vicini, tra Bari e Matera." },
   },
   // Città senza clienti per ora (brief SEO 02/10, punto 5): solo la pagina agenzia.
   {
