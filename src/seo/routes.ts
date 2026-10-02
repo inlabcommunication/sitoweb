@@ -122,6 +122,7 @@ export const AUTHORS = [
     knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati',
       'Social media management', 'Marketing degli eventi', 'Netnografia', 'Comunicazione digitale nel recruiting', 'Rappresentazioni sociali'],
     // Dati confermati da Nicola (brief SEO 02/10, punto 4)
+    vatID: '03411970738',
     homeLocation: 'Palagianello',
     facts: ['Originario di Palagianello (TA).',
       'Si è laureato in Psicologia all\'Università di Bari e si è specializzato in Psicologia della comunicazione e del marketing alla Sapienza Università di Roma.',
@@ -148,6 +149,7 @@ export const AUTHORS = [
   { slug: 'ilaria-gemma', name: 'Ilaria Gemma', jobTitle: 'Content creator e comunicazione visiva',
     title: 'Ilaria Gemma: content creator, foto e video a Castellaneta',
     description: 'Ilaria Gemma, content creator e co-fondatrice di InLab Communication a Castellaneta (TA): foto, video, reel e comunicazione visiva per i brand locali.',
+    vatID: '03476860733',
     alumniOf: '',
     knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'],
     sameAs: ['https://www.instagram.com/ilari_3/', 'https://www.instagram.com/ilari.image/'] },
@@ -157,6 +159,8 @@ type AuthorData = {
   slug: string; name: string; jobTitle: string; title: string; description: string; alumniOf: string;
   knowsAbout: string[]; sameAs: string[];
   homeLocation?: string; facts?: string[]; inBreve?: string; researchIntro?: string;
+  /** Partita IVA (solo cifre), data da Nicola */
+  vatID?: string;
   teaching?: { name: string; description: string; location: string }; research?: Research[];
 };
 export type Author = AuthorData;
@@ -171,6 +175,7 @@ const personJsonLd = (a: Author) => ({
   workLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Castellaneta', addressRegion: 'TA', addressCountry: 'IT' } },
   ...(a.alumniOf ? { alumniOf: { '@type': 'CollegeOrUniversity', name: a.alumniOf } } : {}),
   knowsAbout: a.knowsAbout, sameAs: a.sameAs,
+  ...(a.vatID ? { vatID: `IT${a.vatID}` } : {}),
   ...(a.homeLocation ? { homeLocation: { '@type': 'Place', name: a.homeLocation,
     address: { '@type': 'PostalAddress', addressLocality: a.homeLocation, addressRegion: 'TA', addressCountry: 'IT' } } } : {}),
   ...(a.teaching ? { hasOccupation: { '@type': 'Occupation', name: a.teaching.name, description: a.teaching.description,

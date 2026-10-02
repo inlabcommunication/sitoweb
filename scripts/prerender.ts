@@ -261,7 +261,7 @@ const llms = [
   ...(indexable('/contatti') ? [line('/contatti')] : []),
   `- Email: ${BUSINESS.email}`,
   `- Telefono: ${BUSINESS.telephone}`,
-  `- P.IVA: 03411970738 (InLab Communication di Nicola Carpignano)`,
+  ...AUTHORS.filter((a) => a.vatID).map((a) => `- P.IVA ${a.name}: ${a.vatID}`),
   `- Sede: ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
 ].join('\n');
 writeFileSync(join(DIST, 'llms.txt'), llms);

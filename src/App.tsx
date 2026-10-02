@@ -31,7 +31,7 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS } from "./seo/routes";
 import { cityInfo } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
@@ -315,7 +315,7 @@ const Footer = () => {
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
           <p style={{fontSize:12,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
-            <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano — Agenzia di comunicazione — Castellaneta (TA), 74011 — P.IVA 03411970738</span>
+            <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano (P.IVA 03411970738) e Ilaria Gemma (P.IVA 03476860733) — Agenzia di comunicazione — Castellaneta (TA), 74011</span>
             <Link to="/privacy" className="foot-link" style={{color:"var(--m)"}}>Privacy e cookie</Link>
             {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:12,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
           </p>
@@ -1339,6 +1339,9 @@ const PageContatti = () => {
               Sede a Castellaneta (TA). Lavoriamo con aziende e professionisti in tutta la Puglia e non solo: molti progetti si seguono anche da remoto.
             </p>
             <div style={{marginTop:"2rem"}}><DoveSiamo/></div>
+            <p style={{marginTop:"1.5rem",fontSize:13,color:"var(--m)",lineHeight:1.7}}>
+              {AUTHORS.filter(a=>a.vatID).map((a,i)=><React.Fragment key={a.slug}>{i>0&&<br/>}{a.name} — P.IVA {a.vatID}</React.Fragment>)}
+            </p>
           </div>
  
           {/* Form */}
