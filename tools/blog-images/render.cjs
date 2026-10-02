@@ -12,16 +12,19 @@ module.exports = async (jobs) => {
     await p.setViewportSize({ width: j.w, height: j.h });
     await p.setContent(fs.readFileSync(j.html, 'utf8'));
     const png = await p.screenshot({ type: 'png', fullPage: !!j.full });
-    const mime = j.type === 'jpeg' ? 'image/jpeg' : 'image/webp';
-    const data = await p.evaluate(async ([d, mime]) => {
-      const img = new Image(); img.src = 'data:image/png;base64,' + d; await img.decode();
-      const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
-      c.getContext('2d').drawImage(img, 0, 0); return c.toDataURL(mime, mime === 'image/jpeg' ? 0.88 : 0.9).split(',')[1];
-    }, [png.toString('base64'), mime]);
-    const buf = addMetadata(Buffer.from(data, 'base64'), j.type === 'jpeg' ? 'jpeg' : 'webp');
-    fs.mkdirSync(path.dirname(j.out), { recursive: true });
-    fs.writeFileSync(j.out, buf);
-    console.log(path.relative(process.cwd(), j.out), Math.round(buf.length / 1024) + 'KB');
+    const outputs = j.outputs || [{ out: j.out, type: j.type === 'jpeg' ? 'jpeg' : 'webp', quality: j.type === 'jpeg' ? 0.88 : 0.9 }];
+    for (const o of outputs) {
+      const mime = o.type === 'jpeg' ? 'image/jpeg' : 'image/webp';
+      const data = await p.evaluate(async ([d, mime, q]) => {
+        const img = new Image(); img.src = 'data:image/png;base64,' + d; await img.decode();
+        const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+        c.getContext('2d').drawImage(img, 0, 0); return c.toDataURL(mime, q).split(',')[1];
+      }, [png.toString('base64'), mime, o.quality]);
+      const buf = addMetadata(Buffer.from(data, 'base64'), o.type);
+      fs.mkdirSync(path.dirname(o.out), { recursive: true });
+      fs.writeFileSync(o.out, buf);
+      console.log(path.relative(process.cwd(), o.out), Math.round(buf.length / 1024) + 'KB');
+    }
   }
   await b.close();
 };
