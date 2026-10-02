@@ -31,7 +31,7 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS } from "./seo/routes";
 import { cityInfo } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
@@ -1339,6 +1339,9 @@ const PageContatti = () => {
               Sede a Castellaneta (TA). Lavoriamo con aziende e professionisti in tutta la Puglia e non solo: molti progetti si seguono anche da remoto.
             </p>
             <div style={{marginTop:"2rem"}}><DoveSiamo/></div>
+            <p style={{marginTop:"1.5rem",fontSize:13,color:"var(--m)",lineHeight:1.7}}>
+              {AUTHORS.filter(a=>a.vatID).map((a,i)=><React.Fragment key={a.slug}>{i>0&&<br/>}{a.name} — P.IVA {a.vatID}</React.Fragment>)}
+            </p>
           </div>
  
           {/* Form */}
