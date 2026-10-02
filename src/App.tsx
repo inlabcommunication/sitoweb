@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense, startTransition } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
   MapPin, Phone, Mail, Check,
@@ -1593,6 +1593,10 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
           <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{info.faq2.q}</h3>
           <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq2.a}</p>
         </>}
+        {info.faq3 && <>
+          <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{info.faq3.q}</h3>
+          <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq3.a}</p>
+        </>}
       </div>
     </div>
   </section>
@@ -2080,7 +2084,10 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   // Chatbot e banner cookie esistono solo nel browser: compaiono dopo il primo
   // render, così il primo render coincide con l'HTML statico (hydration).
   const [clientReady,setClientReady]=useState(false);
-  useEffect(()=>{ setClientReady(true); },[]);
+  // In una transition: se il blocco Suspense di una pagina lazy (blog, casi
+  // studio…) non è ancora agganciato, React aspetta il suo file invece di
+  // buttare via l'HTML statico e ridisegnarlo (richiesta Performance 02/10).
+  useEffect(()=>{ startTransition(()=>setClientReady(true)); },[]);
 
   useEffect(() => {
     loadContent();

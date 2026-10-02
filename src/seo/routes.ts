@@ -28,7 +28,8 @@ export const BUSINESS = {
   postalCode: '74011',
   city: 'Castellaneta',
   region: 'Puglia',
-  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Via+Regina+Margherita+74011+Castellaneta+TA',
+  // Scheda Google dell'attività (link dato da Nicola il 02/10)
+  mapsUrl: 'https://share.google/Re9YzDT7O7rv8SVio',
   sameAs: [
     'https://www.instagram.com/inlab.communication/',
     'https://www.facebook.com/inlab.communication',
@@ -192,6 +193,7 @@ export const organizationJsonLd = () => ({
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
   contactPoint: { '@type': 'ContactPoint', telephone: BUSINESS.telephone, email: BUSINESS.email, contactType: 'customer service', areaServed: 'IT', availableLanguage: 'Italian' },
+  hasMap: BUSINESS.mapsUrl,
   address: { '@type': 'PostalAddress', streetAddress: BUSINESS.street, addressLocality: BUSINESS.city, postalCode: BUSINESS.postalCode, addressRegion: 'TA', addressCountry: 'IT' },
   // città con clienti reali e città seguite (AGENCY_CITIES), più Puglia e Italia
   areaServed: [...AGENCY_CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
