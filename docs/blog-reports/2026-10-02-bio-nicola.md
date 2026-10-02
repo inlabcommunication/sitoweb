@@ -77,3 +77,34 @@ Coautori, anno e rivista non sono riuscito a verificarli: ResearchGate non si ap
 1. Laurea a Bari: triennale in Psicologia?
 2. "#Melomerito": coautori, anno e dove è stato pubblicato (rivista o atti).
 3. Il nome esatto del secondo master EA Formazione, già chiesto dalla SEO.
+
+## Aggiornamento 02/10 sera: conferme di Nicola
+
+Nicola ha confermato tre dati:
+- **Bari:** laurea triennale in Psicologia.
+- **"#Melomerito":** pubblicato nel 2019, coautori Concetta Papapicco e Giuseppe Mininni (Università di Bari). Non ha indicato la rivista.
+- **Master EA Formazione:** il secondo è il "Master in Social Media Manager".
+
+Le PR #65 e #66 sono unite. Sul sito manca ancora quanto segue.
+
+### Richieste per lo sviluppo
+
+1. **`src/constants.ts`, `studio.team[0].edu`:** sostituire `"Psicologia — Università di Bari"` con `"Laurea in Psicologia — Università di Bari"`.
+
+2. **`src/seo/routes.ts`, `AUTHORS[0]`:**
+   - In `facts`, cambiare "Ha studiato Psicologia all'Università di Bari" in: "Si è laureato in Psicologia all'Università di Bari".
+   - In `facts`, `teaching.description` e (se presente) /chi-siamo, sostituire "il master sui social media" con "il Master in Social Media Manager". Frase completa:
+     > Docente di Marketing e Social Media in due master di EA Formazione (Bari): il Master in Management degli Eventi e il Master in Social Media Manager.
+   - In `research`, aggiungere "#Melomerito" come primo elemento, perché è del 2019:
+     ```ts
+     {
+       authors: ['Papapicco C.', 'Mininni G.', 'Carpignano N.'], year: '2019',
+       title: '"#Melomerito": a Netnographic Study on Communication in Digital Recruiting',
+       book: '', publisher: 'Università degli Studi di Bari Aldo Moro', pages: '',
+       url: 'https://www.researchgate.net/publication/331529739_Melomerito_a_Netnographic_Study_on_Communication_in_Digital_Recruiting',
+     },
+     ```
+     - Ordine degli autori: è quello indicato da Nicola. Se la pagina ResearchGate riporta un ordine diverso, vale quello della pagina.
+     - `book` e `pages` sono vuoti: non vanno mostrati né nel testo né nel JSON-LD. Nel JSON-LD lo `ScholarlyArticle` ha `datePublished: '2019'` e `author` uguale all'`@id` di Nicola. I coautori vanno come `Person` con il solo `name`.
+
+3. **Brief SEO 02/10, punto 4:** con queste conferme il nome del secondo master e "#Melomerito" non sono più in sospeso.
