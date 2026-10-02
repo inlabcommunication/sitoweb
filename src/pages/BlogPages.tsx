@@ -269,6 +269,7 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
             <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(3rem,8vw,6.5rem)', lineHeight: 0.9, marginBottom: '1rem', textTransform: 'uppercase' }}>{author.name}</h1>
             <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.2rem,2.2vw,1.7rem)', color: 'var(--a)', marginBottom: '1.4rem' }}>{author.jobTitle}</p>
             {member.bio && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640 }}>{member.bio}</p>}
+            {author.facts && author.facts.length > 0 && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640, marginTop: member.bio ? '1rem' : 0 }}>{author.facts.join(' ')}</p>}
           </div>
         </div>
       </section>
@@ -290,6 +291,21 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
           </div>
         </div>
       </section>
+
+      {author.research && author.research.length > 0 && (
+        <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+          <div style={{ maxWidth: 1080, margin: '0 auto' }}>
+            <h2 className="section-label" style={{ fontWeight: 500 }}>Ricerca</h2>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {author.research.map((r) => (
+                <li key={r.url} style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820 }}>
+                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>"{r.title}"</a>, in <em>{r.book}</em>, {r.publisher}, pp. {r.pages}.
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {mine.length > 0 && (
         <section style={{ padding: '5rem 2rem', borderBottom: '.5px solid var(--b)' }}>

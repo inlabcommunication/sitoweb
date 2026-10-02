@@ -40,7 +40,7 @@ export const CITY_INFO: CityInfo[] = [
   },
   {
     name: 'Palagianello', provincia: 'provincia di Taranto',
-    contesto: 'Palagianello è un paese della gravina, con il castello Stella-Caracciolo e le chiese rupestri. È una comunità piccola, dove il passaparola conta molto: social e scheda Google servono a farsi trovare anche da chi arriva dai paesi vicini.',
+    contesto: 'Palagianello è un paese della gravina, con il castello Stella-Caracciolo e le chiese rupestri. È una comunità piccola, dove il passaparola conta molto: social e scheda Google servono a farsi trovare anche da chi arriva dai paesi vicini. Nicola Carpignano, co-fondatore di InLab, è di Palagianello: qui conosciamo le attività e le persone da sempre.',
     settori: ['attività del centro storico', 'ristorazione', 'artigiani e piccole imprese'],
     faq: { q: 'Ha senso fare social per un\'attività di un paese piccolo?', a: 'Sì, se il pubblico è quello giusto: le persone del paese e dei paesi vicini. Con le sponsorizzate si possono raggiungere solo loro, senza sprecare budget.' },
     metodo: "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti.",

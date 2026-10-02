@@ -109,7 +109,21 @@ export const AUTHORS = [
     title: 'Nicola Carpignano: social media e marketing a Castellaneta',
     description: 'Nicola Carpignano, social media manager e co-fondatore di InLab Communication a Castellaneta (TA): strategia, contenuti e marketing per attività locali.',
     alumniOf: 'Sapienza Università di Roma',
-    knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati'],
+    knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati',
+      'Social media management', 'Marketing degli eventi', 'Netnografia'],
+    // Dati confermati da Nicola (brief SEO 02/10, punto 4)
+    homeLocation: 'Palagianello',
+    facts: ['Originario di Palagianello (TA).', 'Ha studiato Psicologia a Bari.',
+      'Docente di Marketing e Social Media in due master di EA Formazione (Bari): il Master in Management degli Eventi e il master sui social media.'],
+    inBreve: 'Originario di Palagianello (TA), ha studiato Psicologia a Bari e insegna Marketing e Social Media nei master di EA Formazione.',
+    teaching: { name: 'Docente di Marketing e Social Media', description: 'Master in Management degli Eventi e master sui social media di EA Formazione (Bari)', location: 'Bari' },
+    research: [{
+      authors: ['De Rosa A. M. S.', 'Bocci E.', 'Carpignano N.'], year: '2020',
+      title: 'Polemical social representations about "immigration" in journal articles of different political positioning via Facebook',
+      book: 'Political and economic self-constitution: media, political culture and democracy',
+      publisher: 'Institute of Social Sciences (Belgrado)', pages: '58-64',
+      url: 'https://iris.uniroma1.it/handle/11573/1544870',
+    }],
     sameAs: [] as string[] },
   { slug: 'ilaria-gemma', name: 'Ilaria Gemma', jobTitle: 'Content creator e comunicazione visiva',
     title: 'Ilaria Gemma: content creator, foto e video a Castellaneta',
@@ -117,8 +131,15 @@ export const AUTHORS = [
     alumniOf: '',
     knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'],
     sameAs: [] as string[] },
-];
-export type Author = (typeof AUTHORS)[number];
+] as AuthorData[];
+type Research = { authors: string[]; year: string; title: string; book: string; publisher: string; pages: string; url: string };
+type AuthorData = {
+  slug: string; name: string; jobTitle: string; title: string; description: string; alumniOf: string;
+  knowsAbout: string[]; sameAs: string[];
+  homeLocation?: string; facts?: string[]; inBreve?: string;
+  teaching?: { name: string; description: string; location: string }; research?: Research[];
+};
+export type Author = AuthorData;
 export const authorPath = (slug: string) => `/autori/${slug}`;
 /** Autore da nome visualizzato (es. firma di un articolo); undefined se non è un fondatore. */
 export const authorByName = (name?: string) => AUTHORS.find((a) => a.name.toLowerCase() === String(name || '').trim().toLowerCase());
@@ -130,7 +151,18 @@ const personJsonLd = (a: Author) => ({
   workLocation: { '@type': 'Place', address: { '@type': 'PostalAddress', addressLocality: 'Castellaneta', addressRegion: 'TA', addressCountry: 'IT' } },
   ...(a.alumniOf ? { alumniOf: { '@type': 'CollegeOrUniversity', name: a.alumniOf } } : {}),
   knowsAbout: a.knowsAbout, sameAs: a.sameAs,
+  ...(a.homeLocation ? { homeLocation: { '@type': 'Place', name: a.homeLocation,
+    address: { '@type': 'PostalAddress', addressLocality: a.homeLocation, addressRegion: 'TA', addressCountry: 'IT' } } } : {}),
+  ...(a.teaching ? { hasOccupation: { '@type': 'Occupation', name: a.teaching.name, description: a.teaching.description,
+    occupationLocation: { '@type': 'City', name: a.teaching.location } } } : {}),
 });
+/** Pubblicazioni dell'autore, collegate alla sua Person con @id. */
+const researchJsonLd = (a: Author) => (a.research || []).map((r) => ({
+  '@context': 'https://schema.org', '@type': 'ScholarlyArticle', headline: r.title, url: r.url, datePublished: r.year,
+  author: r.authors.map((n) => n.startsWith(a.name.split(' ').pop()!) ? { '@id': personId(a) } : { '@type': 'Person', name: n }),
+  isPartOf: { '@type': 'Book', name: r.book, publisher: { '@type': 'Organization', name: r.publisher } },
+  pagination: r.pages, inLanguage: 'en',
+}));
 
 export const organizationJsonLd = () => ({
   '@context': 'https://schema.org',
@@ -243,7 +275,8 @@ export const getSeo = (rawPath: string): Seo => {
   if (author) {
     return page(path, withBrand(author.title), author.description, {
       sitemap: { priority: 0.6, changefreq: 'monthly' },
-      jsonLd: [{ '@context': 'https://schema.org', '@type': 'ProfilePage', url: abs(path), inLanguage: 'it-IT', mainEntity: personJsonLd(author) }],
+      jsonLd: [{ '@context': 'https://schema.org', '@type': 'ProfilePage', url: abs(path), inLanguage: 'it-IT', mainEntity: personJsonLd(author) },
+        ...researchJsonLd(author)],
     }, [['Chi siamo', '/chi-siamo'], [author.name, path]]);
   }
   if (path === '/casi-studio') {
