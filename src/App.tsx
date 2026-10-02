@@ -315,7 +315,7 @@ const Footer = () => {
         </div>
         <div style={{borderTop:".5px solid var(--b)",paddingTop:"1.5rem",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:"1rem"}}>
           <p style={{fontSize:12,color:"var(--m)",letterSpacing:".08em",display:"flex",gap:"1rem",flexWrap:"wrap",alignItems:"center"}}>
-            <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano — Agenzia di comunicazione — Castellaneta (TA), 74011 — P.IVA 03411970738</span>
+            <span>© {new Date().getFullYear()} InLab Communication di Nicola Carpignano (P.IVA 03411970738) e Ilaria Gemma (P.IVA 03476860733) — Agenzia di comunicazione — Castellaneta (TA), 74011</span>
             <Link to="/privacy" className="foot-link" style={{color:"var(--m)"}}>Privacy e cookie</Link>
             {GA_ID && <button onClick={()=>reopenConsent()} className="foot-link" style={{background:"none",border:"none",color:"var(--m)",fontSize:12,letterSpacing:".08em",cursor:"pointer",padding:0,fontFamily:"inherit"}}>Preferenze cookie</button>}
           </p>
