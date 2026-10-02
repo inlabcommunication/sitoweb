@@ -48,6 +48,22 @@ const preloadTags = (path: string) => {
   return files.map((f) => `<link rel="modulepreload" crossorigin href="/${f}">`).join('\n    ');
 };
 
+// Cover del blog (elemento LCP di /blog e degli articoli): preload in <head>,
+// prima dei modulepreload, con gli stessi srcset e sizes del <picture> in
+// BlogPages.tsx, così parte subito e non viene scaricata due volte
+// (richiesta Performance 02/10). Solo per le cover locali con la .webp.
+const coverPreload = (path: string) => {
+  const posts = getBlogPosts();
+  const post = path === '/blog' ? posts[0] : path.startsWith('/blog/') ? posts.find((p) => `/blog/${p.slug}` === path) : undefined;
+  const m = post?.cover?.match(/^\/blog\/([^/]+)\/cover\.jpg$/);
+  if (!m || !existsSync(join(DIST, 'blog', m[1], 'cover.webp'))) return '';
+  const base = `/blog/${m[1]}`;
+  const srcset = [480, 800].filter((w) => existsSync(join(DIST, 'blog', m[1], `cover-${w}.webp`)))
+    .map((w) => `${base}/cover-${w}.webp ${w}w`).concat(`${base}/cover.webp 1600w`).join(', ');
+  const sizes = path === '/blog' ? '(max-width: 768px) 100vw, 800px' : '(max-width: 768px) 100vw, 1080px';
+  return `<link rel="preload" as="image" type="image/webp" imagesrcset="${srcset}" imagesizes="${sizes}" fetchpriority="high">`;
+};
+
 const render = (path: string, body = '') => {
   const seo = getSeo(path);
   let html = template.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(seo.title)}</title>`);
@@ -66,6 +82,8 @@ const render = (path: string, body = '') => {
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
   html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}`);
+  const cover = coverPreload(path);
+  if (cover) html = html.replace(/<link rel="modulepreload"/, `${cover}\n    <link rel="modulepreload"`);
   const preload = preloadTags(path);
   return html.replace('</head>', `    ${gsc}${preload ? preload + '\n    ' : ''}${pageLd}\n  </head>`);
 };
