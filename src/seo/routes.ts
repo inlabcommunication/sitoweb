@@ -139,7 +139,8 @@ export const organizationJsonLd = () => ({
   name: BRAND,
   description: 'Agenzia di comunicazione con sede a Castellaneta (Taranto): gestione social, video e reel, Meta Ads, siti web, branding e automazioni AI per aziende in Puglia e non solo.',
   // Distingue l'agenzia da realtà con nomi simili (Google e i sistemi AI le confondevano)
-  disambiguatingDescription: 'InLab Communication è l\'agenzia di comunicazione di Castellaneta, in provincia di Taranto (Puglia), fondata da Nicola Carpignano e Ilaria Gemma. Non è collegata ad altre agenzie con nomi simili in altre città, come InLab Comunicazione di Forlì.',
+  alternateName: ['InLab Communication Castellaneta', 'InLab Castellaneta'],
+  disambiguatingDescription: 'InLab Communication è l\'agenzia di comunicazione e marketing di Castellaneta, in provincia di Taranto (Puglia), fondata da Nicola Carpignano e Ilaria Gemma. Non è collegata ad altre realtà con nomi simili, come inlab di inDrive, InLab Comunicazione di Forlì o laboratori universitari chiamati InLab.',
   founder: AUTHORS.map(personRef),
   knowsLanguage: 'it',
   url: `${SITE_URL}/`,
@@ -224,8 +225,8 @@ export const getSeo = (rawPath: string): Seo => {
   const path = rawPath.length > 1 ? rawPath.replace(/\/+$/, '') : '/';
 
   if (path === '/') {
-    return page('/', `${BRAND} | Agenzia di comunicazione in Puglia`,
-      'Agenzia di comunicazione con sede a Castellaneta (TA): social media, video e reel, Meta Ads, siti web e branding per aziende in Puglia e non solo.',
+    return page('/', `${BRAND} Castellaneta | Agenzia di comunicazione`,
+      'Agenzia di comunicazione a Castellaneta (TA): social media, reel e video, siti web, branding e Meta Ads per aziende in provincia di Taranto e in Puglia.',
       { sitemap: { priority: 1, changefreq: 'weekly' } }); // i dati dell'agenzia sono già nello script "org" di index.html
   }
   if (path === '/servizi') {

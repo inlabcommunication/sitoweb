@@ -30,7 +30,7 @@ const FEED = [
   'idee-reel-ristoranti', 'servizio-fotografico-ristoranti', 'reel-o-post-cosa-pubblicare-instagram',
   'sponsorizzate-instagram-attivita-locali', 'rebranding-attivita-commerciale', 'quante-volte-pubblicare-social',
   'gestione-social-attivita-locale-cosa-include', 'meta-ads-creativita-advantage', 'whatsapp-business-ai',
-].map((slug) => `/blog/${slug}/cover.jpg`);
+].map((slug) => `/img/feed/${slug}.webp`); // miniature 240×300 (le copertine originali pesano ~110 KB l'una)
 
 type Story = {
   key: string; num: string; label: string; title: string; accent: string;
@@ -87,7 +87,7 @@ const ScreenSocial: React.FC<{ stats: { display: string; short: string }[] }> = 
     <div className="sps-ig-name">inlab.communication</div>
     <div className="sps-ig-bio">Agenzia di comunicazione · Castellaneta (TA)</div>
     <div className="sps-ig-grid">
-      {FEED.map((src) => <div key={src} style={{ backgroundImage: `url(${src})` }} />)}
+      {FEED.map((src) => <img key={src} src={src} alt="" width={240} height={300} loading="lazy" decoding="async" />)}
     </div>
   </div>
 );
@@ -318,7 +318,7 @@ const SpsStyles = () => (
     .sps-ig-name{margin-top:10px;font-size:11px;font-weight:500;color:var(--t)}
     .sps-ig-bio{font-size:9.5px;color:rgba(240,237,230,.55);margin-top:2px}
     .sps-ig-grid{margin-top:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;border-radius:10px;overflow:hidden}
-    .sps-ig-grid div{aspect-ratio:4/5;background-size:cover;background-position:center;background-color:#2a2631}
+    .sps-ig-grid img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background-color:#2a2631}
 
     .sps-video{background:linear-gradient(160deg,#3a2d55,#15131a 60%)}
     .sps-video video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}

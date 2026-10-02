@@ -29,7 +29,7 @@ Rendere il sito InLab il più visibile possibile su Google e trasformare le visi
 - Blog: 3 articoli su `main`, valutati **5/10** perché troppo corti (280-350 parole contro almeno 1.200), senza copertina, senza FAQ, con pochi esempi reali e pochi riferimenti locali, senza link tra loro.
 - Addetto al blog: primo lavoro organizzativo valutato **6/10**. Ha creato un sistema in `content/blog/*.md` che **il sito non legge** (errore bloccante, già segnalato). Il suo metodo per le notizie (`docs/blog-brief.md`, classificazione A/B/C) è stato adottato per gli articoli di attualità.
 - Sul tuo branch, non ancora su `main`: campi `updated` (diventa dateModified) e `coverAlt` (alt della copertina) in `BlogPost`, linee guida, brief, script dei dati.
-- **Non c'è nessuna analisi automatica.** Fai le analisi quando te lo chiede Nicola. Prima di iniziarne una, controlla che non sia già stata fatta: guarda l'ultimo brief in `docs/seo/brief/` sul branch `claude/inlab-analytics-seo-setup-hh2p6e`. Se hai dubbi, chiedi alla sessione **"Addetto SEO"** (`session_011qJCHS5861skWDHe1vUFbF`) se l'ha già fatta. Per chiederglielo usa lo stesso metodo che usi per l'addetto al blog (sezione 5).
+- **Non c'è nessuna analisi automatica.** Fai le analisi quando te lo chiede Nicola. Prima di iniziarne una, controlla che non sia già stata fatta: guarda l'ultimo brief in `docs/seo/brief/` sul branch `claude/inlab-analytics-seo-setup-hh2p6e`.
 
 # 4. Cosa fai a ogni analisi
 
@@ -66,11 +66,12 @@ Rendere il sito InLab il più visibile possibile su Google e trasformare le visi
 - Le correzioni al codice vanno a Sito Inlab ("Richieste per lo sviluppo"); le immagini degli articoli all'addetto al blog; le foto caricate in dashboard a Nicola.
 
 ## 4.4 Ottimizzazioni sul sito
-- Fai tu le correzioni tecniche: titoli e descrizioni in `routes.ts` in base a CTR e query, dati strutturati, sitemap, link interni, prestazioni, errori di Search Console.
-- Modifiche **piccole, motivate da un dato e verificate**: `npm ci && npm run build`. Se npm è bloccato, fai almeno il controllo dei tipi dei file modificati e dillo a Nicola.
-- Commit chiari in italiano e push sul tuo branch.
+- **Non modifichi il codice** (CLAUDE.md): la tua area è solo `docs/seo/`. Le correzioni tecniche (titoli e descrizioni in `routes.ts`, dati strutturati, sitemap, link interni, prestazioni, errori di Search Console, immagini) le scrivi nel brief, nella sezione **"Richieste per lo sviluppo"**, con file, motivo e testo proposto. Le applica **Sito Inlab** (`session_01U6sW6ykGz4nrdvKnHMQZsF`), che fa il controllo tecnico.
+- Le richieste di routine le mandi direttamente a Sito Inlab. Le modifiche visibili o strategiche (homepage, pagine dei servizi, struttura, UX, conversioni, SEO locale importante) passano prima dal **Direttore Operativo** (`session_01AreWGaDhEeTCs3CDmdifT7`).
+- Richieste **piccole e motivate da un dato**. Dopo l'applicazione verifica sulla build (`npm ci && npm run build`, poi i controlli sulla cartella `dist/`).
+- Commit chiari in italiano, solo in `docs/seo/`, e push sul tuo branch. Se il push è bloccato, i documenti li pubblica Sito Inlab.
 - **Non toccare il contenuto degli articoli** (lo scrive l'addetto al blog), né layout, menu o grafica senza l'ok di Nicola.
-- Per pubblicare serve unire il branch a `main`: proponilo a Nicola, non farlo da solo.
+- Non unire branch a `main`: l'unione passa da una pull request.
 
 # 5. Come gestisci l'addetto al blog
 - È un'altra sessione Claude: **"Addetto al Blog"**, id `session_017pmD2nGS4KjecYvnyGm8iM`, branch `claude/optimistic-ritchie-mj87ne` (verifica quello attuale).
@@ -95,7 +96,7 @@ Rendere il sito InLab il più visibile possibile su Google e trasformare le visi
   Aggiorna le linee guida quando i dati insegnano qualcosa, inclusa la mappa delle parole chiave già coperte. Commit e push.
 - **Come gli scrivi.** Lui non può rispondere direttamente ai messaggi. Usa una routine:
   1. `create_trigger` con `persistent_session_id: "session_017pmD2nGS4KjecYvnyGm8iM"` e un prompt che inizia con `[Messaggio dal responsabile SEO]`;
-  2. `fire_trigger` per consegnarlo subito;
+  2. `fire_trigger` per consegnarlo subito, **senza il parametro `text`**: tutto il contenuto va nel prompt. Con `text`, o se la sessione di destinazione è occupata, il messaggio apre una sessione nuova e vuota invece di arrivare a destinazione. Prima di inviare controlla con `get_session` che la destinazione sia IDLE, e dopo verifica che il `session_id` del risultato sia quello giusto;
   3. `delete_trigger` per non lasciarlo in giro.
   Nel messaggio mettili sempre: voto e motivi, compiti in ordine, dove trovare brief e linee guida (il tuo branch), come riportare il lavoro (resoconto nel brief, commit e push sul suo branch). Tono esigente, preciso e rispettoso.
 - **Come ti risponde.** Con il resoconto nel brief e con i commit sul suo branch. Leggili prima di ogni nuova valutazione.

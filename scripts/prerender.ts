@@ -207,7 +207,7 @@ const org = organizationJsonLd() as any;
 const caseRoutes = routes.filter((p) => p.startsWith('/casi-studio/'));
 const llms = [
   `# ${org.name}`, '',
-  '> Agenzia di comunicazione con sede a Castellaneta (TA), Puglia, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
+  '> InLab Communication è un\'agenzia di comunicazione e digital marketing con sede a Castellaneta, in provincia di Taranto, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
   org.disambiguatingDescription, '',
   '## Servizi', '',
   ...SERVICES_SEO.map((s) => '/' + s.slug).filter(indexable).map((p) => line(p)),
