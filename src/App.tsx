@@ -53,7 +53,7 @@ const G = () => (
     :root{
       --a:#cdb2ff; --bg:#1e1d1d; --s:#262525; --b:rgba(255,255,255,0.07);
       --t:#F0EDE6; --m:rgba(240,237,230,0.64);
-      --fd:'Bebas Neue',sans-serif; --fs:'DM Serif Display',serif; --fb:'DM Sans',sans-serif;
+      --fd:'Bebas Neue','Bebas Neue Fallback',sans-serif; --fs:'DM Serif Display','DM Serif Display Fallback',serif; --fb:'DM Sans','DM Sans Fallback',sans-serif;
     }
     html{scroll-behavior:smooth}
     body{background:var(--bg);color:var(--t);font-family:var(--fb);font-weight:300;overflow-x:hidden}
@@ -78,7 +78,7 @@ const G = () => (
     .btn-p{background:var(--a);color:#000}.btn-p:hover{box-shadow:0 0 28px rgba(205,178,255,.28);transform:scale(1.03)}
     .btn-g{background:transparent;color:var(--t);border:.5px solid var(--b)}.btn-g:hover{border-color:rgba(255,255,255,.3)}
  
-    .tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
+    .tag{display:inline-block;padding:3px 10px;border-radius:100px;font-size:12px;font-weight:500;letter-spacing:.12em;text-transform:uppercase}
     .tag-a{background:rgba(205,178,255,.12);color:var(--a);border:.5px solid rgba(205,178,255,.25)}
     .tag-g{background:rgba(255,255,255,.05);color:var(--m);border:.5px solid var(--b)}
  
@@ -115,7 +115,7 @@ const G = () => (
     .case-card:focus-visible{outline:2px solid var(--a);outline-offset:3px}
     .case-card-num{position:absolute;right:1.2rem;top:50%;transform:translateY(-50%);font-family:var(--fd);font-size:clamp(8rem,14vw,12rem);line-height:.85;color:rgba(205,178,255,0.05);pointer-events:none;user-select:none;letter-spacing:-.04em}
     .case-card-desc{font-size:14px;line-height:1.7;color:var(--m);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:1.4rem}
-    .case-card-cta{margin-top:auto;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);display:inline-flex;align-items:center;gap:6px;transition:gap .25s}
+    .case-card-cta{margin-top:auto;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--a);display:inline-flex;align-items:center;gap:6px;transition:gap .25s}
     .case-card:hover .case-card-cta{gap:10px}
     .logo-strip{display:flex;width:max-content;gap:1.2rem;animation:marq 40s linear infinite}
     .logo-strip-wrap:hover .logo-strip{animation-play-state:paused}
@@ -1704,7 +1704,7 @@ const PageCliente = ({id}: {id: string}) => {
                 ["Contenuti", reels.length || gallery.length ? [reels.length && `${reels.length} reel`, gallery.length && `${gallery.length} foto`].filter(Boolean).join(" · ") : ""],
               ].map(([label,value])=>(
                 <div key={label} style={{background:"rgba(255,255,255,.03)",padding:"1.2rem"}}>
-                  <p style={{fontSize:9,letterSpacing:".18em",textTransform:"uppercase",color:"var(--m)",marginBottom:8}}>{label}</p>
+                  <p style={{fontSize:12,letterSpacing:".18em",textTransform:"uppercase",color:"var(--m)",marginBottom:8}}>{label}</p>
                   <p style={{fontSize:14,color:"var(--t)",lineHeight:1.45}}>{value || "Non indicato"}</p>
                 </div>
               ))}

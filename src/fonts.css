@@ -59,3 +59,34 @@
   src: url('./assets/fonts/dm-serif-display-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+
+/* Caratteri di riserva con le stesse proporzioni dei font del sito (richiesta
+   Performance 01/10, CLS): finché Bebas Neue / DM Sans / DM Serif non sono
+   caricati, il testo occupa già lo stesso spazio e la pagina non "salta".
+   Valori calcolati dalle metriche dei file woff2 rispetto ad Arial (Bebas è
+   quasi sempre maiuscolo: misurato sulle maiuscole). Non cambiano l'aspetto
+   finale. */
+@font-face {
+  font-family: 'Bebas Neue Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Roboto');
+  size-adjust: 57.46%;
+  ascent-override: 156.63%;
+  descent-override: 52.21%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'DM Sans Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('Roboto');
+  size-adjust: 98.96%;
+  ascent-override: 100.24%;
+  descent-override: 31.32%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'DM Serif Display Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('Liberation Serif');
+  size-adjust: 96.51%;
+  ascent-override: 107.35%;
+  descent-override: 34.71%;
+  line-gap-override: 0%;
+}
