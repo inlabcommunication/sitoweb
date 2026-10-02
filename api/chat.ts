@@ -16,6 +16,13 @@ const MAX_MESSAGES = 20;
 const MAX_USER_CHARS = 1200;
 const MAX_TOTAL_CHARS = 12000;
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
+/** Numero di telefono plausibile, altrimenti "": 9-15 cifre, che inizia con +, 0 o 3
+ *  (fissi e cellulari italiani o prefisso internazionale), così date e importi non passano. */
+const cleanPhone = (v: string): string => {
+  const t = v.replace(/[^\d+]/g, "").replace(/^00/, "+");
+  const digits = t.replace(/\D/g, "");
+  return /^(\+|0|3)/.test(t) && digits.length >= 9 && digits.length <= 15 && !t.slice(1).includes("+") ? t : "";
+};
 
 const SYSTEM_PROMPT = `Sei "INLAB AI", l'assistente virtuale di InLab Communication, un'agenzia di comunicazione con sede a Castellaneta (Taranto), in Puglia.
 
@@ -259,25 +266,33 @@ async function handle(req: VercelRequest, res: VercelResponse) {
     const { visibleText, meta } = extractMetaAndCleanResponse(result.rawText);
     const m = (meta || {}) as any;
 
-    // Salva il lead solo con un'email valida
+    // Salva il lead quando c'è un contatto: email valida OPPURE numero di telefono
+    // (il bot chiede "email o numero di telefono", quindi basta uno dei due)
     const lastUserMsg = messages[messages.length - 1].content;
     const candidate = str(m?.contact_data?.email, 254) || (lastUserMsg.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/)?.[0] ?? "");
     const email = EMAIL_RE.test(candidate) ? candidate.toLowerCase() : null;
+    const phone = cleanPhone(str(m?.contact_data?.phone, 40)) || cleanPhone(lastUserMsg.match(/(?:\+|00)?\d[\d .-]{7,18}\d/)?.[0] ?? "");
+    const name = str(m?.contact_data?.name, 100) || null;
 
-    if (email && sessionId && db) {
+    if (sessionId && db) {
       try {
         const conversation = [...messages, { role: "assistant", content: visibleText }].slice(-30);
         const leadsRef = db.collection("leads");
-        const existing = await leadsRef.where("session_id", "==", sessionId).where("email", "==", email).limit(1).get();
+        // Un solo lead per conversazione: se esiste già si aggiornano conversazione e contatti mancanti
+        const existing = await leadsRef.where("session_id", "==", sessionId).limit(1).get();
         if (!existing.empty) {
-          await existing.docs[0].ref.update({ conversation, updated_at: new Date().toISOString() });
-        } else {
+          const old = existing.docs[0].data();
+          await existing.docs[0].ref.update({
+            conversation, updated_at: new Date().toISOString(),
+            ...(email && !old.email ? { email } : {}),
+            ...(phone && !old.phone ? { phone } : {}),
+            ...(name && !old.name ? { name } : {}),
+          });
+        } else if (email || phone) {
           const classification = ["freddo", "tiepido", "caldo", "urgente"].includes(m.classification) ? m.classification : "freddo";
           const tags = Array.isArray(m.tags) ? m.tags.map((t: unknown) => str(t, 40)).filter(Boolean).slice(0, 6) : [];
           await leadsRef.add({
-            email,
-            name: str(m?.contact_data?.name, 100) || null,
-            phone: str(m?.contact_data?.phone, 30) || null,
+            email, name, phone,
             intent: `[${classification.toUpperCase()}] ${tags.join(", ")}`,
             conversation, source: "chatbot", status: "new",
             session_id: sessionId, created_at: new Date().toISOString(),

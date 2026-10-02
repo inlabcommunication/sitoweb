@@ -362,12 +362,12 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           <motion.h1
             initial={false}
             transition={{ delay: reduced ? 0 : 0.05 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '.5px solid var(--b)', borderRadius: 100, padding: '5px 14px 5px 5px', marginBottom: '2rem', fontSize: 10, fontWeight: 500, lineHeight: 'normal' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 8, border: '.5px solid var(--b)', borderRadius: 100, padding: '5px 14px 5px 5px', marginBottom: '2rem', fontSize: 12, fontWeight: 500, lineHeight: 'normal' }}
           >
             <span style={{ width: 20, height: 20, background: 'var(--a)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <MapPin size={10} color="#000" />
             </span>
-            <span style={{ fontSize: 10, fontWeight: 500, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)' }}>
+            <span style={{ fontSize: 12, fontWeight: 500, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)' }}>
               {tag}
             </span>
           </motion.h1>
@@ -410,7 +410,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
             {agencyStats.slice(0, 3).map(s => ({ n: s.display, l: s.short })).map((s, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontFamily: 'var(--fd)', fontSize: 20, color: 'var(--a)', letterSpacing: '.04em' }}>{s.n}</span>
-                <span style={{ fontSize: 11, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>{s.l}</span>
+                <span style={{ fontSize: 12, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>{s.l}</span>
               </div>
             ))}
           </motion.div>

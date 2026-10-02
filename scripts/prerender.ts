@@ -1,10 +1,10 @@
 // Dopo `vite build`: crea un HTML per ogni pagina con <head> già corretto
 // (titolo, description, canonical, Open Graph, JSON-LD), più sitemap.xml e
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
+import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -28,6 +28,26 @@ const GSC = (() => {
 })();
 if (process.env.VITE_GSC_VERIFICATION && !GSC) console.warn('[prerender] VITE_GSC_VERIFICATION non valido: ignorato');
 
+// Pagine caricate a parte (lazy): il loro file va precaricato subito, insieme
+// a quelli della pagina, invece di aspettare che lo chieda React (richiesta
+// Performance 02/10: sul blog arrivava dopo i file di Firebase e la pagina
+// veniva ridisegnata in ritardo). Nomi dei file dal manifest di Vite.
+const MANIFEST = join(DIST, '.vite', 'manifest.json');
+const manifest: Record<string, { file: string; imports?: string[] }> =
+  existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, 'utf-8')) : {};
+const lazyPage = (path: string) =>
+  path === '/privacy' ? 'src/pages/PrivacyPage.tsx'
+  : path === '/blog' || path.startsWith('/blog/') || path.startsWith('/autori/') ? 'src/pages/BlogPages.tsx'
+  : path.startsWith('/casi-studio/') ? 'src/pages/CaseStudyPages.tsx'
+  : '';
+const preloadTags = (path: string) => {
+  const entry = manifest[lazyPage(path)];
+  if (!entry) return '';
+  const files = [entry.file, ...(entry.imports || []).filter((k) => k !== 'index.html').map((k) => manifest[k]?.file)]
+    .filter((f): f is string => !!f && !template.includes(`/${f}"`));
+  return files.map((f) => `<link rel="modulepreload" crossorigin href="/${f}">`).join('\n    ');
+};
+
 const render = (path: string, body = '') => {
   const seo = getSeo(path);
   let html = template.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(seo.title)}</title>`);
@@ -45,8 +65,9 @@ const render = (path: string, body = '') => {
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
-  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
-  return html.replace('</head>', `    ${gsc}${pageLd}\n  </head>`);
+  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}`);
+  const preload = preloadTags(path);
+  return html.replace('</head>', `    ${gsc}${preload ? preload + '\n    ' : ''}${pageLd}\n  </head>`);
 };
 
 // Articoli pubblicati dalla dashboard (Firestore, API REST pubblica: le regole
@@ -109,8 +130,17 @@ async function fetchRemotePosts() {
   }
 }
 
+// Contenuti della dashboard dentro la pagina (richiesta Performance 02/10): il
+// browser parte dagli stessi testi dell'HTML statico invece che dai testi
+// predefiniti, così il hero non cambia testo quando arriva Firestore (CLS e
+// LCP su mobile). È un blocco di dati, non viene eseguito: la CSP non cambia.
+// Il documento è già pubblico (lo legge ogni visitatore da Firestore).
+let contentTag = '';
+const CONTENT_TAG_MAX = 100_000;
+
 async function main() {
 const saved = await fetchSiteContent();
+
 if (saved && saved.schemaVersion >= 3) {
   registerContent(saved);
   console.log(`[prerender] contenuti dashboard: ${saved.clients?.items?.length ?? 0} clienti, ${saved.cases?.items?.length ?? 0} casi studio`);
@@ -124,11 +154,17 @@ console.log(`[prerender] blog: ${remotePosts.length} articoli da Firestore`);
 // stesso codice React del sito, compilato da `vite build --ssr`. Se il
 // rendering di una pagina fallisce, la pagina viene scritta come prima
 // (senza testo) e il build continua: il sito non si blocca mai per questo.
-type Ssr = { renderPage: (p: string) => Promise<string>; primeContent: (c: any) => void; primeBlogPosts: (p: any[]) => void };
+type Ssr = { renderPage: (p: string) => Promise<string>; primeContent: (c: any) => void; slimForPage: (c: any) => any; primeBlogPosts: (p: any[]) => void };
 let ssr: Ssr | null = null;
 try {
   ssr = await import(pathToFileURL(join(process.cwd(), 'dist-ssr', 'entry-server.mjs')).href) as Ssr;
-  if (saved) ssr.primeContent(saved);
+  if (saved) {
+    ssr.primeContent(saved);
+    // Versione ridotta (reel Instagram come semplice link): stessi testi.
+    const tag = `<script type="application/json" id="site-content">${json(ssr.slimForPage(saved))}</script>`;
+    if (tag.length <= CONTENT_TAG_MAX) contentTag = tag;
+    console.log(`[prerender] contenuti nella pagina: ${(tag.length / 1024).toFixed(1)} KB${contentTag ? '' : ' (troppo grandi, non inseriti)'}`);
+  }
   ssr.primeBlogPosts(posts);
 } catch (e) {
   console.warn('[prerender] HTML statico non disponibile, pagine senza testo:', (e as Error).message);
@@ -188,8 +224,13 @@ const urls = routes
 writeFileSync(join(DIST, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join('\n')}\n</urlset>\n`);
 
+// Bot AI scritti per nome (richiesta SEO 01/10). Un gruppo dedicato sostituisce
+// "*" per quei bot, quindi ripete gli stessi Disallow: /admin e /api/ restano esclusi.
+const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'bingbot'];
+const RULES = 'Allow: /\nDisallow: /admin\nDisallow: /api/\n';
 writeFileSync(join(DIST, 'robots.txt'),
-  `User-agent: *\nAllow: /\nDisallow: /admin\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+  `User-agent: *\n${RULES}\n${AI_BOTS.map((b) => `User-agent: ${b}`).join('\n')}\n${RULES}\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
 // llms.txt (richiesta SEO 01/10): sommario in Markdown per i sistemi AI, solo
 // pagine indicizzabili con indirizzo assoluto. Non va in sitemap.
@@ -202,7 +243,7 @@ const org = organizationJsonLd() as any;
 const caseRoutes = routes.filter((p) => p.startsWith('/casi-studio/'));
 const llms = [
   `# ${org.name}`, '',
-  '> Agenzia di comunicazione con sede a Castellaneta (TA), Puglia, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
+  '> InLab Communication è un\'agenzia di comunicazione e digital marketing con sede a Castellaneta, in provincia di Taranto, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
   org.disambiguatingDescription, '',
   '## Servizi', '',
   ...SERVICES_SEO.map((s) => '/' + s.slug).filter(indexable).map((p) => line(p)),
@@ -211,7 +252,8 @@ const llms = [
   '', '## Casi studio', '',
   ...['/casi-studio', ...caseRoutes].filter(indexable).map((p) => line(p)),
   '', '## Città in cui lavoriamo', '',
-  `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta.`,
+  `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta. Seguiamo anche attività di ${EXTRA_AGENCY_CITIES.join(', ')}.`,
+  '', ...AGENCY_CITIES.map(agencyPath).filter(indexable).map((p) => line(p)),
   '', '## Blog', '',
   ...(indexable('/blog') ? [line('/blog')] : []),
   ...getBlogPosts().map((p) => '/blog/' + p.slug).filter(indexable).map((p) => line(p)),
@@ -220,11 +262,13 @@ const llms = [
   `- Email: ${BUSINESS.email}`,
   `- Telefono: ${BUSINESS.telephone}`,
   `- P.IVA: 03411970738 (InLab Communication di Nicola Carpignano)`,
-  `- Sede: ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
+  `- Sede: ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
 ].join('\n');
 writeFileSync(join(DIST, 'llms.txt'), llms);
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
+// il manifest serve solo qui: non va pubblicato
+rmSync(join(DIST, '.vite'), { recursive: true, force: true });
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

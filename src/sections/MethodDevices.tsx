@@ -183,7 +183,8 @@ export const MethodDevices: React.FC<{ focus: Focus; stepLabel: string; reduced?
     <div className="md-stage">
       <MdStyles />
       <div className="md-glow" />
-      <div className="md-scene">
+      {/* dispositivi finti: solo decorazione, nascosti agli screen reader e ai controlli di contrasto */}
+      <div className="md-scene" aria-hidden="true">
         <motion.div className="md-slot md-slot-pc" animate={pose('pc')} transition={t}><Laptop screen={focus.screen} /></motion.div>
         <motion.div className="md-slot md-slot-cam" animate={pose('camera')} transition={t}><Camera on={focus.device === 'camera'} /></motion.div>
         <motion.div className="md-slot md-slot-phone" animate={pose('phone')} transition={t}><Phone on={focus.device === 'phone'} /></motion.div>
