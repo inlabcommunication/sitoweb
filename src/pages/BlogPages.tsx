@@ -6,7 +6,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
 import { useBlogPosts, readingMinutes, formatDate, type BlogPost } from '../lib/blog';
 import { Markdown } from '../components/Markdown';
 import { applySeo } from '../seo/head';
-import { getSeo, AUTHORS, authorByName, authorPath } from '../seo/routes';
+import { getSeo, AUTHORS, authorByName, authorPath, AGENCY_CITIES, agencyPath } from '../seo/routes';
 import { useContent } from '../lib/content';
 import { cld } from '../lib/media';
 
@@ -318,6 +318,11 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
               {author.knowsAbout.map((k) => <span key={k} className="tag tag-a">{k}</span>)}
             </div>
             <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '1rem' }}>Lavora in InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA).</p>
+            {author.homeLocation && AGENCY_CITIES.includes(author.homeLocation) && (
+              <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '.5rem' }}>
+                È di {author.homeLocation}: <a href={agencyPath(author.homeLocation)} onClick={linkTo(go, agencyPath(author.homeLocation))} style={{ color: 'var(--t)' }}>agenzia di comunicazione a {author.homeLocation}</a>.
+              </p>
+            )}
             {author.vatID && <p style={{ fontSize: 13, color: 'var(--m)', marginTop: '.5rem' }}>P.IVA {author.vatID}</p>}
             {author.sameAs.length > 0 && (
               <p style={{ fontSize: 13, color: 'var(--m)', marginTop: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 1rem' }}>

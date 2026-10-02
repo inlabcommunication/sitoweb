@@ -369,7 +369,11 @@ export const getSeo = (rawPath: string): Seo => {
     return page(path, title, desc, {
       sitemap: { priority: 0.7, changefreq: 'monthly' },
       jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing a ${c}`,
-        serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }],
+        serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef,
+        // Taranto: la pagina copre anche la provincia (sezione "Lavoriamo in tutta la provincia")
+        areaServed: c === 'Taranto'
+          ? [{ '@type': 'City', name: c }, { '@type': 'AdministrativeArea', name: 'Provincia di Taranto' }]
+          : { '@type': 'City', name: c } }],
     }, [['Servizi', '/servizi'], [`Agenzia a ${c}`, path]]);
   }
 
