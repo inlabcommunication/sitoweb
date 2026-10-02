@@ -12,3 +12,6 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+/** Cover del blog (/blog/<slug>/cover.jpg) con la versione .webp accanto (vite.config.ts). */
+declare const __BLOG_WEBP__: string[];

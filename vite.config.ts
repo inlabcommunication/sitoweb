@@ -1,9 +1,18 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
+import { existsSync, readdirSync } from 'fs';
 import { defineConfig } from 'vite';
+
+// Cover del blog che hanno anche la versione WebP (generate da tools/blog-images):
+// solo per queste il sito usa <picture> con la WebP, le altre restano JPG.
+const BLOG_DIR = path.resolve(__dirname, 'public/blog');
+const blogWebp = existsSync(BLOG_DIR)
+  ? readdirSync(BLOG_DIR).filter((d) => existsSync(path.join(BLOG_DIR, d, 'cover.webp'))).map((d) => `/blog/${d}/cover.jpg`)
+  : [];
 
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],
+  define: { __BLOG_WEBP__: JSON.stringify(blogWebp) },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
