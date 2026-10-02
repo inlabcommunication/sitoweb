@@ -23,8 +23,12 @@ export const BUSINESS = {
   name: BRAND,
   email: 'inlab.communication@gmail.com',
   telephone: '+393295654319',
+  // Indirizzo confermato da Nicola il 02/10 (senza civico finché non lo conferma)
+  street: 'Via Regina Margherita',
+  postalCode: '74011',
   city: 'Castellaneta',
   region: 'Puglia',
+  mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Via+Regina+Margherita+74011+Castellaneta+TA',
   sameAs: [
     'https://www.instagram.com/inlab.communication/',
     'https://www.facebook.com/inlab.communication',
@@ -187,7 +191,7 @@ export const organizationJsonLd = () => ({
   email: BUSINESS.email,
   telephone: BUSINESS.telephone,
   contactPoint: { '@type': 'ContactPoint', telephone: BUSINESS.telephone, email: BUSINESS.email, contactType: 'customer service', areaServed: 'IT', availableLanguage: 'Italian' },
-  address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, postalCode: '74011', addressRegion: 'TA', addressCountry: 'IT' },
+  address: { '@type': 'PostalAddress', streetAddress: BUSINESS.street, addressLocality: BUSINESS.city, postalCode: BUSINESS.postalCode, addressRegion: 'TA', addressCountry: 'IT' },
   // città con clienti reali e città seguite (AGENCY_CITIES), più Puglia e Italia
   areaServed: [...AGENCY_CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
   sameAs: BUSINESS.sameAs,
