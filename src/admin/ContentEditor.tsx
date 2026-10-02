@@ -311,7 +311,7 @@ export const ContentEditor = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    loadContent().then(c => { setContent(c); setOriginal(c); setLoading(false); });
+    loadContent(false, true).then(c => { setContent(c); setOriginal(c); setLoading(false); });
   }, []);
 
   const dirty = JSON.stringify(content) !== JSON.stringify(original);
