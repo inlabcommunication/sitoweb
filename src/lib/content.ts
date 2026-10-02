@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { startTransition, useEffect, useState } from 'react';
 import { getLiteDb, liteFirestore } from './firestoreLite';
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId, normalizeClients } from './clientUtils';
@@ -68,7 +68,13 @@ export const primeContent = (saved: any, slim = false) => {
   cachedSlim = slim;
 };
 
-export const getContent = (): SiteContent => cached ?? normalizeSiteContent(WEBSITE_CONTENT);
+// Contenuti predefiniti: sempre lo stesso oggetto, così se Firestore non c'è
+// (o non risponde) useContent non riceve un oggetto "nuovo" uguale al primo.
+// Non va in `cached`: la dashboard deve sempre leggere i dati veri.
+let defaults: SiteContent | null = null;
+const defaultContent = () => (defaults ??= normalizeSiteContent(WEBSITE_CONTENT));
+
+export const getContent = (): SiteContent => cached ?? defaultContent();
 
 /** full = servono i dati completi (dashboard), non la versione ridotta della pagina. */
 export const loadContent = async (forceRefresh = false, full = false): Promise<SiteContent> => {
@@ -77,7 +83,7 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
     const db = await getLiteDb();
     if (!db) {
       if (full && cachedSlim) throw new Error('contenuti completi non disponibili');
-      cached ??= normalizeSiteContent(WEBSITE_CONTENT); return cached;
+      cached ??= defaultContent(); return cached;
     }
     const { doc, getDoc } = await liteFirestore();
     const snap = await getDoc(doc(db, 'app', 'site_content'));
@@ -96,7 +102,7 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
     // La dashboard non deve mai modificare (e poi salvare) la versione ridotta.
     if (full && cachedSlim) throw e;
     console.warn('[content] fallback ai contenuti statici', e);
-    cached ??= normalizeSiteContent(WEBSITE_CONTENT);
+    cached ??= defaultContent();
   }
   return cached;
 };
@@ -125,9 +131,13 @@ export const subscribeContent = (fn: (c: SiteContent) => void) => {
 };
 
 export const useContent = (): SiteContent => {
-  const [content, setContent] = useState<SiteContent>(cached ?? normalizeSiteContent(WEBSITE_CONTENT));
+  // Lo stesso oggetto per tutti i componenti e per loadContent: se i dati non
+  // cambiano, nessun aggiornamento dopo l'hydration.
+  const [content, setContent] = useState<SiteContent>(() => cached ?? defaultContent());
   useEffect(() => {
-    loadContent(true).then(c => { setContent(c); });
+    // In una transition: un aggiornamento arrivato mentre il blocco Suspense di
+    // una pagina lazy non è ancora agganciato non deve farlo ridisegnare.
+    loadContent(true).then(c => { startTransition(() => setContent(c)); });
     return subscribeContent(setContent);
   }, []);
   return content;
