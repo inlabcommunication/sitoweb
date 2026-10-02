@@ -13,6 +13,9 @@ export default defineConfig(({ isSsrBuild }) => ({
     target: 'es2020',
     // la build "ssr" genera solo il codice per l'HTML statico: niente file pubblici
     copyPublicDir: !isSsrBuild,
+    // elenco dei file per pagina: il prerender lo usa per i modulepreload
+    // (scripts/prerender.ts) e poi lo cancella da dist
+    manifest: !isSsrBuild,
     rollupOptions: {
       output: {
         // React e motion in chunk separati: restano in cache tra un deploy e l'altro.
