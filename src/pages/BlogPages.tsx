@@ -320,6 +320,7 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
         <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
             <h2 className="section-label" style={{ fontWeight: 500 }}>Ricerca</h2>
+            {author.researchIntro && <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820, marginBottom: '1rem' }}>{author.researchIntro}</p>}
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {author.research.map((r) => (
                 <li key={r.url} style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820 }}>
