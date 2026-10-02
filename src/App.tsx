@@ -354,6 +354,16 @@ const Marquee = ({items}) => {
 };
  
 // Hero delle pagine interne: visibile subito, senza dissolvenza (è l'elemento principale della pagina)
+// Frase di definizione dell'agenzia in "Chi siamo" (brief SEO 02/10): subito dopo
+// "InLab nasce…", anche se il testo è stato cambiato in dashboard.
+const AGENCY_DEFINITION = "InLab Communication è un'agenzia di comunicazione e digital marketing con sede a Castellaneta, in provincia di Taranto, fondata da Nicola Carpignano e Ilaria Gemma.";
+const withDefinition = (text?: string) => {
+  const t = String(text || "").trim();
+  if (t.includes(AGENCY_DEFINITION)) return t;
+  const first = "InLab nasce dall'incontro tra due prospettive complementari.";
+  return t.includes(first) ? t.replace(first, `${first} ${AGENCY_DEFINITION}`) : [AGENCY_DEFINITION, t].filter(Boolean).join(" ");
+};
+
 const PageHero = ({tag,h1,h1b,italic,sub,cta1,cta1to,cta2,cta2to,accent=false}: any) => {
   const {go}=useRouter();
   return (
@@ -1180,7 +1190,7 @@ const PageChiSiamo = () => {
     <>
       <PageHero tag={studio.tag || "Il laboratorio"}
         h1={title[0] || "NON SIAMO"} h1b={title[1] || "CONSULENTI"} italic={title[2] || "siamo partner."}
-        sub={studio.description1}
+        sub={withDefinition(studio.description1)}
         cta1="Vedi i casi studio" cta1to="/casi-studio" cta2="Contattaci" cta2to="/contatti"
       />
  
