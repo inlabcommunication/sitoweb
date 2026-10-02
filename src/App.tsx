@@ -272,7 +272,6 @@ const Navbar = () => {
 ═══════════════════════════════════════════════════════════════ */
 const Footer = () => {
   const { go } = useRouter();
-  const location = ((useContent() as any).contact?.location) || "Castellaneta (TA), Puglia";
   return (
     <footer style={{borderTop:".5px solid var(--b)",padding:"4rem 2rem 2.5rem"}}>
       <div style={{maxWidth:1280,margin:"0 auto"}}>
@@ -285,9 +284,10 @@ const Footer = () => {
               <span style={{fontFamily:"var(--fd)",fontSize:19,letterSpacing:".15em"}}>INLAB</span>
             </div>
             <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione con sede a Castellaneta (TA). Strategia, creatività e tecnologia per far crescere il tuo brand.</p>
-            <div style={{display:"flex",alignItems:"center",gap:6,marginTop:"0.5rem",minHeight:44,fontSize:12,color:"var(--m)"}}>
-              <MapPin size={12}/> {location}
-            </div>
+            {/* Indirizzo fisso da BUSINESS (stesso valore del JSON-LD), non dalla dashboard */}
+            <a href={BUSINESS.mapsUrl} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"flex",alignItems:"center",gap:6,marginTop:"0.5rem",minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
+              <MapPin size={12}/> {BUSINESS.street}, {BUSINESS.city} (TA)
+            </a>
             {/* NAP visibile su ogni pagina (richiesta SEO 01/10): stessi valori del JSON-LD */}
             <a href={`tel:${BUSINESS.telephone}`} className="foot-link" style={{display:"flex",alignItems:"center",gap:6,minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
               <Phone size={12}/> {BUSINESS.telephone.replace(/^\+39(\d{3})(\d{3})(\d{4})$/, "+39 $1 $2 $3")}
@@ -1212,7 +1212,7 @@ const PageChiSiamo = () => {
                     <div style={{fontSize:16,fontWeight:500}}>{authorByName(p.name) ? <Link to={authorPath(authorByName(p.name)!.slug)} style={{color:"inherit"}}>{p.name}</Link> : p.name}</div>
                   </div>
                 </div>
-                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}</p>
+                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}{authorByName(p.name)?.inBreve ? " "+authorByName(p.name)!.inBreve : ""}</p>
                 {p.edu?.length>0&&(
                   <div style={{marginBottom:"1.5rem",padding:"1rem 1.1rem",borderRadius:14,background:"rgba(205,178,255,0.06)",border:".5px solid rgba(205,178,255,0.2)"}}>
                     <div style={{display:"flex",alignItems:"center",gap:6,fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
@@ -1338,6 +1338,7 @@ const PageContatti = () => {
             <p style={{marginTop:"2.5rem",fontSize:14,color:"var(--m)",lineHeight:1.7,maxWidth:420}}>
               Sede a Castellaneta (TA). Lavoriamo con aziende e professionisti in tutta la Puglia e non solo: molti progetti si seguono anche da remoto.
             </p>
+            <div style={{marginTop:"2rem"}}><DoveSiamo/></div>
           </div>
  
           {/* Form */}
@@ -1425,6 +1426,16 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const content=useContent() as any;
   const localClients=normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(city)));
   const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
+  // Le città senza clienti (EXTRA_AGENCY_CITIES) non hanno pagine per servizio:
+  // i servizi puntano alle pagine generali.
+  const hasServicePages=CITIES.includes(city);
+  const isHome=city===BUSINESS.city;
+  // Taranto: clienti e casi di tutta la provincia, raggruppati per città (brief SEO 02/10)
+  const provinceGroups=city==="Taranto" ? PROVINCE_CITIES.map(c=>({
+    city:c,
+    cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
+    clients:normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(c))),
+  })).filter(g=>g.cases.length||g.clients.length) : [];
   return (
     <>
       <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
@@ -1434,7 +1445,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>a {city}</span>
           </h1>
           <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
-            InLab Communication segue social, video, campagne, siti web e branding per attività di {city} e della {provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.
+            {isHome
+              ? "InLab Communication ha sede a Castellaneta: seguiamo social, video, campagne, siti web e branding per le attività del paese e di Castellaneta Marina, con strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme."
+              : `InLab Communication segue social, video, campagne, siti web e branding per attività di ${city} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </p>
           <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
         </div>
@@ -1446,6 +1459,10 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             <p className="section-label">Il territorio</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare a {city}</h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
+            {info.sezione && <>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.sezione.titolo}</h2>
+              <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.sezione.testo}</p>
+            </>}
           </div>
         </section>
       )}
@@ -1456,8 +1473,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
             {SERVICES.map(s=>(
-              <Link key={s.slug} to={`/${s.slug}-${citySlug(city)}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
-                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{s.label} a {city}</span></span>
+              <Link key={s.slug} to={hasServicePages?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
+                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePages?`${s.label} a ${city}`:s.label}</span></span>
                 <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{s.short}</span>
               </Link>
             ))}
@@ -1465,7 +1482,29 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </div>
       </section>
 
-      {(localClients.length>0||localCases.length>0)&&(
+      {provinceGroups.length>0&&(
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">Clienti in provincia di Taranto</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Lavoriamo in tutta la provincia</h2>
+            {provinceGroups.map(g=>(
+              <div key={g.city} style={{marginBottom:"3rem"}}>
+                <h3 style={{fontFamily:"var(--fd)",fontWeight:400,fontSize:"clamp(1.6rem,2.6vw,2.4rem)",lineHeight:1,textTransform:"uppercase",marginBottom:"1.2rem"}}>{g.city}</h3>
+                <CaseCardGrid>
+                  {g.cases.map((cs: any, i: number)=>(
+                    <CaseCard key={"caso-"+cs.id} href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
+                  ))}
+                  {g.clients.map((cl: any, i: number)=>(
+                    <CaseCard key={cl.id} href={`/cliente/${cl.id}`} number={g.cases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"/>
+                  ))}
+                </CaseCardGrid>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {provinceGroups.length===0&&(localClients.length>0||localCases.length>0)&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Clienti a {city}</p>
@@ -1484,12 +1523,18 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
 
       {info && <CityDetails info={info}/>}
 
+      {isHome && (
+        <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}><DoveSiamo/></div>
+        </section>
+      )}
+
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia anche in queste città</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-            {CITIES.filter(c=>c!==city).map(c=>(
-              <Link key={c} to={c==="Castellaneta"?"/":agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
+            {AGENCY_CITIES.filter(c=>c!==city).map(c=>(
+              <Link key={c} to={agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
             ))}
           </div>
         </div>
@@ -1499,6 +1544,21 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
     </>
   );
 };
+
+// "Dove siamo" (richiesta SEO 02/10): indirizzo come testo e link a Google Maps,
+// senza iframe per non appesantire la pagina.
+const DoveSiamo = () => (
+  <div>
+    <p className="section-label">Dove siamo</p>
+    <p style={{fontSize:16,color:"var(--t)",lineHeight:1.7,marginBottom:".6rem"}}>InLab Communication — {BUSINESS.street}, {BUSINESS.postalCode} {BUSINESS.city} (TA)</p>
+    <a href={BUSINESS.mapsUrl} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>
+      <MapPin size={14}/> Apri in Google Maps <ArrowUpRight size={13}/>
+    </a>
+  </div>
+);
+
+// Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
+const PROVINCE_CITIES=["Castellaneta","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
 // Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
 // caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto)
@@ -2017,6 +2077,10 @@ const renderPage = (info) => {
 export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   // ssrPath: usato solo in fase di build per generare l'HTML statico di ogni pagina
   const [route,setRoute]=useState(() => ssrPath ?? getCurrentPath());
+  // Chatbot e banner cookie esistono solo nel browser: compaiono dopo il primo
+  // render, così il primo render coincide con l'HTML statico (hydration).
+  const [clientReady,setClientReady]=useState(false);
+  useEffect(()=>{ setClientReady(true); },[]);
 
   useEffect(() => {
     loadContent();
@@ -2071,7 +2135,7 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
       </AnimatePresence>
       <Footer/>
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
-      {ssrPath === undefined && <><Chatbot/><CookieBanner/></>}
+      {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}
     </RouterCtx.Provider>
   );
 }

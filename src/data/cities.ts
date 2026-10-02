@@ -11,6 +11,8 @@ export type CityInfo = {
   /** "Come lavoriamo a {città}" (brief SEO 01/10 sera) */
   metodo?: string;
   faq2?: { q: string; a: string };
+  /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
+  sezione?: { titolo: string; testo: string };
 };
 
 export const CITY_INFO: CityInfo[] = [
@@ -29,6 +31,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Avete un ufficio a Castellaneta?', a: 'Sì, InLab Communication ha sede a Castellaneta (TA). Possiamo incontrarci di persona.' },
     metodo: "A Castellaneta il lavoro segue due stagioni: d'estate il pubblico arriva da fuori, con turisti e famiglie a Castellaneta Marina, mentre il resto dell'anno contano i clienti del paese e dei paesi vicini. Per questo prepariamo i contenuti in anticipo sulla stagione e teniamo viva la comunicazione anche d'inverno.",
     faq2: { q: "Lavorate anche per strutture di Castellaneta Marina?", a: "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate." },
+    sezione: { titolo: 'Castellaneta Marina', testo: "Castellaneta Marina, sulla costa ionica, vive di turismo estivo, villaggi, lidi e ristorazione. Per le strutture della costa prepariamo foto, video, social e sponsorizzate prima dell'estate, quando i turisti scelgono dove andare, e le seguiamo durante tutta la stagione." },
   },
   {
     name: 'Mottola', provincia: 'provincia di Taranto',
@@ -40,7 +43,7 @@ export const CITY_INFO: CityInfo[] = [
   },
   {
     name: 'Palagianello', provincia: 'provincia di Taranto',
-    contesto: 'Palagianello è un paese della gravina, con il castello Stella-Caracciolo e le chiese rupestri. È una comunità piccola, dove il passaparola conta molto: social e scheda Google servono a farsi trovare anche da chi arriva dai paesi vicini.',
+    contesto: 'Palagianello è un paese della gravina, con il castello Stella-Caracciolo e le chiese rupestri. È una comunità piccola, dove il passaparola conta molto: social e scheda Google servono a farsi trovare anche da chi arriva dai paesi vicini. Nicola Carpignano, co-fondatore di InLab, è di Palagianello: qui conosciamo le attività e le persone da sempre.',
     settori: ['attività del centro storico', 'ristorazione', 'artigiani e piccole imprese'],
     faq: { q: 'Ha senso fare social per un\'attività di un paese piccolo?', a: 'Sì, se il pubblico è quello giusto: le persone del paese e dei paesi vicini. Con le sponsorizzate si possono raggiungere solo loro, senza sprecare budget.' },
     metodo: "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti.",
@@ -69,6 +72,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Lavorate anche per attività stagionali di Ginosa Marina?', a: 'Sì: prepariamo contenuti e campagne prima dell\'estate e le seguiamo durante la stagione.' },
     metodo: "A Ginosa lavoriamo su due pubblici diversi: chi vive in paese tutto l'anno e chi arriva d'estate a Ginosa Marina. Per i negozi del centro contano costanza e riconoscibilità, come nel caso di Paresteta; per le attività della marina conta farsi trovare prima della stagione, con contenuti e campagne pronti già in primavera.",
     faq2: { q: "Quando conviene iniziare a promuovere un'attività di Ginosa Marina?", a: "Qualche mese prima dell'estate: i turisti scelgono dove andare in anticipo, quindi contenuti, scheda Google e sponsorizzate devono essere pronti prima dell'arrivo della stagione." },
+    sezione: { titolo: 'Ginosa Marina', testo: "Ginosa Marina, sulla costa ionica, d'estate si riempie di turisti. Per lidi, ristoranti e strutture della marina conta farsi trovare prima della stagione: contenuti, scheda Google e sponsorizzate pronti in anticipo, poi seguiti durante l'estate." },
   },
   {
     name: 'Gravina in Puglia', provincia: 'provincia di Bari',
@@ -77,6 +81,31 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Lavorate anche fuori dalla provincia di Taranto?', a: 'Sì. Abbiamo clienti a Gravina in Puglia e lavoriamo in tutta la Puglia e anche fuori regione.' },
     metodo: "A Gravina in Puglia lavoriamo per attività che guardano sia alla Murgia sia al resto della Puglia. Molte hanno clienti anche nei comuni del barese e del materano: per questo impostiamo social e campagne su un'area più ampia del solo paese e curiamo la scheda Google, perché chi arriva da fuori cerca prima di tutto lì.",
     faq2: { q: "Venite anche a Gravina in Puglia per shooting e riprese?", a: "Sì, ci spostiamo da Castellaneta per incontri, foto e video. Il resto del lavoro lo seguiamo a distanza, con un contatto diretto." },
+  },
+  // Città senza clienti per ora (brief SEO 02/10, punto 5): solo la pagina agenzia.
+  {
+    name: 'Massafra', provincia: 'provincia di Taranto',
+    contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa.',
+    settori: ['negozi e commercio', 'aziende agricole', 'ristorazione', 'eventi'],
+    faq: { q: 'Lavorate anche con attività di Massafra?', a: 'Sì, Massafra è a pochi chilometri dalla nostra sede: possiamo incontrarci di persona e fare shooting e riprese sul posto.' },
+  },
+  {
+    name: 'Bari', provincia: 'Città metropolitana di Bari',
+    contesto: 'Bari è il capoluogo della Puglia, con Bari Vecchia, il lungomare e un tessuto di imprese, professionisti e attività commerciali tra i più grandi del Sud. Per InLab è una città di casa: Nicola Carpignano ha studiato Psicologia a Bari e insegna Marketing e Social Media nei master di EA Formazione.',
+    settori: ['aziende e professionisti', 'commercio e ristorazione', 'eventi e formazione'],
+    faq: { q: 'Seguite aziende di Bari anche se avete sede a Castellaneta?', a: 'Sì. Lavoriamo a distanza per strategia, contenuti e campagne, e veniamo a Bari per incontri, shooting e riprese.' },
+  },
+  {
+    name: 'Matera', provincia: 'provincia di Matera',
+    contesto: 'Matera, con i Sassi patrimonio UNESCO e Capitale Europea della Cultura nel 2019, è a breve distanza da Laterza e Ginosa. Vive di turismo, ospitalità, ristorazione e cultura: settori in cui immagini, video e una presenza online curata fanno la differenza.',
+    settori: ['strutture ricettive e B&B', 'ristoranti', 'esperienze ed eventi culturali', 'artigianato'],
+    faq: { q: 'Lavorate anche fuori dalla Puglia, a Matera?', a: 'Sì. Matera è vicina ai paesi in cui lavoriamo ogni giorno, e seguiamo attività anche fuori regione.' },
+  },
+  {
+    name: 'Gioia del Colle', provincia: 'Città metropolitana di Bari',
+    contesto: 'Gioia del Colle, nella Murgia barese, è conosciuta per il castello normanno-svevo, per la mozzarella e i latticini e per il vino Primitivo di Gioia del Colle DOC. È un territorio di produttori e di aziende agroalimentari, che online hanno bisogno di raccontare qualità e origine.',
+    settori: ['caseifici e produttori', 'cantine', 'commercio e ristorazione'],
+    faq: { q: 'Potete aiutare un caseificio o una cantina a vendere di più online?', a: 'Sì: foto e video dei prodotti fatti sul posto, social, sito o e-commerce, e campagne mirate a chi cerca prodotti tipici.' },
   },
 ];
 

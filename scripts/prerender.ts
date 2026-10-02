@@ -4,7 +4,7 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { AGENCY_CITIES, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
+import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -45,7 +45,7 @@ const render = (path: string, body = '') => {
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
-  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}`);
   return html.replace('</head>', `    ${gsc}${pageLd}\n  </head>`);
 };
 
@@ -109,8 +109,17 @@ async function fetchRemotePosts() {
   }
 }
 
+// Contenuti della dashboard dentro la pagina (richiesta Performance 02/10): il
+// browser parte dagli stessi testi dell'HTML statico invece che dai testi
+// predefiniti, così il hero non cambia testo quando arriva Firestore (CLS e
+// LCP su mobile). È un blocco di dati, non viene eseguito: la CSP non cambia.
+// Il documento è già pubblico (lo legge ogni visitatore da Firestore).
+let contentTag = '';
+const CONTENT_TAG_MAX = 100_000;
+
 async function main() {
 const saved = await fetchSiteContent();
+
 if (saved && saved.schemaVersion >= 3) {
   registerContent(saved);
   console.log(`[prerender] contenuti dashboard: ${saved.clients?.items?.length ?? 0} clienti, ${saved.cases?.items?.length ?? 0} casi studio`);
@@ -124,11 +133,17 @@ console.log(`[prerender] blog: ${remotePosts.length} articoli da Firestore`);
 // stesso codice React del sito, compilato da `vite build --ssr`. Se il
 // rendering di una pagina fallisce, la pagina viene scritta come prima
 // (senza testo) e il build continua: il sito non si blocca mai per questo.
-type Ssr = { renderPage: (p: string) => Promise<string>; primeContent: (c: any) => void; primeBlogPosts: (p: any[]) => void };
+type Ssr = { renderPage: (p: string) => Promise<string>; primeContent: (c: any) => void; slimForPage: (c: any) => any; primeBlogPosts: (p: any[]) => void };
 let ssr: Ssr | null = null;
 try {
   ssr = await import(pathToFileURL(join(process.cwd(), 'dist-ssr', 'entry-server.mjs')).href) as Ssr;
-  if (saved) ssr.primeContent(saved);
+  if (saved) {
+    ssr.primeContent(saved);
+    // Versione ridotta (reel Instagram come semplice link): stessi testi.
+    const tag = `<script type="application/json" id="site-content">${json(ssr.slimForPage(saved))}</script>`;
+    if (tag.length <= CONTENT_TAG_MAX) contentTag = tag;
+    console.log(`[prerender] contenuti nella pagina: ${(tag.length / 1024).toFixed(1)} KB${contentTag ? '' : ' (troppo grandi, non inseriti)'}`);
+  }
   ssr.primeBlogPosts(posts);
 } catch (e) {
   console.warn('[prerender] HTML statico non disponibile, pagine senza testo:', (e as Error).message);
@@ -216,7 +231,7 @@ const llms = [
   '', '## Casi studio', '',
   ...['/casi-studio', ...caseRoutes].filter(indexable).map((p) => line(p)),
   '', '## Città in cui lavoriamo', '',
-  `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta.`,
+  `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta. Seguiamo anche attività di ${EXTRA_AGENCY_CITIES.join(', ')}.`,
   '', ...AGENCY_CITIES.map(agencyPath).filter(indexable).map((p) => line(p)),
   '', '## Blog', '',
   ...(indexable('/blog') ? [line('/blog')] : []),
@@ -226,7 +241,7 @@ const llms = [
   `- Email: ${BUSINESS.email}`,
   `- Telefono: ${BUSINESS.telephone}`,
   `- P.IVA: 03411970738 (InLab Communication di Nicola Carpignano)`,
-  `- Sede: ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
+  `- Sede: ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
 ].join('\n');
 writeFileSync(join(DIST, 'llms.txt'), llms);
 

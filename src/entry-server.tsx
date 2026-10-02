@@ -5,10 +5,10 @@
 // il testo senza eseguire JavaScript.
 import { prerenderToNodeStream } from 'react-dom/static';
 import App from './App';
-import { primeContent } from './lib/content';
+import { primeContent, slimForPage } from './lib/content';
 import { primeBlogPosts, type BlogPost } from './lib/blog';
 
-export { primeContent, primeBlogPosts };
+export { primeContent, slimForPage, primeBlogPosts };
 export type { BlogPost };
 
 export async function renderPage(path: string): Promise<string> {

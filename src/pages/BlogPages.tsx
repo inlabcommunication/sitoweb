@@ -237,6 +237,13 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
 // Pagina autore (/autori/:slug): chi è, cosa fa e gli articoli che ha firmato.
 // Usa solo informazioni già presenti nel sito (team in /chi-siamo e dati SEO).
+// "Instagram (@ilari_3)", "LinkedIn", "Facebook": nome leggibile del profilo
+const profileLabel = (u: string) => {
+  const host = u.includes('linkedin.') ? 'LinkedIn' : u.includes('instagram.') ? 'Instagram' : u.includes('facebook.') ? 'Facebook' : new URL(u).hostname;
+  const handle = host === 'Instagram' ? u.split('/').filter(Boolean).pop() : '';
+  return handle ? `${host} (@${handle})` : host;
+};
+
 export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
   const author = AUTHORS.find((a) => a.slug === slug);
   const { posts, loading } = useBlogPosts();
@@ -269,6 +276,7 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
             <h1 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(3rem,8vw,6.5rem)', lineHeight: 0.9, marginBottom: '1rem', textTransform: 'uppercase' }}>{author.name}</h1>
             <p style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.2rem,2.2vw,1.7rem)', color: 'var(--a)', marginBottom: '1.4rem' }}>{author.jobTitle}</p>
             {member.bio && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640 }}>{member.bio}</p>}
+            {author.facts && author.facts.length > 0 && <p style={{ fontSize: 16, color: 'var(--m)', lineHeight: 1.8, maxWidth: 640, marginTop: member.bio ? '1rem' : 0 }}>{author.facts.join(' ')}</p>}
           </div>
         </div>
       </section>
@@ -287,9 +295,32 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
               {author.knowsAbout.map((k) => <span key={k} className="tag tag-a">{k}</span>)}
             </div>
             <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '1rem' }}>Lavora in InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA).</p>
+            {author.sameAs.length > 0 && (
+              <p style={{ fontSize: 13, color: 'var(--m)', marginTop: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 1rem' }}>
+                <span>Profili:</span>
+                {author.sameAs.map((u) => (
+                  <a key={u} href={u} target="_blank" rel="noopener" style={{ color: 'var(--t)', display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>{profileLabel(u)}</a>
+                ))}
+              </p>
+            )}
           </div>
         </div>
       </section>
+
+      {author.research && author.research.length > 0 && (
+        <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+          <div style={{ maxWidth: 1080, margin: '0 auto' }}>
+            <h2 className="section-label" style={{ fontWeight: 500 }}>Ricerca</h2>
+            <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+              {author.research.map((r) => (
+                <li key={r.url} style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820 }}>
+                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>"{r.title}"</a>, in <em>{r.book}</em>, {r.publisher}, pp. {r.pages}.
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {mine.length > 0 && (
         <section style={{ padding: '5rem 2rem', borderBottom: '.5px solid var(--b)' }}>
