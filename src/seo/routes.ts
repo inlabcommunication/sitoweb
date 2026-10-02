@@ -224,8 +224,8 @@ export const getSeo = (rawPath: string): Seo => {
   const path = rawPath.length > 1 ? rawPath.replace(/\/+$/, '') : '/';
 
   if (path === '/') {
-    return page('/', `${BRAND} | Agenzia di comunicazione in Puglia`,
-      'Agenzia di comunicazione con sede a Castellaneta (TA): social media, video e reel, Meta Ads, siti web e branding per aziende in Puglia e non solo.',
+    return page('/', `${BRAND} Castellaneta | Agenzia di comunicazione`,
+      'Agenzia di comunicazione a Castellaneta (TA): social media, reel e video, siti web, branding e Meta Ads per aziende in provincia di Taranto e in Puglia.',
       { sitemap: { priority: 1, changefreq: 'weekly' } }); // i dati dell'agenzia sono già nello script "org" di index.html
   }
   if (path === '/servizi') {
