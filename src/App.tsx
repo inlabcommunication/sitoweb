@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "motion/react";
-import React, { useState, useEffect, useCallback, lazy, Suspense } from "react";
+import React, { useState, useEffect, useCallback, lazy, Suspense, startTransition } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
   MapPin, Phone, Mail, Check,
@@ -2080,7 +2080,10 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   // Chatbot e banner cookie esistono solo nel browser: compaiono dopo il primo
   // render, così il primo render coincide con l'HTML statico (hydration).
   const [clientReady,setClientReady]=useState(false);
-  useEffect(()=>{ setClientReady(true); },[]);
+  // In una transition: se il blocco Suspense di una pagina lazy (blog, casi
+  // studio…) non è ancora agganciato, React aspetta il suo file invece di
+  // buttare via l'HTML statico e ridisegnarlo (richiesta Performance 02/10).
+  useEffect(()=>{ startTransition(()=>setClientReady(true)); },[]);
 
   useEffect(() => {
     loadContent();
