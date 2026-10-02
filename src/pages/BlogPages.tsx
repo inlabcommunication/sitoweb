@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
-import { useBlogPosts, readingMinutes, formatDate, type BlogPost } from '../lib/blog';
+import { useBlogPosts, readingMinutesOf, usePostContent, formatDate, type BlogPost } from '../lib/blog';
 import { Markdown } from '../components/Markdown';
 import { applySeo } from '../seo/head';
 import { getSeo, AUTHORS, authorByName, authorPath } from '../seo/routes';
@@ -83,7 +83,7 @@ const Meta = ({ post }: { post: BlogPost }) => (
     <span aria-hidden="true">·</span>
     <time dateTime={post.date}>{formatDate(post.date)}</time>
     <span aria-hidden="true">·</span>
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={11} /> {readingMinutes(post.content)} min</span>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><Clock size={11} /> {readingMinutesOf(post)} min</span>
   </div>
 );
 
@@ -153,6 +153,7 @@ export const PageBlog = ({ go }: { go: Go }) => {
 export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
   const { posts, loading } = useBlogPosts();
   const post = posts.find((p) => p.slug === slug);
+  const text = usePostContent(post);
 
   // Gli articoli scritti dalla dashboard arrivano dopo il caricamento:
   // aggiorna titolo/description/dati strutturati appena disponibili.
@@ -215,7 +216,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
         )}
 
         <div style={{ maxWidth: 820, margin: '0 auto', padding: '2.5rem 2rem 4rem' }}>
-          <Markdown source={post.content} onNavigate={go} />
+          {text ? <Markdown source={text} onNavigate={go} /> : <div style={{ minHeight: '60vh' }} aria-busy="true" />}
           {post.tags.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: '3rem', paddingTop: '2rem', borderTop: '.5px solid var(--b)' }}>
               {post.tags.map((t) => (

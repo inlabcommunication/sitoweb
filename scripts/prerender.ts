@@ -81,7 +81,11 @@ const render = (path: string, body = '') => {
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
-  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}`);
+  // Testo dell'articolo per il browser (il JS del sito non lo contiene più): stesso
+  // testo dell'HTML statico, così la pagina si aggancia senza ridisegnarsi.
+  const post = path.startsWith('/blog/') ? getBlogPosts().find((p) => `/blog/${p.slug}` === path) : undefined;
+  const postTag = post?.content ? `<script type="application/json" id="post-content">${json({ slug: post.slug, content: post.content })}</script>` : '';
+  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}${postTag}`);
   const cover = coverPreload(path);
   if (cover) html = html.replace(/<link rel="modulepreload"/, `${cover}\n    <link rel="modulepreload"`);
   const preload = preloadTags(path);
@@ -232,6 +236,11 @@ const noindex = (html: string, title: string) => html
 writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
 writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | InLab Communication')
   .replace('<div id="root"></div>', `<div id="root">${await body('/__pagina-non-trovata__')}</div>`));
+
+// Testo di ogni articolo in /blog-data/<slug>.json: lo usa il sito quando si
+// apre un articolo navigando (senza ricaricare la pagina).
+mkdirSync(join(DIST, 'blog-data'), { recursive: true });
+for (const p of getBlogPosts()) writeFileSync(join(DIST, 'blog-data', `${p.slug}.json`), JSON.stringify({ content: p.content }));
 
 // lastmod solo dove la data è reale (articoli del blog): Google ignora le date
 // che cambiano a ogni build senza che la pagina cambi.

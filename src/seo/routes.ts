@@ -404,7 +404,8 @@ export const getSeo = (rawPath: string): Seo => {
     if (post) {
       const desc = post.seoDescription || post.excerpt || plain(post.content);
       const image = post.cover ? (post.cover.startsWith('/') ? abs(post.cover) : post.cover) : abs(DEFAULT_OG_IMAGE);
-      const words = plain(post.content).split(' ').length;
+      // nel browser gli articoli del codice arrivano senza testo: parole calcolate al build
+      const words = post.content ? plain(post.content).split(' ').length : ((post as any).words ?? 0);
       const modified = post.updated && post.updated > post.date ? post.updated : post.date;
       return page(path, post.seoTitle || withBrand(post.title), desc, {
         image, lastmod: modified,
