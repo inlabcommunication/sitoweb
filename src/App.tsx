@@ -272,7 +272,6 @@ const Navbar = () => {
 ═══════════════════════════════════════════════════════════════ */
 const Footer = () => {
   const { go } = useRouter();
-  const location = ((useContent() as any).contact?.location) || "Castellaneta (TA), Puglia";
   return (
     <footer style={{borderTop:".5px solid var(--b)",padding:"4rem 2rem 2.5rem"}}>
       <div style={{maxWidth:1280,margin:"0 auto"}}>
@@ -285,9 +284,10 @@ const Footer = () => {
               <span style={{fontFamily:"var(--fd)",fontSize:19,letterSpacing:".15em"}}>INLAB</span>
             </div>
             <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione con sede a Castellaneta (TA). Strategia, creatività e tecnologia per far crescere il tuo brand.</p>
-            <div style={{display:"flex",alignItems:"center",gap:6,marginTop:"0.5rem",minHeight:44,fontSize:12,color:"var(--m)"}}>
-              <MapPin size={12}/> {location}
-            </div>
+            {/* Indirizzo fisso da BUSINESS (stesso valore del JSON-LD), non dalla dashboard */}
+            <a href={BUSINESS.mapsUrl} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"flex",alignItems:"center",gap:6,marginTop:"0.5rem",minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
+              <MapPin size={12}/> {BUSINESS.street}, {BUSINESS.city} (TA)
+            </a>
             {/* NAP visibile su ogni pagina (richiesta SEO 01/10): stessi valori del JSON-LD */}
             <a href={`tel:${BUSINESS.telephone}`} className="foot-link" style={{display:"flex",alignItems:"center",gap:6,minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
               <Phone size={12}/> {BUSINESS.telephone.replace(/^\+39(\d{3})(\d{3})(\d{4})$/, "+39 $1 $2 $3")}
