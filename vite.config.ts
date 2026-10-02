@@ -3,12 +3,17 @@ import path from 'path';
 import { existsSync, readdirSync } from 'fs';
 import { defineConfig } from 'vite';
 
-// Cover del blog che hanno anche la versione WebP (generate da tools/blog-images):
-// solo per queste il sito usa <picture> con la WebP, le altre restano JPG.
+// Cover del blog con la versione WebP (generate da tools/blog-images): per ognuna
+// le larghezze ridotte che esistono davvero (cover-480.webp, cover-800.webp).
+// Solo queste finiscono nel srcset; le cover senza .webp restano JPG.
 const BLOG_DIR = path.resolve(__dirname, 'public/blog');
-const blogWebp = existsSync(BLOG_DIR)
-  ? readdirSync(BLOG_DIR).filter((d) => existsSync(path.join(BLOG_DIR, d, 'cover.webp'))).map((d) => `/blog/${d}/cover.jpg`)
-  : [];
+const blogWebp: Record<string, number[]> = {};
+if (existsSync(BLOG_DIR)) {
+  for (const d of readdirSync(BLOG_DIR)) {
+    if (!existsSync(path.join(BLOG_DIR, d, 'cover.webp'))) continue;
+    blogWebp[`/blog/${d}/cover.jpg`] = [480, 800].filter((w) => existsSync(path.join(BLOG_DIR, d, `cover-${w}.webp`)));
+  }
+}
 
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react()],

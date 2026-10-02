@@ -57,18 +57,21 @@ const linkTo = (go: Go, to: string) => (e: React.MouseEvent) => {
 
 // La prima card (in evidenza) è l'immagine principale della pagina: si carica
 // subito e con priorità alta; le altre solo quando stanno per entrare nello schermo.
-// Versione WebP della cover locale, se esiste (richiesta Performance 02/10:
-// circa 33 KB invece di 106). Il JPG resta come riserva e per le anteprime social.
-const WEBP = new Set(__BLOG_WEBP__);
-const CoverImg = ({ src, ...img }: { src: string } & React.ImgHTMLAttributes<HTMLImageElement>) =>
-  WEBP.has(src)
-    ? <picture><source type="image/webp" srcSet={src.replace(/\.jpg$/, '.webp')} /><img src={src} {...img} /></picture>
-    : <img src={src} {...img} />;
+// Versione WebP della cover locale, se esiste (richiesta Performance 02/10),
+// con le larghezze ridotte per il telefono (480 e 800 px) quando ci sono.
+// Il JPG resta come riserva e per le anteprime social.
+const CoverImg = ({ src, sizes, ...img }: { src: string; sizes: string } & React.ImgHTMLAttributes<HTMLImageElement>) => {
+  const widths = __BLOG_WEBP__[src];
+  if (!widths) return <img src={src} {...img} />;
+  const base = src.replace(/\/cover\.jpg$/, '');
+  const srcSet = [...widths.map((w) => `${base}/cover-${w}.webp ${w}w`), `${base}/cover.webp 1600w`].join(', ');
+  return <picture><source type="image/webp" srcSet={srcSet} sizes={sizes} /><img src={src} {...img} /></picture>;
+};
 
 const Cover = ({ post, priority = false }: { post: BlogPost; priority?: boolean }) => (
   <div className="blog-cover">
     {post.cover
-      ? <CoverImg src={cld(post.cover, 900)} alt={post.coverAlt || post.title} width={1600} height={900}
+      ? <CoverImg src={cld(post.cover, 900)} sizes="(max-width: 768px) 100vw, 800px" alt={post.coverAlt || post.title} width={1600} height={900}
           loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" />
       : <div className="blog-cover-ph" aria-hidden="true">{post.category}</div>}
   </div>
@@ -207,7 +210,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
         {post.cover && (
           <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 2rem 1rem' }}>
-            <CoverImg src={cld(post.cover, 1600)} alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
+            <CoverImg src={cld(post.cover, 1600)} sizes="(max-width: 768px) 100vw, 1080px" alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
           </div>
         )}
 
@@ -324,7 +327,7 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {author.research.map((r) => (
                 <li key={r.url} style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820 }}>
-                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>"{r.title}"</a>, in <em>{r.book}</em>, {r.publisher}, pp. {r.pages}.
+                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>{r.title.startsWith('"') ? r.title : `"${r.title}"`}</a>{r.book ? <>, in <em>{r.book}</em></> : null}, {r.publisher}{r.pages ? `, pp. ${r.pages}` : ''}.
                 </li>
               ))}
             </ul>
