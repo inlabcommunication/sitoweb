@@ -14,7 +14,12 @@ export type CityInfo = {
   /** Terza domanda (brief SEO 02/10 pomeriggio) */
   faq3?: { q: string; a: string };
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
-  sezione?: { titolo: string; testo: string };
+  sezione?: { titolo: string; testo: string; link?: { to: string; label: string } };
+  /** Paragrafo proprio per ogni servizio (slug di SERVICES_SEO): pagine
+   *  /{servizio}-{città} diverse tra loro (Taranto e Palagianello, 02/10 sera) */
+  servizi?: Record<string, string>;
+  /** Domande in più, sotto faq3 */
+  altreFaq?: { q: string; a: string }[];
 };
 
 export const CITY_INFO: CityInfo[] = [
@@ -26,6 +31,21 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Taranto lavoriamo soprattutto su visibilità e differenza dalla concorrenza: in città ci sono molte attività dello stesso settore, quindi contano una scheda Google curata, recensioni, contenuti riconoscibili e campagne mirate per quartiere o per zona, dal Borgo al lungomare. Partiamo da un'analisi di come ti trovano oggi i clienti e di cosa fanno le attività vicine a te.",
     faq2: { q: "Si possono fare sponsorizzate solo per alcune zone di Taranto?", a: "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te." },
     faq3: { q: "Che tipo di attività di Taranto seguite?", a: "Soprattutto negozi, locali, studi professionali e attività che vogliono farsi trovare da chi cerca in città. Partiamo spesso da scheda Google, sito e social, poi aggiungiamo campagne mirate per zona quando servono." },
+    // Richiesta di Nicola (02/10 sera): rafforzare Taranto. Solo fatti verificabili sulla città.
+    sezione: { titolo: 'Taranto quartiere per quartiere', testo: "Taranto non è un pubblico unico. Il Borgo è il centro del commercio, con via D'Aquino e via Di Palma; la Città Vecchia vive di storia, ristorazione e turismo; quartieri come Tre Carrare, Solito-Corvisea, Montegranaro-Salinella e Paolo VI hanno negozi e servizi di vicinato; Talsano, Lama e San Vito guardano al mare e d'estate cambiano ritmo. Per questo un piano social o una campagna per Taranto parte da dove sono i tuoi clienti: chi vende nel Borgo parla a tutta la città, chi ha un'attività di quartiere parla prima a chi abita vicino." },
+    servizi: {
+      'gestione-social': "Per la gestione social a Taranto partiamo da cosa rende diversa la tua attività rispetto alle tante dello stesso settore in città. Prepariamo un piano editoriale con contenuti girati da te, non immagini di repertorio, e curiamo un profilo che chi passa dal Borgo o dal lungomare riconosce subito.",
+      'meta-ads': "Le campagne Meta Ads a Taranto funzionano quando il pubblico è scelto bene: un raggio intorno al negozio, alcuni quartieri o tutta la provincia, a seconda di chi può venire da te. Prepariamo più creatività, le confrontiamo e spostiamo il budget su quelle che portano contatti.",
+      'siti-web': "Un sito per un'attività di Taranto deve farsi trovare da chi cerca in città: pagine veloci, indirizzo e orari chiari, collegamento alla scheda Google e testi con le parole che usano i clienti, come il quartiere o la zona in cui sei.",
+      'video': "Giriamo video e reel a Taranto direttamente nella tua attività: il locale, il lavoro, le persone. La città offre sfondi riconoscibili, dal lungomare al Ponte Girevole, ma per un brand conta prima di tutto far vedere cosa succede dentro.",
+      'shooting': "Gli shooting fotografici a Taranto li facciamo sul posto, con luce e spazi veri: foto dei prodotti, degli ambienti e del team, da usare su sito, social, scheda Google e campagne.",
+      'branding': "In una città con tanta concorrenza come Taranto, un marchio riconoscibile aiuta a essere ricordati: logo, colori, tono di voce e materiali coerenti, dall'insegna ai social.",
+      'automazioni-ai': "Per le attività di Taranto che ricevono molte richieste impostiamo automazioni semplici: risposte ai messaggi più frequenti, raccolta dei contatti dal sito e dalle campagne, promemoria per gli appuntamenti. Così meno richieste restano senza risposta.",
+    },
+    altreFaq: [
+      { q: "Curate anche la scheda Google di attività di Taranto?", a: "Sì: la sistemiamo con categoria, orari, foto vere e descrizione, e ti aiutiamo a chiedere le recensioni ai clienti. Per chi cerca in città è spesso il primo contatto con l'attività." },
+      { q: "Lavorate anche nei comuni della provincia di Taranto?", a: "Sì. Oltre a Taranto abbiamo clienti a Castellaneta, Palagianello, Palagiano, Mottola, Laterza e Ginosa, e lavoriamo in tutta la provincia." },
+    ],
   },
   {
     name: 'Castellaneta', provincia: 'provincia di Taranto',
@@ -54,6 +74,21 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti.",
     faq2: { q: "Serve un sito se ho già la pagina Facebook?", a: "Spesso sì: il sito e la scheda Google fanno trovare l'attività su Google, mentre i social tengono il contatto con chi ti conosce già. Insieme funzionano meglio." },
     faq3: { q: "Perché scegliere un'agenzia vicina a Palagianello?", a: "Perché conosciamo il paese e le persone: Nicola è di Palagianello. Possiamo venire in negozio per foto e video senza costi di trasferta importanti e seguirti con incontri di persona quando serve." },
+    // Richiesta di Nicola (02/10 sera): rafforzare Palagianello.
+    sezione: { titolo: 'Palagianello e i paesi vicini', testo: "Palagianello è tra Castellaneta, Mottola e Palagiano, a pochi minuti dalla nostra sede. Molte attività del paese lavorano anche con clienti dei comuni intorno: per questo impostiamo social e sponsorizzate sul paese e sui comuni vicini insieme, e curiamo la scheda Google per chi arriva da fuori. Nicola Carpignano, co-fondatore di InLab, è cresciuto a Palagianello.",
+      link: { to: '/autori/nicola-carpignano', label: 'Chi è Nicola Carpignano' } },
+    servizi: {
+      'gestione-social': "A Palagianello molti clienti ti conoscono già di persona: i social servono a restare presenti ogni settimana e a farti scoprire da chi arriva da Mottola, Palagiano o Castellaneta. Mostriamo le persone, i prodotti e la vita dell'attività, senza toni da grande città.",
+      'meta-ads': "Per un paese come Palagianello le sponsorizzate funzionano con budget contenuti e un pubblico ristretto: il paese e i comuni vicini. Così l'annuncio arriva a chi può davvero passare da te, senza disperdere la spesa.",
+      'siti-web': "Un sito per un'attività di Palagianello non deve essere complicato: chi sei, cosa offri, dove sei e come contattarti, con il collegamento a WhatsApp e alla scheda Google. Serve soprattutto a chi non ti conosce ancora e ti cerca da fuori paese.",
+      'video': "Giriamo video e reel a Palagianello nella tua attività, con le persone che ci lavorano. Il paese, con la gravina e il castello Stella-Caracciolo, offre anche scorci riconoscibili per raccontare il legame con il territorio.",
+      'shooting': "Facciamo gli shooting a Palagianello sul posto, a pochi minuti da Castellaneta: foto di prodotti, ambienti e persone, per avere immagini vere da usare su social, sito e scheda Google.",
+      'branding': "Per un'attività di Palagianello il branding è spesso il primo passo: un logo e un'immagine coordinata che funzionino sull'insegna, sui social e sui materiali stampati, e che facciano riconoscere l'attività anche fuori dal paese.",
+      'automazioni-ai': "Anche una piccola attività di Palagianello può risparmiare tempo con automazioni semplici: risposte ai messaggi più frequenti, prenotazioni e promemoria, raccolta dei contatti. Le impostiamo in modo che siano facili da gestire da soli.",
+    },
+    altreFaq: [
+      { q: "Seguite anche eventi e iniziative a Palagianello?", a: "Sì, possiamo curare la comunicazione di eventi e iniziative del paese: post, video, grafiche e sponsorizzate rivolte a Palagianello e ai comuni vicini." },
+    ],
   },
   {
     name: 'Palagiano', provincia: 'provincia di Taranto',

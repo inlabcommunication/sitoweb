@@ -284,6 +284,10 @@ const Footer = () => {
               <span style={{fontFamily:"var(--fd)",fontSize:19,letterSpacing:".15em"}}>INLAB</span>
             </div>
             <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260}}>Agenzia di comunicazione con sede a Castellaneta (TA). Strategia, creatività e tecnologia per far crescere il tuo brand.</p>
+            {/* Link fissi alle città da rafforzare (richiesta di Nicola, 02/10 sera) */}
+            <p style={{fontSize:13,color:"var(--m)",lineHeight:1.7,maxWidth:260,marginTop:".6rem"}}>
+              Agenzia di comunicazione anche a <Link to={agencyPath("Taranto")} className="foot-link" style={{color:"var(--t)"}}>Taranto</Link> e a <Link to={agencyPath("Palagianello")} className="foot-link" style={{color:"var(--t)"}}>Palagianello</Link>.
+            </p>
             {/* Indirizzo fisso da BUSINESS (stesso valore del JSON-LD), non dalla dashboard */}
             <a href={BUSINESS.mapsUrl} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"flex",alignItems:"center",gap:6,marginTop:"0.5rem",minHeight:44,fontSize:12,color:"var(--m)",width:"fit-content"}}>
               <MapPin size={12}/> {BUSINESS.street}, {BUSINESS.city} (TA)
@@ -1465,6 +1469,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             {info.sezione && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.sezione.titolo}</h2>
               <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.sezione.testo}</p>
+              {info.sezione.link && <Link to={info.sezione.link.to} className="btn btn-g" style={{marginTop:"1.5rem"}}>{info.sezione.link.label} <ArrowUpRight size={13}/></Link>}
             </>}
           </div>
         </section>
@@ -1600,6 +1605,12 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
           <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{info.faq3.q}</h3>
           <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq3.a}</p>
         </>}
+        {(info.altreFaq||[]).map(f=>(
+          <React.Fragment key={f.q}>
+            <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{f.q}</h3>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{f.a}</p>
+          </React.Fragment>
+        ))}
       </div>
     </div>
   </section>
@@ -1656,9 +1667,19 @@ const PageCittaSEO = ({city, service}) => {
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase"}}>
               CONOSCIAMO<br/><span className="stroke">IL TERRITORIO</span>
             </h2>
-            {info ? (
+            {info ? (<>
               <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
-            ) : (
+              {/* Testo proprio del servizio in questa città (src/data/cities.ts) */}
+              {info.servizi?.[svc.slug] && <>
+                <h3 style={{fontFamily:"var(--fd)",fontWeight:400,fontSize:"clamp(1.6rem,2.6vw,2.4rem)",lineHeight:1,textTransform:"uppercase",margin:"2.5rem 0 1rem"}}>{svc.label} a {cityName}</h3>
+                <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.servizi[svc.slug]}</p>
+              </>}
+              {info.servizi && info.sezione && <>
+                <h3 style={{fontFamily:"var(--fd)",fontWeight:400,fontSize:"clamp(1.6rem,2.6vw,2.4rem)",lineHeight:1,textTransform:"uppercase",margin:"2.5rem 0 1rem"}}>{info.sezione.titolo}</h3>
+                <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.sezione.testo}</p>
+                {info.sezione.link && <Link to={info.sezione.link.to} className="btn btn-g" style={{marginTop:"1.2rem"}}>{info.sezione.link.label} <ArrowUpRight size={13}/></Link>}
+              </>}
+            </>) : (
               <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>Lavoriamo con attività di {cityName} e della {provincia}: campagne e contenuti che parlano la lingua giusta alle persone giuste, nel posto giusto.</p>
             )}
           </div>
