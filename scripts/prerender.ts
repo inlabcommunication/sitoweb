@@ -241,7 +241,7 @@ const llms = [
   `- Email: ${BUSINESS.email}`,
   `- Telefono: ${BUSINESS.telephone}`,
   `- P.IVA: 03411970738 (InLab Communication di Nicola Carpignano)`,
-  `- Sede: ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
+  `- Sede: ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
 ].join('\n');
 writeFileSync(join(DIST, 'llms.txt'), llms);
 
