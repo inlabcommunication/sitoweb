@@ -124,14 +124,19 @@ export const AUTHORS = [
     // Dati confermati da Nicola (brief SEO 02/10, punto 4)
     homeLocation: 'Palagianello',
     facts: ['Originario di Palagianello (TA).',
-      'Ha studiato Psicologia all\'Università di Bari e si è specializzato in Psicologia della comunicazione e del marketing alla Sapienza Università di Roma.',
-      'Docente di Marketing e Social Media in due master di EA Formazione (Bari): il Master in Management degli Eventi e il master sui social media.',
+      'Si è laureato in Psicologia all\'Università di Bari e si è specializzato in Psicologia della comunicazione e del marketing alla Sapienza Università di Roma.',
+      'Docente di Marketing e Social Media in due master di EA Formazione (Bari): il Master in Management degli Eventi e il Master in Social Media Manager.',
       'Nella ricerca universitaria ha studiato lo stile della comunicazione online: come si parla di lavoro, recruiting e temi sociali sui social.'],
     inBreve: 'Originario di Palagianello (TA), ha studiato Psicologia a Bari e si è specializzato in Psicologia della comunicazione e del marketing alla Sapienza di Roma. Oggi guida strategia e social di InLab Communication e insegna Marketing e Social Media nei master di EA Formazione.',
     // Bio rivista dall'Addetto al Blog su richiesta di Nicola (docs/blog-reports/2026-10-02-bio-nicola.md)
     researchIntro: 'Il suo interesse per i social parte dallo studio dello stile comunicativo. Con l\'Università di Bari ha analizzato la comunicazione del recruiting digitale con un metodo netnografico. Con la Sapienza ha studiato come i giornali di diverso orientamento politico raccontano l\'immigrazione su Facebook.',
-    teaching: { name: 'Docente di Marketing e Social Media', description: 'Master in Management degli Eventi e master sui social media di EA Formazione (Bari)', location: 'Bari' },
+    teaching: { name: 'Docente di Marketing e Social Media', description: 'Master in Management degli Eventi e Master in Social Media Manager di EA Formazione (Bari)', location: 'Bari' },
     research: [{
+      authors: ['Papapicco C.', 'Mininni G.', 'Carpignano N.'], year: '2019',
+      title: '"#Melomerito": a Netnographic Study on Communication in Digital Recruiting',
+      publisher: 'Università degli Studi di Bari Aldo Moro',
+      url: 'https://www.researchgate.net/publication/331529739_Melomerito_a_Netnographic_Study_on_Communication_in_Digital_Recruiting',
+    }, {
       authors: ['De Rosa A. M. S.', 'Bocci E.', 'Carpignano N.'], year: '2020',
       title: 'Polemical social representations about "immigration" in journal articles of different political positioning via Facebook',
       book: 'Political and economic self-constitution: media, political culture and democracy',
@@ -147,7 +152,7 @@ export const AUTHORS = [
     knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'],
     sameAs: ['https://www.instagram.com/ilari_3/', 'https://www.instagram.com/ilari.image/'] },
 ] as AuthorData[];
-type Research = { authors: string[]; year: string; title: string; book: string; publisher: string; pages: string; url: string };
+type Research = { authors: string[]; year: string; title: string; book?: string; publisher: string; pages?: string; url: string };
 type AuthorData = {
   slug: string; name: string; jobTitle: string; title: string; description: string; alumniOf: string;
   knowsAbout: string[]; sameAs: string[];
@@ -175,8 +180,11 @@ const personJsonLd = (a: Author) => ({
 const researchJsonLd = (a: Author) => (a.research || []).map((r) => ({
   '@context': 'https://schema.org', '@type': 'ScholarlyArticle', headline: r.title, url: r.url, datePublished: r.year,
   author: r.authors.map((n) => n.startsWith(a.name.split(' ').pop()!) ? { '@id': personId(a) } : { '@type': 'Person', name: n }),
-  isPartOf: { '@type': 'Book', name: r.book, publisher: { '@type': 'Organization', name: r.publisher } },
-  pagination: r.pages, inLanguage: 'en',
+  ...(r.book
+    ? { isPartOf: { '@type': 'Book', name: r.book, publisher: { '@type': 'Organization', name: r.publisher } } }
+    : { publisher: { '@type': 'Organization', name: r.publisher } }),
+  ...(r.pages ? { pagination: r.pages } : {}),
+  inLanguage: 'en',
 }));
 
 export const organizationJsonLd = () => ({
