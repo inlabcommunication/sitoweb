@@ -306,12 +306,15 @@ export const ContentEditor = () => {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [preview, setPreview] = useState(true);
   const [expandedPages, setExpandedPages] = useState<Record<string, boolean>>({ home: true });
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    loadContent().then(c => { setContent(c); setOriginal(c); setLoading(false); });
+    loadContent(false, true)
+      .then(c => { setContent(c); setOriginal(c); setLoading(false); })
+      .catch(() => setLoadError(true));
   }, []);
 
   const dirty = JSON.stringify(content) !== JSON.stringify(original);
@@ -351,6 +354,7 @@ export const ContentEditor = () => {
     setExpandedPages(e => ({ ...e, [p]: true }));
   };
 
+  if (loadError) return <div role="alert" style={{ padding: '4rem', textAlign: 'center', color: '#b42318', fontSize: 13 }}>Contenuti non caricati dal database: ricarica la pagina prima di modificare.</div>;
   if (loading) return <div style={{ padding: '4rem', textAlign: 'center', color: '#555', fontSize: 13 }}>Caricamento contenuti...</div>;
 
   const pageUrl = {

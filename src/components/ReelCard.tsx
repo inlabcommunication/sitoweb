@@ -5,6 +5,7 @@ import React from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
 import type { Reel } from '../data/caseStudies';
 import { cld, cldVideoPoster } from '../lib/media';
+import { instagramPost } from '../lib/instagram';
 
 const safe = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
@@ -16,10 +17,8 @@ export const videoPoster = (url: string) =>
 
 /** Dal codice di incorporamento (o dal link) ricava l'indirizzo dell'iframe Instagram. */
 export const instagramEmbedSrc = (embed?: string) => {
-  const m = (embed || '').match(/instagram\.com\/(?:[\w.]+\/)?(reels?|p|tv)\/([\w-]+)/i);
-  if (!m) return '';
-  const kind = m[1].toLowerCase() === 'p' ? 'p' : m[1].toLowerCase() === 'tv' ? 'tv' : 'reel';
-  return `https://www.instagram.com/${kind}/${m[2]}/embed/`;
+  const post = instagramPost(embed);
+  return post ? `https://www.instagram.com/${post.kind}/${post.id}/embed/` : '';
 };
 
 /** Altezza dell'intestazione dell'embed Instagram (avatar + nome profilo), nascosta. */
