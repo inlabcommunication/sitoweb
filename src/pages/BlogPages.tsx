@@ -22,6 +22,7 @@ const BlogStyles = () => (
     .blog-card:hover .blog-read{color:var(--a)}
     .blog-card:hover .blog-cover img{transform:scale(1.04)}
     .blog-cover{position:relative;aspect-ratio:16/9;overflow:hidden;background:linear-gradient(135deg,rgba(205,178,255,.22),rgba(205,178,255,.04) 60%),var(--s)}
+    .blog-cover picture{display:contents}
     .blog-cover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s}
     .blog-cover-ph{position:absolute;inset:0;display:flex;align-items:flex-end;padding:1.4rem;font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.4rem);line-height:.9;color:rgba(240,237,230,.18);letter-spacing:.02em;text-transform:uppercase}
     .blog-feat{display:grid;grid-template-columns:1.25fr 1fr}
@@ -56,10 +57,21 @@ const linkTo = (go: Go, to: string) => (e: React.MouseEvent) => {
 
 // La prima card (in evidenza) è l'immagine principale della pagina: si carica
 // subito e con priorità alta; le altre solo quando stanno per entrare nello schermo.
+// Versione WebP della cover locale, se esiste (richiesta Performance 02/10),
+// con le larghezze ridotte per il telefono (480 e 800 px) quando ci sono.
+// Il JPG resta come riserva e per le anteprime social.
+const CoverImg = ({ src, sizes, ...img }: { src: string; sizes: string } & React.ImgHTMLAttributes<HTMLImageElement>) => {
+  const widths = __BLOG_WEBP__[src];
+  if (!widths) return <img src={src} {...img} />;
+  const base = src.replace(/\/cover\.jpg$/, '');
+  const srcSet = [...widths.map((w) => `${base}/cover-${w}.webp ${w}w`), `${base}/cover.webp 1600w`].join(', ');
+  return <picture><source type="image/webp" srcSet={srcSet} sizes={sizes} /><img src={src} {...img} /></picture>;
+};
+
 const Cover = ({ post, priority = false }: { post: BlogPost; priority?: boolean }) => (
   <div className="blog-cover">
     {post.cover
-      ? <img src={cld(post.cover, 900)} alt={post.coverAlt || post.title} width={1600} height={900}
+      ? <CoverImg src={cld(post.cover, 900)} sizes="(max-width: 768px) 100vw, 800px" alt={post.coverAlt || post.title} width={1600} height={900}
           loading={priority ? 'eager' : 'lazy'} fetchPriority={priority ? 'high' : 'auto'} decoding="async" />
       : <div className="blog-cover-ph" aria-hidden="true">{post.category}</div>}
   </div>
@@ -198,7 +210,7 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
         {post.cover && (
           <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 2rem 1rem' }}>
-            <img src={cld(post.cover, 1600)} alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
+            <CoverImg src={cld(post.cover, 1600)} sizes="(max-width: 768px) 100vw, 1080px" alt={post.coverAlt || post.title} width={1600} height={900} fetchPriority="high" style={{ width: '100%', height: 'auto', aspectRatio: '16/9', objectFit: 'cover', borderRadius: 24, display: 'block', border: '.5px solid var(--b)' }} />
           </div>
         )}
 
@@ -311,10 +323,11 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
         <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
           <div style={{ maxWidth: 1080, margin: '0 auto' }}>
             <h2 className="section-label" style={{ fontWeight: 500 }}>Ricerca</h2>
+            {author.researchIntro && <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820, marginBottom: '1rem' }}>{author.researchIntro}</p>}
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {author.research.map((r) => (
                 <li key={r.url} style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820 }}>
-                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>"{r.title}"</a>, in <em>{r.book}</em>, {r.publisher}, pp. {r.pages}.
+                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>{r.title.startsWith('"') ? r.title : `"${r.title}"`}</a>{r.book ? <>, in <em>{r.book}</em></> : null}, {r.publisher}{r.pages ? `, pp. ${r.pages}` : ''}.
                 </li>
               ))}
             </ul>

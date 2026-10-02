@@ -63,94 +63,9 @@ Il brief del 30/09 e la sezione 8 aggiornata delle linee guida non sono ancora s
 
 Da ora, prima di ogni consegna, per ogni articolo nuovo o aggiornato controllo: nomi dei file descrittivi, testo alternativo di 8-15 parole, copertina JPG sotto i 250 KB e interne WebP sotto i 150 KB (larghe al massimo 1600 px), metadati IPTC InLab Communication. Stato al 30/09: tutti i 17 articoli e le 41 immagini sono in regola.
 
-## Richieste per lo sviluppo
+## Metadati nel generatore (aggiornamento del 01/10/2026)
 
-**Per la sessione Sito Inlab.** File: `tools/blog-images/render.cjs` (oppure un passaggio finale in `gen.cjs`).
-**Motivo:** richiesta del responsabile SEO del 30/09. Google Immagini mostra come crediti i metadati IPTC. Oggi le immagini nuove escono senza, e l'addetto al blog non può modificare `tools/`.
-**Proposta:** dopo aver scritto ogni file, aggiungere i metadati con lo script qui sotto. Non ricomprime l'immagine: inserisce un segmento APP1 (XMP) e APP13 (IPTC IIM) nei JPEG, un chunk `XMP ` nei WebP. Si può anche lasciare in Python e chiamarlo dopo `gen.cjs`, oppure portarlo in JavaScript. Verificato su 41 file: pixel identici, file validi in Chromium.
-
-```python
-# Aggiunge metadati IPTC (IIM) e XMP a JPEG e WebP senza ricomprimere i pixel.
-# Uso: python3 iptc.py file1.jpg file2.webp ...
-import struct, sys
-
-CREATOR = 'InLab Communication'
-CREDIT = 'InLab Communication'
-COPYRIGHT = '© InLab Communication'
-
-XMP = f'''<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/">
- <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <rdf:Description rdf:about=""
-    xmlns:dc="http://purl.org/dc/elements/1.1/"
-    xmlns:photoshop="http://ns.adobe.com/photoshop/1.0/"
-    xmlns:xmpRights="http://ns.adobe.com/xap/1.0/rights/">
-   <dc:creator><rdf:Seq><rdf:li>{CREATOR}</rdf:li></rdf:Seq></dc:creator>
-   <dc:rights><rdf:Alt><rdf:li xml:lang="x-default">{COPYRIGHT}</rdf:li></rdf:Alt></dc:rights>
-   <photoshop:Credit>{CREDIT}</photoshop:Credit>
-   <xmpRights:Marked>True</xmpRights:Marked>
-  </rdf:Description>
- </rdf:RDF>
-</x:xmpmeta>
-<?xpacket end="w"?>'''.encode('utf-8')
-
-XMP_NS = b'http://ns.adobe.com/xap/1.0/\x00'
-
-
-def iim():
-    def ds(rec, tag, val):
-        return b'\x1c' + bytes([rec, tag]) + struct.pack('>H', len(val)) + val
-    data = ds(1, 90, b'\x1b%G')  # set di caratteri UTF-8
-    data += ds(2, 80, CREATOR.encode()) + ds(2, 110, CREDIT.encode()) + ds(2, 116, COPYRIGHT.encode())
-    res = b'8BIM' + struct.pack('>H', 0x0404) + b'\x00\x00' + struct.pack('>I', len(data)) + data
-    if len(data) % 2:
-        res += b'\x00'
-    return b'Photoshop 3.0\x00' + res
-
-
-def seg(marker, payload):
-    return b'\xff' + bytes([marker]) + struct.pack('>H', len(payload) + 2) + payload
-
-
-def jpeg(buf):
-    assert buf[:2] == b'\xff\xd8'
-    if XMP_NS in buf[:4096]:
-        return None  # già fatto
-    i = 2
-    # dopo APP0 (JFIF) se presente
-    if buf[2:4] == b'\xff\xe0':
-        i = 4 + struct.unpack('>H', buf[4:6])[0]
-    return buf[:i] + seg(0xE1, XMP_NS + XMP) + seg(0xED, iim()) + buf[i:]
-
-
-def webp(buf):
-    assert buf[:4] == b'RIFF' and buf[8:12] == b'WEBP'
-    chunks, i = [], 12
-    while i < len(buf):
-        cid = buf[i:i+4]; size = struct.unpack('<I', buf[i+4:i+8])[0]
-        chunks.append([cid, buf[i+8:i+8+size]]); i += 8 + size + (size & 1)
-    if any(c[0] == b'XMP ' for c in chunks):
-        return None
-    if chunks[0][0] != b'VP8X':
-        # immagine semplice: serve il chunk VP8X con le dimensioni
-        c = chunks[0]
-        if c[0] == b'VP8 ':
-            w = struct.unpack('<H', c[1][6:8])[0] & 0x3fff; h = struct.unpack('<H', c[1][8:10])[0] & 0x3fff
-        else:  # VP8L
-            b = struct.unpack('<I', c[1][1:5])[0]; w = (b & 0x3fff) + 1; h = ((b >> 14) & 0x3fff) + 1
-        vp8x = bytes([0, 0, 0, 0]) + (w - 1).to_bytes(3, 'little') + (h - 1).to_bytes(3, 'little')
-        chunks.insert(0, [b'VP8X', vp8x])
-    flags = bytearray(chunks[0][1]); flags[0] |= 0x04; chunks[0][1] = bytes(flags)
-    chunks.append([b'XMP ', XMP])
-    body = b''.join(c[0] + struct.pack('<I', len(c[1])) + c[1] + (b'\x00' if len(c[1]) & 1 else b'') for c in chunks)
-    return b'RIFF' + struct.pack('<I', 4 + len(body)) + b'WEBP' + body
-
-
-for f in sys.argv[1:]:
-    b = open(f, 'rb').read()
-    out = jpeg(b) if f.endswith('.jpg') else webp(b)
-    if out is None:
-        print('già presente', f); continue
-    open(f, 'wb').write(out)
-    print(f'{f}: {len(b)//1024} KB -> {len(out)//1024} KB')
-```
+Dal 01/10 `CLAUDE.md` mette `tools/blog-images/` nell'area dell'addetto al blog, quindi **la richiesta per lo sviluppo non serve più**: l'ho fatto io.
+- Nuovo `tools/blog-images/metadata.cjs`: porta in JavaScript lo script Python che c'era qui, con lo stesso risultato byte per byte (verificato). `render.cjs` lo usa su ogni immagine generata. Lo stesso file si usa anche da riga di comando sulle immagini esistenti: `node tools/blog-images/metadata.cjs public/blog/<slug>/*.jpg public/blog/<slug>/*.webp`.
+- Spec aggiornati ai nuovi nomi descrittivi dei file: ogni spec ora corrisponde ai file in `public/blog/`.
+- Prova: generato uno spec di prova; copertina e infografiche uscite con XMP (e IPTC IIM nel JPEG); file di prova eliminato.

@@ -20,7 +20,7 @@ module.exports = {
 </svg>`
   },
   inline: [
-    { type: 'steps', name: 'checklist', tag: 'CHECKLIST DEL CAMBIO', title: 'Cosa aggiornare <span class="acc">il giorno del rebranding</span>', check: true, cols: 2, items: [
+    { type: 'steps', name: 'checklist-rebranding-insegna-social', tag: 'CHECKLIST DEL CAMBIO', title: 'Cosa aggiornare <span class="acc">il giorno del rebranding</span>', check: true, cols: 2, items: [
       ['Insegna e vetrine', 'Insegna, vetrofanie, targhe e segnaletica'],
       ['Scheda Google', 'Nome, logo e foto: può servire una nuova verifica'],
       ['Profili social', 'Nome, nome utente, immagine, bio e link'],
@@ -28,7 +28,7 @@ module.exports = {
       ['WhatsApp Business', 'Nome, foto e messaggio di benvenuto'],
       ['Materiali', 'Menu, listini, packaging, divise e biglietti']
     ] },
-    { type: 'timeline', name: 'fasi', tag: 'COMUNICARE IL CAMBIO', title: 'Tre fasi per <span class="acc">non perdere clienti</span>', items: [
+    { type: 'timeline', name: 'fasi-comunicare-rebranding', tag: 'COMUNICARE IL CAMBIO', title: 'Tre fasi per <span class="acc">non perdere clienti</span>', items: [
       ['Prima', 'Crea attesa', 'Teaser sui social, vetrina, clienti abituali coinvolti'],
       ['Il giorno', 'Un momento preciso', 'Inaugurazione o evento: un motivo per passare', 1],
       ['Dopo', 'Accompagna', '"Prima eravamo…" per qualche mese, poi solo il nuovo nome']

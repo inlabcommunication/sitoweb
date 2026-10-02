@@ -29,6 +29,6 @@ module.exports = {
       ['Tempo per imparare', 'Qualche settimana prima di giudicare'],
       ['Contatti veri', 'Misura messaggi, chiamate e prenotazioni']
     ] },
-    { type: 'compare', name: 'metriche', tag: 'COSA MISURARE', title: 'Numeri che <span class="acc">contano</span>', left: { label: 'Poco utili da soli', items: ['Like', 'Visualizzazioni', 'Nuovi follower', 'Copertura'] }, right: { label: 'Da guardare', items: ['Costo per messaggio o contatto', 'Chiamate e prenotazioni', 'Contatti della tua zona', 'Frequenza: quando cambiare annuncio'] } }
+    { type: 'compare', name: 'metriche-sponsorizzate-instagram', tag: 'COSA MISURARE', title: 'Numeri che <span class="acc">contano</span>', left: { label: 'Poco utili da soli', items: ['Like', 'Visualizzazioni', 'Nuovi follower', 'Copertura'] }, right: { label: 'Da guardare', items: ['Costo per messaggio o contatto', 'Chiamate e prenotazioni', 'Contatti della tua zona', 'Frequenza: quando cambiare annuncio'] } }
   ]
 };

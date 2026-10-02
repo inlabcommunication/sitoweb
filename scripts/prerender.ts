@@ -1,7 +1,7 @@
 // Dopo `vite build`: crea un HTML per ogni pagina con <head> già corretto
 // (titolo, description, canonical, Open Graph, JSON-LD), più sitemap.xml e
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
-import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
@@ -28,6 +28,26 @@ const GSC = (() => {
 })();
 if (process.env.VITE_GSC_VERIFICATION && !GSC) console.warn('[prerender] VITE_GSC_VERIFICATION non valido: ignorato');
 
+// Pagine caricate a parte (lazy): il loro file va precaricato subito, insieme
+// a quelli della pagina, invece di aspettare che lo chieda React (richiesta
+// Performance 02/10: sul blog arrivava dopo i file di Firebase e la pagina
+// veniva ridisegnata in ritardo). Nomi dei file dal manifest di Vite.
+const MANIFEST = join(DIST, '.vite', 'manifest.json');
+const manifest: Record<string, { file: string; imports?: string[] }> =
+  existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, 'utf-8')) : {};
+const lazyPage = (path: string) =>
+  path === '/privacy' ? 'src/pages/PrivacyPage.tsx'
+  : path === '/blog' || path.startsWith('/blog/') || path.startsWith('/autori/') ? 'src/pages/BlogPages.tsx'
+  : path.startsWith('/casi-studio/') ? 'src/pages/CaseStudyPages.tsx'
+  : '';
+const preloadTags = (path: string) => {
+  const entry = manifest[lazyPage(path)];
+  if (!entry) return '';
+  const files = [entry.file, ...(entry.imports || []).filter((k) => k !== 'index.html').map((k) => manifest[k]?.file)]
+    .filter((f): f is string => !!f && !template.includes(`/${f}"`));
+  return files.map((f) => `<link rel="modulepreload" crossorigin href="/${f}">`).join('\n    ');
+};
+
 const render = (path: string, body = '') => {
   const seo = getSeo(path);
   let html = template.replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(seo.title)}</title>`);
@@ -46,7 +66,8 @@ const render = (path: string, body = '') => {
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
   html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}`);
-  return html.replace('</head>', `    ${gsc}${pageLd}\n  </head>`);
+  const preload = preloadTags(path);
+  return html.replace('</head>', `    ${gsc}${preload ? preload + '\n    ' : ''}${pageLd}\n  </head>`);
 };
 
 // Articoli pubblicati dalla dashboard (Firestore, API REST pubblica: le regole
@@ -246,6 +267,8 @@ const llms = [
 writeFileSync(join(DIST, 'llms.txt'), llms);
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
+// il manifest serve solo qui: non va pubblicato
+rmSync(join(DIST, '.vite'), { recursive: true, force: true });
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

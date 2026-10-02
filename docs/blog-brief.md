@@ -12,6 +12,8 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 - **Pull request:** le apre l'addetto al blog dal proprio branch, solo con file della sua area. Sito Inlab fa il controllo tecnico, Nicola la unisce.
 - **Mappa "Già coperte":** la aggiorna il responsabile SEO. L'addetto al blog scrive le voci nuove nel resoconto, nella sezione "Voci da aggiungere alla mappa".
 - **Crediti:** se in una sessione non ci sono compiti del brief né notizie A o B forti, basta un report breve, senza articolo.
+- **Resoconto al Direttore a fine di ogni lavoro** (regola di Nicola, 01/10/2026): cosa è stato fatto, articoli e PR, file del resoconto, problemi, cosa serve da Nicola o dalla SEO. Si manda con `create_trigger` (`persistent_session_id` del Direttore, `initiation: human_request`, prompt che inizia con `[Resoconto da Addetto al Blog]`), poi `fire_trigger` senza `text`, poi `delete_trigger`.
+- **Strumento immagini:** `tools/blog-images/` è nell'area dell'addetto al blog (CLAUDE.md, 01/10/2026). Il generatore aggiunge da solo i metadati IPTC; per immagini già esistenti si usa `node tools/blog-images/metadata.cjs <file>`.
 - **Rubrica delle sessioni** (dal direttore, 30/09/2026). Per scrivere a una sessione: `create_trigger` con `persistent_session_id`, poi `fire_trigger` e `delete_trigger`. Ogni messaggio sveglia l'altra sessione e consuma i suoi limiti: scrivere solo quando serve, con tutto dentro.
   - Direttore Operativo: `session_01AreWGaDhEeTCs3CDmdifT7`
   - Sito Inlab (unico che modifica il codice): `session_01U6sW6ykGz4nrdvKnHMQZsF`

@@ -35,7 +35,7 @@ module.exports = {
 </svg>`
   },
   inline: [
-    { type: 'steps', name: 'checklist', tag: 'WHATSAPP BUSINESS · CHECKLIST', title: 'Prima di attivare <span class="acc">l\'assistente AI</span>', check: true, cols: 2, items: [
+    { type: 'steps', name: 'checklist-assistente-ai-whatsapp', tag: 'WHATSAPP BUSINESS · CHECKLIST', title: 'Prima di attivare <span class="acc">l\'assistente AI</span>', check: true, cols: 2, items: [
       ['Base informativa', 'Orari, listini, FAQ e politiche scritti e aggiornati'],
       ['Passaggio all\'operatore', 'Reclami, preventivi e casi delicati vanno a una persona'],
       ['Dati sensibili', 'Niente dati sanitari in chat: limita il bot alla parte organizzativa'],
