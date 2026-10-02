@@ -32,15 +32,20 @@ export const BUSINESS = {
   ],
 };
 
-// Città con clienti reali (indicazione del titolare, 29/09/2026). Massafra è
-// stata tolta (redirect 301 in vercel.json). Ginosa resta: Paresteta ha un
-// negozio lì (in attesa di conferma del responsabile SEO).
+// Città con clienti reali (indicazione del titolare, 29/09/2026): hanno anche
+// le pagine per servizio /{servizio}-{città}. Ginosa resta: Paresteta ha un
+// negozio lì.
 export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Castellaneta', 'Laterza', 'Ginosa', 'Gravina in Puglia'];
+// Città senza clienti per ora (brief SEO 02/10, punto 5, confermato da Nicola):
+// solo la pagina /agenzia-comunicazione-{città}, nessuna pagina per servizio.
+// Le vecchie /{servizio}-massafra restano in redirect 301 (vercel.json): la
+// regola elenca solo gli slug dei servizi, quindi non tocca l'agenzia.
+export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
-/** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città
- *  tranne Castellaneta, dove la pagina di riferimento è la home. */
-export const AGENCY_CITIES = CITIES.filter((c) => c !== 'Castellaneta');
+/** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
+ *  Castellaneta compresa (dal 02/10, la home resta la pagina del brand). */
+export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
 export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
 export const SERVICES_SEO = [
@@ -183,8 +188,8 @@ export const organizationJsonLd = () => ({
   telephone: BUSINESS.telephone,
   contactPoint: { '@type': 'ContactPoint', telephone: BUSINESS.telephone, email: BUSINESS.email, contactType: 'customer service', areaServed: 'IT', availableLanguage: 'Italian' },
   address: { '@type': 'PostalAddress', addressLocality: BUSINESS.city, postalCode: '74011', addressRegion: 'TA', addressCountry: 'IT' },
-  // città con clienti reali (CITIES) più Puglia e Italia: si lavora anche fuori regione
-  areaServed: [...CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
+  // città con clienti reali e città seguite (AGENCY_CITIES), più Puglia e Italia
+  areaServed: [...AGENCY_CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
   sameAs: BUSINESS.sameAs,
   knowsAbout: SERVICES_SEO.map((s) => s.label),
   hasOfferCatalog: {
@@ -330,7 +335,9 @@ export const getSeo = (rawPath: string): Seo => {
       `Agenzia comunicazione e marketing a ${c} | InLab`,
       `Agenzia di comunicazione e marketing a ${c}`,
     ].find((t) => t.length <= 60) || `Agenzia di comunicazione a ${c} | InLab`;
-    const desc = [
+    const desc = c === BUSINESS.city
+      ? 'Agenzia di comunicazione e marketing con sede a Castellaneta (TA): social, video, Meta Ads, siti web e branding per attività del paese e della Marina.'
+      : [
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta (TA), preventivo gratuito.`,
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta, preventivo gratuito.`,
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Preventivo gratuito.`,
