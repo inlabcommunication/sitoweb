@@ -287,7 +287,8 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
           <Field label="Numero" value={p.value} onChange={(v: string) => { const a = JSON.parse(JSON.stringify(content.contact.phones)); a[i].value = v; set('contact.phones', a); }} />
         </CardBlock>
       ))}
-      <Field label="Sede" value={(content.contact as any)?.location} onChange={(v: string) => set('contact.location', v)} placeholder="Taranto, Puglia" />
+      <Field label="Sede" value={(content.contact as any)?.location} onChange={(v: string) => set('contact.location', v)} placeholder="Castellaneta (TA), Puglia"
+        hint="Compare nella pagina Contatti. Il footer e i dati per Google usano l'indirizzo fisso del sito (Via Regina Margherita, Castellaneta): per cambiarlo chiedi a Sito Inlab." />
     </div>
   );
 

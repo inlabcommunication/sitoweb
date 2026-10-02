@@ -133,13 +133,14 @@ export const AUTHORS = [
       publisher: 'Institute of Social Sciences (Belgrado)', pages: '58-64',
       url: 'https://iris.uniroma1.it/handle/11573/1544870',
     }],
-    sameAs: [] as string[] },
+    // Profili confermati da Nicola (brief SEO 02/10, punto 7)
+    sameAs: ['https://www.linkedin.com/in/nicola-carpignano/', 'https://www.instagram.com/nicocarpignano/', 'https://www.facebook.com/nico.carpignano/'] },
   { slug: 'ilaria-gemma', name: 'Ilaria Gemma', jobTitle: 'Content creator e comunicazione visiva',
     title: 'Ilaria Gemma: content creator, foto e video a Castellaneta',
     description: 'Ilaria Gemma, content creator e co-fondatrice di InLab Communication a Castellaneta (TA): foto, video, reel e comunicazione visiva per i brand locali.',
     alumniOf: '',
     knowsAbout: ['Comunicazione', 'Video editing', 'Fotografia', 'Content creation'],
-    sameAs: [] as string[] },
+    sameAs: ['https://www.instagram.com/ilari_3/', 'https://www.instagram.com/ilari.image/'] },
 ] as AuthorData[];
 type Research = { authors: string[]; year: string; title: string; book: string; publisher: string; pages: string; url: string };
 type AuthorData = {

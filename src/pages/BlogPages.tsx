@@ -237,6 +237,13 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
 
 // Pagina autore (/autori/:slug): chi è, cosa fa e gli articoli che ha firmato.
 // Usa solo informazioni già presenti nel sito (team in /chi-siamo e dati SEO).
+// "Instagram (@ilari_3)", "LinkedIn", "Facebook": nome leggibile del profilo
+const profileLabel = (u: string) => {
+  const host = u.includes('linkedin.') ? 'LinkedIn' : u.includes('instagram.') ? 'Instagram' : u.includes('facebook.') ? 'Facebook' : new URL(u).hostname;
+  const handle = host === 'Instagram' ? u.split('/').filter(Boolean).pop() : '';
+  return handle ? `${host} (@${handle})` : host;
+};
+
 export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
   const author = AUTHORS.find((a) => a.slug === slug);
   const { posts, loading } = useBlogPosts();
@@ -288,6 +295,14 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
               {author.knowsAbout.map((k) => <span key={k} className="tag tag-a">{k}</span>)}
             </div>
             <p style={{ fontSize: 13, color: 'var(--m)', lineHeight: 1.7, marginTop: '1rem' }}>Lavora in InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA).</p>
+            {author.sameAs.length > 0 && (
+              <p style={{ fontSize: 13, color: 'var(--m)', marginTop: '1rem', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 1rem' }}>
+                <span>Profili:</span>
+                {author.sameAs.map((u) => (
+                  <a key={u} href={u} target="_blank" rel="noopener" style={{ color: 'var(--t)', display: 'inline-flex', alignItems: 'center', minHeight: 44 }}>{profileLabel(u)}</a>
+                ))}
+              </p>
+            )}
           </div>
         </div>
       </section>
