@@ -75,7 +75,10 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
   if (cached && !forceRefresh && !(full && cachedSlim)) return cached;
   try {
     const db = await getLiteDb();
-    if (!db) { cached ??= normalizeSiteContent(WEBSITE_CONTENT); return cached; }
+    if (!db) {
+      if (full && cachedSlim) throw new Error('contenuti completi non disponibili');
+      cached ??= normalizeSiteContent(WEBSITE_CONTENT); return cached;
+    }
     const { doc, getDoc } = await liteFirestore();
     const snap = await getDoc(doc(db, 'app', 'site_content'));
     if (snap.exists()) {
@@ -90,6 +93,8 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
   } catch (e) {
+    // La dashboard non deve mai modificare (e poi salvare) la versione ridotta.
+    if (full && cachedSlim) throw e;
     console.warn('[content] fallback ai contenuti statici', e);
     cached ??= normalizeSiteContent(WEBSITE_CONTENT);
   }
