@@ -22,7 +22,7 @@ module.exports = {
 </svg>`
   },
   inline: [
-    { type: 'compare', name: 'formati', tag: 'FORMATI INSTAGRAM', title: 'Ogni formato ha <span class="acc">un lavoro</span>', left: { label: 'Reel e storie', items: ['Reel: farsi scoprire da chi non ti segue', 'Storie: presenza quotidiana con chi ti segue', 'Reel ideale: 7-30 secondi, un\'idea sola', 'Storie: da qui arrivano molti messaggi'] }, right: { label: 'Carosello e foto', items: ['Carosello: spiegare e convincere', 'Ottimo per menu, trattamenti, FAQ', 'Foto singola: annunci veloci', 'Chi scorre fino alla fine è interessato'] } },
+    { type: 'compare', name: 'formati-instagram-reel-post-storie', tag: 'FORMATI INSTAGRAM', title: 'Ogni formato ha <span class="acc">un lavoro</span>', left: { label: 'Reel e storie', items: ['Reel: farsi scoprire da chi non ti segue', 'Storie: presenza quotidiana con chi ti segue', 'Reel ideale: 7-30 secondi, un\'idea sola', 'Storie: da qui arrivano molti messaggi'] }, right: { label: 'Carosello e foto', items: ['Carosello: spiegare e convincere', 'Ottimo per menu, trattamenti, FAQ', 'Foto singola: annunci veloci', 'Chi scorre fino alla fine è interessato'] } },
     { type: 'timeline', name: 'piano-settimanale', tag: 'ESEMPIO', title: 'Una settimana <span class="acc">tipo</span>', items: [
       ['Lunedì', 'Storia', 'La novità della settimana'],
       ['Martedì', 'Reel', 'Dietro le quinte', 1],

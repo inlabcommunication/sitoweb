@@ -21,7 +21,7 @@ module.exports = {
 </svg>`
   },
   inline: [
-    { type: 'steps', name: 'preparazione', tag: 'PRIMA DELLO SHOOTING', title: 'Come preparare <span class="acc">il ristorante</span>', check: true, cols: 2, items: [
+    { type: 'steps', name: 'preparare-servizio-fotografico-ristorante', tag: 'PRIMA DELLO SHOOTING', title: 'Come preparare <span class="acc">il ristorante</span>', check: true, cols: 2, items: [
       ['Obiettivo chiaro', 'Menu, Instagram, sito, scheda Google o delivery?'],
       ['Giorno e luce', 'Un giorno tranquillo, nelle ore più luminose'],
       ['Lista dei piatti', 'I più venduti e quelli che ti rappresentano'],
@@ -29,6 +29,6 @@ module.exports = {
       ['Pulizia e dettagli', 'Via cartelli, fili e avvisi dalle inquadrature'],
       ['Staff avvisato', 'Divise in ordine, consenso di chi compare']
     ] },
-    { type: 'compare', name: 'formati', tag: 'OGNI CANALE IL SUO FORMATO', title: 'Le stesse foto, <span class="acc">usi diversi</span>', left: { label: 'Menu, delivery e sito', items: ['Stessa luce e stesso sfondo per tutti i piatti', 'Vista dall\'alto per pizze e taglieri', 'Orizzontali ampie per il sito', 'Coerenza prima di tutto'] }, right: { label: 'Instagram e scheda Google', items: ['Verticale 4:5 nel feed, 9:16 per storie', 'Mani, movimento, atmosfera', 'Sala, esterno e insegna su Google', 'Foto reali e aggiornate'] } }
+    { type: 'compare', name: 'foto-ristorante-menu-instagram-google', tag: 'OGNI CANALE IL SUO FORMATO', title: 'Le stesse foto, <span class="acc">usi diversi</span>', left: { label: 'Menu, delivery e sito', items: ['Stessa luce e stesso sfondo per tutti i piatti', 'Vista dall\'alto per pizze e taglieri', 'Orizzontali ampie per il sito', 'Coerenza prima di tutto'] }, right: { label: 'Instagram e scheda Google', items: ['Verticale 4:5 nel feed, 9:16 per storie', 'Mani, movimento, atmosfera', 'Sala, esterno e insegna su Google', 'Foto reali e aggiornate'] } }
   ]
 };
