@@ -45,7 +45,7 @@ const render = (path: string, body = '') => {
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
-  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>`);
+  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}`);
   return html.replace('</head>', `    ${gsc}${pageLd}\n  </head>`);
 };
 
@@ -109,8 +109,21 @@ async function fetchRemotePosts() {
   }
 }
 
+// Contenuti della dashboard dentro la pagina (richiesta Performance 02/10): il
+// browser parte dagli stessi testi dell'HTML statico invece che dai testi
+// predefiniti, così il hero non cambia testo quando arriva Firestore (CLS e
+// LCP su mobile). È un blocco di dati, non viene eseguito: la CSP non cambia.
+// Il documento è già pubblico (lo legge ogni visitatore da Firestore).
+let contentTag = '';
+const CONTENT_TAG_MAX = 200_000;
+
 async function main() {
 const saved = await fetchSiteContent();
+if (saved) {
+  const tag = `<script type="application/json" id="site-content">${json(saved)}</script>`;
+  if (tag.length <= CONTENT_TAG_MAX) contentTag = tag;
+  console.log(`[prerender] contenuti nella pagina: ${(tag.length / 1024).toFixed(1)} KB${contentTag ? '' : ' (troppo grandi, non inseriti)'}`);
+}
 if (saved && saved.schemaVersion >= 3) {
   registerContent(saved);
   console.log(`[prerender] contenuti dashboard: ${saved.clients?.items?.length ?? 0} clienti, ${saved.cases?.items?.length ?? 0} casi studio`);

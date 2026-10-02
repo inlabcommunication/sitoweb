@@ -25,10 +25,17 @@ function dropStaleSections(saved: any) {
 let cached: SiteContent | null = null;
 const listeners = new Set<(c: SiteContent) => void>();
 
-/** Solo per la generazione dell'HTML statico: contenuti salvati in dashboard letti al build. */
+// Impronta dei dati salvati: se Firestore restituisce gli stessi dati già in
+// pagina, i componenti non vengono ridisegnati.
+let savedKey = '';
+const stableKey = (v: any): string => JSON.stringify(v, (_k, x) =>
+  x && typeof x === 'object' && !Array.isArray(x) ? Object.fromEntries(Object.keys(x).sort().map((k) => [k, x[k]])) : x);
+
+/** Contenuti salvati in dashboard letti al build: per l'HTML statico e, nel browser, dal blocco #site-content. */
 export const primeContent = (saved: any) => {
   const clean = dropStaleSections(saved);
   cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, clean), clean?.schemaVersion >= 3);
+  savedKey = stableKey(saved);
 };
 
 export const getContent = (): SiteContent => cached ?? normalizeSiteContent(WEBSITE_CONTENT);
@@ -37,18 +44,22 @@ export const loadContent = async (forceRefresh = false): Promise<SiteContent> =>
   if (cached && !forceRefresh) return cached;
   try {
     const db = await getLiteDb();
-    if (!db) { cached = normalizeSiteContent(WEBSITE_CONTENT); return cached; }
+    if (!db) { cached ??= normalizeSiteContent(WEBSITE_CONTENT); return cached; }
     const { doc, getDoc } = await liteFirestore();
     const snap = await getDoc(doc(db, 'app', 'site_content'));
     if (snap.exists()) {
-      const saved = dropStaleSections(snap.data() as any);
+      const raw = snap.data() as any;
+      const key = stableKey(raw);
+      if (cached && key === savedKey) return cached;
+      savedKey = key;
+      const saved = dropStaleSections(raw);
       cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, saved), saved?.schemaVersion >= 3);
     } else {
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
   } catch (e) {
     console.warn('[content] fallback ai contenuti statici', e);
-    cached = normalizeSiteContent(WEBSITE_CONTENT);
+    cached ??= normalizeSiteContent(WEBSITE_CONTENT);
   }
   return cached;
 };
@@ -143,4 +154,15 @@ function deepMerge(target: any, source: any): any {
     }
   }
   return out;
+}
+
+// Nel browser: stessi contenuti dell'HTML statico già dal primo render (in
+// fondo al modulo, dopo le funzioni e le costanti che primeContent usa).
+if (typeof document !== 'undefined') {
+  try {
+    const el = document.getElementById('site-content');
+    if (el?.textContent) primeContent(JSON.parse(el.textContent));
+  } catch (e) {
+    console.warn('[content] contenuti in pagina non letti', e);
+  }
 }
