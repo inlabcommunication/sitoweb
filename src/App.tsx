@@ -1564,7 +1564,8 @@ const DoveSiamo = () => (
 const PROVINCE_CITIES=["Castellaneta","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
 // Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
-// caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto)
+// caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto).
+// Un caso senza città (né in dashboard né predefinite) non compare in nessuna pagina città.
 const caseLocations = (cs: any): string[] =>
   Array.isArray(cs?.locations) && cs.locations.length ? cs.locations
     : ((DEFAULT_CASES.find((d: any)=>d.id===cs?.id) as any)?.locations || []);
