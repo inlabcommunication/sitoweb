@@ -4,8 +4,6 @@ import App from './App.tsx';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import './fonts.css';
 import './index.css';
-import { LazyMotion } from 'motion/react';
-import { loadMotionFeatures } from './lib/motionLoader';
 
 // Dopo un nuovo deploy i file delle pagine caricate al momento (blog, casi
 // studio, privacy, dashboard) cambiano nome: chi aveva il sito già aperto non
@@ -48,7 +46,7 @@ const Root = () => {
     };
   }, []);
   return admin
-    ? <LazyMotion features={loadMotionFeatures}><Suspense fallback={null}><AdminApp /></Suspense></LazyMotion>
+    ? <Suspense fallback={null}><AdminApp /></Suspense>
     : <App />;
 };
 

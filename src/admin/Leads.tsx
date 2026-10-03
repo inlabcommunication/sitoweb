@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
-import { m as motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, Calendar, Download, Search, Trash2, MessageSquare, Tag, X } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { firebaseConfig } from '../lib/firebaseConfig';
