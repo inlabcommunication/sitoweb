@@ -62,7 +62,7 @@ const Dot: React.FC<{ c: MapCity; x: number; y: number; n: number; href: string;
       <title>{text}</title>
       {home && <circle cx={x} cy={y} r={r * 1.9} fill="none" stroke="var(--a)" strokeOpacity={0.5} />}
       <circle className="dot" cx={x} cy={y} r={r} fill="var(--a)" />
-      <circle cx={x} cy={y} r={Math.max(r * 2.2, 12)} fill="transparent" />
+      <circle cx={x} cy={y} r={Math.max(r * 2.2, 15)} fill="transparent" />
       <text x={tx} y={ty} textAnchor={anchor as any} fontSize={size} fill="var(--t)" fontFamily="var(--fb, inherit)">{c.name}</text>
     </a>
   );
@@ -103,7 +103,7 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
       </section>
 
       <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
-        <style>{`.map-dot{cursor:pointer}.map-dot:focus{outline:none}.map-dot:focus-visible .dot,.map-dot:hover .dot{stroke:var(--t);stroke-width:2}.map-grid{display:grid;grid-template-columns:1fr 2fr;gap:2rem;align-items:center}@media(max-width:768px){.map-grid{grid-template-columns:1fr}}`}</style>
+        <style>{`.map-dot{cursor:pointer}.map-dot:focus{outline:none}.map-dot:focus-visible .dot,.map-dot:hover .dot{stroke:var(--t);stroke-width:2}.map-grid{display:grid;grid-template-columns:1fr 2fr;gap:2rem;align-items:center}@media(max-width:768px){.map-grid{grid-template-columns:1fr}}@media(max-width:480px){.map-zoom text{font-size:23px}}`}</style>
         <div className="map-grid" style={{ maxWidth: 1280, margin: '0 auto' }}>
           <figure style={{ margin: 0 }}>
             <svg viewBox={`0 0 ${italy.s * (18.7 - 6.5) * K} ${italy.h}`} width="100%" role="group" aria-labelledby="map-it-title" style={{ display: 'block', maxWidth: 340, margin: '0 auto' }}>
@@ -115,7 +115,7 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
             <figcaption style={{ fontSize: 13, color: 'var(--m)', textAlign: 'center', marginTop: '.8rem' }}>Il riquadro è l'arco ionico, ingrandito qui accanto.</figcaption>
           </figure>
           <figure style={{ margin: 0 }}>
-            <svg viewBox={`0 0 600 ${zoom.h.toFixed(0)}`} width="100%" role="group" aria-labelledby="map-zoom-title" style={{ display: 'block' }}>
+            <svg viewBox={`0 0 600 ${zoom.h.toFixed(0)}`} width="100%" role="group" aria-labelledby="map-zoom-title" className="map-zoom" style={{ display: 'block' }}>
               <title id="map-zoom-title">Mappa dell'arco ionico con le città in cui lavoriamo</title>
               {COAST.map((pts, i) => <path key={i} d={pathOf(pts, zoom.p, false)} fill="none" stroke="rgba(240,237,230,.35)" strokeWidth={1.5} strokeDasharray="4 4" />)}
               {near.map((c) => { const [x, y] = zoom.p(c.lat, c.lon); return <Dot key={c.name} c={c} x={x} y={y} n={groups.get(c.name)?.length || 0} href={hrefOf(c.name)} go={go} home={c.name === MAP_HOME} label={c.label} size={17} />; })}
