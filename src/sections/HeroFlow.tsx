@@ -85,16 +85,16 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
         const qx = mx + (-dy / len) * 10;
         const qy = my + (dx / len) * 10;
         return (
-          <motion.path
+          <path
             key={n.label}
             d={`M ${n.x} ${n.y} Q ${qx} ${qy} ${cx} ${cy}`}
+            pathLength={1}
+            className="hf-line"
             fill="none"
             stroke="rgba(205,178,255,0.45)"
             strokeWidth="0.6"
             strokeLinecap="round"
-            initial={{ pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 1 }}
-            transition={{ duration: reduced ? 0 : 1.4, delay: reduced ? 0 : 0.5 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={reduced ? { animation: 'none' } : { animationDelay: `${0.5 + i * 0.1}s` }}
           />
         );
       })}
@@ -121,11 +121,8 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
 
       {/* Icone dei nodi */}
       {NODES.map((n, i) => (
-        <motion.g key={n.label}
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: reduced ? 0 : 0.5, delay: reduced ? 0 : 0.1 + i * 0.08 }}
-          style={{ transformOrigin: `${n.x}px ${n.y}px` }}
+        <g key={n.label} className="hf-pop"
+          style={{ transformOrigin: `${n.x}px ${n.y}px`, ...(reduced ? { animation: 'none' } : { animationDelay: `${0.1 + i * 0.08}s` }) }}
         >
           {/* Card icona */}
           <rect
@@ -158,15 +155,12 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
           >
             {n.label}
           </text>
-        </motion.g>
+        </g>
       ))}
 
       {/* Box centrale BRAND — rettangolo SVG centrato esattamente su (100,100) */}
-      <motion.g
-        initial={{ opacity: 0, scale: 0.85 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: reduced ? 0 : 0.7, delay: reduced ? 0 : 0.2 }}
-        style={{ transformOrigin: `${cx}px ${cy}px` }}
+      <g className="hf-pop"
+        style={{ transformOrigin: `${cx}px ${cy}px`, ...(reduced ? { animation: 'none' } : { animationDuration: '.7s', animationDelay: '.2s' }) }}
       >
         {/* Alone pulsante */}
         {!reduced && (
@@ -202,23 +196,18 @@ const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
           fontStyle="italic" fill="rgba(205,178,255,0.85)">
           al centro.
         </text>
-      </motion.g>
+      </g>
     </svg>
   );
 };
 
 // Entrata del telefono: sale dal basso sdraiato in prospettiva (rotateX),
 // si raddrizza e si assesta con una leggera inclinazione 3D, poi fluttua.
-const PHONE_EASE = [0.16, 1, 0.3, 1] as const;
 
 const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced, topStat }) => (
   <div style={{ display: 'flex', justifyContent: 'center', perspective: 1400 }}>
-  <motion.div
-    initial={reduced ? false : { opacity: 0, y: 180, scale: 0.82, rotateX: 38, rotateY: -4, rotateZ: -9, filter: 'blur(12px)' }}
-    animate={{ opacity: 1, y: 0, scale: 1, rotateX: 4, rotateY: -10, rotateZ: -2, filter: 'blur(0px)' }}
-    transition={reduced ? { duration: 0 } : { duration: 1.5, delay: 0.35, ease: PHONE_EASE, opacity: { duration: 0.6, delay: 0.35 }, filter: { duration: 0.9, delay: 0.35 } }}
-    style={{ transformStyle: 'preserve-3d', transformOrigin: '50% 100%' }}
-  >
+  {/* entrata in CSS (.hero-phone in App.tsx): parte con l'HTML, senza JavaScript */}
+  <div className="hero-phone" style={reduced ? { animation: 'none' } : undefined}>
   {/* fluttuazione continua in CSS (.anim-float), non in JavaScript */}
   <div className="anim-float">
     <div style={{
@@ -301,7 +290,7 @@ const PhoneMockup: React.FC<{ reduced: boolean; topStat: string }> = ({ reduced,
       </div>
     </div>
   </div>
-  </motion.div>
+  </div>
   </div>
 );
 

@@ -17,13 +17,20 @@ type Msg = { role: 'user' | 'assistant'; content: string; ts: number };
 
 const SESSION_KEY = 'inlab_sid';
 
+// sessionStorage può non essere disponibile (navigazione privata, blocchi):
+// in quel caso l'id vale solo per questa pagina
+let memSid = '';
 const getSessionId = (): string => {
-  let sid = sessionStorage.getItem(SESSION_KEY);
-  if (!sid) {
-    sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
-    sessionStorage.setItem(SESSION_KEY, sid);
+  try {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+      sessionStorage.setItem(SESSION_KEY, sid);
+    }
+    return sid;
+  } catch {
+    return memSid ||= `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
   }
-  return sid;
 };
 
 // ════════════════════════════════════════════════════════════════
