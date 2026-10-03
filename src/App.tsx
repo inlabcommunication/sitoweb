@@ -2198,25 +2198,16 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   }, [route]);
  
   const pageInfo=parseRoute(route);
-  const mounted = React.useRef(false);
-  useEffect(() => { mounted.current = true; }, []);
  
   return (
     <RouterCtx.Provider value={{route,go}}>
       <G/>
       <Navbar/>
-      <AnimatePresence mode="wait">
-        {/* al primo caricamento la pagina è visibile subito (niente dissolvenza
-            sull'HTML statico); la transizione resta nei cambi di pagina. Le
-            animazioni delle singole sezioni non cambiano. */}
-        <motion.div key={route}
-          initial={mounted.current ? {opacity:0,y:12} : false}
-          animate={{opacity:1,y:0}}
-          exit={{opacity:0,y:-8}}
-          transition={{duration:.25}}>
-          {renderPage(pageInfo)}
-        </motion.div>
-      </AnimatePresence>
+      {/* Cambio pagina senza dissolvenza: con la transizione (uscita + entrata
+          a opacità 0) su Safari lento la pagina poteva restare nera (03/10). */}
+      <div key={route}>
+        {renderPage(pageInfo)}
+      </div>
       <Footer/>
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
       {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}
