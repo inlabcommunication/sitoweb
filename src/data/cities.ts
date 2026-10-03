@@ -35,7 +35,7 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Castellaneta il lavoro segue due stagioni: d'estate il pubblico arriva da fuori, con turisti e famiglie a Castellaneta Marina, mentre il resto dell'anno contano i clienti del paese e dei paesi vicini. Per questo prepariamo i contenuti in anticipo sulla stagione e teniamo viva la comunicazione anche d'inverno.",
     faq2: { q: "Lavorate anche per strutture di Castellaneta Marina?", a: "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate." },
     sezione: { titolo: 'Castellaneta Marina', testo: "Castellaneta Marina, sulla costa ionica, vive di turismo estivo, villaggi, lidi e ristorazione. Per le strutture della costa prepariamo foto, video, social e sponsorizzate prima dell'estate, quando i turisti scelgono dove andare, e le seguiamo durante tutta la stagione." },
-    faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
+    faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita 26. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
   },
   {
     name: 'Mottola', provincia: 'provincia di Taranto',

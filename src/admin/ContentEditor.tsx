@@ -288,7 +288,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
         </CardBlock>
       ))}
       <Field label="Sede" value={(content.contact as any)?.location} onChange={(v: string) => set('contact.location', v)} placeholder="Castellaneta (TA), Puglia"
-        hint="Compare nella pagina Contatti. Il footer e i dati per Google usano l'indirizzo fisso del sito (Via Regina Margherita, Castellaneta): per cambiarlo chiedi a Sito Inlab." />
+        hint="Compare nella pagina Contatti. Il footer e i dati per Google usano l'indirizzo fisso del sito (Via Regina Margherita, 26 — Castellaneta): per cambiarlo chiedi a Sito Inlab." />
     </div>
   );
 

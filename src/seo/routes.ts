@@ -23,8 +23,8 @@ export const BUSINESS = {
   name: BRAND,
   email: 'inlab.communication@gmail.com',
   telephone: '+393295654319',
-  // Indirizzo confermato da Nicola il 02/10 (senza civico finché non lo conferma)
-  street: 'Via Regina Margherita',
+  // Indirizzo confermato da Nicola (via il 02/10, civico 26 il 03/10). Unica fonte: footer, Dove siamo, JSON-LD, llms.txt
+  street: 'Via Regina Margherita, 26',
   postalCode: '74011',
   city: 'Castellaneta',
   region: 'Puglia',
