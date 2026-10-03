@@ -353,4 +353,6 @@ export const WEBSITE_CONTENT = {
   // Casi studio "Non solo contenuti" (pagine a blocchi) ed esempi per servizio
   cases: { items: DEFAULT_CASES },
   serviceExamples: SERVICE_EXAMPLES,
+  // Attività senza scheda per /dove-lavoriamo (solo città, settore, servizi)
+  areas: { items: [] as { city: string; sector: string; services: string }[] },
 };

@@ -340,3 +340,20 @@ export const ServiceExamplesEditor = ({ content, set }: Props) => {
     </div>
   );
 };
+
+// Attività senza scheda cliente per /dove-lavoriamo: niente nomi (regola di
+// Nicola, brief SEO 03/10), solo città, settore e servizi.
+export const AreasEditor = ({ content, set }: Props) => (
+  <div>
+    <SectionTitle>Dove lavoriamo — attività senza scheda</SectionTitle>
+    <Note>Queste righe compaiono nella pagina <b>/dove-lavoriamo</b> insieme alle schede clienti. <b>Non scrivere il nome dell'attività</b>: solo città, settore e servizi (es. Ferrara — ristorante — gestione social). Il numero di attività per città si aggiorna da solo.</Note>
+    <ObjList items={content.areas?.items || []} onChange={(a) => set('areas.items', a)} addLabel="Aggiungi attività"
+      newItem={() => ({ city: '', sector: '', services: '' })}
+      titleOf={(x, i) => [x.city, x.sector].filter(Boolean).join(' — ') || `Attività ${i + 1}`}
+      fields={[
+        { key: 'city', label: 'Città', hint: 'Come si scrive sulla mappa, es. Taranto, Ferrara, Roma' },
+        { key: 'sector', label: 'Settore', hint: 'Es. ristorante, parrucchiere, studio medico' },
+        { key: 'services', label: 'Servizi (separati da virgola)', hint: 'Es. gestione social, video' },
+      ]} />
+  </div>
+);
