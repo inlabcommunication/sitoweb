@@ -112,7 +112,10 @@ const G = () => (
     .hf-line{stroke-dasharray:1;animation:hfLine 1.4s cubic-bezier(.16,1,.3,1) both}
     @keyframes hfPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
     .hf-pop{transform-box:view-box;animation:hfPop .5s ease-out both}
-    @media (prefers-reduced-motion:reduce){.hero-phone,.hf-line,.hf-pop{animation:none}}
+    /* Parola che ruota nella hero: 5 parole x 2,2 s = ciclo di 11 s */
+    @keyframes rotW{0%{opacity:0;transform:translateY(8px)}3%{opacity:1;transform:none}17%{opacity:1;transform:none}20%{opacity:0;transform:translateY(-8px)}100%{opacity:0;transform:translateY(-8px)}}
+    .rot-w{animation:rotW 11s ease-in-out infinite both}
+    @media (prefers-reduced-motion:reduce){.hero-phone,.hf-line,.hf-pop{animation:none}.rot-w{animation:none;opacity:0}.rot-w:first-child{opacity:1}}
     /* riquadri di clienti ed esempi: stesso stile dei casi studio */
     .case-card{
     position:relative;overflow:hidden;text-decoration:none;color:inherit;font:inherit;
@@ -140,7 +143,7 @@ const G = () => (
       .hide-mob{display:none!important}
       .show-mob{display:flex!important}
       /* "Ti serve essere" + parola lilla sempre sulla riga sotto, qualunque sia la parola */
-      .rot-word{display:block!important}
+      .rot-word{display:grid!important}
       .grid-1-mob{grid-template-columns:1fr!important}
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}

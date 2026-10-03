@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion, useReducedMotion as useFmReducedMotion } from 'motion/react';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -19,29 +19,20 @@ const NODES: Node[] = [
 
 const ROTATING_WORDS = ['scelto.', 'ricordato.', 'desiderato.', 'trovato.', 'riconosciuto.'];
 
-const RotatingWord: React.FC<{ reduced: boolean }> = ({ reduced }) => {
-  const [idx, setIdx] = useState(0);
-  const [visible, setVisible] = useState(true);
-  useEffect(() => {
-    if (reduced) return;
-    const t = setInterval(() => {
-      setVisible(false);
-      setTimeout(() => { setIdx(i => (i + 1) % ROTATING_WORDS.length); setVisible(true); }, 350);
-    }, 2200);
-    return () => clearInterval(t);
-  }, [reduced]);
-  return (
-    <span className="rot-word" style={{
-      display: 'inline-block', color: 'var(--a)',
-      fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400,
-      transition: 'opacity .35s, transform .35s',
-      opacity: visible ? 1 : 0,
-      transform: visible ? 'translateY(0)' : 'translateY(-8px)',
-    }}>
-      {ROTATING_WORDS[idx]}
-    </span>
-  );
-};
+// Parola che ruota, tutta in CSS (classi .rot-w in App.tsx): le parole sono già
+// nell'HTML, una sopra l'altra nella stessa cella, e il primo cambio arriva a ~1 s
+// anche prima che parta il JavaScript (prima: 2,2 s dopo l'avvio di React, ~4 s su
+// iPhone; richiesta Performance 03/10). La larghezza è quella della parola più lunga.
+const RotatingWord: React.FC<{ reduced: boolean }> = ({ reduced }) => (
+  <span className="rot-word" style={{ display: 'inline-grid', justifyItems: 'start', color: 'var(--a)', fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 400 }}>
+    {(reduced ? ROTATING_WORDS.slice(0, 1) : ROTATING_WORDS).map((w, i) => (
+      <span key={w} className={reduced ? undefined : 'rot-w'} aria-hidden={i > 0 ? true : undefined}
+        style={{ gridArea: '1 / 1', ...(reduced ? {} : { animationDelay: i === 0 ? '-1.2s' : `${(1 + (i - 1) * 2.2).toFixed(1)}s` }) }}>
+        {w}
+      </span>
+    ))}
+  </span>
+);
 
 // ── Diagramma tutto in SVG — zero div assoluti ───────────────────
 const FlowDiagram: React.FC<{ reduced: boolean }> = ({ reduced }) => {
