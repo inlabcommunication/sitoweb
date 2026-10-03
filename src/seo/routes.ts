@@ -360,13 +360,13 @@ export const getSeo = (rawPath: string): Seo => {
       `Agenzia comunicazione e marketing a ${c} | InLab`,
       `Agenzia di comunicazione e marketing a ${c}`,
     ].find((t) => t.length <= 60) || `Agenzia di comunicazione a ${c} | InLab`;
-    const desc = c === BUSINESS.city
+    const desc = cityInfo(c)?.description || (c === BUSINESS.city
       ? 'Agenzia di comunicazione e marketing con sede a Castellaneta (TA): social, video, Meta Ads, siti web e branding per attività del paese e della Marina.'
       : [
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta (TA), preventivo gratuito.`,
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta, preventivo gratuito.`,
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Preventivo gratuito.`,
-    ].find((d) => d.length <= 155)!;
+    ].find((d) => d.length <= 155)!);
     const seo = page(path, title, desc, {
       sitemap: { priority: 0.7, changefreq: 'monthly' },
       jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing a ${c}`,

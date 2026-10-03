@@ -20,6 +20,8 @@ export type CityInfo = {
   servizi?: Record<string, string>;
   /** Paragrafo di apertura della pagina agenzia al posto di quello generico */
   intro?: string;
+  /** Meta description propria della pagina agenzia (140-155 caratteri) */
+  description?: string;
   /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
   casaNostra?: { titolo: string; testo: string; autore: string; link: string };
 };
@@ -61,6 +63,7 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti.",
     faq2: { q: "Serve un sito se ho già la pagina Facebook?", a: "Spesso sì: il sito e la scheda Google fanno trovare l'attività su Google, mentre i social tengono il contatto con chi ti conosce già. Insieme funzionano meglio." },
     faq3: { q: "Perché scegliere un'agenzia vicina a Palagianello?", a: "Perché conosciamo il paese e le persone: Nicola è di Palagianello. Possiamo venire in negozio per foto e video senza costi di trasferta importanti e seguirti con incontri di persona quando serve." },
+    description: "Agenzia di comunicazione a Palagianello, fondata da chi è del paese: social, video, sponsorizzate, siti e foto per le attività locali. Preventivo gratuito.",
     intro: "InLab Communication è di casa a Palagianello: Nicola Carpignano, uno dei due fondatori, è di Palagianello. Seguiamo social, video, sponsorizzate, siti e foto per le attività del paese, da Sublime Tentazione a Masseria Sacramento e DIRAM.",
     casaNostra: {
       titolo: 'Palagianello è casa nostra',
