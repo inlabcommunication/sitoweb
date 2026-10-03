@@ -49,7 +49,22 @@ const blogSeedLite = (): Plugin => ({
     // importa più blogSeed.ts, che resta solo nel chunk della dashboard.
     const mod = await import(pathToFileURL(tmp).href);
     const fns = ['slugify', 'normalizePost', 'mergePosts'].map((n) => `export const ${n} = ${mod[n].toString()};`).join('\n');
-    return `${fns}\nexport const BLOG_CATEGORIES = ${JSON.stringify(mod.BLOG_CATEGORIES)};\nexport const BLOG_SEED = ${JSON.stringify(lite)};\n`;
+    const out = `${fns}\nexport const BLOG_CATEGORIES = ${JSON.stringify(mod.BLOG_CATEGORIES)};\nexport const BLOG_SEED = ${JSON.stringify(lite)};\n`;
+    // Controllo: le copie devono restare funzioni pure. Se un giorno usano una
+    // costante o un helper di blogSeed.ts, qui la build si ferma invece di
+    // rompersi nel browser con un ReferenceError.
+    const check = path.join(dir, `lite-${Date.now()}.mjs`);
+    writeFileSync(check, out);
+    try {
+      const c = await import(pathToFileURL(check).href);
+      const sample = BLOG_SEED[0];
+      if (c.slugify('Prova Città 2') !== mod.slugify('Prova Città 2')) throw new Error('slugify diverso');
+      if (JSON.stringify(c.normalizePost(sample.slug, sample)) !== JSON.stringify(mod.normalizePost(sample.slug, sample))) throw new Error('normalizePost diverso');
+      if (c.mergePosts(c.BLOG_SEED, [sample]).length !== mod.mergePosts(BLOG_SEED, [sample]).length) throw new Error('mergePosts diverso');
+    } catch (e) {
+      throw new Error(`blog-seed-lite: slugify, normalizePost e mergePosts in blogSeed.ts devono restare pure (niente costanti o helper esterni): ${(e as Error).message}`);
+    }
+    return out;
   },
 });
 
