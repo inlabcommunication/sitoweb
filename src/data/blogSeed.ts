@@ -2606,4 +2606,249 @@ Prendi un foglio e scrivi tre colonne: cosa deve restare, cosa deve cambiare, do
 
 Scopri il nostro servizio di [branding e identità visiva](/branding) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
+  {
+    slug: 'agenzia-comunicazione-taranto-come-scegliere',
+    title: 'Come scegliere un\'agenzia di comunicazione a Taranto: 7 domande da fare prima di firmare',
+    excerpt: 'Le 7 domande da fare prima di scegliere un\'agenzia di comunicazione a Taranto, i segnali che devono farti dubitare e un esempio dal territorio.',
+    category: 'Strategia',
+    tags: ['agenzia di comunicazione', 'Taranto', 'attività locali', 'marketing locale', 'social media'],
+    author: 'Nicola Carpignano',
+    date: '2026-10-03',
+    cover: '/blog/agenzia-comunicazione-taranto-come-scegliere/cover.jpg',
+    coverAlt: 'Checklist con le domande per scegliere un\'agenzia di comunicazione a Taranto',
+    published: true,
+    seoTitle: 'Agenzia di comunicazione a Taranto: 7 domande | InLab',
+    seoDescription: 'Come scegliere un\'agenzia di comunicazione a Taranto: 7 domande da fare prima di firmare, i segnali d\'allarme e cosa conta per un\'attività locale.',
+    content: `Scegliere un'**agenzia di comunicazione a Taranto** non è semplice: le proposte sono tante, i siti delle agenzie si somigliano e spesso si decide guardando solo il preventivo. Poi, dopo qualche mese, ci si accorge che non era quello che serviva. In questa guida trovi le 7 domande da fare prima di firmare, i segnali che devono farti dubitare e cosa conta davvero per un'attività di Taranto e provincia.
+
+**Risposta breve: prima di scegliere un'agenzia di comunicazione a Taranto chiedi lavori simili al tuo fatti in zona, chi seguirà davvero il progetto, cosa è incluso e cosa resta a te, se foto e video si fanno sul posto, come si misurano i risultati, di chi restano profili e account, e come si chiude l'accordo. Un'agenzia seria risponde a tutte e sette con chiarezza, prima di firmare.**
+
+L'obiettivo non è trovare l'agenzia "migliore" in assoluto, ma quella giusta per la tua attività, il tuo pubblico e il tuo modo di lavorare.
+
+## Cosa fa un'agenzia di comunicazione (e cosa non può fare)
+
+Un'agenzia di comunicazione aiuta un'attività a farsi conoscere e scegliere. In pratica può occuparsi di:
+
+- **strategia**: a chi parlare, con quale messaggio, su quali canali;
+- **social media**: piano editoriale, contenuti, gestione di commenti e messaggi;
+- **foto e video**: shooting, reel, video che spiegano un servizio;
+- **sponsorizzate** su Instagram e Facebook;
+- **sito web** e presenza su Google;
+- **branding**: nome, logo, immagine coordinata.
+
+Ci sono anche cose che un'agenzia **non può fare** da sola. Non può sistemare un servizio che non funziona, inventare un'offerta che non c'è o garantire un numero preciso di clienti. Chi promette risultati certi in tempi brevi, senza conoscere la tua attività, sta vendendo una speranza.
+
+## Le 7 domande da fare prima di scegliere un'agenzia di comunicazione a Taranto
+
+### 1. Avete lavorato con attività simili alla mia, qui in zona?
+
+Chiedi di vedere lavori veri: profili social, video, siti, con il nome dell'attività. Non serve che siano del tuo stesso settore, ma devono avere problemi simili ai tuoi. Un negozio di quartiere, uno studio professionale e un'azienda che vende servizi tecnici hanno bisogno di comunicazioni diverse.
+
+### 2. Chi segue concretamente il mio progetto?
+
+Sapere chi scrive i testi, chi fa le riprese e chi risponde quando hai un dubbio evita molte incomprensioni. Chiedi se avrai un referente unico e come lo potrai contattare: telefono, WhatsApp, email.
+
+### 3. Cosa fate voi e cosa resta a me?
+
+Ogni collaborazione richiede qualcosa anche al titolare: approvare i contenuti, essere disponibile per le riprese, segnalare novità e offerte. Fatti dire con precisione cosa è incluso (quanti contenuti, quante uscite, quali canali) e quanto tempo ti verrà chiesto ogni mese.
+
+### 4. Foto e video li fate sul posto?
+
+Per un'attività locale le immagini vere valgono più di qualsiasi foto di repertorio. Un'agenzia che può venire nella tua sede, in negozio o in cantiere, ti racconta per quello che sei. Chiedi ogni quanto sono previste le riprese.
+
+### 5. Come misuriamo i risultati, e ogni quanto me li mostrate?
+
+Mettetevi d'accordo prima su cosa conta per te: richieste su WhatsApp, chiamate, prenotazioni, visite in negozio, contatti dal sito. Poi chiedi un report periodico con pochi numeri chiari e una spiegazione di cosa cambiare nel mese successivo.
+
+### 6. Di chi sono profili, account pubblicitari, sito e materiali?
+
+I profili social, la scheda Google, l'account pubblicitario e il dominio del sito devono essere **intestati a te**. L'agenzia lavora con un accesso da collaboratore. Chiedi anche se foto e video realizzati restano a tua disposizione se un giorno smetterete di lavorare insieme.
+
+### 7. Quanto dura l'accordo e come si chiude?
+
+Leggi con calma durata, rinnovo e preavviso. Un primo periodo di prova di qualche mese è utile a entrambi: l'agenzia conosce l'attività, tu vedi come lavora. Diffida dei contratti lunghi firmati al primo incontro.
+
+![Le 7 domande da fare prima di scegliere un'agenzia di comunicazione a Taranto](/blog/agenzia-comunicazione-taranto-come-scegliere/domande-scegliere-agenzia-comunicazione-taranto.webp)
+
+## I segnali che devono farti dubitare
+
+Durante il primo incontro alcuni segnali dicono molto più del preventivo.
+
+**Buoni segnali:**
+
+- fanno molte domande sulla tua attività, sui clienti e sulla concorrenza;
+- ti mostrano lavori veri, con nomi e link;
+- ti propongono pochi obiettivi chiari, non tutto insieme;
+- ti spiegano cosa misureranno e come.
+
+**Campanelli d'allarme:**
+
+- promettono "migliaia di follower" o risultati garantiti;
+- ti propongono lo stesso pacchetto che propongono a tutti;
+- non mostrano lavori o mostrano solo grafiche senza nomi;
+- vogliono gestire profili e account intestati a loro.
+
+![Buoni segnali e campanelli d'allarme nel primo incontro con un'agenzia di comunicazione](/blog/agenzia-comunicazione-taranto-come-scegliere/segnali-scelta-agenzia-comunicazione.webp)
+
+## Agenzia in città o in provincia: conta la distanza?
+
+Conta meno di quanto si pensi, a una condizione: che l'agenzia possa venire da te quando serve. Strategia, piano editoriale, testi, sponsorizzate e report si seguono bene anche a distanza, con un referente sempre raggiungibile. Riprese, shooting e incontri importanti invece vanno fatti sul posto.
+
+Più della distanza conta la **conoscenza del territorio**. Taranto ha pubblici molto diversi tra il Borgo, la Città Vecchia, i quartieri residenziali e i comuni della provincia. Chi lavora ogni giorno in zona sa come parlano le persone, quali periodi dell'anno muovono gli acquisti e quali canali usano davvero i tuoi clienti.
+
+## Un esempio dal territorio: spiegare un servizio tecnico con i video
+
+Con [Emmesse](/cliente/emmesse), azienda di Taranto che si occupa di impianti fotovoltaici e termici, abbiamo lavorato soprattutto su **video parlati promozionali**. Il fotovoltaico è un tema tecnico e chi deve scegliere un impianto ha molti dubbi: sentire una persona competente che spiega le cose in modo semplice vale più di cento grafiche.
+
+Qui c'è la lezione che vale per ogni scelta di agenzia: **la comunicazione giusta parte da cosa devono capire i tuoi clienti**, non dal formato di moda. Un'agenzia che inizia da questa domanda è sulla strada giusta.
+
+## Domande frequenti
+
+### Quanto costa un'agenzia di comunicazione a Taranto?
+
+Dipende da cosa serve: quanti canali, quanti contenuti al mese, se ci sono riprese, sponsorizzate o un sito da realizzare. Più del prezzo conta capire cosa è incluso: confronta i preventivi voce per voce, usando le 7 domande di questa guida.
+
+### Meglio un'agenzia o un freelance?
+
+Un freelance può bastare se ti serve una sola competenza, per esempio solo i testi o solo le sponsorizzate. Un'agenzia è più adatta quando servono insieme strategia, foto, video, social e campagne, con una sola persona di riferimento che coordina tutto.
+
+### Quanto tempo serve per vedere i primi risultati?
+
+Con le sponsorizzate i primi contatti possono arrivare in poche settimane. La crescita dei social e la visibilità su Google richiedono invece alcuni mesi di lavoro costante. Diffida di chi promette risultati importanti in pochi giorni.
+
+### Posso cambiare agenzia senza perdere i profili?
+
+Sì, se profili, scheda Google, account pubblicitario e dominio sono intestati a te. Per questo è importante chiarirlo prima di iniziare: chi cambia agenzia con gli account a proprio nome riparte in pochi giorni.
+
+### Un'agenzia di fuori Taranto può seguire la mia attività?
+
+Sì, se viene sul posto per riprese e incontri e ha un referente sempre raggiungibile. Conta di più che conosca il territorio e il tuo tipo di clientela.
+
+## Da dove partire
+
+Prima del primo incontro scrivi su un foglio tre cose: cosa vendi, a chi, e cosa vorresti che succedesse tra sei mesi. Porta il foglio all'incontro insieme alle 7 domande: capirai in pochi minuti se l'agenzia che hai davanti fa per te.
+
+Se hai un'attività a Taranto o in provincia, scopri come lavoriamo come [agenzia di comunicazione a Taranto](/agenzia-comunicazione-taranto) e cosa include la nostra [gestione social a Taranto](/gestione-social-taranto). Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'social-media-manager-taranto',
+    title: 'Social media manager a Taranto: cosa fa e quando conviene affidarsi a un professionista',
+    excerpt: 'Cosa fa in concreto un social media manager, le competenze che servono, i 6 segnali per capire quando affidarsi a un professionista a Taranto e come lavorare insieme.',
+    category: 'Social media',
+    tags: ['social media manager', 'Taranto', 'gestione social', 'instagram', 'attività locali'],
+    author: 'Nicola Carpignano',
+    date: '2026-10-03',
+    cover: '/blog/social-media-manager-taranto/cover.jpg',
+    coverAlt: 'Social media manager a Taranto che pianifica contenuti, riprese e report per un\'attività',
+    published: true,
+    seoTitle: 'Social media manager a Taranto: cosa fa e quando | InLab',
+    seoDescription: 'Social media manager a Taranto: cosa fa in concreto, le competenze che servono e i 6 segnali per capire quando conviene affidarsi a un professionista.',
+    content: `Cercare un **social media manager a Taranto** di solito arriva dopo mesi di post pubblicati quando c'è tempo, storie dimenticate e messaggi a cui si risponde tardi. Il dubbio è sempre lo stesso: serve davvero un professionista, o basta impegnarsi un po' di più? In questa guida vediamo cosa fa in concreto un social media manager, quali competenze servono, i segnali che dicono che è il momento di affidarsi a qualcuno e come lavorare bene insieme.
+
+**Risposta breve: un social media manager decide cosa pubblicare e perché, organizza foto e video, scrive i testi, risponde a commenti e messaggi e guarda i numeri per migliorare ogni mese. Conviene affidarsi a un professionista quando i social ti tolgono tempo senza portare richieste, quando pubblichi a singhiozzo o quando i concorrenti in zona comunicano meglio di te.**
+
+Avere un professionista non vuol dire sparire dai social: il titolare resta la voce più credibile dell'attività. Cambia il fatto che qualcuno costruisce un metodo intorno a quella voce.
+
+## Cosa fa un social media manager, in concreto
+
+Il lavoro di un social media manager non è "fare post". In una settimana tipo:
+
+- **pianifica**: decide i temi della settimana in base agli obiettivi, alle stagioni e alle novità dell'attività;
+- **organizza le riprese**: prepara cosa girare e fotografare, spesso in una sola sessione per più contenuti;
+- **scrive**: testi dei post, copioni dei reel, risposte ai commenti;
+- **pubblica** nei giorni e negli orari in cui il tuo pubblico è attivo;
+- **ascolta**: legge commenti e messaggi, li gira a te quando serve una risposta tua;
+- **misura**: controlla cosa porta richieste e cosa no, e corregge il piano.
+
+Se vuoi il dettaglio di tutto quello che comprende un servizio completo, lo trovi nella guida su [cosa include la gestione social per attività locali](/blog/gestione-social-attivita-locale-cosa-include). Qui ci concentriamo sulla figura professionale e su quando conviene sceglierla.
+
+## Le competenze che fanno la differenza
+
+Un buon social media manager mette insieme abilità diverse, e raramente il fai-da-te le copre tutte:
+
+- **strategia**: capire chi sono i tuoi clienti e cosa li convince a sceglierti;
+- **scrittura**: dire le cose in modo semplice, con il tono giusto per la tua attività;
+- **linguaggio video**: sapere cosa funziona nei primi secondi di un reel e come girarlo;
+- **conoscenza delle piattaforme**: formati, regole e novità di Instagram, Facebook e TikTok cambiano spesso;
+- **lettura dei numeri**: distinguere i dati che contano (messaggi, chiamate, prenotazioni) da quelli che fanno solo scena;
+- **relazione**: gestire anche un commento negativo con calma e trasformarlo in un'occasione.
+
+A queste si aggiunge una competenza meno visibile ma decisiva: la **costanza**. Un piano seguito per mesi batte qualsiasi contenuto geniale pubblicato una volta sola.
+
+## Quando conviene affidarsi a un social media manager a Taranto: 6 segnali
+
+1. **Pubblichi a singhiozzo**: due settimane piene, poi un mese di silenzio.
+2. **I social ti rubano ore** che dovresti dedicare ai clienti, al negozio o allo studio.
+3. **Ti scrivono, ma rispondi tardi**: un messaggio che aspetta un giorno spesso è un cliente perso.
+4. **I concorrenti in zona comunicano meglio**: a Taranto in molti settori ci sono decine di attività simili, e chi si fa riconoscere online viene scelto prima.
+5. **Non sai cosa funziona**: pubblichi, ma non sai quali contenuti portano richieste.
+6. **Stai per fare un passo importante**: un'apertura, un nuovo servizio, una stagione decisiva come l'estate o il Natale.
+
+Se ti riconosci in almeno due di questi punti, è il momento di valutare un aiuto professionale.
+
+![I 6 segnali che indicano quando affidarsi a un social media manager a Taranto](/blog/social-media-manager-taranto/segnali-social-media-manager-taranto.webp)
+
+## Cosa resta al titolare, anche con un professionista
+
+Affidare i social non vuol dire delegare tutto. Le collaborazioni che funzionano meglio hanno sempre un titolare presente:
+
+- **ci mette la faccia** quando serve: nei video parlati, nelle presentazioni, nei momenti importanti;
+- **segnala le novità**: un prodotto nuovo, un evento, una recensione bella da condividere;
+- **approva i contenuti** in tempi brevi, così il calendario non si blocca;
+- **risponde alle domande tecniche** che solo lui conosce.
+
+In cambio si libera dal lavoro più pesante: pensare ogni giorno a cosa pubblicare, montare video, scrivere testi e seguire le statistiche.
+
+## Perché conta conoscere Taranto e la provincia
+
+Un social media manager che lavora sul territorio sa cose che non si trovano nei manuali. Sa come cambia il pubblico d'estate sul litorale, quando i paesi si svuotano e le marine si riempiono. Sa che in provincia il passaparola corre veloce anche online. E sa che il tono giusto a volte è quello di casa.
+
+Due esempi dal nostro lavoro in provincia di Taranto:
+
+- con [Nunzio Putignano](/cliente/nunzio-putignano), autofficina di Palagiano, raccontiamo l'officina con reel simpatici e spontanei, spesso in dialetto, con il titolare e il suo team in prima linea. Il risultato è un'officina riconoscibile in paese e sui social;
+- con [Emmesse](/cliente/emmesse), azienda di Taranto che lavora su impianti fotovoltaici e termici, usiamo video parlati per spiegare in modo chiaro un tema tecnico e far emergere la competenza dell'azienda.
+
+Due attività diversissime, una regola comune: **i contenuti funzionano quando somigliano a chi li pubblica**.
+
+## Come lavorare bene con il tuo social media manager
+
+Il primo mese è quello che decide come andrà la collaborazione. Ecco come impostarlo:
+
+1. **Incontro iniziale**: obiettivi, clienti tipo, concorrenti, cosa ha funzionato e cosa no finora.
+2. **Piano del primo mese**: temi, formati, giorni di pubblicazione e chi approva.
+3. **Prima sessione di riprese**: foto e video per più settimane di contenuti, in sede.
+4. **Primo report**: pochi numeri chiari e cosa cambiare nel mese successivo.
+
+Chiarite subito anche gli aspetti pratici: i profili restano intestati a te, il social media manager accede come collaboratore, e c'è un canale diretto (di solito WhatsApp) per le comunicazioni veloci.
+
+![Il primo mese di lavoro con un social media manager: incontro, piano, riprese e report](/blog/social-media-manager-taranto/primo-mese-social-media-manager.webp)
+
+## Domande frequenti
+
+### Che differenza c'è tra social media manager e gestione social?
+
+Il social media manager è la figura professionale; la gestione social è il servizio che svolge. Lo stesso lavoro può farlo un freelance, una persona interna all'azienda o un'agenzia, che di solito affianca al social media manager anche chi fa foto, video e sponsorizzate.
+
+### Un social media manager si occupa anche delle sponsorizzate?
+
+Spesso sì, ma non sempre: chiedilo prima. Le sponsorizzate richiedono competenze specifiche su pubblici, budget e misurazione. Quando social e campagne li segue la stessa squadra, contenuti e annunci lavorano meglio insieme.
+
+### Basta un social media manager a distanza per un'attività di Taranto?
+
+Per strategia, testi, pubblicazione e messaggi sì. Per foto e video invece serve qualcuno che venga sul posto: i contenuti girati nella tua attività, con le tue persone, funzionano molto meglio delle immagini di repertorio.
+
+### Quanto tempo serve per vedere risultati?
+
+I primi segnali, come più messaggi e più interazioni dalle persone della zona, arrivano di solito nei primi mesi. Una crescita stabile richiede costanza nel tempo. Le sponsorizzate possono accelerare, se c'è un'offerta chiara.
+
+### Devo dare la password dei miei profili?
+
+No. Su Instagram e Facebook si può aggiungere il social media manager come collaboratore dalla gestione dell'account aziendale, senza condividere la password. I profili restano tuoi.
+
+## Da dove partire
+
+Prendi le ultime dieci pubblicazioni sui tuoi profili e segna quante ti hanno portato un messaggio, una chiamata o una visita. Se la risposta è "quasi nessuna" o "non lo so", il problema non è quanto pubblichi, ma il metodo.
+
+Scopri come lavoriamo come [social media manager a Taranto](/gestione-social-taranto) e cosa facciamo come [agenzia di comunicazione a Taranto](/agenzia-comunicazione-taranto). Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
 ];
