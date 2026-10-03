@@ -298,7 +298,7 @@ const SpsStyles = () => (
     .sps-line{display:block;overflow:hidden;padding-bottom:.04em}
     .sps-line>span{display:inline-block}
     .sps-heading .accent,.sps-heading em{font-family:var(--fs);font-style:italic;text-transform:none;color:var(--a);font-size:.72em}
-    .sps-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:rgba(205,178,255,.13);filter:blur(110px);pointer-events:none;z-index:1}
+    .sps-glow{position:absolute;width:520px;height:520px;border-radius:50%;background:radial-gradient(closest-side, rgba(205,178,255,0.13) 0%, rgba(205,178,255,0.065) 45%, rgba(205,178,255,0) 100%);pointer-events:none;z-index:1}
     .sps-phone-wrap{position:relative;z-index:2;perspective:1400px}
     .sps-phone{width:min(290px,64vw);aspect-ratio:9/18.5;border-radius:38px;padding:10px;background:linear-gradient(145deg,#0d0c10 0%,#26222d 52%,#0b0b0d 100%);border:1px solid rgba(255,255,255,.16);box-shadow:0 40px 100px rgba(0,0,0,.55),0 0 0 8px rgba(205,178,255,.04);position:relative;will-change:transform}
     .sps-notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:90px;height:22px;border-radius:0 0 16px 16px;background:#0b0b0d;z-index:5}

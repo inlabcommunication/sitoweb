@@ -119,14 +119,14 @@ export const FinalCTA: React.FC<FinalCTAProps> = ({ onClick }) => {
       <div className="anim-glowA"
         style={{
           position: 'absolute', top: '-20%', right: '-10%', width: 600, height: 600,
-          background: 'rgba(205,178,255,0.08)', borderRadius: '50%', filter: 'blur(120px)',
+          background: 'radial-gradient(closest-side, rgba(205,178,255,0.08) 0%, rgba(205,178,255,0.04) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%',
           pointerEvents: 'none',
         }}
       />
       <div className="anim-glowB"
         style={{
           position: 'absolute', bottom: '-20%', left: '-10%', width: 500, height: 500,
-          background: 'rgba(205,178,255,0.18)', borderRadius: '50%', filter: 'blur(100px)',
+          background: 'radial-gradient(closest-side, rgba(205,178,255,0.18) 0%, rgba(205,178,255,0.09) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%',
           pointerEvents: 'none',
         }}
       />
