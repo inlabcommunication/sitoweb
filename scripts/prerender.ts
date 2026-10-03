@@ -37,6 +37,7 @@ const manifest: Record<string, { file: string; imports?: string[] }> =
   existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, 'utf-8')) : {};
 const lazyPage = (path: string) =>
   path === '/privacy' ? 'src/pages/PrivacyPage.tsx'
+  : path === '/dove-lavoriamo' ? 'src/pages/DoveLavoriamoPage.tsx'
   : path === '/blog' || path.startsWith('/blog/') || path.startsWith('/autori/') ? 'src/pages/BlogPages.tsx'
   : path.startsWith('/casi-studio/') ? 'src/pages/CaseStudyPages.tsx'
   : '';

@@ -43,6 +43,7 @@ const PagePrivacy = lazy(() => import("./pages/PrivacyPage").then(m => ({ defaul
 const PageBlog = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageBlog })));
 const PageArticolo = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageArticolo })));
 const PageAutore = lazy(() => import("./pages/BlogPages").then(m => ({ default: m.PageAutore })));
+const PageDoveLavoriamoLazy = lazy(() => import("./pages/DoveLavoriamoPage").then(m => ({ default: m.PageDoveLavoriamo })));
  
 /* ═══════════════════════════════════════════════════════════════
    GLOBAL STYLES
@@ -1584,6 +1585,27 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   );
 };
 
+// /dove-lavoriamo: attività per città, senza nomi (brief SEO 03/10). Fonti:
+// schede clienti, casi studio senza scheda cliente, elenco "Dove lavoriamo"
+// della dashboard (solo città, settore, servizi).
+const cityName = (loc: string) => String(loc||"").split(/[(,]/)[0].trim();
+const splitList = (v: any): string[] => Array.isArray(v) ? v.map(String) : String(v||"").split(/[,·]/).map(t=>t.trim()).filter(Boolean);
+const PageDoveLavoriamoWrap = () => {
+  const {go}=useRouter();
+  const c=useContent() as any;
+  const clients=normalizeClients((c.clients?.items||[]) as any[]);
+  const activities=[
+    ...clients.filter((cl: any)=>cl.location&&cl.sector).map((cl: any)=>({city:cityName(cl.location),sector:String(cl.sector),services:splitList(cl.services),href:`/cliente/${cl.id}`})),
+    ...((c.cases?.items||[]) as any[]).filter((cs: any)=>!clients.some((cl: any)=>cl.id===cs.clientId)).flatMap((cs: any)=>{
+      const sector=cs.sector||(DEFAULT_CASES.find((d: any)=>d.id===cs.id) as any)?.sector;
+      return sector ? caseLocations(cs).map((city: string)=>({city:cityName(city),sector,services:splitList(cs.category),href:`/casi-studio/${cs.id}`})) : [];
+    }),
+    ...((c.areas?.items||[]) as any[]).filter((a: any)=>a?.city&&a?.sector).map((a: any)=>({city:cityName(a.city),sector:String(a.sector),services:splitList(a.services)})),
+  ];
+  return <PageDoveLavoriamoLazy activities={activities} agencyCities={AGENCY_CITIES} agencyPath={agencyPath} go={go}
+    cta={<ServiceCTA title="LAVORIAMO ANCHE NELLA TUA CITTÀ?" sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>}/>;
+};
+
 // "Dove siamo" (richiesta SEO 02/10): indirizzo come testo e link a Google Maps,
 // senza iframe per non appesantire la pagina.
 const DoveSiamo = () => (
@@ -2045,6 +2067,7 @@ const PageBranding = () => (
 const parseRoute = (route) => {
   if(route==="/") return {page:"home"};
   if(route==="/chi-siamo") return {page:"chi-siamo"};
+  if(route==="/dove-lavoriamo") return {page:"dove-lavoriamo"};
   // Vecchie pagine del portfolio dimostrativo: come il redirect 301 del server
   if(route==="/lavori"||route==="/portfolio"||route.startsWith("/progetto/")) return {page:"casi-studio"};
   if(route==="/casi-studio") return {page:"casi-studio"};
@@ -2103,6 +2126,7 @@ const renderPage = (info) => {
     case "casi-studio": return <PageCasiStudio/>;
     case "servizi": return <PageServizi/>;
     case "contatti": return <PageContatti/>;
+    case "dove-lavoriamo": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageDoveLavoriamoWrap/></Suspense>;
     case "privacy": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PagePrivacy/></Suspense>;
     case "blog": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageBlog go={navigate}/></Suspense>;
     case "autore": return <Suspense fallback={<div style={{minHeight:"100vh"}}/>}><PageAutore slug={info.id} go={navigate}/></Suspense>;

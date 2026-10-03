@@ -272,7 +272,7 @@ const page = (path: string, title: string, description: string, extra: Partial<S
 
 /** Tutte le pagine indicizzabili (per sitemap e prerender). */
 export const listRoutes = (): string[] => [
-  '/', '/servizi', '/chi-siamo', '/casi-studio', '/contatti',
+  '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/casi-studio', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
   ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...AGENCY_CITIES.map(agencyPath),
@@ -295,6 +295,12 @@ export const getSeo = (rawPath: string): Seo => {
     return page(path, `Servizi di comunicazione digitale | ${BRAND}`,
       'Gestione social, Meta Ads, siti web e landing page, video e reel, shooting fotografici, branding e automazioni AI: tutti i servizi di InLab Communication.',
       { sitemap: { priority: 0.9, changefreq: 'monthly' } }, [['Servizi', '/servizi']]);
+  }
+  if (path === '/dove-lavoriamo') {
+    // Nessun dato strutturato in più (brief SEO 03/10): solo WebPage e breadcrumb
+    return page(path, 'Dove lavoriamo: Castellaneta, Taranto e provincia | InLab',
+      'Le città in cui lavora InLab Communication: Castellaneta, Taranto, Palagianello, Mottola, Palagiano, Ginosa e le altre. Settori e servizi per ogni città.',
+      { sitemap: { priority: 0.7, changefreq: 'monthly' } }, [['Dove lavoriamo', '/dove-lavoriamo']]);
   }
   if (path === '/chi-siamo') {
     return page(path, 'Chi siamo: Nicola Carpignano e Ilaria Gemma | InLab',
