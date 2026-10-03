@@ -220,3 +220,56 @@ Stesse condizioni di prima: Chromium, rete 4G lenta reale (562 ms, 1,47 Mbps), C
 2. **Media · Una sola lettura di Firestore**: ancora 22 richieste sulla home dopo il load (vedi sopra, `src/lib/content.ts:79`).
 3. **Media · Poster del video**: ancora `w_1280`, 34 KB, richiesto a 0,8 s (`src/App.tsx:722`).
 4. **Minore · `q_auto:eco` sull'immagine in alto delle pagine cliente** (`src/App.tsx`, immagine in alto di `PageCliente`). Da misurare: sotto 80 KB su mobile.
+
+## Rimisura dopo la PR #81 (Firestore una volta, aloni senza blur) — 03/10 ore 15:05 UTC
+
+Home, main edffd8c. Su richiesta di Sito Inlab, dopo la segnalazione di Nicola ("lentissima, su desktop e su mobile").
+
+| Prova | Risultato |
+|---|---|
+| Lighthouse mobile | **99**: FCP 1,2 s, LCP 1,6 s, TBT 50 ms, CLS 0, 429 KB, A11y 100 |
+| Lighthouse desktop | **100**: FCP 0,4 s, LCP 0,5 s, TBT 0 ms, CLS 0, 474 KB, A11y 96 (contrasto di `MethodTimeline`, già noto) |
+| Richieste a Firestore sulla home | **4** (erano 22, circa 190 KB). Richiesta confermata |
+| Scorrimento di tutta la home in 10 s, mobile con CPU 4× | **60 fps**: fotogrammi da 17 ms, nessuno sopra 50 ms, 0 long task durante lo scorrimento |
+| Scorrimento, desktop | **60 fps**: massimo 33 ms, 0 long task |
+| Long task all'apertura, mobile con CPU 4× | 5, tra 67 e 282 ms, tutti entro 1,5 s (esecuzione degli script) |
+| Long task all'apertura, desktop | 1 da 86 ms |
+
+### Sequenza su mobile (4G lento reale, CPU 4×, cache vuota)
+
+- HTML a 0,99 s, primo disegno a 2,35 s, React aggancia a 4,37 s.
+- **Primo cambio della parola che ruota: 6,48 s.** Non è ancora cambiato, perché la richiesta è in attesa.
+- Nel primo secondo partono ancora insieme:
+  - i font Bebas e DM Sans (53 KB);
+  - gli script: index 81, react 71, motion 48 KB;
+  - **il poster del video `w_1280` (34 KB)**, richiesto a 0,97 s in competizione con gli script, anche se il video è molto più in basso.
+  - I due DM Serif (51 KB) partono a 1,7 s: servono alla parola in corsivo del hero.
+
+### Lettura
+
+- **In Chromium la home non è lenta**: caricamento rapido, scorrimento fluido, nessun blocco. Non riesco a riprodurre "lentissima" né su desktop né su mobile.
+- Il problema di Nicola resta quindi probabilmente **specifico di Safari**. Le ipotesi, in ordine:
+  1. **Parola che ruota** che si muove solo a ~4 s: è la percezione di "lento" sul telefono. Richiesta già al Direttore.
+  2. **`backdrop-filter: blur()` su elementi fissi**:
+     - banner cookie (`src/components/CookieBanner.tsx:19`, 14 px);
+     - menu in alto dopo lo scorrimento (`src/App.tsx:235`, 14 px);
+     - classe `.glass` (`src/App.tsx:74`, 12 px);
+     - due elementi a `src/App.tsx:593` e `:615`, 10 px.
+     
+     In navigazione privata il banner cookie compare **a ogni visita**. In Safari un elemento fisso con sfocatura sopra uno sfondo che si muove (`anim-drift`) va ricalcolato a ogni fotogramma: è un costo noto della GPU dell'iPhone, che Chromium headless non misura.
+  3. Gli aloni con `filter: blur(90–120px)` tolti nella PR #81 erano lo stesso tipo di costo, e più grande. Da far riprovare a Nicola.
+- Non posso misurare WebKit: ho solo Chromium e non posso scaricare altri browser.
+
+## Richieste per lo sviluppo — aggiornamento dopo la PR #81
+
+1. **Alta · Parola che ruota** (già al Direttore, vedi sopra): primo cambio entro ~1 s.
+2. **Media · Poster del video**: `w_720`, impostato solo quando la sezione si avvicina (`src/App.tsx:722`, `VideoReel`). Toglie 34 KB dal primo secondo.
+3. **Media, per Safari · `backdrop-filter` sugli elementi fissi.**
+   - Banner cookie e menu in alto: sfondo pieno quasi opaco (per esempio `rgba(20,20,20,.94)`) al posto di `backdrop-filter: blur()`. L'aspetto cambia di poco, perché lo sfondo del sito è già scuro.
+   - In alternativa, sfocatura solo dove il dispositivo regge bene, per esempio `@media (hover:hover) and (pointer:fine)`, cioè solo desktop.
+   - Da verificare su iPhone (Nicola): fluidità dello scorrimento con il banner cookie aperto, prima e dopo.
+4. **Per Nicola**: riprovare da iPhone in Safari privato dopo la PR #81. Va annotato:
+   - se lo scorrimento è ancora a scatti;
+   - se a scatti è solo con il banner cookie aperto o anche dopo averlo chiuso.
+   
+   Serve a capire se la causa è il punto 3.
