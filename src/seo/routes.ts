@@ -355,7 +355,7 @@ export const getSeo = (rawPath: string): Seo => {
   const agencyCity = AGENCY_CITIES.find((c) => path === agencyPath(c));
   if (agencyCity) {
     const c = agencyCity;
-    const title = [
+    const title = cityInfo(c)?.title || [
       `Agenzia di comunicazione e marketing a ${c} | InLab`,
       `Agenzia comunicazione e marketing a ${c} | InLab`,
       `Agenzia di comunicazione e marketing a ${c}`,

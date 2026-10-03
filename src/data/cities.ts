@@ -24,6 +24,8 @@ export type CityInfo = {
   intro?: string;
   /** Meta description propria della pagina agenzia (140-155 caratteri) */
   description?: string;
+  /** Title proprio della pagina agenzia (max 60 caratteri) */
+  title?: string;
   /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
   casaNostra?: { titolo: string; testo: string; autore: string; link: string };
 };
@@ -51,6 +53,8 @@ export const CITY_INFO: CityInfo[] = [
       'video': "Video parlati che spiegano un servizio in modo semplice, come quelli per Emmesse sul fotovoltaico, e reel brevi per farti scegliere tra tanti concorrenti.",
       'branding': "Nome, logo e immagine coordinata per distinguersi in una città con tanta offerta: un'identità chiara su insegna, social, sito e materiali.",
     },
+    title: 'Agenzia di comunicazione a Taranto e provincia | InLab',
+    description: "Agenzia di comunicazione e marketing per attività di Taranto e provincia: social, sponsorizzate, siti, video e branding. Preventivo gratuito.",
     intro: "Dal Borgo alla Città Vecchia, dal lungomare ai quartieri residenziali: InLab Communication segue social, video, sponsorizzate, siti e branding per attività di Taranto, con un'agenzia a meno di un'ora, a Castellaneta. Lavoriamo già con aziende di Taranto come Emmesse e con attività in tutta la provincia, da Castellaneta a Ginosa.",
   },
   {
