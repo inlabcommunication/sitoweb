@@ -2617,7 +2617,7 @@ Scopri il nostro servizio di [branding e identità visiva](/branding) oppure [ra
     cover: '/blog/agenzia-comunicazione-taranto-come-scegliere/cover.jpg',
     coverAlt: 'Checklist con le domande per scegliere un\'agenzia di comunicazione a Taranto',
     published: true,
-    seoTitle: 'Agenzia di comunicazione a Taranto: 7 domande | InLab',
+    seoTitle: 'Come scegliere un\'agenzia di comunicazione a Taranto | InLab',
     seoDescription: 'Come scegliere un\'agenzia di comunicazione a Taranto: 7 domande da fare prima di firmare, i segnali d\'allarme e cosa conta per un\'attività locale.',
     content: `Scegliere un'**agenzia di comunicazione a Taranto** non è semplice: le proposte sono tante, i siti delle agenzie si somigliano e spesso si decide guardando solo il preventivo. Poi, dopo qualche mese, ci si accorge che non era quello che serviva. In questa guida trovi le 7 domande da fare prima di firmare, i segnali che devono farti dubitare e cosa conta davvero per un'attività di Taranto e provincia.
 
