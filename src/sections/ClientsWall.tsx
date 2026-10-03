@@ -1,5 +1,5 @@
 import React from 'react';
-import { m as motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { normalizeClients } from '../lib/clientUtils';

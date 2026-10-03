@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
-import { m as motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { TrendingUp, Eye, Clock, MousePointerClick, Monitor, Smartphone, Tablet, Globe } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
