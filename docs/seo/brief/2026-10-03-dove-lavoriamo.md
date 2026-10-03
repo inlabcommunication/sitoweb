@@ -34,7 +34,12 @@
 ### 3. Note tecniche
 - I clienti si leggono dai dati, non vanno scritti a mano: quando Nicola pubblica un nuovo cliente con la città, la pagina si aggiorna da sola.
 - Paresteta deve risultare solo sotto Ginosa (vedi il brief Palagianello, punto 1). La pagina userà lo stesso campo città.
-- **Ferrara e Bologna:** compaiono solo quando c'è un cliente pubblicato con quella città. Niente pagine agenzia per ora. La mappa allora mostrerà anche l'Emilia-Romagna, come secondo riquadro.
+- **Città fuori dalla Puglia: Ferrara, Bologna e Roma** (aggiornamento di Nicola, 03/10). Lì ci sono già clienti, ma nomi, settori e consenso arriveranno più avanti.
+  - La mappa ha **due livelli**: uno "Italia" con Puglia, Emilia-Romagna e Lazio, e un ingrandimento sull'arco ionico.
+  - Le tre città compaiono **subito**: puntino sulla mappa e voce nel blocco "Lavoriamo anche a", **senza link**, perché la pagina città non c'è.
+  - Quando ci sarà un cliente pubblicato con quella città, la città passa automaticamente all'elenco principale con i clienti.
+  - La pagina `/agenzia-comunicazione-{città}` si apre solo con almeno un lavoro pubblicabile, e la chiede la SEO.
+  - **Struttura dei dati:** l'elenco delle città della mappa (nome, regione, coordinate sul disegno, pagina città sì o no) va tenuto in un unico posto, separato dai clienti. Così aggiungere una città non richiede di cambiare il codice della pagina.
 
 ## Cosa misuro dopo
 - Pagina indicizzata in Search Console.
