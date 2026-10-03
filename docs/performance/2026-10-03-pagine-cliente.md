@@ -101,3 +101,79 @@ Addetto performance, su richiesta del Direttore (segnalazione di Nicola: sito le
    - Annotare se la pagina resta nera e quanto ci mette a comparire l'immagine in alto.
    - Se si può, con Safari su Mac → Sviluppo → iPhone collegato: scheda Rete (peso totale) e Console (errori).
    - Serve a confermare o escludere l'ipotesi sul nero, che io non posso provare senza WebKit.
+
+## Home: perché la prima animazione arriva dopo ~4 s (03/10 ore 10:40 UTC)
+
+Richiesta del Direttore. Nicola, con un iPhone 11 Pro e Safari, vede la prima animazione della home dopo circa 4 s.
+
+### Metodo
+
+- Chromium (puppeteer) sulla home online, main 416afb5, quindi **prima della PR #80**.
+- Condizioni:
+  - schermo 375×812 a densità 3, user agent di iPhone;
+  - cache disattivata;
+  - rete 4G lenta reale: 562 ms di latenza, 1,47 Mbps;
+  - CPU rallentata 4×.
+- Momenti misurati nella pagina:
+  - **idratazione**: React aggancia la pagina, cioè la radice riceve le proprietà `__react*`;
+  - **telefono 3D**: opacità che passa da 0 a più di 0 (inizio dell'animazione) e poi a 1;
+  - **parola che ruota**: primo cambio.
+- 2 prove. Niente Lighthouse, per non fare misure doppie.
+
+### Sequenza (prova 1 / prova 2, in ms dall'inizio)
+
+| Momento | Prova 1 | Prova 2 |
+|---|---|---|
+| HTML scaricato | 1.020 | 1.044 |
+| Titolo e testo nel DOM (il telefono 3D c'è già, ma a opacità 0) | 2.053 | 1.902 |
+| Primo disegno (FCP) = LCP (paragrafo del hero) | 2.339 | 1.976 |
+| `motion` / `react` / `index` scaricati | 3.373 / 3.628 / 3.683 | simile |
+| DOMContentLoaded | 3.858 | 3.736 |
+| **React aggancia la pagina** | **4.296** | **4.028** |
+| **Inizio dell'animazione del telefono** | **4.674** | **4.397** |
+| Telefono del tutto visibile | 5.202 | 4.958 |
+| Primo cambio della parola che ruota | 6.456 | 6.232 |
+
+**Tra HTML scaricato e prima animazione passano 3,4–3,6 s.** È lo stesso ordine di grandezza dei 4 s di Nicola.
+
+### Causa
+
+1. **La prima animazione dipende dal JavaScript.** Il telefono 3D (`src/sections/HeroFlow.tsx:217`) è nell'HTML statico con `opacity:0` e `initial={{opacity:0, y:180, …}}`. Parte solo quando `motion` è scaricato e React ha agganciato tutta la home. Il testo invece è già visibile dall'HTML: i titoli hanno `initial={false}`.
+2. **Il JavaScript arriva tardi perché divide la banda con i font.**
+   - Nei primi ~2,5 s si scaricano insieme 200 KB di script (index 81, react 71, motion 48) e 104 KB di font (Bebas 15, DM Sans 38, i due DM Serif 51).
+   - Insieme a loro c'è il poster del video (34 KB, `w_1280`), che compare solo più in basso nella pagina.
+   - A 1,47 Mbps tutto questo occupa circa 2,7 s di rete.
+3. **Poi la CPU**: dopo l'arrivo degli script servono altri ~0,4–0,6 s per eseguirli e agganciare l'intera home, che è lunga.
+4. **Non dipende** da Firestore, dal video, dagli embed di Instagram (sulla home non ci sono) o da immagini. La PR #76 (LazyMotion, ora annullata) avrebbe tolto 48 KB, cioè circa 0,3 s, ma l'animazione sarebbe comunque rimasta legata al JavaScript.
+
+### Trovato in più: Firestore legge lo stesso documento circa 10 volte
+
+- Dopo il `load` la home fa 22 richieste a Firestore: circa 10 letture da 19 KB, quindi **~190 KB**, più altrettante richieste vuote.
+- Causa probabile:
+  - `loadContent()` in `src/lib/content.ts:79` salva il risultato solo quando la lettura è finita (`cached`);
+  - più componenti lo chiamano nello stesso momento;
+  - ognuno fa quindi il proprio `getDoc(app/site_content)`.
+- Non ritarda l'animazione, perché parte dopo il `load`. Però su un telefono sono 190 KB in più e 10 letture in più per ogni visita nel conteggio di Firestore.
+
+## Richieste per lo sviluppo — home (al Direttore)
+
+1. **Alta · Entrata del telefono 3D in CSS, senza aspettare il JavaScript.**
+   - File: `src/sections/HeroFlow.tsx:216–219`.
+   - Spostare l'entrata (opacità, salita, rotazione, sfocatura) in una classe CSS con `@keyframes`, già presente nell'HTML statico. Durata e ritardo come oggi: 1,5 s, ritardo 0,35 s, stessa curva `cubic-bezier(0.16,1,0.3,1)`.
+   - Sul `motion.div` usare `initial={false}`: motion non deve rifare l'entrata quando React aggancia la pagina.
+   - L'oscillazione successiva resta com'è, già in CSS dalla PR #32.
+   - Rispettare `@media (prefers-reduced-motion: reduce) { animation: none; opacity: 1; transform: none }`.
+   - Se la PR #80 ha già reso visibile il telefono senza JS, basta aggiungere l'animazione CSS.
+   - Effetto: l'animazione parte con il primo disegno, cioè a 2,0–2,3 s in queste condizioni molto lente invece di 4,4–4,7 s. Con il 4G normale di un iPhone dovrebbe partire entro ~1 s.
+   - Da misurare: inizio dell'animazione del telefono entro 0,5 s dal primo disegno, nelle stesse condizioni di questa prova.
+2. **Media · Una sola lettura di Firestore per visita.**
+   - File: `src/lib/content.ts:79` (`loadContent`).
+   - Salvare la promessa in corso, per esempio `let inflight: Promise<SiteContent> | null`, e restituirla alle chiamate che arrivano nel frattempo.
+   - Da misurare: sulla home 1 sola lettura di `app/site_content` invece di circa 10.
+3. **Media · Font DM Serif e poster del video non nel primo caricamento.**
+   - I due DM Serif (51 KB) si scaricano a 1,7 s in competizione con gli script. Servono solo alla parola in corsivo: verificare che non abbiano `preload` e che siano solo nel CSS.
+   - Il poster del video (`src/App.tsx:722`, `VideoReel`, 34 KB a `w_1280`) è più in basso nella pagina, quindi non deve partire subito:
+     - poster a `w_720` come il video;
+     - impostarlo solo quando la sezione si avvicina allo schermo, con lo stesso `IntersectionObserver` che fa partire il video.
+   - Da misurare: nel primo secondo e mezzo solo HTML, CSS, i 2 font principali e gli script.
+4. **Dopo, se serve · LazyMotion.** Con il punto 1 il tempo dell'animazione non dipende più da `motion`. Rimetterla resta utile per la banda (48 KB), ma solo dopo che è chiarito il nero su Safari.
