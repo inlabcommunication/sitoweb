@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { m as motion, useInView } from 'motion/react';
+import { motion, useInView } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import { useAgencyStats } from '../data/stats';
 import { useContent } from '../lib/content';

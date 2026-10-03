@@ -1,4 +1,4 @@
-import { m as motion, AnimatePresence, LazyMotion } from "motion/react";
+import { motion, AnimatePresence } from "motion/react";
 import React, { useState, useEffect, useCallback, lazy, Suspense, startTransition } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
@@ -2155,11 +2155,6 @@ const renderPage = (info) => {
 /* ═══════════════════════════════════════════════════════════════
    APP
 ═══════════════════════════════════════════════════════════════ */
-// Animazioni: nel primo caricamento c'è solo il nucleo di motion (componenti
-// "m"); le funzioni di animazione arrivano dopo, in un file a parte
-// (richiesta Performance 03/10: ~29 KB gzip in meno nel primo secondo).
-const loadMotionFeatures = () => import("./lib/motionFeatures").then(r => r.default);
-
 export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   // ssrPath: usato solo in fase di build per generare l'HTML statico di ogni pagina
   const [route,setRoute]=useState(() => ssrPath ?? getCurrentPath());
@@ -2207,7 +2202,6 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   useEffect(() => { mounted.current = true; }, []);
  
   return (
-    <LazyMotion features={loadMotionFeatures}>
     <RouterCtx.Provider value={{route,go}}>
       <G/>
       <Navbar/>
@@ -2227,6 +2221,5 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
       {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}
     </RouterCtx.Provider>
-    </LazyMotion>
   );
 }

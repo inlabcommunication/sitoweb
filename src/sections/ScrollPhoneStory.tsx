@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { m as motion, useMotionValueEvent, useScroll, useSpring, useTransform, useReducedMotion as useFmReducedMotion, type MotionValue } from 'motion/react';
+import {
+  motion, useMotionValueEvent, useScroll, useSpring, useTransform,
+  useReducedMotion as useFmReducedMotion, type MotionValue,
+} from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { useAgencyStats } from '../data/stats';

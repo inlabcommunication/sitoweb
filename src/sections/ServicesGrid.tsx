@@ -1,6 +1,6 @@
 import React from 'react';
 import { linkClick } from '../lib/router';
-import { m as motion } from 'motion/react';
+import { motion } from 'motion/react';
 import {
   TrendingUp, Video, Camera, Star, Layout,
   Target, Users, Calendar, ArrowUpRight,

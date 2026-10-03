@@ -85,14 +85,13 @@ export default defineConfig(({ isSsrBuild }) => ({
     manifest: !isSsrBuild,
     rollupOptions: {
       output: {
-        // React in un chunk separato: resta in cache tra un deploy e l'altro.
-        // motion no: il nucleo va col sito e le animazioni (domAnimation) in un
-        // file caricato dopo (LazyMotion in App.tsx).
+        // React e motion in chunk separati: restano in cache tra un deploy e l'altro.
         // Firebase no: lite (sito) e completo (admin) devono restare separati.
         // (non per la build "ssr" usata solo per generare l'HTML statico)
         manualChunks: isSsrBuild ? undefined : (id) => {
           if (!id.includes('node_modules')) return;
-          if (/[\/]node_modules[\/](react|react-dom|scheduler)[\/]/.test(id)) return 'react';
+          if (id.includes('/motion') || id.includes('/framer-motion/')) return 'motion';
+          if (id.includes('/react') || id.includes('/scheduler/')) return 'react';
         },
       },
     },

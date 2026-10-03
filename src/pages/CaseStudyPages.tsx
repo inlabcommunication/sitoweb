@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { m as motion, useScroll, useTransform, useInView } from 'motion/react';
+import { motion, useScroll, useTransform, useInView } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Check } from 'lucide-react';
 import { BrowserMockup } from '../components/BrowserMockup';
 import { ReelsGrid, Gallery, hasReel } from '../components/ReelCard';
