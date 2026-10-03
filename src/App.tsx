@@ -1717,7 +1717,10 @@ const PageCittaSEO = ({city, service}) => {
         <section style={{padding:"3rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:"1rem",flexWrap:"wrap"}}>
             <p style={{fontSize:15,color:"var(--m)"}}>Ti serve più di un servizio a {cityName}?</p>
-            <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi a {cityName} <ArrowUpRight size={13}/></Link>
+            <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
+              <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi a {cityName} <ArrowUpRight size={13}/></Link>
+              {cityName!=="Taranto"&&provincia==="provincia di Taranto"&&<Link to={agencyPath("Taranto")} className="btn btn-g">Agenzia a Taranto <ArrowUpRight size={13}/></Link>}
+            </div>
           </div>
         </section>
       )}
