@@ -288,11 +288,12 @@ nuovo, ma non modifica questo file.
 
 | Servizio | Pagina | Argomenti per il blog | Già coperte (parola chiave → articolo) |
 |---|---|---|---|
-| Gestione Social | `/gestione-social` | costi, cosa include, come scegliere, piano editoriale, social per settore (ristoranti, dentisti, negozi…) | *gestione social per attività locali* → `gestione-social-attivita-locale-cosa-include`; *quante volte pubblicare sui social* → `quante-volte-pubblicare-social`; *Meta One aziende* → `meta-one-aziende` |
+| Gestione Social | `/gestione-social` | costi, cosa include, come scegliere, piano editoriale, social per settore (ristoranti, dentisti, negozi…) | *gestione social per attività locali* → `gestione-social-attivita-locale-cosa-include`; *quante volte pubblicare sui social* → `quante-volte-pubblicare-social`; *Meta One aziende* → `meta-one-aziende`; *social media manager Taranto* → `social-media-manager-taranto` |
 | Video & Reels | `/video` | idee per reel per settore, come girare reel, durata, trend, reel vs post | *reel o post Instagram* → `reel-o-post-cosa-pubblicare-instagram`; *idee reel per ristoranti* → `idee-reel-ristoranti`; *SEO su TikTok* → `seo-tiktok-search-ads` |
 | Siti Web & Web App | `/siti-web` | costi di un sito, sito vs social, SEO locale, scheda Google, e-commerce, landing page | *sito web per attività locali* → `sito-web-o-solo-social-attivita-locale`; *Google Business Profile GA4* → `google-business-profile-ga4`; *report AI Overviews Search Console* → `ai-overviews-search-console-report`; *SEO per AI Overviews / GEO* → `seo-ai-overviews-geo-google` |
 | Meta Ads | `/meta-ads` | quanto investire, sponsorizzate Instagram, errori comuni, campagne per attività locali | *sponsorizzate Instagram per attività locali* → `sponsorizzate-instagram-attivita-locali`; *Meta Ads 2026* → `meta-ads-creativita-advantage` |
 | Automazioni AI | `/automazioni-ai` | chatbot per attività locali, risposte automatiche WhatsApp/Instagram, AI per piccole imprese | *WhatsApp Business AI* → `whatsapp-business-ai`; *contenuti AI obblighi / AI Act* → `contenuti-ai-obblighi-ai-act` |
+| Agenzia (pagine città, nessun servizio singolo) | `/agenzia-comunicazione-taranto` e le altre `/agenzia-comunicazione-{città}` | come scegliere un'agenzia in una città, lavorare con un'agenzia locale | *agenzia di comunicazione Taranto* → `agenzia-comunicazione-taranto-come-scegliere` |
 | Email e newsletter (nessuna pagina dedicata) | `/siti-web` come servizio principale, `/automazioni-ai` come secondario | newsletter, privacy delle email, moduli di iscrizione | *tracking pixel email Garante* → `tracking-pixel-email-garante` |
 | Foto & Shooting | `/shooting` | shooting per ristoranti/prodotti, foto per i social, come prepararsi a uno shooting | *servizio fotografico per ristoranti* → `servizio-fotografico-ristoranti` |
 | Branding & Identità | `/branding` | logo, rebranding, identità visiva, nome dell'attività (caso Paresteta) | *rebranding attività commerciale* → `rebranding-attivita-commerciale` |
@@ -303,7 +304,9 @@ scrivere un terzo articolo sullo stesso tema senza chiederlo nel resoconto):
 - `ai-overviews-search-console-report` (misurare) ↔ `seo-ai-overviews-geo-google` (ottimizzare);
 - `gestione-social-attivita-locale-cosa-include` contiene già "come scegliere" e
   "domande da fare prima di scegliere": un articolo nuovo su *come scegliere un
-  social media manager* rischia di fargli concorrenza.
+  social media manager* rischia di fargli concorrenza;
+- `social-media-manager-taranto` (la figura professionale, locale) ↔ `gestione-social-attivita-locale-cosa-include` (cosa comprende il servizio);
+- `agenzia-comunicazione-taranto-come-scegliere` (articolo informativo) ↔ la pagina `/agenzia-comunicazione-taranto` (pagina commerciale): l'articolo non deve avere un title che inizia come quello della pagina.
 
 Casi studio da citare: `/casi-studio/paresteta` (rebranding e lancio di un'attività
 locale), `/casi-studio/ricciardi` (sito, lead generation e social per uno studio
