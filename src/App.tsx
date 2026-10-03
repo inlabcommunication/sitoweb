@@ -2167,6 +2167,9 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   useEffect(()=>{ startTransition(()=>setClientReady(true)); },[]);
 
   useEffect(() => {
+    // Da qui le animazioni sono attive: tolta la regola che le tiene visibili
+    // prima dell'avvio (index.html).
+    requestAnimationFrame(() => document.documentElement.classList.add('hy'));
     loadContent();
     initAnalytics();
     initGa();
