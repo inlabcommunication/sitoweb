@@ -201,7 +201,7 @@ export const MethodDevices: React.FC<{ focus: Focus; stepLabel: string; reduced?
 const MdStyles = () => (
   <style>{`
     .md-stage{position:relative;width:100%;height:100%}
-    .md-glow{position:absolute;left:50%;top:45%;width:420px;height:420px;transform:translate(-50%,-50%);border-radius:50%;background:rgba(205,178,255,.1);filter:blur(90px);pointer-events:none}
+    .md-glow{position:absolute;left:50%;top:45%;width:420px;height:420px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side, rgba(205,178,255,0.1) 0%, rgba(205,178,255,0.05) 45%, rgba(205,178,255,0) 100%);pointer-events:none}
     .md-scene{position:absolute;left:50%;top:50%;width:520px;height:440px;transform:translate(-50%,-50%)}
     .md-slot{position:absolute;will-change:transform}
     .md-slot-pc{left:90px;top:70px}

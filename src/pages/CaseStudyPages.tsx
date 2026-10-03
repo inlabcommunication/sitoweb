@@ -85,7 +85,7 @@ const Lead: React.FC<{ text?: string; mb?: string }> = ({ text, mb = '2.5rem' })
 
 const Section: React.FC<{ children: React.ReactNode; glow?: boolean }> = ({ children, glow }) => (
   <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
-    {glow && <div style={{ position: 'absolute', top: '50%', left: '50%', width: 600, height: 600, transform: 'translate(-50%, -50%)', background: 'rgba(205,178,255,0.04)', borderRadius: '50%', filter: 'blur(120px)', pointerEvents: 'none' }} />}
+    {glow && <div style={{ position: 'absolute', top: '50%', left: '50%', width: 600, height: 600, transform: 'translate(-50%, -50%)', background: 'radial-gradient(closest-side, rgba(205,178,255,0.04) 0%, rgba(205,178,255,0.02) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%', pointerEvents: 'none' }} />}
     <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1 }}>{children}</div>
   </section>
 );

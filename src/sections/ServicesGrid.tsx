@@ -27,7 +27,7 @@ export const ServicesGrid: React.FC<ServicesGridProps> = ({ onServiceClick }) =>
       {/* Glow di sfondo */}
       <div style={{
         position: 'absolute', top: '40%', right: '-5%', width: 480, height: 480,
-        background: 'rgba(205,178,255,0.05)', borderRadius: '50%', filter: 'blur(110px)',
+        background: 'radial-gradient(closest-side, rgba(205,178,255,0.05) 0%, rgba(205,178,255,0.025) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%',
         pointerEvents: 'none',
       }} />
 
