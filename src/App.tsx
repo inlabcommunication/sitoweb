@@ -678,6 +678,17 @@ const PageHome = () => {
       {/* SERVIZI: schede orizzontali */}
       <ServicesOrbScroll onServiceClick={(slug) => go("/" + slug)} />
 
+      {/* Dove lavoriamo: link alle pagine città più importanti (brief SEO Taranto 03/10) */}
+      <section style={{padding:"2.5rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <p style={{maxWidth:1280,margin:"0 auto",fontSize:16,color:"var(--m)",lineHeight:1.9}}>
+          Lavoriamo a{" "}
+          <Link to={agencyPath("Castellaneta")} className="foot-link" style={{color:"var(--t)",fontWeight:500,textDecoration:"underline",textUnderlineOffset:3}}>Castellaneta</Link>,{" "}
+          <Link to={agencyPath("Taranto")} className="foot-link" style={{color:"var(--t)",fontWeight:500,textDecoration:"underline",textUnderlineOffset:3}}>Taranto</Link>,{" "}
+          <Link to={agencyPath("Palagianello")} className="foot-link" style={{color:"var(--t)",fontWeight:500,textDecoration:"underline",textUnderlineOffset:3}}>Palagianello</Link>{" "}
+          e in tutta la provincia.
+        </p>
+      </section>
+
       {/* MANIFESTO */}
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",top:"10%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
