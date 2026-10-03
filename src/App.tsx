@@ -1838,7 +1838,11 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
+          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} fetchPriority="high"
+              // versioni ridotte da Cloudinary per i telefoni (richiesta Performance 2, 03/10)
+              srcSet={/\/image\/upload\//.test(heroImage) ? [640,960,1280,1600].map(w=>`${cld(heroImage, w)} ${w}w`).join(", ") : undefined}
+              sizes="100vw"
+              style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
