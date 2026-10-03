@@ -102,7 +102,7 @@ Addetto performance, su richiesta del Direttore (segnalazione di Nicola: sito le
    - Se si può, con Safari su Mac → Sviluppo → iPhone collegato: scheda Rete (peso totale) e Console (errori).
    - Serve a confermare o escludere l'ipotesi sul nero, che io non posso provare senza WebKit.
 
-## Home: perché la prima animazione arriva dopo ~4 s (03/10 ore 10:40 UTC)
+## Home: perché la prima animazione arriva dopo ~4 s (03/10 ore 10:30 UTC)
 
 Richiesta del Direttore. Nicola, con un iPhone 11 Pro e Safari, vede la prima animazione della home dopo circa 4 s.
 
@@ -170,10 +170,10 @@ Richiesta del Direttore. Nicola, con un iPhone 11 Pro e Safari, vede la prima an
    - File: `src/lib/content.ts:79` (`loadContent`).
    - Salvare la promessa in corso, per esempio `let inflight: Promise<SiteContent> | null`, e restituirla alle chiamate che arrivano nel frattempo.
    - Da misurare: sulla home 1 sola lettura di `app/site_content` invece di circa 10.
-3. **Media · Font DM Serif e poster del video non nel primo caricamento.**
-   - I due DM Serif (51 KB) si scaricano a 1,7 s in competizione con gli script. Servono solo alla parola in corsivo: verificare che non abbiano `preload` e che siano solo nel CSS.
+3. **Media · Poster del video non nel primo caricamento.**
+   - I due DM Serif (51 KB) non hanno `preload` e servono alla parola in corsivo del hero, quindi vanno bene così.
    - Il poster del video (`src/App.tsx:722`, `VideoReel`, 34 KB a `w_1280`) è più in basso nella pagina, quindi non deve partire subito:
      - poster a `w_720` come il video;
      - impostarlo solo quando la sezione si avvicina allo schermo, con lo stesso `IntersectionObserver` che fa partire il video.
-   - Da misurare: nel primo secondo e mezzo solo HTML, CSS, i 2 font principali e gli script.
+   - Da misurare: nessuna richiesta del poster prima di scorrere verso il video.
 4. **Dopo, se serve · LazyMotion.** Con il punto 1 il tempo dell'animazione non dipende più da `motion`. Rimetterla resta utile per la banda (48 KB), ma solo dopo che è chiarito il nero su Safari.
