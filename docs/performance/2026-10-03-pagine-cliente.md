@@ -177,3 +177,46 @@ Richiesta del Direttore. Nicola, con un iPhone 11 Pro e Safari, vede la prima an
      - impostarlo solo quando la sezione si avvicina allo schermo, con lo stesso `IntersectionObserver` che fa partire il video.
    - Da misurare: nessuna richiesta del poster prima di scorrere verso il video.
 4. **Dopo, se serve · LazyMotion.** Con il punto 1 il tempo dell'animazione non dipende più da `motion`. Rimetterla resta utile per la banda (48 KB), ma solo dopo che è chiarito il nero su Safari.
+
+## Rimisura dopo la PR #80 (main 4916052) — 03/10 ore 14:50 UTC
+
+Stesse condizioni di prima: Chromium, rete 4G lenta reale (562 ms, 1,47 Mbps), CPU 4×, cache vuota, schermo da iPhone. Per la home una prova di sequenza; per le pagine cliente una prova Lighthouse a pagina.
+
+### Pagine cliente: richieste 1 e 2 confermate
+
+| Pagina | Perf. | Peso | Richieste a Instagram | Immagine in alto | A11y |
+|---|---|---|---|---|---|
+| Villa Natia | 100 | **409 KB** (era 4,0 MB) | **0** | — | 100 |
+| Nunzio Putignano | 77 | **553 KB** (era 2,4–2,6 MB) | **0** | `w_960`, 140 KB (era `w_1600`, 167 KB) | 100 |
+
+- Il 77 di Nunzio Putignano è una stima della simulazione: l'LCP *misurato davvero* è 0,2 s. L'elemento LCP è il titolo, con un "render delay" simulato di 4,3 s, come nella prova falsata di stamattina.
+- L'immagine in alto pesa ancora 140 KB perché il telefono simulato (densità 1,75) sceglie la versione da 960 px. È al 36% di opacità, quindi `q_auto:eco` la porterebbe probabilmente vicino agli 80 KB. Richiesta minore.
+
+### Home: il telefono 3D su mobile non si vede
+
+- Su mobile il telefono 3D sta in un contenitore `hide-mob`, quindi non è visibile e la sua animazione non parte. La nuova entrata in CSS funziona su desktop: a 0,96 s è già a opacità 0,69.
+- Animazioni visibili nel primo schermo su mobile, in ms dall'inizio:
+
+| Animazione | Inizio | Da cosa dipende |
+|---|---|---|
+| Sfondo sfocato che si muove (`anim-drift`, CSS) | 1.774, con il primo disegno | HTML |
+| Pulsante (animazione di motion) | 5.468 | JavaScript |
+| **Parola che ruota (`rot-word`), primo cambio** | **6.121–6.456** | JavaScript, **2,2 s dopo** che React aggancia la pagina (4.016) |
+
+- **È questa la "prima animazione" che vede Nicola.** L'unico movimento evidente nel primo schermo del telefono è la parola in corsivo che cambia. `RotatingWord` (`src/sections/HeroFlow.tsx:22–31`) avvia il timer da 2.200 ms solo dopo l'aggancio di React, quindi il primo cambio arriva a "aggancio + 2,2 s".
+- Su un iPhone 11 Pro con 4G normale l'aggancio arriva verosimilmente a ~1,5–2 s, quindi il primo cambio a **~4 s**: coincide con quello che vede Nicola.
+
+## Richieste per lo sviluppo — aggiornamento dopo la PR #80 (al Direttore)
+
+1. **Alta · Parola che ruota senza aspettare il JavaScript (o quasi).**
+   - File: `src/sections/HeroFlow.tsx:22–31` (`RotatingWord`).
+   - **Soluzione A, consigliata:** rotazione in CSS.
+     - Le 5 parole nell'HTML statico, una sopra l'altra nella stessa riga, con un `@keyframes` che le mostra a turno: ciclo di 5 × 2,2 s e `animation-delay` scalati, primo cambio a ~1 s.
+     - La riga deve avere la larghezza della parola più lunga, per non spostare il testo.
+     - Accessibilità: per gli screen reader solo la prima parola, le altre con `aria-hidden="true"`.
+     - Con riduci movimento resta ferma la prima parola.
+   - **Soluzione B, minima:** lasciare il codice com'è ma fare il primo cambio dopo ~800 ms dall'aggancio (un `setTimeout` iniziale più corto, poi l'intervallo da 2,2 s). Il primo cambio passa da "aggancio + 2,2 s" a "aggancio + 0,8 s", cioè ~2,5 s su iPhone. Resta legato al JavaScript.
+   - Da misurare: primo cambio della parola entro ~1 s dal primo disegno (soluzione A) o entro 1 s dall'aggancio (soluzione B), con lo stesso script.
+2. **Media · Una sola lettura di Firestore**: ancora 22 richieste sulla home dopo il load (vedi sopra, `src/lib/content.ts:79`).
+3. **Media · Poster del video**: ancora `w_1280`, 34 KB, richiesto a 0,8 s (`src/App.tsx:722`).
+4. **Minore · `q_auto:eco` sull'immagine in alto delle pagine cliente** (`src/App.tsx`, immagine in alto di `PageCliente`). Da misurare: sotto 80 KB su mobile.
