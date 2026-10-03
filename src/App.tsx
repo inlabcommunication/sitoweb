@@ -1433,8 +1433,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   // i servizi puntano alle pagine generali.
   const hasServicePages=CITIES.includes(city);
   const isHome=city===BUSINESS.city;
-  // Taranto: clienti e casi di tutta la provincia, raggruppati per città (brief SEO 02/10)
-  const provinceGroups=city==="Taranto" ? PROVINCE_CITIES.map(c=>({
+  // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
+  const provinceGroups=city==="Taranto" ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
     city:c,
     cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
     clients:normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(c))),
