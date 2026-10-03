@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr --emptyOutDir && tsx scripts/prerender.ts",
+    "build": "tsx scripts/check-hydration-safety.ts && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr --emptyOutDir && tsx scripts/prerender.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "check:hydration": "node scripts/check-hydration.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.32.1",
