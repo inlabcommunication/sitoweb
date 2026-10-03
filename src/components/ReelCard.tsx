@@ -1,5 +1,8 @@
 // Card di un reel: l'embed Instagram (codice di incorporamento o link del reel)
 // si guarda direttamente sul sito dentro l'iframe ufficiale di Instagram.
+// L'iframe si crea solo al tocco ("facciata"): prima c'è una copertina leggera,
+// così la pagina non scarica 2-4 MB di Instagram e nulla parte prima del
+// consenso (richiesta Performance 03/10, approvata da Nicola).
 // I reel salvati prima con video caricato / link restano visibili come prima.
 import React from 'react';
 import { ArrowUpRight, Play } from 'lucide-react';
@@ -27,8 +30,11 @@ const INSTAGRAM_HEADER = 54;
 /** Un reel è mostrabile se ha un embed valido o (vecchi reel) un video / link https. */
 export const hasReel = (r?: Reel) => !!r && !!(instagramEmbedSrc(r.embed) || safe(r.video) || safe(r.instagram));
 
-export const ReelCard: React.FC<{ reel: Reel; resetKey?: number }> = ({ reel, resetKey = 0 }) => {
+export const ReelCard: React.FC<{ reel: Reel; resetKey?: number; onPlay?: () => void }> = ({ reel, resetKey = 0, onPlay }) => {
   const embedSrc = instagramEmbedSrc(reel.embed);
+  const [playing, setPlaying] = React.useState(false);
+  // resetKey cambia quando si avvia un altro reel: si torna alla copertina (il video si ferma)
+  React.useEffect(() => { if (resetKey) setPlaying(false); }, [resetKey]);
   const video = safe(reel.video);
   const ig = safe(reel.instagram);
   if (!embedSrc && !video && !ig) return null;
@@ -42,9 +48,21 @@ export const ReelCard: React.FC<{ reel: Reel; resetKey?: number }> = ({ reel, re
             ai lati. L'iframe è allargato (142,2%) e centrato così il video 9:16 riempie la card,
             e sale di INSTAGRAM_HEADER px: intestazione, like e commenti restano fuori. */}
         <div style={{ position: 'relative', aspectRatio: '9 / 16', borderRadius: 20, overflow: 'hidden', border: '.5px solid var(--b)', background: '#000' }}>
-          <iframe key={resetKey} src={embedSrc} title={reel.title || 'Reel Instagram'} loading="lazy" scrolling="no" allowFullScreen
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: '-21.11%', width: '142.22%', height: `calc(100% + ${INSTAGRAM_HEADER + 300}px)`, border: 0, display: 'block' }} />
+          {playing ? (
+            <iframe key={resetKey} src={embedSrc} title={reel.title || 'Reel Instagram'} scrolling="no" allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+              style={{ position: 'absolute', top: -INSTAGRAM_HEADER, left: '-21.11%', width: '142.22%', height: `calc(100% + ${INSTAGRAM_HEADER + 300}px)`, border: 0, display: 'block' }} />
+          ) : (
+            <button type="button" onClick={() => { setPlaying(true); onPlay?.(); }} aria-label={`Guarda ${reel.title || 'il reel'} (video di Instagram)`}
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 0, cursor: 'pointer', color: 'var(--a)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12,
+                background: safe(reel.cover) ? `#000 center / cover no-repeat url("${cld(safe(reel.cover), 600)}")` : 'linear-gradient(160deg, #2b2440, #1a191b 70%)' }}>
+              <span style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(205,178,255,0.18)', border: '.5px solid rgba(205,178,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Play size={24} fill="currentColor" />
+              </span>
+              <span style={{ fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--t)' }}>Guarda il reel</span>
+              <span style={{ fontSize: 12, color: 'var(--m)' }}>Video di Instagram</span>
+            </button>
+          )}
           {count && (
             <span style={{ position: 'absolute', bottom: 12, left: 12, pointerEvents: 'none', fontSize: 12, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: '#000', background: 'var(--a)', borderRadius: 100, padding: '5px 10px' }}>
               {count} visualizzazioni
@@ -132,7 +150,7 @@ export const ReelsGrid: React.FC<{ reels: Reel[] }> = ({ reels }) => {
 
   return (
     <div ref={ref} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '1.2rem' }}>
-      {reels.map((r, i) => <div key={i} data-reel={i}><ReelCard reel={r} resetKey={keys[i] || 0} /></div>)}
+      {reels.map((r, i) => <div key={i} data-reel={i}><ReelCard reel={r} resetKey={keys[i] || 0} onPlay={() => activate(i)} /></div>)}
     </div>
   );
 };
