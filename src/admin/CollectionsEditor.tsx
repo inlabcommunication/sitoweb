@@ -88,6 +88,8 @@ const REEL_FIELDS: FieldDef[] = [
   { key: 'showViews', label: 'Mostra visualizzazioni', kind: 'check', showIf: (r) => !!(r.embed || '').trim(), getValue: (r) => r.showViews ?? !!r.views },
   { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M', hint: 'Scrivi solo il numero: "visualizzazioni" lo aggiunge il sito (Instagram non lo passa nell\'embed)',
     showIf: (r) => !(r.embed || '').trim() || (r.showViews ?? !!r.views) },
+  { key: 'cover', label: 'Copertina (facoltativa)', kind: 'image', showIf: (r) => !!(r.embed || '').trim(),
+    hint: 'Immagine mostrata prima che il visitatore avvii il reel. Senza copertina il sito mostra uno sfondo con il pulsante play.' },
 ];
 const newReel = () => ({ title: '', embed: '', showViews: false, views: '' });
 

@@ -104,6 +104,15 @@ const G = () => (
     .anim-glowA{animation:glowA 4s ease-in-out infinite;will-change:opacity}
     .anim-glowB{animation:glowB 5s ease-in-out 1.5s infinite;will-change:opacity;opacity:.2}
     @media (prefers-reduced-motion:reduce){.anim-drift,.anim-float,.anim-glowA,.anim-glowB{animation:none}}
+    /* Entrata del telefono e del diagramma della home in CSS: parte appena arriva
+       l'HTML, senza aspettare il JavaScript (Safari su iPhone: ~4 s prima, 03/10) */
+    @keyframes heroPhoneIn{from{opacity:0;transform:translateY(180px) scale(.82) rotateX(38deg) rotateY(-4deg) rotateZ(-9deg);filter:blur(12px)}60%{opacity:1;filter:blur(0)}to{opacity:1;transform:translateY(0) scale(1) rotateX(4deg) rotateY(-10deg) rotateZ(-2deg);filter:blur(0)}}
+    .hero-phone{transform:rotateX(4deg) rotateY(-10deg) rotateZ(-2deg);transform-style:preserve-3d;transform-origin:50% 100%;animation:heroPhoneIn 1.5s cubic-bezier(.16,1,.3,1) .35s both}
+    @keyframes hfLine{from{stroke-dashoffset:1;opacity:0}to{stroke-dashoffset:0;opacity:1}}
+    .hf-line{stroke-dasharray:1;animation:hfLine 1.4s cubic-bezier(.16,1,.3,1) both}
+    @keyframes hfPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+    .hf-pop{transform-box:view-box;animation:hfPop .5s ease-out both}
+    @media (prefers-reduced-motion:reduce){.hero-phone,.hf-line,.hf-pop{animation:none}}
     /* riquadri di clienti ed esempi: stesso stile dei casi studio */
     .case-card{
     position:relative;overflow:hidden;text-decoration:none;color:inherit;font:inherit;
@@ -1838,7 +1847,11 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
+          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} fetchPriority="high"
+              // versioni ridotte da Cloudinary per i telefoni (richiesta Performance 2, 03/10)
+              srcSet={/\/image\/upload\//.test(heroImage) ? [640,960,1280,1600].map(w=>`${cld(heroImage, w)} ${w}w`).join(", ") : undefined}
+              sizes="100vw"
+              style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
@@ -2167,6 +2180,9 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   useEffect(()=>{ startTransition(()=>setClientReady(true)); },[]);
 
   useEffect(() => {
+    // Da qui le animazioni sono attive: tolta la regola che le tiene visibili
+    // prima dell'avvio (index.html).
+    requestAnimationFrame(() => document.documentElement.classList.add('hy'));
     loadContent();
     initAnalytics();
     initGa();
@@ -2198,25 +2214,16 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   }, [route]);
  
   const pageInfo=parseRoute(route);
-  const mounted = React.useRef(false);
-  useEffect(() => { mounted.current = true; }, []);
  
   return (
     <RouterCtx.Provider value={{route,go}}>
       <G/>
       <Navbar/>
-      <AnimatePresence mode="wait">
-        {/* al primo caricamento la pagina è visibile subito (niente dissolvenza
-            sull'HTML statico); la transizione resta nei cambi di pagina. Le
-            animazioni delle singole sezioni non cambiano. */}
-        <motion.div key={route}
-          initial={mounted.current ? {opacity:0,y:12} : false}
-          animate={{opacity:1,y:0}}
-          exit={{opacity:0,y:-8}}
-          transition={{duration:.25}}>
-          {renderPage(pageInfo)}
-        </motion.div>
-      </AnimatePresence>
+      {/* Cambio pagina senza dissolvenza: con la transizione (uscita + entrata
+          a opacità 0) su Safari lento la pagina poteva restare nera (03/10). */}
+      <div key={route}>
+        {renderPage(pageInfo)}
+      </div>
       <Footer/>
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
       {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}

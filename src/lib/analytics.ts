@@ -20,15 +20,24 @@ const ensureDb = async () => {
 const SESSION_KEY = 'inlab_sid';
 const SESSION_START_KEY = 'inlab_sst';
 
+// sessionStorage può non essere disponibile (navigazione privata, blocchi):
+// in quel caso l'id e l'inizio sessione valgono solo per questa pagina
+const mem = { sid: '', start: '' };
 const getSessionId = (): string => {
-  let sid = sessionStorage.getItem(SESSION_KEY);
-  if (!sid) {
-    sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
-    sessionStorage.setItem(SESSION_KEY, sid);
-    sessionStorage.setItem(SESSION_START_KEY, Date.now().toString());
+  try {
+    let sid = sessionStorage.getItem(SESSION_KEY);
+    if (!sid) {
+      sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+      sessionStorage.setItem(SESSION_KEY, sid);
+      sessionStorage.setItem(SESSION_START_KEY, Date.now().toString());
+    }
+    return sid;
+  } catch {
+    if (!mem.sid) { mem.sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`; mem.start = Date.now().toString(); }
+    return mem.sid;
   }
-  return sid;
 };
+const sessionStart = () => { try { return sessionStorage.getItem(SESSION_START_KEY) ?? mem.start; } catch { return mem.start; } };
 
 const getDevice = (): 'mobile' | 'tablet' | 'desktop' => {
   const w = window.innerWidth;
@@ -99,7 +108,7 @@ export const trackClick = (target: string) => {
 };
 
 const trackSessionEnd = () => {
-  const start = parseInt(sessionStorage.getItem(SESSION_START_KEY) ?? '0', 10);
+  const start = parseInt(sessionStart() || '0', 10);
   if (!start || !db || !addEvent) return;
   const duration = Math.round((Date.now() - start) / 1000);
   addEvent({
