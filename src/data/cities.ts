@@ -35,6 +35,15 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Taranto lavoriamo soprattutto su visibilità e differenza dalla concorrenza: in città ci sono molte attività dello stesso settore, quindi contano una scheda Google curata, recensioni, contenuti riconoscibili e campagne mirate per quartiere o per zona, dal Borgo al lungomare. Partiamo da un'analisi di come ti trovano oggi i clienti e di cosa fanno le attività vicine a te.",
     faq2: { q: "Si possono fare sponsorizzate solo per alcune zone di Taranto?", a: "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te." },
     faq3: { q: "Che tipo di attività di Taranto seguite?", a: "Soprattutto negozi, locali, studi professionali e attività che vogliono farsi trovare da chi cerca in città. Partiamo spesso da scheda Google, sito e social, poi aggiungiamo campagne mirate per zona quando servono." },
+    servizi: {
+      'gestione-social': "A Taranto ogni settore ha decine di concorrenti: sui social vince chi si riconosce subito. Costruiamo una linea editoriale chiara, con contenuti che mostrano le persone e il lavoro vero, non post generici.",
+      'meta-ads': "Sponsorizzate mirate per quartiere o per raggio intorno all'attività, dal Borgo a Talsano: il budget va solo a chi può venire da te, con report chiari su contatti e richieste.",
+      'siti-web': "Un sito veloce e collegato alla scheda Google per farti trovare da chi cerca a Taranto: pagine dei servizi, recensioni, mappa e contatti a portata di tocco.",
+      'automazioni-ai': "Risposte automatiche su WhatsApp e Instagram per prenotazioni, preventivi e domande frequenti: utili a studi, locali e negozi di Taranto che ricevono tanti messaggi.",
+      'shooting': "Shooting in negozio, in studio o in esterna tra il lungomare e la Città Vecchia: foto vere che fanno riconoscere la tua attività, al posto delle immagini di repertorio.",
+      'video': "Video parlati che spiegano un servizio in modo semplice, come quelli per Emmesse sul fotovoltaico, e reel brevi per farti scegliere tra tanti concorrenti.",
+      'branding': "Nome, logo e immagine coordinata per distinguersi in una città con tanta offerta: un'identità chiara su insegna, social, sito e materiali.",
+    },
     intro: "Dal Borgo alla Città Vecchia, dal lungomare ai quartieri residenziali: InLab Communication segue social, video, sponsorizzate, siti e branding per attività di Taranto, con un'agenzia a meno di un'ora, a Castellaneta. Lavoriamo già con aziende di Taranto come Emmesse e con attività in tutta la provincia, da Castellaneta a Ginosa.",
   },
   {
