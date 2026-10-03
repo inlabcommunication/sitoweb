@@ -1829,6 +1829,10 @@ const PageCittaSEO = ({city, service}) => {
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CLIENTE
 ═══════════════════════════════════════════════════════════════ */
+// Immagine in alto delle pagine cliente: è a opacità 0,36 sotto il testo, quindi
+// basta la qualità "eco" di Cloudinary (~80 KB in meno, richiesta Performance 03/10)
+const cldEco = (url: string, w: number) => cld(url, w).replace('q_auto,', 'q_auto:eco,');
+
 const PageCliente = ({id}: {id: string}) => {
   const {go}=useRouter();
   const c=useContent();
@@ -1865,9 +1869,9 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} fetchPriority="high"
+          ? <img src={cldEco(heroImage, 1600)} alt={workAlt(client)} fetchPriority="high"
               // versioni ridotte da Cloudinary per i telefoni (richiesta Performance 2, 03/10)
-              srcSet={/\/image\/upload\//.test(heroImage) ? [640,960,1280,1600].map(w=>`${cld(heroImage, w)} ${w}w`).join(", ") : undefined}
+              srcSet={/\/image\/upload\//.test(heroImage) ? [640,960,1280,1600].map(w=>`${cldEco(heroImage, w)} ${w}w`).join(", ") : undefined}
               sizes="100vw"
               style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
