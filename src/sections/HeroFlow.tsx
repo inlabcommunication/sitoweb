@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useReducedMotion as useFmReducedMotion } from 'motion/react';
+import { motion } from 'motion/react';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { useAgencyStats } from '../data/stats';
@@ -305,10 +305,11 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
   ctaPrimary = 'Raccontaci il tuo progetto',
   ctaSecondary = 'Guarda i nostri lavori',
 }) => {
-  const reducedSystem = useReducedMotion();
+  // Solo l'hook del sito: vale false nel primo render (come l'HTML statico) e si
+  // aggiorna dopo il mount. useReducedMotion di motion legge subito la preferenza
+  // e con "Riduci movimento" rompeva l'aggancio della home (errore 418, 03/10).
+  const reduced = useReducedMotion();
   const agencyStats = useAgencyStats();
-  const reducedFm = useFmReducedMotion();
-  const reduced = reducedSystem || !!reducedFm;
 
   return (
     <section style={{
