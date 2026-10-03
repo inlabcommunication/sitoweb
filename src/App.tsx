@@ -72,6 +72,14 @@ const G = () => (
     .stroke-a{-webkit-text-stroke:1px var(--a);color:transparent}
  
     .glass{background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:.5px solid var(--b)}
+    /* Telefoni e tablet: niente sfocatura dietro gli elementi fissi o sovrapposti
+       (Safari la ricalcola a ogni fotogramma), sfondo un po' più pieno al suo posto.
+       Sul computer resta la sfocatura (richiesta Performance 03/10). */
+    @media (hover:none),(pointer:coarse){
+      .glass,.nb-touch{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+      .nav-scrolled{background:rgba(10,10,8,0.96)!important}
+      .vid-btn{background:rgba(20,20,20,0.85)!important}
+    }
     .card{background:var(--s);border:.5px solid var(--b);border-radius:24px;padding:2rem;transition:border-color .3s,transform .3s}
     .card:hover{border-color:rgba(205,178,255,0.3);transform:translateY(-3px)}
  
@@ -230,7 +238,7 @@ const Navbar = () => {
   ];
  
   return (
-    <nav style={{
+    <nav className={scrolled ? "nb-touch nav-scrolled" : "nb-touch"} style={{
       position:"fixed",top:0,left:0,right:0,zIndex:100,
       padding: scrolled ? "14px 0":"26px 0",
       transition:"padding .4s,background .4s,border-color .4s",
@@ -605,6 +613,7 @@ const VideoReel = ({
           <button
             onClick={togglePlay}
             aria-label={playing?"Metti in pausa il video":"Riproduci il video"}
+            className="nb-touch vid-btn"
             style={{
               position:"absolute",bottom:"14%",right:"calc(4% + 64px)",zIndex:2,
               width:52,height:52,borderRadius:"50%",
@@ -626,6 +635,7 @@ const VideoReel = ({
           <button
             onClick={toggleAudio}
             aria-label={muted?"Attiva audio":"Disattiva audio"}
+            className="nb-touch vid-btn"
             style={{
               position:"absolute",bottom:"14%",right:"4%",zIndex:2,
               width:52,height:52,borderRadius:"50%",
