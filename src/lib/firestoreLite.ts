@@ -10,8 +10,12 @@ let dbPromise: Promise<Firestore | null> | null = null;
 // libero: i contenuti sono già nell'HTML (blocco #site-content), quindi non
 // serve rubare banda alla cover e ai file della pagina (richiesta Performance
 // 02/10: ~70 KB in meno nel primo secondo).
+// Al massimo ~3 s dall'avvio comunque: se il load tarda (video, rete lenta) le
+// visite brevi verrebbero perse dalle statistiche (nota dell'analista 03/10).
+const MAX_WAIT_MS = 3000;
 const afterLoad = () => new Promise<void>((resolve) => {
   if (typeof window === 'undefined') return resolve();
+  setTimeout(resolve, MAX_WAIT_MS);
   const idle = () => ('requestIdleCallback' in window
     ? (window as any).requestIdleCallback(() => resolve(), { timeout: 2000 })
     : setTimeout(resolve, 1));
