@@ -35,6 +35,7 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Taranto lavoriamo soprattutto su visibilità e differenza dalla concorrenza: in città ci sono molte attività dello stesso settore, quindi contano una scheda Google curata, recensioni, contenuti riconoscibili e campagne mirate per quartiere o per zona, dal Borgo al lungomare. Partiamo da un'analisi di come ti trovano oggi i clienti e di cosa fanno le attività vicine a te.",
     faq2: { q: "Si possono fare sponsorizzate solo per alcune zone di Taranto?", a: "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te." },
     faq3: { q: "Che tipo di attività di Taranto seguite?", a: "Soprattutto negozi, locali, studi professionali e attività che vogliono farsi trovare da chi cerca in città. Partiamo spesso da scheda Google, sito e social, poi aggiungiamo campagne mirate per zona quando servono." },
+    intro: "Dal Borgo alla Città Vecchia, dal lungomare ai quartieri residenziali: InLab Communication segue social, video, sponsorizzate, siti e branding per attività di Taranto, con un'agenzia a meno di un'ora, a Castellaneta. Lavoriamo già con aziende di Taranto come Emmesse e con attività in tutta la provincia, da Castellaneta a Ginosa.",
   },
   {
     name: 'Castellaneta', provincia: 'provincia di Taranto',
