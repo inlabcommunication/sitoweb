@@ -307,7 +307,7 @@ const Footer = () => {
           <div>
             <div style={{fontSize:12,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Blog","/blog"],["Contatti","/contatti"]].map(([l,r])=>(
+              {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Blog","/blog"],["Agenzia a Taranto","/agenzia-comunicazione-taranto"],["Contatti","/contatti"]].map(([l,r])=>(
                 <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
               ))}
             </div>
