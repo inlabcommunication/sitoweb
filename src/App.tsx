@@ -104,6 +104,15 @@ const G = () => (
     .anim-glowA{animation:glowA 4s ease-in-out infinite;will-change:opacity}
     .anim-glowB{animation:glowB 5s ease-in-out 1.5s infinite;will-change:opacity;opacity:.2}
     @media (prefers-reduced-motion:reduce){.anim-drift,.anim-float,.anim-glowA,.anim-glowB{animation:none}}
+    /* Entrata del telefono e del diagramma della home in CSS: parte appena arriva
+       l'HTML, senza aspettare il JavaScript (Safari su iPhone: ~4 s prima, 03/10) */
+    @keyframes heroPhoneIn{from{opacity:0;transform:translateY(180px) scale(.82) rotateX(38deg) rotateY(-4deg) rotateZ(-9deg);filter:blur(12px)}60%{opacity:1;filter:blur(0)}to{opacity:1;transform:translateY(0) scale(1) rotateX(4deg) rotateY(-10deg) rotateZ(-2deg);filter:blur(0)}}
+    .hero-phone{transform:rotateX(4deg) rotateY(-10deg) rotateZ(-2deg);transform-style:preserve-3d;transform-origin:50% 100%;animation:heroPhoneIn 1.5s cubic-bezier(.16,1,.3,1) .35s both}
+    @keyframes hfLine{from{stroke-dashoffset:1;opacity:0}to{stroke-dashoffset:0;opacity:1}}
+    .hf-line{stroke-dasharray:1;animation:hfLine 1.4s cubic-bezier(.16,1,.3,1) both}
+    @keyframes hfPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
+    .hf-pop{transform-box:view-box;animation:hfPop .5s ease-out both}
+    @media (prefers-reduced-motion:reduce){.hero-phone,.hf-line,.hf-pop{animation:none}}
     /* riquadri di clienti ed esempi: stesso stile dei casi studio */
     .case-card{
     position:relative;overflow:hidden;text-decoration:none;color:inherit;font:inherit;
