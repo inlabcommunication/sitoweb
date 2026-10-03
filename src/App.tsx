@@ -491,6 +491,21 @@ const VideoReel = ({
   // ridotta da Cloudinary (720 px sul telefono, 1280 px sul computer).
   // Con "Riduci movimento" o "Risparmio dati" non parte da solo: resta il
   // poster e si avvia col pulsante audio.
+  // Poster caricato solo quando la sezione si avvicina allo schermo (600 px
+  // prima), 720 px sul telefono: non ruba banda al primo schermo (Performance 03/10)
+  const [poster, setPoster] = useState('');
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const near = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        setPoster(cldVideoPoster(src, window.innerWidth < 768 ? 720 : 1280));
+        near.disconnect();
+      }
+    }, { rootMargin: '600px 0px' });
+    near.observe(v);
+    return () => near.disconnect();
+  }, [src]);
   const load = (v: HTMLVideoElement) => {
     if (!v.getAttribute('src')) v.src = cldVideo(src, window.innerWidth < 768 ? 720 : 1280);
   };
@@ -575,7 +590,7 @@ const VideoReel = ({
           }}>
             <video
               ref={videoRef}
-              poster={cldVideoPoster(src, 1280) || undefined}
+              poster={poster || undefined}
               loop
               muted
               playsInline
