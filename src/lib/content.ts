@@ -130,6 +130,10 @@ export const subscribeContent = (fn: (c: SiteContent) => void) => {
   return () => listeners.delete(fn);
 };
 
+// Aggiornamento da Firestore una sola volta per visita, condiviso da tutti i
+// componenti: prima ogni sezione che usava i contenuti rifaceva la stessa
+// richiesta (8+ scaricamenti uguali da ~19 KB sulla home, 03/10).
+let refreshOnce: Promise<SiteContent> | null = null;
 export const useContent = (): SiteContent => {
   // Lo stesso oggetto per tutti i componenti e per loadContent: se i dati non
   // cambiano, nessun aggiornamento dopo l'hydration.
@@ -137,7 +141,7 @@ export const useContent = (): SiteContent => {
   useEffect(() => {
     // In una transition: un aggiornamento arrivato mentre il blocco Suspense di
     // una pagina lazy non è ancora agganciato non deve farlo ridisegnare.
-    loadContent(true).then(c => { startTransition(() => setContent(c)); });
+    (refreshOnce ??= loadContent(true)).then(c => { startTransition(() => setContent(c)); });
     return subscribeContent(setContent);
   }, []);
   return content;

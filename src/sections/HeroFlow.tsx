@@ -336,7 +336,7 @@ export const HeroFlow: React.FC<HeroFlowProps> = ({
           WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 80%)',
         }} />
         <div className="anim-drift"
-          style={{ position: 'absolute', top: '10%', right: '5%', width: 500, height: 500, background: 'rgba(205,178,255,0.06)', borderRadius: '50%', filter: 'blur(120px)' }}
+          style={{ position: 'absolute', top: '10%', right: '5%', width: 500, height: 500, background: 'radial-gradient(closest-side, rgba(205,178,255,0.06) 0%, rgba(205,178,255,0.03) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%' }}
         />
       </div>
 

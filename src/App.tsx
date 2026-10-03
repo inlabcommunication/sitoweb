@@ -379,8 +379,8 @@ const PageHero = ({tag,h1,h1b,italic,sub,sub2,cta1,cta1to,cta2,cta2to,accent=fal
   return (
     <section style={{minHeight:"92vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:"9rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
       <div style={{position:"absolute",inset:0,pointerEvents:"none",zIndex:0}}>
-        <div style={{position:"absolute",top:"20%",right:"8%",width:480,height:480,background:"rgba(205,178,255,0.055)",borderRadius:"50%",filter:"blur(110px)"}}/>
-        <div style={{position:"absolute",bottom:"10%",left:"5%",width:320,height:320,background:"rgba(255,255,255,0.018)",borderRadius:"50%",filter:"blur(80px)"}}/>
+        <div style={{position:"absolute",top:"20%",right:"8%",width:480,height:480,background:"radial-gradient(closest-side, rgba(205,178,255,0.055) 0%, rgba(205,178,255,0.0275) 45%, rgba(205,178,255,0) 100%)",borderRadius:"50%"}}/>
+        <div style={{position:"absolute",bottom:"10%",left:"5%",width:320,height:320,background:"radial-gradient(closest-side, rgba(255,255,255,0.018) 0%, rgba(255,255,255,0.009) 45%, rgba(255,255,255,0) 100%)",borderRadius:"50%"}}/>
       </div>
       <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
         {tag && <motion.div initial={false}
@@ -442,7 +442,7 @@ const ServiceCTA = ({title="Vuoi questo servizio?",sub="Parliamo del tuo progett
     <section style={{padding:"6rem 2rem"}}>
       <div style={{maxWidth:1280,margin:"0 auto"}}>
         <div className="glass" style={{borderRadius:40,padding:"4rem",textAlign:"center",position:"relative",overflow:"hidden"}}>
-          <div style={{position:"absolute",top:0,right:0,width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(90px)",pointerEvents:"none"}}/>
+          <div style={{position:"absolute",top:0,right:0,width:400,height:400,background:"radial-gradient(closest-side, rgba(205,178,255,0.04) 0%, rgba(205,178,255,0.02) 45%, rgba(205,178,255,0) 100%)",borderRadius:"50%",pointerEvents:"none"}}/>
           <div style={{position:"relative",zIndex:1}}>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,5vw,5rem)",lineHeight:.9,marginBottom:"1rem"}}>{title}</h2>
             <p style={{fontSize:16,color:"var(--m)",marginBottom:"2rem"}}>{sub}</p>
@@ -532,8 +532,8 @@ const VideoReel = ({
   return (
     <section style={{padding:"7rem 0 6rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
       {/* Glow di sfondo coerente col resto del sito */}
-      <div style={{position:"absolute",top:"30%",right:"-5%",width:520,height:520,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(120px)",pointerEvents:"none"}}/>
-      <div style={{position:"absolute",bottom:"5%",left:"-5%",width:380,height:380,background:"rgba(205,178,255,0.03)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",top:"30%",right:"-5%",width:520,height:520,background:"radial-gradient(closest-side, rgba(205,178,255,0.05) 0%, rgba(205,178,255,0.025) 45%, rgba(205,178,255,0) 100%)",borderRadius:"50%",pointerEvents:"none"}}/>
+      <div style={{position:"absolute",bottom:"5%",left:"-5%",width:380,height:380,background:"radial-gradient(closest-side, rgba(205,178,255,0.03) 0%, rgba(205,178,255,0.015) 45%, rgba(205,178,255,0) 100%)",borderRadius:"50%",pointerEvents:"none"}}/>
 
       <div style={{maxWidth:1280,margin:"0 auto",padding:"0 2rem",position:"relative",zIndex:1}}>
         {/* Header */}
@@ -702,7 +702,7 @@ const PageHome = () => {
 
       {/* MANIFESTO */}
       <section style={{padding:"8rem 2rem",borderBottom:".5px solid var(--b)",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",top:"10%",left:"-5%",width:400,height:400,background:"rgba(205,178,255,0.04)",borderRadius:"50%",filter:"blur(100px)",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",top:"10%",left:"-5%",width:400,height:400,background:"radial-gradient(closest-side, rgba(205,178,255,0.04) 0%, rgba(205,178,255,0.02) 45%, rgba(205,178,255,0) 100%)",borderRadius:"50%",pointerEvents:"none"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
           <div style={{display:"grid",gridTemplateColumns:"1.1fr 1fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <motion.div initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}} viewport={{once:true,margin:"-80px"}}>
@@ -1699,7 +1699,7 @@ const PageCittaSEO = ({city, service}) => {
     <>
       <section style={{minHeight:"85vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:"9rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
         <div style={{position:"absolute",inset:0,pointerEvents:"none"}}>
-          <div style={{position:"absolute",top:"20%",right:"10%",width:450,height:450,background:"rgba(205,178,255,0.05)",borderRadius:"50%",filter:"blur(100px)"}}/>
+          <div style={{position:"absolute",top:"20%",right:"10%",width:450,height:450,background:"radial-gradient(closest-side, rgba(205,178,255,0.05) 0%, rgba(205,178,255,0.025) 45%, rgba(205,178,255,0) 100%)",borderRadius:"50%"}}/>
         </div>
         <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
           <motion.div initial={false}
