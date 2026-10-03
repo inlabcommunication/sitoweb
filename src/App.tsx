@@ -365,7 +365,7 @@ const withDefinition = (text?: string) => {
   return t.includes(first) ? t.replace(first, `${first} ${AGENCY_DEFINITION}`) : [AGENCY_DEFINITION, t].filter(Boolean).join(" ");
 };
 
-const PageHero = ({tag,h1,h1b,italic,sub,cta1,cta1to,cta2,cta2to,accent=false}: any) => {
+const PageHero = ({tag,h1,h1b,italic,sub,sub2,cta1,cta1to,cta2,cta2to,accent=false}: any) => {
   const {go}=useRouter();
   return (
     <section style={{minHeight:"92vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:"9rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
@@ -388,6 +388,7 @@ const PageHero = ({tag,h1,h1b,italic,sub,cta1,cta1to,cta2,cta2to,accent=false}: 
         <motion.div initial={false}
           style={{display:"flex",flexWrap:"wrap",gap:"1.5rem",alignItems:"flex-end",justifyContent:"space-between"}}>
           {sub && <p style={{maxWidth:440,fontSize:17,lineHeight:1.75,color:"var(--m)",fontWeight:300}}>{sub}</p>}
+          {sub2 && <p style={{maxWidth:440,fontSize:17,lineHeight:1.75,color:"var(--m)",fontWeight:300,marginTop:"1rem"}}>{sub2}</p>}
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
             {cta1 && <button className="btn btn-p" onClick={()=>cta1to&&go(cta1to)}>{cta1} <ArrowRight size={14}/></button>}
             {cta2 && <button className="btn btn-g" onClick={()=>cta2to&&go(cta2to)}>{cta2}</button>}
@@ -1223,6 +1224,7 @@ const PageChiSiamo = () => {
       <PageHero tag={studio.tag || "Il laboratorio"}
         h1={title[0] || "NON SIAMO"} h1b={title[1] || "CONSULENTI"} italic={title[2] || "siamo partner."}
         sub={withDefinition(studio.description1)}
+        sub2={<>Lavoriamo con attività di Castellaneta, Taranto e di tutta la provincia, e seguiamo clienti anche fuori dalla Puglia: trovi tutte le città nella pagina <Link to="/dove-lavoriamo" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>dove lavoriamo</Link>.</>}
         cta1="Vedi i casi studio" cta1to="/casi-studio" cta2="Contattaci" cta2to="/contatti"
       />
  
