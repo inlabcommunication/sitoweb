@@ -45,8 +45,11 @@ const blogSeedLite = (): Plugin => ({
     // words: parole per la SEO (wordCount); minutes: tempo di lettura delle card
     const lite = BLOG_SEED.map((p: any) => ({ ...p, content: '', words: plainWords(p.content),
       minutes: Math.max(1, Math.round(p.content.split(/\s+/).filter(Boolean).length / 200)) }));
-    const real = JSON.stringify(BLOG_SEED_FILE.replace(/\\/g, '/'));
-    return `export { slugify, normalizePost, mergePosts, BLOG_CATEGORIES } from ${real};\nexport const BLOG_SEED = ${JSON.stringify(lite)};\n`;
+    // Le funzioni vengono copiate dal file compilato (toString): il sito non
+    // importa più blogSeed.ts, che resta solo nel chunk della dashboard.
+    const mod = await import(pathToFileURL(tmp).href);
+    const fns = ['slugify', 'normalizePost', 'mergePosts'].map((n) => `export const ${n} = ${mod[n].toString()};`).join('\n');
+    return `${fns}\nexport const BLOG_CATEGORIES = ${JSON.stringify(mod.BLOG_CATEGORIES)};\nexport const BLOG_SEED = ${JSON.stringify(lite)};\n`;
   },
 });
 

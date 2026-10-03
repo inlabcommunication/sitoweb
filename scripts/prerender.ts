@@ -240,7 +240,10 @@ writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | In
 // Testo di ogni articolo in /blog-data/<slug>.json: lo usa il sito quando si
 // apre un articolo navigando (senza ricaricare la pagina).
 mkdirSync(join(DIST, 'blog-data'), { recursive: true });
-for (const p of getBlogPosts()) writeFileSync(join(DIST, 'blog-data', `${p.slug}.json`), JSON.stringify({ content: p.content }));
+// solo slug semplici: uno slug strano salvato da dashboard non può scrivere fuori da dist
+for (const p of getBlogPosts()) {
+  if (/^[a-z0-9-]+$/.test(p.slug)) writeFileSync(join(DIST, 'blog-data', `${p.slug}.json`), JSON.stringify({ content: p.content }));
+}
 
 // lastmod solo dove la data è reale (articoli del blog): Google ignora le date
 // che cambiano a ogni build senza che la pagina cambi.
