@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   motion,
-  useReducedMotion,
   useScroll,
   useTransform,
   type MotionValue,
 } from "motion/react";
+// hook del sito: false nel primo render come l'HTML statico (errore 418 con "Riduci movimento")
+import { useReducedMotion } from "../hooks/useReducedMotion";
 import {
   ArrowUpRight,
   Calendar,

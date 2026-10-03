@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   motion, useMotionValueEvent, useScroll, useSpring, useTransform,
-  useReducedMotion as useFmReducedMotion, type MotionValue,
+  type MotionValue,
 } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -188,7 +188,8 @@ export const ScrollPhoneStory: React.FC = () => {
 const SpsScene: React.FC<{ mobile: boolean }> = ({ mobile }) => {
   const ref = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const reduced = useReducedMotion() || !!useFmReducedMotion();
+  // solo l'hook del sito: false nel primo render come l'HTML statico (vedi HeroFlow)
+  const reduced = useReducedMotion();
   const stats = useAgencyStats();
 
   const { scrollYProgress: raw } = useScroll({ target: ref, offset: ['start start', 'end end'] });

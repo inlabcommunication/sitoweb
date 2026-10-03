@@ -16,6 +16,7 @@ export const CookieBanner: React.FC = () => {
 
   return (
     <div role="dialog" aria-live="polite" aria-label="Preferenze cookie"
+      className="nb-touch"
       style={{ position: 'fixed', left: 16, bottom: 16, zIndex: 10000, width: 'min(420px, calc(100vw - 32px))', background: 'rgba(24,23,23,0.97)', backdropFilter: 'blur(14px)', border: '.5px solid rgba(205,178,255,0.3)', borderRadius: 20, padding: '1.3rem 1.3rem 1.1rem', boxShadow: '0 20px 60px rgba(0,0,0,.5)' }}>
       <button onClick={() => choose('denied')} aria-label="Chiudi e rifiuta" style={{ position: 'absolute', top: 10, right: 10, background: 'none', border: 'none', color: 'var(--m)', cursor: 'pointer', padding: 4 }}><X size={16} /></button>
       <p style={{ fontFamily: 'var(--fd)', fontSize: 20, letterSpacing: '.04em', marginBottom: 8 }}>COOKIE</p>

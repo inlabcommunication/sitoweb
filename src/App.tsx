@@ -72,6 +72,14 @@ const G = () => (
     .stroke-a{-webkit-text-stroke:1px var(--a);color:transparent}
  
     .glass{background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:.5px solid var(--b)}
+    /* Telefoni e tablet: niente sfocatura dietro gli elementi fissi o sovrapposti
+       (Safari la ricalcola a ogni fotogramma), sfondo un po' più pieno al suo posto.
+       Sul computer resta la sfocatura (richiesta Performance 03/10). */
+    @media (hover:none),(pointer:coarse){
+      .glass,.nb-touch{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+      .nav-scrolled{background:rgba(10,10,8,0.96)!important}
+      .vid-btn{background:rgba(20,20,20,0.85)!important}
+    }
     .card{background:var(--s);border:.5px solid var(--b);border-radius:24px;padding:2rem;transition:border-color .3s,transform .3s}
     .card:hover{border-color:rgba(205,178,255,0.3);transform:translateY(-3px)}
  
@@ -112,7 +120,10 @@ const G = () => (
     .hf-line{stroke-dasharray:1;animation:hfLine 1.4s cubic-bezier(.16,1,.3,1) both}
     @keyframes hfPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:scale(1)}}
     .hf-pop{transform-box:view-box;animation:hfPop .5s ease-out both}
-    @media (prefers-reduced-motion:reduce){.hero-phone,.hf-line,.hf-pop{animation:none}}
+    /* Parola che ruota nella hero: 5 parole x 2,2 s = ciclo di 11 s */
+    @keyframes rotW{0%{opacity:0;transform:translateY(8px)}3%{opacity:1;transform:none}17%{opacity:1;transform:none}20%{opacity:0;transform:translateY(-8px)}100%{opacity:0;transform:translateY(-8px)}}
+    .rot-w{animation:rotW 11s ease-in-out infinite both}
+    @media (prefers-reduced-motion:reduce){.hero-phone,.hf-line,.hf-pop{animation:none}.rot-w{animation:none;opacity:0}.rot-w:first-child{opacity:1}}
     /* riquadri di clienti ed esempi: stesso stile dei casi studio */
     .case-card{
     position:relative;overflow:hidden;text-decoration:none;color:inherit;font:inherit;
@@ -140,7 +151,7 @@ const G = () => (
       .hide-mob{display:none!important}
       .show-mob{display:flex!important}
       /* "Ti serve essere" + parola lilla sempre sulla riga sotto, qualunque sia la parola */
-      .rot-word{display:block!important}
+      .rot-word{display:grid!important}
       .grid-1-mob{grid-template-columns:1fr!important}
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
@@ -227,7 +238,7 @@ const Navbar = () => {
   ];
  
   return (
-    <nav style={{
+    <nav className={scrolled ? "nb-touch nav-scrolled" : "nb-touch"} style={{
       position:"fixed",top:0,left:0,right:0,zIndex:100,
       padding: scrolled ? "14px 0":"26px 0",
       transition:"padding .4s,background .4s,border-color .4s",
@@ -488,6 +499,21 @@ const VideoReel = ({
   // ridotta da Cloudinary (720 px sul telefono, 1280 px sul computer).
   // Con "Riduci movimento" o "Risparmio dati" non parte da solo: resta il
   // poster e si avvia col pulsante audio.
+  // Poster caricato solo quando la sezione si avvicina allo schermo (600 px
+  // prima), 720 px sul telefono: non ruba banda al primo schermo (Performance 03/10)
+  const [poster, setPoster] = useState('');
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    const near = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) {
+        setPoster(cldVideoPoster(src, window.innerWidth < 768 ? 720 : 1280));
+        near.disconnect();
+      }
+    }, { rootMargin: '600px 0px' });
+    near.observe(v);
+    return () => near.disconnect();
+  }, [src]);
   const load = (v: HTMLVideoElement) => {
     if (!v.getAttribute('src')) v.src = cldVideo(src, window.innerWidth < 768 ? 720 : 1280);
   };
@@ -572,7 +598,7 @@ const VideoReel = ({
           }}>
             <video
               ref={videoRef}
-              poster={cldVideoPoster(src, 1280) || undefined}
+              poster={poster || undefined}
               loop
               muted
               playsInline
@@ -587,6 +613,7 @@ const VideoReel = ({
           <button
             onClick={togglePlay}
             aria-label={playing?"Metti in pausa il video":"Riproduci il video"}
+            className="nb-touch vid-btn"
             style={{
               position:"absolute",bottom:"14%",right:"calc(4% + 64px)",zIndex:2,
               width:52,height:52,borderRadius:"50%",
@@ -608,6 +635,7 @@ const VideoReel = ({
           <button
             onClick={toggleAudio}
             aria-label={muted?"Attiva audio":"Disattiva audio"}
+            className="nb-touch vid-btn"
             style={{
               position:"absolute",bottom:"14%",right:"4%",zIndex:2,
               width:52,height:52,borderRadius:"50%",
@@ -1811,6 +1839,10 @@ const PageCittaSEO = ({city, service}) => {
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CLIENTE
 ═══════════════════════════════════════════════════════════════ */
+// Immagine in alto delle pagine cliente: è a opacità 0,36 sotto il testo, quindi
+// basta la qualità "eco" di Cloudinary (~80 KB in meno, richiesta Performance 03/10)
+const cldEco = (url: string, w: number) => cld(url, w).replace('q_auto,', 'q_auto:eco,');
+
 const PageCliente = ({id}: {id: string}) => {
   const {go}=useRouter();
   const c=useContent();
@@ -1847,9 +1879,9 @@ const PageCliente = ({id}: {id: string}) => {
     <>
       <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
-          ? <img src={cld(heroImage, 1600)} alt={workAlt(client)} fetchPriority="high"
+          ? <img src={cldEco(heroImage, 1600)} alt={workAlt(client)} fetchPriority="high"
               // versioni ridotte da Cloudinary per i telefoni (richiesta Performance 2, 03/10)
-              srcSet={/\/image\/upload\//.test(heroImage) ? [640,960,1280,1600].map(w=>`${cld(heroImage, w)} ${w}w`).join(", ") : undefined}
+              srcSet={/\/image\/upload\//.test(heroImage) ? [640,960,1280,1600].map(w=>`${cldEco(heroImage, w)} ${w}w`).join(", ") : undefined}
               sizes="100vw"
               style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",opacity:.36}}/>
           : <div style={{position:"absolute",inset:0,background:"linear-gradient(135deg,#262525 0%,#151515 58%,#2b2440 100%)"}}/>
