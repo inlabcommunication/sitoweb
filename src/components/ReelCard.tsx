@@ -32,6 +32,9 @@ export const hasReel = (r?: Reel) => !!r && !!(instagramEmbedSrc(r.embed) || saf
 
 export const ReelCard: React.FC<{ reel: Reel; resetKey?: number; onPlay?: () => void }> = ({ reel, resetKey = 0, onPlay }) => {
   const embedSrc = instagramEmbedSrc(reel.embed);
+  // Copertina dentro url(""): solo indirizzi https senza virgolette, parentesi o barre inverse
+  const coverUrl = cld(safe(reel.cover), 600);
+  const cover = coverUrl && !/["'()\\\s]/.test(coverUrl) ? coverUrl : '';
   const [playing, setPlaying] = React.useState(false);
   // resetKey cambia quando si avvia un altro reel: si torna alla copertina (il video si ferma)
   React.useEffect(() => { if (resetKey) setPlaying(false); }, [resetKey]);
@@ -55,7 +58,7 @@ export const ReelCard: React.FC<{ reel: Reel; resetKey?: number; onPlay?: () => 
           ) : (
             <button type="button" onClick={() => { setPlaying(true); onPlay?.(); }} aria-label={`Guarda ${reel.title || 'il reel'} (video di Instagram)`}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 0, cursor: 'pointer', color: 'var(--a)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12,
-                background: safe(reel.cover) ? `#000 center / cover no-repeat url("${cld(safe(reel.cover), 600)}")` : 'linear-gradient(160deg, #2b2440, #1a191b 70%)' }}>
+                background: cover ? `#000 center / cover no-repeat url("${cover}")` : 'linear-gradient(160deg, #2b2440, #1a191b 70%)' }}>
               <span style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(205,178,255,0.18)', border: '.5px solid rgba(205,178,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Play size={24} fill="currentColor" />
               </span>
