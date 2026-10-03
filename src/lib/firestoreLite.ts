@@ -6,10 +6,24 @@ import { firebaseConfig, isFirebaseConfigured } from './firebaseConfig';
 
 let dbPromise: Promise<Firestore | null> | null = null;
 
+// Firestore parte solo dopo il caricamento della pagina, quando il browser è
+// libero: i contenuti sono già nell'HTML (blocco #site-content), quindi non
+// serve rubare banda alla cover e ai file della pagina (richiesta Performance
+// 02/10: ~70 KB in meno nel primo secondo).
+const afterLoad = () => new Promise<void>((resolve) => {
+  if (typeof window === 'undefined') return resolve();
+  const idle = () => ('requestIdleCallback' in window
+    ? (window as any).requestIdleCallback(() => resolve(), { timeout: 2000 })
+    : setTimeout(resolve, 1));
+  if (document.readyState === 'complete') idle();
+  else window.addEventListener('load', idle, { once: true });
+});
+
 export const getLiteDb = (): Promise<Firestore | null> => {
   if (!isFirebaseConfigured()) return Promise.resolve(null);
   if (!dbPromise) {
-    dbPromise = Promise.all([import('firebase/app'), import('firebase/firestore/lite')])
+    dbPromise = afterLoad()
+      .then(() => Promise.all([import('firebase/app'), import('firebase/firestore/lite')]))
       .then(([{ initializeApp, getApps }, { getFirestore }]) => {
         const app = getApps()[0] ?? initializeApp(firebaseConfig);
         return getFirestore(app);

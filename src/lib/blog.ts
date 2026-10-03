@@ -10,6 +10,44 @@ export type { BlogPost };
 export { slugify, mergePosts, normalizePost } from '../data/blogSeed';
 
 export const readingMinutes = (md: string) => Math.max(1, Math.round(md.split(/\s+/).filter(Boolean).length / 200));
+/** Tempo di lettura: dal testo se c'è, altrimenti dal valore calcolato al build (vite.config.ts). */
+export const readingMinutesOf = (p: BlogPost) => p.content ? readingMinutes(p.content) : ((p as any).minutes ?? 1);
+
+// Testo dell'articolo: nel sito pubblico gli articoli del codice arrivano senza
+// content (vite.config.ts, plugin blog-seed-lite). Il testo è nella pagina
+// dell'articolo (#post-content, scritto dal prerender) oppure in
+// /blog-data/<slug>.json quando si arriva all'articolo navigando nel sito.
+const textCache = new Map<string, string>();
+const pageText = (slug: string): string => {
+  if (typeof document === 'undefined') return '';
+  try {
+    const el = document.getElementById('post-content');
+    const d = el?.textContent ? JSON.parse(el.textContent) : null;
+    return d?.slug === slug && typeof d.content === 'string' ? d.content : '';
+  } catch { return ''; }
+};
+const knownText = (p: BlogPost) => p.content || textCache.get(p.slug) || pageText(p.slug);
+
+export const usePostContent = (post?: BlogPost): string => {
+  const [text, setText] = useState(() => (post ? knownText(post) : ''));
+  useEffect(() => {
+    if (!post) return;
+    const known = knownText(post);
+    setText(known);
+    if (known) return;
+    let alive = true;
+    fetch(`/blog-data/${encodeURIComponent(post.slug)}.json`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (!alive || typeof d?.content !== 'string') return;
+        textCache.set(post.slug, d.content);
+        setText(d.content);
+      })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [post?.slug, post?.content]);
+  return text;
+};
 
 export const formatDate = (iso: string) => {
   const d = new Date(iso + 'T12:00:00');

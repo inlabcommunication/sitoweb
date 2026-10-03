@@ -13,8 +13,21 @@ export type CityInfo = {
   faq2?: { q: string; a: string };
   /** Terza domanda (brief SEO 02/10 pomeriggio) */
   faq3?: { q: string; a: string };
+  /** Domande in più dopo la terza (brief SEO 03/10 Taranto) */
+  altreFaq?: { q: string; a: string }[];
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   sezione?: { titolo: string; testo: string };
+  /** Descrizioni proprie dei servizi (slug → testo): sostituiscono quella generica
+   * nella pagina agenzia e in /{servizio}-{città} (brief SEO 03/10 Palagianello) */
+  servizi?: Record<string, string>;
+  /** Paragrafo di apertura della pagina agenzia al posto di quello generico */
+  intro?: string;
+  /** Meta description propria della pagina agenzia (140-155 caratteri) */
+  description?: string;
+  /** Title proprio della pagina agenzia (max 60 caratteri) */
+  title?: string;
+  /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
+  casaNostra?: { titolo: string; testo: string; autore: string; link: string };
 };
 
 export const CITY_INFO: CityInfo[] = [
@@ -26,6 +39,23 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Taranto lavoriamo soprattutto su visibilità e differenza dalla concorrenza: in città ci sono molte attività dello stesso settore, quindi contano una scheda Google curata, recensioni, contenuti riconoscibili e campagne mirate per quartiere o per zona, dal Borgo al lungomare. Partiamo da un'analisi di come ti trovano oggi i clienti e di cosa fanno le attività vicine a te.",
     faq2: { q: "Si possono fare sponsorizzate solo per alcune zone di Taranto?", a: "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te." },
     faq3: { q: "Che tipo di attività di Taranto seguite?", a: "Soprattutto negozi, locali, studi professionali e attività che vogliono farsi trovare da chi cerca in città. Partiamo spesso da scheda Google, sito e social, poi aggiungiamo campagne mirate per zona quando servono." },
+    altreFaq: [
+      { q: "Quanto tempo serve per vedere risultati a Taranto?", a: "Per le sponsorizzate bastano poche settimane per i primi contatti. Per la visibilità su Google e la crescita dei social servono alcuni mesi di lavoro costante. Te lo spieghiamo con numeri chiari, mese per mese." },
+      { q: "Seguite anche aziende in provincia di Taranto fuori città?", a: "Sì: lavoriamo con attività di Castellaneta, Palagianello, Palagiano, Mottola, Laterza, Ginosa e Massafra. Trovi i lavori qui sopra, divisi per città." },
+    ],
+    sezione: { titolo: "Perché un'agenzia di Castellaneta per Taranto", testo: "Siamo a meno di un'ora da Taranto: veniamo di persona per incontri, shooting e riprese, e seguiamo il resto a distanza con un contatto diretto. Conosciamo la provincia perché ci lavoriamo ogni giorno, da Castellaneta a Palagianello, da Mottola a Ginosa: per un'attività di Taranto vuol dire avere un'agenzia vicina, con costi e tempi da agenzia locale." },
+    servizi: {
+      'gestione-social': "A Taranto ogni settore ha decine di concorrenti: sui social vince chi si riconosce subito. Costruiamo una linea editoriale chiara, con contenuti che mostrano le persone e il lavoro vero, non post generici.",
+      'meta-ads': "Sponsorizzate mirate per quartiere o per raggio intorno all'attività, dal Borgo a Talsano: il budget va solo a chi può venire da te, con report chiari su contatti e richieste.",
+      'siti-web': "Un sito veloce e collegato alla scheda Google per farti trovare da chi cerca a Taranto: pagine dei servizi, recensioni, mappa e contatti a portata di tocco.",
+      'automazioni-ai': "Risposte automatiche su WhatsApp e Instagram per prenotazioni, preventivi e domande frequenti: utili a studi, locali e negozi di Taranto che ricevono tanti messaggi.",
+      'shooting': "Shooting in negozio, in studio o in esterna tra il lungomare e la Città Vecchia: foto vere che fanno riconoscere la tua attività, al posto delle immagini di repertorio.",
+      'video': "Video parlati che spiegano un servizio in modo semplice, come quelli per Emmesse sul fotovoltaico, e reel brevi per farti scegliere tra tanti concorrenti.",
+      'branding': "Nome, logo e immagine coordinata per distinguersi in una città con tanta offerta: un'identità chiara su insegna, social, sito e materiali.",
+    },
+    title: 'Agenzia di comunicazione a Taranto e provincia | InLab',
+    description: "Agenzia di comunicazione e marketing per attività di Taranto e provincia: social, sponsorizzate, siti, video e branding. Preventivo gratuito.",
+    intro: "Dal Borgo alla Città Vecchia, dal lungomare ai quartieri residenziali: InLab Communication segue social, video, sponsorizzate, siti e branding per attività di Taranto, con un'agenzia a meno di un'ora, a Castellaneta. Lavoriamo già con aziende di Taranto come Emmesse e con attività in tutta la provincia, da Castellaneta a Ginosa.",
   },
   {
     name: 'Castellaneta', provincia: 'provincia di Taranto',
@@ -35,7 +65,7 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Castellaneta il lavoro segue due stagioni: d'estate il pubblico arriva da fuori, con turisti e famiglie a Castellaneta Marina, mentre il resto dell'anno contano i clienti del paese e dei paesi vicini. Per questo prepariamo i contenuti in anticipo sulla stagione e teniamo viva la comunicazione anche d'inverno.",
     faq2: { q: "Lavorate anche per strutture di Castellaneta Marina?", a: "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate." },
     sezione: { titolo: 'Castellaneta Marina', testo: "Castellaneta Marina, sulla costa ionica, vive di turismo estivo, villaggi, lidi e ristorazione. Per le strutture della costa prepariamo foto, video, social e sponsorizzate prima dell'estate, quando i turisti scelgono dove andare, e le seguiamo durante tutta la stagione." },
-    faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
+    faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita 26. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
   },
   {
     name: 'Mottola', provincia: 'provincia di Taranto',
@@ -54,6 +84,23 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti.",
     faq2: { q: "Serve un sito se ho già la pagina Facebook?", a: "Spesso sì: il sito e la scheda Google fanno trovare l'attività su Google, mentre i social tengono il contatto con chi ti conosce già. Insieme funzionano meglio." },
     faq3: { q: "Perché scegliere un'agenzia vicina a Palagianello?", a: "Perché conosciamo il paese e le persone: Nicola è di Palagianello. Possiamo venire in negozio per foto e video senza costi di trasferta importanti e seguirti con incontri di persona quando serve." },
+    description: "Agenzia di comunicazione a Palagianello, fondata da chi è del paese: social, video, sponsorizzate, siti e foto per le attività locali. Preventivo gratuito.",
+    intro: "InLab Communication è di casa a Palagianello: Nicola Carpignano, uno dei due fondatori, è di Palagianello. Seguiamo social, video, sponsorizzate, siti e foto per le attività del paese, da Sublime Tentazione a Masseria Sacramento e DIRAM.",
+    casaNostra: {
+      titolo: 'Palagianello è casa nostra',
+      testo: "Nicola Carpignano, co-fondatore di InLab Communication, è di Palagianello. Si è laureato in Psicologia all'Università di Bari, insegna Marketing e Social Media nei master di EA Formazione e ha pubblicato ricerche sulla comunicazione digitale. Per le attività del paese vuol dire avere vicino qualcuno che conosce il territorio e il mestiere.",
+      autore: 'nicola-carpignano',
+      link: 'Scopri chi è Nicola',
+    },
+    servizi: {
+      'gestione-social': "A Palagianello i social sono il passaparola che continua online: raccontiamo le persone dietro il bancone, le novità e gli eventi del paese. Come per Sublime Tentazione, con una presenza costante tra gelati d'estate e panettoni a Natale.",
+      'meta-ads': "Sponsorizzate mirate a Palagianello e ai paesi vicini, come Palagiano, Mottola, Castellaneta e Massafra: budget contenuti e un pubblico che può davvero venire da te, senza sprechi.",
+      'siti-web': "Un sito semplice e veloce, collegato alla scheda Google, per farti trovare da chi cerca un'attività a Palagianello e da chi arriva da fuori per la gravina e il castello.",
+      'automazioni-ai': "Risposte automatiche su WhatsApp e Instagram per prenotazioni e domande frequenti: utili a masserie, ristoranti e negozi del paese che non possono stare sempre al telefono.",
+      'shooting': "Shooting sul posto, in negozio, in laboratorio o in masseria: foto vere degli spazi, dei prodotti e delle serate, al posto delle immagini di repertorio.",
+      'video': "Video brevi e leggeri che raccontano il negozio e chi ci lavora. Come per DIRAM, tra ricambi, riparazioni e punto Poste.",
+      'branding': "Nome, logo e immagine coordinata per chi apre o rinnova un'attività a Palagianello: un'identità che si riconosce in paese e nei comuni vicini.",
+    },
   },
   {
     name: 'Palagiano', provincia: 'provincia di Taranto',

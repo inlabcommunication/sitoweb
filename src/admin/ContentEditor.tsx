@@ -4,7 +4,7 @@ import { Save, RotateCcw, Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronRight }
 import { WEBSITE_CONTENT } from '../constants';
 import { loadContent, saveContent, SiteContent } from '../lib/content';
 import { inputStyle, Field, ImageField, CardBlock, AddBtn, SectionTitle, Note } from './editorUi';
-import { ClientsEditor, CasesEditor, ServiceExamplesEditor } from './CollectionsEditor';
+import { ClientsEditor, CasesEditor, ServiceExamplesEditor, AreasEditor } from './CollectionsEditor';
 
 // ─── Struttura pagine + blocchi ────────────────────────────────
 
@@ -35,6 +35,7 @@ const PAGES: { key: Page; label: string; icon: string; blocks: { key: string; la
     key: 'servizi', label: 'Servizi', icon: '🧩',
     blocks: [
       { key: 'service_examples', label: 'Esempi per servizio' },
+      { key: 'areas', label: 'Dove lavoriamo' },
     ],
   },
   {
@@ -163,6 +164,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
   if (block === 'clients') return <ClientsEditor content={content} set={set} />;
   if (block === 'cases') return <CasesEditor content={content} set={set} />;
   if (block === 'service_examples') return <ServiceExamplesEditor content={content} set={set} />;
+  if (block === 'areas') return <AreasEditor content={content} set={set} />;
 
   // ── STATS ────────────────────────────────────────────────────
   if (block === 'stats') return (
@@ -288,7 +290,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
         </CardBlock>
       ))}
       <Field label="Sede" value={(content.contact as any)?.location} onChange={(v: string) => set('contact.location', v)} placeholder="Castellaneta (TA), Puglia"
-        hint="Compare nella pagina Contatti. Il footer e i dati per Google usano l'indirizzo fisso del sito (Via Regina Margherita, Castellaneta): per cambiarlo chiedi a Sito Inlab." />
+        hint="Compare nella pagina Contatti. Il footer e i dati per Google usano l'indirizzo fisso del sito (Via Regina Margherita, 26 — Castellaneta): per cambiarlo chiedi a Sito Inlab." />
     </div>
   );
 

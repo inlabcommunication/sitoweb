@@ -8,6 +8,7 @@ import { getClientId } from '../lib/clientUtils';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
+import { cityInfo } from '../data/cities';
 
 /** Dominio del sito. Impostalo su Vercel con VITE_SITE_URL (es. https://www.inlabcommunication.it). */
 export const SITE_URL = (
@@ -23,8 +24,8 @@ export const BUSINESS = {
   name: BRAND,
   email: 'inlab.communication@gmail.com',
   telephone: '+393295654319',
-  // Indirizzo confermato da Nicola il 02/10 (senza civico finché non lo conferma)
-  street: 'Via Regina Margherita',
+  // Indirizzo confermato da Nicola (via il 02/10, civico 26 il 03/10). Unica fonte: footer, Dove siamo, JSON-LD, llms.txt
+  street: 'Via Regina Margherita, 26',
   postalCode: '74011',
   city: 'Castellaneta',
   region: 'Puglia',
@@ -271,7 +272,7 @@ const page = (path: string, title: string, description: string, extra: Partial<S
 
 /** Tutte le pagine indicizzabili (per sitemap e prerender). */
 export const listRoutes = (): string[] => [
-  '/', '/servizi', '/chi-siamo', '/casi-studio', '/contatti',
+  '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/casi-studio', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
   ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...AGENCY_CITIES.map(agencyPath),
@@ -294,6 +295,12 @@ export const getSeo = (rawPath: string): Seo => {
     return page(path, `Servizi di comunicazione digitale | ${BRAND}`,
       'Gestione social, Meta Ads, siti web e landing page, video e reel, shooting fotografici, branding e automazioni AI: tutti i servizi di InLab Communication.',
       { sitemap: { priority: 0.9, changefreq: 'monthly' } }, [['Servizi', '/servizi']]);
+  }
+  if (path === '/dove-lavoriamo') {
+    // Nessun dato strutturato in più (brief SEO 03/10): solo WebPage e breadcrumb
+    return page(path, 'Dove lavoriamo: Castellaneta, Taranto e provincia | InLab',
+      'Le città in cui lavora InLab Communication: Castellaneta, Taranto, Palagianello, Mottola, Palagiano, Ginosa e le altre. Settori e servizi per ogni città.',
+      { sitemap: { priority: 0.7, changefreq: 'monthly' } }, [['Dove lavoriamo', '/dove-lavoriamo']]);
   }
   if (path === '/chi-siamo') {
     return page(path, 'Chi siamo: Nicola Carpignano e Ilaria Gemma | InLab',
@@ -354,23 +361,27 @@ export const getSeo = (rawPath: string): Seo => {
   const agencyCity = AGENCY_CITIES.find((c) => path === agencyPath(c));
   if (agencyCity) {
     const c = agencyCity;
-    const title = [
+    const title = cityInfo(c)?.title || [
       `Agenzia di comunicazione e marketing a ${c} | InLab`,
       `Agenzia comunicazione e marketing a ${c} | InLab`,
       `Agenzia di comunicazione e marketing a ${c}`,
     ].find((t) => t.length <= 60) || `Agenzia di comunicazione a ${c} | InLab`;
-    const desc = c === BUSINESS.city
+    const desc = cityInfo(c)?.description || (c === BUSINESS.city
       ? 'Agenzia di comunicazione e marketing con sede a Castellaneta (TA): social, video, Meta Ads, siti web e branding per attività del paese e della Marina.'
       : [
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta (TA), preventivo gratuito.`,
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta, preventivo gratuito.`,
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Preventivo gratuito.`,
-    ].find((d) => d.length <= 155)!;
-    return page(path, title, desc, {
+    ].find((d) => d.length <= 155)!);
+    const seo = page(path, title, desc, {
       sitemap: { priority: 0.7, changefreq: 'monthly' },
       jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing a ${c}`,
         serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }],
     }, [['Servizi', '/servizi'], [`Agenzia a ${c}`, path]]);
+    // Fondatore del posto citato nella pagina (sezione "casa nostra")
+    const founder = AUTHORS.find((a) => a.slug === cityInfo(c)?.casaNostra?.autore);
+    if (founder) (seo.jsonLd[0] as Record<string, unknown>).mentions = { '@id': personId(founder) };
+    return seo;
   }
 
   if (path.startsWith('/casi-studio/')) {
@@ -404,7 +415,8 @@ export const getSeo = (rawPath: string): Seo => {
     if (post) {
       const desc = post.seoDescription || post.excerpt || plain(post.content);
       const image = post.cover ? (post.cover.startsWith('/') ? abs(post.cover) : post.cover) : abs(DEFAULT_OG_IMAGE);
-      const words = plain(post.content).split(' ').length;
+      // nel browser gli articoli del codice arrivano senza testo: parole calcolate al build
+      const words = post.content ? plain(post.content).split(' ').length : ((post as any).words ?? 0);
       const modified = post.updated && post.updated > post.date ? post.updated : post.date;
       return page(path, post.seoTitle || withBrand(post.title), desc, {
         image, lastmod: modified,

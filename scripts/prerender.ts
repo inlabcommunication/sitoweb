@@ -37,6 +37,7 @@ const manifest: Record<string, { file: string; imports?: string[] }> =
   existsSync(MANIFEST) ? JSON.parse(readFileSync(MANIFEST, 'utf-8')) : {};
 const lazyPage = (path: string) =>
   path === '/privacy' ? 'src/pages/PrivacyPage.tsx'
+  : path === '/dove-lavoriamo' ? 'src/pages/DoveLavoriamoPage.tsx'
   : path === '/blog' || path.startsWith('/blog/') || path.startsWith('/autori/') ? 'src/pages/BlogPages.tsx'
   : path.startsWith('/casi-studio/') ? 'src/pages/CaseStudyPages.tsx'
   : '';
@@ -46,6 +47,22 @@ const preloadTags = (path: string) => {
   const files = [entry.file, ...(entry.imports || []).filter((k) => k !== 'index.html').map((k) => manifest[k]?.file)]
     .filter((f): f is string => !!f && !template.includes(`/${f}"`));
   return files.map((f) => `<link rel="modulepreload" crossorigin href="/${f}">`).join('\n    ');
+};
+
+// Cover del blog (elemento LCP di /blog e degli articoli): preload in <head>,
+// prima dei modulepreload, con gli stessi srcset e sizes del <picture> in
+// BlogPages.tsx, così parte subito e non viene scaricata due volte
+// (richiesta Performance 02/10). Solo per le cover locali con la .webp.
+const coverPreload = (path: string) => {
+  const posts = getBlogPosts();
+  const post = path === '/blog' ? posts[0] : path.startsWith('/blog/') ? posts.find((p) => `/blog/${p.slug}` === path) : undefined;
+  const m = post?.cover?.match(/^\/blog\/([^/]+)\/cover\.jpg$/);
+  if (!m || !existsSync(join(DIST, 'blog', m[1], 'cover.webp'))) return '';
+  const base = `/blog/${m[1]}`;
+  const srcset = [480, 800].filter((w) => existsSync(join(DIST, 'blog', m[1], `cover-${w}.webp`)))
+    .map((w) => `${base}/cover-${w}.webp ${w}w`).concat(`${base}/cover.webp 1600w`).join(', ');
+  const sizes = path === '/blog' ? '(max-width: 768px) 100vw, 800px' : '(max-width: 768px) 100vw, 1080px';
+  return `<link rel="preload" as="image" type="image/webp" imagesrcset="${srcset}" imagesizes="${sizes}" fetchpriority="high">`;
 };
 
 const render = (path: string, body = '') => {
@@ -65,7 +82,13 @@ const render = (path: string, body = '') => {
     `<script type="application/ld+json" data-seo="org">${json(organizationJsonLd())}</script>`);
   const pageLd = seo.jsonLd.map((o) => `<script type="application/ld+json" data-seo="page">${json(o)}</script>`).join('\n    ');
   const gsc = GSC ? `<meta name="google-site-verification" content="${esc(GSC)}" />\n    ` : '';
-  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}`);
+  // Testo dell'articolo per il browser (il JS del sito non lo contiene più): stesso
+  // testo dell'HTML statico, così la pagina si aggancia senza ridisegnarsi.
+  const post = path.startsWith('/blog/') ? getBlogPosts().find((p) => `/blog/${p.slug}` === path) : undefined;
+  const postTag = post?.content ? `<script type="application/json" id="post-content">${json({ slug: post.slug, content: post.content })}</script>` : '';
+  html = html.replace('<div id="root"></div>', `<div id="root">${body}</div>${contentTag}${postTag}`);
+  const cover = coverPreload(path);
+  if (cover) html = html.replace(/<link rel="modulepreload"/, `${cover}\n    <link rel="modulepreload"`);
   const preload = preloadTags(path);
   return html.replace('</head>', `    ${gsc}${preload ? preload + '\n    ' : ''}${pageLd}\n  </head>`);
 };
@@ -214,6 +237,14 @@ const noindex = (html: string, title: string) => html
 writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
 writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | InLab Communication')
   .replace('<div id="root"></div>', `<div id="root">${await body('/__pagina-non-trovata__')}</div>`));
+
+// Testo di ogni articolo in /blog-data/<slug>.json: lo usa il sito quando si
+// apre un articolo navigando (senza ricaricare la pagina).
+mkdirSync(join(DIST, 'blog-data'), { recursive: true });
+// solo slug semplici: uno slug strano salvato da dashboard non può scrivere fuori da dist
+for (const p of getBlogPosts()) {
+  if (/^[a-z0-9-]+$/.test(p.slug)) writeFileSync(join(DIST, 'blog-data', `${p.slug}.json`), JSON.stringify({ content: p.content }));
+}
 
 // lastmod solo dove la data è reale (articoli del blog): Google ignora le date
 // che cambiano a ogni build senza che la pagina cambi.
