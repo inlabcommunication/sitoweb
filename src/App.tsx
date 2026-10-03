@@ -1,4 +1,7 @@
-import { motion, AnimatePresence } from "motion/react";
+import { m as motion, AnimatePresence, LazyMotion } from "motion/react";
+// Animazioni: nel primo caricamento solo il nucleo di motion (componenti "m");
+// le funzioni di animazione arrivano dopo (LazyMotion, richiesta Performance 03/10)
+import { loadMotionFeatures } from "./lib/motionLoader";
 import React, { useState, useEffect, useCallback, lazy, Suspense, startTransition } from "react";
 import {
   ArrowRight, ArrowUpRight, ArrowLeft, Menu, X,
@@ -2202,6 +2205,7 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   useEffect(() => { mounted.current = true; }, []);
  
   return (
+    <LazyMotion features={loadMotionFeatures}>
     <RouterCtx.Provider value={{route,go}}>
       <G/>
       <Navbar/>
@@ -2221,5 +2225,6 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
       {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}
     </RouterCtx.Provider>
+    </LazyMotion>
   );
 }

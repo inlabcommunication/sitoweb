@@ -1,11 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { m as motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import {
   ArrowUpRight,
   Calendar,

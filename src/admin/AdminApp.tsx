@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
-import { motion } from 'motion/react';
+import { m as motion } from 'motion/react';
 import { BarChart3, Users, Edit3, LogOut, ExternalLink, Settings2, FolderOpen, Newspaper } from 'lucide-react';
 import { auth, db, isFirebaseConfigured } from '../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
