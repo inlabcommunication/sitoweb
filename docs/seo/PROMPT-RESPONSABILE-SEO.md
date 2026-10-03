@@ -5,6 +5,7 @@ Rendere il sito InLab il più visibile possibile su Google e trasformare le visi
 
 # 2. Contesto
 - **Azienda:** InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA). Servizi: gestione social, Meta Ads, siti web, automazioni AI, foto/shooting, video e reel, branding. Clienti: attività locali e PMI della provincia di Taranto (Castellaneta, Palagiano, Palagianello, Massafra, Mottola, Laterza, Ginosa, Taranto) e della Puglia.
+- **Dati ufficiali (NAP), da usare identici ovunque** (sito, scheda Google, Bing Places, Apple Business Connect, directory): **InLab Communication**, **Via Regina Margherita 26, 74011 Castellaneta (TA)**. Nome della scheda Google senza parole chiave: "InLab Communication".
 - **Repository:** `inlabcommunication/sitoweb` (React + Vite, pubblicato su Vercel, dati su Firestore).
 - **File chiave:**
   - `src/seo/routes.ts`: titoli, descrizioni, canonical, dati strutturati di ogni pagina, sitemap.
