@@ -119,7 +119,7 @@ export const MethodTimeline: React.FC = () => {
                 ref={(el: HTMLDivElement | null) => { stepRefs.current[i] = el; }}
                 data-step={i}
                 className="mt-step"
-                animate={{ opacity: active === i ? 1 : 0.35 }}
+                animate={{ opacity: active === i ? 1 : 0.8 }}
                 transition={{ duration: reduced ? 0 : 0.4 }}
                 style={{
                   position: 'relative',
