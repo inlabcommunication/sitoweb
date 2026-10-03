@@ -4,7 +4,7 @@ Addetto performance, su richiesta del Direttore (segnalazione di Nicola: sito le
 
 ## Metodo
 
-- Lighthouse 12 mobile sul sito online, main 416afb5 (dopo la PR #79, che ha annullato LazyMotion), 03/10 tra le 10:25 e le 10:45 UTC. Cache sempre vuota.
+- Lighthouse 12 mobile sul sito online, main 416afb5 (dopo la PR #79, che ha annullato LazyMotion), 03/10 tra le 10:18 e le 10:23 UTC. Cache sempre vuota.
 - Pagine misurate:
   - `/cliente/nunzio-putignano` (con immagine in alto): 2 prove simulate e 1 con rallentamento reale;
   - `/cliente/villa-natia` (senza immagine in alto): 2 prove simulate e 1 con rete lenta (400 ms di latenza, 1,2 Mbps) e CPU 4×;
