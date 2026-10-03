@@ -1478,7 +1478,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             {SERVICES.map(s=>(
               <Link key={s.slug} to={hasServicePages?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
                 <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePages?`${s.label} a ${city}`:s.label}</span></span>
-                <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{s.short}</span>
+                <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info?.servizi?.[s.slug]||s.short}</span>
               </Link>
             ))}
           </div>
@@ -1638,7 +1638,7 @@ const PageCittaSEO = ({city, service}) => {
           </motion.h1>
           <motion.p initial={false}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
-            InLab Communication segue {svc.label} per attività di {cityName} e della {provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.
+            {info?.servizi?.[svc.slug] || `InLab Communication segue ${svc.label} per attività di ${cityName} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
             <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>

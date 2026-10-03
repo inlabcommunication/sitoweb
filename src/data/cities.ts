@@ -15,6 +15,9 @@ export type CityInfo = {
   faq3?: { q: string; a: string };
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   sezione?: { titolo: string; testo: string };
+  /** Descrizioni proprie dei servizi (slug → testo): sostituiscono quella generica
+   * nella pagina agenzia e in /{servizio}-{città} (brief SEO 03/10 Palagianello) */
+  servizi?: Record<string, string>;
 };
 
 export const CITY_INFO: CityInfo[] = [
@@ -54,6 +57,15 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Palagianello il pubblico è soprattutto del paese e dei comuni vicini, come Palagiano, Mottola e Castellaneta. Per questo lavoriamo su una comunicazione vicina e riconoscibile: scheda Google completa, post che mostrano le persone dietro l'attività e sponsorizzate locali con budget contenuti.",
     faq2: { q: "Serve un sito se ho già la pagina Facebook?", a: "Spesso sì: il sito e la scheda Google fanno trovare l'attività su Google, mentre i social tengono il contatto con chi ti conosce già. Insieme funzionano meglio." },
     faq3: { q: "Perché scegliere un'agenzia vicina a Palagianello?", a: "Perché conosciamo il paese e le persone: Nicola è di Palagianello. Possiamo venire in negozio per foto e video senza costi di trasferta importanti e seguirti con incontri di persona quando serve." },
+    servizi: {
+      'gestione-social': "A Palagianello i social sono il passaparola che continua online: raccontiamo le persone dietro il bancone, le novità e gli eventi del paese. Come per Sublime Tentazione, con una presenza costante tra gelati d'estate e panettoni a Natale.",
+      'meta-ads': "Sponsorizzate mirate a Palagianello e ai paesi vicini, come Palagiano, Mottola, Castellaneta e Massafra: budget contenuti e un pubblico che può davvero venire da te, senza sprechi.",
+      'siti-web': "Un sito semplice e veloce, collegato alla scheda Google, per farti trovare da chi cerca un'attività a Palagianello e da chi arriva da fuori per la gravina e il castello.",
+      'automazioni-ai': "Risposte automatiche su WhatsApp e Instagram per prenotazioni e domande frequenti: utili a masserie, ristoranti e negozi del paese che non possono stare sempre al telefono.",
+      'shooting': "Shooting sul posto, in negozio, in laboratorio o in masseria: foto vere degli spazi, dei prodotti e delle serate, al posto delle immagini di repertorio.",
+      'video': "Video brevi e leggeri che raccontano il negozio e chi ci lavora. Come per DIRAM, tra ricambi, riparazioni e punto Poste.",
+      'branding': "Nome, logo e immagine coordinata per chi apre o rinnova un'attività a Palagianello: un'identità che si riconosce in paese e nei comuni vicini.",
+    },
   },
   {
     name: 'Palagiano', provincia: 'provincia di Taranto',
