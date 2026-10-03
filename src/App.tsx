@@ -411,6 +411,20 @@ const StatsRow = ({stats}) => (
   </section>
 );
  
+// "Dove lavoriamo" in fondo alle pagine servizio: link alle pagine città
+// più importanti (brief SEO Taranto 03/10)
+const DoveLavoriamo = ({slug}: {slug: string}) => (
+  <section style={{padding:"2.5rem 2rem",borderBottom:".5px solid var(--b)"}}>
+    <p style={{maxWidth:1280,margin:"0 auto",fontSize:15,color:"var(--m)",lineHeight:1.9}}>
+      Dove lavoriamo:{" "}
+      {["Taranto","Castellaneta","Palagianello"].map(c=>(
+        <React.Fragment key={c}><Link to={`/${slug}-${citySlug(c)}`} className="foot-link" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>{c}</Link>{" · "}</React.Fragment>
+      ))}
+      <Link to="/servizi" className="foot-link" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>tutte le città</Link>
+    </p>
+  </section>
+);
+
 const ServiceCTA = ({title="Vuoi questo servizio?",sub="Parliamo del tuo progetto senza impegno.",btn="Richiedi un preventivo",to="/contatti"}) => {
   const {go}=useRouter();
   return (
@@ -825,6 +839,7 @@ const PageGestioneSocial = () => (
     </section>
  
     <ServiceExamples slug="gestione-social"/>
+    <DoveLavoriamo slug="gestione-social"/>
     <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito"/>
   </>
 );
@@ -885,6 +900,7 @@ const PageMetaAds = () => (
     </section>
  
     <ServiceExamples slug="meta-ads"/>
+    <DoveLavoriamo slug="meta-ads"/>
     <ServiceCTA title="PAGA SOLO I RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
   </>
 );
@@ -945,6 +961,7 @@ const PageSitiWeb = () => (
     </section>
  
     <ServiceExamples slug="siti-web"/>
+    <DoveLavoriamo slug="siti-web"/>
     <ServiceCTA title="IL TUO SITO ATTUALE TI PORTA CLIENTI?" sub="Se la risposta è no, possiamo cambiarlo." btn="Richiedi un'analisi gratuita"/>
   </>
 );
@@ -1006,6 +1023,7 @@ const PageAutomazioniAI = () => (
     </section>
  
     <ServiceExamples slug="automazioni-ai"/>
+    <DoveLavoriamo slug="automazioni-ai"/>
     <ServiceCTA title="QUANTO TEMPO PERDI OGNI GIORNO?" sub="Una consulenza gratuita di 30 minuti per scoprire cosa possiamo automatizzare." btn="Prenota la consulenza"/>
   </>
 );
@@ -1065,6 +1083,7 @@ const PageShooting = () => (
     </section>
  
     <ServiceExamples slug="shooting"/>
+    <DoveLavoriamo slug="shooting"/>
     <ServiceCTA title="LA TUA AZIENDA MERITA FOTO MIGLIORI." sub="Prenota una call per discutere il tuo shooting." btn="Richiedi disponibilità"/>
   </>
 );
@@ -1125,6 +1144,7 @@ const PageVideo = () => (
     </section>
  
     <ServiceExamples slug="video"/>
+    <DoveLavoriamo slug="video"/>
     <ServiceCTA title="IL PROSSIMO VIDEO VIRALE È IL TUO." sub="Mostraci il tuo brand. Ti diciamo come lo raccontiamo." btn="Parliamo del tuo video"/>
   </>
 );
@@ -2006,6 +2026,7 @@ const PageBranding = () => (
     </section>
 
     <ServiceExamples slug="branding"/>
+    <DoveLavoriamo slug="branding"/>
     <ServiceCTA title="IL TUO BRAND MERITA UN'IDENTITÀ VERA." sub="Costruiamola insieme, con metodo e visione." btn="Parliamo del tuo brand"/>
   </>
 );
