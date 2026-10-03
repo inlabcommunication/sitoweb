@@ -8,6 +8,7 @@ import { getClientId } from '../lib/clientUtils';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
+import { cityInfo } from '../data/cities';
 
 /** Dominio del sito. Impostalo su Vercel con VITE_SITE_URL (es. https://www.inlabcommunication.it). */
 export const SITE_URL = (
@@ -366,11 +367,15 @@ export const getSeo = (rawPath: string): Seo => {
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Da Castellaneta, preventivo gratuito.`,
       `Agenzia di comunicazione e marketing per attività di ${c}: social, video, Meta Ads, siti web e branding. Preventivo gratuito.`,
     ].find((d) => d.length <= 155)!;
-    return page(path, title, desc, {
+    const seo = page(path, title, desc, {
       sitemap: { priority: 0.7, changefreq: 'monthly' },
       jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing a ${c}`,
         serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }],
     }, [['Servizi', '/servizi'], [`Agenzia a ${c}`, path]]);
+    // Fondatore del posto citato nella pagina (sezione "casa nostra")
+    const founder = AUTHORS.find((a) => a.slug === cityInfo(c)?.casaNostra?.autore);
+    if (founder) (seo.jsonLd[0] as Record<string, unknown>).mentions = { '@id': personId(founder) };
+    return seo;
   }
 
   if (path.startsWith('/casi-studio/')) {

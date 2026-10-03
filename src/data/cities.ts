@@ -20,6 +20,8 @@ export type CityInfo = {
   servizi?: Record<string, string>;
   /** Paragrafo di apertura della pagina agenzia al posto di quello generico */
   intro?: string;
+  /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
+  casaNostra?: { titolo: string; testo: string; autore: string; link: string };
 };
 
 export const CITY_INFO: CityInfo[] = [
@@ -60,6 +62,12 @@ export const CITY_INFO: CityInfo[] = [
     faq2: { q: "Serve un sito se ho già la pagina Facebook?", a: "Spesso sì: il sito e la scheda Google fanno trovare l'attività su Google, mentre i social tengono il contatto con chi ti conosce già. Insieme funzionano meglio." },
     faq3: { q: "Perché scegliere un'agenzia vicina a Palagianello?", a: "Perché conosciamo il paese e le persone: Nicola è di Palagianello. Possiamo venire in negozio per foto e video senza costi di trasferta importanti e seguirti con incontri di persona quando serve." },
     intro: "InLab Communication è di casa a Palagianello: Nicola Carpignano, uno dei due fondatori, è di Palagianello. Seguiamo social, video, sponsorizzate, siti e foto per le attività del paese, da Sublime Tentazione a Masseria Sacramento e DIRAM.",
+    casaNostra: {
+      titolo: 'Palagianello è casa nostra',
+      testo: "Nicola Carpignano, co-fondatore di InLab Communication, è di Palagianello. Si è laureato in Psicologia all'Università di Bari, insegna Marketing e Social Media nei master di EA Formazione e ha pubblicato ricerche sulla comunicazione digitale. Per le attività del paese vuol dire avere vicino qualcuno che conosce il territorio e il mestiere.",
+      autore: 'nicola-carpignano',
+      link: 'Scopri chi è Nicola',
+    },
     servizi: {
       'gestione-social': "A Palagianello i social sono il passaparola che continua online: raccontiamo le persone dietro il bancone, le novità e gli eventi del paese. Come per Sublime Tentazione, con una presenza costante tra gelati d'estate e panettoni a Natale.",
       'meta-ads': "Sponsorizzate mirate a Palagianello e ai paesi vicini, come Palagiano, Mottola, Castellaneta e Massafra: budget contenuti e un pubblico che può davvero venire da te, senza sprechi.",
