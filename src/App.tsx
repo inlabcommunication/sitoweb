@@ -1606,6 +1606,12 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
           <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{info.faq3.q}</h3>
           <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq3.a}</p>
         </>}
+        {(info.altreFaq||[]).map(f=>(
+          <React.Fragment key={f.q}>
+            <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{f.q}</h3>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{f.a}</p>
+          </React.Fragment>
+        ))}
       </div>
     </div>
   </section>

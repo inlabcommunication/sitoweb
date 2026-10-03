@@ -13,6 +13,8 @@ export type CityInfo = {
   faq2?: { q: string; a: string };
   /** Terza domanda (brief SEO 02/10 pomeriggio) */
   faq3?: { q: string; a: string };
+  /** Domande in più dopo la terza (brief SEO 03/10 Taranto) */
+  altreFaq?: { q: string; a: string }[];
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   sezione?: { titolo: string; testo: string };
   /** Descrizioni proprie dei servizi (slug → testo): sostituiscono quella generica
@@ -35,6 +37,10 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Taranto lavoriamo soprattutto su visibilità e differenza dalla concorrenza: in città ci sono molte attività dello stesso settore, quindi contano una scheda Google curata, recensioni, contenuti riconoscibili e campagne mirate per quartiere o per zona, dal Borgo al lungomare. Partiamo da un'analisi di come ti trovano oggi i clienti e di cosa fanno le attività vicine a te.",
     faq2: { q: "Si possono fare sponsorizzate solo per alcune zone di Taranto?", a: "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te." },
     faq3: { q: "Che tipo di attività di Taranto seguite?", a: "Soprattutto negozi, locali, studi professionali e attività che vogliono farsi trovare da chi cerca in città. Partiamo spesso da scheda Google, sito e social, poi aggiungiamo campagne mirate per zona quando servono." },
+    altreFaq: [
+      { q: "Quanto tempo serve per vedere risultati a Taranto?", a: "Per le sponsorizzate bastano poche settimane per i primi contatti. Per la visibilità su Google e la crescita dei social servono alcuni mesi di lavoro costante. Te lo spieghiamo con numeri chiari, mese per mese." },
+      { q: "Seguite anche aziende in provincia di Taranto fuori città?", a: "Sì: lavoriamo con attività di Castellaneta, Palagianello, Palagiano, Mottola, Laterza, Ginosa e Massafra. Trovi i lavori qui sopra, divisi per città." },
+    ],
     sezione: { titolo: "Perché un'agenzia di Castellaneta per Taranto", testo: "Siamo a meno di un'ora da Taranto: veniamo di persona per incontri, shooting e riprese, e seguiamo il resto a distanza con un contatto diretto. Conosciamo la provincia perché ci lavoriamo ogni giorno, da Castellaneta a Palagianello, da Mottola a Ginosa: per un'attività di Taranto vuol dire avere un'agenzia vicina, con costi e tempi da agenzia locale." },
     servizi: {
       'gestione-social': "A Taranto ogni settore ha decine di concorrenti: sui social vince chi si riconosce subito. Costruiamo una linea editoriale chiara, con contenuti che mostrano le persone e il lavoro vero, non post generici.",
