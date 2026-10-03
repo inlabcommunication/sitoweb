@@ -1,5 +1,5 @@
 import React from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m as motion } from 'motion/react';
 
 /* ════════════════════════════════════════════════════════════════
    Computer, macchina fotografica e telefono accanto al metodo.

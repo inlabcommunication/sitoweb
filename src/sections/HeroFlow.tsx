@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, useReducedMotion as useFmReducedMotion } from 'motion/react';
+import { m as motion, useReducedMotion as useFmReducedMotion } from 'motion/react';
 import { ArrowRight, MapPin } from 'lucide-react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { useAgencyStats } from '../data/stats';

@@ -1,11 +1,5 @@
 import React, { useRef } from "react";
-import {
-  motion,
-  useReducedMotion,
-  useScroll,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
+import { m as motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 
 function pad<T>(input: number[], output: T[]): [number[], T[]] {
   const i = [...input];

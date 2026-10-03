@@ -1,7 +1,7 @@
 // Pagine del blog: elenco articoli (/blog) e articolo singolo (/blog/:slug).
 // Caricate on-demand (lazy) per non appesantire il resto del sito.
 import React, { useEffect, useMemo, useState } from 'react';
-import { motion } from 'motion/react';
+import { m as motion } from 'motion/react';
 import { ArrowLeft, ArrowRight, ArrowUpRight, Clock } from 'lucide-react';
 import { useBlogPosts, readingMinutesOf, usePostContent, formatDate, type BlogPost } from '../lib/blog';
 import { Markdown } from '../components/Markdown';

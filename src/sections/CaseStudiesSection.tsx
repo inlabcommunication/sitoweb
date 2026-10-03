@@ -1,6 +1,6 @@
 import React from 'react';
 import { linkClick } from '../lib/router';
-import { motion } from 'motion/react';
+import { m as motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useContent } from '../lib/content';
 import { DEFAULT_CASES, type CaseStudy } from '../data/caseStudies';

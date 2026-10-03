@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { m as motion, useScroll, useTransform } from 'motion/react';
 import { MethodDevices, deviceFor } from './MethodDevices';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { Search, Compass, Wand2, Send, BarChart3 } from 'lucide-react';
