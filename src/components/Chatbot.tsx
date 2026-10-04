@@ -223,6 +223,7 @@ export const Chatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: 'spring', damping: 24, stiffness: 280 }}
+            className="nb-touch"
             style={{
               position: 'fixed',
               bottom: 100,
