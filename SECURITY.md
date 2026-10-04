@@ -48,7 +48,7 @@ La dashboard carica i file **solo** con upload firmati: senza `CLOUDINARY_API_SE
 Finché il preset resta "Unsigned", chiunque conosca il nome del cloud può caricare file: impostalo su "Signed".
 
 ### 7b. Copertine dei reel (`/api/reel-cover`)
-Solo admin (token Firebase + `admins/{uid}`), stessa origine, massimo 30 importazioni l'ora per admin. Accetta solo link `instagram.com/reel|p|tv/<codice>`; una sola richiesta alla pagina di incorporamento (User-Agent che dichiara il sito, nessun redirect seguito, pagina fino a 2 MB, timeout 8 s); scarica solo immagini JPEG/PNG/WebP fino a 8 MB dai CDN di Meta (`*.cdninstagram.com`, `*.fbcdn.net`, anche dopo eventuali reindirizzamenti) e le carica su Cloudinary con upload firmato. I visitatori non contattano mai Instagram. Interruttore: `REEL_COVER_IMPORT=off`.
+Solo admin (token Firebase + `admins/{uid}`), stessa origine, massimo 30 importazioni l'ora per admin. Accetta solo link `instagram.com/reel|p|tv/<codice>`; una sola richiesta alla pagina di incorporamento (User-Agent che dichiara il sito, nessun redirect seguito, pagina fino a 2 MB, timeout 8 s); verifica l'admin prima di ogni altro controllo; scarica solo immagini JPEG/PNG/WebP fino a 8 MB (dimensione controllata prima di leggerle) dai CDN di Meta (`*.cdninstagram.com`, `*.fbcdn.net`), senza seguire reindirizzamenti e le carica su Cloudinary con upload firmato. I visitatori non contattano mai Instagram. Interruttore: `REEL_COVER_IMPORT=off`.
 
 ### 8. Pulizia automatica dei contatori (consigliato)
 Firestore → **TTL** → aggiungi una policy sul campo `expireAt` della raccolta `_ratelimits`.

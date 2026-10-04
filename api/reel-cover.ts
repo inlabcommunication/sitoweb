@@ -84,12 +84,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   securityHeaders(res);
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   if (!isAllowedOrigin(req)) return res.status(403).json({ error: "Forbidden" });
-  if (String(process.env.REEL_COVER_IMPORT || "").toLowerCase() === "off") return res.status(503).json({ error: "disabled" });
-
-  const secret = process.env.CLOUDINARY_API_SECRET;
-  if (!secret) return res.status(501).json({ error: "cloudinary_not_configured" });
+  // Prima l'autenticazione: un anonimo non deve sapere se la funzione è accesa o configurata
   const uid = await requireAdmin(req);
   if (!uid) return res.status(401).json({ error: "unauthorized" });
+  if (String(process.env.REEL_COVER_IMPORT || "").toLowerCase() === "off") return res.status(503).json({ error: "disabled" });
+  const secret = process.env.CLOUDINARY_API_SECRET;
+  if (!secret) return res.status(501).json({ error: "cloudinary_not_configured" });
 
   const ref = postRef(str(req.body?.embed, 20_000));
   if (!ref) return res.status(400).json({ error: "bad_link" });
@@ -108,9 +108,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const src = html ? thumbnailFrom(html.toString("utf8")) : null;
     if (!src) return res.status(404).json({ error: "no_thumbnail" });
 
-    const img = await fetch(src, { headers: { "User-Agent": USER_AGENT }, signal: AbortSignal.timeout(8_000) });
-    // anche dopo eventuali reindirizzamenti si accettano solo i CDN di Meta
-    if (!img.ok || !metaCdn(img.url || src)) return res.status(502).json({ error: "image_failed" });
+    // Nessun reindirizzamento seguito: si accetta solo una risposta 200 diretta dal CDN di Meta
+    const img = await fetch(src, { redirect: "manual", headers: { "User-Agent": USER_AGENT }, signal: AbortSignal.timeout(8_000) });
+    if (img.status !== 200) return res.status(502).json({ error: "image_failed" });
     const type = String(img.headers.get("content-type") || "").split(";")[0].trim();
     if (!/^image\/(jpeg|png|webp)$/.test(type)) return res.status(502).json({ error: "image_failed" });
     const bytes = await readLimited(img, MAX_IMAGE);
