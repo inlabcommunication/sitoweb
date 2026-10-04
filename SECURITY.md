@@ -47,6 +47,9 @@ Google Cloud Console → APIs & Services → Credentials → chiave "Browser key
 La dashboard carica i file **solo** con upload firmati: senza `CLOUDINARY_API_SECRET` l'archivio media mostra un errore invece di ripiegare su upload non firmati.
 Finché il preset resta "Unsigned", chiunque conosca il nome del cloud può caricare file: impostalo su "Signed".
 
+### 7b. Copertine dei reel (`/api/reel-cover`)
+Solo admin (token Firebase + `admins/{uid}`), stessa origine, massimo 60 importazioni l'ora per admin. Accetta solo link `instagram.com/reel|p|tv/<codice>` e username `[a-z0-9._]`; scarica solo immagini JPEG/PNG/WebP fino a 8 MB dai CDN di Meta (`*.cdninstagram.com`, `*.fbcdn.net`), anche dopo eventuali reindirizzamenti, e le carica su Cloudinary con upload firmato. `META_IG_TOKEN` resta solo su Vercel e non compare mai nelle risposte.
+
 ### 8. Pulizia automatica dei contatori (consigliato)
 Firestore → **TTL** → aggiungi una policy sul campo `expireAt` della raccolta `_ratelimits`.
 
