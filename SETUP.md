@@ -45,15 +45,6 @@ RATE_LIMIT_SALT=...           # stringa casuale lunga
 CHAT_DAILY_LIMIT=400          # opzionale: tetto giornaliero di messaggi al chatbot
 ```
 
-### Copertine dei reel da Instagram (facoltativo)
-
-```
-META_IG_TOKEN=...             # token Meta (instagram_basic, pages_show_list, pages_read_engagement)
-META_IG_USER_ID=...           # ID numerico dell'account Instagram professionale di InLab
-```
-
-Servono a `/api/reel-cover`: quando in dashboard si incolla un reel senza copertina, il server prende la miniatura da Meta (Instagram Graph API, *Business Discovery*) una sola volta e la salva su Cloudinary (`inlab/reel/`). Funziona solo per reel di account professionali (Business o Creator). Senza queste variabili la dashboard lo dice e la copertina si carica a mano; il sito non fa mai richieste a Meta dal browser dei visitatori.
-
 ### Dominio del sito (SEO)
 
 ```

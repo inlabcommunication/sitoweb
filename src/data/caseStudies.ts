@@ -6,9 +6,7 @@
 /** `embed`: codice di incorporamento Instagram (o link del reel). `video`/`instagram` restano per i reel già salvati. */
 export type Reel = { title?: string; embed?: string; showViews?: boolean; video?: string; instagram?: string; views?: string;
   /** Copertina facoltativa (immagine) mostrata prima di avviare l'embed Instagram */
-  cover?: string;
-  /** Account Instagram del reel, per importare la copertina quando c'è solo il link */
-  account?: string };
+  cover?: string };
 
 export type CaseBlock =
   | { type: 'text'; tag?: string; title?: string; titleAccent?: string; body?: string; boxTitle?: string; boxBody?: string }
