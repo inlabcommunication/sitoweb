@@ -279,3 +279,22 @@ Home, main edffd8c. Su richiesta di Sito Inlab, dopo la segnalazione di Nicola (
 - Nicola ha riprovato e scrive "Tutto ok": la home non risulta più lenta.
 - La richiesta 3 (`backdrop-filter` sugli elementi fissi) scende a **bassa**: va ripresa solo se tornano scatti su Safari.
 - Restano aperte: parola che ruota (alta) e poster del video (media).
+
+## Rimisura dopo la PR #82 — 04/10 ore 01:05 UTC
+
+Una sola prova mirata: home con schermo da 390 px, 4G lento reale, CPU 4×, cache vuota; Lighthouse mobile su una pagina cliente.
+
+| | Dopo la PR #81 (03/10) | Dopo la PR #82 (04/10) |
+|---|---|---|
+| Home: parola che ruota | timer JS, primo cambio a **6,48 s** (aggancio + 2,2 s) | **animazione CSS attiva con il primo disegno (2,32 s)**: primo cambio ~1,2 s dopo, circa 3,5 s in queste condizioni estreme |
+| Home: FCP / LCP | 2,35 / 2,23 s | 2,52 / 2,44 s (TTFB di questa prova 1,03 s contro 0,34: rete dell'ambiente) |
+| Home: poster del video nel primo secondo | `w_1280`, 34 KB a 0,97 s | **assente**: nessuna richiesta Cloudinary all'apertura |
+| Home: richieste Firestore | 4 | 4 |
+| Home: `icon-192.png` | nel `<head>` | richiesta solo a 5,3 s, dopo il load (manifest), quindi non compete più |
+| Nunzio Putignano: Perf. / LCP | 77 (simulazione falsata) / reale 0,2 s | **100 / 1,2 s** (reale 0,6 s), TBT 10 ms, CLS 0,008 |
+| Nunzio Putignano: peso | 553 KB | **457 KB**, 0 richieste a Instagram |
+| Nunzio Putignano: immagine in alto | `q_auto`, `w_960`, 140 KB | **`q_auto:eco`, `w_960`, 95 KB** |
+
+- Tutte le richieste del 03/10 sono confermate. Non ho notato anomalie.
+- Nel primo caricamento della home restano solo HTML, CSS, script e font. Su desktop il telefono 3D entra in CSS (verificato il 03/10).
+- Resta solo la decisione di Nicola sul contrasto degli step di `MethodTimeline` su desktop (accessibilità 96).
