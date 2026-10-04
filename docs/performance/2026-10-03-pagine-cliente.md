@@ -273,3 +273,9 @@ Home, main edffd8c. Su richiesta di Sito Inlab, dopo la segnalazione di Nicola (
    - se a scatti è solo con il banner cookie aperto o anche dopo averlo chiuso.
    
    Serve a capire se la causa è il punto 3.
+
+## Riscontro di Nicola da iPhone dopo la PR #81 — 04/10
+
+- Nicola ha riprovato e scrive "Tutto ok": la home non risulta più lenta.
+- La richiesta 3 (`backdrop-filter` sugli elementi fissi) scende a **bassa**: va ripresa solo se tornano scatti su Safari.
+- Restano aperte: parola che ruota (alta) e poster del video (media).
