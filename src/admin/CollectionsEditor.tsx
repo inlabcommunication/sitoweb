@@ -5,6 +5,7 @@ import type React from 'react';
 import { Field, ImageField, CardBlock, AddBtn, SectionTitle, Note, inputStyle } from './editorUi';
 import { BLOCK_LABELS, emptyBlock, type CaseBlock } from '../data/caseStudies';
 import { SERVICES_SEO } from '../seo/routes';
+import { ReelsList } from './ReelCoverImport';
 // Durante la digitazione: minuscole, niente spazi o accenti (i trattini finali restano)
 const slugify = (v: string) => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').slice(0, 80);
 
@@ -44,8 +45,10 @@ const FieldFor: React.FC<{ f: FieldDef; value: any; onChange: (v: any) => void }
     : <Field label={f.label} value={value} onChange={onChange} multiline={f.kind === 'textarea'} rows={f.rows} placeholder={f.placeholder} hint={f.hint} />;
 
 /** Lista di oggetti con aggiungi / elimina / riordina. */
-const ObjList = ({ items = [], onChange, fields, newItem, addLabel, titleOf }: {
+const ObjList = ({ items = [], onChange, fields, newItem, addLabel, titleOf, extra }: {
   items: any[]; onChange: (a: any[]) => void; fields: FieldDef[]; newItem: () => any; addLabel: string; titleOf: (x: any, i: number) => string;
+  /** Contenuto aggiuntivo sotto i campi di ogni voce */
+  extra?: (it: any, i: number) => React.ReactNode;
 }) => (
   <div style={{ marginBottom: 12 }}>
     {items.map((it, i) => (
@@ -56,6 +59,7 @@ const ObjList = ({ items = [], onChange, fields, newItem, addLabel, titleOf }: {
         {fields.filter((f) => !f.showIf || f.showIf(it || {})).map((f) => (
           <FieldFor key={f.key} f={f} value={f.getValue ? f.getValue(it || {}) : it?.[f.key]} onChange={(v) => { const a = clone(items); a[i] = { ...a[i], [f.key]: v }; onChange(a); }} />
         ))}
+        {extra?.(it || {}, i)}
       </CardBlock>
     ))}
     <AddBtn label={addLabel} onClick={() => onChange([...clone(items), newItem()])} />
@@ -89,7 +93,7 @@ const REEL_FIELDS: FieldDef[] = [
   { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M', hint: 'Scrivi solo il numero: "visualizzazioni" lo aggiunge il sito (Instagram non lo passa nell\'embed)',
     showIf: (r) => !(r.embed || '').trim() || (r.showViews ?? !!r.views) },
   { key: 'cover', label: 'Copertina (facoltativa)', kind: 'image', showIf: (r) => !!(r.embed || '').trim(),
-    hint: 'Immagine mostrata prima che il visitatore avvii il reel. Senza copertina il sito mostra uno sfondo con il pulsante play.' },
+    hint: 'Immagine mostrata prima che il visitatore avvii il reel. Si importa da sola da Instagram quando incolli il reel; puoi anche caricarla a mano.' },
 ];
 const newReel = () => ({ title: '', embed: '', showViews: false, views: '' });
 
@@ -150,7 +154,7 @@ export const ClientsEditor = ({ content, set }: Props) => {
 
           <SectionTitle>Reel</SectionTitle>
           <Note>Incolla il codice di incorporamento del reel (su Instagram: ··· → Incorpora) oppure il suo link: il reel si guarda direttamente sul sito.</Note>
-          <ObjList items={c.reels || []} onChange={(a) => upd(i, 'reels', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel"
+          <ReelsList List={ObjList} items={c.reels || []} onChange={(a) => upd(i, 'reels', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel"
             titleOf={(r, j) => r.title || `Reel ${j + 1}`} />
 
           <SectionTitle>Contatti e link</SectionTitle>
@@ -210,7 +214,7 @@ const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: 
         fields={[{ key: 'value', label: 'Valore', hint: 'Es. 200+ (i numeri si animano), ★ 4.9, +35%' }, { key: 'label', label: 'Descrizione' }]} />
       <Field label="Nota sotto i numeri (facoltativa)" value={b.note} onChange={(v: string) => u('note', v)} placeholder="Es. Dati Meta Business Suite, gen–giu 2026" /></>;
     case 'reels': return <>{titles}
-      <ObjList items={b.items} onChange={(a) => u('items', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel" titleOf={(r, j) => r.title || `Reel ${j + 1}`} /></>;
+      <ReelsList List={ObjList} items={b.items} onChange={(a) => u('items', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel" titleOf={(r, j) => r.title || `Reel ${j + 1}`} /></>;
     case 'gallery': return <>{titles}
       <Images label={`Foto — ${clientName}`} value={b.images} onChange={(a) => u('images', a)} /></>;
     case 'quote': return <>
