@@ -254,7 +254,7 @@ const MdStyles = () => (
     .md-phone-screen{position:relative;height:100%;border-radius:15px;overflow:hidden;background:#17151b;padding:16px 6px 6px;font-family:var(--fb)}
     .md-post-head{display:flex;align-items:center;gap:4px;font-size:6px;color:var(--t)}
     .md-post-head i{width:12px;height:12px;border-radius:50%;background:var(--a)}
-    .md-post-head em{margin-left:auto;font-style:normal;color:rgba(240,237,230,.45);font-size:5px}
+    .md-post-head em{margin-left:auto;font-style:normal;color:rgba(240,237,230,.75);font-size:5px}
     .md-post-img{margin-top:5px;aspect-ratio:4/5;border-radius:6px;background:linear-gradient(150deg,var(--a),#6f58b0 45%,#1a1720);display:flex;align-items:flex-end;padding:6px}
     .md-post-img span{font-family:var(--fd);font-size:13px;line-height:.9;color:#fff}
     .md-post-actions{margin-top:5px;font-size:8px;letter-spacing:3px;color:rgba(240,237,230,.7)}
