@@ -280,7 +280,7 @@ Home, main edffd8c. Su richiesta di Sito Inlab, dopo la segnalazione di Nicola (
 - La richiesta 3 (`backdrop-filter` sugli elementi fissi) scende a **bassa**: va ripresa solo se tornano scatti su Safari.
 - Restano aperte: parola che ruota (alta) e poster del video (media).
 
-## Rimisura dopo la PR #82 — 04/10 ore 01:05 UTC
+## Rimisura dopo la PR #82 — 04/10 ore 01:00 UTC
 
 Una sola prova mirata: home con schermo da 390 px, 4G lento reale, CPU 4×, cache vuota; Lighthouse mobile su una pagina cliente.
 
