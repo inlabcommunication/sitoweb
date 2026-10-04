@@ -1,25 +1,28 @@
 # Guida: copertine dei reel nelle pagine cliente
 
-Per Nicola. Oggi nei reel dei clienti si vede solo uno sfondo neutro con il play. Per avere l'anteprima vera basta caricare una **copertina** per ogni reel. Non serve codice e non rallenta il sito.
+Per Nicola. L'importazione automatica è online (PR #85, 04/10). Il sito prende la copertina di ogni reel dalla pagina pubblica di Instagram **una sola volta**, la salva su Cloudinary e la mostra come immagine nostra, leggera. I visitatori non contattano mai Instagram prima del tocco.
 
-## Cosa serve
-- **1 immagine per reel**, verticale (9:16), per esempio 1080×1920 o 720×1280.
-- Un fotogramma significativo del video, **senza testi importanti ai bordi** (il riquadro si ritaglia leggermente).
-- In tutto circa **3 per cliente, ~30**. Si può fare a poco a poco: i reel senza copertina restano come ora.
+## Come importare le copertine dei reel già inseriti
+1. Vai in dashboard (`/admin`) → **Progetti raccontati** → apri un cliente → sezione **Reel**.
+2. Premi **"Importa copertine mancanti"**. Il sito le prende una alla volta (circa 3 secondi l'una) e sotto il pulsante scrive quante ne ha importate.
+3. Controlla le copertine (anteprima sotto il campo Copertina). Se una non ti piace, caricane un'altra con 📁: la tua non viene mai sostituita in automatico.
+4. Premi **SALVA**. Senza Salva le copertine non vanno online.
+5. Ripeti per ogni cliente.
 
-## Come ottenere l'immagine
-- Fai uno **screenshot** dal video originale sul telefono (metti in pausa sul fotogramma giusto), oppure
-- su Instagram usa "Modifica copertina" sul reel e fai lo screenshot della copertina scelta.
+## Per i reel nuovi
+Quando incolli il **codice di incorporamento** (o il link) del reel, la copertina arriva da sola in pochi secondi ("Sto importando la copertina…" → "Copertina importata"). Poi **Salva**.
 
-## Come caricarla (dashboard)
-1. Entra in dashboard → **Clienti** (o la sezione dei casi studio/clienti) e apri il cliente.
-2. Nel blocco dei **reel**, per ogni reel che ha il codice/link Instagram compare il campo **"Copertina (facoltativa)"**.
-3. Premi il pulsante **📁** (libreria media) e carica l'immagine: va su Cloudinary da sola. In alternativa incolla un link Cloudinary.
-4. Salva. Il sito la ridimensiona e la comprime da solo (formato automatico, qualità automatica): **non devi prepararla**.
+## Se vedi un messaggio rosso
+- **"Copertina non disponibile":** il post è privato o rimosso, oppure Instagram ha cambiato la pagina. Carica la copertina a mano (screenshot del reel, verticale 9:16, con 📁).
+- **"Instagram ha bloccato la richiesta":** riprova più tardi (anche il giorno dopo); se continua, carica a mano e avvisa il Direttore.
+- **"Troppe importazioni":** massimo 30 all'ora, riprova tra un'ora.
 
-## Cosa NON fare
-- Non usare le miniature prese da Instagram al caricamento della pagina: fanno richieste a Meta prima del consenso cookie (privacy) e rallentano.
-- Non caricare i video interi: pesano e rallentano.
+In ogni caso il sito **non mostra errori ai visitatori**: dove manca la copertina resta lo sfondo con il pulsante play.
 
-## Se non hai tempo
-Possiamo usare come ripiego, per i reel senza copertina, l'immagine in alto del caso studio con una velatura scura, il play e "Guarda il reel". È una modifica visibile (la stessa foto sui 3 reel): serve il tuo ok.
+## Cosa tenere presente
+- È una lettura automatica di una pagina pubblica di Instagram: i termini di Instagram la vietano senza permesso. Rischio pratico basso (una richiesta per reel, solo dalla dashboard), ma può smettere di funzionare quando Instagram cambia o blocca i server. In quel caso la strada è la copertina a mano.
+- Si può spegnere senza modificare il codice: variabile `REEL_COVER_IMPORT=off` su Vercel, poi Redeploy.
+- Non importare più di 30 reel in un'ora.
+
+## Alternativa manuale (sempre valida)
+Uno screenshot per reel (verticale 9:16, circa 1080×1920, un fotogramma significativo senza testi importanti ai bordi) caricato con 📁 nel campo **Copertina (facoltativa)**; il sito la ridimensiona e la comprime da solo.
