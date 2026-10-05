@@ -213,6 +213,18 @@ export const CITY_INFO: CityInfo[] = [
     faq2: { q: "Quando conviene iniziare a promuovere un'attività di Ginosa Marina?", a: "Qualche mese prima dell'estate: i turisti scelgono dove andare in anticipo, quindi contenuti, scheda Google e sponsorizzate devono essere pronti prima dell'arrivo della stagione." },
     sezione: { titolo: 'Ginosa Marina', testo: "Ginosa Marina, sulla costa ionica, d'estate si riempie di turisti. Per lidi, ristoranti e strutture della marina conta farsi trovare prima della stagione: contenuti, scheda Google e sponsorizzate pronti in anticipo, poi seguiti durante l'estate." },
     faq3: { q: "Seguite attività sia di Ginosa paese sia di Ginosa Marina?", a: "Sì, con due strategie diverse: comunicazione costante tutto l'anno per il paese, campagne e contenuti stagionali per la marina. Spesso la stessa attività ha bisogno di entrambe." },
+    description: "Agenzia di comunicazione a Ginosa e Ginosa Marina: lancio, rebranding, social e sponsorizzate. Il caso Paresteta, da H28 a nuovo nome. Preventivo gratuito.",
+    intro: "A Ginosa abbiamo seguito il cambio di nome di un negozio, da H28 a Paresteta, trasformandolo in un evento del paese. InLab Communication segue lancio, rebranding, social, video e sponsorizzate per Ginosa e Ginosa Marina, da Castellaneta.",
+    focus: {
+      titolo: "Nuova apertura o nuovo nome: come farlo sapere a tutti",
+      testo: "Un'apertura o un cambio di insegna sono il momento in cui il paese ti guarda di più. Con Paresteta il cambio da H28 è diventato un'inaugurazione con attenzione e gente in negozio: nome e immagine nuovi, contenuti social prima dell'evento, sponsorizzate sulla zona e il racconto della giornata. Lo stesso metodo vale per un lido che riapre a Ginosa Marina o per un'attività nuova in paese: preparare l'attesa, riempire il giorno dell'apertura, poi restare presenti.",
+    },
+    altreFaq: [
+      { q: "Quanto tempo prima di un'apertura bisogna iniziare a comunicare?", a: "Qualche settimana prima: il tempo di preparare nome e immagine, creare attesa sui social e far partire le sponsorizzate sulla zona. Il caso Paresteta mostra come lo facciamo." },
+    ],
+    servizi: {
+      'branding': "Nome, logo e immagine coordinata per chi apre o si rinnova, come nel caso Paresteta: dall'insegna ai social, tutto racconta la stessa novità.",
+    },
   },
   {
     name: 'Gravina in Puglia', provincia: 'provincia di Bari',
