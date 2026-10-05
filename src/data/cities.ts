@@ -112,6 +112,19 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Mottola molte attività vivono di eventi, cerimonie e passaparola. Per una location o un ristorante contano le immagini: foto degli spazi, video delle serate, recensioni e un profilo Instagram che faccia venire voglia di prenotare una visita. Lavoriamo sul posto per raccontare gli ambienti come li vede un ospite.",
     faq2: { q: "Fate anche video di matrimoni o eventi a Mottola?", a: "Facciamo video e reel per la comunicazione della location e dell'attività: contenuti che mostrano gli spazi e l'atmosfera, da usare su social, sito e campagne." },
     faq3: { q: "Lavorate anche per attività di Mottola che non fanno eventi?", a: "Sì: negozi, ristoranti e servizi del paese. Per loro lavoriamo su presenza costante sui social, foto curate e una scheda Google completa, così chi è di passaggio sulla statale li trova." },
+    description: "Agenzia di comunicazione a Mottola: foto, video e social per sale ricevimenti e locali del paese, come Villa Natia e Sottoscala. Preventivo gratuito.",
+    intro: "A Mottola raccontiamo locali e location con le immagini: foto e video che fanno venire voglia di prenotare. Seguiamo social, video, sponsorizzate, siti e branding per le attività del paese, da Castellaneta.",
+    focus: {
+      titolo: "Prima si guarda, poi si prenota",
+      testo: "Per una sala ricevimenti o un locale, la prima visita avviene sullo schermo. Per Villa Natia raccontiamo matrimoni ed eventi con foto e video che ne mostrano l'eleganza; per Sottoscala abbiamo costruito un'identità visiva food, con foto curate e reel di sushi, cocktail e focacce. In entrambi i casi il lavoro è lo stesso: far vedere gli spazi e l'atmosfera come li vivrà l'ospite, così la telefonata arriva da chi ha già deciso.",
+    },
+    altreFaq: [
+      { q: "Conviene investire nei social per una sala ricevimenti?", a: "Sì: oggi gli sposi e chi organizza un evento guardano prima i profili e le foto, poi chiedono un appuntamento. Contenuti curati e costanti portano richieste più mirate." },
+    ],
+    servizi: {
+      'shooting': "Shooting sul posto per sale, ristoranti e locali di Mottola: gli spazi, i piatti e le persone, come per Villa Natia e Sottoscala.",
+      'gestione-social': "Un profilo Instagram che fa da vetrina: foto degli spazi, reel delle serate e contenuti costanti, per far venire voglia di prenotare una visita o un tavolo.",
+    },
   },
   {
     name: 'Palagianello', provincia: 'provincia di Taranto',
