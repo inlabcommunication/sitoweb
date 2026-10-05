@@ -30,6 +30,7 @@ import { ClientsWall } from "./sections/ClientsWall";
 import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
+import { publishedOtherClients } from './data/otherClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
@@ -1909,7 +1910,9 @@ const cldEco = (url: string, w: number) => cld(url, w).replace('q_auto,', 'q_aut
 const PageCliente = ({id}: {id: string}) => {
   const {go}=useRouter();
   const c=useContent();
-  const clients=normalizeClients(((c as any).clients?.items || []) as any[]);
+  const mainClients=normalizeClients(((c as any).clients?.items || []) as any[]);
+  // anche gli "Altri clienti", ma solo con la scheda pubblicata (mai pagine vuote)
+  const clients=[...mainClients, ...publishedOtherClients((c as any).otherClients?.items, new Set(mainClients.map((x: any)=>x.id)))];
   const client=clients.find((item: any)=>getClientId(item)===id);
   const heroImage=client?.image || client?.gallery?.[0];
   const reels=((client?.reels || []) as any[]).filter((r: any)=>hasReel(r));
