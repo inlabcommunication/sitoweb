@@ -28,6 +28,10 @@ export type CityInfo = {
   title?: string;
   /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
   casaNostra?: { titolo: string; testo: string; autore: string; link: string };
+  /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
+  focus?: { titolo: string; testo: string };
+  /** Collegamento su una parola dell'apertura (es. il nome di Nicola → pagina autore) */
+  introLink?: { testo: string; href: string };
   /** Clienti in evidenza subito dopo l'apertura della pagina agenzia, con una riga
    * in più per cliente (id della scheda cliente, id del caso studio facoltativo).
    * Brief SEO 05/10 Palagiano. */
@@ -87,6 +91,18 @@ export const CITY_INFO: CityInfo[] = [
     faq2: { q: "Lavorate anche per strutture di Castellaneta Marina?", a: "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate." },
     sezione: { titolo: 'Castellaneta Marina', testo: "Castellaneta Marina, sulla costa ionica, vive di turismo estivo, villaggi, lidi e ristorazione. Per le strutture della costa prepariamo foto, video, social e sponsorizzate prima dell'estate, quando i turisti scelgono dove andare, e le seguiamo durante tutta la stagione." },
     faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita 26. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
+    description: "Agenzia di comunicazione a Castellaneta, in Via Regina Margherita 26: video, social e sponsorizzate per il paese e la Marina. Preventivo gratuito.",
+    intro: "Siamo a Castellaneta, in Via Regina Margherita 26: per le attività del paese siamo l'agenzia sotto casa. Seguiamo social, video, sponsorizzate, siti e branding, e ci vediamo di persona quando serve, in sede o direttamente da te.",
+    focus: {
+      titolo: "Il video che fa vendere: due esempi da Castellaneta",
+      testo: "Un video breve spiega in pochi secondi quello che una foto non riesce a dire. Per lo Studio Ventimiglia Solution giriamo video di presentazione degli immobili in vendita: chi guarda capisce spazi, luce e posizione prima ancora di chiamare. Per l'Ottica Occhi Blu abbiamo scelto video promozionali simpatici, che rendono semplice e leggera la scelta di un paio di occhiali. Settori diversi, lo stesso obiettivo: far capire subito perché scegliere te.",
+    },
+    altreFaq: [
+      { q: "Quanto costa fare un video per la mia attività a Castellaneta?", a: "Dipende da durata, riprese e quante versioni servono per i social. Dopo un primo incontro in sede ti facciamo un preventivo chiaro e gratuito." },
+    ],
+    servizi: {
+      'video': "Video brevi che spiegano e fanno scegliere: presentazioni degli immobili per lo Studio Ventimiglia, video simpatici per l'Ottica Occhi Blu. Li giriamo a Castellaneta, a due passi dalla nostra sede.",
+    },
   },
   {
     name: 'Mottola', provincia: 'provincia di Taranto',
@@ -96,6 +112,19 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Mottola molte attività vivono di eventi, cerimonie e passaparola. Per una location o un ristorante contano le immagini: foto degli spazi, video delle serate, recensioni e un profilo Instagram che faccia venire voglia di prenotare una visita. Lavoriamo sul posto per raccontare gli ambienti come li vede un ospite.",
     faq2: { q: "Fate anche video di matrimoni o eventi a Mottola?", a: "Facciamo video e reel per la comunicazione della location e dell'attività: contenuti che mostrano gli spazi e l'atmosfera, da usare su social, sito e campagne." },
     faq3: { q: "Lavorate anche per attività di Mottola che non fanno eventi?", a: "Sì: negozi, ristoranti e servizi del paese. Per loro lavoriamo su presenza costante sui social, foto curate e una scheda Google completa, così chi è di passaggio sulla statale li trova." },
+    description: "Agenzia di comunicazione a Mottola: foto, video e social per sale ricevimenti e locali del paese, come Villa Natia e Sottoscala. Preventivo gratuito.",
+    intro: "A Mottola raccontiamo locali e location con le immagini: foto e video che fanno venire voglia di prenotare. Seguiamo social, video, sponsorizzate, siti e branding per le attività del paese, da Castellaneta.",
+    focus: {
+      titolo: "Prima si guarda, poi si prenota",
+      testo: "Per una sala ricevimenti o un locale, la prima visita avviene sullo schermo. Per Villa Natia raccontiamo matrimoni ed eventi con foto e video che ne mostrano l'eleganza; per Sottoscala abbiamo costruito un'identità visiva food, con foto curate e reel di sushi, cocktail e focacce. In entrambi i casi il lavoro è lo stesso: far vedere gli spazi e l'atmosfera come li vivrà l'ospite, così la telefonata arriva da chi ha già deciso.",
+    },
+    altreFaq: [
+      { q: "Conviene investire nei social per una sala ricevimenti?", a: "Sì: oggi gli sposi e chi organizza un evento guardano prima i profili e le foto, poi chiedono un appuntamento. Contenuti curati e costanti portano richieste più mirate." },
+    ],
+    servizi: {
+      'shooting': "Shooting sul posto per sale, ristoranti e locali di Mottola: gli spazi, i piatti e le persone, come per Villa Natia e Sottoscala.",
+      'gestione-social': "Un profilo Instagram che fa da vetrina: foto degli spazi, reel delle serate e contenuti costanti, per far venire voglia di prenotare una visita o un tavolo.",
+    },
   },
   {
     name: 'Palagianello', provincia: 'provincia di Taranto',
@@ -174,6 +203,18 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Laterza il valore sta nel saper fare: forni, botteghe, ceramisti e produttori. Lavoriamo con video brevi del lavoro, foto curate dei prodotti e testi che spiegano la tradizione senza retorica. Così anche chi non è del posto capisce perché vale la pena comprare o fare una deviazione per venire a trovarti.",
     faq2: { q: "Si possono vendere online prodotti artigianali di Laterza?", a: "Sì: con un piccolo e-commerce o con un catalogo collegato a WhatsApp e Instagram. Ti aiutiamo a scegliere la soluzione più semplice da gestire." },
     faq3: { q: "Si può portare più gente a Laterza con i social?", a: "Sì, raccontando bene quello che c'è: la gravina, il pane, la maiolica. Video brevi e foto curate funzionano anche con chi arriva da fuori, per esempio da Matera o dalla costa." },
+    description: "Agenzia di comunicazione a Laterza: social, video e foto per forni, botteghe e artigiani, per farsi conoscere anche fuori dal paese. Preventivo gratuito.",
+    intro: "Laterza ha forni, botteghe e ceramisti che lavorano bene da generazioni. Li aiutiamo a farsi conoscere anche fuori dal paese con social, video, foto, siti e branding, da Castellaneta.",
+    focus: {
+      titolo: "Perché comunicare sui social anche se ti conoscono tutti",
+      testo: "In paese ti conoscono già, ma chi arriva da fuori, chi è emigrato e chi cerca un regalo o un prodotto tipico ti trova solo se sei online. I social sono il posto dove si sceglie dove fare una deviazione, cosa comprare, dove portare un ospite. Un forno che mostra il pane appena sfornato o una bottega che racconta come nasce una maiolica non vende solo un prodotto: fa conoscere il lavoro e la storia che ci sono dietro.",
+    },
+    altreFaq: [
+      { q: "Ho poco tempo: quanto devo pubblicare?", a: "Meno di quanto pensi: due o tre contenuti curati a settimana bastano per iniziare. Riprese e montaggio li facciamo noi, tu continui a lavorare." },
+    ],
+    servizi: {
+      'video': "Video brevi girati in bottega o al forno: le mani, i gesti, il prodotto finito. È il formato che fa capire il valore del saper fare.",
+    },
   },
   {
     name: 'Ginosa', provincia: 'provincia di Taranto',
@@ -184,6 +225,18 @@ export const CITY_INFO: CityInfo[] = [
     faq2: { q: "Quando conviene iniziare a promuovere un'attività di Ginosa Marina?", a: "Qualche mese prima dell'estate: i turisti scelgono dove andare in anticipo, quindi contenuti, scheda Google e sponsorizzate devono essere pronti prima dell'arrivo della stagione." },
     sezione: { titolo: 'Ginosa Marina', testo: "Ginosa Marina, sulla costa ionica, d'estate si riempie di turisti. Per lidi, ristoranti e strutture della marina conta farsi trovare prima della stagione: contenuti, scheda Google e sponsorizzate pronti in anticipo, poi seguiti durante l'estate." },
     faq3: { q: "Seguite attività sia di Ginosa paese sia di Ginosa Marina?", a: "Sì, con due strategie diverse: comunicazione costante tutto l'anno per il paese, campagne e contenuti stagionali per la marina. Spesso la stessa attività ha bisogno di entrambe." },
+    description: "Agenzia di comunicazione a Ginosa e Ginosa Marina: lancio, rebranding, social e sponsorizzate. Il caso Paresteta, da H28 a nuovo nome. Preventivo gratuito.",
+    intro: "A Ginosa abbiamo seguito il cambio di nome di un negozio, da H28 a Paresteta, trasformandolo in un evento del paese. InLab Communication segue lancio, rebranding, social, video e sponsorizzate per Ginosa e Ginosa Marina, da Castellaneta.",
+    focus: {
+      titolo: "Nuova apertura o nuovo nome: come farlo sapere a tutti",
+      testo: "Un'apertura o un cambio di insegna sono il momento in cui il paese ti guarda di più. Con Paresteta il cambio da H28 è diventato un'inaugurazione con attenzione e gente in negozio: nome e immagine nuovi, contenuti social prima dell'evento, sponsorizzate sulla zona e il racconto della giornata. Lo stesso metodo vale per un lido che riapre a Ginosa Marina o per un'attività nuova in paese: preparare l'attesa, riempire il giorno dell'apertura, poi restare presenti.",
+    },
+    altreFaq: [
+      { q: "Quanto tempo prima di un'apertura bisogna iniziare a comunicare?", a: "Qualche settimana prima: il tempo di preparare nome e immagine, creare attesa sui social e far partire le sponsorizzate sulla zona. Il caso Paresteta mostra come lo facciamo." },
+    ],
+    servizi: {
+      'branding': "Nome, logo e immagine coordinata per chi apre o si rinnova, come nel caso Paresteta: dall'insegna ai social, tutto racconta la stessa novità.",
+    },
   },
   {
     name: 'Gravina in Puglia', provincia: 'provincia di Bari',
@@ -200,12 +253,50 @@ export const CITY_INFO: CityInfo[] = [
     contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa.',
     settori: ['negozi e commercio', 'aziende agricole', 'ristorazione', 'eventi'],
     faq: { q: 'Lavorate anche con attività di Massafra?', a: 'Sì, Massafra è a pochi chilometri dalla nostra sede: possiamo incontrarci di persona e fare shooting e riprese sul posto.' },
+    description: "Agenzia di comunicazione a Massafra: un piano per far crescere la tua attività con social, sponsorizzate, sito e scheda Google. Preventivo gratuito.",
+    intro: "Massafra è una città di commercio e servizi, a pochi chilometri dalla nostra sede. Aiutiamo le attività a crescere passo dopo passo: social, sponsorizzate, sito e scheda Google, con un piano chiaro e risultati misurati insieme.",
+    focus: {
+      titolo: "Crescere un passo alla volta",
+      testo: "La crescita di un'attività locale raramente arriva da un post fortunato: arriva da un piano. Il primo passo è farsi trovare, con la scheda Google completa e un profilo social curato. Il secondo è farsi scegliere, con contenuti che mostrano chi sei e cosa fai meglio degli altri. Il terzo è portare richieste, con sponsorizzate mirate su Massafra e dintorni e un sito che trasforma una visita in un contatto. Ogni mese guardiamo insieme cosa funziona e dove spingere di più.",
+    },
+    altreFaq: [
+      { q: "Da dove si parte per far crescere un'attività a Massafra?", a: "Da quello che c'è già: scheda Google, profili social, sito. Li analizziamo in un primo incontro e ti diciamo quali sono i due o tre passi che servono subito." },
+    ],
+    servizi: {
+      'gestione-social': "Per un'attività di Massafra i social servono a crescere: farsi trovare da chi non ti conosce ancora, farsi scegliere da chi ti confronta con altri, portare richieste concrete. Costruiamo un piano editoriale chiaro, giriamo foto e reel sul posto, a pochi chilometri dalla nostra sede, e ogni mese guardiamo insieme cosa funziona.",
+      'meta-ads': "Sponsorizzate mirate su Massafra e sui paesi vicini, con un budget che cresce solo quando i risultati lo giustificano.",
+    },
+    paginaServizio: {
+      'gestione-social': {
+        title: "Gestione social a Massafra | InLab Communication",
+        description: "Gestione social a Massafra: piano editoriale, contenuti, reel e sponsorizzate per far crescere la tua attività passo dopo passo. Preventivo gratuito.",
+      },
+    },
   },
   {
     name: 'Bari', provincia: 'Città metropolitana di Bari',
     contesto: 'Bari è il capoluogo della Puglia, con Bari Vecchia, il lungomare e un tessuto di imprese, professionisti e attività commerciali tra i più grandi del Sud. Per InLab è una città di casa: Nicola Carpignano ha studiato Psicologia a Bari e insegna Marketing e Social Media nei master di EA Formazione.',
     settori: ['aziende e professionisti', 'commercio e ristorazione', 'eventi e formazione'],
     faq: { q: 'Seguite aziende di Bari anche se avete sede a Castellaneta?', a: 'Sì. Lavoriamo a distanza per strategia, contenuti e campagne, e veniamo a Bari per incontri, shooting e riprese.' },
+    description: "Agenzia di comunicazione per attività di Bari: strategia, social, sponsorizzate e siti con il metodo di chi insegna marketing. Preventivo gratuito.",
+    intro: "A Bari Nicola Carpignano, cofondatore di InLab, ha studiato Psicologia e insegna Marketing e Social Media nei master di EA Formazione. Portiamo lo stesso metodo alle attività di Bari: strategia prima dei post, numeri chiari e contenuti che parlano alle persone giuste.",
+    introLink: { testo: "Nicola Carpignano", href: "/autori/nicola-carpignano" },
+    focus: {
+      titolo: "Prima la strategia, poi i contenuti",
+      testo: "In una città grande come Bari pubblicare tanto non basta: bisogna sapere a chi parli e perché dovrebbe scegliere te. Partiamo da qui, con l'analisi del pubblico, dei concorrenti e di cosa ti rende diverso. Poi costruiamo il piano: quali contenuti, su quali canali, con quale budget per le sponsorizzate, e come misureremo i risultati. È lo stesso approccio che Nicola insegna nei master in Marketing e Social Media: psicologia delle persone, obiettivi chiari, dati.",
+    },
+    altreFaq: [
+      { q: "Che differenza c'è tra un social media manager e una strategia di comunicazione?", a: "Il social media manager pubblica; la strategia decide cosa, per chi e perché. Noi facciamo entrambe le cose: prima il piano, poi i contenuti e le campagne." },
+    ],
+    servizi: {
+      'gestione-social': "In una città grande come Bari pubblicare tanto non basta: serve sapere a chi parli e perché dovrebbe scegliere te. Partiamo dalla strategia, con l'analisi di pubblico, concorrenti e punti di forza, poi costruiamo contenuti e campagne. È il metodo che Nicola Carpignano insegna nei master di EA Formazione in Marketing e Social Media.",
+    },
+    paginaServizio: {
+      'gestione-social': {
+        title: "Gestione social a Bari | InLab Communication",
+        description: "Gestione social a Bari: strategia, piano editoriale, contenuti e campagne con il metodo di chi insegna Social Media nei master. Preventivo gratuito.",
+      },
+    },
   },
   {
     name: 'Matera', provincia: 'provincia di Matera',
@@ -218,6 +309,25 @@ export const CITY_INFO: CityInfo[] = [
     contesto: 'Gioia del Colle, nella Murgia barese, è conosciuta per il castello normanno-svevo, per la mozzarella e i latticini e per il vino Primitivo di Gioia del Colle DOC. È un territorio di produttori e di aziende agroalimentari, che online hanno bisogno di raccontare qualità e origine.',
     settori: ['caseifici e produttori', 'cantine', 'commercio e ristorazione'],
     faq: { q: 'Potete aiutare un caseificio o una cantina a vendere di più online?', a: 'Sì: foto e video dei prodotti fatti sul posto, social, sito o e-commerce, e campagne mirate a chi cerca prodotti tipici.' },
+    description: "Agenzia di comunicazione a Gioia del Colle: foto, social, e-commerce e campagne per caseifici, cantine e produttori della Murgia. Preventivo gratuito.",
+    intro: "Mozzarella, latticini e Primitivo: a Gioia del Colle i prodotti parlano da soli, se qualcuno li fa vedere bene. Seguiamo foto, video, social, siti, e-commerce e campagne per produttori e attività del territorio, da Castellaneta.",
+    focus: {
+      titolo: "Dal caseificio alla tavola di chi compra online",
+      testo: "Chi compra un prodotto tipico vuole sapere da dove arriva e chi lo fa. Per questo partiamo dalle immagini vere: il latte che diventa mozzarella, la vendemmia, la cantina. Con queste costruiamo social che raccontano l'origine, un sito o un piccolo e-commerce semplice da gestire, e campagne rivolte a chi cerca prodotti della Murgia anche fuori dalla Puglia.",
+    },
+    altreFaq: [
+      { q: "Si possono vendere online prodotti freschi come i latticini?", a: "Sì, con le giuste scelte su spedizioni e confezioni. Prima ti aiutiamo a capire se conviene e con quale formula: ordini con ritiro, consegna in zona o spedizione." },
+    ],
+    servizi: {
+      'gestione-social': "A Gioia del Colle i social funzionano quando mostrano da dove arriva il prodotto: il caseificio, la cantina, le persone che ci lavorano. Raccontiamo origine e qualità con foto e video veri, in un piano editoriale costante, e portiamo i contenuti anche a chi cerca prodotti della Murgia fuori dalla Puglia.",
+      'siti-web': "E-commerce e cataloghi semplici da gestire, collegati a WhatsApp e Instagram, per vendere latticini, vino e prodotti tipici anche fuori regione.",
+    },
+    paginaServizio: {
+      'gestione-social': {
+        title: "Gestione social a Gioia del Colle | InLab Communication",
+        description: "Gestione social a Gioia del Colle: contenuti su prodotti, origine e persone, per caseifici, cantine e attività del territorio. Preventivo gratuito.",
+      },
+    },
   },
 ];
 

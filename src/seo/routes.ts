@@ -52,6 +52,14 @@ export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(
 /** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
  *  Castellaneta compresa (dal 02/10, la home resta la pagina del brand). */
 export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
+/** Pagine servizio in più fuori da CITIES (servizio → città). Brief SEO 05/10, decisione di
+ *  Nicola: solo gestione social a Massafra, Gioia del Colle e Bari; gli altri servizi no. */
+export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
+  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari'],
+};
+/** Città che hanno la pagina /{servizio}-{città} per quel servizio */
+export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
+export const hasServicePage = (slug: string, city: string) => serviceCities(slug).includes(city);
 export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
 export const SERVICES_SEO = [
@@ -274,7 +282,7 @@ const page = (path: string, title: string, description: string, extra: Partial<S
 export const listRoutes = (): string[] => [
   '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/casi-studio', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
-  ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${citySlug(c)}`)),
+  ...SERVICES_SEO.flatMap((s) => serviceCities(s.slug).map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...AGENCY_CITIES.map(agencyPath),
   ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
@@ -340,7 +348,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   for (const s of SERVICES_SEO) {
-    const city = CITIES.find((c) => path === `/${s.slug}-${citySlug(c)}`);
+    const city = serviceCities(s.slug).find((c) => path === `/${s.slug}-${citySlug(c)}`);
     if (city) {
       // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
       const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;
