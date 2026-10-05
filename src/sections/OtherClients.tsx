@@ -48,10 +48,13 @@ export const OtherClients: React.FC = () => {
             const body = (
               <>
                 {/* Riquadro immagine a proporzione fissa: nessuno spostamento del layout al caricamento */}
-                <div style={{ aspectRatio: '4 / 3', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: img ? (isLogo ? '#f0ede6' : '#1a1a1a') : FALLBACKS[i % FALLBACKS.length], padding: img && isLogo ? '12%' : 0 }}>
+                <div style={{ aspectRatio: '4 / 3', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: img ? (isLogo ? '#f0ede6' : '#1a1a1a') : FALLBACKS[i % FALLBACKS.length] }}>
                   {img ? (
                     <img src={img} alt={isLogo ? `Logo ${c.name}` : `Lavoro per ${c.name}`} width={600} height={450} loading="lazy" decoding="async"
-                      style={isLogo ? { maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto', objectFit: 'contain', display: 'block' } : { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      style={isLogo
+                        // fuori dal flusso anche il logo: il riquadro resta 4:3 qualunque sia la sua forma (segnalazione analista, 05/10)
+                        ? { position: 'absolute', inset: '12%', width: '76%', height: '76%', objectFit: 'contain', display: 'block' }
+                        : { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   ) : (
                     <span style={{ padding: '0 .9rem', textAlign: 'center', overflowWrap: 'anywhere', fontFamily: 'var(--fd)', fontSize: 'clamp(18px, 2.4vw, 30px)', letterSpacing: '.03em', textTransform: 'uppercase', color: 'var(--t)', lineHeight: 1 }}>{c.name}</span>
                   )}

@@ -4,7 +4,7 @@
 // compilata da lui in dashboard). Finché una scheda non è pubblicata compare
 // solo come riquadro nella griglia di /clienti: nessuna pagina /cliente/…,
 // niente sitemap. Si modificano dalla dashboard (Clienti → Altri clienti);
-// questi sono i valori iniziali: solo i dati dati da Nicola, il resto vuoto.
+// questi sono i valori iniziali: solo i dati forniti da Nicola, il resto vuoto.
 import { getClientId, normalizeClients } from '../lib/clientUtils';
 
 export type OtherClient = {
