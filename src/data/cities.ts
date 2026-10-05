@@ -283,6 +283,18 @@ export const CITY_INFO: CityInfo[] = [
     contesto: 'Gioia del Colle, nella Murgia barese, è conosciuta per il castello normanno-svevo, per la mozzarella e i latticini e per il vino Primitivo di Gioia del Colle DOC. È un territorio di produttori e di aziende agroalimentari, che online hanno bisogno di raccontare qualità e origine.',
     settori: ['caseifici e produttori', 'cantine', 'commercio e ristorazione'],
     faq: { q: 'Potete aiutare un caseificio o una cantina a vendere di più online?', a: 'Sì: foto e video dei prodotti fatti sul posto, social, sito o e-commerce, e campagne mirate a chi cerca prodotti tipici.' },
+    description: "Agenzia di comunicazione a Gioia del Colle: foto, social, e-commerce e campagne per caseifici, cantine e produttori della Murgia. Preventivo gratuito.",
+    intro: "Mozzarella, latticini e Primitivo: a Gioia del Colle i prodotti parlano da soli, se qualcuno li fa vedere bene. Seguiamo foto, video, social, siti, e-commerce e campagne per produttori e attività del territorio, da Castellaneta.",
+    focus: {
+      titolo: "Dal caseificio alla tavola di chi compra online",
+      testo: "Chi compra un prodotto tipico vuole sapere da dove arriva e chi lo fa. Per questo partiamo dalle immagini vere: il latte che diventa mozzarella, la vendemmia, la cantina. Con queste costruiamo social che raccontano l'origine, un sito o un piccolo e-commerce semplice da gestire, e campagne rivolte a chi cerca prodotti della Murgia anche fuori dalla Puglia.",
+    },
+    altreFaq: [
+      { q: "Si possono vendere online prodotti freschi come i latticini?", a: "Sì, con le giuste scelte su spedizioni e confezioni. Prima ti aiutiamo a capire se conviene e con quale formula: ordini con ritiro, consegna in zona o spedizione." },
+    ],
+    servizi: {
+      'siti-web': "E-commerce e cataloghi semplici da gestire, collegati a WhatsApp e Instagram, per vendere latticini, vino e prodotti tipici anche fuori regione.",
+    },
   },
 ];
 
