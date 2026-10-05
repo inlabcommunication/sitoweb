@@ -354,20 +354,22 @@ export const OtherClientsEditor = ({ content, set }: Props) => {
   return (
     <div>
       <SectionTitle>Altri clienti — collaborazioni su un servizio</SectionTitle>
-      <Note>Compaiono nella pagina <b>/clienti</b>, sotto "Non solo contenuti": nome, e se vuoi settore, città, servizi e logo. Non hanno una pagina propria. Le modifiche vanno online con <b>Salva</b>.</Note>
+      <Note>Compaiono nella pagina <b>/clienti</b>, sotto "Non solo contenuti", come piccole schede: immagine, nome, settore, città e una riga. Non hanno una pagina propria. <b>Immagine</b>: il logo oppure la foto di un lavoro già pubblicato; senza immagine la scheda mostra il nome su fondo colorato. Nella riga niente numeri né prezzi, e nessun dato personale. Le modifiche vanno online con <b>Salva</b>.</Note>
       <Field label="Etichetta" value={d.label} onChange={(v: string) => set('otherClients.label', v)} placeholder="Altri clienti" />
       <Field label="Titolo" value={d.title} onChange={(v: string) => set('otherClients.title', v)} placeholder="Collaborazioni" />
       <Field label="Titolo (parte in contorno)" value={d.accent} onChange={(v: string) => set('otherClients.accent', v)} placeholder="su misura." />
       <Field label="Testo" value={d.text} onChange={(v: string) => set('otherClients.text', v)} multiline rows={3} />
       <ObjList items={d.items || []} onChange={(a) => set('otherClients.items', a)} addLabel="Aggiungi cliente"
-        newItem={() => ({ name: '', sector: '', location: '', services: '', logo: '' })}
+        newItem={() => ({ name: '', sector: '', location: '', line: '', services: '', logo: '', photo: false })}
         titleOf={(x, i) => x.name || `Cliente ${i + 1}`}
         fields={[
           { key: 'name', label: 'Nome', placeholder: 'Es. Vision Ottica' },
           { key: 'sector', label: 'Settore (facoltativo)', placeholder: 'Es. Ottica, Lido, Ristorante' },
           { key: 'location', label: 'Città (facoltativa)', placeholder: 'Es. Castellaneta Marina' },
+          { key: 'line', label: 'Una riga (facoltativa)', placeholder: 'Es. Lido sul mare, seguito per i social in estate', hint: 'Breve, senza numeri né prezzi.' },
           { key: 'services', label: 'Servizi seguiti (facoltativi, separati da virgola)', placeholder: 'Es. Gestione social, Foto' },
-          { key: 'logo', label: 'Logo (facoltativo)', kind: 'image' },
+          { key: 'logo', label: 'Immagine (facoltativa): logo o foto di un lavoro', kind: 'image' },
+          { key: 'photo', label: 'L\'immagine è una foto (riempie la scheda); se non spuntato è un logo, centrato su fondo chiaro', kind: 'check', showIf: (x: any) => !!x.logo },
         ]} />
     </div>
   );
