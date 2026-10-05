@@ -9,8 +9,15 @@ Per Nicola. L'importazione automatica è online (PR #85, 04/10). Il sito prende 
 4. Premi **SALVA**. Senza Salva le copertine non vanno online.
 5. Ripeti per ogni cliente.
 
-## Per i reel nuovi
-Quando incolli il **codice di incorporamento** (o il link) del reel, la copertina arriva da sola in pochi secondi ("Sto importando la copertina…" → "Copertina importata"). Poi **Salva**.
+## Per i reel nuovi (copertina automatica)
+Apri il cliente → **Reel** → incolla il codice di incorporamento (o il link) nel campo **"Embed Instagram del reel"** (non nel campo Copertina). Se il reel **non ha ancora una copertina**, dopo circa un secondo compare "Sto importando la copertina da Instagram…", poi il campo Copertina si riempie e compare "Copertina importata da Instagram. Ricordati di premere Salva." Premi **Salva**.
+
+**Se non parte da sola:**
+- il reel ha già una copertina: l'automatico non la tocca, usa **"Reimporta copertina da Instagram"** (chiede conferma);
+- hai incollato nel campo sbagliato (deve essere "Embed Instagram del reel");
+- hai salvato o chiuso prima del secondo di attesa;
+- stai modificando un reel senza cambiare il link: l'import parte solo quando cambia il reel.
+Il tasto **"Importa copertina da Instagram"** resta come ripiego manuale. Se continua a non partire, scrivi al Direttore cliente, reel e cosa compare sotto il campo.
 
 ## Se vedi un messaggio rosso
 - **"Copertina non disponibile":** il post è privato o rimosso, oppure Instagram ha cambiato la pagina. Carica la copertina a mano (screenshot del reel, verticale 9:16, con 📁).
