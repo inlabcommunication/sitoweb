@@ -31,7 +31,7 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
 import { cityInfo } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
@@ -1764,8 +1764,8 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
 const PageCittaSEO = ({city, service}) => {
   const {go}=useRouter();
   const svc=SERVICES.find(s=>s.slug===service)||SERVICES[0];
-  const cityName=CITIES.find(c=>citySlug(c)===city)||city;
-  const otherCities=CITIES.filter(c=>c!==cityName);
+  const cityName=serviceCities(svc.slug).find(c=>citySlug(c)===city)||city;
+  const otherCities=serviceCities(svc.slug).filter(c=>c!==cityName);
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
     .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
@@ -1794,7 +1794,7 @@ const PageCittaSEO = ({city, service}) => {
           </motion.h1>
           <motion.p initial={false}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
-            {info?.servizi?.[svc.slug] || `InLab Communication segue ${svc.label} per attività di ${cityName} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
+            {info?.servizi?.[svc.slug] ? <IntroText text={info.servizi[svc.slug]} link={info.introLink}/> : `InLab Communication segue ${svc.label} per attività di ${cityName} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
             <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
@@ -2213,7 +2213,7 @@ const parseRoute = (route) => {
   if(agencyCity) return {page:"agency",city:agencyCity};
   // city SEO pages
   for(const svc of SERVICES){
-    for(const city of CITIES){
+    for(const city of serviceCities(svc.slug)){
       const expected=`/${svc.slug}-${citySlug(city)}`;
       if(route===expected) return {page:"city",service:svc.slug,city:citySlug(city)};
     }

@@ -263,7 +263,14 @@ export const CITY_INFO: CityInfo[] = [
       { q: "Da dove si parte per far crescere un'attività a Massafra?", a: "Da quello che c'è già: scheda Google, profili social, sito. Li analizziamo in un primo incontro e ti diciamo quali sono i due o tre passi che servono subito." },
     ],
     servizi: {
+      'gestione-social': "Per un'attività di Massafra i social servono a crescere: farsi trovare da chi non ti conosce ancora, farsi scegliere da chi ti confronta con altri, portare richieste concrete. Costruiamo un piano editoriale chiaro, giriamo foto e reel sul posto, a pochi chilometri dalla nostra sede, e ogni mese guardiamo insieme cosa funziona.",
       'meta-ads': "Sponsorizzate mirate su Massafra e sui paesi vicini, con un budget che cresce solo quando i risultati lo giustificano.",
+    },
+    paginaServizio: {
+      'gestione-social': {
+        title: "Gestione social a Massafra | InLab Communication",
+        description: "Gestione social a Massafra: piano editoriale, contenuti, reel e sponsorizzate per far crescere la tua attività passo dopo passo. Preventivo gratuito.",
+      },
     },
   },
   {
@@ -281,6 +288,15 @@ export const CITY_INFO: CityInfo[] = [
     altreFaq: [
       { q: "Che differenza c'è tra un social media manager e una strategia di comunicazione?", a: "Il social media manager pubblica; la strategia decide cosa, per chi e perché. Noi facciamo entrambe le cose: prima il piano, poi i contenuti e le campagne." },
     ],
+    servizi: {
+      'gestione-social': "In una città grande come Bari pubblicare tanto non basta: serve sapere a chi parli e perché dovrebbe scegliere te. Partiamo dalla strategia, con l'analisi di pubblico, concorrenti e punti di forza, poi costruiamo contenuti e campagne. È il metodo che Nicola Carpignano insegna nei master di EA Formazione in Marketing e Social Media.",
+    },
+    paginaServizio: {
+      'gestione-social': {
+        title: "Gestione social a Bari | InLab Communication",
+        description: "Gestione social a Bari: strategia, piano editoriale, contenuti e campagne con il metodo di chi insegna Social Media nei master. Preventivo gratuito.",
+      },
+    },
   },
   {
     name: 'Matera', provincia: 'provincia di Matera',
@@ -303,7 +319,14 @@ export const CITY_INFO: CityInfo[] = [
       { q: "Si possono vendere online prodotti freschi come i latticini?", a: "Sì, con le giuste scelte su spedizioni e confezioni. Prima ti aiutiamo a capire se conviene e con quale formula: ordini con ritiro, consegna in zona o spedizione." },
     ],
     servizi: {
+      'gestione-social': "A Gioia del Colle i social funzionano quando mostrano da dove arriva il prodotto: il caseificio, la cantina, le persone che ci lavorano. Raccontiamo origine e qualità con foto e video veri, in un piano editoriale costante, e portiamo i contenuti anche a chi cerca prodotti della Murgia fuori dalla Puglia.",
       'siti-web': "E-commerce e cataloghi semplici da gestire, collegati a WhatsApp e Instagram, per vendere latticini, vino e prodotti tipici anche fuori regione.",
+    },
+    paginaServizio: {
+      'gestione-social': {
+        title: "Gestione social a Gioia del Colle | InLab Communication",
+        description: "Gestione social a Gioia del Colle: contenuti su prodotti, origine e persone, per caseifici, cantine e attività del territorio. Preventivo gratuito.",
+      },
     },
   },
 ];
