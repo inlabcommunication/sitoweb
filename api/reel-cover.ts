@@ -53,12 +53,23 @@ export function thumbnailFrom(page: string): string | null {
   return url && metaCdn(url) ? url : null;
 }
 
-/** Corpo della risposta fino a `max` byte (oltre si interrompe). */
+/** Corpo della risposta fino a `max` byte: si legge a pezzi e ci si ferma appena si
+ *  supera il limite, anche quando la risposta non dichiara la dimensione (chunked). */
 async function readLimited(r: Response, max: number): Promise<Buffer | null> {
   const len = Number(r.headers.get("content-length") || 0);
-  if (len > max) return null;
-  const buf = Buffer.from(await r.arrayBuffer());
-  return buf.length > max ? null : buf;
+  if (len > max) { await r.body?.cancel().catch(() => {}); return null; }
+  if (!r.body) return null;
+  const reader = r.body.getReader();
+  const parts: Uint8Array[] = [];
+  let total = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.byteLength;
+    if (total > max) { await reader.cancel().catch(() => {}); return null; }
+    parts.push(value);
+  }
+  return Buffer.concat(parts);
 }
 
 async function uploadToCloudinary(bytes: Buffer, type: string, code: string, secret: string): Promise<string | null> {
