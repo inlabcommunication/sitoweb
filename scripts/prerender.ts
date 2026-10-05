@@ -4,7 +4,7 @@
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
+import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, EXTRA_SERVICE_CITIES, citySlug, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -284,6 +284,10 @@ const llms = [
   ...['/casi-studio', ...caseRoutes].filter(indexable).map((p) => line(p)),
   '', '## Città in cui lavoriamo', '',
   `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta. Seguiamo anche attività di ${EXTRA_AGENCY_CITIES.join(', ')}.`,
+  ...Object.entries(EXTRA_SERVICE_CITIES).flatMap(([slug, cities]) => {
+    const label = SERVICES_SEO.find((s) => s.slug === slug)?.label || slug;
+    return cities.length ? [`${label} anche a ${cities.join(', ')}: ${cities.map((c) => `${SITE_URL}/${slug}-${citySlug(c)}`).join(', ')}.`] : [];
+  }),
   '', ...AGENCY_CITIES.map(agencyPath).filter(indexable).map((p) => line(p)),
   '', '## Blog', '',
   ...(indexable('/blog') ? [line('/blog')] : []),
