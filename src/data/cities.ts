@@ -203,6 +203,18 @@ export const CITY_INFO: CityInfo[] = [
     metodo: "A Laterza il valore sta nel saper fare: forni, botteghe, ceramisti e produttori. Lavoriamo con video brevi del lavoro, foto curate dei prodotti e testi che spiegano la tradizione senza retorica. Così anche chi non è del posto capisce perché vale la pena comprare o fare una deviazione per venire a trovarti.",
     faq2: { q: "Si possono vendere online prodotti artigianali di Laterza?", a: "Sì: con un piccolo e-commerce o con un catalogo collegato a WhatsApp e Instagram. Ti aiutiamo a scegliere la soluzione più semplice da gestire." },
     faq3: { q: "Si può portare più gente a Laterza con i social?", a: "Sì, raccontando bene quello che c'è: la gravina, il pane, la maiolica. Video brevi e foto curate funzionano anche con chi arriva da fuori, per esempio da Matera o dalla costa." },
+    description: "Agenzia di comunicazione a Laterza: social, video e foto per forni, botteghe e artigiani, per farsi conoscere anche fuori dal paese. Preventivo gratuito.",
+    intro: "Laterza ha forni, botteghe e ceramisti che lavorano bene da generazioni. Li aiutiamo a farsi conoscere anche fuori dal paese con social, video, foto, siti e branding, da Castellaneta.",
+    focus: {
+      titolo: "Perché comunicare sui social anche se ti conoscono tutti",
+      testo: "In paese ti conoscono già, ma chi arriva da fuori, chi è emigrato e chi cerca un regalo o un prodotto tipico ti trova solo se sei online. I social sono il posto dove si sceglie dove fare una deviazione, cosa comprare, dove portare un ospite. Un forno che mostra il pane appena sfornato o una bottega che racconta come nasce una maiolica non vende solo un prodotto: fa conoscere il lavoro e la storia che ci sono dietro.",
+    },
+    altreFaq: [
+      { q: "Ho poco tempo: quanto devo pubblicare?", a: "Meno di quanto pensi: due o tre contenuti curati a settimana bastano per iniziare. Riprese e montaggio li facciamo noi, tu continui a lavorare." },
+    ],
+    servizi: {
+      'video': "Video brevi girati in bottega o al forno: le mani, i gesti, il prodotto finito. È il formato che fa capire il valore del saper fare.",
+    },
   },
   {
     name: 'Ginosa', provincia: 'provincia di Taranto',
