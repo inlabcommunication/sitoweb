@@ -246,6 +246,31 @@ for (const p of getBlogPosts()) {
   if (/^[a-z0-9-]+$/.test(p.slug)) writeFileSync(join(DIST, 'blog-data', `${p.slug}.json`), JSON.stringify({ content: p.content }));
 }
 
+// Controllo: nessuna pagina della sitemap deve finire in un redirect di vercel.json
+// (05/10: una vecchia regola mandava /gestione-social-massafra a /gestione-social).
+// Le sorgenti usano la sintassi di Vercel: ":nome(a|b)" e ":nome".
+{
+  const vercel = JSON.parse(readFileSync('vercel.json', 'utf8'));
+  // un solo passaggio: i parametri diventano gruppi, il resto del testo resta letterale
+  const lit = (t: string) => t.replace(/[.+?^${}()|[\]\\*]/g, (c) => '\\' + c);
+  const toRegex = (src: string) => {
+    let out = '', last = 0;
+    for (const m of src.matchAll(/:\w+(?:\(([^)]*)\)|(\*))?/g)) {
+      out += lit(src.slice(last, m.index)) + (m[1] !== undefined ? `(?:${m[1]})` : m[2] ? '.*' : '[^/]+');
+      last = m.index! + m[0].length;
+    }
+    return new RegExp('^' + out + lit(src.slice(last)) + '$');
+  };
+  const redirects = ((vercel.redirects || []) as { source: string }[]).map((r) => ({ source: r.source, re: toRegex(r.source) }));
+  const clash = routes
+    .filter((p) => { const seo = getSeo(p); return !seo.noindex && seo.sitemap; })
+    .flatMap((p) => redirects.filter((r) => r.re.test(p)).map((r) => `${p} ← ${r.source}`));
+  if (clash.length) {
+    console.error('[prerender] pagine della sitemap che vercel.json reindirizza:\n  ' + clash.join('\n  '));
+    process.exit(1);
+  }
+}
+
 // lastmod solo dove la data è reale (articoli del blog): Google ignora le date
 // che cambiano a ogni build senza che la pagina cambi.
 const urls = routes
