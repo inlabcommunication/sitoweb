@@ -136,6 +136,19 @@ export const CITY_INFO: CityInfo[] = [
     ],
     description: "Agenzia di comunicazione a Palagiano: reel per l'Autofficina Putignano, sito e campagne per lo Studio Dentistico Ricciardi. Preventivo gratuito.",
     intro: "A Palagiano lavoriamo con attività molto diverse tra loro: per l'Autofficina Nunzio Putignano giriamo reel ironici in dialetto con il titolare e il suo team, per lo Studio Dentistico Ricciardi abbiamo creato il sito Lumina e le campagne che portano richieste di visita. InLab Communication segue social, video, sponsorizzate, siti e branding da Castellaneta, a pochi chilometri dal paese.",
+    paginaServizio: {
+      'siti-web': {
+        title: 'Realizzazione siti web a Palagiano | InLab',
+        description: "Siti web a Palagiano: per lo Studio Dentistico Ricciardi abbiamo creato luminaricciardi.it, con una pagina per ogni trattamento. Preventivo gratuito.",
+        progettoInEvidenza: {
+          titolo: 'Il sito che abbiamo fatto a Palagiano: luminaricciardi.it',
+          testo: "Per lo Studio Dentistico Ricciardi, in Via Imbriani a Palagiano, abbiamo progettato il nuovo sito attorno al brand Lumina. Ci sono una pagina per ogni trattamento, dalla prevenzione all'implantologia computer guidata, la presentazione dello studio e del team e i contatti sempre visibili per prenotare una visita. Il sito lavora insieme ai social e alle campagne: chi vede un contenuto arriva sulla pagina del trattamento giusto e da lì chiede un appuntamento.",
+          punti: ['Sito web', 'Pagine dedicate ai trattamenti', 'Copywriting', 'Brand Lumina', 'Collegamento con campagne e social'],
+          caso: 'ricciardi',
+          sito: { url: 'https://luminaricciardi.it/', label: 'Visita il sito' },
+        },
+      },
+    },
     clientiInEvidenza: {
       titolo: 'I nostri clienti a Palagiano',
       voci: [

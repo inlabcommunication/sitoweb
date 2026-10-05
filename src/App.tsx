@@ -1755,6 +1755,7 @@ const PageCittaSEO = ({city, service}) => {
     .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
   const info=cityInfo(cityName);
   const provincia=info?.provincia||"provincia di Taranto";
+  const project=info?.paginaServizio?.[svc.slug]?.progettoInEvidenza;
  
   return (
     <>
@@ -1784,6 +1785,28 @@ const PageCittaSEO = ({city, service}) => {
         </div>
       </section>
  
+      {/* Un lavoro fatto in città, subito dopo l'apertura (brief SEO 05/10 Palagiano) */}
+      {project && (
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:900,margin:"0 auto"}}>
+            <p className="section-label">Un nostro lavoro a {cityName}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{project.titolo}</h2>
+            {project.immagine && <img src={cld(project.immagine.src, 900)} alt={project.immagine.alt} loading="lazy" decoding="async" style={{width:"100%",borderRadius:20,marginBottom:"1.5rem",display:"block"}}/>}
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8,marginBottom:"1.5rem"}}>{project.testo}</p>
+            {project.punti?.length ? <>
+              <h3 style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--t)",fontWeight:500,marginBottom:".8rem"}}>Cosa abbiamo realizzato</h3>
+              <ul style={{listStyle:"none",padding:0,margin:"0 0 1.5rem",display:"flex",flexWrap:"wrap",gap:8}}>
+                {project.punti.map(p=><li key={p} className="tag tag-g" style={{fontSize:12,padding:"8px 14px"}}>{p}</li>)}
+              </ul>
+            </> : null}
+            <div style={{display:"flex",flexWrap:"wrap",gap:"0 1.5rem"}}>
+              {project.caso && <Link to={`/casi-studio/${project.caso}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>Leggi il caso studio <ArrowRight size={13}/></Link>}
+              {project.sito && /^https:\/\//.test(project.sito.url) && <a href={project.sito.url} target="_blank" rel="noopener" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>{project.sito.label} <ArrowUpRight size={13}/></a>}
+            </div>
+          </div>
+        </section>
+      )}
+
       <AgencyStatsRow/>
  
       {/* Local content */}
