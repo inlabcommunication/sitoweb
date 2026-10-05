@@ -28,6 +28,10 @@ export type CityInfo = {
   title?: string;
   /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
   casaNostra?: { titolo: string; testo: string; autore: string; link: string };
+  /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
+  focus?: { titolo: string; testo: string };
+  /** Collegamento su una parola dell'apertura (es. il nome di Nicola → pagina autore) */
+  introLink?: { testo: string; href: string };
   /** Clienti in evidenza subito dopo l'apertura della pagina agenzia, con una riga
    * in più per cliente (id della scheda cliente, id del caso studio facoltativo).
    * Brief SEO 05/10 Palagiano. */
@@ -87,6 +91,18 @@ export const CITY_INFO: CityInfo[] = [
     faq2: { q: "Lavorate anche per strutture di Castellaneta Marina?", a: "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate." },
     sezione: { titolo: 'Castellaneta Marina', testo: "Castellaneta Marina, sulla costa ionica, vive di turismo estivo, villaggi, lidi e ristorazione. Per le strutture della costa prepariamo foto, video, social e sponsorizzate prima dell'estate, quando i turisti scelgono dove andare, e le seguiamo durante tutta la stagione." },
     faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita 26. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
+    description: "Agenzia di comunicazione a Castellaneta, in Via Regina Margherita 26: video, social e sponsorizzate per il paese e la Marina. Preventivo gratuito.",
+    intro: "Siamo a Castellaneta, in Via Regina Margherita 26: per le attività del paese siamo l'agenzia sotto casa. Seguiamo social, video, sponsorizzate, siti e branding, e ci vediamo di persona quando serve, in sede o direttamente da te.",
+    focus: {
+      titolo: "Il video che fa vendere: due esempi da Castellaneta",
+      testo: "Un video breve spiega in pochi secondi quello che una foto non riesce a dire. Per lo Studio Ventimiglia Solution giriamo video di presentazione degli immobili in vendita: chi guarda capisce spazi, luce e posizione prima ancora di chiamare. Per l'Ottica Occhi Blu abbiamo scelto video promozionali simpatici, che rendono semplice e leggera la scelta di un paio di occhiali. Settori diversi, lo stesso obiettivo: far capire subito perché scegliere te.",
+    },
+    altreFaq: [
+      { q: "Quanto costa fare un video per la mia attività a Castellaneta?", a: "Dipende da durata, riprese e quante versioni servono per i social. Dopo un primo incontro in sede ti facciamo un preventivo chiaro e gratuito." },
+    ],
+    servizi: {
+      'video': "Video brevi che spiegano e fanno scegliere: presentazioni degli immobili per lo Studio Ventimiglia, video simpatici per l'Ottica Occhi Blu. Li giriamo a Castellaneta, a due passi dalla nostra sede.",
+    },
   },
   {
     name: 'Mottola', provincia: 'provincia di Taranto',

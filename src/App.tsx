@@ -1491,6 +1491,13 @@ const PageContatti = () => {
 /* ═══════════════════════════════════════════════════════════════
    PAGE: CITTÀ SEO (template)
 ═══════════════════════════════════════════════════════════════ */
+// Apertura della pagina città, con un eventuale collegamento su una parola (es. Bari → pagina di Nicola)
+const IntroText = ({text, link}: {text: string; link?: {testo: string; href: string}}) => {
+  const i = link ? text.indexOf(link.testo) : -1;
+  if (!link || i < 0) return <>{text}</>;
+  return <>{text.slice(0, i)}<Link to={link.href} style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>{link.testo}</Link>{text.slice(i + link.testo.length)}</>;
+};
+
 /* Pagina "Agenzia di comunicazione e marketing a {città}" (brief SEO 01/10) */
 const PageAgenziaCitta = ({city}: {city: string}) => {
   const {go}=useRouter();
@@ -1520,13 +1527,24 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>a {city}</span>
           </h1>
           <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
-            {info?.intro ? info.intro : isHome
+            {info?.intro ? <IntroText text={info.intro} link={info.introLink}/> : isHome
               ? "InLab Communication ha sede a Castellaneta: seguiamo social, video, campagne, siti web e branding per le attività del paese e di Castellaneta Marina, con strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme."
               : `InLab Communication segue social, video, campagne, siti web e branding per attività di ${city} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </p>
           <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
         </div>
       </section>
+
+      {/* Argomento proprio della città, subito dopo l'apertura (brief SEO 05/10 città) */}
+      {info?.focus && (
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:900,margin:"0 auto"}}>
+            <p className="section-label">A {city}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{info.focus.titolo}</h2>
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.focus.testo}</p>
+          </div>
+        </section>
+      )}
 
       {/* Clienti in evidenza subito dopo l'apertura, con una riga in più (brief SEO 05/10 Palagiano) */}
       {featured && (
