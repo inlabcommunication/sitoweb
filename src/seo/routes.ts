@@ -348,7 +348,9 @@ export const getSeo = (rawPath: string): Seo => {
         ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito.",
         ", da un'agenzia di Castellaneta (TA). Preventivo gratuito.",
       ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';
-      return page(path, withBrand(`${s.label} a ${city}`), desc, {
+      // testi propri della pagina, se il brief SEO li prevede (src/data/cities.ts → paginaServizio)
+      const own = cityInfo(city)?.paginaServizio?.[s.slug];
+      return page(path, own?.title || withBrand(`${s.label} a ${city}`), own?.description || desc, {
         sitemap: { priority: 0.6, changefreq: 'monthly' },
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} a ${city}`, serviceType: s.keyword,

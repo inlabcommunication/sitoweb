@@ -1504,6 +1504,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   // i servizi puntano alle pagine generali.
   const hasServicePages=CITIES.includes(city);
   const isHome=city===BUSINESS.city;
+  const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
   const provinceGroups=city==="Taranto" ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
     city:c,
@@ -1526,6 +1527,38 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
           <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
         </div>
       </section>
+
+      {/* Clienti in evidenza subito dopo l'apertura, con una riga in più (brief SEO 05/10 Palagiano) */}
+      {featured && (
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">Clienti a {city}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>{featured.titolo}</h2>
+            {(localCases.length>0||localClients.length>0) && (
+              <CaseCardGrid>
+                {localCases.map((cs: any, i: number)=>(
+                  <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
+                ))}
+                {localClients.map((cl: any, i: number)=>(
+                  <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"/>
+                ))}
+              </CaseCardGrid>
+            )}
+            <ul style={{listStyle:"none",padding:0,margin:"2rem 0 0",display:"flex",flexDirection:"column",gap:0}}>
+              {featured.voci.map(v=>{
+                return (
+                  <li key={v.cliente} style={{display:"flex",flexWrap:"wrap",alignItems:"center",gap:"0.4rem 1.2rem",padding:"1rem 0",borderBottom:".5px solid var(--b)"}}>
+                    <span style={{fontSize:15,color:"var(--t)",fontWeight:500}}>{v.nome}</span>
+                    <span style={{fontSize:14,color:"var(--m)",flex:"1 1 260px"}}>{v.riga}</span>
+                    {v.caso && <Link to={`/casi-studio/${v.caso}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:13,color:"var(--a)"}}>Leggi il caso studio <ArrowRight size={12}/></Link>}
+                    <Link to={`/cliente/${v.cliente}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:13,color:"var(--a)"}}>Scheda cliente <ArrowRight size={12}/></Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {info && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
@@ -1583,7 +1616,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </section>
       )}
 
-      {provinceGroups.length===0&&(localClients.length>0||localCases.length>0)&&(
+      {!featured&&provinceGroups.length===0&&(localClients.length>0||localCases.length>0)&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Clienti a {city}</p>
@@ -1722,6 +1755,7 @@ const PageCittaSEO = ({city, service}) => {
     .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
   const info=cityInfo(cityName);
   const provincia=info?.provincia||"provincia di Taranto";
+  const project=info?.paginaServizio?.[svc.slug]?.progettoInEvidenza;
  
   return (
     <>
@@ -1751,6 +1785,28 @@ const PageCittaSEO = ({city, service}) => {
         </div>
       </section>
  
+      {/* Un lavoro fatto in città, subito dopo l'apertura (brief SEO 05/10 Palagiano) */}
+      {project && (
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:900,margin:"0 auto"}}>
+            <p className="section-label">Un nostro lavoro a {cityName}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{project.titolo}</h2>
+            {project.immagine && <img src={cld(project.immagine.src, 900)} alt={project.immagine.alt} loading="lazy" decoding="async" style={{width:"100%",borderRadius:20,marginBottom:"1.5rem",display:"block"}}/>}
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8,marginBottom:"1.5rem"}}>{project.testo}</p>
+            {project.punti?.length ? <>
+              <h3 style={{fontSize:13,letterSpacing:".14em",textTransform:"uppercase",color:"var(--t)",fontWeight:500,marginBottom:".8rem"}}>Cosa abbiamo realizzato</h3>
+              <ul style={{listStyle:"none",padding:0,margin:"0 0 1.5rem",display:"flex",flexWrap:"wrap",gap:8}}>
+                {project.punti.map(p=><li key={p} className="tag tag-g" style={{fontSize:12,padding:"8px 14px"}}>{p}</li>)}
+              </ul>
+            </> : null}
+            <div style={{display:"flex",flexWrap:"wrap",gap:"0 1.5rem"}}>
+              {project.caso && <Link to={`/casi-studio/${project.caso}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>Leggi il caso studio <ArrowRight size={13}/></Link>}
+              {project.sito && /^https:\/\//.test(project.sito.url) && <a href={project.sito.url} target="_blank" rel="noopener" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>{project.sito.label} <ArrowUpRight size={13}/></a>}
+            </div>
+          </div>
+        </section>
+      )}
+
       <AgencyStatsRow/>
  
       {/* Local content */}
