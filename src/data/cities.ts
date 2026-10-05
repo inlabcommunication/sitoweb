@@ -271,6 +271,16 @@ export const CITY_INFO: CityInfo[] = [
     contesto: 'Bari è il capoluogo della Puglia, con Bari Vecchia, il lungomare e un tessuto di imprese, professionisti e attività commerciali tra i più grandi del Sud. Per InLab è una città di casa: Nicola Carpignano ha studiato Psicologia a Bari e insegna Marketing e Social Media nei master di EA Formazione.',
     settori: ['aziende e professionisti', 'commercio e ristorazione', 'eventi e formazione'],
     faq: { q: 'Seguite aziende di Bari anche se avete sede a Castellaneta?', a: 'Sì. Lavoriamo a distanza per strategia, contenuti e campagne, e veniamo a Bari per incontri, shooting e riprese.' },
+    description: "Agenzia di comunicazione per attività di Bari: strategia, social, sponsorizzate e siti con il metodo di chi insegna marketing. Preventivo gratuito.",
+    intro: "A Bari Nicola Carpignano, cofondatore di InLab, ha studiato Psicologia e insegna Marketing e Social Media nei master di EA Formazione. Portiamo lo stesso metodo alle attività di Bari: strategia prima dei post, numeri chiari e contenuti che parlano alle persone giuste.",
+    introLink: { testo: "Nicola Carpignano", href: "/autori/nicola-carpignano" },
+    focus: {
+      titolo: "Prima la strategia, poi i contenuti",
+      testo: "In una città grande come Bari pubblicare tanto non basta: bisogna sapere a chi parli e perché dovrebbe scegliere te. Partiamo da qui, con l'analisi del pubblico, dei concorrenti e di cosa ti rende diverso. Poi costruiamo il piano: quali contenuti, su quali canali, con quale budget per le sponsorizzate, e come misureremo i risultati. È lo stesso approccio che Nicola insegna nei master in Marketing e Social Media: psicologia delle persone, obiettivi chiari, dati.",
+    },
+    altreFaq: [
+      { q: "Che differenza c'è tra un social media manager e una strategia di comunicazione?", a: "Il social media manager pubblica; la strategia decide cosa, per chi e perché. Noi facciamo entrambe le cose: prima il piano, poi i contenuti e le campagne." },
+    ],
   },
   {
     name: 'Matera', provincia: 'provincia di Matera',
