@@ -28,22 +28,27 @@
     },
     {
       "source": "/cliente/aleph-caffe",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "permanent": true
     },
     {
+      "source": "/casi-studio",
+      "destination": "/clienti",
+      "statusCode": 301
+    },
+    {
       "source": "/lavori",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "statusCode": 301
     },
     {
       "source": "/portfolio",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "statusCode": 301
     },
     {
       "source": "/progetto/:id",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "statusCode": 301
     }
   ],

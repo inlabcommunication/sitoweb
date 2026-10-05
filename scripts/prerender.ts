@@ -306,7 +306,7 @@ const llms = [
   '', '## Chi siamo', '',
   ...['/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug))].filter(indexable).map((p) => line(p)),
   '', '## Casi studio', '',
-  ...['/casi-studio', ...caseRoutes].filter(indexable).map((p) => line(p)),
+  ...['/clienti', ...caseRoutes].filter(indexable).map((p) => line(p)),
   '', '## Città in cui lavoriamo', '',
   `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta. Seguiamo anche attività di ${EXTRA_AGENCY_CITIES.join(', ')}.`,
   ...Object.entries(EXTRA_SERVICE_CITIES).flatMap(([slug, cities]) => {
