@@ -439,7 +439,7 @@ const DoveLavoriamo = ({slug}: {slug: string}) => (
   <section style={{padding:"2.5rem 2rem",borderBottom:".5px solid var(--b)"}}>
     <p style={{maxWidth:1280,margin:"0 auto",fontSize:15,color:"var(--m)",lineHeight:1.9}}>
       Dove lavoriamo:{" "}
-      {["Taranto","Castellaneta","Palagianello"].map(c=>(
+      {["Taranto","Castellaneta","Palagianello",...serviceCities(slug).filter(c=>!CITIES.includes(c))].map(c=>(
         <React.Fragment key={c}><Link to={`/${slug}-${citySlug(c)}`} className="foot-link" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>{c}</Link>{" · "}</React.Fragment>
       ))}
       <Link to="/servizi" className="foot-link" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>tutte le città</Link>
@@ -1507,9 +1507,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const content=useContent() as any;
   const localClients=normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(city)));
   const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
-  // Le città senza clienti (EXTRA_AGENCY_CITIES) non hanno pagine per servizio:
-  // i servizi puntano alle pagine generali.
-  const hasServicePages=CITIES.includes(city);
+  // Le città fuori da CITIES hanno solo le pagine servizio previste in EXTRA_SERVICE_CITIES
+  // (oggi gestione social): gli altri servizi puntano alle pagine generali.
+  const hasServicePage=(slug: string)=>serviceCities(slug).includes(city);
   const isHome=city===BUSINESS.city;
   const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
@@ -1603,8 +1603,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
             {SERVICES.map(s=>(
-              <Link key={s.slug} to={hasServicePages?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
-                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePages?`${s.label} a ${city}`:s.label}</span></span>
+              <Link key={s.slug} to={hasServicePage(s.slug)?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
+                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePage(s.slug)?`${s.label} a ${city}`:s.label}</span></span>
                 <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info?.servizi?.[s.slug]||s.short}</span>
               </Link>
             ))}
