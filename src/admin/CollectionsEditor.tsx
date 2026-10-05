@@ -347,6 +347,32 @@ export const ServiceExamplesEditor = ({ content, set }: Props) => {
   );
 };
 
+// "Altri clienti" della pagina /clienti: brand seguiti per un servizio
+// specifico, senza scheda (richiesta di Nicola, 05/10).
+export const OtherClientsEditor = ({ content, set }: Props) => {
+  const d = content.otherClients || {};
+  return (
+    <div>
+      <SectionTitle>Altri clienti — collaborazioni su un servizio</SectionTitle>
+      <Note>Compaiono nella pagina <b>/clienti</b>, sotto "Non solo contenuti": nome, e se vuoi settore, città, servizi e logo. Non hanno una pagina propria. Le modifiche vanno online con <b>Salva</b>.</Note>
+      <Field label="Etichetta" value={d.label} onChange={(v: string) => set('otherClients.label', v)} placeholder="Altri clienti" />
+      <Field label="Titolo" value={d.title} onChange={(v: string) => set('otherClients.title', v)} placeholder="Collaborazioni" />
+      <Field label="Titolo (parte in contorno)" value={d.accent} onChange={(v: string) => set('otherClients.accent', v)} placeholder="su misura." />
+      <Field label="Testo" value={d.text} onChange={(v: string) => set('otherClients.text', v)} multiline rows={3} />
+      <ObjList items={d.items || []} onChange={(a) => set('otherClients.items', a)} addLabel="Aggiungi cliente"
+        newItem={() => ({ name: '', sector: '', location: '', services: '', logo: '' })}
+        titleOf={(x, i) => x.name || `Cliente ${i + 1}`}
+        fields={[
+          { key: 'name', label: 'Nome', placeholder: 'Es. Vision Ottica' },
+          { key: 'sector', label: 'Settore (facoltativo)', placeholder: 'Es. Ottica, Lido, Ristorante' },
+          { key: 'location', label: 'Città (facoltativa)', placeholder: 'Es. Castellaneta Marina' },
+          { key: 'services', label: 'Servizi seguiti (facoltativi, separati da virgola)', placeholder: 'Es. Gestione social, Foto' },
+          { key: 'logo', label: 'Logo (facoltativo)', kind: 'image' },
+        ]} />
+    </div>
+  );
+};
+
 // Attività senza scheda cliente per /dove-lavoriamo: niente nomi (regola di
 // Nicola, brief SEO 03/10), solo città, settore e servizi.
 export const AreasEditor = ({ content, set }: Props) => (

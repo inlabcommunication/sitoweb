@@ -29,6 +29,7 @@ import { MethodTimeline } from "./sections/MethodTimeline";
 import { ClientsWall } from "./sections/ClientsWall";
 import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
+import { OtherClients } from './sections/OtherClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
@@ -2074,6 +2075,7 @@ const PageCasiStudio = () => {
       </section>
       <ClientsWall showHeader={false} onClientClick={(id) => go(`/cliente/${id}`)} />
       <CaseStudiesSection onCaseClick={(id) => go("/casi-studio/" + id)} />
+      <OtherClients />
       <FinalCTA onClick={() => go("/contatti")} />
     </>
   );
