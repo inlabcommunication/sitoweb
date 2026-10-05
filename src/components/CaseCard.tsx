@@ -20,12 +20,16 @@ type Props = {
   onOpen?: () => void;
   /** titolo come <h3> (dove la pagina lo richiede per la struttura dei titoli) */
   heading?: boolean;
+  /** riga in più sotto la descrizione (es. il lavoro fatto per il cliente) */
+  note?: string;
+  /** secondo link, sotto la card e fuori dal link principale (es. il caso studio) */
+  secondary?: { href: string; label: string };
 };
 
-export const CaseCard: React.FC<Props> = ({ href, number, kicker, title, italic, meta, desc, cta, logo, onOpen, heading = false }) => {
+export const CaseCard: React.FC<Props> = ({ href, number, kicker, title, italic, meta, desc, cta, logo, onOpen, heading = false, note, secondary }) => {
   const n = String(number).padStart(2, '0');
   const Title = heading ? 'h3' : 'span';
-  return (
+  const card = (
     <a href={href} className="case-card" onClick={linkClick(onOpen || (() => navigate(href)))}>
       <span className="case-card-num" aria-hidden="true">{n}</span>
       <span style={{ position: 'relative', zIndex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -42,9 +46,20 @@ export const CaseCard: React.FC<Props> = ({ href, number, kicker, title, italic,
         {italic && <span style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.05rem, 1.6vw, 1.3rem)', color: 'var(--a)', lineHeight: 1.3, marginBottom: '0.8rem' }}>{italic}</span>}
         {meta && <span style={{ fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: '1rem' }}>{meta}</span>}
         {desc && <span className="case-card-desc">{desc}</span>}
+        {note && <span style={{ display: 'block', fontSize: 14, color: 'var(--t)', lineHeight: 1.5, margin: '0.4rem 0 1rem' }}>{note}</span>}
         <span className="case-card-cta">{cta} <ArrowUpRight size={13} /></span>
       </span>
     </a>
+  );
+  if (!secondary) return card;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {card}
+      <a href={secondary.href} onClick={linkClick(() => navigate(secondary.href))} className="foot-link"
+        style={{ display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 44, padding: '0 0.4rem', fontSize: 13, color: 'var(--a)' }}>
+        {secondary.label} <ArrowUpRight size={12} />
+      </a>
+    </div>
   );
 };
 
