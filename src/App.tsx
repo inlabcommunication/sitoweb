@@ -231,7 +231,7 @@ const Navbar = () => {
   const navLinks = [
     { to:"/", label:"Home" },
     { to:"/chi-siamo", label:"Studio" },
-    { to:"/casi-studio", label:"Casi studio" },
+    { to:"/clienti", label:"Clienti" },
     { to:"/servizi", label:"Servizi" },
     { to:"/blog", label:"Blog" },
     { to:"/contatti", label:"Contatti" },
@@ -328,7 +328,7 @@ const Footer = () => {
           <div>
             <div style={{fontSize:12,fontWeight:500,letterSpacing:".16em",textTransform:"uppercase",color:"var(--m)",marginBottom:"1rem"}}>Studio</div>
             <div className="foot-list" style={{display:"flex",flexDirection:"column",gap:"0.6rem"}}>
-              {[["Chi siamo","/chi-siamo"],["Casi studio","/casi-studio"],["Blog","/blog"],["Agenzia a Taranto","/agenzia-comunicazione-taranto"],["Dove lavoriamo","/dove-lavoriamo"],["Contatti","/contatti"]].map(([l,r])=>(
+              {[["Chi siamo","/chi-siamo"],["Clienti","/clienti"],["Blog","/blog"],["Agenzia a Taranto","/agenzia-comunicazione-taranto"],["Dove lavoriamo","/dove-lavoriamo"],["Contatti","/contatti"]].map(([l,r])=>(
                 <Link key={r} to={r} className="foot-link" style={{fontSize:13,color:"var(--m)",transition:"color .2s"}}>{l}</Link>
               ))}
             </div>
@@ -838,7 +838,7 @@ const PageGestioneSocial = () => (
       italic="con la giusta comunicazione social."
       sub="Non pubblichiamo solo post. Costruiamo una presenza digitale strategica che trasforma follower in clienti reali."
       cta1="Richiedi un preventivo" cta1to="/contatti"
-      cta2="Vedi i risultati" cta2to="/casi-studio"
+      cta2="Vedi i risultati" cta2to="/clienti"
     />
     <Marquee items={["Analisi","✦","Strategia","✦","Contenuti","✦","Pubblicazione","✦","Ottimizzazione","✦","Crescita","✦"]}/>
     <StatsRow stats={[{n:"3.2M+",l:"Views generate"},{n:"47",l:"Brand gestiti"},{n:"+280%",l:"Crescita media follower"},{n:"94%",l:"Clienti rinnovano"}]}/>
@@ -902,7 +902,7 @@ const PageMetaAds = () => (
     <PageHero tag="Servizio — Meta Ads & Facebook Advertising"
       h1="CAMPAGNE CHE" h1b="CONVERTONO" italic="non solo che impressionano."
       sub="Gestiamo le tue campagne su Facebook e Instagram con metodo: obiettivi chiari, budget ottimizzato, risultati misurabili."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi case study" cta2to="/casi-studio"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi case study" cta2to="/clienti"
     />
     <Marquee items={["Facebook Ads","✦","Instagram Ads","✦","Retargeting","✦","Lead Generation","✦","E-commerce","✦","Brand Awareness","✦"]}/>
     <StatsRow stats={[{n:"3.2×",l:"ROAS medio clienti"},{n:"-42%",l:"Costo per lead medio"},{n:"28",l:"Campagne attive ora"},{n:"€2M+",l:"Budget gestito"}]}/>
@@ -963,7 +963,7 @@ const PageSitiWeb = () => (
     <PageHero tag="Servizio — Siti Web & Web App"
       h1="SITI WEB CHE" h1b="LAVORANO" italic="anche di notte."
       sub="Design curato, codice pulito, ottimizzazione SEO. Il tuo sito non è una brochure — è il miglior venditore che hai."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi portfolio web" cta2to="/casi-studio"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi portfolio web" cta2to="/clienti"
     />
     <Marquee items={["Design","✦","Sviluppo","✦","SEO","✦","Performance","✦","CMS","✦","E-commerce","✦","Web App","✦"]}/>
     <StatsRow stats={[{n:"<2s",l:"Tempo di caricamento medio"},{n:"98",l:"Score PageSpeed medio"},{n:"Top 3",l:"Posizione Google media"},{n:"100%",l:"Siti mobile-first"}]}/>
@@ -1024,7 +1024,7 @@ const PageAutomazioniAI = () => (
     <PageHero tag="Servizio — Automazioni con Intelligenza Artificiale"
       h1="LAVORA DI" h1b="MENO" italic="ottieni di più."
       sub="Integriamo strumenti AI nei tuoi processi aziendali. Risposte automatiche, flussi di lavoro intelligenti, chatbot. Tu ti concentri su quello che conta."
-      cta1="Scopri le possibilità" cta1to="/contatti" cta2="Vedi esempi" cta2to="/casi-studio"
+      cta1="Scopri le possibilità" cta1to="/contatti" cta2="Vedi esempi" cta2to="/clienti"
     />
     <Marquee items={["ChatGPT","✦","Make","✦","Zapier","✦","WhatsApp Business","✦","CRM","✦","Email automatiche","✦","Chatbot","✦"]}/>
     <StatsRow stats={[{n:"-60%",l:"Tempo su task ripetitivi"},{n:"24/7",l:"Risposte automatiche attive"},{n:"+180%",l:"Lead gestiti senza effort"},{n:"3 sett.",l:"Tempo medio implementazione"}]}/>
@@ -1086,7 +1086,7 @@ const PageShooting = () => (
     <PageHero tag="Servizio — Shooting Fotografico Professionale"
       h1="IMMAGINI CHE" h1b="RACCONTANO" italic="la tua storia."
       sub="La fotografia professionale non è un lusso — è un investimento. Foto mediocri costano clienti. Foto straordinarie li conquistano."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi il portfolio" cta2to="/casi-studio"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi il portfolio" cta2to="/clienti"
     />
     <Marquee items={["Brand Photography","✦","Product Shooting","✦","Food Photography","✦","Corporate","✦","Reportage","✦","Social Content","✦"]}/>
     <StatsRow stats={[{n:"200+",l:"Shooting completati"},{n:"47",l:"Brand fotografati"},{n:"100%",l:"Clienti soddisfatti"},{n:"48h",l:"Consegna materiale"}]}/>
@@ -1146,7 +1146,7 @@ const PageVideo = () => (
     <PageHero tag="Servizio — Video Production & Reels"
       h1="VIDEO CHE" h1b="FERMANO" italic="lo scroll."
       sub="Abbiamo portato brand locali a milioni di visualizzazioni organiche. Non con la fortuna — con metodo, script e produzione professionale."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i video" cta2to="/casi-studio"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i video" cta2to="/clienti"
     />
     <Marquee items={["Reel Instagram","✦","TikTok","✦","YouTube","✦","Video Istituzionale","✦","Spot Pubblicitario","✦","Documentario","✦"]}/>
     <StatsRow stats={[{n:"3.2M+",l:"Views organiche generate"},{n:"840K",l:"Record su singolo video"},{n:"12",l:"Reel virali prodotti"},{n:"×8",l:"Engagement medio vs media"}]}/>
@@ -1262,7 +1262,7 @@ const PageChiSiamo = () => {
         h1={title[0] || "NON SIAMO"} h1b={title[1] || "CONSULENTI"} italic={title[2] || "siamo partner."}
         sub={withDefinition(studio.description1)}
         sub2={<>Lavoriamo con attività di Castellaneta, Taranto e di tutta la provincia, e seguiamo clienti anche fuori dalla Puglia: trovi tutte le città nella pagina <Link to="/dove-lavoriamo" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>dove lavoriamo</Link>.</>}
-        cta1="Vedi i casi studio" cta1to="/casi-studio" cta2="Contattaci" cta2to="/contatti"
+        cta1="Vedi i clienti" cta1to="/clienti" cta2="Contattaci" cta2to="/contatti"
       />
  
       {/* Team */}
@@ -1950,7 +1950,7 @@ const PageCliente = ({id}: {id: string}) => {
         }
         <div style={{position:"absolute",inset:0,background:"linear-gradient(to top,rgba(30,29,29,1) 0%,rgba(30,29,29,.66) 48%,rgba(30,29,29,.2) 100%)"}}/>
         <div style={{maxWidth:1280,margin:"0 auto",width:"100%",position:"relative",zIndex:1}}>
-          <Link to="/casi-studio" className="btn btn-g" style={{marginBottom:"2rem",fontSize:12,padding:"8px 16px"}}>
+          <Link to="/clienti" className="btn btn-g" style={{marginBottom:"2rem",fontSize:12,padding:"8px 16px"}}>
             <ArrowLeft size={12}/> Clienti
           </Link>
           <div style={{display:"grid",gridTemplateColumns:"1.25fr .75fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
@@ -2057,7 +2057,7 @@ const PageCasiStudio = () => {
     <>
       <section style={{padding:"10rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <motion.p initial={false} className="section-label">Casi studio</motion.p>
+          <motion.p initial={false} className="section-label">Clienti</motion.p>
           <motion.h1
             initial={false}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.5rem"}}
@@ -2084,7 +2084,7 @@ const PageCasiStudio = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageCaso = ({id}: {id:string}) => {
   const { go } = useRouter();
-  const onBack = () => go("/casi-studio");
+  const onBack = () => go("/clienti");
   const onContact = () => go("/contatti");
 
   // Scroll in alto quando si arriva sulla pagina
@@ -2104,8 +2104,8 @@ const PageCaso = ({id}: {id:string}) => {
               QUESTO PROGETTO<br/><span className="stroke">NON ESISTE.</span>
             </h1>
             <p style={{color:"var(--m)",marginBottom:"2rem"}}>Forse stavi cercando un altro dei nostri progetti.</p>
-            <button className="btn btn-p" onClick={() => go("/casi-studio")}>
-              Torna ai casi studio <ArrowRight size={14}/>
+            <button className="btn btn-p" onClick={() => go("/clienti")}>
+              Torna ai clienti <ArrowRight size={14}/>
             </button>
           </div>
         </section>
@@ -2122,7 +2122,7 @@ const PageBranding = () => (
     <PageHero tag="Servizio — Branding & Identità Visiva"
       h1="IL TUO BRAND" h1b="HA UNA VOCE?" italic="Diamogliene una memorabile."
       sub="Diamo forma all'immagine del brand con grafiche, tono, colori e contenuti coerenti. Non solo un logo — un sistema visivo che comunica chi sei prima ancora che tu parli."
-      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i casi studio" cta2to="/casi-studio"
+      cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi i clienti" cta2to="/clienti"
     />
     <Marquee items={["Logo & Naming","✦","Brand Identity","✦","Palette colori","✦","Tono di voce","✦","Brand guidelines","✦","Visual system","✦"]}/>
     <StatsRow stats={[{n:"100%",l:"Progetti con brand guidelines"},{n:"48h",l:"Prime proposte visive"},{n:"3+",l:"Revisioni incluse"},{n:"∞",l:"File sorgenti consegnati"}]}/>
@@ -2180,7 +2180,9 @@ const parseRoute = (route) => {
   if(route==="/dove-lavoriamo") return {page:"dove-lavoriamo"};
   // Vecchie pagine del portfolio dimostrativo: come il redirect 301 del server
   if(route==="/lavori"||route==="/portfolio"||route.startsWith("/progetto/")) return {page:"casi-studio"};
-  if(route==="/casi-studio") return {page:"casi-studio"};
+  // "Casi studio" è diventata "Clienti" (richiesta di Nicola, 05/10): /casi-studio resta valido
+  // per i vecchi link interni (il server lo reindirizza a /clienti con un 301)
+  if(route==="/clienti"||route==="/casi-studio") return {page:"casi-studio"};
   if(route==="/servizi") return {page:"servizi"};
   if(route==="/contatti") return {page:"contatti"};
   if(route==="/privacy") return {page:"privacy"};

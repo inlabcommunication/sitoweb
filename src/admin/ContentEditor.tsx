@@ -25,7 +25,7 @@ const PAGES: { key: Page; label: string; icon: string; blocks: { key: string; la
     ],
   },
   {
-    key: 'casi', label: 'Casi studio', icon: '📂',
+    key: 'casi', label: 'Clienti', icon: '📂',
     blocks: [
       { key: 'clients', label: 'Progetti raccontati (schede clienti)' },
       { key: 'cases',   label: 'Non solo contenuti (casi studio)' },
@@ -361,7 +361,7 @@ export const ContentEditor = () => {
   if (loading) return <div style={{ padding: '4rem', textAlign: 'center', color: '#555', fontSize: 13 }}>Caricamento contenuti...</div>;
 
   const pageUrl = {
-    home: '/', studio: '/chi-siamo', casi: '/casi-studio',
+    home: '/', studio: '/chi-siamo', casi: '/clienti',
     servizi: '/siti-web', contatti: '/contatti',
   }[page] ?? '/';
 

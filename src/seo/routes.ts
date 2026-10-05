@@ -280,7 +280,7 @@ const page = (path: string, title: string, description: string, extra: Partial<S
 
 /** Tutte le pagine indicizzabili (per sitemap e prerender). */
 export const listRoutes = (): string[] => [
-  '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/casi-studio', '/contatti',
+  '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/clienti', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
   ...SERVICES_SEO.flatMap((s) => serviceCities(s.slug).map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...AGENCY_CITIES.map(agencyPath),
@@ -323,10 +323,10 @@ export const getSeo = (rawPath: string): Seo => {
         ...researchJsonLd(author)],
     }, [['Chi siamo', '/chi-siamo'], [author.name, path]]);
   }
-  if (path === '/casi-studio') {
-    return page(path, `Casi studio e clienti | ${BRAND}`,
+  if (path === '/clienti') {
+    return page(path, `Clienti e casi studio | ${BRAND}`,
       'Progetti raccontati passo per passo: strategie social, siti web, lead generation e contenuti per aziende e attività in provincia di Taranto e in Puglia.',
-      { sitemap: { priority: 0.8, changefreq: 'monthly' } }, [['Casi studio', '/casi-studio']]);
+      { sitemap: { priority: 0.8, changefreq: 'monthly' } }, [['Clienti', '/clienti']]);
   }
   if (path === '/contatti') {
     return page(path, `Contatti | Richiedi un preventivo a ${BRAND}`,
@@ -400,7 +400,7 @@ export const getSeo = (rawPath: string): Seo => {
       return page(path, withBrand(cs.title), cs.description, {
         sitemap: { priority: 0.7, changefreq: 'monthly' },
         jsonLd: [{ '@context': 'https://schema.org', '@type': 'CreativeWork', name: cs.title, description: cs.description, url: abs(path), creator: orgRef, inLanguage: 'it-IT' }],
-      }, [['Casi studio', '/casi-studio'], [cs.title.split(':')[0], path]]);
+      }, [['Clienti', '/clienti'], [cs.title.split(':')[0], path]]);
     }
   }
 
@@ -452,7 +452,7 @@ export const getSeo = (rawPath: string): Seo => {
       return page(path, `${cl.name}${where} | Clienti InLab`,
         cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`,
         { sitemap: { priority: 0.5, changefreq: 'monthly' } },
-        [['Casi studio', '/casi-studio'], [cl.name, path]]);
+        [['Clienti', '/clienti'], [cl.name, path]]);
     }
   }
 
