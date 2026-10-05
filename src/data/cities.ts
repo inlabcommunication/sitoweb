@@ -241,6 +241,18 @@ export const CITY_INFO: CityInfo[] = [
     contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa.',
     settori: ['negozi e commercio', 'aziende agricole', 'ristorazione', 'eventi'],
     faq: { q: 'Lavorate anche con attività di Massafra?', a: 'Sì, Massafra è a pochi chilometri dalla nostra sede: possiamo incontrarci di persona e fare shooting e riprese sul posto.' },
+    description: "Agenzia di comunicazione a Massafra: un piano per far crescere la tua attività con social, sponsorizzate, sito e scheda Google. Preventivo gratuito.",
+    intro: "Massafra è una città di commercio e servizi, a pochi chilometri dalla nostra sede. Aiutiamo le attività a crescere passo dopo passo: social, sponsorizzate, sito e scheda Google, con un piano chiaro e risultati misurati insieme.",
+    focus: {
+      titolo: "Crescere un passo alla volta",
+      testo: "La crescita di un'attività locale raramente arriva da un post fortunato: arriva da un piano. Il primo passo è farsi trovare, con la scheda Google completa e un profilo social curato. Il secondo è farsi scegliere, con contenuti che mostrano chi sei e cosa fai meglio degli altri. Il terzo è portare richieste, con sponsorizzate mirate su Massafra e dintorni e un sito che trasforma una visita in un contatto. Ogni mese guardiamo insieme cosa funziona e dove spingere di più.",
+    },
+    altreFaq: [
+      { q: "Da dove si parte per far crescere un'attività a Massafra?", a: "Da quello che c'è già: scheda Google, profili social, sito. Li analizziamo in un primo incontro e ti diciamo quali sono i due o tre passi che servono subito." },
+    ],
+    servizi: {
+      'meta-ads': "Sponsorizzate mirate su Massafra e sui paesi vicini, con un budget che cresce solo quando i risultati lo giustificano.",
+    },
   },
   {
     name: 'Bari', provincia: 'Città metropolitana di Bari',
