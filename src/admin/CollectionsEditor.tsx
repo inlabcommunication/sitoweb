@@ -6,6 +6,7 @@ import { Field, ImageField, CardBlock, AddBtn, SectionTitle, Note, inputStyle } 
 import { BLOCK_LABELS, emptyBlock, type CaseBlock } from '../data/caseStudies';
 import { SERVICES_SEO } from '../seo/routes';
 import { ReelsList } from './ReelCoverImport';
+import { getClientId } from '../lib/clientUtils';
 // Durante la digitazione: minuscole, niente spazi o accenti (i trattini finali restano)
 const slugify = (v: string) => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').slice(0, 80);
 
@@ -101,10 +102,50 @@ const newReel = () => ({ title: '', embed: '', showViews: false, views: '' });
 // PROGETTI RACCONTATI — schede clienti
 // ═══════════════════════════════════════════════════════════════
 
+// Campi di una scheda cliente: gli stessi per "Progetti raccontati" e per gli
+// "Altri clienti" (richiesta di Nicola, 05/10: schede complete come gli altri).
+const ClientFields = ({ c, cases, patch }: { c: any; cases: any[]; patch: (o: any) => void }) => {
+  const upd = (key: string, val: any) => patch({ [key]: val });
+  return (
+    <>
+      <SectionTitle>Informazioni</SectionTitle>
+      <Field label="Nome cliente" value={c.name} onChange={(v: string) => upd('name', v)} />
+      <Field label="Indirizzo pagina (ID)" value={c.id} onChange={(v: string) => upd('id', slugify(v))}
+        hint={`Pagina: /cliente/${c.id || '…'} — se lo cambi, i vecchi link smettono di funzionare`} />
+      <Field label="Settore" value={c.sector} onChange={(v: string) => upd('sector', v)} placeholder="Ristorazione, beauty, hospitality..." />
+      <Field label="Località" value={c.location} onChange={(v: string) => upd('location', v)} placeholder="Castellaneta (TA)" />
+      <Field label="Riassunto (card e inizio pagina)" value={c.summary} onChange={(v: string) => upd('summary', v)} multiline rows={2} />
+      <Field label="Descrizione della scheda" value={c.description} onChange={(v: string) => upd('description', v)} multiline rows={4} />
+      <Field label="Servizi (separati da virgola)" value={Array.isArray(c.services) ? c.services.join(', ') : c.services || ''} onChange={(v: string) => upd('services', v.split(',').map((s) => s.trim()).filter(Boolean))} placeholder="Gestione Social, Reels, Branding" />
+      <Lines label="Risultati" value={c.results || []} onChange={(a) => upd('results', a)} />
+      <Select label="Caso studio collegato" value={c.caseStudy || ''} onChange={(v) => upd('caseStudy', v)}
+        options={[['', '— Nessuno —'], ...cases.map((x: any) => [x.id, x.client] as [string, string])]} />
+
+      <SectionTitle>Immagini</SectionTitle>
+      <ImageField label="Logo" value={c.logo} onChange={(v: string) => upd('logo', v)} />
+      <ImageField label="Immagine hero (sfondo in alto nella scheda)" value={c.image} onChange={(v: string) => upd('image', v)} />
+      <Images label="Foto (galleria)" value={c.gallery || []} onChange={(a) => upd('gallery', a)} />
+
+      <SectionTitle>Reel</SectionTitle>
+      <Note>Incolla il codice di incorporamento del reel (su Instagram: ··· → Incorpora) oppure il suo link: il reel si guarda direttamente sul sito.</Note>
+      <ReelsList List={ObjList} items={c.reels || []} onChange={(a) => upd('reels', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel"
+        titleOf={(r, j) => r.title || `Reel ${j + 1}`} />
+
+      <SectionTitle>Contatti e link</SectionTitle>
+      <Field label="Sito web" value={c.website || c.url} onChange={(v: string) => patch({ website: v, url: v })} placeholder="https://..." />
+      <Field label="Instagram" value={c.instagram} onChange={(v: string) => upd('instagram', v)} placeholder="https://instagram.com/..." />
+      <Field label="Facebook" value={c.facebook} onChange={(v: string) => upd('facebook', v)} placeholder="https://facebook.com/..." />
+      <Field label="TikTok" value={c.tiktok} onChange={(v: string) => upd('tiktok', v)} placeholder="https://tiktok.com/@..." />
+      <Field label="Telefono" value={c.phone} onChange={(v: string) => upd('phone', v)} placeholder="+39 ..." />
+      <Field label="Indirizzo" value={c.address} onChange={(v: string) => upd('address', v)} placeholder="Via ..., Città (TA)" />
+    </>
+  );
+};
+
 export const ClientsEditor = ({ content, set }: Props) => {
   const items: any[] = content.clients?.items || [];
   const cases: any[] = content.cases?.items || [];
-  const upd = (i: number, key: string, val: any) => { const a = clone(items); a[i] = { ...a[i], [key]: val }; set('clients.items', a); };
+  const patch = (i: number, o: any) => { const a = clone(items); a[i] = { ...a[i], ...o }; set('clients.items', a); };
   const homeIds: string[] | undefined = Array.isArray(content.clients?.homeIds) ? content.clients.homeIds : undefined;
 
   return (
@@ -134,36 +175,7 @@ export const ClientsEditor = ({ content, set }: Props) => {
           onUp={i > 0 ? () => set('clients.items', moved(items, i, -1)) : undefined}
           onDown={i < items.length - 1 ? () => set('clients.items', moved(items, i, 1)) : undefined}
           onDelete={() => { const a = clone(items); a.splice(i, 1); set('clients.items', a); }}>
-          <SectionTitle>Informazioni</SectionTitle>
-          <Field label="Nome cliente" value={c.name} onChange={(v: string) => upd(i, 'name', v)} />
-          <Field label="Indirizzo pagina (ID)" value={c.id} onChange={(v: string) => upd(i, 'id', slugify(v))}
-            hint={`Pagina: /cliente/${c.id || '…'} — se lo cambi, i vecchi link smettono di funzionare`} />
-          <Field label="Settore" value={c.sector} onChange={(v: string) => upd(i, 'sector', v)} placeholder="Ristorazione, beauty, hospitality..." />
-          <Field label="Località" value={c.location} onChange={(v: string) => upd(i, 'location', v)} placeholder="Castellaneta (TA)" />
-          <Field label="Riassunto (card e inizio pagina)" value={c.summary} onChange={(v: string) => upd(i, 'summary', v)} multiline rows={2} />
-          <Field label="Descrizione della scheda" value={c.description} onChange={(v: string) => upd(i, 'description', v)} multiline rows={4} />
-          <Field label="Servizi (separati da virgola)" value={(c.services || []).join(', ')} onChange={(v: string) => upd(i, 'services', v.split(',').map((s) => s.trim()).filter(Boolean))} placeholder="Gestione Social, Reels, Branding" />
-          <Lines label="Risultati" value={c.results || []} onChange={(a) => upd(i, 'results', a)} />
-          <Select label="Caso studio collegato" value={c.caseStudy || ''} onChange={(v) => upd(i, 'caseStudy', v)}
-            options={[['', '— Nessuno —'], ...cases.map((x: any) => [x.id, x.client] as [string, string])]} />
-
-          <SectionTitle>Immagini</SectionTitle>
-          <ImageField label="Logo" value={c.logo} onChange={(v: string) => upd(i, 'logo', v)} />
-          <ImageField label="Immagine hero (sfondo in alto nella scheda)" value={c.image} onChange={(v: string) => upd(i, 'image', v)} />
-          <Images label="Foto (galleria)" value={c.gallery || []} onChange={(a) => upd(i, 'gallery', a)} />
-
-          <SectionTitle>Reel</SectionTitle>
-          <Note>Incolla il codice di incorporamento del reel (su Instagram: ··· → Incorpora) oppure il suo link: il reel si guarda direttamente sul sito.</Note>
-          <ReelsList List={ObjList} items={c.reels || []} onChange={(a) => upd(i, 'reels', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel"
-            titleOf={(r, j) => r.title || `Reel ${j + 1}`} />
-
-          <SectionTitle>Contatti e link</SectionTitle>
-          <Field label="Sito web" value={c.website || c.url} onChange={(v: string) => { const a = clone(items); a[i] = { ...a[i], website: v, url: v }; set('clients.items', a); }} placeholder="https://..." />
-          <Field label="Instagram" value={c.instagram} onChange={(v: string) => upd(i, 'instagram', v)} placeholder="https://instagram.com/..." />
-          <Field label="Facebook" value={c.facebook} onChange={(v: string) => upd(i, 'facebook', v)} placeholder="https://facebook.com/..." />
-          <Field label="TikTok" value={c.tiktok} onChange={(v: string) => upd(i, 'tiktok', v)} placeholder="https://tiktok.com/@..." />
-          <Field label="Telefono" value={c.phone} onChange={(v: string) => upd(i, 'phone', v)} placeholder="+39 ..." />
-          <Field label="Indirizzo" value={c.address} onChange={(v: string) => upd(i, 'address', v)} placeholder="Via ..., Città (TA)" />
+          <ClientFields c={c} cases={cases} patch={(o) => patch(i, o)} />
         </CardBlock>
       ))}
       <AddBtn label="Aggiungi cliente" onClick={() => set('clients.items', [...clone(items), {
@@ -351,26 +363,42 @@ export const ServiceExamplesEditor = ({ content, set }: Props) => {
 // specifico, senza scheda (richiesta di Nicola, 05/10).
 export const OtherClientsEditor = ({ content, set }: Props) => {
   const d = content.otherClients || {};
+  const items: any[] = d.items || [];
+  const cases: any[] = content.cases?.items || [];
+  const mainIds = new Set((content.clients?.items || []).map((x: any, i: number) => getClientId(x, i)));
+  const patch = (i: number, o: any) => { const a = clone(items); a[i] = { ...a[i], ...o }; set('otherClients.items', a); };
   return (
     <div>
       <SectionTitle>Altri clienti — collaborazioni su un servizio</SectionTitle>
-      <Note>Compaiono nella pagina <b>/clienti</b>, sotto "Non solo contenuti", come piccole schede: immagine, nome, settore, città e una riga. Non hanno una pagina propria. <b>Immagine</b>: il logo oppure la foto di un lavoro già pubblicato; senza immagine la scheda mostra il nome su fondo colorato. Nella riga niente numeri né prezzi, e nessun dato personale. Le modifiche vanno online con <b>Salva</b>.</Note>
+      <Note>Compaiono nella pagina <b>/clienti</b>, sotto "Non solo contenuti", come riquadri: logo (o immagine hero), nome, settore, località e riassunto; senza immagine il riquadro mostra il nome su fondo colorato. Ogni scheda ha <b>gli stessi campi dei clienti di "Progetti raccontati"</b>. Finché non spunti <b>Pubblica la scheda</b> resta solo il riquadro: nessuna pagina e nessun indirizzo nuovo per Google. Solo informazioni già pubbliche, nessun dato personale. Le modifiche vanno online con <b>Salva</b>.</Note>
       <Field label="Etichetta" value={d.label} onChange={(v: string) => set('otherClients.label', v)} placeholder="Altri clienti" />
       <Field label="Titolo" value={d.title} onChange={(v: string) => set('otherClients.title', v)} placeholder="Collaborazioni" />
       <Field label="Titolo (parte in contorno)" value={d.accent} onChange={(v: string) => set('otherClients.accent', v)} placeholder="su misura." />
       <Field label="Testo" value={d.text} onChange={(v: string) => set('otherClients.text', v)} multiline rows={3} />
-      <ObjList items={d.items || []} onChange={(a) => set('otherClients.items', a)} addLabel="Aggiungi cliente"
-        newItem={() => ({ name: '', sector: '', location: '', line: '', services: '', logo: '', photo: false })}
-        titleOf={(x, i) => x.name || `Cliente ${i + 1}`}
-        fields={[
-          { key: 'name', label: 'Nome', placeholder: 'Es. Vision Ottica' },
-          { key: 'sector', label: 'Settore (facoltativo)', placeholder: 'Es. Ottica, Lido, Ristorante' },
-          { key: 'location', label: 'Città (facoltativa)', placeholder: 'Es. Castellaneta Marina' },
-          { key: 'line', label: 'Una riga (facoltativa)', placeholder: 'Es. Lido sul mare, seguito per i social in estate', hint: 'Breve, senza numeri né prezzi.' },
-          { key: 'services', label: 'Servizi seguiti (facoltativi, separati da virgola)', placeholder: 'Es. Gestione social, Foto' },
-          { key: 'logo', label: 'Immagine (facoltativa): logo o foto di un lavoro', kind: 'image' },
-          { key: 'photo', label: 'L\'immagine è una foto (riempie la scheda); se non spuntato è un logo, centrato su fondo chiaro', kind: 'check', showIf: (x: any) => !!x.logo },
-        ]} />
+      {items.map((c, i) => {
+        const id = getClientId(c, i);
+        const clash = mainIds.has(id);
+        const ready = !!String(c.name || '').trim() && !!String(c.summary || '').trim();
+        const live = c.published === true && ready && !clash;
+        return (
+          <CardBlock key={c.id || i} title={`${c.name || 'Nuovo cliente'}${live ? '' : ' (solo riquadro)'}`} collapsed
+            confirmDelete={`Eliminare "${c.name}"? Dopo il salvataggio non sarà più visibile sul sito.`}
+            onUp={i > 0 ? () => set('otherClients.items', moved(items, i, -1)) : undefined}
+            onDown={i < items.length - 1 ? () => set('otherClients.items', moved(items, i, 1)) : undefined}
+            onDelete={() => { const a = clone(items); a.splice(i, 1); set('otherClients.items', a); }}>
+            <SectionTitle>Pubblicazione</SectionTitle>
+            <Check label={`Pubblica la scheda (pagina /cliente/${id})`} value={c.published === true} onChange={(v) => patch(i, { published: v })} />
+            <Note>{clash ? `L'indirizzo /cliente/${id} è già usato da un cliente di "Progetti raccontati": cambia "Indirizzo pagina (ID)" qui sotto.`
+              : !ready ? 'Per pubblicare la scheda serve almeno il riassunto: finché manca, online resta solo il riquadro (anche se la spunta è attiva).'
+              : live ? `Online: il riquadro in /clienti apre la pagina /cliente/${id}.` : 'Non pubblicata: online c\'è solo il riquadro in /clienti.'}</Note>
+            <ClientFields c={c} cases={cases} patch={(o) => patch(i, o)} />
+          </CardBlock>
+        );
+      })}
+      <AddBtn label="Aggiungi cliente" onClick={() => set('otherClients.items', [...clone(items), {
+        id: `cliente-${Date.now().toString(36)}`, name: 'Nuovo cliente', sector: '', location: '', summary: '', description: '',
+        services: [], results: [], logo: '', image: '', website: '', url: '', instagram: '', gallery: [], reels: [], published: false,
+      }])} />
     </div>
   );
 };
