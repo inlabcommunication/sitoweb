@@ -1,7 +1,7 @@
 # Brief SEO: un argomento diverso per ogni pagina città
 
 **Da:** responsabile SEO → **A:** Sito Inlab
-**Richiesta di Nicola (05/10):** le pagine `/agenzia-comunicazione-{città}` devono esserci almeno per Palagiano, Palagianello, Massafra, Taranto, Castellaneta, Mottola, Gioia del Colle, Ginosa, Laterza e Bari. Le esistono già tutte, rispondono 200 e sono in sitemap. Nicola chiede anche: "non farle uguali, focalizzati in ognuna su qualcosa (la crescita, l'importanza dei social…); nei paesi dove abbiamo clienti parla dei clienti".
+**Richiesta di Nicola (05/10):** le pagine `/agenzia-comunicazione-{città}` devono esserci almeno per Palagiano, Palagianello, Massafra, Taranto, Castellaneta, Mottola, Gioia del Colle, Ginosa, Laterza e Bari. Esistono già tutte, rispondono 200 e sono in sitemap. Nicola chiede anche: "non farle uguali, focalizzati in ognuna su qualcosa (la crescita, l'importanza dei social…); nei paesi dove abbiamo clienti parla dei clienti".
 
 ## Stato su Google (Controllo URL, 05/10)
 | Città | Stato |
