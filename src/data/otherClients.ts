@@ -1,5 +1,6 @@
 // "Altri clienti": brand che seguiamo per un servizio specifico (social, foto,
-// video, sito…), senza scheda né pagina dedicata. Richiesta di Nicola (05/10):
+// video, sito…), senza pagina dedicata: ognuno ha una piccola scheda nella
+// griglia di /clienti (richiesta di Nicola tramite il Direttore, 05/10). Richiesta di Nicola (05/10):
 // si mostrano insieme, senza dire chi li segue, con un titolo che fa capire
 // che sono collaborazioni mirate. Si modificano dalla dashboard (Clienti →
 // Altri clienti); questi sono i valori iniziali.
@@ -9,10 +10,14 @@ export type OtherClient = {
   sector?: string;
   /** città, es. "Castellaneta Marina" (facoltativo) */
   location?: string;
+  /** una riga di descrizione, senza numeri né prezzi (facoltativa) */
+  line?: string;
   /** servizi seguiti, separati da virgola (facoltativo) */
   services?: string;
-  /** logo su Cloudinary (facoltativo) */
+  /** immagine della scheda su Cloudinary: logo o foto di un lavoro già pubblico (facoltativa) */
   logo?: string;
+  /** l'immagine è una foto (riempie la scheda) e non un logo (centrato su fondo chiaro) */
+  photo?: boolean;
 };
 
 export const OTHER_CLIENTS_DEFAULT: { label: string; title: string; accent: string; text: string; items: OtherClient[] } = {
