@@ -28,6 +28,27 @@ export type CityInfo = {
   title?: string;
   /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
   casaNostra?: { titolo: string; testo: string; autore: string; link: string };
+  /** Clienti in evidenza subito dopo l'apertura della pagina agenzia, con una riga
+   * in più per cliente (id della scheda cliente, id del caso studio facoltativo).
+   * Brief SEO 05/10 Palagiano. */
+  clientiInEvidenza?: { titolo: string; voci: { cliente: string; nome: string; riga: string; caso?: string }[] };
+  /** Testi propri delle pagine /{servizio}-{città} (slug del servizio → testi). Brief SEO 05/10 Palagiano. */
+  paginaServizio?: Record<string, {
+    /** Title (max 60 caratteri) e meta description (140-155) al posto di quelli generici */
+    title?: string;
+    description?: string;
+    /** Un lavoro fatto in città, mostrato subito dopo l'apertura */
+    progettoInEvidenza?: {
+      titolo: string;
+      testo: string;
+      punti?: string[];
+      /** id del caso studio (link "Leggi il caso studio") */
+      caso?: string;
+      /** sito esterno del lavoro: link senza nofollow, è un lavoro nostro */
+      sito?: { url: string; label: string };
+      immagine?: { src: string; alt: string };
+    };
+  }>;
 };
 
 export const CITY_INFO: CityInfo[] = [
@@ -107,9 +128,30 @@ export const CITY_INFO: CityInfo[] = [
     contesto: 'Palagiano è terra di agrumi, in particolare delle clementine del Golfo di Taranto, con la frazione di Chiatona sul mare. Molte attività sono legate all\'agricoltura, alla vendita di prodotti locali e al turismo estivo sulla costa.',
     settori: ['aziende agricole e produttori', 'negozi e servizi del paese', 'strutture e attività della costa'],
     faq: { q: 'Potete aiutare un\'azienda agricola a vendere online?', a: 'Sì: sito, e-commerce o vetrina sui social, e foto dei prodotti fatte sul posto.' },
-    metodo: "A Palagiano lavoriamo spesso con chi produce: aziende agricole, produttori di agrumi e attività che vendono prodotti del territorio. Fotografiamo i prodotti e le fasi del lavoro, prepariamo schede chiare per il sito o per la vendita online e raccontiamo la filiera sui social, perché chi compra vuole sapere da dove arriva quello che mangia.",
+    metodo: "A Palagiano partiamo sempre dalla persona che c'è dietro l'attività. Con l'Autofficina Putignano abbiamo scelto la strada più naturale: il titolare davanti alla telecamera, in dialetto, con l'ironia che lo fa riconoscere in paese. Con lo Studio Ricciardi serviva l'opposto: un tono professionale e rassicurante, un sito chiaro su ogni trattamento e contenuti che spiegano prima di vendere. Due stili diversi, lo stesso metodo: capire chi sei, scegliere il linguaggio giusto per i tuoi clienti e misurare i risultati.",
     faq2: { q: "Fate foto dei prodotti direttamente in azienda?", a: "Sì, facciamo gli shooting sul posto: in campo, in magazzino o in negozio, per avere foto vere e non immagini di repertorio." },
     faq3: { q: "Lavorate anche con strutture e attività di Chiatona?", a: "Sì: lidi, ristoranti e strutture della costa. Prepariamo contenuti e campagne prima dell'estate e li seguiamo durante la stagione, insieme alle attività del paese che lavorano tutto l'anno." },
+    altreFaq: [
+      { q: "Lavorate anche con studi medici e professionisti di Palagiano?", a: "Sì: per lo Studio Dentistico Ricciardi seguiamo sito, campagne e social. Con i professionisti curiamo soprattutto chiarezza e fiducia: spiegare bene i servizi, mostrare lo studio e le persone, rendere facile prenotare." },
+    ],
+    description: "Agenzia di comunicazione a Palagiano: reel per l'Autofficina Putignano, sito e campagne per lo Studio Dentistico Ricciardi. Preventivo gratuito.",
+    intro: "A Palagiano lavoriamo con attività molto diverse tra loro: per l'Autofficina Nunzio Putignano giriamo reel ironici in dialetto con il titolare e il suo team, per lo Studio Dentistico Ricciardi abbiamo creato il sito Lumina e le campagne che portano richieste di visita. InLab Communication segue social, video, sponsorizzate, siti e branding da Castellaneta, a pochi chilometri dal paese.",
+    clientiInEvidenza: {
+      titolo: 'I nostri clienti a Palagiano',
+      voci: [
+        { cliente: 'studio-dentistico-ricciardi', nome: 'Studio Dentistico Ricciardi', riga: 'Sito luminaricciardi.it, lead generation e social', caso: 'ricciardi' },
+        { cliente: 'nunzio-putignano', nome: 'Autofficina Nunzio Putignano', riga: 'Reel in dialetto e gestione social' },
+      ],
+    },
+    servizi: {
+      'gestione-social': "Per un'attività di paese i social funzionano quando mostrano le persone. Come per l'Autofficina Putignano: il titolare e il team protagonisti, con un tono che chi abita a Palagiano riconosce subito.",
+      'video': "Reel spontanei, anche in dialetto, girati sul posto: è il formato con cui abbiamo raccontato l'Autofficina Putignano. Per gli studi professionali, video più calmi che spiegano un servizio in modo semplice.",
+      'siti-web': "Siti con una pagina per ogni servizio e la richiesta di contatto sempre a portata di mano, come luminaricciardi.it, il sito che abbiamo fatto per lo Studio Dentistico Ricciardi.",
+      'meta-ads': "Campagne mirate su Palagiano, Chiatona e i paesi vicini, per portare richieste concrete: per lo Studio Ricciardi le campagne portano le persone alle pagine dei trattamenti e alla prenotazione.",
+      'shooting': "Foto vere della tua attività, del team e del lavoro, al posto delle immagini di repertorio: in officina, in studio, in negozio o in azienda.",
+      'branding': "Un'identità chiara su insegna, social e sito. Per lo Studio Ricciardi abbiamo costruito il brand Lumina, più caldo e contemporaneo.",
+      'automazioni-ai': "Risposte automatiche su WhatsApp e Instagram per prenotazioni e domande frequenti: utili a studi e attività di Palagiano che ricevono tanti messaggi.",
+    },
   },
   {
     name: 'Laterza', provincia: 'provincia di Taranto',
