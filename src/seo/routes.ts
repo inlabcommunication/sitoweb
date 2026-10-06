@@ -5,6 +5,7 @@
 
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
+import { publishedOtherClients } from '../data/otherClients';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
@@ -83,9 +84,12 @@ export const SERVICES_SEO = [
 // dashboard quando disponibili (browser dopo il caricamento, build via REST).
 let siteClients: any[] = ((WEBSITE_CONTENT as any).clients?.items || []) as any[];
 let siteCases: any[] = ((WEBSITE_CONTENT as any).cases?.items || []) as any[];
+// "Altri clienti": hanno una pagina /cliente/… solo quando la scheda è pubblicata
+let siteOtherClients: any[] = ((WEBSITE_CONTENT as any).otherClients?.items || []) as any[];
 export const registerContent = (content: any) => {
   if (Array.isArray(content?.clients?.items)) siteClients = content.clients.items;
   if (Array.isArray(content?.cases?.items)) siteCases = content.cases.items;
+  if (Array.isArray(content?.otherClients?.items)) siteOtherClients = content.otherClients.items;
 };
 const caseSeo = (c: any) => ({
   id: String(c.id),
@@ -262,7 +266,10 @@ export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filt
 export const getBlogPosts = () => blogPosts;
 const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
 
-const clients = () => siteClients.filter((c) => c && c.name).map((c, i) => ({ ...c, id: getClientId(c, i) }));
+const clients = () => {
+  const main = siteClients.filter((c) => c && c.name).map((c, i) => ({ ...c, id: getClientId(c, i) }));
+  return [...main, ...publishedOtherClients(siteOtherClients, new Set(main.map((c) => c.id)))];
+};
 const cases = () => siteCases.filter((c) => c && c.id && c.client).map(caseSeo);
 
 const page = (path: string, title: string, description: string, extra: Partial<Seo> = {}, crumbs?: [string, string][]): Seo => {

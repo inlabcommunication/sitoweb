@@ -41,23 +41,23 @@ let cachedSlim = false;
  * incorporamento Instagram dei reel (quasi tutto il peso del documento)
  * diventa il solo link del post, che è l'unica parte usata dal sito.
  */
+const slimReels = (items: any[]) => items.map((c: any) => !Array.isArray(c?.reels) ? c : {
+  ...c,
+  reels: c.reels.map((r: any) => {
+    if (!r || typeof r.embed !== 'string') return r;
+    const post = instagramPost(r.embed);
+    return { ...r, embed: post ? `https://www.instagram.com/${post.kind}/${post.id}/` : '' };
+  }),
+});
+
 export const slimForPage = (saved: any) => {
-  const items = saved?.clients?.items;
-  if (!Array.isArray(items)) return saved;
-  return {
-    ...saved,
-    clients: {
-      ...saved.clients,
-      items: items.map((c: any) => !Array.isArray(c?.reels) ? c : {
-        ...c,
-        reels: c.reels.map((r: any) => {
-          if (!r || typeof r.embed !== 'string') return r;
-          const post = instagramPost(r.embed);
-          return { ...r, embed: post ? `https://www.instagram.com/${post.kind}/${post.id}/` : '' };
-        }),
-      }),
-    },
-  };
+  let out = saved;
+  // stesso trattamento per i clienti e per gli "Altri clienti" (schede complete)
+  for (const key of ['clients', 'otherClients']) {
+    const items = out?.[key]?.items;
+    if (Array.isArray(items)) out = { ...out, [key]: { ...out[key], items: slimReels(items) } };
+  }
+  return out;
 };
 
 /** Contenuti salvati in dashboard: per l'HTML statico (al build) e, nel browser, dal blocco #site-content. */
