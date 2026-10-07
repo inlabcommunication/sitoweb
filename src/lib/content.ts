@@ -3,6 +3,7 @@ import { getLiteDb, liteFirestore } from './firestoreLite';
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId, normalizeClients } from './clientUtils';
 import { instagramPost } from './instagram';
+import { withPrefill } from '../data/otherClients';
 
 export type SiteContent = typeof WEBSITE_CONTENT;
 
@@ -150,8 +151,12 @@ export const useContent = (): SiteContent => {
 /** authoritative = l'elenco clienti salvato è completo (non va unito ai clienti predefiniti) */
 function normalizeSiteContent(content: any, authoritative = false): SiteContent {
   const clients = mergeClientItems(authoritative ? [] : WEBSITE_CONTENT.clients?.items || [], content?.clients?.items || []);
+  // "Altri clienti": testi preparati per le schede ancora vuote (vedi OTHER_CLIENTS_PREFILL)
+  const other = Array.isArray(content?.otherClients?.items)
+    ? { otherClients: { ...content.otherClients, items: withPrefill(content.otherClients.items) } } : {};
   return {
     ...content,
+    ...other,
     clients: {
       ...WEBSITE_CONTENT.clients,
       ...(content?.clients || {}),
