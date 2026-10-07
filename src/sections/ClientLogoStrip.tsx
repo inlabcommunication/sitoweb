@@ -1,4 +1,4 @@
-// Home: solo i loghi dei clienti, uno accanto all'altro. Se sono tanti
+// Home: solo i loghi dei clienti, in riquadri quadrati uno accanto all'altro. Se sono tanti
 // scorrono (si fermano al passaggio del mouse e con "Riduci movimento").
 // Quali clienti mostrare si sceglie in dashboard (clients.homeIds); se non è
 // mai stato scelto, compaiono tutti i clienti che hanno un logo.
@@ -30,9 +30,10 @@ export const ClientLogoStrip: React.FC<Props> = ({ excludeId, allClients = false
   const logo = (c: any, copy = false) => (
     <a key={(copy ? 'b-' : '') + c.id} className={copy ? 'logo-copy' : undefined} href={`/cliente/${c.id}`} onClick={linkClick(() => navigate(`/cliente/${c.id}`))}
       aria-label={copy ? undefined : c.name} aria-hidden={copy || undefined} tabIndex={copy ? -1 : undefined}
-      style={{ flex: '0 0 auto', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', height: 76, minWidth: 130, padding: '12px 24px', borderRadius: 18, background: '#f0ede6' }}>
-      <img src={cld(c.logo, 400)} alt={copy ? '' : `Logo ${c.name}`} loading="lazy" decoding="async"
-        style={{ maxHeight: 48, maxWidth: 150, objectFit: 'contain', display: 'block' }} />
+      // riquadro quadrato, con il logo a pieno riquadro (Nicola, 07/10: "più grandi e quadrati")
+      style={{ flex: '0 0 auto', position: 'relative', display: 'block', width: 'clamp(110px, 12vw, 150px)', aspectRatio: '1 / 1', borderRadius: 18, overflow: 'hidden', background: '#f0ede6', border: '.5px solid var(--b)' }}>
+      <img src={cld(c.logo, 400)} alt={copy ? '' : `Logo ${c.name}`} width={300} height={300} loading="lazy" decoding="async"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
     </a>
   );
 

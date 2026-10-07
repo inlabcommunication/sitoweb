@@ -48,7 +48,7 @@ export const OtherClients: React.FC = () => {
             const body = (
               <>
                 {/* Riquadro immagine a proporzione fissa: nessuno spostamento del layout al caricamento */}
-                <div style={{ aspectRatio: '4 / 3', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: img ? '#1a1a1a' : FALLBACKS[i % FALLBACKS.length] }}>
+                <div style={{ aspectRatio: '4 / 3', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: img ? (isLogo ? '#f0ede6' : '#1a1a1a') : FALLBACKS[i % FALLBACKS.length] }}>
                   {img ? (
                     <img src={img} alt={isLogo ? `Logo ${c.name}` : `Lavoro per ${c.name}`} width={600} height={450} loading="lazy" decoding="async"
                       // logo e foto riempiono tutto il riquadro 4:3, come le anteprime della libreria media (Nicola, 07/10)
