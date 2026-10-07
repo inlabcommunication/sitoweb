@@ -128,7 +128,7 @@ const imageObject = (url: string, caption?: string, size?: { width: number; heig
 // Fondatori/autori: una sola identità (Person con @id) usata in /chi-siamo,
 // nelle pagine autore, in Organization.founder e negli articoli.
 export const AUTHORS = [
-  { slug: 'nicola-carpignano', name: 'Nicola Carpignano', jobTitle: 'Social media manager, comunicazione e marketing',
+  { slug: 'nicola-carpignano-social-media-manager-palagianello', name: 'Nicola Carpignano', jobTitle: 'Social media manager, comunicazione e marketing',
     title: 'Nicola Carpignano: social media e marketing a Castellaneta',
     description: 'Nicola Carpignano, social media manager e co-fondatore di InLab Communication a Castellaneta (TA): strategia, contenuti e marketing per attività locali.',
     alumniOf: 'Sapienza Università di Roma',

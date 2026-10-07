@@ -139,7 +139,7 @@ export const CITY_INFO: CityInfo[] = [
     casaNostra: {
       titolo: 'Palagianello è casa nostra',
       testo: "Nicola Carpignano, co-fondatore di InLab Communication, è di Palagianello. Si è laureato in Psicologia all'Università di Bari, insegna Marketing e Social Media nei master di EA Formazione e ha pubblicato ricerche sulla comunicazione digitale. Per le attività del paese vuol dire avere vicino qualcuno che conosce il territorio e il mestiere.",
-      autore: 'nicola-carpignano',
+      autore: 'nicola-carpignano-social-media-manager-palagianello',
       link: 'Scopri chi è Nicola',
     },
     servizi: {
@@ -280,7 +280,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Seguite aziende di Bari anche se avete sede a Castellaneta?', a: 'Sì. Lavoriamo a distanza per strategia, contenuti e campagne, e veniamo a Bari per incontri, shooting e riprese.' },
     description: "Agenzia di comunicazione per attività di Bari: strategia, social, sponsorizzate e siti con il metodo di chi insegna marketing. Preventivo gratuito.",
     intro: "A Bari Nicola Carpignano, cofondatore di InLab, ha studiato Psicologia e insegna Marketing e Social Media nei master di EA Formazione. Portiamo lo stesso metodo alle attività di Bari: strategia prima dei post, numeri chiari e contenuti che parlano alle persone giuste.",
-    introLink: { testo: "Nicola Carpignano", href: "/autori/nicola-carpignano" },
+    introLink: { testo: "Nicola Carpignano", href: "/autori/nicola-carpignano-social-media-manager-palagianello" },
     focus: {
       titolo: "Prima la strategia, poi i contenuti",
       testo: "In una città grande come Bari pubblicare tanto non basta: bisogna sapere a chi parli e perché dovrebbe scegliere te. Partiamo da qui, con l'analisi del pubblico, dei concorrenti e di cosa ti rende diverso. Poi costruiamo il piano: quali contenuti, su quali canali, con quale budget per le sponsorizzate, e come misureremo i risultati. È lo stesso approccio che Nicola insegna nei master in Marketing e Social Media: psicologia delle persone, obiettivi chiari, dati.",
