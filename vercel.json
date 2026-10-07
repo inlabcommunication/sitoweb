@@ -27,6 +27,11 @@
       "statusCode": 301
     },
     {
+      "source": "/autori/nicola-carpignano",
+      "destination": "/autori/nicola-carpignano-social-media-manager-palagianello",
+      "statusCode": 301
+    },
+    {
       "source": "/cliente/aleph-caffe",
       "destination": "/clienti",
       "permanent": true
