@@ -41,7 +41,7 @@ export const OtherClients: React.FC = () => {
           {items.map((c, i) => {
             const meta = [c.sector, c.location].filter(Boolean).join(' · ');
             const services = (Array.isArray(c.services) ? c.services : String(c.services || '').split(',')).map((x) => String(x).trim()).filter(Boolean).join(', ');
-            // nel riquadro: il logo (centrato su fondo chiaro); senza logo l'immagine della scheda (a pieno riquadro)
+            // nel riquadro: il logo, o senza logo l'immagine della scheda, sempre a pieno riquadro
             const isLogo = !!c.logo;
             const img = cld(c.logo || c.image, 600);
             const href = pages.has(getClientId(c)) ? `/cliente/${getClientId(c)}` : '';
@@ -51,10 +51,8 @@ export const OtherClients: React.FC = () => {
                 <div style={{ aspectRatio: '4 / 3', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', background: img ? (isLogo ? '#f0ede6' : '#1a1a1a') : FALLBACKS[i % FALLBACKS.length] }}>
                   {img ? (
                     <img src={img} alt={isLogo ? `Logo ${c.name}` : `Lavoro per ${c.name}`} width={600} height={450} loading="lazy" decoding="async"
-                      style={isLogo
-                        // fuori dal flusso anche il logo: il riquadro resta 4:3 qualunque sia la sua forma (segnalazione analista, 05/10)
-                        ? { position: 'absolute', inset: '12%', width: '76%', height: '76%', objectFit: 'contain', display: 'block' }
-                        : { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      // logo e foto riempiono tutto il riquadro 4:3, come le anteprime della libreria media (Nicola, 07/10)
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
                   ) : (
                     <span style={{ padding: '0 .9rem', textAlign: 'center', overflowWrap: 'anywhere', fontFamily: 'var(--fd)', fontSize: 'clamp(18px, 2.4vw, 30px)', letterSpacing: '.03em', textTransform: 'uppercase', color: 'var(--t)', lineHeight: 1 }}>{c.name}</span>
                   )}
