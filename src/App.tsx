@@ -30,7 +30,7 @@ import { ClientsWall } from "./sections/ClientsWall";
 import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
-import { publishedOtherClients } from './data/otherClients';
+import { otherClientPages } from './data/otherClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
@@ -1911,8 +1911,8 @@ const PageCliente = ({id}: {id: string}) => {
   const {go}=useRouter();
   const c=useContent();
   const mainClients=normalizeClients(((c as any).clients?.items || []) as any[]);
-  // anche gli "Altri clienti", ma solo con la scheda pubblicata (mai pagine vuote)
-  const clients=[...mainClients, ...publishedOtherClients((c as any).otherClients?.items, new Set(mainClients.map((x: any)=>x.id)))];
+  // anche gli "Altri clienti", tutti (le schede non pubblicate sono noindex, vedi seo/routes)
+  const clients=[...mainClients, ...otherClientPages((c as any).otherClients?.items, new Set(mainClients.map((x: any)=>x.id)))];
   const client=clients.find((item: any)=>getClientId(item)===id);
   const heroImage=client?.image || client?.gallery?.[0];
   const reels=((client?.reels || []) as any[]).filter((r: any)=>hasReel(r));
@@ -1986,7 +1986,7 @@ const PageCliente = ({id}: {id: string}) => {
             {client.logo&&<img src={cld(client.logo, 400)} alt={`Logo ${client.name}`} style={{maxHeight:74,maxWidth:240,objectFit:"contain",marginBottom:"2rem",display:"block"}}/>}
             <p className="section-label">Scheda cliente</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.8rem,5vw,5rem)",lineHeight:.9,marginBottom:"1.5rem"}}>INFORMAZIONI<br/><span className="stroke">E CONTESTO</span></h2>
-            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Aggiungi una descrizione dalla dashboard per completare questa scheda cliente."}</p>
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.9,marginBottom:"2rem"}}>{client.description || client.summary || "Scheda in aggiornamento."}</p>
             {linkedCase&&(
               <Link to={`/casi-studio/${linkedCase.id}`} className="btn btn-p" style={{marginBottom:"1rem"}}>
                 Leggi il caso studio <ArrowRight size={14}/>

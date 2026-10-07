@@ -360,7 +360,7 @@ export const ServiceExamplesEditor = ({ content, set }: Props) => {
 };
 
 // "Altri clienti" della pagina /clienti: brand seguiti per un servizio
-// specifico, senza scheda (richiesta di Nicola, 05/10).
+// specifico, ognuno con la sua scheda (richieste di Nicola, 05/10 e 07/10).
 export const OtherClientsEditor = ({ content, set }: Props) => {
   const d = content.otherClients || {};
   const items: any[] = d.items || [];
@@ -370,7 +370,7 @@ export const OtherClientsEditor = ({ content, set }: Props) => {
   return (
     <div>
       <SectionTitle>Altri clienti — collaborazioni su un servizio</SectionTitle>
-      <Note>Compaiono nella pagina <b>/clienti</b>, sotto "Non solo contenuti", come riquadri: logo (o immagine hero), nome, settore, località e riassunto; senza immagine il riquadro mostra il nome su fondo colorato. Ogni scheda ha <b>gli stessi campi dei clienti di "Progetti raccontati"</b>. Finché non spunti <b>Pubblica la scheda</b> resta solo il riquadro: nessuna pagina e nessun indirizzo nuovo per Google. Solo informazioni già pubbliche, nessun dato personale. Le modifiche vanno online con <b>Salva</b>.</Note>
+      <Note>Compaiono nella pagina <b>/clienti</b>, sotto "Non solo contenuti", come riquadri: logo (o immagine hero), nome, settore, località e riassunto; senza immagine il riquadro mostra il nome su fondo colorato. Ogni scheda ha <b>gli stessi campi dei clienti di "Progetti raccontati"</b>. Ogni riquadro apre già la sua pagina <b>/cliente/…</b>, anche se la scheda è vuota; finché non spunti <b>Pubblica la scheda</b> (con il riassunto compilato) la pagina resta fuori da Google e dalla sitemap. Solo informazioni già pubbliche, nessun dato personale. Le modifiche vanno online con <b>Salva</b>.</Note>
       <Field label="Etichetta" value={d.label} onChange={(v: string) => set('otherClients.label', v)} placeholder="Altri clienti" />
       <Field label="Titolo" value={d.title} onChange={(v: string) => set('otherClients.title', v)} placeholder="Collaborazioni" />
       <Field label="Titolo (parte in contorno)" value={d.accent} onChange={(v: string) => set('otherClients.accent', v)} placeholder="su misura." />
@@ -381,16 +381,16 @@ export const OtherClientsEditor = ({ content, set }: Props) => {
         const ready = !!String(c.name || '').trim() && !!String(c.summary || '').trim();
         const live = c.published === true && ready && !clash;
         return (
-          <CardBlock key={c.id || i} title={`${c.name || 'Nuovo cliente'}${live ? '' : ' (solo riquadro)'}`} collapsed
+          <CardBlock key={c.id || i} title={`${c.name || 'Nuovo cliente'}${live ? '' : ' (bozza, non su Google)'}`} collapsed
             confirmDelete={`Eliminare "${c.name}"? Dopo il salvataggio non sarà più visibile sul sito.`}
             onUp={i > 0 ? () => set('otherClients.items', moved(items, i, -1)) : undefined}
             onDown={i < items.length - 1 ? () => set('otherClients.items', moved(items, i, 1)) : undefined}
             onDelete={() => { const a = clone(items); a.splice(i, 1); set('otherClients.items', a); }}>
             <SectionTitle>Pubblicazione</SectionTitle>
-            <Check label={`Pubblica la scheda (pagina /cliente/${id})`} value={c.published === true} onChange={(v) => patch(i, { published: v })} />
+            <Check label={`Pubblica la scheda su Google (pagina /cliente/${id})`} value={c.published === true} onChange={(v) => patch(i, { published: v })} />
             <Note>{clash ? `L'indirizzo /cliente/${id} è già usato da un cliente di "Progetti raccontati": cambia "Indirizzo pagina (ID)" qui sotto.`
-              : !ready ? 'Per pubblicare la scheda serve almeno il riassunto: finché manca, online resta solo il riquadro (anche se la spunta è attiva).'
-              : live ? `Online: il riquadro in /clienti apre la pagina /cliente/${id}.` : 'Non pubblicata: online c\'è solo il riquadro in /clienti.'}</Note>
+              : !ready ? `La pagina /cliente/${id} è online ma fuori da Google: per pubblicarla serve almeno il riassunto (anche se la spunta è attiva).`
+              : live ? `Pubblicata: la pagina /cliente/${id} è online e su Google.` : `Bozza: la pagina /cliente/${id} è online ma fuori da Google e dalla sitemap.`}</Note>
             <ClientFields c={c} cases={cases} patch={(o) => patch(i, o)} />
           </CardBlock>
         );

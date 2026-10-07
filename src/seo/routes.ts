@@ -5,7 +5,7 @@
 
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
-import { publishedOtherClients } from '../data/otherClients';
+import { otherClientPages } from '../data/otherClients';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
@@ -84,7 +84,7 @@ export const SERVICES_SEO = [
 // dashboard quando disponibili (browser dopo il caricamento, build via REST).
 let siteClients: any[] = ((WEBSITE_CONTENT as any).clients?.items || []) as any[];
 let siteCases: any[] = ((WEBSITE_CONTENT as any).cases?.items || []) as any[];
-// "Altri clienti": hanno una pagina /cliente/… solo quando la scheda è pubblicata
+// "Altri clienti": pagina /cliente/… per tutti; noindex e fuori sitemap finché la scheda non è pubblicata
 let siteOtherClients: any[] = ((WEBSITE_CONTENT as any).otherClients?.items || []) as any[];
 export const registerContent = (content: any) => {
   if (Array.isArray(content?.clients?.items)) siteClients = content.clients.items;
@@ -268,7 +268,7 @@ const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').repla
 
 const clients = () => {
   const main = siteClients.filter((c) => c && c.name).map((c, i) => ({ ...c, id: getClientId(c, i) }));
-  return [...main, ...publishedOtherClients(siteOtherClients, new Set(main.map((c) => c.id)))];
+  return [...main, ...otherClientPages(siteOtherClients, new Set(main.map((c) => c.id)))];
 };
 const cases = () => siteCases.filter((c) => c && c.id && c.client).map(caseSeo);
 
@@ -285,7 +285,7 @@ const page = (path: string, title: string, description: string, extra: Partial<S
   };
 };
 
-/** Tutte le pagine indicizzabili (per sitemap e prerender). */
+/** Tutte le pagine del sito (per prerender); in sitemap solo quelle indicizzabili. */
 export const listRoutes = (): string[] => [
   '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/clienti', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
@@ -458,7 +458,8 @@ export const getSeo = (rawPath: string): Seo => {
       const where = cl.location ? ` a ${cl.location.replace(/\s*\(TA\)/, '')}` : '';
       return page(path, `${cl.name}${where} | Clienti InLab`,
         cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`,
-        { sitemap: { priority: 0.5, changefreq: 'monthly' } },
+        // scheda "Altri clienti" non ancora pubblicata: la pagina c'è, ma resta fuori da Google e dalla sitemap
+        (cl as any).draft ? { noindex: true } : { sitemap: { priority: 0.5, changefreq: 'monthly' } },
         [['Clienti', '/clienti'], [cl.name, path]]);
     }
   }
