@@ -1,8 +1,8 @@
 // Sezione "Altri clienti" della pagina /clienti, sotto "Non solo contenuti":
 // brand seguiti per un servizio specifico. Ogni cliente ha un riquadro uguale
 // per tutti: immagine (logo o foto di un lavoro), nome, settore · città e il
-// riassunto. Con la scheda pubblicata il riquadro apre la pagina /cliente/…
-// (come i clienti di "Progetti raccontati"). Senza immagine il riquadro mostra
+// riassunto. Ogni riquadro apre la pagina /cliente/… (come i clienti di
+// "Progetti raccontati"), anche se la scheda è ancora vuota (Nicola, 07/10). Senza immagine il riquadro mostra
 // il nome su fondo colorato, così nessuno resta vuoto. Statica (nessuna animazione):
 // leggera e uguale tra HTML pre-generato e browser. Solo su /clienti, non in home.
 import React from 'react';
@@ -10,7 +10,7 @@ import { useContent } from '../lib/content';
 import { cld } from '../lib/media';
 import { getClientId, normalizeClients } from '../lib/clientUtils';
 import { linkClick, navigate } from '../lib/router';
-import { OTHER_CLIENTS_DEFAULT, publishedOtherClients, type OtherClient } from '../data/otherClients';
+import { OTHER_CLIENTS_DEFAULT, otherClientPages, type OtherClient } from '../data/otherClients';
 
 // Fondi della scheda senza immagine: toni lilla del sito, alternati
 const FALLBACKS = [
@@ -23,9 +23,9 @@ export const OtherClients: React.FC = () => {
   const content = useContent() as any;
   const data = { ...OTHER_CLIENTS_DEFAULT, ...(content.otherClients || {}) };
   const items = ((data.items || []) as OtherClient[]).filter((c) => String(c?.name || '').trim());
-  // schede pubblicate: il riquadro porta alla pagina /cliente/… (le altre restano solo riquadro)
+  // il riquadro porta alla pagina /cliente/… (tranne se l'indirizzo è già di un cliente principale)
   const mainIds = new Set(normalizeClients(content.clients?.items || []).map((x: any) => x.id));
-  const pages = new Set(publishedOtherClients(items, mainIds).map((x) => x.id));
+  const pages = new Set(otherClientPages(items, mainIds).map((x) => x.id));
   if (!items.length) return null;
   return (
     <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)' }}>

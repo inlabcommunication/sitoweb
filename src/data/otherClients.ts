@@ -1,14 +1,15 @@
 // "Altri clienti": brand che seguiamo per un servizio specifico (social, foto,
 // video, sito…). Richiesta di Nicola (05/10, tramite il Direttore): ognuno ha
 // una scheda completa come i clienti di "Progetti raccontati" (stessi campi,
-// compilata da lui in dashboard). Finché una scheda non è pubblicata compare
-// solo come riquadro nella griglia di /clienti: nessuna pagina /cliente/…,
-// niente sitemap. Si modificano dalla dashboard (Clienti → Altri clienti);
+// compilata da lui in dashboard). Ogni scheda ha subito la sua pagina
+// /cliente/… (richiesta di Nicola, 07/10: "creale grezze, anche vuote"), ma
+// finché non è pubblicata con il riassunto la pagina è noindex e fuori dalla
+// sitemap. Si modificano dalla dashboard (Clienti → Altri clienti);
 // questi sono i valori iniziali: solo i dati forniti da Nicola, il resto vuoto.
 import { getClientId, normalizeClients } from '../lib/clientUtils';
 
 export type OtherClient = {
-  /** indirizzo della pagina: /cliente/<id> (solo quando la scheda è pubblicata) */
+  /** indirizzo della pagina: /cliente/<id> */
   id?: string;
   name: string;
   sector?: string;
@@ -32,7 +33,7 @@ export type OtherClient = {
   tiktok?: string;
   phone?: string;
   address?: string;
-  /** la scheda ha una pagina propria (/cliente/<id>) solo se pubblicata e con il riassunto */
+  /** la pagina /cliente/<id> va su Google e in sitemap solo se pubblicata e con il riassunto */
   published?: boolean;
 };
 
@@ -68,15 +69,20 @@ export const isPublishable = (c: any) =>
   !!(c && c.published === true && String(c.name || '').trim() && String(c.summary || '').trim());
 
 /**
- * Altri clienti con una pagina propria, nello stesso formato dei clienti
- * principali. `takenIds`: indirizzi già usati dai clienti principali, che
- * hanno la precedenza (nessuna pagina doppia).
+ * Altri clienti con la pagina /cliente/…, nello stesso formato dei clienti
+ * principali: tutti quelli con un nome. `draft` è vero finché la scheda non è
+ * pubblicabile: la pagina esiste ma è noindex e fuori dalla sitemap.
+ * `takenIds`: indirizzi già usati dai clienti principali, che hanno la
+ * precedenza (nessuna pagina doppia).
  */
-export const publishedOtherClients = (items: any[] = [], takenIds: Set<string> = new Set()) => {
+export const otherClientPages = (items: any[] = [], takenIds: Set<string> = new Set()) => {
   const seen = new Set(takenIds);
-  return normalizeClients((Array.isArray(items) ? items : []).filter(isPublishable)).filter((c) => {
-    if (seen.has(c.id)) return false;
-    seen.add(c.id);
-    return true;
-  });
+  return (Array.isArray(items) ? items : [])
+    .filter((c) => c && String(c.name || '').trim())
+    .map((c) => ({ ...normalizeClients([c])[0], draft: !isPublishable(c) }))
+    .filter((c) => {
+      if (seen.has(c.id)) return false;
+      seen.add(c.id);
+      return true;
+    });
 };
