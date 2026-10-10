@@ -5,6 +5,7 @@
 
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
+import { otherClientPages } from '../data/otherClients';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
@@ -52,6 +53,14 @@ export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(
 /** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
  *  Castellaneta compresa (dal 02/10, la home resta la pagina del brand). */
 export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
+/** Pagine servizio in più fuori da CITIES (servizio → città). Brief SEO 05/10, decisione di
+ *  Nicola: solo gestione social a Massafra, Gioia del Colle e Bari; gli altri servizi no. */
+export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
+  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari'],
+};
+/** Città che hanno la pagina /{servizio}-{città} per quel servizio */
+export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
+export const hasServicePage = (slug: string, city: string) => serviceCities(slug).includes(city);
 export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
 export const SERVICES_SEO = [
@@ -75,9 +84,12 @@ export const SERVICES_SEO = [
 // dashboard quando disponibili (browser dopo il caricamento, build via REST).
 let siteClients: any[] = ((WEBSITE_CONTENT as any).clients?.items || []) as any[];
 let siteCases: any[] = ((WEBSITE_CONTENT as any).cases?.items || []) as any[];
+// "Altri clienti": pagina /cliente/… per tutti; noindex e fuori sitemap finché la scheda non è pubblicata
+let siteOtherClients: any[] = ((WEBSITE_CONTENT as any).otherClients?.items || []) as any[];
 export const registerContent = (content: any) => {
   if (Array.isArray(content?.clients?.items)) siteClients = content.clients.items;
   if (Array.isArray(content?.cases?.items)) siteCases = content.cases.items;
+  if (Array.isArray(content?.otherClients?.items)) siteOtherClients = content.otherClients.items;
 };
 const caseSeo = (c: any) => ({
   id: String(c.id),
@@ -116,16 +128,18 @@ const imageObject = (url: string, caption?: string, size?: { width: number; heig
 // Fondatori/autori: una sola identità (Person con @id) usata in /chi-siamo,
 // nelle pagine autore, in Organization.founder e negli articoli.
 export const AUTHORS = [
-  { slug: 'nicola-carpignano', name: 'Nicola Carpignano', jobTitle: 'Social media manager, comunicazione e marketing',
-    title: 'Nicola Carpignano: social media e marketing a Castellaneta',
-    description: 'Nicola Carpignano, social media manager e co-fondatore di InLab Communication a Castellaneta (TA): strategia, contenuti e marketing per attività locali.',
+  { slug: 'nicola-carpignano-social-media-manager-palagianello', name: 'Nicola Carpignano', jobTitle: 'Social media manager',
+    // brief SEO 10/10: "Nicola Carpignano social media manager Palagianello"
+    subtitle: 'Social media manager · Palagianello e Castellaneta (TA)',
+    title: 'Nicola Carpignano, social media manager a Palagianello | InLab',
+    description: 'Nicola Carpignano è social media manager e cofondatore di InLab Communication. È di Palagianello, lavora tra Palagianello, Castellaneta e Taranto.',
     alumniOf: 'Sapienza Università di Roma',
-    knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati',
+    knowsAbout: ['Comunicazione e marketing', 'Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati',
       'Social media management', 'Marketing degli eventi', 'Netnografia', 'Comunicazione digitale nel recruiting', 'Rappresentazioni sociali'],
     // Dati confermati da Nicola (brief SEO 02/10, punto 4)
     vatID: '03411970738',
     homeLocation: 'Palagianello',
-    facts: ['Originario di Palagianello (TA).',
+    facts: ['Nicola Carpignano è un social media manager di Palagianello e cofondatore di InLab Communication, l\'agenzia di comunicazione con sede a Castellaneta.',
       'Si è laureato in Psicologia all\'Università di Bari e si è specializzato in Psicologia della comunicazione e del marketing alla Sapienza Università di Roma.',
       'Docente di Marketing e Social Media in due master di EA Formazione (Bari): il Master in Management degli Eventi e il Master in Social Media Manager.',
       'Nella ricerca universitaria ha studiato lo stile della comunicazione online: come si parla di lavoro, recruiting e temi sociali sui social.'],
@@ -157,7 +171,7 @@ export const AUTHORS = [
 ] as AuthorData[];
 type Research = { authors: string[]; year: string; title: string; book?: string; publisher: string; pages?: string; url: string };
 type AuthorData = {
-  slug: string; name: string; jobTitle: string; title: string; description: string; alumniOf: string;
+  slug: string; name: string; jobTitle: string; /** riga sotto il nome nella pagina autore (se manca: jobTitle) */ subtitle?: string; title: string; description: string; alumniOf: string;
   knowsAbout: string[]; sameAs: string[];
   homeLocation?: string; facts?: string[]; inBreve?: string; researchIntro?: string;
   /** Partita IVA (solo cifre), data da Nicola */
@@ -254,7 +268,10 @@ export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filt
 export const getBlogPosts = () => blogPosts;
 const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
 
-const clients = () => siteClients.filter((c) => c && c.name).map((c, i) => ({ ...c, id: getClientId(c, i) }));
+const clients = () => {
+  const main = siteClients.filter((c) => c && c.name).map((c, i) => ({ ...c, id: getClientId(c, i) }));
+  return [...main, ...otherClientPages(siteOtherClients, new Set(main.map((c) => c.id)))];
+};
 const cases = () => siteCases.filter((c) => c && c.id && c.client).map(caseSeo);
 
 const page = (path: string, title: string, description: string, extra: Partial<Seo> = {}, crumbs?: [string, string][]): Seo => {
@@ -270,11 +287,11 @@ const page = (path: string, title: string, description: string, extra: Partial<S
   };
 };
 
-/** Tutte le pagine indicizzabili (per sitemap e prerender). */
+/** Tutte le pagine del sito (per prerender); in sitemap solo quelle indicizzabili. */
 export const listRoutes = (): string[] => [
-  '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/casi-studio', '/contatti',
+  '/', '/servizi', '/chi-siamo', '/dove-lavoriamo', '/clienti', '/contatti',
   ...SERVICES_SEO.map((s) => '/' + s.slug),
-  ...SERVICES_SEO.flatMap((s) => CITIES.map((c) => `/${s.slug}-${citySlug(c)}`)),
+  ...SERVICES_SEO.flatMap((s) => serviceCities(s.slug).map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...AGENCY_CITIES.map(agencyPath),
   ...cases().map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
@@ -315,10 +332,10 @@ export const getSeo = (rawPath: string): Seo => {
         ...researchJsonLd(author)],
     }, [['Chi siamo', '/chi-siamo'], [author.name, path]]);
   }
-  if (path === '/casi-studio') {
-    return page(path, `Casi studio e clienti | ${BRAND}`,
+  if (path === '/clienti') {
+    return page(path, `Clienti e casi studio | ${BRAND}`,
       'Progetti raccontati passo per passo: strategie social, siti web, lead generation e contenuti per aziende e attività in provincia di Taranto e in Puglia.',
-      { sitemap: { priority: 0.8, changefreq: 'monthly' } }, [['Casi studio', '/casi-studio']]);
+      { sitemap: { priority: 0.8, changefreq: 'monthly' } }, [['Clienti', '/clienti']]);
   }
   if (path === '/contatti') {
     return page(path, `Contatti | Richiedi un preventivo a ${BRAND}`,
@@ -340,7 +357,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   for (const s of SERVICES_SEO) {
-    const city = CITIES.find((c) => path === `/${s.slug}-${citySlug(c)}`);
+    const city = serviceCities(s.slug).find((c) => path === `/${s.slug}-${citySlug(c)}`);
     if (city) {
       // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
       const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;
@@ -348,7 +365,9 @@ export const getSeo = (rawPath: string): Seo => {
         ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito.",
         ", da un'agenzia di Castellaneta (TA). Preventivo gratuito.",
       ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';
-      return page(path, withBrand(`${s.label} a ${city}`), desc, {
+      // testi propri della pagina, se il brief SEO li prevede (src/data/cities.ts → paginaServizio)
+      const own = cityInfo(city)?.paginaServizio?.[s.slug];
+      return page(path, own?.title || withBrand(`${s.label} a ${city}`), own?.description || desc, {
         sitemap: { priority: 0.6, changefreq: 'monthly' },
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} a ${city}`, serviceType: s.keyword,
@@ -390,7 +409,7 @@ export const getSeo = (rawPath: string): Seo => {
       return page(path, withBrand(cs.title), cs.description, {
         sitemap: { priority: 0.7, changefreq: 'monthly' },
         jsonLd: [{ '@context': 'https://schema.org', '@type': 'CreativeWork', name: cs.title, description: cs.description, url: abs(path), creator: orgRef, inLanguage: 'it-IT' }],
-      }, [['Casi studio', '/casi-studio'], [cs.title.split(':')[0], path]]);
+      }, [['Clienti', '/clienti'], [cs.title.split(':')[0], path]]);
     }
   }
 
@@ -441,8 +460,9 @@ export const getSeo = (rawPath: string): Seo => {
       const where = cl.location ? ` a ${cl.location.replace(/\s*\(TA\)/, '')}` : '';
       return page(path, `${cl.name}${where} | Clienti InLab`,
         cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`,
-        { sitemap: { priority: 0.5, changefreq: 'monthly' } },
-        [['Casi studio', '/casi-studio'], [cl.name, path]]);
+        // scheda "Altri clienti" non ancora pubblicata: la pagina c'è, ma resta fuori da Google e dalla sitemap
+        (cl as any).draft ? { noindex: true } : { sitemap: { priority: 0.5, changefreq: 'monthly' } },
+        [['Clienti', '/clienti'], [cl.name, path]]);
     }
   }
 

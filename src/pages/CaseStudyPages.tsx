@@ -22,7 +22,7 @@ const CaseHeroBack: React.FC<{ onBack: () => void }> = ({ onBack }) => (
       cursor: 'pointer', fontFamily: 'inherit',
     }}
   >
-    <ArrowLeft size={11} /> Casi studio
+    <ArrowLeft size={11} /> Clienti
   </button>
 );
 

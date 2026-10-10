@@ -45,6 +45,10 @@ RATE_LIMIT_SALT=...           # stringa casuale lunga
 CHAT_DAILY_LIMIT=400          # opzionale: tetto giornaliero di messaggi al chatbot
 ```
 
+### Copertine dei reel
+
+Quando in dashboard si incolla un reel senza copertina, `/api/reel-cover` legge una sola volta la pagina pubblica di incorporamento del post (`instagram.com/reel/<codice>/embed/`), prende la miniatura e la salva su Cloudinary (`inlab/reel/`). Non servono app né token. È un metodo *best effort*: se Instagram cambia la pagina o blocca la richiesta, la dashboard lo dice e la copertina si carica a mano. Per spegnerlo: `REEL_COVER_IMPORT=off` su Vercel e Redeploy.
+
 ### Dominio del sito (SEO)
 
 ```

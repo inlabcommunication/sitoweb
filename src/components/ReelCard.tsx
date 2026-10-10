@@ -10,6 +10,10 @@ import type { Reel } from '../data/caseStudies';
 import { cld, cldVideoPoster } from '../lib/media';
 import { instagramPost } from '../lib/instagram';
 
+/** Copertine dei reel: larghezze per srcset e qualità eco (bastano per un riquadro 9:16 piccolo). */
+const REEL_COVER_W = [360, 480, 720];
+const cldEco = (url: string, w: number) => cld(url, w).replace('q_auto,', 'q_auto:eco,');
+
 const safe = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
 /** Copertina automatica per i video Cloudinary (primo fotogramma in JPG). */
@@ -32,9 +36,10 @@ export const hasReel = (r?: Reel) => !!r && !!(instagramEmbedSrc(r.embed) || saf
 
 export const ReelCard: React.FC<{ reel: Reel; resetKey?: number; onPlay?: () => void }> = ({ reel, resetKey = 0, onPlay }) => {
   const embedSrc = instagramEmbedSrc(reel.embed);
-  // Copertina dentro url(""): solo indirizzi https senza virgolette, parentesi o barre inverse
-  const coverUrl = cld(safe(reel.cover), 600);
-  const cover = coverUrl && !/["'()\\\s]/.test(coverUrl) ? coverUrl : '';
+  // Copertina: <img> pigra (si scarica solo vicino allo schermo) con più larghezze
+  // e qualità eco; nessuna richiesta a Instagram prima del tocco (Direttore 04/10).
+  const cover = safe(reel.cover);
+  const coverCld = /\/image\/upload\//.test(cover);
   const [playing, setPlaying] = React.useState(false);
   // resetKey cambia quando si avvia un altro reel: si torna alla copertina (il video si ferma)
   React.useEffect(() => { if (resetKey) setPlaying(false); }, [resetKey]);
@@ -58,12 +63,19 @@ export const ReelCard: React.FC<{ reel: Reel; resetKey?: number; onPlay?: () => 
           ) : (
             <button type="button" onClick={() => { setPlaying(true); onPlay?.(); }} aria-label={`Guarda ${reel.title || 'il reel'} (video di Instagram)`}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', padding: 0, border: 0, cursor: 'pointer', color: 'var(--a)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12,
-                background: cover ? `#000 center / cover no-repeat url("${cover}")` : 'linear-gradient(160deg, #2b2440, #1a191b 70%)' }}>
-              <span style={{ width: 64, height: 64, borderRadius: '50%', background: 'rgba(205,178,255,0.18)', border: '.5px solid rgba(205,178,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                background: cover ? '#000' : 'linear-gradient(160deg, #2b2440, #1a191b 70%)' }}>
+              {cover && (
+                <img src={coverCld ? cldEco(cover, 480) : cover} alt="" aria-hidden="true" loading="lazy" decoding="async"
+                  srcSet={coverCld ? REEL_COVER_W.map((w) => `${cldEco(cover, w)} ${w}w`).join(', ') : undefined}
+                  sizes="(max-width: 640px) 92vw, 360px"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                  style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+              )}
+              <span style={{ position: 'relative', width: 64, height: 64, borderRadius: '50%', background: 'rgba(205,178,255,0.18)', border: '.5px solid rgba(205,178,255,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Play size={24} fill="currentColor" />
               </span>
-              <span style={{ fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--t)' }}>Guarda il reel</span>
-              <span style={{ fontSize: 12, color: 'var(--m)' }}>Video di Instagram</span>
+              <span style={{ position: 'relative', fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--t)' }}>Guarda il reel</span>
+              <span style={{ position: 'relative', fontSize: 12, color: 'var(--m)' }}>Video di Instagram</span>
             </button>
           )}
           {count && (

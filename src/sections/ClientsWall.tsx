@@ -117,7 +117,7 @@ export const ClientsWall: React.FC<ClientsWallProps> = ({ onClientClick, showHea
 
         {hasMore && relatedTo && (
           <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
-            <a href="/casi-studio" onClick={linkClick(() => navigate('/casi-studio'))} className="btn btn-g">
+            <a href="/clienti" onClick={linkClick(() => navigate('/clienti'))} className="btn btn-g">
               Vedi tutti i clienti <ArrowUpRight size={13} />
             </a>
           </div>

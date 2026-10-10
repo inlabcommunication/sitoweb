@@ -4,7 +4,7 @@ import { Save, RotateCcw, Plus, Trash2, Eye, EyeOff, ChevronDown, ChevronRight }
 import { WEBSITE_CONTENT } from '../constants';
 import { loadContent, saveContent, SiteContent } from '../lib/content';
 import { inputStyle, Field, ImageField, CardBlock, AddBtn, SectionTitle, Note } from './editorUi';
-import { ClientsEditor, CasesEditor, ServiceExamplesEditor, AreasEditor } from './CollectionsEditor';
+import { ClientsEditor, CasesEditor, ServiceExamplesEditor, AreasEditor, OtherClientsEditor } from './CollectionsEditor';
 
 // ─── Struttura pagine + blocchi ────────────────────────────────
 
@@ -25,10 +25,11 @@ const PAGES: { key: Page; label: string; icon: string; blocks: { key: string; la
     ],
   },
   {
-    key: 'casi', label: 'Casi studio', icon: '📂',
+    key: 'casi', label: 'Clienti', icon: '📂',
     blocks: [
       { key: 'clients', label: 'Progetti raccontati (schede clienti)' },
       { key: 'cases',   label: 'Non solo contenuti (casi studio)' },
+      { key: 'otherClients', label: 'Altri clienti (collaborazioni)' },
     ],
   },
   {
@@ -163,6 +164,7 @@ const BlockEditor = ({ block, content, set, setContent }: any) => {
   // ── CASI STUDIO / SERVIZI (raccolte) ─────────────────────────
   if (block === 'clients') return <ClientsEditor content={content} set={set} />;
   if (block === 'cases') return <CasesEditor content={content} set={set} />;
+  if (block === 'otherClients') return <OtherClientsEditor content={content} set={set} />;
   if (block === 'service_examples') return <ServiceExamplesEditor content={content} set={set} />;
   if (block === 'areas') return <AreasEditor content={content} set={set} />;
 
@@ -361,7 +363,7 @@ export const ContentEditor = () => {
   if (loading) return <div style={{ padding: '4rem', textAlign: 'center', color: '#555', fontSize: 13 }}>Caricamento contenuti...</div>;
 
   const pageUrl = {
-    home: '/', studio: '/chi-siamo', casi: '/casi-studio',
+    home: '/', studio: '/chi-siamo', casi: '/clienti',
     servizi: '/siti-web', contatti: '/contatti',
   }[page] ?? '/';
 

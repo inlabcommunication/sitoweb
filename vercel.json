@@ -5,6 +5,9 @@
   "functions": {
     "api/chat.ts": {
       "maxDuration": 30
+    },
+    "api/reel-cover.ts": {
+      "maxDuration": 60
     }
   },
   "redirects": [
@@ -19,28 +22,38 @@
       "permanent": true
     },
     {
-      "source": "/:svc(gestione-social|meta-ads|siti-web|automazioni-ai|shooting|video|branding)-massafra",
+      "source": "/:svc(meta-ads|siti-web|automazioni-ai|shooting|video|branding)-massafra",
       "destination": "/:svc",
       "statusCode": 301
     },
     {
+      "source": "/autori/nicola-carpignano",
+      "destination": "/autori/nicola-carpignano-social-media-manager-palagianello",
+      "statusCode": 301
+    },
+    {
       "source": "/cliente/aleph-caffe",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "permanent": true
     },
     {
+      "source": "/casi-studio",
+      "destination": "/clienti",
+      "statusCode": 301
+    },
+    {
       "source": "/lavori",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "statusCode": 301
     },
     {
       "source": "/portfolio",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "statusCode": 301
     },
     {
       "source": "/progetto/:id",
-      "destination": "/casi-studio",
+      "destination": "/clienti",
       "statusCode": 301
     }
   ],

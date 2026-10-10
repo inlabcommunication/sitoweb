@@ -3,6 +3,7 @@
  * Tutti i testi e contenuti del sito sono modificabili dalla dashboard.
  */
 
+import { OTHER_CLIENTS_DEFAULT } from './data/otherClients';
 import { DEFAULT_CASES } from './data/caseStudies';
 import { SERVICE_EXAMPLES } from './data/serviceExamples';
 
@@ -353,6 +354,8 @@ export const WEBSITE_CONTENT = {
   // Casi studio "Non solo contenuti" (pagine a blocchi) ed esempi per servizio
   cases: { items: DEFAULT_CASES },
   serviceExamples: SERVICE_EXAMPLES,
+  // "Altri clienti": brand seguiti per un servizio specifico (pagina /clienti)
+  otherClients: OTHER_CLIENTS_DEFAULT,
   // Attività senza scheda per /dove-lavoriamo (solo città, settore, servizi)
   areas: { items: [] as { city: string; sector: string; services: string }[] },
 };
