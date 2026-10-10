@@ -143,13 +143,21 @@ export const CITY_INFO: CityInfo[] = [
       link: 'Scopri chi è Nicola',
     },
     servizi: {
-      'gestione-social': "A Palagianello i social sono il passaparola che continua online: raccontiamo le persone dietro il bancone, le novità e gli eventi del paese. Come per Sublime Tentazione, con una presenza costante tra gelati d'estate e panettoni a Natale.",
+      'gestione-social': "A Palagianello il tuo social media manager è del paese: Nicola Carpignano, cofondatore di InLab Communication, segue di persona la comunicazione delle attività locali, da Sublime Tentazione a Masseria Sacramento. I social sono il passaparola che continua online: raccontiamo le persone dietro il bancone, le novità e gli eventi del paese. Come per Sublime Tentazione, con una presenza costante tra gelati d'estate e panettoni a Natale.",
       'meta-ads': "Sponsorizzate mirate a Palagianello e ai paesi vicini, come Palagiano, Mottola, Castellaneta e Massafra: budget contenuti e un pubblico che può davvero venire da te, senza sprechi.",
       'siti-web': "Un sito semplice e veloce, collegato alla scheda Google, per farti trovare da chi cerca un'attività a Palagianello e da chi arriva da fuori per la gravina e il castello.",
       'automazioni-ai': "Risposte automatiche su WhatsApp e Instagram per prenotazioni e domande frequenti: utili a masserie, ristoranti e negozi del paese che non possono stare sempre al telefono.",
       'shooting': "Shooting sul posto, in negozio, in laboratorio o in masseria: foto vere degli spazi, dei prodotti e delle serate, al posto delle immagini di repertorio.",
       'video': "Video brevi e leggeri che raccontano il negozio e chi ci lavora. Come per DIRAM, tra ricambi, riparazioni e punto Poste.",
       'branding': "Nome, logo e immagine coordinata per chi apre o rinnova un'attività a Palagianello: un'identità che si riconosce in paese e nei comuni vicini.",
+    },
+    // brief SEO 10/10: "social media manager Palagianello"; l'H1 della pagina resta "Gestione social a Palagianello"
+    introLink: { testo: "Nicola Carpignano", href: "/autori/nicola-carpignano-social-media-manager-palagianello" },
+    paginaServizio: {
+      'gestione-social': {
+        title: "Social media manager a Palagianello | InLab Communication",
+        description: "Social media manager a Palagianello: Nicola Carpignano, cofondatore di InLab, è del paese. Gestione social, reel e sponsorizzate. Preventivo gratuito.",
+      },
     },
   },
   {
