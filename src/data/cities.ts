@@ -386,6 +386,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per attività di Statte che vogliono farsi conoscere anche a Taranto: contenuti riconoscibili e costanti, con un piano chiaro." },
   },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Noci", provincia: "provincia di Bari",
+    contesto: "Noci, in provincia di Bari, è al confine con la Valle d'Itria: centro storico con le gnostre, masserie in campagna e una tradizione gastronomica che si festeggia con Bacco nelle Gnostre. È un paese che vive di cibo, ospitalità e turismo.",
+    settori: ["ristoranti e bracerie", "masserie e ospitalità", "negozi del centro storico"],
+    faq: { q: "Fate food photography per ristoranti di Noci?", a: "Sì, con shooting sul posto: piatti, sala e persone, da usare su social, scheda Google e sito." },
+    description: "Agenzia di comunicazione a Noci: social, foto, video e sponsorizzate per ristoranti, masserie e attività della Murgia dei Trulli. Preventivo gratuito.",
+    intro: "Noci è nella Murgia dei Trulli, tra gnostre, masserie e buona cucina. Seguiamo social, foto, video, sponsorizzate e siti per le attività del paese, da Castellaneta.",
+    focus: { titolo: "Il cibo si vende con gli occhi", testo: "Per un ristorante, una braceria o una masseria di Noci, le foto dei piatti e i video in cucina sono il primo menu che le persone vedono. Facciamo shooting e reel sul posto, curiamo la scheda Google con foto vere e prepariamo contenuti e campagne per i periodi di maggiore affluenza, come le feste e i weekend d'autunno." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, masserie e negozi di Noci: foto dei piatti, reel in cucina e contenuti costanti per farsi scegliere da chi arriva in paese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
