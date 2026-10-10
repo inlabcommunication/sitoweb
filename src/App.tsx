@@ -32,6 +32,7 @@ import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
 import { CLIENT_SEO } from './data/clientSeo';
+import { MAP_CITIES } from './data/mapCities';
 import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
@@ -1519,11 +1520,14 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
   // Città nuove senza clienti (lavoriVicini): stesso blocco con i lavori dei paesi vicini (brief SEO 10/10 territorio)
-  const provinceGroups=(city==="Taranto"||(info?.lavoriVicini&&!localClients.length&&!localCases.length)) ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
+  const nearby=!!(city!=="Taranto"&&info?.lavoriVicini&&!localClients.length&&!localCases.length);
+  const allGroups=(city==="Taranto"||nearby) ? (nearby ? byDistance(city, PROVINCE_CITIES) : ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")]).map(c=>({
     city:c,
     cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
     clients:clientsInCity(content, c),
   })).filter(g=>g.cases.length||g.clients.length) : [];
+  // Città senza clienti: solo 6 schede, dei paesi più vicini (brief SEO 10/10: niente blocco uguale su tante pagine)
+  const provinceGroups=nearby ? limitCards(allGroups, 6) : allGroups;
   return (
     <>
       <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
@@ -1581,6 +1585,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             {info.sezione && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.sezione.titolo}</h2>
               <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.sezione.testo}</p>
+              {info.sezione.link && <Link to={info.sezione.link.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",fontSize:14,color:"var(--a)"}}>{info.sezione.link.testo} <ArrowRight size={13}/></Link>}
             </>}
             {info.casaNostra && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.casaNostra.titolo}</h2>
@@ -1703,6 +1708,23 @@ const DoveSiamo = () => (
   </div>
 );
 
+// Città ordinate dalla più vicina (coordinate della mappa di /dove-lavoriamo)
+const byDistance=(from: string, list: string[])=>{
+  const at=(n: string)=>MAP_CITIES.find(m=>m.name===n);
+  const o=at(from);
+  if(!o) return list;
+  const d=(n: string)=>{ const m=at(n); return m ? Math.hypot(m.lat-o.lat,(m.lon-o.lon)*Math.cos(o.lat*Math.PI/180)) : Infinity; };
+  return [...list].sort((a,b)=>d(a)-d(b));
+};
+// Al massimo `max` schede in tutto, nell'ordine dei gruppi (prima i casi, poi i clienti)
+const limitCards=(groups: {city:string;cases:any[];clients:any[]}[], max: number)=>{
+  let left=max;
+  return groups.map(g=>{
+    const cases=g.cases.slice(0,left); left-=cases.length;
+    const clients=g.clients.slice(0,left); left-=clients.length;
+    return {...g,cases,clients};
+  }).filter(g=>g.cases.length||g.clients.length);
+};
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
 const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 

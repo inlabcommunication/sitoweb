@@ -228,6 +228,8 @@ export const organizationJsonLd = () => ({
   contactPoint: { '@type': 'ContactPoint', telephone: BUSINESS.telephone, email: BUSINESS.email, contactType: 'customer service', areaServed: 'IT', availableLanguage: 'Italian' },
   hasMap: BUSINESS.mapsUrl,
   address: { '@type': 'PostalAddress', streetAddress: BUSINESS.street, addressLocality: BUSINESS.city, postalCode: BUSINESS.postalCode, addressRegion: 'TA', addressCountry: 'IT' },
+  // centro di Castellaneta (brief SEO 10/10): da sostituire con le coordinate esatte della scheda Google
+  geo: { '@type': 'GeoCoordinates', latitude: 40.6333, longitude: 16.9333 },
   // città con clienti reali e città seguite (AGENCY_CITIES), più Puglia e Italia
   areaServed: [...AGENCY_CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
   sameAs: BUSINESS.sameAs,
