@@ -348,6 +348,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Riempire la stagione, prima che inizi", testo: "Chi va al mare sceglie il lido e il ristorante guardando le foto. Per Il Paradiso abbiamo fotografato i piatti del ristorante, per La Vela creiamo le grafiche degli eventi. Il lavoro inizia prima dell'estate: contenuti, scheda Google e sponsorizzate pronti in primavera, poi foto, reel ed eventi raccontati durante la stagione." },
     servizi: { 'gestione-social': "Social per lidi e ristoranti di Castellaneta Marina: piatti, tramonti ed eventi raccontati durante la stagione, con grafiche come quelle che curiamo per La Vela." },
   },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Ferrara", provincia: "provincia di Ferrara",
+    contesto: "Ferrara è la città degli Estensi, con il Castello Estense, le Mura e un centro rinascimentale patrimonio UNESCO. È una città di botteghe, locali e attività storiche, dove la qualità si racconta bene con immagini curate.",
+    settori: ["pasticcerie e botteghe", "locali e ristoranti", "attività storiche del centro"],
+    faq: { q: "Seguite attività di Ferrara anche se siete in Puglia?", a: "Sì: per la Pasticceria Naturale gestiamo i social a distanza e facciamo foto e video sul posto." },
+    description: "Agenzia di comunicazione per attività di Ferrara: gestione social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    intro: "A Ferrara gestiamo i social della Pasticceria Naturale: strategia, idee e testi nostri, foto e video realizzati sul posto. Seguiamo attività di Ferrara con lo stesso metodo che usiamo in Puglia, lavorando a distanza e venendo di persona per le riprese.",
+    focus: { titolo: "Seguire un'attività a distanza, senza perdere il contatto", testo: "Con la Pasticceria Naturale lavoriamo così: strategia e piano editoriale condivisi, testi e idee scritti da noi, foto e video girati sul posto. Il resto si fa a distanza, con un contatto diretto e report chiari. Per un'attività di Ferrara significa avere un social media manager dedicato, non un account gestito in serie." },
+    servizi: { 'gestione-social': "Gestione social a Ferrara come per la Pasticceria Naturale: strategia, testi, idee per i contenuti e foto e video realizzati sul posto." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
