@@ -11,8 +11,12 @@ Aggiornata: 10/10/2026
 - [ ] Compilare le 3 schede vuote (Acchiappasogni, Feliciano Fangio, IMH) e spuntare "Pubblica la scheda".
 
 ## Decisioni
-- [ ] Persone nominate nelle schede (Vision Ottica, Inox Racing, Arte e Oro): confermare che sono d'accordo.
+- [x] Persone nominate nelle schede: confermato da Nicola (10/10).
 - [ ] Togliere il link "Scheda cliente" dalle 3 schede vuote finché non pubblicate (consiglio: sì).
+
+## Sicurezza (analista, 10/10)
+- [ ] Possibile tentativo di accesso visto da Nicola ~10 giorni fa: dire all'analista cosa ha visto; controllare utenti Firebase, attività account Google, registro sicurezza GitHub, log Vercel.
+- [ ] Account GitHub "clinicaricciardilumina-alt" (3 copie del sito il 25/09, unite nella PR #1): dire all'analista chi è.
 
 ## Console (SECURITY.md)
 - [ ] Sign-up Firebase disattivato · [ ] restrizione referrer sulla browser key · [ ] tetto di spesa Google e Anthropic · [ ] "Salva impostazioni" · [ ] TTL su `_ratelimits`.
