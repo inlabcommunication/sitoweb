@@ -26,6 +26,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Matera', label: 'w', region: 'Basilicata', lat: 40.666, lon: 16.604 },
   { name: 'Castellaneta Marina', label: 's', region: 'Puglia', lat: 40.533, lon: 16.939 },
   { name: 'Crispiano', region: 'Puglia', lat: 40.603, lon: 17.231 },
+  { name: 'Statte', label: 's', region: 'Puglia', lat: 40.565, lon: 17.206 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

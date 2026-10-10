@@ -374,6 +374,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per masserie e attività di Crispiano: foto e reel girati sul posto, un calendario costante e campagne per eventi e prenotazioni." },
   },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Statte", provincia: "provincia di Taranto",
+    contesto: "Statte si trova a pochi chilometri da Taranto, nel Parco Terra delle Gravine, con la gravina di Leucaspide e le sue masserie. Molte attività lavorano sia con il paese sia con il pubblico di Taranto.",
+    settori: ["negozi e servizi del paese", "masserie e ristorazione", "attività che lavorano anche con Taranto"],
+    faq: { q: "Le sponsorizzate possono raggiungere anche Taranto?", a: "Sì: impostiamo zone e raggio in base a dove si trovano i tuoi clienti, Statte e i quartieri vicini di Taranto." },
+    description: "Agenzia di comunicazione a Statte: social, sponsorizzate, sito e scheda Google per attività alle porte di Taranto. Da Castellaneta, preventivo gratuito.",
+    intro: "Statte è alle porte di Taranto: per le sue attività la sfida è farsi notare tra tanti concorrenti della città vicina. Seguiamo social, sponsorizzate, siti e scheda Google, da Castellaneta.",
+    focus: { titolo: "Farsi trovare da chi cerca a Taranto", testo: "Per un'attività di Statte, il pubblico non si ferma ai confini del paese: chi cerca un servizio a Taranto può scegliere te, se ti trova. Partiamo da una scheda Google completa e curata, contenuti social riconoscibili e sponsorizzate su Statte e sui quartieri vicini di Taranto, con un budget proporzionato." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per attività di Statte che vogliono farsi conoscere anche a Taranto: contenuti riconoscibili e costanti, con un piano chiaro." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
