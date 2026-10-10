@@ -32,6 +32,7 @@ import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
 import { CLIENT_SEO } from './data/clientSeo';
+import { clientServiceSlugs, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
@@ -1908,6 +1909,8 @@ const PageCittaSEO = ({city, service}) => {
 // basta la qualità "eco" di Cloudinary (~80 KB in meno, richiesta Performance 03/10)
 const cldEco = (url: string, w: number) => cld(url, w).replace('q_auto,', 'q_auto:eco,');
 
+// Nome breve del servizio nei link "{Servizio} a {Paese}"
+const SERVICE_SHORT: Record<string,string> = {"gestione-social":"Gestione social","video":"Video","shooting":"Foto e shooting","siti-web":"Siti web","meta-ads":"Sponsorizzate","branding":"Branding","automazioni-ai":"Automazioni AI"};
 const PageCliente = ({id}: {id: string}) => {
   const {go}=useRouter();
   const c=useContent();
@@ -2039,6 +2042,21 @@ const PageCliente = ({id}: {id: string}) => {
 
       <ClientLogoStrip excludeId={client.id} allClients label="Altri brand che hanno scelto InLab" />
 
+      {/* "Lavoriamo a {Paese}": la scheda porta alle pagine del suo paese (brief SEO 10/10 territorio, punto 2) */}
+      {locationCities(client.location).filter((city: string)=>AGENCY_CITIES.includes(city)).map((city: string)=>(
+        <section key={city} style={{padding:"4rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <h2 className="section-label" style={{marginBottom:"1.5rem",fontWeight:400}}>Lavoriamo a {city}</h2>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+              <Link to={agencyPath(city)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia di comunicazione a {city}</Link>
+              {clientServiceSlugs(client).filter((slug: string)=>serviceCities(slug).includes(city)).map((slug: string)=>(
+                <Link key={slug} to={`/${slug}-${citySlug(city)}`} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>{SERVICE_SHORT[slug]||slug} a {city}</Link>
+              ))}
+              <Link to="/dove-lavoriamo" className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Tutte le città</Link>
+            </div>
+          </div>
+        </section>
+      ))}
       <ServiceCTA title={`VUOI UN PROGETTO COME ${client.name.toUpperCase()}?`} sub="Raccontaci cosa vuoi ottenere e capiamo insieme la direzione migliore." btn="Parliamone"/>
     </>
   );
