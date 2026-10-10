@@ -32,7 +32,7 @@ import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
 import { CLIENT_SEO } from './data/clientSeo';
-import { clientServiceSlugs, locationCities } from './lib/localClients';
+import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
@@ -1509,7 +1509,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const provincia=info?.provincia||"provincia di Taranto";
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const content=useContent() as any;
-  const localClients=normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(city)));
+  // clienti principali + "Altri clienti" pubblicati, città confrontata in modo esatto (brief SEO 10/10 territorio, punto 3)
+  const localClients=clientsInCity(content, city);
   const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
   // Le città fuori da CITIES hanno solo le pagine servizio previste in EXTRA_SERVICE_CITIES
   // (oggi gestione social): gli altri servizi puntano alle pagine generali.
@@ -1520,7 +1521,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const provinceGroups=city==="Taranto" ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
     city:c,
     cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
-    clients:normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(c))),
+    clients:clientsInCity(content, c),
   })).filter(g=>g.cases.length||g.clients.length) : [];
   return (
     <>
@@ -1702,7 +1703,7 @@ const DoveSiamo = () => (
 );
 
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
-const PROVINCE_CITIES=["Castellaneta","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
+const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
 // Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
 // caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto).
@@ -1759,8 +1760,8 @@ const PageCittaSEO = ({city, service}) => {
   const cityName=serviceCities(svc.slug).find(c=>citySlug(c)===city)||city;
   const otherCities=serviceCities(svc.slug).filter(c=>c!==cityName);
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
-    .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
+  // per primi i clienti che hanno questo servizio (brief SEO 10/10 territorio, punto 3)
+  const localClients=clientsInCity(useContent(), cityName, svc.slug);
   const localCases=(((useContent() as any).cases?.items||[]) as any[])
     .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
   const info=cityInfo(cityName);
