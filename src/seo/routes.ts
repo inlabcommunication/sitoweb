@@ -6,6 +6,7 @@
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
 import { otherClientPages } from '../data/otherClients';
+import { CLIENT_SEO, withSeoSuffix } from '../data/clientSeo';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
@@ -47,7 +48,7 @@ export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Caste
 // solo la pagina /agenzia-comunicazione-{città}, nessuna pagina per servizio.
 // Le vecchie /{servizio}-massafra restano in redirect 301 (vercel.json): la
 // regola elenca solo gli slug dei servizi, quindi non tocca l'agenzia.
-export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle'];
+export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 /** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
@@ -56,7 +57,7 @@ export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
 /** Pagine servizio in più fuori da CITIES (servizio → città). Brief SEO 05/10, decisione di
  *  Nicola: solo gestione social a Massafra, Gioia del Colle e Bari; gli altri servizi no. */
 export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
-  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari'],
+  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca'],
 };
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
@@ -458,8 +459,10 @@ export const getSeo = (rawPath: string): Seo => {
     const cl = clients().find((c) => path === '/cliente/' + c.id);
     if (cl) {
       const where = cl.location ? ` a ${cl.location.replace(/\s*\(TA\)/, '')}` : '';
-      return page(path, `${cl.name}${where} | Clienti InLab`,
-        cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`,
+      const seo = CLIENT_SEO[cl.id];
+      const desc = cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`;
+      return page(path, seo ? seo.title : `${cl.name}${where} | Clienti InLab`,
+        seo ? withSeoSuffix(desc, seo.label) : desc,
         // scheda "Altri clienti" non ancora pubblicata: la pagina c'è, ma resta fuori da Google e dalla sitemap
         (cl as any).draft ? { noindex: true } : { sitemap: { priority: 0.5, changefreq: 'monthly' } },
         [['Clienti', '/clienti'], [cl.name, path]]);

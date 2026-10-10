@@ -28,6 +28,9 @@ export type CityInfo = {
   title?: string;
   /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
   casaNostra?: { titolo: string; testo: string; autore: string; link: string };
+  /** Città senza clienti: nella pagina agenzia il blocco "Lavoriamo in tutta la provincia"
+   * con i lavori dei paesi vicini al posto di "I nostri lavori" (brief SEO 10/10 territorio) */
+  lavoriVicini?: boolean;
   /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
   focus?: { titolo: string; testo: string };
   /** Collegamento su una parola dell'apertura (es. il nome di Nicola → pagina autore) */
@@ -336,6 +339,76 @@ export const CITY_INFO: CityInfo[] = [
         description: "Gestione social a Gioia del Colle: contenuti su prodotti, origine e persone, per caseifici, cantine e attività del territorio. Preventivo gratuito.",
       },
     },
+  },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Castellaneta Marina", provincia: "provincia di Taranto",
+    contesto: "Castellaneta Marina vive tra la pineta, la Riserva naturale Stornara e una lunga spiaggia sulla costa ionica. D'estate si riempie di turisti, villaggi e lidi; il resto dell'anno contano i clienti di Castellaneta e dei paesi vicini.",
+    settori: ["lidi e stabilimenti balneari", "ristoranti e bar della costa", "villaggi e strutture ricettive"],
+    faq: { q: "Quando conviene iniziare la comunicazione di un lido?", a: "In primavera: a giugno i turisti hanno già scelto dove andare. Prepariamo foto, scheda Google e campagne prima dell'apertura." },
+    description: "Agenzia di comunicazione a Castellaneta Marina: foto, social, grafiche e sponsorizzate per lidi, ristoranti e strutture della costa. Preventivo gratuito.",
+    intro: "Castellaneta Marina è la nostra costa: per i lidi Il Paradiso e La Vela abbiamo curato shooting dei piatti e grafiche degli eventi. Seguiamo foto, social, video e sponsorizzate per le attività della marina, a pochi minuti dalla nostra sede di Castellaneta.",
+    focus: { titolo: "Riempire la stagione, prima che inizi", testo: "Chi va al mare sceglie il lido e il ristorante guardando le foto. Per Il Paradiso abbiamo fotografato i piatti del ristorante, per La Vela creiamo le grafiche degli eventi. Il lavoro inizia prima dell'estate: contenuti, scheda Google e sponsorizzate pronti in primavera, poi foto, reel ed eventi raccontati durante la stagione." },
+    servizi: { 'gestione-social': "Social per lidi e ristoranti di Castellaneta Marina: piatti, tramonti ed eventi raccontati durante la stagione, con grafiche come quelle che curiamo per La Vela." },
+  },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Ferrara", provincia: "provincia di Ferrara",
+    contesto: "Ferrara è la città degli Estensi, con il Castello Estense, le Mura e un centro rinascimentale patrimonio UNESCO. È una città di botteghe, locali e attività storiche, dove la qualità si racconta bene con immagini curate.",
+    settori: ["pasticcerie e botteghe", "locali e ristoranti", "attività storiche del centro"],
+    faq: { q: "Seguite attività di Ferrara anche se siete in Puglia?", a: "Sì: per la Pasticceria Naturale gestiamo i social a distanza e facciamo foto e video sul posto." },
+    description: "Agenzia di comunicazione per attività di Ferrara: gestione social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    intro: "A Ferrara gestiamo i social della Pasticceria Naturale: strategia, idee e testi nostri, foto e video realizzati sul posto. Seguiamo attività di Ferrara con lo stesso metodo che usiamo in Puglia, lavorando a distanza e venendo di persona per le riprese.",
+    focus: { titolo: "Seguire un'attività a distanza, senza perdere il contatto", testo: "Con la Pasticceria Naturale lavoriamo così: strategia e piano editoriale condivisi, testi e idee scritti da noi, foto e video girati sul posto. Il resto si fa a distanza, con un contatto diretto e report chiari. Per un'attività di Ferrara significa avere un social media manager dedicato, non un account gestito in serie." },
+    servizi: { 'gestione-social': "Gestione social a Ferrara come per la Pasticceria Naturale: strategia, testi, idee per i contenuti e foto e video realizzati sul posto." },
+  },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Crispiano", provincia: "provincia di Taranto",
+    contesto: "Crispiano è conosciuta come la città delle cento masserie: la sua campagna, tra gravine e muretti a secco, è piena di masserie storiche che oggi ospitano ristoranti, eventi e turismo.",
+    settori: ["masserie ed eventi", "ristoranti e agriturismi", "attività del paese"],
+    faq: { q: "Lavorate con masserie ed agriturismi?", a: "Sì: foto, video, social e campagne per eventi, ristorazione e ospitalità. Facciamo le riprese sul posto." },
+    description: "Agenzia di comunicazione a Crispiano: social, foto, video e sponsorizzate per masserie, ristoranti e attività del paese. Da Castellaneta, preventivo gratuito.",
+    intro: "Crispiano è la città delle cento masserie, a mezz'ora dalla nostra sede. Seguiamo social, foto, video, sponsorizzate e siti per masserie, ristoranti e attività del paese.",
+    focus: { titolo: "Raccontare una masseria a chi non c'è mai stato", testo: "Una masseria si sceglie dalle immagini: gli spazi, la luce, i piatti, l'atmosfera di un evento. Facciamo shooting e riprese sul posto, costruiamo un profilo social che mostri la masseria in ogni stagione e portiamo i contenuti, con le sponsorizzate, a chi cerca un posto per un matrimonio, un pranzo o un weekend." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per masserie e attività di Crispiano: foto e reel girati sul posto, un calendario costante e campagne per eventi e prenotazioni." },
+  },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Statte", provincia: "provincia di Taranto",
+    contesto: "Statte si trova a pochi chilometri da Taranto, nel Parco Terra delle Gravine, con la gravina di Leucaspide e le sue masserie. Molte attività lavorano sia con il paese sia con il pubblico di Taranto.",
+    settori: ["negozi e servizi del paese", "masserie e ristorazione", "attività che lavorano anche con Taranto"],
+    faq: { q: "Le sponsorizzate possono raggiungere anche Taranto?", a: "Sì: impostiamo zone e raggio in base a dove si trovano i tuoi clienti, Statte e i quartieri vicini di Taranto." },
+    description: "Agenzia di comunicazione a Statte: social, sponsorizzate, sito e scheda Google per attività alle porte di Taranto. Da Castellaneta, preventivo gratuito.",
+    intro: "Statte è alle porte di Taranto: per le sue attività la sfida è farsi notare tra tanti concorrenti della città vicina. Seguiamo social, sponsorizzate, siti e scheda Google, da Castellaneta.",
+    focus: { titolo: "Farsi trovare da chi cerca a Taranto", testo: "Per un'attività di Statte, il pubblico non si ferma ai confini del paese: chi cerca un servizio a Taranto può scegliere te, se ti trova. Partiamo da una scheda Google completa e curata, contenuti social riconoscibili e sponsorizzate su Statte e sui quartieri vicini di Taranto, con un budget proporzionato." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per attività di Statte che vogliono farsi conoscere anche a Taranto: contenuti riconoscibili e costanti, con un piano chiaro." },
+  },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Noci", provincia: "provincia di Bari",
+    contesto: "Noci, in provincia di Bari, è al confine con la Valle d'Itria: centro storico con le gnostre, masserie in campagna e una tradizione gastronomica che si festeggia con Bacco nelle Gnostre. È un paese che vive di cibo, ospitalità e turismo.",
+    settori: ["ristoranti e bracerie", "masserie e ospitalità", "negozi del centro storico"],
+    faq: { q: "Fate food photography per ristoranti di Noci?", a: "Sì, con shooting sul posto: piatti, sala e persone, da usare su social, scheda Google e sito." },
+    description: "Agenzia di comunicazione a Noci: social, foto, video e sponsorizzate per ristoranti, masserie e attività della Murgia dei Trulli. Preventivo gratuito.",
+    intro: "Noci è nella Murgia dei Trulli, tra gnostre, masserie e buona cucina. Seguiamo social, foto, video, sponsorizzate e siti per le attività del paese, da Castellaneta.",
+    focus: { titolo: "Il cibo si vende con gli occhi", testo: "Per un ristorante, una braceria o una masseria di Noci, le foto dei piatti e i video in cucina sono il primo menu che le persone vedono. Facciamo shooting e reel sul posto, curiamo la scheda Google con foto vere e prepariamo contenuti e campagne per i periodi di maggiore affluenza, come le feste e i weekend d'autunno." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, masserie e negozi di Noci: foto dei piatti, reel in cucina e contenuti costanti per farsi scegliere da chi arriva in paese." },
+  },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Martina Franca", provincia: "provincia di Taranto",
+    contesto: "Martina Franca è famosa per il centro storico barocco, il Festival della Valle d'Itria e il capocollo. Tra trulli e masserie è una delle mete più amate della Puglia, con turisti italiani e stranieri per gran parte dell'anno.",
+    settori: ["hotel e strutture ricettive", "ristoranti", "negozi di prodotti tipici"],
+    faq: { q: "Potete fare contenuti anche in inglese?", a: "Sì, per hotel, ristoranti e attività che lavorano con turisti stranieri: post, didascalie e testi del sito." },
+    description: "Agenzia di comunicazione a Martina Franca: social, foto, video e campagne per hotel, ristoranti e negozi della Valle d'Itria. Preventivo gratuito.",
+    intro: "Martina Franca è la capitale barocca della Valle d'Itria. Seguiamo social, foto, video, sponsorizzate e siti per hotel, ristoranti, negozi e attività del territorio, da Castellaneta.",
+    focus: { titolo: "Parlare anche ai turisti", testo: "A Martina Franca molti clienti arrivano da fuori. Per un hotel, un ristorante o un negozio di prodotti tipici servono contenuti che funzionino anche per chi non conosce il posto: foto curate, reel brevi, una scheda Google completa e, quando serve, testi anche in inglese. Prepariamo campagne mirate ai turisti prima della stagione e ai clienti della zona per il resto dell'anno." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per hotel, ristoranti e negozi di Martina Franca: contenuti curati per i turisti e per chi vive in Valle d'Itria, anche in inglese." },
   },
 ];
 

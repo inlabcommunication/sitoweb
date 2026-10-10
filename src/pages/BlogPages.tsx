@@ -329,7 +329,7 @@ export const PageAutore = ({ slug, go }: { slug: string; go: Go }) => {
             <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
               {author.research.map((r) => (
                 <li key={r.url} style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, maxWidth: 820 }}>
-                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)' }}>{r.title.startsWith('"') ? r.title : `"${r.title}"`}</a>{r.book ? <>, in <em>{r.book}</em></> : null}, {r.publisher}{r.pages ? `, pp. ${r.pages}` : ''}.
+                  {r.authors.join(', ')} ({r.year}), <a href={r.url} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--t)', textDecoration: 'underline', textUnderlineOffset: 3 }}>{r.title.startsWith('"') ? r.title : `"${r.title}"`}</a>{r.book ? <>, in <em>{r.book}</em></> : null}, {r.publisher}{r.pages ? `, pp. ${r.pages}` : ''}.
                 </li>
               ))}
             </ul>

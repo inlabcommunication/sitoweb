@@ -31,6 +31,8 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
+import { CLIENT_SEO } from './data/clientSeo';
+import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
@@ -1507,7 +1509,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const provincia=info?.provincia||"provincia di Taranto";
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const content=useContent() as any;
-  const localClients=normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(city)));
+  // clienti principali + "Altri clienti" pubblicati, città confrontata in modo esatto (brief SEO 10/10 territorio, punto 3)
+  const localClients=clientsInCity(content, city);
   const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
   // Le città fuori da CITIES hanno solo le pagine servizio previste in EXTRA_SERVICE_CITIES
   // (oggi gestione social): gli altri servizi puntano alle pagine generali.
@@ -1515,10 +1518,11 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const isHome=city===BUSINESS.city;
   const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
-  const provinceGroups=city==="Taranto" ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
+  // Città nuove senza clienti (lavoriVicini): stesso blocco con i lavori dei paesi vicini (brief SEO 10/10 territorio)
+  const provinceGroups=(city==="Taranto"||(info?.lavoriVicini&&!localClients.length&&!localCases.length)) ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
     city:c,
     cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
-    clients:normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(c))),
+    clients:clientsInCity(content, c),
   })).filter(g=>g.cases.length||g.clients.length) : [];
   return (
     <>
@@ -1700,7 +1704,7 @@ const DoveSiamo = () => (
 );
 
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
-const PROVINCE_CITIES=["Castellaneta","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
+const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
 // Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
 // caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto).
@@ -1757,8 +1761,8 @@ const PageCittaSEO = ({city, service}) => {
   const cityName=serviceCities(svc.slug).find(c=>citySlug(c)===city)||city;
   const otherCities=serviceCities(svc.slug).filter(c=>c!==cityName);
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
-    .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
+  // per primi i clienti che hanno questo servizio (brief SEO 10/10 territorio, punto 3)
+  const localClients=clientsInCity(useContent(), cityName, svc.slug);
   const localCases=(((useContent() as any).cases?.items||[]) as any[])
     .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
   const info=cityInfo(cityName);
@@ -1907,6 +1911,8 @@ const PageCittaSEO = ({city, service}) => {
 // basta la qualità "eco" di Cloudinary (~80 KB in meno, richiesta Performance 03/10)
 const cldEco = (url: string, w: number) => cld(url, w).replace('q_auto,', 'q_auto:eco,');
 
+// Nome breve del servizio nei link "{Servizio} a {Paese}"
+const SERVICE_SHORT: Record<string,string> = {"gestione-social":"Gestione social","video":"Video","shooting":"Foto e shooting","siti-web":"Siti web","meta-ads":"Sponsorizzate","branding":"Branding","automazioni-ai":"Automazioni AI"};
 const PageCliente = ({id}: {id: string}) => {
   const {go}=useRouter();
   const c=useContent();
@@ -1928,18 +1934,9 @@ const PageCliente = ({id}: {id: string}) => {
     {label:client?.address ? "Come arrivare" : "", href:client?.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${client.name} ${client.address}`)}` : ""},
   ].filter(link=>link.label && link.href && /^(https?:\/\/|tel:)/.test(String(link.href)));
 
-  if(!client){
-    return (
-      <section style={{minHeight:"70vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"8rem 2rem",textAlign:"center"}}>
-        <div style={{maxWidth:560}}>
-          <p className="section-label">Cliente non trovato</p>
-          <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.2rem"}}>SCHEDA<br/><span className="stroke">NON DISPONIBILE</span></h1>
-          <p style={{color:"var(--m)",lineHeight:1.7,marginBottom:"2rem"}}>La card selezionata non ha ancora una scheda cliente associata.</p>
-          <button className="btn btn-p" onClick={()=>go("/")}>Torna alla home <ArrowRight size={14}/></button>
-        </div>
-      </section>
-    );
-  }
+  // Cliente inesistente: stessa pagina di 404.html (servita dal server con stato 404),
+  // così HTML e React coincidono (segnalazione analista 10/10)
+  if(!client) return <PageNotFound/>;
 
   return (
     <>
@@ -1959,7 +1956,7 @@ const PageCliente = ({id}: {id: string}) => {
           </Link>
           <div style={{display:"grid",gridTemplateColumns:"1.25fr .75fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <div>
-              <p className="section-label">{client.sector || "Cliente InLab"}</p>
+              <p className="section-label">{CLIENT_SEO[client.id]?.label || client.sector || "Cliente InLab"}</p>
               <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(4rem,10vw,10rem)",lineHeight:.84,textTransform:"uppercase",marginBottom:"1.5rem"}}>{client.name}</h1>
               <p style={{maxWidth:620,fontSize:17,lineHeight:1.8,color:"rgba(240,237,230,.72)"}}>{client.summary || client.description || "Scheda cliente InLab Communication."}</p>
             </div>
@@ -2047,6 +2044,21 @@ const PageCliente = ({id}: {id: string}) => {
 
       <ClientLogoStrip excludeId={client.id} allClients label="Altri brand che hanno scelto InLab" />
 
+      {/* "Lavoriamo a {Paese}": la scheda porta alle pagine del suo paese (brief SEO 10/10 territorio, punto 2) */}
+      {locationCities(client.location).filter((city: string)=>AGENCY_CITIES.includes(city)).map((city: string)=>(
+        <section key={city} style={{padding:"4rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <h2 className="section-label" style={{marginBottom:"1.5rem",fontWeight:400}}>Lavoriamo a {city}</h2>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+              <Link to={agencyPath(city)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia di comunicazione a {city}</Link>
+              {clientServiceSlugs(client).filter((slug: string)=>serviceCities(slug).includes(city)).map((slug: string)=>(
+                <Link key={slug} to={`/${slug}-${citySlug(city)}`} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>{SERVICE_SHORT[slug]||slug} a {city}</Link>
+              ))}
+              <Link to="/dove-lavoriamo" className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Tutte le città</Link>
+            </div>
+          </div>
+        </section>
+      ))}
       <ServiceCTA title={`VUOI UN PROGETTO COME ${client.name.toUpperCase()}?`} sub="Raccontaci cosa vuoi ottenere e capiamo insieme la direzione migliore." btn="Parliamone"/>
     </>
   );
