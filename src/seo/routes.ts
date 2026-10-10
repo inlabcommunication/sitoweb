@@ -128,16 +128,18 @@ const imageObject = (url: string, caption?: string, size?: { width: number; heig
 // Fondatori/autori: una sola identità (Person con @id) usata in /chi-siamo,
 // nelle pagine autore, in Organization.founder e negli articoli.
 export const AUTHORS = [
-  { slug: 'nicola-carpignano-social-media-manager-palagianello', name: 'Nicola Carpignano', jobTitle: 'Social media manager, comunicazione e marketing',
-    title: 'Nicola Carpignano: social media e marketing a Castellaneta',
-    description: 'Nicola Carpignano, social media manager e co-fondatore di InLab Communication a Castellaneta (TA): strategia, contenuti e marketing per attività locali.',
+  { slug: 'nicola-carpignano-social-media-manager-palagianello', name: 'Nicola Carpignano', jobTitle: 'Social media manager',
+    // brief SEO 10/10: "Nicola Carpignano social media manager Palagianello"
+    subtitle: 'Social media manager · Palagianello e Castellaneta (TA)',
+    title: 'Nicola Carpignano, social media manager a Palagianello | InLab',
+    description: 'Nicola Carpignano è social media manager e cofondatore di InLab Communication. È di Palagianello, lavora tra Palagianello, Castellaneta e Taranto.',
     alumniOf: 'Sapienza Università di Roma',
-    knowsAbout: ['Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati',
+    knowsAbout: ['Comunicazione e marketing', 'Psicologia della comunicazione', 'Digital marketing', 'Social media marketing', 'Analisi dati',
       'Social media management', 'Marketing degli eventi', 'Netnografia', 'Comunicazione digitale nel recruiting', 'Rappresentazioni sociali'],
     // Dati confermati da Nicola (brief SEO 02/10, punto 4)
     vatID: '03411970738',
     homeLocation: 'Palagianello',
-    facts: ['Originario di Palagianello (TA).',
+    facts: ['Nicola Carpignano è un social media manager di Palagianello e cofondatore di InLab Communication, l\'agenzia di comunicazione con sede a Castellaneta.',
       'Si è laureato in Psicologia all\'Università di Bari e si è specializzato in Psicologia della comunicazione e del marketing alla Sapienza Università di Roma.',
       'Docente di Marketing e Social Media in due master di EA Formazione (Bari): il Master in Management degli Eventi e il Master in Social Media Manager.',
       'Nella ricerca universitaria ha studiato lo stile della comunicazione online: come si parla di lavoro, recruiting e temi sociali sui social.'],
@@ -169,7 +171,7 @@ export const AUTHORS = [
 ] as AuthorData[];
 type Research = { authors: string[]; year: string; title: string; book?: string; publisher: string; pages?: string; url: string };
 type AuthorData = {
-  slug: string; name: string; jobTitle: string; title: string; description: string; alumniOf: string;
+  slug: string; name: string; jobTitle: string; /** riga sotto il nome nella pagina autore (se manca: jobTitle) */ subtitle?: string; title: string; description: string; alumniOf: string;
   knowsAbout: string[]; sameAs: string[];
   homeLocation?: string; facts?: string[]; inBreve?: string; researchIntro?: string;
   /** Partita IVA (solo cifre), data da Nicola */
