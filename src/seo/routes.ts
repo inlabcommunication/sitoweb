@@ -48,7 +48,7 @@ export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Caste
 // solo la pagina /agenzia-comunicazione-{città}, nessuna pagina per servizio.
 // Le vecchie /{servizio}-massafra restano in redirect 301 (vercel.json): la
 // regola elenca solo gli slug dei servizi, quindi non tocca l'agenzia.
-export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle'];
+export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle', 'Castellaneta Marina'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 /** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
@@ -57,7 +57,7 @@ export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
 /** Pagine servizio in più fuori da CITIES (servizio → città). Brief SEO 05/10, decisione di
  *  Nicola: solo gestione social a Massafra, Gioia del Colle e Bari; gli altri servizi no. */
 export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
-  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari'],
+  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari', 'Castellaneta Marina'],
 };
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];

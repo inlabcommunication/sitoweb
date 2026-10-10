@@ -337,6 +337,17 @@ export const CITY_INFO: CityInfo[] = [
       },
     },
   },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Castellaneta Marina", provincia: "provincia di Taranto",
+    contesto: "Castellaneta Marina vive tra la pineta, la Riserva naturale Stornara e una lunga spiaggia sulla costa ionica. D'estate si riempie di turisti, villaggi e lidi; il resto dell'anno contano i clienti di Castellaneta e dei paesi vicini.",
+    settori: ["lidi e stabilimenti balneari", "ristoranti e bar della costa", "villaggi e strutture ricettive"],
+    faq: { q: "Quando conviene iniziare la comunicazione di un lido?", a: "In primavera: a giugno i turisti hanno già scelto dove andare. Prepariamo foto, scheda Google e campagne prima dell'apertura." },
+    description: "Agenzia di comunicazione a Castellaneta Marina: foto, social, grafiche e sponsorizzate per lidi, ristoranti e strutture della costa. Preventivo gratuito.",
+    intro: "Castellaneta Marina è la nostra costa: per i lidi Il Paradiso e La Vela abbiamo curato shooting dei piatti e grafiche degli eventi. Seguiamo foto, social, video e sponsorizzate per le attività della marina, a pochi minuti dalla nostra sede di Castellaneta.",
+    focus: { titolo: "Riempire la stagione, prima che inizi", testo: "Chi va al mare sceglie il lido e il ristorante guardando le foto. Per Il Paradiso abbiamo fotografato i piatti del ristorante, per La Vela creiamo le grafiche degli eventi. Il lavoro inizia prima dell'estate: contenuti, scheda Google e sponsorizzate pronti in primavera, poi foto, reel ed eventi raccontati durante la stagione." },
+    servizi: { 'gestione-social': "Social per lidi e ristoranti di Castellaneta Marina: piatti, tramonti ed eventi raccontati durante la stagione, con grafiche come quelle che curiamo per La Vela." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
