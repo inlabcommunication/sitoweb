@@ -24,6 +24,8 @@ Decise dal titolare il 10/10/2026 dopo lo stop per crediti finiti. Obiettivo: st
 
 **R3 — Resoconti corti.** Massimo ~15 righe. Solo ciò che è **nuovo o cambiato** dall'ultimo resoconto. Non ripetere "serve da Nicola" già noto: scrivilo solo se è nuovo. Se non è successo nulla: 3 righe.
 
+**R3b — Nessuna ripetizione a Nicola.** Le cose da fare per Nicola stanno in `DA-FARE-NICOLA.md` (lista unica). Si scrivono a Nicola solo se nuove o cambiate; se un altro agente (es. la SEO) gliele ha già dette, non si ripetono. Gli agenti segnalano al Direttore, non a Nicola, ciò che non blocca il loro lavoro.
+
 **R4 — Un messaggio, tutto dentro.** Raggruppa più punti in un solo messaggio. Niente messaggi di sola conferma o ringraziamento. Una risposta si manda solo se serve un'azione, una decisione o una correzione.
 
 **R5 — Prima il dubbio, poi il lavoro.** Se la richiesta è ambigua, chiedi **una** domanda al Direttore prima di costruire. Costa meno che rifare.
