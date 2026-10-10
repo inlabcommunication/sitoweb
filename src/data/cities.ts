@@ -28,6 +28,9 @@ export type CityInfo = {
   title?: string;
   /** Sezione sul fondatore del posto: testo + slug della pagina autore (anche in JSON-LD "mentions") */
   casaNostra?: { titolo: string; testo: string; autore: string; link: string };
+  /** Città senza clienti: nella pagina agenzia il blocco "Lavoriamo in tutta la provincia"
+   * con i lavori dei paesi vicini al posto di "I nostri lavori" (brief SEO 10/10 territorio) */
+  lavoriVicini?: boolean;
   /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
   focus?: { titolo: string; testo: string };
   /** Collegamento su una parola dell'apertura (es. il nome di Nicola → pagina autore) */
@@ -358,6 +361,18 @@ export const CITY_INFO: CityInfo[] = [
     intro: "A Ferrara gestiamo i social della Pasticceria Naturale: strategia, idee e testi nostri, foto e video realizzati sul posto. Seguiamo attività di Ferrara con lo stesso metodo che usiamo in Puglia, lavorando a distanza e venendo di persona per le riprese.",
     focus: { titolo: "Seguire un'attività a distanza, senza perdere il contatto", testo: "Con la Pasticceria Naturale lavoriamo così: strategia e piano editoriale condivisi, testi e idee scritti da noi, foto e video girati sul posto. Il resto si fa a distanza, con un contatto diretto e report chiari. Per un'attività di Ferrara significa avere un social media manager dedicato, non un account gestito in serie." },
     servizi: { 'gestione-social': "Gestione social a Ferrara come per la Pasticceria Naturale: strategia, testi, idee per i contenuti e foto e video realizzati sul posto." },
+  },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Crispiano", provincia: "provincia di Taranto",
+    contesto: "Crispiano è conosciuta come la città delle cento masserie: la sua campagna, tra gravine e muretti a secco, è piena di masserie storiche che oggi ospitano ristoranti, eventi e turismo.",
+    settori: ["masserie ed eventi", "ristoranti e agriturismi", "attività del paese"],
+    faq: { q: "Lavorate con masserie ed agriturismi?", a: "Sì: foto, video, social e campagne per eventi, ristorazione e ospitalità. Facciamo le riprese sul posto." },
+    description: "Agenzia di comunicazione a Crispiano: social, foto, video e sponsorizzate per masserie, ristoranti e attività del paese. Da Castellaneta, preventivo gratuito.",
+    intro: "Crispiano è la città delle cento masserie, a mezz'ora dalla nostra sede. Seguiamo social, foto, video, sponsorizzate e siti per masserie, ristoranti e attività del paese.",
+    focus: { titolo: "Raccontare una masseria a chi non c'è mai stato", testo: "Una masseria si sceglie dalle immagini: gli spazi, la luce, i piatti, l'atmosfera di un evento. Facciamo shooting e riprese sul posto, costruiamo un profilo social che mostri la masseria in ogni stagione e portiamo i contenuti, con le sponsorizzate, a chi cerca un posto per un matrimonio, un pranzo o un weekend." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per masserie e attività di Crispiano: foto e reel girati sul posto, un calendario costante e campagne per eventi e prenotazioni." },
   },
 ];
 

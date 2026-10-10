@@ -1518,7 +1518,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const isHome=city===BUSINESS.city;
   const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
-  const provinceGroups=city==="Taranto" ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
+  // Città nuove senza clienti (lavoriVicini): stesso blocco con i lavori dei paesi vicini (brief SEO 10/10 territorio)
+  const provinceGroups=(city==="Taranto"||(info?.lavoriVicini&&!localClients.length&&!localCases.length)) ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
     city:c,
     cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
     clients:clientsInCity(content, c),
