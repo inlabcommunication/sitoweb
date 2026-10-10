@@ -31,6 +31,7 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
+import { CLIENT_SEO } from './data/clientSeo';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
@@ -1950,7 +1951,7 @@ const PageCliente = ({id}: {id: string}) => {
           </Link>
           <div style={{display:"grid",gridTemplateColumns:"1.25fr .75fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <div>
-              <p className="section-label">{client.sector || "Cliente InLab"}</p>
+              <p className="section-label">{CLIENT_SEO[client.id]?.label || client.sector || "Cliente InLab"}</p>
               <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(4rem,10vw,10rem)",lineHeight:.84,textTransform:"uppercase",marginBottom:"1.5rem"}}>{client.name}</h1>
               <p style={{maxWidth:620,fontSize:17,lineHeight:1.8,color:"rgba(240,237,230,.72)"}}>{client.summary || client.description || "Scheda cliente InLab Communication."}</p>
             </div>

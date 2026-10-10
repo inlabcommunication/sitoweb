@@ -6,6 +6,7 @@
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
 import { otherClientPages } from '../data/otherClients';
+import { CLIENT_SEO, withSeoSuffix } from '../data/clientSeo';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
@@ -458,8 +459,10 @@ export const getSeo = (rawPath: string): Seo => {
     const cl = clients().find((c) => path === '/cliente/' + c.id);
     if (cl) {
       const where = cl.location ? ` a ${cl.location.replace(/\s*\(TA\)/, '')}` : '';
-      return page(path, `${cl.name}${where} | Clienti InLab`,
-        cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`,
+      const seo = CLIENT_SEO[cl.id];
+      const desc = cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`;
+      return page(path, seo ? seo.title : `${cl.name}${where} | Clienti InLab`,
+        seo ? withSeoSuffix(desc, seo.label) : desc,
         // scheda "Altri clienti" non ancora pubblicata: la pagina c'è, ma resta fuori da Google e dalla sitemap
         (cl as any).draft ? { noindex: true } : { sitemap: { priority: 0.5, changefreq: 'monthly' } },
         [['Clienti', '/clienti'], [cl.name, path]]);
