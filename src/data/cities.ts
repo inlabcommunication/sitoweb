@@ -140,7 +140,7 @@ export const CITY_INFO: CityInfo[] = [
       titolo: 'Palagianello è casa nostra',
       testo: "Nicola Carpignano, co-fondatore di InLab Communication, è di Palagianello. Si è laureato in Psicologia all'Università di Bari, insegna Marketing e Social Media nei master di EA Formazione e ha pubblicato ricerche sulla comunicazione digitale. Per le attività del paese vuol dire avere vicino qualcuno che conosce il territorio e il mestiere.",
       autore: 'nicola-carpignano-social-media-manager-palagianello',
-      link: 'Scopri chi è Nicola',
+      link: 'Nicola Carpignano, social media manager di Palagianello',
     },
     servizi: {
       'gestione-social': "A Palagianello il tuo social media manager è del paese: Nicola Carpignano, cofondatore di InLab Communication, segue di persona la comunicazione delle attività locali, da Sublime Tentazione a Masseria Sacramento. I social sono il passaparola che continua online: raccontiamo le persone dietro il bancone, le novità e gli eventi del paese. Come per Sublime Tentazione, con una presenza costante tra gelati d'estate e panettoni a Natale.",
