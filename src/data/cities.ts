@@ -398,6 +398,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, masserie e negozi di Noci: foto dei piatti, reel in cucina e contenuti costanti per farsi scegliere da chi arriva in paese." },
   },
+  {
+    // brief SEO 10/10 territorio, lotto 1
+    name: "Martina Franca", provincia: "provincia di Taranto",
+    contesto: "Martina Franca è famosa per il centro storico barocco, il Festival della Valle d'Itria e il capocollo. Tra trulli e masserie è una delle mete più amate della Puglia, con turisti italiani e stranieri per gran parte dell'anno.",
+    settori: ["hotel e strutture ricettive", "ristoranti", "negozi di prodotti tipici"],
+    faq: { q: "Potete fare contenuti anche in inglese?", a: "Sì, per hotel, ristoranti e attività che lavorano con turisti stranieri: post, didascalie e testi del sito." },
+    description: "Agenzia di comunicazione a Martina Franca: social, foto, video e campagne per hotel, ristoranti e negozi della Valle d'Itria. Preventivo gratuito.",
+    intro: "Martina Franca è la capitale barocca della Valle d'Itria. Seguiamo social, foto, video, sponsorizzate e siti per hotel, ristoranti, negozi e attività del territorio, da Castellaneta.",
+    focus: { titolo: "Parlare anche ai turisti", testo: "A Martina Franca molti clienti arrivano da fuori. Per un hotel, un ristorante o un negozio di prodotti tipici servono contenuti che funzionino anche per chi non conosce il posto: foto curate, reel brevi, una scheda Google completa e, quando serve, testi anche in inglese. Prepariamo campagne mirate ai turisti prima della stagione e ai clienti della zona per il resto dell'anno." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per hotel, ristoranti e negozi di Martina Franca: contenuti curati per i turisti e per chi vive in Valle d'Itria, anche in inglese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
