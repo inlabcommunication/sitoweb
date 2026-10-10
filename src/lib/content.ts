@@ -51,8 +51,34 @@ const slimReels = (items: any[]) => items.map((c: any) => !Array.isArray(c?.reel
   }),
 });
 
+/**
+ * Esempi delle pagine servizio che puntano a un cliente o a un caso studio che
+ * non esiste più (es. un cliente rimosso): la card non li mostra, quindi si
+ * tolgono anche dai dati, perché non restino nel JSON di ogni pagina
+ * (segnalazione analista 10/10). "Esiste" = stesso criterio della card:
+ * clients.items (normalizzati) e cases.items del contenuto unito.
+ */
+const dropOrphanExamplesFrom = (examples: any, merged: any) => {
+  if (!examples || typeof examples !== 'object' || Array.isArray(examples)) return examples;
+  const clientIds = new Set(normalizeClients(merged?.clients?.items || []).map((c: any) => c.id));
+  const caseIds = new Set(((merged?.cases?.items || []) as any[]).map((c: any) => c?.id));
+  const out: any = {};
+  for (const [slug, list] of Object.entries(examples)) {
+    out[slug] = !Array.isArray(list) ? list : list.filter((e: any) =>
+      e?.kind === 'client' ? clientIds.has(e.clientId) : e?.kind === 'case' ? caseIds.has(e.caseId) : true);
+  }
+  return out;
+};
+const dropOrphanExamples = (content: any) =>
+  content?.serviceExamples ? { ...content, serviceExamples: dropOrphanExamplesFrom(content.serviceExamples, content) } : content;
+
 export const slimForPage = (saved: any) => {
   let out = saved;
+  if (out?.serviceExamples) {
+    const clean = dropStaleSections(out);
+    const merged = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, clean), clean?.schemaVersion >= 3);
+    out = { ...out, serviceExamples: dropOrphanExamplesFrom(out.serviceExamples, merged) };
+  }
   // stesso trattamento per i clienti e per gli "Altri clienti" (schede complete)
   for (const key of ['clients', 'otherClients']) {
     const items = out?.[key]?.items;
@@ -64,7 +90,7 @@ export const slimForPage = (saved: any) => {
 /** Contenuti salvati in dashboard: per l'HTML statico (al build) e, nel browser, dal blocco #site-content. */
 export const primeContent = (saved: any, slim = false) => {
   const clean = dropStaleSections(saved);
-  cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, clean), clean?.schemaVersion >= 3);
+  cached = dropOrphanExamples(normalizeSiteContent(deepMerge(WEBSITE_CONTENT, clean), clean?.schemaVersion >= 3));
   savedKey = stableKey(slim ? saved : slimForPage(saved));
   cachedSlim = slim;
 };
@@ -95,7 +121,7 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
       savedKey = key;
       cachedSlim = false;
       const saved = dropStaleSections(raw);
-      cached = normalizeSiteContent(deepMerge(WEBSITE_CONTENT, saved), saved?.schemaVersion >= 3);
+      cached = dropOrphanExamples(normalizeSiteContent(deepMerge(WEBSITE_CONTENT, saved), saved?.schemaVersion >= 3));
     } else {
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
