@@ -1928,18 +1928,9 @@ const PageCliente = ({id}: {id: string}) => {
     {label:client?.address ? "Come arrivare" : "", href:client?.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${client.name} ${client.address}`)}` : ""},
   ].filter(link=>link.label && link.href && /^(https?:\/\/|tel:)/.test(String(link.href)));
 
-  if(!client){
-    return (
-      <section style={{minHeight:"70vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"8rem 2rem",textAlign:"center"}}>
-        <div style={{maxWidth:560}}>
-          <p className="section-label">Cliente non trovato</p>
-          <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.2rem"}}>SCHEDA<br/><span className="stroke">NON DISPONIBILE</span></h1>
-          <p style={{color:"var(--m)",lineHeight:1.7,marginBottom:"2rem"}}>La card selezionata non ha ancora una scheda cliente associata.</p>
-          <button className="btn btn-p" onClick={()=>go("/")}>Torna alla home <ArrowRight size={14}/></button>
-        </div>
-      </section>
-    );
-  }
+  // Cliente inesistente: stessa pagina di 404.html (servita dal server con stato 404),
+  // così HTML e React coincidono (segnalazione analista 10/10)
+  if(!client) return <PageNotFound/>;
 
   return (
     <>
