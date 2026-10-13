@@ -1614,8 +1614,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {provinceGroups.length>0&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti in provincia di Taranto</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Lavoriamo in tutta la provincia</h2>
+            {/* Città senza clienti fuori provincia: "Lavori nei paesi vicini" (approvato dal Direttore 13/10) */}
+            <p className="section-label">{nearby&&provincia!=="provincia di Taranto" ? "I nostri lavori" : "Clienti in provincia di Taranto"}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>{nearby&&provincia!=="provincia di Taranto" ? "Lavori nei paesi vicini" : "Lavoriamo in tutta la provincia"}</h2>
             {provinceGroups.map(g=>(
               <div key={g.city} style={{marginBottom:"3rem"}}>
                 <h3 style={{fontFamily:"var(--fd)",fontWeight:400,fontSize:"clamp(1.6rem,2.6vw,2.4rem)",lineHeight:1,textTransform:"uppercase",marginBottom:"1.2rem"}}>{g.city}</h3>
