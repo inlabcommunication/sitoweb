@@ -32,6 +32,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Grottaglie', region: 'Puglia', lat: 40.536, lon: 17.436 },
   { name: 'San Giorgio Ionico', region: 'Puglia', lat: 40.457, lon: 17.380 },
   { name: 'Locorotondo', region: 'Puglia', lat: 40.755, lon: 17.326 },
+  { name: 'Alberobello', region: 'Puglia', lat: 40.784, lon: 17.238 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

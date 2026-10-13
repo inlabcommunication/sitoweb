@@ -448,6 +448,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per cantine, B&B e ristoranti di Locorotondo: immagini curate del borgo e del prodotto, contenuti per ogni stagione e testi anche in inglese." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Alberobello", provincia: "provincia di Bari",
+    contesto: "I trulli di Alberobello, nei rioni Monti e Aia Piccola, sono patrimonio mondiale UNESCO dal 1996. La città vive di turismo tutto l'anno: case vacanza nei trulli, ristoranti, negozi di artigianato e prodotti tipici.",
+    settori: ["trulli e case vacanza", "ristoranti e locali", "negozi di artigianato e prodotti tipici"],
+    faq: { q: "Potete aiutare un trullo in affitto ad avere più prenotazioni dirette?", a: "Sì: foto curate, sito con richiesta di prenotazione, scheda Google e social, per dipendere meno dai portali." },
+    description: "Agenzia di comunicazione ad Alberobello: social, foto, video e campagne per trulli in affitto, ristoranti e negozi della città dei trulli. Preventivo gratuito.",
+    intro: "Alberobello è la città dei trulli, patrimonio UNESCO, con turisti da tutto il mondo. Seguiamo social, foto, video, sponsorizzate e siti per strutture ricettive, ristoranti e negozi, da Castellaneta.",
+    focus: { titolo: "Distinguersi dove tutti hanno un trullo", testo: "Ad Alberobello molte attività offrono qualcosa di simile: lo stesso panorama, gli stessi trulli. Per farsi scegliere serve mostrare cosa ti rende diverso: l'accoglienza, la cucina, i dettagli. Lavoriamo su foto e video autentici, recensioni, scheda Google e prenotazioni, con contenuti pensati anche per i turisti stranieri." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per strutture, ristoranti e negozi di Alberobello: contenuti autentici, recensioni valorizzate e testi anche in inglese per i turisti." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
