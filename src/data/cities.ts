@@ -472,6 +472,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per aziende, showroom e negozi di Santeramo in Colle: contenuti professionali, foto dei prodotti e campagne per richieste di contatto." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Altamura", provincia: "provincia di Bari",
+    contesto: "Altamura è famosa per il Pane di Altamura DOP, per la Cattedrale voluta da Federico II e per l'Uomo di Altamura, uno dei reperti preistorici più importanti d'Europa. È una città grande e viva, con un'economia di aziende agroalimentari, commercio e servizi.",
+    settori: ["forni e aziende agroalimentari", "ristoranti e attività del centro", "negozi e servizi"],
+    faq: { q: "Potete aiutare un forno o un'azienda alimentare a vendere online?", a: "Sì: foto dei prodotti, social, e-commerce o catalogo con ordini su WhatsApp, e campagne mirate." },
+    description: "Agenzia di comunicazione ad Altamura: social, foto, video, siti e campagne per forni, ristoranti, negozi e aziende della Murgia. Preventivo gratuito.",
+    intro: "Altamura è la città del pane DOP e il cuore dell'Alta Murgia. Seguiamo social, foto, video, sponsorizzate e siti per forni, ristoranti, negozi e aziende del territorio, da Castellaneta.",
+    focus: { titolo: "Un prodotto famoso va raccontato bene", testo: "Il nome Altamura è già conosciuto in tutta Italia: il lavoro è farlo arrivare al tuo forno, al tuo ristorante o alla tua azienda. Raccontiamo il prodotto con foto e video sul posto, curiamo social e scheda Google e prepariamo campagne per chi cerca prodotti tipici, anche per la vendita online." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per forni, ristoranti e negozi di Altamura: il prodotto raccontato con foto e video veri, contenuti costanti e campagne sulla zona." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
