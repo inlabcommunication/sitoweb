@@ -412,6 +412,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per hotel, ristoranti e negozi di Martina Franca: contenuti curati per i turisti e per chi vive in Valle d'Itria, anche in inglese." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Grottaglie", provincia: "provincia di Taranto",
+    contesto: "Grottaglie è famosa per il Quartiere delle Ceramiche, dove le botteghe lavorano l'argilla da secoli, e per l'aeroporto di Taranto-Grottaglie. È un paese di artigiani, negozi e piccole imprese a pochi chilometri da Taranto.",
+    settori: ["botteghe di ceramica e artigiani", "negozi e servizi del paese", "ristoranti e attività turistiche"],
+    faq: { q: "Potete aiutare una bottega di ceramica a vendere online?", a: "Sì: foto dei prodotti, social e un piccolo e-commerce o un catalogo collegato a Instagram e WhatsApp." },
+    description: "Agenzia di comunicazione a Grottaglie: social, foto, video e siti per botteghe di ceramica, negozi e attività del paese. Preventivo gratuito.",
+    intro: "Grottaglie è la città delle ceramiche. Seguiamo social, foto, video, sponsorizzate e siti per botteghe, negozi e attività del paese, da Castellaneta.",
+    focus: { titolo: "Far vedere le mani che lavorano", testo: "Una ceramica fatta a mano si vende meglio quando si vede come nasce: il tornio, la decorazione, la cottura. Giriamo reel in bottega, fotografiamo i pezzi finiti con luce curata e costruiamo un profilo che parli sia ai clienti del posto sia a chi compra online o arriva da turista." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per botteghe e negozi di Grottaglie: reel in laboratorio, foto dei pezzi e contenuti costanti per farsi conoscere anche fuori dal paese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
