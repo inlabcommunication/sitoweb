@@ -436,6 +436,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per attività di San Giorgio Ionico: contenuti riconoscibili, legati alla scheda Google e alle sponsorizzate sulla zona." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Locorotondo", provincia: "provincia di Bari",
+    contesto: "Locorotondo è tra i Borghi più belli d'Italia, con il centro storico a pianta circolare affacciato sulla Valle d'Itria. È conosciuta per il vino bianco Locorotondo DOC, per le masserie e i trulli delle campagne e per il turismo, che dura gran parte dell'anno.",
+    settori: ["cantine e produttori di vino", "B&B, masserie e strutture ricettive", "ristoranti e bar del centro"],
+    faq: { q: "Lavorate con cantine e strutture ricettive?", a: "Sì: foto, video, social e campagne, anche in inglese per i turisti stranieri." },
+    description: "Agenzia di comunicazione a Locorotondo: social, foto, video e campagne per cantine, masserie, ristoranti e B&B della Valle d'Itria. Preventivo gratuito.",
+    intro: "Locorotondo, con il suo centro bianco e circolare, è uno dei borghi più fotografati della Valle d'Itria. Seguiamo social, foto, video, sponsorizzate e siti per cantine, strutture ricettive e locali del paese.",
+    focus: { titolo: "Un borgo che si sceglie dalle foto", testo: "Chi prenota una camera, un tavolo o una visita in cantina a Locorotondo lo fa guardando le immagini. Curiamo foto e video che rendano giustizia al posto, profili social che raccontano le stagioni, dalla vendemmia all'estate, e campagne per raggiungere i turisti prima che partano, anche in inglese." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per cantine, B&B e ristoranti di Locorotondo: immagini curate del borgo e del prodotto, contenuti per ogni stagione e testi anche in inglese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
