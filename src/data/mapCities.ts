@@ -37,6 +37,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Altamura', region: 'Puglia', lat: 40.827, lon: 16.553 },
   { name: 'Acquaviva delle Fonti', region: 'Puglia', lat: 40.897, lon: 16.842 },
   { name: 'Polignano a Mare', region: 'Puglia', lat: 40.996, lon: 17.220 },
+  { name: 'Montescaglioso', region: 'Basilicata', lat: 40.552, lon: 16.667 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

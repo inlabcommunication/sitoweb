@@ -508,6 +508,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, B&B e locali di Polignano a Mare: foto e reel curati, recensioni valorizzate e contenuti anche in inglese." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Montescaglioso", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Montescaglioso domina la valle del Bradano ed è conosciuta per l'Abbazia benedettina di Sant'Angelo. Vicina a Matera, vive di agricoltura, prodotti tipici e di un turismo che cresce insieme a quello della città dei Sassi.",
+    settori: ["strutture ricettive e agriturismi", "produttori e aziende agricole", "ristoranti e attività del paese"],
+    faq: { q: "Lavorate anche in Basilicata?", a: "Sì: siamo a Castellaneta, a pochi chilometri dal confine, e seguiamo attività tra Matera, Montescaglioso e il Metapontino." },
+    description: "Agenzia di comunicazione a Montescaglioso: social, foto, video e siti per attività, masserie e produttori tra Matera e il Metapontino. Preventivo gratuito.",
+    intro: "Montescaglioso è a pochi chilometri da Matera e dalla nostra Ginosa. Seguiamo social, foto, video, sponsorizzate e siti per attività, produttori e strutture del paese, da Castellaneta.",
+    focus: { titolo: "Sfruttare la vicinanza con Matera", testo: "Chi visita Matera cerca anche dove dormire, mangiare e cosa vedere nei dintorni. Per un'attività di Montescaglioso conta farsi trovare da quei visitatori: scheda Google completa, foto curate, social che raccontano il paese e l'abbazia, campagne mirate a chi sta organizzando un viaggio in Basilicata." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per strutture, produttori e ristoranti di Montescaglioso: il paese e i prodotti raccontati anche a chi visita Matera." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
