@@ -30,6 +30,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Noci', region: 'Puglia', lat: 40.792, lon: 17.126 },
   { name: 'Martina Franca', label: 'e', region: 'Puglia', lat: 40.705, lon: 17.336 },
   { name: 'Grottaglie', region: 'Puglia', lat: 40.536, lon: 17.436 },
+  { name: 'San Giorgio Ionico', region: 'Puglia', lat: 40.457, lon: 17.380 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

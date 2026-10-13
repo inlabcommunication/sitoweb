@@ -424,6 +424,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per botteghe e negozi di Grottaglie: reel in laboratorio, foto dei pezzi e contenuti costanti per farsi conoscere anche fuori dal paese." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "San Giorgio Ionico", provincia: "provincia di Taranto",
+    contesto: "San Giorgio Ionico si trova a sud-est di Taranto, tra campagne e vigneti. Molte attività lavorano sia con chi vive in paese sia con chi arriva dai comuni vicini e dalla città.",
+    settori: ["negozi e servizi", "ristorazione e bar", "artigiani e imprese locali"],
+    faq: { q: "Mi aiutate anche con la scheda Google?", a: "Sì: la completiamo con foto vere, descrizione, orari e servizi, e la teniamo aggiornata insieme ai social." },
+    description: "Agenzia di comunicazione a San Giorgio Ionico: social, sponsorizzate, scheda Google e sito per negozi e attività alle porte di Taranto. Preventivo gratuito.",
+    intro: "San Giorgio Ionico è a pochi minuti da Taranto: per le sue attività conta farsi scegliere dai clienti del paese e da quelli della città vicina. Seguiamo social, sponsorizzate, siti e scheda Google, da Castellaneta.",
+    focus: { titolo: "Prima ti cercano su Google, poi entrano", testo: "Chi cerca un negozio o un servizio vicino a casa guarda prima la scheda Google: orari, foto, recensioni. Partiamo da lì, con una scheda completa e aggiornata. Poi la colleghiamo a social curati e a sponsorizzate su San Giorgio e sui paesi vicini, così chi ti trova online sa subito chi sei e come raggiungerti." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per attività di San Giorgio Ionico: contenuti riconoscibili, legati alla scheda Google e alle sponsorizzate sulla zona." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
