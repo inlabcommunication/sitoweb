@@ -484,6 +484,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per forni, ristoranti e negozi di Altamura: il prodotto raccontato con foto e video veri, contenuti costanti e campagne sulla zona." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Acquaviva delle Fonti", provincia: "provincia di Bari",
+    contesto: "Acquaviva delle Fonti, nel cuore della provincia di Bari, è conosciuta per la cipolla rossa di Acquaviva e per l'ospedale Miulli, che porta in città persone da tutta la zona. È un centro di servizi, commercio e professionisti.",
+    settori: ["studi professionali e sanitari", "negozi e servizi", "ristorazione e prodotti tipici"],
+    faq: { q: "Quanto tempo serve per realizzare un sito?", a: "Dipende dalle pagine e dai contenuti: dopo un primo incontro ti diamo tempi e preventivo chiari." },
+    description: "Agenzia di comunicazione ad Acquaviva delle Fonti: siti web, social, sponsorizzate e scheda Google per negozi, studi e attività. Preventivo gratuito.",
+    intro: "Ad Acquaviva delle Fonti realizziamo siti web, social e campagne per negozi, studi professionali e attività del paese. Lavoriamo da Castellaneta, con incontri di persona quando serve.",
+    focus: { titolo: "Un sito che lavora per te", testo: "Per uno studio, un negozio o un'attività di servizi, il sito è il posto dove chi ti ha trovato decide se contattarti. Realizziamo siti veloci e chiari, con una pagina per ogni servizio, contatti sempre visibili e collegamento alla scheda Google, come abbiamo fatto con luminaricciardi.it per uno studio dentistico di Palagiano.", link: { testo: "luminaricciardi.it", href: "/casi-studio/ricciardi" } },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per negozi, studi e attività di Acquaviva delle Fonti: contenuti chiari e costanti, collegati al sito e alla scheda Google." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

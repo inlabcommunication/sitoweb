@@ -35,6 +35,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Alberobello', region: 'Puglia', lat: 40.784, lon: 17.238 },
   { name: 'Santeramo in Colle', region: 'Puglia', lat: 40.794, lon: 16.757 },
   { name: 'Altamura', region: 'Puglia', lat: 40.827, lon: 16.553 },
+  { name: 'Acquaviva delle Fonti', region: 'Puglia', lat: 40.897, lon: 16.842 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
