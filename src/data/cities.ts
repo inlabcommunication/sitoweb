@@ -520,6 +520,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per strutture, produttori e ristoranti di Montescaglioso: il paese e i prodotti raccontati anche a chi visita Matera." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Bernalda", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Bernalda, con il suo centro storico e Palazzo Margherita legato alla famiglia Coppola, comprende Metaponto, con le Tavole Palatine e le spiagge del Lido. Il territorio unisce turismo balneare, archeologia e una forte agricoltura, dalle fragole alla frutta della piana.",
+    settori: ["lidi e strutture turistiche di Metaponto", "aziende agricole e produttori", "ristoranti e attività del paese"],
+    faq: { q: "Seguite anche lidi e strutture di Metaponto?", a: "Sì: foto, video, social e sponsorizzate preparati prima dell'estate e seguiti durante la stagione." },
+    description: "Agenzia di comunicazione a Bernalda e Metaponto: social, foto, video e campagne per lidi, strutture, ristoranti e aziende agricole. Preventivo gratuito.",
+    intro: "Da Bernalda al Lido di Metaponto: seguiamo social, foto, video, sponsorizzate e siti per strutture turistiche, ristoranti e aziende agricole, a mezz'ora dalla nostra sede di Castellaneta.",
+    focus: { titolo: "Due stagioni, due pubblici", testo: "D'estate il pubblico sono i turisti di Metaponto, il resto dell'anno sono i clienti del paese e le aziende agricole. Prepariamo contenuti e campagne per la stagione balneare con anticipo, e costruiamo per le aziende del territorio una comunicazione costante, con foto e video dei prodotti e della produzione." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, strutture e aziende di Bernalda e Metaponto: contenuti per la stagione estiva e una presenza costante tutto l'anno." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
