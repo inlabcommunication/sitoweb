@@ -1549,7 +1549,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {info?.focus && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
-            <p className="section-label">A {city}</p>
+            <p className="section-label">{aCity(city).replace(/^a/,"A")}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{info.focus.titolo}</h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}><IntroText text={info.focus.testo} link={info.focus.link}/></p>
           </div>
@@ -1671,7 +1671,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </div>
       </section>
 
-      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO A ${city.toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
+      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO ${aCity(city).toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
     </>
   );
 };
@@ -1922,7 +1922,7 @@ const PageCittaSEO = ({city, service}) => {
       </section>
  
       <ServiceExamples slug={svc.slug}/>
-      <ServiceCTA title={`VUOI CRESCERE A ${cityName.toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
+      <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
   );
 };
