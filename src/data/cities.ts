@@ -33,7 +33,8 @@ export type CityInfo = {
    * con i lavori dei paesi vicini al posto di "I nostri lavori" (brief SEO 10/10 territorio) */
   lavoriVicini?: boolean;
   /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
-  focus?: { titolo: string; testo: string };
+  /** `link`: collegamento su una parola del testo (es. un lavoro nostro → il suo caso studio, brief SEO 12/10) */
+  focus?: { titolo: string; testo: string; link?: { testo: string; href: string } };
   /** Collegamento su una parola dell'apertura (es. il nome di Nicola → pagina autore) */
   introLink?: { testo: string; href: string };
   /** Clienti in evidenza subito dopo l'apertura della pagina agenzia, con una riga

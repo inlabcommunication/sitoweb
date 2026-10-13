@@ -1551,7 +1551,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
           <div style={{maxWidth:900,margin:"0 auto"}}>
             <p className="section-label">A {city}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{info.focus.titolo}</h2>
-            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.focus.testo}</p>
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}><IntroText text={info.focus.testo} link={info.focus.link}/></p>
           </div>
         </section>
       )}
