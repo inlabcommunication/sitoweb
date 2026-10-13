@@ -460,6 +460,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per strutture, ristoranti e negozi di Alberobello: contenuti autentici, recensioni valorizzate e testi anche in inglese per i turisti." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Santeramo in Colle", provincia: "provincia di Bari",
+    contesto: "Santeramo in Colle, sull'altopiano della Murgia barese, è conosciuta come uno dei centri del distretto del mobile imbottito. Accanto alle imprese del settore ci sono negozi, ristoranti e attività legate alla campagna e alla carne della Murgia.",
+    settori: ["aziende e produttori", "negozi e showroom", "ristoranti e bracerie"],
+    faq: { q: "Lavorate anche con aziende e showroom?", a: "Sì: sito, branding, foto e video dei prodotti, social e campagne per generare contatti." },
+    description: "Agenzia di comunicazione a Santeramo in Colle: social, video, siti e campagne per aziende, negozi e attività della Murgia. Preventivo gratuito.",
+    intro: "Santeramo in Colle è sulla Murgia, a pochi chilometri da Gioia del Colle e Matera. Seguiamo social, video, sponsorizzate, siti e branding per aziende e attività del paese, da Castellaneta.",
+    focus: { titolo: "Comunicare come un'azienda, anche se sei piccolo", testo: "In un territorio con imprese conosciute anche fuori dall'Italia, anche le attività più piccole possono comunicare in modo professionale: un'immagine coordinata, un sito chiaro, contenuti costanti. Partiamo dal branding e dal sito, poi costruiamo social e campagne che portano richieste concrete, dal paese e dai comuni vicini." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per aziende, showroom e negozi di Santeramo in Colle: contenuti professionali, foto dei prodotti e campagne per richieste di contatto." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
