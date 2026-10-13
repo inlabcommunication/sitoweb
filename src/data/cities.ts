@@ -496,6 +496,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per negozi, studi e attività di Acquaviva delle Fonti: contenuti chiari e costanti, collegati al sito e alla scheda Google." },
   },
+  {
+    // brief SEO 12/10, lotto 2
+    name: "Polignano a Mare", provincia: "provincia di Bari",
+    contesto: "Polignano a Mare, con il centro storico a picco sul mare e la spiaggia di Lama Monachile, è la città di Domenico Modugno e ospita tappe del Red Bull Cliff Diving. Il turismo è forte tutto l'anno, con molti visitatori stranieri.",
+    settori: ["ristoranti e locali", "B&B e case vacanza", "negozi e attività turistiche"],
+    faq: { q: "Fate contenuti per turisti stranieri?", a: "Sì: post, didascalie e testi del sito anche in inglese, e campagne mirate a chi sta pianificando un viaggio in Puglia." },
+    description: "Agenzia di comunicazione a Polignano a Mare: social, foto, video e campagne per ristoranti, B&B, locali e attività turistiche. Preventivo gratuito.",
+    intro: "Polignano a Mare è uno dei borghi sul mare più conosciuti della Puglia. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, B&B e locali, da Castellaneta.",
+    focus: { titolo: "Farsi trovare tra tanti", testo: "A Polignano l'offerta è enorme e il panorama è uguale per tutti. Per un ristorante o un B&B conta la scheda Google, con foto e recensioni, i profili social curati e i contenuti in inglese. Lavoriamo su questi tre punti insieme, con campagne mirate ai turisti prima e durante la stagione." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, B&B e locali di Polignano a Mare: foto e reel curati, recensioni valorizzate e contenuti anche in inglese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
