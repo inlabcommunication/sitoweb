@@ -62,6 +62,8 @@ export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
 export const hasServicePage = (slug: string, city: string) => serviceCities(slug).includes(city);
+/** "a Bari", "ad Altamura": "ad" davanti a vocale (correzione approvata dal Direttore 13/10) */
+export const aCity = (c: string) => (/^[aeiou]/i.test(c) ? 'ad ' : 'a ') + c;
 export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
 export const SERVICES_SEO = [
@@ -363,17 +365,17 @@ export const getSeo = (rawPath: string): Seo => {
     const city = serviceCities(s.slug).find((c) => path === `/${s.slug}-${citySlug(c)}`);
     if (city) {
       // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
-      const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;
+      const base = `${s.label} ${aCity(city)}: ${s.keyword} per aziende e attività locali`;
       const desc = [
         ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito.",
         ", da un'agenzia di Castellaneta (TA). Preventivo gratuito.",
       ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';
       // testi propri della pagina, se il brief SEO li prevede (src/data/cities.ts → paginaServizio)
       const own = cityInfo(city)?.paginaServizio?.[s.slug];
-      return page(path, own?.title || withBrand(`${s.label} a ${city}`), own?.description || desc, {
+      return page(path, own?.title || withBrand(`${s.label} ${aCity(city)}`), own?.description || desc, {
         sitemap: { priority: 0.6, changefreq: 'monthly' },
         jsonLd: [{
-          '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} a ${city}`, serviceType: s.keyword,
+          '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} ${aCity(city)}`, serviceType: s.keyword,
           url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: city },
         }],
       }, [['Servizi', '/servizi'], [s.label, '/' + s.slug], [city, path]]);
@@ -384,10 +386,10 @@ export const getSeo = (rawPath: string): Seo => {
   if (agencyCity) {
     const c = agencyCity;
     const title = cityInfo(c)?.title || [
-      `Agenzia di comunicazione e marketing a ${c} | InLab`,
-      `Agenzia comunicazione e marketing a ${c} | InLab`,
-      `Agenzia di comunicazione e marketing a ${c}`,
-    ].find((t) => t.length <= 60) || `Agenzia di comunicazione a ${c} | InLab`;
+      `Agenzia di comunicazione e marketing ${aCity(c)} | InLab`,
+      `Agenzia comunicazione e marketing ${aCity(c)} | InLab`,
+      `Agenzia di comunicazione e marketing ${aCity(c)}`,
+    ].find((t) => t.length <= 60) || `Agenzia di comunicazione ${aCity(c)} | InLab`;
     const desc = cityInfo(c)?.description || (c === BUSINESS.city
       ? 'Agenzia di comunicazione e marketing con sede a Castellaneta (TA): social, video, Meta Ads, siti web e branding per attività del paese e della Marina.'
       : [
@@ -397,9 +399,9 @@ export const getSeo = (rawPath: string): Seo => {
     ].find((d) => d.length <= 155)!);
     const seo = page(path, title, desc, {
       sitemap: { priority: 0.7, changefreq: 'monthly' },
-      jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing a ${c}`,
+      jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing ${aCity(c)}`,
         serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }],
-    }, [['Servizi', '/servizi'], [`Agenzia a ${c}`, path]]);
+    }, [['Servizi', '/servizi'], [`Agenzia ${aCity(c)}`, path]]);
     // Fondatore del posto citato nella pagina (sezione "casa nostra")
     const founder = AUTHORS.find((a) => a.slug === cityInfo(c)?.casaNostra?.autore);
     if (founder) (seo.jsonLd[0] as Record<string, unknown>).mentions = { '@id': personId(founder) };
