@@ -36,7 +36,7 @@ import { MAP_CITIES } from './data/mapCities';
 import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities, aCity } from "./seo/routes";
 import { cityInfo } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
@@ -1532,9 +1532,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
     <>
       <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-          <p className="section-label">Agenzia a {city} — {provincia}</p>
+          <p className="section-label">Agenzia {aCity(city)} — {provincia}</p>
           <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>
-            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>a {city}</span>
+            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(city)}</span>
           </h1>
           <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
             {info?.intro ? <IntroText text={info.intro} link={info.introLink}/> : isHome
@@ -1549,9 +1549,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {info?.focus && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
-            <p className="section-label">A {city}</p>
+            <p className="section-label">{aCity(city).replace(/^a/,"A")}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{info.focus.titolo}</h2>
-            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.focus.testo}</p>
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}><IntroText text={info.focus.testo} link={info.focus.link}/></p>
           </div>
         </section>
       )}
@@ -1560,7 +1560,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {featured && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti a {city}</p>
+            <p className="section-label">Clienti {aCity(city)}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>{featured.titolo}</h2>
             <CaseCardGrid>
               {localCases.map((cs: any, i: number)=>(
@@ -1580,7 +1580,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
             <p className="section-label">Il territorio</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare a {city}</h2>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare {aCity(city)}</h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
             {info.sezione && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.sezione.titolo}</h2>
@@ -1598,12 +1598,12 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
 
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <p className="section-label">Servizi a {city}</p>
+          <p className="section-label">Servizi {aCity(city)}</p>
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
             {SERVICES.map(s=>(
               <Link key={s.slug} to={hasServicePage(s.slug)?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
-                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePage(s.slug)?`${s.label} a ${city}`:s.label}</span></span>
+                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePage(s.slug)?`${s.label} ${aCity(city)}`:s.label}</span></span>
                 <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info?.servizi?.[s.slug]||s.short}</span>
               </Link>
             ))}
@@ -1614,8 +1614,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {provinceGroups.length>0&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti in provincia di Taranto</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Lavoriamo in tutta la provincia</h2>
+            {/* Città senza clienti fuori provincia: "Lavori nei paesi vicini" (approvato dal Direttore 13/10) */}
+            <p className="section-label">{nearby&&provincia!=="provincia di Taranto" ? "I nostri lavori" : "Clienti in provincia di Taranto"}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>{nearby&&provincia!=="provincia di Taranto" ? "Lavori nei paesi vicini" : "Lavoriamo in tutta la provincia"}</h2>
             {provinceGroups.map(g=>(
               <div key={g.city} style={{marginBottom:"3rem"}}>
                 <h3 style={{fontFamily:"var(--fd)",fontWeight:400,fontSize:"clamp(1.6rem,2.6vw,2.4rem)",lineHeight:1,textTransform:"uppercase",marginBottom:"1.2rem"}}>{g.city}</h3>
@@ -1636,8 +1637,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {!featured&&provinceGroups.length===0&&(localClients.length>0||localCases.length>0)&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti a {city}</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>I nostri lavori a {city}</h2>
+            <p className="section-label">Clienti {aCity(city)}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>I nostri lavori {aCity(city)}</h2>
             <CaseCardGrid>
               {localCases.map((cs: any, i: number)=>(
                 <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
@@ -1670,7 +1671,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </div>
       </section>
 
-      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO A ${city.toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
+      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO ${aCity(city).toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
     </>
   );
 };
@@ -1801,12 +1802,12 @@ const PageCittaSEO = ({city, service}) => {
           <motion.div initial={false}
             style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"1.5rem"}}>
             <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
-            <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} a {cityName} — InLab Communication</span>
+            <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} {aCity(cityName)} — InLab Communication</span>
           </motion.div>
           <motion.h1 initial={false}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,10rem)",lineHeight:.88,marginBottom:"2rem",textTransform:"uppercase"}}>
             {svc.label.toUpperCase()}<br/>
-            <span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>A {cityName.toUpperCase()}</span>
+            <span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(cityName).toUpperCase()}</span>
           </motion.h1>
           <motion.p initial={false}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
@@ -1823,7 +1824,7 @@ const PageCittaSEO = ({city, service}) => {
       {project && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
-            <p className="section-label">Un nostro lavoro a {cityName}</p>
+            <p className="section-label">Un nostro lavoro {aCity(cityName)}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{project.titolo}</h2>
             {project.immagine && <img src={cld(project.immagine.src, 900)} alt={project.immagine.alt} loading="lazy" decoding="async" style={{width:"100%",borderRadius:20,marginBottom:"1.5rem",display:"block"}}/>}
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8,marginBottom:"1.5rem"}}>{project.testo}</p>
@@ -1847,7 +1848,7 @@ const PageCittaSEO = ({city, service}) => {
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"start"}} className="grid-1-mob">
           <div>
-            <p className="section-label">Perché scegliere InLab a {cityName}</p>
+            <p className="section-label">Perché scegliere InLab {aCity(cityName)}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase"}}>
               CONOSCIAMO<br/><span className="stroke">IL TERRITORIO</span>
             </h2>
@@ -1880,8 +1881,8 @@ const PageCittaSEO = ({city, service}) => {
       {(localClients.length>0||localCases.length>0)&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti a {cityName}</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>I NOSTRI LAVORI<br/><span className="stroke">A {cityName.toUpperCase()}</span></h2>
+            <p className="section-label">Clienti {aCity(cityName)}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>I NOSTRI LAVORI<br/><span className="stroke">{aCity(cityName).toUpperCase()}</span></h2>
             <CaseCardGrid>
               {localCases.map((cs: any, i: number)=>(
                 <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
@@ -1899,9 +1900,9 @@ const PageCittaSEO = ({city, service}) => {
       {AGENCY_CITIES.includes(cityName) && (
         <section style={{padding:"3rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:"1rem",flexWrap:"wrap"}}>
-            <p style={{fontSize:15,color:"var(--m)"}}>Ti serve più di un servizio a {cityName}?</p>
+            <p style={{fontSize:15,color:"var(--m)"}}>Ti serve più di un servizio {aCity(cityName)}?</p>
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi a {cityName} <ArrowUpRight size={13}/></Link>
+              <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi {aCity(cityName)} <ArrowUpRight size={13}/></Link>
               {cityName!=="Taranto"&&provincia==="provincia di Taranto"&&<Link to={agencyPath("Taranto")} className="btn btn-g">Agenzia a Taranto <ArrowUpRight size={13}/></Link>}
             </div>
           </div>
@@ -1921,7 +1922,7 @@ const PageCittaSEO = ({city, service}) => {
       </section>
  
       <ServiceExamples slug={svc.slug}/>
-      <ServiceCTA title={`VUOI CRESCERE A ${cityName.toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
+      <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
   );
 };
@@ -2070,11 +2071,11 @@ const PageCliente = ({id}: {id: string}) => {
       {locationCities(client.location).filter((city: string)=>AGENCY_CITIES.includes(city)).map((city: string)=>(
         <section key={city} style={{padding:"4rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <h2 className="section-label" style={{marginBottom:"1.5rem",fontWeight:400}}>Lavoriamo a {city}</h2>
+            <h2 className="section-label" style={{marginBottom:"1.5rem",fontWeight:400}}>Lavoriamo {aCity(city)}</h2>
             <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-              <Link to={agencyPath(city)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia di comunicazione a {city}</Link>
+              <Link to={agencyPath(city)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia di comunicazione {aCity(city)}</Link>
               {clientServiceSlugs(client).filter((slug: string)=>serviceCities(slug).includes(city)).map((slug: string)=>(
-                <Link key={slug} to={`/${slug}-${citySlug(city)}`} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>{SERVICE_SHORT[slug]||slug} a {city}</Link>
+                <Link key={slug} to={`/${slug}-${citySlug(city)}`} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>{SERVICE_SHORT[slug]||slug} {aCity(city)}</Link>
               ))}
               <Link to="/dove-lavoriamo" className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Tutte le città</Link>
             </div>
