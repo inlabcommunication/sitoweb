@@ -16,7 +16,7 @@ Aggiornata: 10/10/2026
 
 ## Sicurezza (analista, 10/10)
 - [ ] Possibile tentativo di accesso visto da Nicola ~10 giorni fa: dire all'analista cosa ha visto; controllare utenti Firebase, attività account Google, registro sicurezza GitHub, log Vercel.
-- [ ] Account GitHub "clinicaricciardilumina-alt" (3 copie del sito il 25/09, unite nella PR #1): dire all'analista chi è.
+- [x] Account GitHub "clinicaricciardilumina-alt": è di Nicola (confermato 17/10); [ ] scollegarlo dal repository su GitHub (istruzioni dell'analista).
 
 ## Console (SECURITY.md)
 - [ ] Sign-up Firebase disattivato · [ ] restrizione referrer sulla browser key · [ ] tetto di spesa Google e Anthropic · [ ] "Salva impostazioni" · [ ] TTL su `_ratelimits`.
