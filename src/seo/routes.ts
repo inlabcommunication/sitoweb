@@ -62,8 +62,8 @@ export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
 export const hasServicePage = (slug: string, city: string) => serviceCities(slug).includes(city);
-/** "a Bari", "ad Altamura": "ad" davanti a vocale (correzione approvata dal Direttore 13/10) */
-export const aCity = (c: string) => (/^[aeiou]/i.test(c) ? 'ad ' : 'a ') + c;
+/** "a Bari", "ad Altamura", "a Ostuni": "ad" solo davanti ad "a" (Direttore 13/10, regola SEO 19/10) */
+export const aCity = (c: string) => (/^a/i.test(c) ? 'ad ' : 'a ') + c;
 export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
 export const SERVICES_SEO = [
