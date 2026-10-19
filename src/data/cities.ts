@@ -544,6 +544,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per lidi, ristoranti e negozi di Pulsano: contenuti per la stagione al mare e una presenza costante per il paese tutto l'anno." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Manduria", provincia: "provincia di Taranto",
+    contesto: "Manduria dà il nome al Primitivo di Manduria DOC e conserva le mura messapiche e il Fonte Pliniano. Sulla costa ci sono marine come San Pietro in Bevagna. È un territorio di vino, agricoltura e turismo estivo.",
+    settori: ["cantine e produttori di vino", "ristoranti e strutture ricettive", "attività delle marine"],
+    faq: { q: "Lavorate con cantine?", a: "Sì: foto e video in vigna e in cantina, social, sito o e-commerce e campagne per visite e vendita." },
+    description: "Agenzia di comunicazione a Manduria: social, foto, video, siti e campagne per cantine del Primitivo, ristoranti, strutture e attività. Preventivo gratuito.",
+    intro: "Manduria è la terra del Primitivo. Seguiamo social, foto, video, sponsorizzate e siti per cantine, ristoranti, strutture ricettive e attività del paese e delle marine.",
+    focus: { titolo: "Raccontare il vino a chi lo compra", testo: "Il Primitivo di Manduria è conosciuto anche all'estero. Per una cantina conta raccontare la propria storia, non solo la denominazione: le vigne, la vendemmia, le persone. Facciamo foto e video in vigna e in cantina, social curati, siti con vendita online o richiesta di visita, e campagne rivolte agli appassionati e ai turisti." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per cantine, ristoranti e strutture di Manduria: vigne, vendemmia e persone raccontate con foto e video veri." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
