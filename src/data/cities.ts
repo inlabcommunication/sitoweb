@@ -580,6 +580,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, forni e pasticcerie di Ceglie Messapica: ricette e laboratorio raccontati con foto e reel." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Ostuni", provincia: "provincia di Brindisi",
+    contesto: "Ostuni è conosciuta come la Città Bianca per il centro storico a calce, tra la Valle d'Itria e il mare. Tra uliveti secolari e masserie, il turismo arriva da tutto il mondo, e la costa ha marine e spiagge molto frequentate in estate.",
+    settori: ["hotel, masserie e strutture di lusso", "ristoranti e locali", "negozi e artigianato"],
+    faq: { q: "Lavorate anche in inglese?", a: "Sì: social, sito e campagne anche in inglese per il pubblico internazionale." },
+    description: "Agenzia di comunicazione a Ostuni: social, foto, video e campagne per hotel, masserie, ristoranti e negozi della Città Bianca. Preventivo gratuito.",
+    intro: "Ostuni, la Città Bianca, è una delle mete più internazionali della Puglia. Seguiamo social, foto, video, sponsorizzate e siti per hotel, masserie, ristoranti e negozi, da Castellaneta.",
+    focus: { titolo: "Comunicare a un pubblico internazionale", testo: "A Ostuni molti clienti arrivano dall'estero e prenotano mesi prima. Servono foto all'altezza del posto, un sito con prenotazione diretta, una scheda Google curata e contenuti in inglese. Lavoriamo su tutto insieme, così una masseria o un ristorante si fanno scegliere senza dipendere solo dai portali." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per hotel, masserie e ristoranti di Ostuni: immagini curate, contenuti in italiano e in inglese e campagne mirate ai viaggiatori." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
