@@ -532,6 +532,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per lidi, strutture e aziende di Bernalda e Metaponto: contenuti per la stagione estiva e una presenza costante tutto l'anno." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Pulsano", provincia: "provincia di Taranto",
+    contesto: "Pulsano, a sud-est di Taranto, ha nel centro il Castello De Falconibus e sulla costa marine come Lido Silvana e Montedarena. D'estate la popolazione cresce con turisti e seconde case; il resto dell'anno contano i clienti del paese e di Taranto.",
+    settori: ["lidi e attività delle marine", "ristoranti, pizzerie e bar", "negozi e servizi del paese"],
+    faq: { q: "Seguite anche attività delle marine di Pulsano?", a: "Sì: lidi, ristoranti e strutture della costa, con contenuti e campagne preparati prima dell'estate." },
+    description: "Agenzia di comunicazione a Pulsano: social, foto, sponsorizzate e scheda Google per lidi, ristoranti e attività del paese e delle marine. Preventivo gratuito.",
+    intro: "Pulsano unisce il paese e le sue marine sulla costa ionica. Seguiamo social, foto, video, sponsorizzate e siti per lidi, ristoranti e attività, da Castellaneta.",
+    focus: { titolo: "Il paese d'inverno, il mare d'estate", testo: "Un'attività di Pulsano parla a due pubblici diversi: chi vive qui tutto l'anno e chi arriva d'estate al mare. Prepariamo i contenuti e le campagne per la stagione con anticipo, e per il resto dell'anno teniamo viva la comunicazione con il paese e con i quartieri vicini di Taranto." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, ristoranti e negozi di Pulsano: contenuti per la stagione al mare e una presenza costante per il paese tutto l'anno." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
