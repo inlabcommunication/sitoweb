@@ -4,7 +4,7 @@
 // dashboard): il numero per città non è mai scritto a mano.
 import React from 'react';
 import { MAP_CITIES, MAP_HOME, type MapCity } from '../data/mapCities';
-import { BUSINESS } from '../seo/routes';
+import { BUSINESS, aCity } from '../seo/routes';
 
 type Go = (to: string) => void;
 export type Activity = { city: string; sector: string; services: string[]; href?: string };
@@ -52,18 +52,19 @@ const projector = (b: Box, width: number) => {
 const pathOf = (pts: [number, number][], p: (lat: number, lon: number) => readonly [number, number], close: boolean) =>
   pts.map(([la, lo], i) => `${i ? 'L' : 'M'}${p(la, lo)[0].toFixed(1)} ${p(la, lo)[1].toFixed(1)}`).join('') + (close ? 'Z' : '');
 
-const Dot: React.FC<{ c: MapCity; x: number; y: number; n: number; href: string; go: Go; home: boolean; label?: string; size: number }> = ({ c, x, y, n, href, go, home, label = 'e', size }) => {
+// `empty`: città con la sola pagina agenzia (nessuna attività): puntino vuoto, senza nome sul disegno (brief SEO 12/10)
+const Dot: React.FC<{ c: MapCity; x: number; y: number; n: number; href: string; go: Go; home: boolean; label?: string; size: number; empty?: boolean }> = ({ c, x, y, n, href, go, home, label = 'e', size, empty }) => {
   const r = home ? size * 0.55 : size * 0.4;
   const off = r + size * 0.35;
   const [tx, ty, anchor] = label === 'n' ? [x, y - off, 'middle'] : label === 's' ? [x, y + off + size * 0.8, 'middle'] : label === 'w' ? [x - off, y + size * 0.35, 'end'] : [x + off, y + size * 0.35, 'start'];
-  const text = `${c.name}: ${n} ${n === 1 ? 'attività seguita' : 'attività seguite'}${home ? ' (la nostra sede)' : ''}`;
+  const text = empty ? `Agenzia di comunicazione ${aCity(c.name)}` : `${c.name}: ${n} ${n === 1 ? 'attività seguita' : 'attività seguite'}${home ? ' (la nostra sede)' : ''}`;
   return (
     <a href={href} onClick={href.startsWith('#') ? undefined : linkTo(go, href)} aria-label={text} className="map-dot">
       <title>{text}</title>
       {home && <circle cx={x} cy={y} r={r * 1.9} fill="none" stroke="var(--a)" strokeOpacity={0.5} />}
-      <circle className="dot" cx={x} cy={y} r={r} fill="var(--a)" />
+      <circle className="dot" cx={x} cy={y} r={empty ? r * 0.8 : r} fill={empty ? 'none' : 'var(--a)'} stroke={empty ? 'var(--a)' : undefined} strokeWidth={empty ? 1.5 : undefined} />
       <circle cx={x} cy={y} r={Math.max(r * 2.2, 15)} fill="transparent" />
-      <text x={tx} y={ty} textAnchor={anchor as any} fontSize={size} fill="var(--t)" fontFamily="var(--fb, inherit)">{c.name}</text>
+      {!empty && <text x={tx} y={ty} textAnchor={anchor as any} fontSize={size} fill="var(--t)" fontFamily="var(--fb, inherit)">{c.name}</text>}
     </a>
   );
 };
@@ -75,7 +76,10 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
   const cities = [...groups.entries()].sort((a, b) => (a[0] === MAP_HOME ? -1 : b[0] === MAP_HOME ? 1 : b[1].length - a[1].length || a[0].localeCompare(b[0])));
   const hasPage = (c: string) => agencyCities.includes(c);
   const hrefOf = (c: string) => (hasPage(c) ? agencyPath(c) : `#${slug(c)}`);
-  const onMap = MAP_CITIES.filter((c) => groups.has(c.name) || c.name === MAP_HOME);
+  const onMap = MAP_CITIES.filter((c) => groups.has(c.name) || c.name === MAP_HOME || hasPage(c.name));
+  const isEmpty = (c: MapCity) => !groups.has(c.name) && c.name !== MAP_HOME;
+  // Prima i puntini vuoti, così quelli pieni (e i loro nomi) restano sopra
+  onMap.sort((x, y) => Number(isEmpty(y)) - Number(isEmpty(x)));
   const others = [...agencyCities, ...MAP_CITIES.map((c) => c.name)].filter((c, i, a) => a.indexOf(c) === i && !groups.has(c));
 
   // Ingrandimento: solo l'area delle città pugliesi e lucane con attività
@@ -110,7 +114,7 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
               <title id="map-it-title">Mappa dell'Italia con le città in cui lavoriamo</title>
               {ITALY.map((pts, i) => <path key={i} d={pathOf(pts, italy.p, true)} fill="rgba(240,237,230,.06)" stroke="rgba(240,237,230,.35)" strokeWidth={1} />)}
               <rect x={zx1} y={zy1} width={Math.max(zx2 - zx1, 8)} height={Math.max(zy2 - zy1, 8)} fill="none" stroke="var(--a)" strokeWidth={1.5} />
-              {far.map((c) => { const [x, y] = italy.p(c.lat, c.lon); return <Dot key={c.name} c={c} x={x} y={y} n={groups.get(c.name)?.length || 0} href={hrefOf(c.name)} go={go} home={false} size={11} />; })}
+              {far.map((c) => { const [x, y] = italy.p(c.lat, c.lon); return <Dot key={c.name} c={c} x={x} y={y} n={groups.get(c.name)?.length || 0} href={hrefOf(c.name)} go={go} home={false} size={11} empty={isEmpty(c)} />; })}
             </svg>
             <figcaption style={{ fontSize: 13, color: 'var(--m)', textAlign: 'center', marginTop: '.8rem' }}>Il riquadro è l'arco ionico, ingrandito qui accanto.</figcaption>
           </figure>
@@ -118,9 +122,9 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
             <svg viewBox={`0 0 600 ${zoom.h.toFixed(0)}`} width="100%" role="group" aria-labelledby="map-zoom-title" className="map-zoom" style={{ display: 'block' }}>
               <title id="map-zoom-title">Mappa dell'arco ionico con le città in cui lavoriamo</title>
               {COAST.map((pts, i) => <path key={i} d={pathOf(pts, zoom.p, false)} fill="none" stroke="rgba(240,237,230,.35)" strokeWidth={1.5} strokeDasharray="4 4" />)}
-              {near.map((c) => { const [x, y] = zoom.p(c.lat, c.lon); return <Dot key={c.name} c={c} x={x} y={y} n={groups.get(c.name)?.length || 0} href={hrefOf(c.name)} go={go} home={c.name === MAP_HOME} label={c.label} size={17} />; })}
+              {near.map((c) => { const [x, y] = zoom.p(c.lat, c.lon); return <Dot key={c.name} c={c} x={x} y={y} n={groups.get(c.name)?.length || 0} href={hrefOf(c.name)} go={go} home={c.name === MAP_HOME} label={c.label} size={17} empty={isEmpty(c)} />; })}
             </svg>
-            <figcaption style={{ fontSize: 13, color: 'var(--m)', textAlign: 'center', marginTop: '.8rem' }}>Ogni punto è una città in cui seguiamo almeno un'attività. L'elenco completo è qui sotto.</figcaption>
+            <figcaption style={{ fontSize: 13, color: 'var(--m)', textAlign: 'center', marginTop: '.8rem' }}>Punto pieno: città in cui seguiamo almeno un'attività. Punto vuoto: città in cui lavoriamo, con la sua pagina. L'elenco completo è qui sotto.</figcaption>
           </figure>
         </div>
       </section>
