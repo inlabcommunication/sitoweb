@@ -556,6 +556,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per cantine, ristoranti e strutture di Manduria: vigne, vendemmia e persone raccontate con foto e video veri." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Cisternino", provincia: "provincia di Brindisi",
+    contesto: "Cisternino è tra i Borghi più belli d'Italia, con un centro storico bianco affacciato sulla Valle d'Itria. È conosciuto per le macellerie con fornello pronto, dove la carne scelta al banco viene cotta alla brace, e per un turismo che arriva da tutta Europa.",
+    settori: ["bracerie e fornelli pronti", "ristoranti e locali", "B&B, masserie e case vacanza"],
+    faq: { q: "Fate video per bracerie e ristoranti?", a: "Sì: reel sul posto, food photography e contenuti per social e scheda Google." },
+    description: "Agenzia di comunicazione a Cisternino: social, foto, video e campagne per bracerie, ristoranti, B&B e negozi della Valle d'Itria. Preventivo gratuito.",
+    intro: "Cisternino, borgo bianco della Valle d'Itria, è famoso per i suoi fornelli pronti. Seguiamo social, foto, video, sponsorizzate e siti per bracerie, ristoranti e strutture del paese.",
+    focus: { titolo: "Far venire fame dallo schermo", testo: "Per una braceria o un ristorante di Cisternino le foto e i video del fuoco, della carne e della sala valgono più di qualsiasi testo. Giriamo reel sul posto, curiamo la scheda Google con foto vere e recensioni, e prepariamo contenuti anche in inglese per i turisti che organizzano la serata dalla Valle d'Itria." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per bracerie, ristoranti e strutture di Cisternino: brace e sala in reel, foto vere e contenuti anche in inglese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
