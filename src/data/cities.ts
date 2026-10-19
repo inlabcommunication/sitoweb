@@ -628,6 +628,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per location, ristoranti e produttori di Conversano: spazi ed eventi raccontati con foto e video curati." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Pisticci", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Pisticci è conosciuta per i calanchi che la circondano, per il Rione Dirupo con le sue case bianche e per l'Amaro Lucano, nato qui. Sulla costa ionica, Marina di Pisticci accoglie villaggi e strutture turistiche in estate.",
+    settori: ["strutture turistiche e villaggi della marina", "aziende agricole e produttori", "attività del paese"],
+    faq: { q: "Seguite anche strutture di Marina di Pisticci?", a: "Sì: foto, video, social e campagne preparati prima dell'estate e seguiti durante la stagione." },
+    description: "Agenzia di comunicazione a Pisticci e Marina di Pisticci: social, foto, video e campagne per strutture, lidi, aziende e attività. Preventivo gratuito.",
+    intro: "Da Pisticci a Marina di Pisticci: seguiamo social, foto, video, sponsorizzate e siti per strutture turistiche, aziende agricole e attività, da Castellaneta.",
+    focus: { titolo: "Un paesaggio unico, da far vedere", testo: "I calanchi, il Rione Dirupo e il mare sono immagini che restano impresse. Per le attività di Pisticci li usiamo per costruire una comunicazione riconoscibile: foto e video sul posto, social che raccontano il territorio e campagne per i turisti della costa e per i clienti del paese." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per strutture, aziende e attività di Pisticci e della marina: territorio e prodotti raccontati con immagini vere." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
