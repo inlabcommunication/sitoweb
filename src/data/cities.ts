@@ -604,6 +604,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per atelier, negozi ed eventi di Putignano: shooting dei capi, reel e campagne per appuntamenti." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Castellana Grotte", provincia: "provincia di Bari",
+    contesto: "Le Grotte di Castellana sono tra le grotte più visitate d'Italia e portano in paese turisti per gran parte dell'anno. Accanto al turismo, Castellana ha negozi, ristoranti e imprese che lavorano con i comuni vicini del sud-est barese.",
+    settori: ["ristoranti e bar", "B&B e strutture ricettive", "negozi e attività turistiche"],
+    faq: { q: "Le campagne possono raggiungere i turisti in zona?", a: "Sì: impostiamo sponsorizzate e scheda Google per chi si trova a Castellana e dintorni." },
+    description: "Agenzia di comunicazione a Castellana Grotte: social, foto, video e campagne per ristoranti, B&B, negozi e attività turistiche. Preventivo gratuito.",
+    intro: "Castellana Grotte accoglie ogni anno i visitatori delle sue grotte famose in tutta Italia. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, strutture e attività del paese.",
+    focus: { titolo: "Intercettare chi è già in viaggio", testo: "Chi visita le grotte cerca subito dove mangiare, dormire o cosa vedere nei dintorni, spesso dal telefono. Conta essere lì in quel momento: scheda Google completa, foto vere, recensioni curate e campagne mirate a chi si trova in zona. Lo stesso lavoro, con contenuti costanti, porta clienti anche dai paesi vicini." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, B&B e negozi di Castellana Grotte: contenuti per i turisti delle grotte e per i clienti del territorio." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
