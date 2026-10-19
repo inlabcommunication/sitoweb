@@ -640,6 +640,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per strutture, aziende e attività di Pisticci e della marina: territorio e prodotti raccontati con immagini vere." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Policoro", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Policoro, sulla costa ionica della Basilicata, ospita il Museo della Siritide, che racconta l'antica Herakleia, e la riserva del Bosco Pantano. È un centro di commercio e servizi per tutto il Metapontino, con una forte agricoltura di frutta e ortaggi e un turismo balneare in crescita.",
+    settori: ["lidi e strutture turistiche", "aziende agricole e ortofrutta", "negozi e servizi"],
+    faq: { q: "Lavorate con aziende agricole?", a: "Sì: foto e video in campo e in magazzino, social, sito e campagne per la vendita." },
+    description: "Agenzia di comunicazione a Policoro: social, foto, video, siti e campagne per lidi, strutture, aziende agricole e negozi. Preventivo gratuito.",
+    intro: "Policoro è il centro più vivo della costa ionica lucana. Seguiamo social, foto, video, sponsorizzate e siti per lidi, strutture, aziende agricole e negozi, da Castellaneta.",
+    focus: { titolo: "Il punto di riferimento della costa lucana", testo: "Policoro serve un'area ampia, dal mare all'entroterra. Per negozi e servizi conta farsi trovare da chi arriva dai paesi vicini; per lidi e strutture conta la stagione estiva; per le aziende agricole conta raccontare il prodotto. Costruiamo una comunicazione diversa per ognuno, con scheda Google, social, sito e campagne." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, aziende e negozi di Policoro: contenuti per la stagione al mare e per i clienti di tutto il Metapontino." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
