@@ -592,6 +592,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per hotel, masserie e ristoranti di Ostuni: immagini curate, contenuti in italiano e in inglese e campagne mirate ai viaggiatori." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Putignano", provincia: "provincia di Bari",
+    contesto: "Il Carnevale di Putignano, con i suoi carri allegorici, è tra i più antichi d'Europa. La città è anche conosciuta per le aziende dell'abbigliamento e degli abiti da sposa, con atelier e showroom che lavorano con clienti da tutta Italia.",
+    settori: ["atelier, abbigliamento e abiti da sposa", "negozi e showroom", "ristorazione ed eventi"],
+    faq: { q: "Lavorate con atelier e negozi di abbigliamento?", a: "Sì: shooting dei capi, reel, social e campagne per portare appuntamenti in showroom." },
+    description: "Agenzia di comunicazione a Putignano: social, video, siti e campagne per negozi, atelier, aziende e attività del paese del Carnevale. Preventivo gratuito.",
+    intro: "Putignano è la città del Carnevale più antico d'Europa e di un forte distretto della moda. Seguiamo social, video, sponsorizzate, siti e branding per negozi, atelier e aziende del paese.",
+    focus: { titolo: "Far vedere il prodotto prima della visita", testo: "Per un atelier o un negozio di abbigliamento, chi arriva in showroom ha spesso già scelto guardando le foto online. Curiamo shooting dei capi, video brevi, profili social e campagne per portare appuntamenti, anche da fuori provincia. Per gli eventi come il Carnevale prepariamo contenuti e sponsorizzate con anticipo." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per atelier, negozi ed eventi di Putignano: shooting dei capi, reel e campagne per appuntamenti." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
