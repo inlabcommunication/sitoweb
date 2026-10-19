@@ -42,6 +42,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Pulsano', region: 'Puglia', lat: 40.384, lon: 17.354 },
   { name: 'Manduria', region: 'Puglia', lat: 40.400, lon: 17.634 },
   { name: 'Cisternino', region: 'Puglia', lat: 40.742, lon: 17.426 },
+  { name: 'Ceglie Messapica', region: 'Puglia', lat: 40.646, lon: 17.516 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

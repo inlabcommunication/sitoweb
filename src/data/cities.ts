@@ -568,6 +568,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per bracerie, ristoranti e strutture di Cisternino: brace e sala in reel, foto vere e contenuti anche in inglese." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Ceglie Messapica", provincia: "provincia di Brindisi",
+    contesto: "Ceglie Messapica, con il suo Castello Ducale, è conosciuta per la tradizione gastronomica e per il biscotto cegliese, dolce di mandorle presidio Slow Food. Ristoranti e laboratori attirano visitatori dalla Valle d'Itria e dalla costa.",
+    settori: ["ristoranti e trattorie", "forni, pasticcerie e laboratori", "negozi e attività del centro"],
+    faq: { q: "Potete aiutare un laboratorio di dolci a vendere online?", a: "Sì: foto dei prodotti, social e un catalogo o e-commerce semplice, con ordini anche su WhatsApp." },
+    description: "Agenzia di comunicazione a Ceglie Messapica: social, foto, video e campagne per ristoranti, forni, pasticcerie e attività del paese. Preventivo gratuito.",
+    intro: "Ceglie Messapica è una delle capitali della buona cucina in Puglia. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, forni, pasticcerie e attività del paese.",
+    focus: { titolo: "Una tradizione che si fotografa", testo: "Dietro un biscotto cegliese o un piatto della tradizione ci sono gesti e ricette tramandati. Raccontarli con foto e video curati fa la differenza tra un locale come tanti e uno che le persone vogliono provare. Lavoriamo sul posto, in cucina e in laboratorio, e portiamo i contenuti a chi cerca dove mangiare in zona." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, forni e pasticcerie di Ceglie Messapica: ricette e laboratorio raccontati con foto e reel." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
