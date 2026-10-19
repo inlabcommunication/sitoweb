@@ -616,6 +616,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, B&B e negozi di Castellana Grotte: contenuti per i turisti delle grotte e per i clienti del territorio." },
   },
+  {
+    // brief SEO 19/10, lotto 3
+    name: "Conversano", provincia: "provincia di Bari",
+    contesto: "Conversano conserva il Castello degli Acquaviva d'Aragona e il Monastero di San Benedetto. Le campagne intorno sono conosciute per le ciliegie e per le masserie e le ville che ospitano matrimoni ed eventi.",
+    settori: ["ville, masserie e location per eventi", "ristoranti e attività del centro", "produttori agricoli"],
+    faq: { q: "Lavorate con location per matrimoni ed eventi?", a: "Sì: foto e video degli spazi, social e campagne per sposi e aziende." },
+    description: "Agenzia di comunicazione a Conversano: social, foto, video, siti e campagne per ristoranti, sale ricevimenti, produttori e negozi. Preventivo gratuito.",
+    intro: "Conversano è una città d'arte del sud-est barese, tra castello, monastero e campagne di ciliegi. Seguiamo social, foto, video, sponsorizzate e siti per attività, location e produttori.",
+    focus: { titolo: "Location ed eventi: le immagini fanno la prenotazione", testo: "Una villa o una masseria per eventi si sceglie prima sullo schermo. Raccontiamo gli spazi con foto e video curati, profili social che mostrano gli eventi e campagne rivolte a sposi e aziende, come facciamo a Mottola con una sala ricevimenti.", link: { testo: "a Mottola con una sala ricevimenti", href: "/cliente/villa-natia" } },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per location, ristoranti e produttori di Conversano: spazi ed eventi raccontati con foto e video curati." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

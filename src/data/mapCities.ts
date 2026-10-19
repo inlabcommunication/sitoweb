@@ -46,6 +46,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Ostuni', region: 'Puglia', lat: 40.729, lon: 17.578 },
   { name: 'Putignano', region: 'Puglia', lat: 40.851, lon: 17.122 },
   { name: 'Castellana Grotte', region: 'Puglia', lat: 40.888, lon: 17.166 },
+  { name: 'Conversano', region: 'Puglia', lat: 40.966, lon: 17.114 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
