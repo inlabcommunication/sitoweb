@@ -474,19 +474,20 @@ Se la tua attività è in provincia di Taranto, trovi i dettagli nella pagina su
   {
     slug: 'tracking-pixel-email-garante',
     title: 'Tracking pixel nelle email e Garante Privacy: come mettere in regola la tua newsletter',
-    excerpt: 'Il Garante Privacy equipara i pixel nelle email ai cookie: senza consenso non puoi tracciare chi apre le tue newsletter. Ecco cosa cambia e cosa fare entro fine ottobre 2026.',
+    excerpt: 'Il Garante Privacy equipara i pixel nelle email ai cookie: senza consenso non puoi tracciare chi apre le tue newsletter. Ecco cosa cambia e cosa fare entro il 29 ottobre 2026.',
     category: 'Strategia',
     tags: ['email marketing', 'newsletter', 'gdpr', 'garante privacy', 'tracking pixel', 'consenso'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
+    updated: '2026-10-20',
     cover: '/blog/tracking-pixel-email-garante/cover.jpg',
     coverAlt: 'Busta email con un pixel di tracciamento e l\'interruttore del consenso',
     published: true,
     seoTitle: 'Tracking pixel email e Garante: cosa fare ora | InLab',
     seoDescription: 'Tracking pixel email Garante: cosa prevedono le linee guida, quando serve il consenso e la checklist per adeguare la newsletter entro ottobre 2026.',
-    content: `Se mandi newsletter o DEM, le linee guida del Garante sui **tracking pixel nelle email** ti riguardano da vicino. Il Garante Privacy ha stabilito che il pixel che registra chi apre i tuoi messaggi va trattato come un cookie: serve il consenso, e il tempo per adeguarsi scade **entro fine ottobre 2026**.
+    content: `Se mandi newsletter o DEM, le linee guida del Garante sui **tracking pixel nelle email** ti riguardano da vicino. Il Garante Privacy ha stabilito che il pixel che registra chi apre i tuoi messaggi va trattato come un cookie: serve il consenso, e il tempo per adeguarsi scade il **29 ottobre 2026**.
 
-**Risposta breve: se la tua piattaforma registra chi apre ogni singola email, ti serve un consenso specifico, come per i cookie. Hai tempo fino a fine ottobre 2026 per aggiornare moduli, informativa e impostazioni. Senza consenso puoi contare solo le aperture complessive in forma anonima.**
+**Risposta breve: se la tua piattaforma registra chi apre ogni singola email, ti serve un consenso specifico, come per i cookie. Hai tempo fino al 29 ottobre 2026 per aggiornare moduli, informativa e impostazioni. Senza consenso puoi contare solo le aperture complessive in forma anonima.**
 
 Non è un tema da ufficio legale e basta. Cambia il modo in cui raccogli le iscrizioni, cosa scrivi nell'informativa e perfino come leggi i risultati delle tue campagne. Qui trovi cosa dice il provvedimento, cosa resta permesso e una checklist pratica da seguire.
 
@@ -495,14 +496,14 @@ Non è un tema da ufficio legale e basta. Cambia il modo in cui raccogli le iscr
 - I pixel nelle email rientrano nell'art. 122 del Codice privacy, lo stesso regime dei cookie: serve un consenso preventivo, libero, specifico e informato.
 - Senza consenso puoi misurare solo il tasso di apertura complessivo in forma anonima, oltre ai pixel per sicurezza e comunicazioni obbligatorie per legge.
 - L'utente deve poter togliere solo il tracciamento e continuare a ricevere le email.
-- Scadenza per mettersi in regola: entro fine ottobre 2026.
+- Scadenza per mettersi in regola: 29 ottobre 2026, sei mesi dopo la pubblicazione in Gazzetta Ufficiale del 29 aprile.
 - L'open rate diventerà meno affidabile: conviene spostare l'attenzione su clic, risposte e conversioni.
 
 ## Cosa ha deciso il Garante sui tracking pixel nelle email
 
 Partiamo dalla definizione. Un **tracking pixel** è un'immagine minuscola, spesso invisibile, inserita nel corpo dell'email. Quando il destinatario apre il messaggio, il client di posta scarica quell'immagine e la piattaforma di invio registra l'apertura. Quasi tutti gli strumenti di email marketing, da Mailchimp a Brevo a MailUp, usano questo meccanismo per calcolare il tasso di apertura.
 
-Con il [provvedimento del 17 aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943), pubblicato in Gazzetta Ufficiale il 29 aprile 2026, il Garante ha adottato linee guida specifiche su questo tema. Il testo concede sei mesi per adeguarsi: la scadenza cade quindi entro fine ottobre 2026.
+Con il [provvedimento del 17 aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943), pubblicato in Gazzetta Ufficiale il 29 aprile 2026, il Garante ha adottato linee guida specifiche su questo tema. Il testo concede sei mesi per adeguarsi: la scadenza cade quindi il 29 ottobre 2026.
 
 ### Il pixel come un cookie
 
@@ -566,7 +567,7 @@ C'è un effetto collaterale che riguarda tutti: l'**open rate** perderà valore 
 
 Secondo noi è un'occasione per misurare meglio. Clic, risposte, prenotazioni, vendite e visite al sito dicono molto di più sul valore di una newsletter rispetto a un'apertura, che non garantisce nemmeno che il messaggio sia stato letto. Se il tuo obiettivo è portare persone sul sito, ti conviene [misurare cosa arriva dal sito in GA4](/blog/google-business-profile-ga4) e collegare le campagne ai risultati reali.
 
-## Tracking pixel nelle email: cosa fare entro fine ottobre 2026
+## Tracking pixel nelle email: cosa fare entro il 29 ottobre 2026
 
 Ecco una checklist operativa. Non sostituisce il parere del tuo consulente privacy, ma ti aiuta a non arrivare impreparato.
 
@@ -578,6 +579,16 @@ Ecco una checklist operativa. Non sostituisce il parere del tuo consulente priva
 6. **Rendi la revoca granulare.** Nel footer delle email e nel centro preferenze devono esserci due strade: disiscrizione completa oppure stop al solo tracciamento.
 7. **Gestisci la base iscritti esistente.** Per chi è già in lista e non ha dato un consenso specifico al tracciamento, valuta con il tuo consulente se inviare email senza pixel o chiedere il consenso.
 8. **Rivedi KPI e automazioni.** Sostituisci i flussi basati sulle aperture con trigger legati a clic, acquisti o azioni sul sito. Se usi [automazioni e chatbot AI](/automazioni-ai) collegati al CRM, controlla che rispettino le nuove scelte degli utenti.
+
+### Se mancano pochi giorni: le priorità
+
+Se sei in ritardo, concentrati su quello che si vede da fuori:
+
+- **prima di tutto la piattaforma**: disattiva il tracciamento individuale delle aperture, o rendilo anonimo, per chi non ha dato un consenso specifico;
+- **poi moduli e informativa**: aggiungi il consenso separato al tracciamento e aggiorna il testo dell'informativa;
+- **infine il footer**: inserisci il link per fermare solo il tracciamento, accanto a quello per la disiscrizione.
+
+Le altre voci della checklist, come la revisione delle automazioni e dei KPI, puoi completarle nelle settimane successive. Dal 30 ottobre, però, ogni email con un pixel individuale inviata senza consenso è un trattamento non conforme.
 
 ![Checklist in sei punti per adeguare la newsletter ai tracking pixel entro ottobre](/blog/tracking-pixel-email-garante/checklist-newsletter-tracking-pixel.webp)
 
@@ -609,7 +620,7 @@ Sono immagini minuscole, di solito invisibili, inserite nel corpo dell'email. Qu
 
 ### Entro quando bisogna adeguarsi alle linee guida del Garante?
 
-Il provvedimento del 17 aprile 2026 è stato pubblicato in Gazzetta Ufficiale il 29 aprile 2026 e concede sei mesi per mettersi in regola. La scadenza cade quindi entro fine ottobre 2026.
+Il provvedimento del 17 aprile 2026 è stato pubblicato in Gazzetta Ufficiale il 29 aprile 2026 e concede sei mesi per mettersi in regola. La scadenza cade quindi il 29 ottobre 2026. Dopo questa data le regole si applicano a tutti, e il Garante può verificare e sanzionare chi non si è adeguato.
 
 ### Posso ancora misurare il tasso di apertura senza consenso?
 
@@ -625,7 +636,7 @@ Deve poter continuare a ricevere le tue email, ma senza pixel. Le linee guida ch
 
 ## Mettere in regola la newsletter senza perdere i risultati
 
-Le linee guida del Garante sui tracking pixel non vietano l'email marketing: chiedono trasparenza e scelte reali per chi riceve i tuoi messaggi. Il primo passo pratico è semplice: apri la tua piattaforma di invio, verifica come registra le aperture e aggiorna form e informativa prima di fine ottobre 2026.
+Le linee guida del Garante sui tracking pixel non vietano l'email marketing: chiedono trasparenza e scelte reali per chi riceve i tuoi messaggi. Il primo passo pratico è semplice: apri la tua piattaforma di invio, verifica come registra le aperture e aggiorna form e informativa prima del 29 ottobre 2026.
 
 Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti generati con l'AI](/blog/contenuti-ai-obblighi-ai-act). Se vuoi rivedere form, automazioni e metriche delle tue campagne email, [parliamone](/contatti): possiamo aiutarti a impostare un sistema chiaro e misurabile.
 
@@ -634,6 +645,7 @@ Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti ge
 **Fonti**
 
 - [Linee guida sui tracking pixel nelle comunicazioni di posta elettronica, provvedimento del 17 aprile 2026 – Garante per la protezione dei dati personali, aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943)
+- [Tracking pixel nelle e-mail, pagina tematica – Garante per la protezione dei dati personali](https://www.garanteprivacy.it/temi/tracking-pixel)
 - [Comunicato sulle linee guida sui tracking pixel nelle email – Garante per la protezione dei dati personali, 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241977)
 - [Tracking pixel nelle email: sei mesi per mettersi in regola – Agenda Digitale, 2026](https://www.agendadigitale.eu/sicurezza/privacy/tracking-pixel-nelle-email-sei-mesi-per-mettersi-in-regola/)
 - [Tracking pixel nelle comunicazioni di posta elettronica: le nuove linee guida – Altalex, 8 maggio 2026](https://www.altalex.com/documents/news/2026/05/08/tracking-pixel-comunicazioni-posta-elettronica-nuove-linee-guida)
@@ -1463,6 +1475,7 @@ Se vuoi un assistente su misura, collegato ai tuoi strumenti e costruito sulle r
     tags: ['meta ads', 'advantage+', 'facebook ads', 'instagram ads', 'intelligenza artificiale', 'pmi'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
+    updated: '2026-10-20',
     cover: '/blog/meta-ads-creativita-advantage/cover.jpg',
     coverAlt: 'Tre creatività diverse che l\'AI di Meta distribuisce a pubblici diversi',
     published: true,
@@ -1515,6 +1528,19 @@ Poi ci sono le regole UE:
 - **Annunci politici e sociali.** Dal 6 ottobre 2025 Meta [non pubblica più annunci politici, elettorali e su temi sociali](https://about.fb.com/news/2025/07/ending-political-electoral-and-social-issue-advertising-in-the-eu/) nell'Unione europea, per effetto del regolamento TTPA sulla pubblicità politica, in vigore dal 10 ottobre 2025. I contenuti organici restano consentiti.
 - **Annunci meno personalizzati.** A quanto risulta, in base a un impegno preso con la Commissione europea a dicembre 2025 nell'ambito del Digital Markets Act, da gennaio 2026 gli utenti UE possono scegliere tra annunci personalizzati, abbonamento senza pubblicità e annunci "meno personalizzati". Se confermato, una parte del pubblico riceve annunci basati su meno dati, e la creatività deve funzionare anche senza un targeting preciso.
 - **Etichette AI.** Il 28 luglio 2026 Meta ha firmato il Codice di condotta UE sulla trasparenza dei contenuti AI: è ragionevole aspettarsi più etichette sulle creatività generate con l'AI.
+
+## Le novità di ottobre 2026: video con l'AI e assistente per le campagne
+
+Il 6 ottobre 2026, all'Advertising Week di New York, [Meta ha presentato nuove funzioni AI per gli inserzionisti](https://about.fb.com/ltam/news/2026/10/advertising-week-new-york-2026-nuevas-capacidades-de-ia-para-guiar-campanas-y-llegar-a-los-clientes/). Per una piccola attività, quattro cose contano più delle altre.
+
+- **Video dalle foto.** In Advantage+ creative si possono creare video partendo dalle immagini statiche che hai già. Chi ha un catalogo prodotti può trasformare le foto dei prodotti in video.
+- **Ads Creative Studio più diffuso.** Lo spazio per creare e modificare le creatività arriva a più inserzionisti, con dati su quali varianti funzionano meglio.
+- **Assistente AI con più memoria.** L'assistente di Meta AI per le aziende ricorda i test passati, la stagionalità e gli obiettivi che gli hai indicato. Meta sta provando anche l'importazione delle linee guida del brand e la gestione delle campagne in conversazione: creare una campagna, cambiare pubblico o budget, con anteprime e approvazioni.
+- **Strategia per ciclo di vita del cliente.** Ora è disponibile per tutti gli inserzionisti: puoi indicare se una campagna punta a clienti nuovi, a clienti esistenti o a entrambi.
+
+### Cosa cambia per ristoranti, negozi e studi
+
+I video generati dalle foto sono un buon modo per testare più varianti senza girare ogni volta. Funzionano però bene solo se le foto di partenza sono belle e vere: un piatto fotografato male resta un piatto fotografato male, anche in movimento. Per le campagne che contano, come un'apertura, una stagione o un evento, un video girato sul posto con le tue persone resta più credibile. Per questo conviene unire le due cose: pochi [video girati bene](/video) per i messaggi principali e varianti generate per i test.
 
 ## Con l'AI il tuo lavoro si sposta: le leve che restano a te
 
@@ -1597,6 +1623,8 @@ Se vuoi impostare così le tue campagne, la nostra [gestione delle campagne Meta
 
 **Fonti**
 
+- [Advertising Week New York 2026: nuove funzioni AI per guidare le campagne](https://about.fb.com/ltam/news/2026/10/advertising-week-new-york-2026-nuevas-capacidades-de-ia-para-guiar-campanas-y-llegar-a-los-clientes/) – Meta, ottobre 2026
+- [Meta introduces new AI-powered tools at Advertising Week](https://www.marketingdive.com/news/meta-introduces-new-ai-powered-tools-at-advertising-week/832517/) – Marketing Dive, ottobre 2026
 - [Come l'AI guida le performance pubblicitarie nel 2026](https://about.fb.com/news/2026/01/2026-ai-drives-performance/) – Meta, 28 gennaio 2026
 - [Nuovi strumenti e AI contro le truffe](https://about.fb.com/news/2026/03/meta-launches-new-anti-scam-tools-deploys-ai-technology-to-fight-scammers-and-protect-people/) – Meta, 11 marzo 2026
 - [Stop agli annunci politici, elettorali e su temi sociali nell'UE](https://about.fb.com/news/2025/07/ending-political-electoral-and-social-issue-advertising-in-the-eu/) – Meta, luglio 2025`,
