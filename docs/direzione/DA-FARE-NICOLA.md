@@ -10,6 +10,8 @@ Aggiornata: 10/10/2026
 - [ ] Nota "Metriche indicative" nei casi Ricciardi e Paresteta → "Dati indicativi riferiti al periodo della campagna."
 - [ ] Compilare le 3 schede vuote (Acchiappasogni, Feliciano Fangio, IMH) e spuntare "Pubblica la scheda".
 
+- [ ] Inserire in dashboard i 13 link Instagram confermati (campo Instagram di ogni scheda); Il Paradiso e Tacco: dare i link a mano.
+
 ## Decisioni
 - [x] Persone nominate nelle schede: confermato da Nicola (10/10).
 - [ ] Togliere il link "Scheda cliente" dalle 3 schede vuote finché non pubblicate (consiglio: sì).
