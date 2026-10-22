@@ -141,7 +141,7 @@ export const OTHER_CLIENTS_DEFAULT: { label: string; title: string; accent: stri
     item('Inox Racing Puglia'),
     item('Acchiappasogni'),
     item('Feliciano Fangio', { sector: 'Parrucchiere' }),
-    item('Arte e Oro', { sector: 'Orafo · Stefano Pastore' }),
+    item('Arte e Oro', { sector: 'Orafo · Stefano Tamburrano' }),
     item('Pasticceria Naturale', { sector: 'Pasticceria', location: 'Ferrara' }),
     item('IMH', { location: 'Ferrara' }),
     item('Il Paradiso', { sector: 'Lido', location: 'Castellaneta Marina' }),
