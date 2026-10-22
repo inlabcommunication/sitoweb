@@ -120,15 +120,38 @@ export const OTHER_CLIENTS_PREFILL: Record<string, Partial<OtherClient>> = {
   },
 };
 
+// Profili Instagram confermati da Nicola (22/10). Valgono solo se la scheda non
+// ha già un Instagram salvato in dashboard: quello salvato vince sempre.
+// Il Paradiso e Tacco non ci sono: link non ancora forniti.
+export const OTHER_CLIENTS_INSTAGRAM: Record<string, string> = {
+  'vision-ottica': 'https://www.instagram.com/visionottica_capone/',
+  'inox-racing-puglia': 'https://www.instagram.com/inox_racing_puglia/',
+  'feliciano-fangio': 'https://www.instagram.com/feliciano_fangio_yourhair/',
+  'arte-e-oro': 'https://www.instagram.com/arteoro_laboratoriorafo/',
+  'pasticceria-naturale': 'https://www.instagram.com/pasticceria.naturale/',
+  'casa28': 'https://www.instagram.com/casa28trattoriaurbana/',
+  'la-vela': 'https://www.instagram.com/lavelaclub/',
+  'match-point': 'https://www.instagram.com/matchpoint_castellaneta/',
+  'splashcar': 'https://www.instagram.com/splashcarwashedetailing/',
+  'imh': 'https://www.instagram.com/i.m.h_consulting/',
+  'olio-vanessa': 'https://www.instagram.com/oliovanessasrls/',
+  'acchiappasogni': 'https://www.instagram.com/acchiappasogni.home/',
+  'pizzeria-ermitage': 'https://www.instagram.com/_hermitage__/',
+  'pizzeria-hermitage': 'https://www.instagram.com/_hermitage__/',
+};
+
 /**
  * Applica i testi di OTHER_CLIENTS_PREFILL alle schede con il riassunto ancora
  * vuoto, e le pubblica. Logo, immagini, link e le altre parti già salvate restano.
+ * Aggiunge l'Instagram di OTHER_CLIENTS_INSTAGRAM solo se il campo è vuoto.
  * Le schede già compilate in dashboard non vengono toccate.
  */
 export const withPrefill = <T = any>(items: T[] = []): T[] =>
   (Array.isArray(items) ? items : []).map((c: any) => {
     const p = c && OTHER_CLIENTS_PREFILL[getClientId(c)];
-    return p && !String(c.summary || '').trim() ? { ...c, ...p, published: true } : c;
+    const out = p && !String(c.summary || '').trim() ? { ...c, ...p, published: true } : c;
+    const ig = out && OTHER_CLIENTS_INSTAGRAM[getClientId(out)];
+    return ig && !String(out.instagram || '').trim() ? { ...out, instagram: ig } : out;
   });
 
 export const OTHER_CLIENTS_DEFAULT: { label: string; title: string; accent: string; text: string; items: OtherClient[] } = {
