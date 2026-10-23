@@ -21,7 +21,7 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 - **Strumento immagini:** `tools/blog-images/` è nell'area dell'addetto al blog (CLAUDE.md, 01/10/2026). Il generatore aggiunge da solo i metadati IPTC; per immagini già esistenti si usa `node tools/blog-images/metadata.cjs <file>`.
 - **Rubrica delle sessioni** (dal direttore, 30/09/2026). Per scrivere a una sessione: `create_trigger` con `persistent_session_id`, poi `fire_trigger` e `delete_trigger`. Ogni messaggio sveglia l'altra sessione e consuma i suoi limiti: scrivere solo quando serve, con tutto dentro.
   - Direttore Operativo: `session_01AreWGaDhEeTCs3CDmdifT7`
-  - Sito Inlab (unico che modifica il codice): `session_01U6sW6ykGz4nrdvKnHMQZsF`
+  - Sito Inlab (unico che modifica il codice): `session_011S4HYEoovHviMzacnSR2wm` (sessione "Sito Inlab (nuova, 13/10)"; quella vecchia è archiviata)
   - Adetto SEO giusto (responsabile strategico del blog): `session_018SfEyMKHa2uSgRSKzdE114`
   - Addetto performance: `session_012pr6hkmubH9ZAA9gVGN4Gf` (con lui si concorda direttamente l'eventuale conversione WebP delle copertine)
   - Adetto analisi sito (controlli e sicurezza, sola lettura): `session_01Kim4sfBnoqhrkBJnpGTrHz`
