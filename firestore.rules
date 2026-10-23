@@ -73,6 +73,26 @@ service cloud.firestore {
         && (!('duration' in request.resource.data) || request.resource.data.duration is number);
     }
 
+    // Chat degli agenti: la leggono solo gli admin. Il titolare (admin) può solo AGGIUNGERE
+    // propri messaggi (testo o vocale); i messaggi degli agenti li scrive /api/agent-chat.
+    match /agent_messages/{id} {
+      allow read, delete: if isAdmin();
+      allow update: if false;
+      allow create: if isAdmin()
+        && request.resource.data.keys().hasOnly(['from', 'to', 'conv', 'text', 'audio', 'createdAt'])
+        && request.resource.data.from == 'owner'
+        && request.resource.data.to in ['group', 'sito', 'direttore', 'seo', 'blog', 'performance', 'competitor', 'sicurezza']
+        && request.resource.data.conv == (request.resource.data.to == 'group' ? 'group' : 'dm_' + request.resource.data.to)
+        && shortStr(request.resource.data.createdAt, 40)
+        && (('text' in request.resource.data) != ('audio' in request.resource.data))
+        && (!('text' in request.resource.data) || shortStr(request.resource.data.text, 4000))
+        && (!('audio' in request.resource.data) || (
+             request.resource.data.audio.keys().hasOnly(['b64', 'mime', 'sec'])
+             && shortStr(request.resource.data.audio.b64, 700000)
+             && shortStr(request.resource.data.audio.mime, 40)
+             && request.resource.data.audio.sec is number));
+    }
+
     // Contatori anti-abuso usati dalle funzioni /api: mai accessibili dal browser
     match /_ratelimits/{id} { allow read, write: if false; }
     match /_usage/{id} { allow read, write: if false; }

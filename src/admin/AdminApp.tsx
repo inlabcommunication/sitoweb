@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
 import { motion } from 'motion/react';
-import { BarChart3, Users, Edit3, LogOut, ExternalLink, Settings2, FolderOpen, Newspaper } from 'lucide-react';
+import { BarChart3, Users, Edit3, LogOut, ExternalLink, Settings2, FolderOpen, Newspaper, MessagesSquare } from 'lucide-react';
 import { auth, db, isFirebaseConfigured } from '../lib/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
@@ -11,6 +11,7 @@ import { ContentEditor } from './ContentEditor';
 import { Settings } from './Settings';
 import { MediaLibraryPage } from './MediaLibrary';
 import { BlogEditor } from './BlogEditor';
+import { AgentChat } from './AgentChat';
 
 const DashboardStyles = () => (
   <style>{`
@@ -38,7 +39,7 @@ const DashboardStyles = () => (
   `}</style>
 );
 
-type Tab = 'analytics' | 'leads' | 'editor' | 'blog' | 'archivio' | 'settings';
+type Tab = 'analytics' | 'leads' | 'editor' | 'blog' | 'archivio' | 'agenti' | 'settings';
 
 export const AdminApp = () => {
   const [user, setUser] = useState<any>(null);
@@ -80,6 +81,7 @@ export const AdminApp = () => {
     { id: 'editor',    label: 'Editor',         icon: <Edit3 size={14} /> },
     { id: 'blog',      label: 'Blog',           icon: <Newspaper size={14} /> },
     { id: 'archivio',  label: 'Archivio Media', icon: <FolderOpen size={14} /> },
+    { id: 'agenti',    label: 'Agenti',         icon: <MessagesSquare size={14} /> },
     { id: 'settings',  label: 'Impostazioni',   icon: <Settings2 size={14} /> },
   ];
 
@@ -155,6 +157,7 @@ export const AdminApp = () => {
         {tab === 'editor'    && <ContentEditor />}
         {tab === 'blog'      && <BlogEditor />}
         {tab === 'archivio'  && <MediaLibraryPage />}
+        {tab === 'agenti'    && <AgentChat />}
         {tab === 'settings'  && <Settings />}
       </motion.div>
     </div>
