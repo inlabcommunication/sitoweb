@@ -288,9 +288,9 @@ nuovo, ma non modifica questo file.
 
 | Servizio | Pagina | Argomenti per il blog | Già coperte (parola chiave → articolo) |
 |---|---|---|---|
-| Gestione Social | `/gestione-social` | costi, cosa include, come scegliere, piano editoriale, social per settore (ristoranti, dentisti, negozi…) | *gestione social per attività locali* → `gestione-social-attivita-locale-cosa-include`; *quante volte pubblicare sui social* → `quante-volte-pubblicare-social`; *Meta One aziende* → `meta-one-aziende`; *social media manager Taranto* → `social-media-manager-taranto` |
+| Gestione Social | `/gestione-social` | costi, cosa include, come scegliere, piano editoriale, social per settore (ristoranti, dentisti, negozi…) | *gestione social per attività locali* → `gestione-social-attivita-locale-cosa-include`; *quante volte pubblicare sui social* → `quante-volte-pubblicare-social`; *Meta One aziende* → `meta-one-aziende`; *social media manager Taranto* → `social-media-manager-taranto`; *Instagram su Google* → `instagram-su-google-seo-profilo` (27/10); *social Natale attività locali* → `social-natale-attivita-locali` (30/10) |
 | Video & Reels | `/video` | idee per reel per settore, come girare reel, durata, trend, reel vs post | *reel o post Instagram* → `reel-o-post-cosa-pubblicare-instagram`; *idee reel per ristoranti* → `idee-reel-ristoranti`; *SEO su TikTok* → `seo-tiktok-search-ads` |
-| Siti Web & Web App | `/siti-web` | costi di un sito, sito vs social, SEO locale, scheda Google, e-commerce, landing page | *sito web per attività locali* → `sito-web-o-solo-social-attivita-locale`; *Google Business Profile GA4* → `google-business-profile-ga4`; *report AI Overviews Search Console* → `ai-overviews-search-console-report`; *SEO per AI Overviews / GEO* → `seo-ai-overviews-geo-google` |
+| Siti Web & Web App | `/siti-web` | costi di un sito, sito vs social, SEO locale, scheda Google, e-commerce, landing page | *sito web per attività locali* → `sito-web-o-solo-social-attivita-locale`; *Google Business Profile GA4* → `google-business-profile-ga4`; *report AI Overviews Search Console* → `ai-overviews-search-console-report`; *SEO per AI Overviews / GEO* → `seo-ai-overviews-geo-google`; *recensioni Google* → `recensioni-google-come-chiederle-rispondere`; *accessibilità sito web / European Accessibility Act* → `accessibilita-sito-web-european-accessibility-act` |
 | Meta Ads | `/meta-ads` | quanto investire, sponsorizzate Instagram, errori comuni, campagne per attività locali | *sponsorizzate Instagram per attività locali* → `sponsorizzate-instagram-attivita-locali`; *Meta Ads 2026* → `meta-ads-creativita-advantage` |
 | Automazioni AI | `/automazioni-ai` | chatbot per attività locali, risposte automatiche WhatsApp/Instagram, AI per piccole imprese | *WhatsApp Business AI* → `whatsapp-business-ai`; *contenuti AI obblighi / AI Act* → `contenuti-ai-obblighi-ai-act` |
 | Agenzia (pagine città, nessun servizio singolo) | `/agenzia-comunicazione-taranto` e le altre `/agenzia-comunicazione-{città}` | come scegliere un'agenzia in una città, lavorare con un'agenzia locale | *agenzia di comunicazione Taranto* → `agenzia-comunicazione-taranto-come-scegliere` |
@@ -302,6 +302,7 @@ nuovo, ma non modifica questo file.
 scrivere un terzo articolo sullo stesso tema senza chiederlo nel resoconto):
 - `sponsorizzate-instagram-attivita-locali` (guida pratica) ↔ `meta-ads-creativita-advantage` (novità 2026);
 - `ai-overviews-search-console-report` (misurare) ↔ `seo-ai-overviews-geo-google` (ottimizzare);
+- `google-business-profile-ga4` (misurare la scheda con GA4) ↔ `recensioni-google-come-chiederle-rispondere` (ottenere e gestire le recensioni);
 - `gestione-social-attivita-locale-cosa-include` contiene già "come scegliere" e
   "domande da fare prima di scegliere": un articolo nuovo su *come scegliere un
   social media manager* rischia di fargli concorrenza;
