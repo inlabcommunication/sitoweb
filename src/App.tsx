@@ -940,7 +940,7 @@ const PageMetaAds = () => (
           {[
             {t:"Lead Generation",d:"Acquisisci contatti qualificati di persone interessate al tuo prodotto o servizio. Ideale per studi professionali, corsi, servizi B2B."},
             {t:"Traffico al sito",d:"Porta visitatori altamente profilati sul tuo sito o landing page. Retargeting su chi ha già visitato senza convertire."},
-            {t:"Vendite e-commerce",d:"Campagne Dynamic Product Ads, retargeting carrello abbandonato, up-sell e cross-sell automatizzati."},
+            {t:"Vendite e-commerce",d:"Campagne con inserzioni Advantage+ del catalogo, retargeting carrello abbandonato, up-sell e cross-sell automatizzati."},
             {t:"Brand Awareness locale",d:"Fai conoscere la tua attività nelle città target. Perfetto per negozi, ristoranti, professionisti locali."},
             {t:"Appuntamenti",d:"Campagne specifiche per prenotazioni: ristoranti, studi medici, centri estetici, palestre."},
             {t:"App & eventi",d:"Promuovi il download di un'app o la partecipazione a un evento con campagne ottimizzate per la conversione specifica."},
@@ -1166,11 +1166,11 @@ const PageVideo = () => (
         <div style={{display:"flex",flexDirection:"column",gap:0}}>
           {[
             {n:1,title:"Concept e strategia",desc:"Analizziamo il tuo brand, il target e cosa funziona nel tuo settore. Definiamo il concept del video: tipo di hook, struttura narrativa, call to action. La strategia viene prima della telecamera."},
-            {n:2,title:"Scrittura dello script",desc:"Scriviamo ogni parola, ogni pausa, ogni transizione. Lo script include il hook dei primi 3 secondi (il più critico), la struttura narrativa, il ritmo dei tagli e la CTA finale."},
+            {n:2,title:"Scrittura dello script",desc:"Scriviamo ogni parola, ogni pausa, ogni transizione. Lo script include l'hook dei primi 3 secondi (il più critico), la struttura narrativa, il ritmo dei tagli e la CTA finale."},
             {n:3,title:"Pre-produzione",desc:"Location scouting, cast (se necessario), props, piano di ripresa, planning della giornata. Arrivare sul set preparati fa la differenza tra 4 ore di riprese e 12."},
             {n:4,title:"Riprese",desc:"Regia professionale, stabilizzatore, microfoni direzionali, luce aggiuntiva. Giriamo sempre materiale extra per il montaggio. Qualità cinema con attrezzatura professionale."},
             {n:5,title:"Montaggio e post-produzione",desc:"Color grading, sound design, testo animato, effetti. Il montaggio segue il ritmo psicologico giusto: tagli veloci dove serve attenzione, pause dove serve impatto."},
-            {n:6,title:"Ottimizzazione per ogni piattaforma",desc:"Instagram Reel, TikTok, YouTube Shorts — ogni piattaforma ha le sue specifiche tecniche e il suo comportamento algoritmo. Ottimizziamo ogni versione."},
+            {n:6,title:"Ottimizzazione per ogni piattaforma",desc:"Instagram Reel, TikTok, YouTube Shorts — ogni piattaforma ha le sue specifiche tecniche e il comportamento del suo algoritmo. Ottimizziamo ogni versione."},
           ].map(s=><ProcessStep key={s.n} {...s}/>)}
         </div>
       </div>
@@ -2180,7 +2180,7 @@ const PageBranding = () => (
             {n:2,title:"Naming e concept",desc:"Se necessario, lavoriamo sul nome. Poi definiamo il concept creativo che guiderà tutte le scelte visive: forma, personalità, tono."},
             {n:3,title:"Identità visiva",desc:"Logo, palette colori, tipografia, pattern. Ogni elemento è scelto con una logica. Ti consegniamo il brand manual con tutte le istruzioni d'uso."},
             {n:4,title:"Tono di voce",desc:"Come parla il tuo brand? Definire il tono di voce significa dare coerenza a ogni testo — social, sito, campagne, comunicazioni."},
-            {n:5,title:"Applicazioni pratiche",desc:"Mocku su social, biglietti da visita, firme email, template grafici. Il brand prende forma su ogni superficie dove compare."},
+            {n:5,title:"Applicazioni pratiche",desc:"Mockup su social, biglietti da visita, firme email, template grafici. Il brand prende forma su ogni superficie dove compare."},
           ].map(s=><ProcessStep key={s.n} {...s}/>)}
         </div>
       </div>
