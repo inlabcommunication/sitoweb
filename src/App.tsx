@@ -956,7 +956,7 @@ const PageMetaAds = () => (
  
     <ServiceExamples slug="meta-ads"/>
     <DoveLavoriamo slug="meta-ads"/>
-    <ServiceCTA title="PAGA SOLO I RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
+    <ServiceCTA title="INVESTI DOVE PORTA RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
   </>
 );
  
