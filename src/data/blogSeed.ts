@@ -415,6 +415,7 @@ Dal 2026 puoi anche collegare la scheda a Google Analytics 4 e vedere in un unic
 ## Checklist: cosa deve avere un sito per un'attività locale
 
 - **Caricamento veloce** e ottima resa da telefono: la maggior parte delle visite arriva da smartphone.
+- **Un sito accessibile**: leggibile, usabile da tastiera e con moduli chiari. Per alcune attività è un obbligo: vedi la guida sull'[accessibilità del sito web](/blog/accessibilita-sito-web-european-accessibility-act).
 - **Una pagina per ogni servizio principale**, con un titolo chiaro che contiene il servizio e la zona.
 - **Contatti sempre visibili**: telefono cliccabile, WhatsApp, modulo breve.
 - **Indirizzo, orari e mappa** facili da trovare.
@@ -1252,7 +1253,7 @@ Con i filtri hostname di tipo "Include" puoi dire a GA4 quali sono i tuoi domini
 - **Categorie**: scegli quella principale con attenzione e aggiungi solo categorie secondarie pertinenti.
 - **Orari**: aggiornali sempre, festivi e chiusure comprese.
 - **Foto reali**: del locale, dei prodotti, delle persone. Meglio una foto vera fatta bene che dieci immagini generiche.
-- **Risposte alle recensioni**: rispondi a tutte, positive e negative, con tono calmo e personale.
+- **Risposte alle recensioni**: rispondi a tutte, positive e negative, con tono calmo e personale. Come chiederle e come rispondere lo spieghiamo nella guida alle [recensioni Google](/blog/recensioni-google-come-chiederle-rispondere).
 - **Post**: novità, eventi, offerte stagionali. Anche pochi post, ma regolari.
 
 ### 6. Controlla nome, indirizzo e telefono
@@ -2878,5 +2879,249 @@ No. Su Instagram e Facebook si può aggiungere il social media manager come coll
 Prendi le ultime dieci pubblicazioni sui tuoi profili e segna quante ti hanno portato un messaggio, una chiamata o una visita. Se la risposta è "quasi nessuna" o "non lo so", il problema non è quanto pubblichi, ma il metodo.
 
 Scopri come lavoriamo come [social media manager a Taranto](/gestione-social-taranto) e cosa facciamo come [agenzia di comunicazione a Taranto](/agenzia-comunicazione-taranto). Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'recensioni-google-come-chiederle-rispondere',
+    title: 'Recensioni Google: come chiederle ai clienti e come rispondere (anche a quelle negative)',
+    excerpt: 'Come chiedere le recensioni Google senza violare le regole, come rispondere a quelle positive e negative e cosa fare con le recensioni false.',
+    category: 'Strategia',
+    tags: ['recensioni google', 'google business profile', 'attività locali', 'reputazione online', 'google maps'],
+    author: 'Nicola Carpignano',
+    date: '2026-10-23',
+    cover: '/blog/recensioni-google-come-chiederle-rispondere/cover.jpg',
+    coverAlt: 'Scheda Google di un\'attività locale con stelle e risposte alle recensioni dei clienti',
+    published: true,
+    seoTitle: 'Recensioni Google: come chiederle e rispondere | InLab',
+    seoDescription: 'Come chiedere le recensioni Google ai clienti senza violare le regole, come rispondere a quelle negative e cosa fare con le recensioni false.',
+    content: `Le **recensioni Google** sono spesso la prima cosa che una persona guarda prima di scegliere un ristorante, un negozio o uno studio della zona. Poche stelle in meno, o una critica lasciata senza risposta, possono far scegliere il concorrente. In questa guida vediamo come chiedere le recensioni ai clienti senza violare le regole di Google, come rispondere a quelle positive e negative e cosa fare con le recensioni false.
+
+**Risposta breve: chiedi la recensione a tutti i clienti, non solo a quelli contenti, con il link della tua scheda Google e senza offrire sconti o regali in cambio. Rispondi a tutte le recensioni in pochi giorni: ringrazia per quelle positive, e per quelle negative riconosci il problema, spiega cosa farai e porta la conversazione in privato. Le recensioni false si segnalano a Google, senza litigare in pubblico.**
+
+Le recensioni non sono solo un voto. Sono contenuti che parlano della tua attività con le parole dei clienti, e Google le usa per capire cosa offri e quanto sei affidabile.
+
+## Perché le recensioni Google contano per un'attività locale
+
+Quando qualcuno cerca "pizzeria vicino a me" o "dentista a Castellaneta", Google mostra le schede delle attività con il numero di stelle accanto al nome. Prima ancora di aprire il tuo sito, il cliente ha già un'idea di te.
+
+Le recensioni lavorano su tre fronti:
+
+- **fiducia**: chi non ti conosce si fida del giudizio di chi è già passato da te;
+- **visibilità**: tra i fattori che Google indica per la ricerca locale c'è la "prominenza", che tiene conto anche del numero di recensioni e dei voti;
+- **informazioni**: le recensioni raccontano cosa fai bene, con parole che i clienti usano davvero quando cercano.
+
+Conta anche la freschezza: una scheda con recensioni recenti dice che l'attività è viva. Cinquanta recensioni di tre anni fa valgono meno di venti dell'ultimo anno.
+
+## Come chiedere le recensioni ai clienti (nel modo giusto)
+
+### Usa il link della tua scheda
+
+Dalla scheda Google Business Profile puoi copiare il link per chiedere una recensione: chi lo apre trova subito il modulo con le stelle. Puoi trasformarlo in un QR code da mettere alla cassa, sul tavolo, nello scontrino o nel biglietto da visita.
+
+### Chiedi al momento giusto
+
+Il momento migliore è subito dopo un'esperienza positiva: il cliente che ringrazia alla cassa, il paziente che esce soddisfatto, il cliente che ritira un lavoro finito. Un messaggio su WhatsApp qualche ora dopo, con il link, funziona molto meglio di una richiesta generica sui social.
+
+### Chiedi a tutti, senza filtri
+
+È importante: le regole di Google non permettono di chiedere recensioni solo ai clienti contenti, filtrando gli altri. Allo stesso modo non si possono offrire **sconti, omaggi o premi in cambio di una recensione**, nemmeno se la recensione può essere negativa. Chi viola queste regole rischia la rimozione delle recensioni e limitazioni sulla scheda.
+
+### Rendi la richiesta semplice
+
+Una frase breve e personale basta: "Se ti sei trovato bene, ci aiuti con una recensione? Bastano due minuti". Non suggerire cosa scrivere né quante stelle mettere.
+
+![Come chiedere le recensioni Google ai clienti: link, momento giusto, nessun incentivo e richiesta a tutti](/blog/recensioni-google-come-chiederle-rispondere/chiedere-recensioni-google-clienti.webp)
+
+## Come rispondere alle recensioni Google
+
+Rispondere è gratuito, si fa dalla scheda o dall'app Google Maps, e la risposta è pubblica: la leggono il cliente che ha scritto e tutti quelli che verranno dopo.
+
+### Alle recensioni positive
+
+Ringrazia per nome quando possibile e aggiungi un dettaglio vero: "Grazie Maria, felici che la torta per il compleanno sia piaciuta!". Evita la stessa frase copiata per tutti: si nota, e sembra automatica.
+
+### Alle recensioni negative
+
+Qui si vede la qualità di un'attività. Uno schema che funziona:
+
+1. **ringrazia** per il commento, anche se è duro;
+2. **riconosci** il problema senza giustificarti troppo;
+3. **spiega** cosa farai o cosa hai già fatto;
+4. **porta la conversazione in privato**, con un numero o un indirizzo email.
+
+![I quattro passi per rispondere a una recensione negativa su Google: ringrazia, riconosci, spiega e passa in privato](/blog/recensioni-google-come-chiederle-rispondere/rispondere-recensione-negativa-google.webp)
+
+Rispondi a mente fredda, entro pochi giorni. Non entrare in dettagli personali o sanitari del cliente: per uno studio medico o dentistico, ad esempio, non va mai confermato in pubblico che quella persona è un paziente.
+
+### Alle recensioni senza testo
+
+Anche le sole stelle meritano due righe di ringraziamento: mostrano a chi legge che la scheda è seguita.
+
+## Recensioni false o offensive: cosa fare
+
+Può capitare una recensione di qualcuno che non è mai stato cliente, un attacco di un concorrente o un commento offensivo. In questi casi:
+
+- **segnala la recensione** dalla scheda o da Google Maps, scegliendo il motivo (spam, conflitto di interessi, contenuto offensivo);
+- **rispondi con calma**, in modo breve e cortese, scrivendo che non trovi traccia del cliente e invitandolo a contattarti;
+- **non chiedere recensioni a parenti e amici** per "compensare": è proprio il comportamento che Google considera manipolazione.
+
+Le recensioni vere, anche quelle critiche, non si possono far rimuovere solo perché non piacciono. La risposta giusta resta il modo migliore per difendersi.
+
+## Un esempio pratico: la routine delle recensioni per un locale
+
+Per un bar o un ristorante, una routine semplice può essere questa:
+
+- QR code con il link alla recensione sul bancone e sul conto;
+- il titolare o il personale lo ricorda a voce ai clienti abituali e a chi si complimenta;
+- una volta a settimana, mezz'ora per rispondere a tutte le recensioni nuove;
+- una volta al mese, rileggere le recensioni per capire cosa i clienti apprezzano e cosa migliorare.
+
+Quello che emerge dalle recensioni è anche materiale per i contenuti: se tutti lodano il cornetto al pistacchio, è il prodotto da mettere al centro dei prossimi reel.
+
+## Domande frequenti
+
+### Si possono comprare recensioni Google?
+
+No. Le recensioni false violano le regole di Google e, in Italia, la normativa sulle pratiche commerciali scorrette vieta di pubblicare o commissionare recensioni false. Il rischio è perdere le recensioni, avere limitazioni sulla scheda e danneggiare la reputazione.
+
+### Posso offrire uno sconto a chi lascia una recensione?
+
+No. Google non permette di offrire incentivi in cambio delle recensioni, anche se il cliente è libero di dare il voto che vuole. Puoi chiedere la recensione, ma senza premi.
+
+### Quanto tempo ho per rispondere a una recensione negativa?
+
+Non c'è un limite fisso, ma conviene farlo entro pochi giorni. Una risposta rapida e cortese mostra che l'attività è attenta ai clienti, ed è letta da tutti quelli che arrivano sulla scheda dopo.
+
+### Posso eliminare una recensione negativa?
+
+Non direttamente. Puoi segnalarla a Google se viola le regole, per esempio se è spam, offensiva o scritta da chi non è mai stato cliente. Se è una critica vera, la strada giusta è rispondere bene.
+
+### Le recensioni aiutano a comparire prima su Google Maps?
+
+Sono uno dei segnali che Google considera, insieme alla pertinenza della scheda e alla distanza da chi cerca. Una scheda completa e aggiornata, con recensioni recenti e risposte, ha più possibilità di essere scelta.
+
+## Da dove partire
+
+Oggi stesso copia il link per chiedere recensioni dalla tua scheda Google, crea un QR code e mettilo dove i clienti lo vedono. Poi dedica mezz'ora a rispondere alle recensioni rimaste senza risposta, partendo da quelle negative.
+
+Se vuoi capire anche quanto ti porta la scheda in chiamate e visite, leggi la guida su [Google Business Profile e GA4](/blog/google-business-profile-ga4). Per una scheda e un sito che lavorano insieme, scopri i nostri [siti web per attività locali](/siti-web) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.
+
+**Fonti**
+
+- [Come Google determina il ranking dei risultati locali](https://support.google.com/business/answer/7091?hl=it) – Guida di Google Business Profile
+- [Contenuti vietati e con limitazioni (recensioni)](https://support.google.com/contributionpolicy/answer/7400114?hl=it) – Norme sui contenuti di Google Maps
+- [Rispondere alle recensioni](https://support.google.com/business/answer/3474050?hl=it) – Guida di Google Business Profile`,
+  },
+  {
+    slug: 'accessibilita-sito-web-european-accessibility-act',
+    title: 'Accessibilità del sito web: cosa chiede l\'European Accessibility Act alle attività',
+    excerpt: 'Dal 28 giugno 2025 molti siti e negozi online devono essere accessibili. Chi è obbligato, chi è esentato e cosa controllare per primo sul tuo sito.',
+    category: 'Siti web',
+    tags: ['accessibilità', 'european accessibility act', 'siti web', 'e-commerce', 'seo'],
+    author: 'Nicola Carpignano',
+    date: '2026-10-23',
+    cover: '/blog/accessibilita-sito-web-european-accessibility-act/cover.jpg',
+    coverAlt: 'Sito web accessibile con contrasto leggibile, testi alternativi e navigazione da tastiera',
+    published: true,
+    seoTitle: 'Accessibilità sito web: European Accessibility Act | InLab',
+    seoDescription: 'Accessibilità del sito web e European Accessibility Act: chi è obbligato dal 28 giugno 2025, chi è esentato e la checklist per adeguare il tuo sito.',
+    content: `Dal 28 giugno 2025 l'**accessibilità del sito web** non è più solo una buona pratica: con l'European Accessibility Act molti siti e negozi online che vendono ai consumatori devono essere usabili anche da persone con disabilità. Molti titolari non sanno se la regola li riguarda, e chi la conosce spesso pensa che basti un plugin. In questa guida vediamo chi è obbligato, chi è esentato, cosa significa in pratica un sito accessibile e da dove partire.
+
+**Risposta breve: l'European Accessibility Act, recepito in Italia con il d.lgs. 82/2022, si applica dal 28 giugno 2025 a diversi servizi digitali per i consumatori, tra cui l'e-commerce. Le microimprese che forniscono servizi (meno di 10 dipendenti e fatturato o bilancio fino a 2 milioni di euro) sono esentate. Anche chi è esentato, però, ha buoni motivi per rendere il sito accessibile: lo usano più persone, funziona meglio sul telefono e piace a Google.**
+
+Questa guida non sostituisce il parere di un consulente legale. Serve a capire il tema e a fare le domande giuste a chi segue il tuo sito.
+
+## Cos'è l'European Accessibility Act
+
+L'European Accessibility Act è la direttiva europea 2019/882 sui requisiti di accessibilità di prodotti e servizi. In Italia è stata recepita con il decreto legislativo 82/2022, e le regole si applicano dal **28 giugno 2025**.
+
+L'obiettivo è semplice: chi ha una disabilità visiva, uditiva, motoria o cognitiva deve poter comprare, prenotare e informarsi online come tutti gli altri. Questo vuol dire, per esempio, poter navigare il sito con la tastiera, usare un lettore di schermo, leggere testi con un contrasto sufficiente, capire i moduli e i messaggi di errore.
+
+Tra i servizi coinvolti ci sono quelli di **commercio elettronico**, oltre a banche, trasporti, comunicazioni elettroniche, e-book e altri servizi digitali per i consumatori.
+
+## Chi deve adeguare il sito e chi è esentato
+
+### Chi è coinvolto
+
+In generale sono coinvolte le imprese che vendono prodotti o servizi ai consumatori attraverso un sito o un'app: negozi online, siti con carrello e pagamento, servizi di prenotazione con acquisto. Le aree più delicate sono quelle in cui il cliente compie un'azione: registrazione, carrello, checkout, pagamento.
+
+### Chi è esentato
+
+Le **microimprese che forniscono servizi** sono esentate dagli obblighi sui servizi. Per microimpresa si intende un'azienda con meno di 10 dipendenti e con fatturato annuo o totale di bilancio fino a 2 milioni di euro.
+
+Molte attività locali rientrano in questa definizione. Prima di concludere che la regola non ti riguarda, però, verifica con il tuo consulente i numeri della tua impresa e il tipo di servizio che offri online.
+
+### Se il sito esisteva già
+
+Le regole valgono per i servizi offerti ai consumatori dopo il 28 giugno 2025, anche se il sito è stato creato prima. Per alcuni casi particolari sono previsti periodi transitori: anche questo va verificato caso per caso.
+
+## Cosa vuol dire, in pratica, un sito accessibile
+
+Il riferimento tecnico più usato sono le linee guida WCAG, alla base della norma europea EN 301 549. Non serve conoscerle a memoria: ecco cosa controllare per primo.
+
+- **Testi alternativi alle immagini**: ogni immagine che dà un'informazione ha una descrizione che il lettore di schermo può leggere.
+- **Contrasto e dimensione dei testi**: testi leggibili anche per chi vede poco, e ingrandibili senza rompere la pagina.
+- **Navigazione da tastiera**: menu, pulsanti e moduli si usano anche senza mouse, e si vede sempre dove ci si trova.
+- **Moduli chiari**: ogni campo ha un'etichetta, gli errori sono spiegati a parole e non solo con il colore rosso.
+- **Titoli in ordine**: la pagina ha un titolo principale e sottotitoli logici, utili a chi usa i lettori di schermo.
+- **Video e audio**: sottotitoli per i video importanti, nessun suono che parte da solo.
+- **Checkout senza ostacoli**: carrello, pagamento e conferma d'ordine funzionano con tastiera e lettori di schermo.
+
+Serve anche una **dichiarazione di accessibilità**, una pagina che spiega quanto il servizio è accessibile e come segnalare un problema.
+
+![Checklist dell'accessibilità del sito web: immagini, contrasto, tastiera, moduli, titoli, video e checkout](/blog/accessibilita-sito-web-european-accessibility-act/checklist-accessibilita-sito-web.webp)
+
+## Perché i plugin "magici" non bastano
+
+Esistono strumenti che promettono di rendere un sito accessibile con un pulsante o una barra di icone. Possono aiutare l'utente a cambiare il contrasto o la dimensione del testo, ma **non correggono i problemi nel codice**: un modulo senza etichette o un menu che non si apre con la tastiera restano tali.
+
+L'accessibilità si costruisce nel sito: nella struttura delle pagine, nei colori scelti, nei testi, nei moduli. Per questo conviene pensarci quando si rifà il sito, o con una revisione fatta da chi lo sviluppa.
+
+## Accessibilità e SEO: due problemi, una soluzione
+
+Molte regole dell'accessibilità coincidono con quelle che aiutano un sito a funzionare meglio su Google e sul telefono:
+
+- i **testi alternativi** aiutano Google a capire le immagini;
+- i **titoli in ordine** rendono chiara la struttura della pagina;
+- un **sito leggibile e veloce sul telefono** fa restare di più le persone;
+- **moduli semplici** fanno arrivare più richieste di contatto.
+
+Anche se la tua attività è esentata, rendere il sito accessibile significa servire meglio tutti i clienti: chi ha una disabilità, le persone anziane, chi naviga al sole con il telefono.
+
+![Accessibilità e SEO a confronto: cosa migliora per le persone e cosa per Google](/blog/accessibilita-sito-web-european-accessibility-act/accessibilita-seo-sito-web.webp)
+
+## Domande frequenti
+
+### L'European Accessibility Act riguarda anche il sito di un piccolo negozio?
+
+Dipende. Le microimprese che forniscono servizi, cioè con meno di 10 dipendenti e fatturato o bilancio fino a 2 milioni di euro, sono esentate dagli obblighi sui servizi. Le imprese più grandi che vendono online ai consumatori sono coinvolte. Verifica sempre la tua situazione con un consulente.
+
+### Da quando si applicano le regole?
+
+Dal 28 giugno 2025, anche per i siti creati prima di quella data. Per alcuni casi particolari sono previsti periodi transitori.
+
+### Basta installare un plugin di accessibilità?
+
+No. I plugin possono offrire opzioni utili all'utente, ma non correggono gli errori nel codice del sito, come moduli senza etichette o menu non usabili da tastiera. Serve una verifica del sito e, se necessario, una correzione da parte di chi lo sviluppa.
+
+### Cos'è la dichiarazione di accessibilità?
+
+È una pagina del sito che spiega quanto il servizio è accessibile, quali parti non lo sono ancora e come gli utenti possono segnalare un problema. Chi è soggetto agli obblighi deve pubblicarla.
+
+### Un sito accessibile si posiziona meglio su Google?
+
+L'accessibilità non è un fattore di posizionamento a sé, ma molte delle sue regole, come i testi alternativi, i titoli ordinati e un sito leggibile sul telefono, migliorano anche l'esperienza degli utenti e la comprensione delle pagine da parte di Google.
+
+## Da dove partire
+
+Apri il tuo sito dal telefono e prova a completare un acquisto o una richiesta di contatto senza toccare le immagini e leggendo solo i testi. Poi prova dal computer usando solo il tasto Tab. Se ti blocchi da qualche parte, lì c'è il primo problema da risolvere.
+
+Se il tuo sito ha bisogno di una revisione o lo stai rifacendo, leggi anche perché a un'attività locale servono [sito web e social insieme](/blog/sito-web-o-solo-social-attivita-locale). Scopri i nostri [siti web e landing page](/siti-web) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.
+
+**Fonti**
+
+- [Direttiva (UE) 2019/882 sui requisiti di accessibilità dei prodotti e dei servizi](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32019L0882) – EUR-Lex
+- [Decreto legislativo 27 maggio 2022, n. 82](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2022-05-27;82) – Normattiva
+- [European Accessibility Act](https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/disability/union-equality-strategy-rights-persons-disabilities-2021-2030/european-accessibility-act_en) – Commissione europea
+- [Siti accessibili per legge: la guida per chi vende online](https://www.agendadigitale.eu/mercati-digitali/siti-accessibili-per-legge-la-guida-per-chi-vende-online/) – Agenda Digitale`,
   },
 ];
