@@ -971,7 +971,7 @@ const PageSitiWeb = () => (
       cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi portfolio web" cta2to="/clienti"
     />
     <Marquee items={["Design","✦","Sviluppo","✦","SEO","✦","Performance","✦","CMS","✦","E-commerce","✦","Web App","✦"]}/>
-    <StatsRow stats={[{n:"<2s",l:"Tempo di caricamento medio"},{n:"98",l:"Score PageSpeed medio"},{n:"Top 3",l:"Posizione Google media"},{n:"100%",l:"Siti mobile-first"}]}/>
+    <StatsRow stats={[{n:"<2s",l:"Tempo di caricamento medio"},{n:"98",l:"Score PageSpeed medio"},{n:"100%",l:"Siti mobile-first"}]}/>
  
     <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
       <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1.4fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
