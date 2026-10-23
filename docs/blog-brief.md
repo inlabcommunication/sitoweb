@@ -7,11 +7,16 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
 - **Il responsabile SEO** (sessione "Adetto SEO giusto") è il riferimento dell'addetto al blog e il responsabile strategico del blog: priorità, parole chiave, intenti, link interni. Il suo ruolo è descritto in `docs/seo/PROMPT-RESPONSABILE-SEO.md`: analizza Google Analytics e Search Console ogni due settimane, scrive il brief in `docs/seo/brief/` e cura `docs/seo/LINEE-GUIDA-BLOG.md`. I suoi messaggi iniziano con `[Messaggio dal responsabile SEO]`. **Le sue indicazioni vanno sempre seguite**; se una sembra sbagliata o poco chiara, lo si scrive nel resoconto del brief, non la si ignora.
 - **Conta solo il nuovo responsabile SEO** (decisione di Nicola). Il brief del 2026-09-28 e i messaggi del responsabile precedente non valgono più: i compiti rimasti aperti lì non vanno ripresi. Si seguono i brief successivi.
 - **Ordine di lavoro:** prima i compiti del brief SEO in corso (priorità 1, poi 2, poi 3); gli articoli di novità di questo documento vengono dopo.
-- **Argomenti fuori dal brief SEO:** non sceglierli da soli. Un articolo di novità (metodo A/B/C) si propone prima al responsabile SEO, nel resoconto o con un messaggio alla sua sessione, e si scrive quando lui lo approva. In caso di conflitto sul posizionamento prevale la SEO (indicazione del direttore, 30/09/2026).
+- **Argomenti fuori dal brief SEO** (regola di Nicola del 23/10/2026, che sostituisce quella del 30/09):
+  - gli articoli si scrivono **due a settimana** anche senza brief, partendo dall'analisi delle fonti qui sotto e dai temi della mappa (LINEE-GUIDA-BLOG §10);
+  - la SEO va **informata** di ogni articolo, con parola chiave e slug, e le sue indicazioni su keyword, link e doppioni valgono sempre;
+  - non serve aspettare la sua approvazione prima di scrivere;
+  - quando la SEO assegna un compito in un brief, quel compito ha la precedenza;
+  - in caso di conflitto sul posizionamento prevale la SEO.
 - **Direttore Operativo** (sessione "Direttore Operativo Inlab."): coordina il progetto, le priorità e i crediti. Si passa da lui quando serve la sessione Sito Inlab, quando c'è un disaccordo o quando un lavoro costa molti crediti. Mappa del progetto: `docs/direzione/MAPPA-PROGETTO.md`.
 - **Pull request:** le apre l'addetto al blog dal proprio branch, solo con file della sua area. Sito Inlab fa il controllo tecnico, Nicola la unisce.
 - **Mappa "Già coperte":** la aggiorna il responsabile SEO. L'addetto al blog scrive le voci nuove nel resoconto, nella sezione "Voci da aggiungere alla mappa".
-- **Crediti:** se in una sessione non ci sono compiti del brief né notizie A o B forti, basta un report breve, senza articolo.
+- **Crediti:** lavora in modo essenziale, ma l'articolo del martedì e del venerdì esce comunque: se non ci sono novità forti, si usa una bozza pronta o un tema della mappa (regola di Nicola del 23/10/2026).
 - **Resoconto al Direttore a fine di ogni lavoro** (regola di Nicola, 01/10/2026): cosa è stato fatto, articoli e PR, file del resoconto, problemi, cosa serve da Nicola o dalla SEO. Si manda con `create_trigger` (`persistent_session_id` del Direttore, `initiation: human_request`, prompt che inizia con `[Resoconto da Addetto al Blog]`), poi `fire_trigger` senza `text`, poi `delete_trigger`.
 - **Strumento immagini:** `tools/blog-images/` è nell'area dell'addetto al blog (CLAUDE.md, 01/10/2026). Il generatore aggiunge da solo i metadati IPTC; per immagini già esistenti si usa `node tools/blog-images/metadata.cjs <file>`.
 - **Rubrica delle sessioni** (dal direttore, 30/09/2026). Per scrivere a una sessione: `create_trigger` con `persistent_session_id`, poi `fire_trigger` e `delete_trigger`. Ogni messaggio sveglia l'altra sessione e consuma i suoi limiti: scrivere solo quando serve, con tutto dentro.
@@ -34,16 +39,21 @@ Tono da agenzia moderna ma concreta: autorevole, chiaro, pratico. Niente fuffa, 
 
 ## Frequenza e flusso
 
-Ogni **martedì e venerdì**:
+Ogni **martedì e venerdì** esce **un articolo**: due a settimana (regola di Nicola del 23/10/2026).
 
 1. Analizza le fonti indicate sotto.
 2. Individua novità, aggiornamenti, trend, casi studio o segnali interessanti.
 3. Classifica ogni elemento per importanza (A/B/C).
-4. Decidi se vale la pena trasformarlo in un articolo.
-5. Se sì, scrivi un articolo SEO ottimizzato. La mattina fai analisi e scrittura; l'articolo va **online alle 11:50**.
-6. Se no, scrivi solo un breve report interno.
+4. Scegli l'articolo del giorno:
+   - prima un compito dei brief SEO;
+   - poi una notizia A o B;
+   - altrimenti una bozza pronta in `docs/blog-reports/bozze/` o un tema utile della mappa.
+5. Consegna con una PR sul tuo branch. Sito Inlab fa il controllo tecnico e Nicola unisce.
+6. Informa la SEO, con parola chiave e slug, e il Direttore.
 
-Pubblica solo per notizie A o B forti. Non pubblicare contenuti deboli solo per rispettare la cadenza.
+**Bozze in anticipo.** Gli articoli si possono studiare e preparare prima. Si salvano in `docs/blog-reports/bozze/<slug>.md`, con le specifiche delle immagini, e si pubblicano uno alla volta nei giorni previsti. Quando una bozza va online, il file si cancella.
+
+La qualità resta la stessa: fonti verificate, nessun contenuto debole per riempire il calendario.
 Non ripetere temi già trattati: controlla gli articoli in `src/data/blogSeed.ts`. Se c'è un seguito di un tema già coperto, preferisci aggiornare l'articolo esistente (campo `updated`) o scriverne uno che lo linki.
 
 ## Fonti da monitorare
