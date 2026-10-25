@@ -54,6 +54,29 @@ const baseEvent = () => ({
   created_at: new Date(), // salvato da Firestore come Timestamp
 });
 
+// "Non contare le mie visite su questo dispositivo" (richiesta di Nicola 25/10):
+// flag tecnico locale, niente cookie. '1' = non contare, '0' = scelta esplicita
+// di contare. Se localStorage non è disponibile (navigazione privata) vale solo
+// per la sessione.
+export const NO_TRACK_KEY = 'inlab_no_track';
+const readFlag = (): string | null => {
+  try { return localStorage.getItem(NO_TRACK_KEY); } catch {
+    try { return sessionStorage.getItem(NO_TRACK_KEY); } catch { return null; }
+  }
+};
+const writeFlag = (v: string) => {
+  try { localStorage.setItem(NO_TRACK_KEY, v); } catch {
+    try { sessionStorage.setItem(NO_TRACK_KEY, v); } catch { /* niente */ }
+  }
+};
+export const isTrackingDisabled = () => readFlag() === '1';
+export const setTrackingDisabled = (off: boolean) => writeFlag(off ? '1' : '0');
+/** Admin in dashboard: il dispositivo smette di essere contato, se non c'è già una scelta esplicita. */
+export const disableTrackingForAdmin = () => { if (readFlag() === null) writeFlag('1'); };
+
+// Visite da non registrare
+const skip = () => isTrackingDisabled();
+
 const queue: any[] = [];
 let flushTimer: number | null = null;
 
@@ -70,7 +93,7 @@ const flush = async () => {
 };
 
 const enqueue = (event: any) => {
-  if (!isFirebaseConfigured()) return;
+  if (!isFirebaseConfigured() || skip()) return;
   queue.push(event);
   if (flushTimer) clearTimeout(flushTimer);
   flushTimer = window.setTimeout(flush, 1500);
@@ -109,7 +132,7 @@ export const trackClick = (target: string) => {
 
 const trackSessionEnd = () => {
   const start = parseInt(sessionStart() || '0', 10);
-  if (!start || !db || !addEvent) return;
+  if (!start || !db || !addEvent || skip()) return;
   const duration = Math.round((Date.now() - start) / 1000);
   addEvent({
     ...baseEvent(),
