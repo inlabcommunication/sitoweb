@@ -1,7 +1,7 @@
 // Aspetto in stile WhatsApp (tema scuro). Tutte le classi hanno prefisso "wa-".
 export const agentChatStyles = `
 .wa-root{--wa-bg:#0b141a;--wa-panel:#111b21;--wa-head:#202c33;--wa-in:#202c33;--wa-out:#005c4b;--wa-line:rgba(134,150,160,.15);--wa-t:#e9edef;--wa-m:#8696a0;--wa-g:#00a884;
-  height:calc(100dvh - 60px);display:flex;flex-direction:column;background:var(--wa-bg);color:var(--wa-t);font-family:'DM Sans',system-ui,sans-serif}
+  height:100dvh;padding-top:env(safe-area-inset-top);display:flex;flex-direction:column;background:var(--wa-bg);color:var(--wa-t);font-family:'DM Sans',system-ui,sans-serif}
 .wa-root *{box-sizing:border-box}
 .wa-root button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
 .wa-tabs{display:flex;gap:6px;padding:8px 12px;background:var(--wa-head);border-bottom:1px solid var(--wa-line)}
@@ -10,7 +10,8 @@ export const agentChatStyles = `
 .wa-error{padding:8px 14px;background:#3b1f1f;color:#ffb4b4;font-size:13px;cursor:pointer}
 .wa-shell{flex:1;display:flex;min-height:0}
 .wa-list{width:360px;max-width:42%;display:flex;flex-direction:column;background:var(--wa-panel);border-right:1px solid var(--wa-line)}
-.wa-list-head{padding:14px 16px 6px;font-size:20px;font-weight:700}
+.wa-list-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px 6px;font-size:20px;font-weight:700}
+.wa-exit{font-size:12px;font-weight:500;color:var(--wa-m)!important;padding:4px 10px;border:1px solid var(--wa-line)!important;border-radius:100px}
 .wa-search{display:flex;align-items:center;gap:8px;margin:6px 12px 8px;padding:7px 12px;background:var(--wa-head);border-radius:10px;color:var(--wa-m)}
 .wa-search input{flex:1;background:none;border:none;outline:none;color:var(--wa-t);font-size:14px}
 .wa-scroll{flex:1;overflow:auto}
@@ -44,7 +45,7 @@ export const agentChatStyles = `
 .wa-wave{flex:1;display:flex;align-items:center;gap:2px;height:30px;cursor:pointer}.wa-wave i{flex:1;min-width:2px;border-radius:2px}
 .wa-voice-t{font-size:11.5px;color:rgba(233,237,239,.7);min-width:34px}
 .wa-empty{margin:40px auto;max-width:360px;text-align:center;font-size:13px;color:var(--wa-m);background:var(--wa-head);padding:10px 14px;border-radius:10px}
-.wa-composer{display:flex;align-items:flex-end;gap:10px;padding:10px 14px;background:var(--wa-head)}
+.wa-composer{display:flex;align-items:flex-end;gap:10px;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:var(--wa-head)}
 .wa-composer textarea{flex:1;resize:none;max-height:120px;padding:10px 14px;border-radius:22px;background:#2a3942;border:none;outline:none;color:var(--wa-t);font:inherit;font-size:15px;line-height:1.35}
 .wa-round{flex:none;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--wa-m)}
 .wa-round:hover{background:rgba(255,255,255,.06)}.wa-send{background:var(--wa-g)!important;color:#fff!important}.wa-danger{color:#ff7a6b!important}
@@ -58,7 +59,7 @@ export const agentChatStyles = `
 .wa-map-head h2{font-size:20px;margin-bottom:4px}.wa-map-head p{max-width:640px;font-size:13px;color:var(--wa-m);line-height:1.5}
 .wa-seg{display:flex;background:var(--wa-head);border-radius:100px;padding:3px}.wa-seg button{padding:6px 14px;border-radius:100px;font-size:12.5px;color:var(--wa-m)}.wa-seg .on{background:var(--wa-g);color:#fff}
 .wa-map-body{display:flex;flex-wrap:wrap;gap:16px;margin-top:10px}
-.wa-svg{flex:1 1 560px;min-width:0;max-height:calc(100dvh - 210px);background:var(--wa-panel);border-radius:16px;border:1px solid var(--wa-line)}
+.wa-svg{flex:1 1 560px;min-width:0;max-height:calc(100dvh - 230px);background:var(--wa-panel);border-radius:16px;border:1px solid var(--wa-line)}
 .wa-map-side{flex:1 1 240px;max-width:340px;background:var(--wa-panel);border:1px solid var(--wa-line);border-radius:16px;padding:16px;align-self:flex-start}
 .wa-map-side h3{font-size:16px;margin-bottom:4px}.wa-map-side h4{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--wa-m);margin:14px 0 6px}
 .wa-muted{font-size:12.5px;color:var(--wa-m);line-height:1.5}
@@ -72,5 +73,7 @@ export const agentChatStyles = `
   .wa-root[data-mobile=chat] .wa-list{display:none}
   .wa-back{display:block}.wa-thread{padding:12px 10px}
   .wa-tabs{overflow-x:auto}
+  .wa-map{padding:12px}.wa-svg{flex-basis:100%}.wa-map-side{max-width:none;flex-basis:100%}
+  .wa-composer textarea{font-size:16px}
 }
 `;

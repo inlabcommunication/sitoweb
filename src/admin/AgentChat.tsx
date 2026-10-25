@@ -35,7 +35,7 @@ const Avatar = ({ color, label, size = 46 }: { color: string; label: string; siz
 );
 const abbr = shortOf;
 
-export const AgentChat = () => {
+export const AgentChat = ({ onLogout }: { onLogout?: () => void }) => {
   const [live, setLive] = useState<ChatMessage[]>([]);
   const [demo, setDemo] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -127,7 +127,7 @@ export const AgentChat = () => {
       ) : (
         <div className="wa-shell">
           <aside className="wa-list">
-            <div className="wa-list-head">Chat degli agenti</div>
+            <div className="wa-list-head">Chat degli agenti{onLogout && <button onClick={onLogout} className="wa-exit">Esci</button>}</div>
             <label className="wa-search"><Search size={15} /><input value={filter} onChange={e => setFilter(e.target.value)} placeholder="Cerca un agente" /></label>
             <div className="wa-scroll">
               {sorted.head.filter(match).map(c => <ConvRow key={c.id} c={c} last={byConv.get(c.id)?.at(-1)} unread={unread(c.id)} active={c.id === active} onClick={() => open(c.id)} />)}

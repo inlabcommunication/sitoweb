@@ -26,8 +26,10 @@ window.addEventListener('vite:preloadError', (event) => {
 // i visitatori del sito non la scaricano mai.
 const AdminApp = lazy(() => import('./admin/AdminApp.tsx').then((m) => ({ default: m.AdminApp })));
 
+const ChatApp = lazy(() => import('./admin/ChatApp.tsx').then((m) => ({ default: m.ChatApp })));
+
 // ════════════════════════════════════════════════════════════════
-// Routing top-level: /admin → dashboard, tutto il resto → sito.
+// Routing top-level: /admin → dashboard, /chat → chat degli agenti (app), tutto il resto → sito.
 // I vecchi link /#/admin vengono portati su /admin.
 // ════════════════════════════════════════════════════════════════
 
@@ -35,16 +37,19 @@ const isAdminRoute = () => {
   if (window.location.hash.startsWith('#/admin')) window.history.replaceState(null, '', '/admin');
   return window.location.pathname.startsWith('/admin');
 };
+const isChatRoute = () => /^\/chat\/?$/.test(window.location.pathname);
 
 const Root = () => {
   const [admin, setAdmin] = useState(isAdminRoute());
+  const [chat, setChat] = useState(isChatRoute());
   useEffect(() => {
-    const update = () => setAdmin(isAdminRoute());
+    const update = () => { setAdmin(isAdminRoute()); setChat(isChatRoute()); };
     window.addEventListener('popstate', update);
     return () => {
       window.removeEventListener('popstate', update);
     };
   }, []);
+  if (chat) return <Suspense fallback={null}><ChatApp /></Suspense>;
   return admin
     ? <Suspense fallback={null}><AdminApp /></Suspense>
     : <App />;
@@ -64,5 +69,5 @@ const tree = (
     </ErrorBoundary>
   </StrictMode>
 );
-if (rootEl.hasChildNodes() && !isAdminRoute()) hydrateRoot(rootEl, tree);
+if (rootEl.hasChildNodes() && !isAdminRoute() && !isChatRoute()) hydrateRoot(rootEl, tree);
 else createRoot(rootEl).render(tree);

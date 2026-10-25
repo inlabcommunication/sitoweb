@@ -1,6 +1,6 @@
-# Chat degli agenti (dashboard → tab "Agenti")
+# Chat degli agenti (app `/chat`)
 
-Area della dashboard `/admin` con aspetto WhatsApp: chat di gruppo, una chat per ciascun agente, gli scambi tra agenti (sola lettura) e una mappa grafica delle interazioni. Il titolare può scrivere testo e registrare vocali.
+App separata dal sito e dalla dashboard, all'indirizzo `/chat`, con aspetto WhatsApp (da telefono: apri `/chat`, accedi con le credenziali admin, poi "Aggiungi alla schermata Home"): chat di gruppo, una chat per ciascun agente, gli scambi tra agenti (sola lettura) e una mappa grafica delle interazioni. Il titolare può scrivere testo e registrare vocali.
 
 ## Messi in funzione (una tantum)
 

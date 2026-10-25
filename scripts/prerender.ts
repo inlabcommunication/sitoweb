@@ -235,6 +235,7 @@ const noindex = (html: string, title: string) => html
   .replace(/<title>[\s\S]*?<\/title>/, `<title>${esc(title)}</title>`)
   .replace(/(<meta name="robots" content=")[^"]*"/, '$1noindex, nofollow"');
 writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
+writeFileSync(join(DIST, 'chat.html'), noindex(template, 'Chat | InLab'));
 writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | InLab Communication')
   .replace('<div id="root"></div>', `<div id="root">${await body('/__pagina-non-trovata__')}</div>`));
 
@@ -284,7 +285,7 @@ writeFileSync(join(DIST, 'sitemap.xml'),
 // "*" per quei bot, quindi ripete gli stessi Disallow: /admin e /api/ restano esclusi.
 const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-SearchBot', 'Claude-User',
   'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'bingbot'];
-const RULES = 'Allow: /\nDisallow: /admin\nDisallow: /api/\n';
+const RULES = 'Allow: /\nDisallow: /admin\nDisallow: /chat\nDisallow: /api/\n';
 writeFileSync(join(DIST, 'robots.txt'),
   `User-agent: *\n${RULES}\n${AI_BOTS.map((b) => `User-agent: ${b}`).join('\n')}\n${RULES}\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
