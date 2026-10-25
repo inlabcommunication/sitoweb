@@ -4,12 +4,29 @@ import { motion } from 'motion/react';
 import { TrendingUp, Eye, Clock, MousePointerClick, Monitor, Smartphone, Tablet, Globe } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import { isTrackingDisabled, setTrackingDisabled } from '../lib/analytics';
 
 type Range = '7d' | '30d' | '90d';
 type Daily = { day: string; unique_visitors: number; pageviews: number; avg_session_duration: number | null; avg_scroll_depth: number | null };
 type TopPage = { path: string; views: number; unique_visitors: number };
 type Device = { device: string; sessions: number };
 type Referrer = { source: string; sessions: number };
+
+// "Non contare le mie visite su questo dispositivo" (richiesta di Nicola 25/10)
+const DeviceTracking = () => {
+  const [off, setOff] = useState(isTrackingDisabled());
+  const toggle = () => { setTrackingDisabled(!off); setOff(isTrackingDisabled()); };
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap', padding: '1rem 1.25rem', marginBottom: '2rem', borderRadius: 12, border: '.5px solid var(--b)', background: 'rgba(255,255,255,0.02)' }}>
+      <span style={{ fontSize: 13, color: off ? 'var(--a)' : 'var(--m)' }} role="status">
+        {off ? 'Questo dispositivo non viene contato nelle statistiche.' : 'Le visite da questo dispositivo vengono contate nelle statistiche.'}
+      </span>
+      <button onClick={toggle} style={{ padding: '8px 16px', borderRadius: 100, fontSize: 11, letterSpacing: '.08em', textTransform: 'uppercase', fontWeight: 500, border: '.5px solid var(--b)', background: 'transparent', color: 'var(--t)', cursor: 'pointer' }}>
+        {off ? 'Torna a contare le mie visite' : 'Non contare le mie visite su questo dispositivo'}
+      </button>
+    </div>
+  );
+};
 
 export const Analytics = () => {
   const [range, setRange] = useState<Range>('30d');
@@ -117,6 +134,8 @@ export const Analytics = () => {
           ))}
         </div>
       </div>
+
+      <DeviceTracking />
 
       {loading ? (
         <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--m)' }}>Caricamento...</div>
