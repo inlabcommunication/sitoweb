@@ -74,8 +74,19 @@ export const setTrackingDisabled = (off: boolean) => writeFlag(off ? '1' : '0');
 /** Admin in dashboard: il dispositivo smette di essere contato, se non c'è già una scelta esplicita. */
 export const disableTrackingForAdmin = () => { if (readFlag() === null) writeFlag('1'); };
 
+// Visitatori non umani (richiesta di Nicola 25/10): bot e crawler, browser
+// automatici o headless, Lighthouse/PageSpeed. Calcolato una volta sola.
+const BOT_UA = /bot|crawl|spider|slurp|headless|lighthouse|pagespeed|gtmetrix|phantomjs|puppeteer|playwright|selenium|facebookexternalhit|bingpreview|embedly|preview/i;
+let botCache: boolean | null = null;
+const isBot = () => {
+  if (botCache === null) {
+    try { botCache = !!(navigator as any).webdriver || BOT_UA.test(navigator.userAgent || ''); } catch { botCache = false; }
+  }
+  return botCache;
+};
+
 // Visite da non registrare
-const skip = () => isTrackingDisabled();
+const skip = () => isBot() || isTrackingDisabled();
 
 const queue: any[] = [];
 let flushTimer: number | null = null;
