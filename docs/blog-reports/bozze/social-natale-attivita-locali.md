@@ -1,22 +1,23 @@
 ---
 pubblicare: venerdì 30/10/2026
 slug: social-natale-attivita-locali
-title: "Social a Natale per attività locali: il piano da novembre all'Epifania"
+title: "Social a Natale per negozi e locali in provincia di Taranto: il piano da novembre all'Epifania"
 excerpt: "Come preparare i social di negozi, ristoranti e laboratori per il periodo di Natale: calendario da novembre all'Epifania, idee di contenuti e sponsorizzate."
 category: Social media
 tags: [natale, piano editoriale, social media, attività locali, instagram]
 author: Ilaria Gemma
 coverAlt: "Calendario dei contenuti social di Natale per un negozio locale da novembre a gennaio"
-seoTitle: "Social a Natale per attività locali: il piano | InLab"
+seoTitle: "Social a Natale per attività a Taranto e provincia | InLab"
 seoDescription: "Social a Natale per attività locali: il calendario da novembre all'Epifania, idee di post e reel per negozi e ristoranti e come usare le sponsorizzate."
-parola chiave: social Natale attività locali (secondaria: piano editoriale Natale)
+parola chiave: social Natale attività locali Taranto (secondaria: piano editoriale Natale)
+aggancio locale: provincia di Taranto (titolo); città: Castellaneta, Palagianello, Mottola
 servizio: /gestione-social
 link interni: /blog/quante-volte-pubblicare-social, /blog/idee-reel-ristoranti, /blog/sponsorizzate-instagram-attivita-locali, /cliente/sublime-tentazione, /contatti
 immagini: spec in tools/blog-images/specs/social-natale-attivita-locali.cjs
 nota: niente dati inventati; Sublime Tentazione solo con quanto c'è nella scheda (gelato d'estate, panettoni a Natale)
 ---
 
-Per molte attività locali il periodo di Natale è il più importante dell'anno: regali, cene, ordini di dolci, prenotazioni per le feste. Sui social, però, a dicembre tutti pubblicano di più, e chi inizia all'ultimo momento si perde nel rumore. In questa guida trovi un **piano social per Natale** pensato per negozi, ristoranti, bar e laboratori: cosa pubblicare e quando, da novembre all'Epifania.
+Per molte attività locali il periodo di Natale è il più importante dell'anno: regali, cene, ordini di dolci, prenotazioni per le feste. Sui social, però, a dicembre tutti pubblicano di più, e chi inizia all'ultimo momento si perde nel rumore. In questa guida trovi un **piano social per Natale** pensato per negozi, ristoranti, bar e laboratori della provincia di Taranto (e non solo): cosa pubblicare e quando, da novembre all'Epifania.
 
 **Risposta breve: inizia a novembre, non a dicembre. Dividi il periodo in quattro fasi: preparazione (inizio novembre), lancio delle proposte (metà novembre), picco degli acquisti e delle prenotazioni (dicembre), ringraziamenti e saldi (dopo Natale fino all'Epifania). In ogni fase servono pochi contenuti chiari, con date, prezzi e modi per ordinare ben visibili.**
 
@@ -112,16 +113,10 @@ Non serve pubblicare tutti i giorni. Due o tre contenuti ben fatti a settimana s
 
 I reel aiutano a farti scoprire da chi non ti segue. I post e le grafiche funzionano per le informazioni da salvare, come menu, orari e date di ritiro. Conviene usare entrambi.
 
-### Le sponsorizzate a Natale costano di più?
-
-Nel periodo delle feste molte aziende fanno pubblicità e la concorrenza aumenta. Per questo conviene iniziare a novembre, con campagne mirate alla tua zona e con un obiettivo chiaro.
-
-### Cosa pubblicare dopo Natale?
-
-Ringraziamenti, i momenti più belli delle feste, eventuali saldi di gennaio e la richiesta di una recensione a chi ha comprato o festeggiato da te.
-
 ## Da dove partire
 
 Prendi un calendario e segna tre date: quando presenterai le proposte di Natale, l'ultimo giorno per ordinare e i giorni di chiusura. Sono la base del tuo piano.
+
+In provincia di Taranto seguiamo i social di negozi, locali e laboratori: vedi la nostra gestione social a [Castellaneta](/gestione-social-castellaneta), a [Palagianello](/gestione-social-palagianello) e a [Mottola](/gestione-social-mottola).
 
 Se vuoi un piano social di Natale costruito sulla tua attività, con foto e video fatti sul posto, scopri la nostra [gestione social](/gestione-social) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.

@@ -10,6 +10,7 @@ coverAlt: "Masseria pugliese con ulivi, tavola apparecchiata all'aperto e conten
 seoTitle: "Marketing per masserie e strutture in Puglia | InLab"
 seoDescription: "Marketing per masserie e strutture ricettive in Puglia: social, foto e video, sito con prenotazioni dirette, scheda Google e recensioni. La guida pratica."
 parola chiave: marketing masserie (secondaria: social per strutture ricettive)
+aggancio locale: Puglia (titolo)
 servizio: /gestione-social
 link interni: /agenzia-comunicazione-crispiano, /agenzia-comunicazione-ostuni, /agenzia-comunicazione-conversano, /cliente/masseria-sacramento, /cliente/villa-natia, /blog/servizio-fotografico-ristoranti, /blog/recensioni-google-come-chiederle-rispondere, /contatti
 immagini: spec in tools/blog-images/specs/marketing-masserie-strutture-ricettive-puglia.cjs
@@ -94,16 +95,10 @@ Con un calendario di eventi pensato per i mesi più tranquilli, come serate a te
 
 Aiutano nei momenti decisivi: lancio di un evento, apertura della stagione, promozione dei matrimoni. Funzionano meglio con foto e video di qualità e con un obiettivo chiaro, come le richieste di disponibilità.
 
-### Conviene avere un sito se sono già sui portali di prenotazione?
-
-Sì. I portali danno visibilità, il sito ti permette di raccontare la struttura come vuoi tu e di ricevere richieste dirette. Le due cose lavorano insieme.
-
-### Lavorate con masserie fuori dalla provincia di Taranto?
-
-Sì, seguiamo strutture in tutta la Puglia, dalla zona di Crispiano alla Valle d'Itria. Vedi le pagine per [Crispiano](/agenzia-comunicazione-crispiano), [Ostuni](/agenzia-comunicazione-ostuni) e [Conversano](/agenzia-comunicazione-conversano).
-
 ## Da dove partire
 
 Apri il tuo profilo Instagram e la scheda Google e guardali con gli occhi di un ospite che non ti conosce: le foto fanno venire voglia di prenotare? Si capisce subito come contattarti? Se la risposta è no, è da lì che partiamo.
+
+Seguiamo masserie e strutture in tutta la Puglia, dalla zona di Crispiano alla Valle d'Itria: trovi come lavoriamo a [Crispiano](/agenzia-comunicazione-crispiano), a [Ostuni](/agenzia-comunicazione-ostuni) e a [Conversano](/agenzia-comunicazione-conversano).
 
 Scopri la nostra [gestione social](/gestione-social) oppure [raccontaci la tua struttura](/contatti): in 24 ore ti diciamo da dove partiremmo.

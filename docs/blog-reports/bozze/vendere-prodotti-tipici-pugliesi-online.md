@@ -10,6 +10,7 @@ coverAlt: "Bottiglie di vino e olio pugliese con un negozio online aperto sul te
 seoTitle: "Vendere prodotti tipici online in Puglia | InLab"
 seoDescription: "Come vendere online i prodotti tipici pugliesi: e-commerce, spedizioni di vino, olio e latticini, foto e social per raccontare territorio e qualità."
 parola chiave: vendere prodotti tipici online
+aggancio locale: Puglia (titolo)
 servizio: /siti-web
 link interni: /agenzia-comunicazione-manduria, /agenzia-comunicazione-gioia-del-colle, /agenzia-comunicazione-altamura, /cliente/olio-vanessa, /cliente/tacco, /blog/sito-web-o-solo-social-attivita-locale, /blog/accessibilita-sito-web-european-accessibility-act, /contatti
 immagini: spec in tools/blog-images/specs/vendere-prodotti-tipici-pugliesi-online.cjs
@@ -89,16 +90,10 @@ Sì, ma con regole precise sul fisco e sulle spedizioni, che cambiano anche in b
 
 Serve un corriere che garantisca la catena del freddo e consegne veloci. Molti produttori limitano le spedizioni dei freschi ad alcune zone e ad alcuni giorni della settimana, per evitare soste nel fine settimana.
 
-### I social bastano per vendere?
-
-I social fanno conoscere il prodotto e creano fiducia, ma per vendere con continuità serve un negozio online dove il cliente può comprare in pochi passaggi. Le due cose lavorano insieme, come spieghiamo nella guida su [sito web e social](/blog/sito-web-o-solo-social-attivita-locale).
-
-### Lavorate con produttori di tutta la Puglia?
-
-Sì, seguiamo aziende in tutta la regione. Vedi le pagine per [Manduria](/agenzia-comunicazione-manduria), [Gioia del Colle](/agenzia-comunicazione-gioia-del-colle) e [Altamura](/agenzia-comunicazione-altamura).
-
 ## Da dove partire
 
 Scegli i tre prodotti che vendi meglio e che si spediscono più facilmente: sono la base del tuo primo negozio online. Fai delle foto vere, scrivi per ognuno da dove viene e come si usa, e calcola costi e tempi di spedizione.
+
+Seguiamo produttori in tutta la Puglia: trovi come lavoriamo a [Manduria](/agenzia-comunicazione-manduria), a [Gioia del Colle](/agenzia-comunicazione-gioia-del-colle) e ad [Altamura](/agenzia-comunicazione-altamura).
 
 Scopri i nostri [siti web ed e-commerce](/siti-web) oppure [raccontaci la tua azienda](/contatti): in 24 ore ti diciamo da dove partiremmo.

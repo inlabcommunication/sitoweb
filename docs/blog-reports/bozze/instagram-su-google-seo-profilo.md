@@ -10,6 +10,7 @@ coverAlt: "Post Instagram di un'attività locale che compare tra i risultati di 
 seoTitle: "Instagram su Google: farti trovare con i post | InLab"
 seoDescription: "Instagram su Google: da luglio 2025 i post dei profili professionali possono comparire nelle ricerche. Come scrivere profilo, didascalie e alt text."
 parola chiave: Instagram su Google (secondaria: SEO Instagram)
+aggancio locale: nessuno nel titolo (articolo "nazionale/novità", 1 dei max 3 al mese); esempi e città della provincia di Taranto nel testo
 servizio: /gestione-social
 link interni: /blog/seo-tiktok-search-ads, /blog/reel-o-post-cosa-pubblicare-instagram, /contatti
 immagini: spec in tools/blog-images/specs/instagram-su-google-seo-profilo.cjs
@@ -37,6 +38,8 @@ Questo non vuol dire che ogni post finirà in prima pagina. Vuol dire che Google
 Molte ricerche locali sono molto specifiche: "torta di compleanno senza glutine Castellaneta", "officina che ripara monopattini Palagianello", "sushi a Mottola". Se un tuo post parla proprio di quello e lo spiega con parole chiare, può comparire tra i risultati, accanto al tuo sito e alla tua scheda Google.
 
 È anche un modo per dare più vita ai contenuti che pubblichi già. Un reel ben descritto lavora sui social nei primi giorni e su Google per mesi.
+
+È il motivo per cui, quando seguiamo i social di un'azienda, curiamo anche i testi. Con [Olio Vanessa](/cliente/olio-vanessa), azienda di olio extravergine di Castellaneta, gestiamo i social dalla strategia a foto, video e grafiche: ogni contenuto racconta prodotto, territorio e lavoro con parole chiare, che oggi possono essere lette anche da Google.
 
 ## Come scrivere il profilo per farti trovare su Google
 
@@ -93,17 +96,11 @@ No. Riguarda i profili professionali, cioè aziendali e creator, pubblici e di p
 
 Poco. Contano di più la prima riga della didascalia, il nome del profilo, la bio e i testi alternativi. Meglio pochi hashtag pertinenti che tanti generici.
 
-### Come si scrive il testo alternativo su Instagram?
-
-Prima di pubblicare, apri le impostazioni avanzate del post e cerca l'opzione per scrivere il testo alternativo. Descrivi in una frase cosa mostra la foto, in modo semplice e concreto.
-
-### Come faccio a togliere i miei post da Google?
-
-Dalle impostazioni della privacy del profilo professionale puoi disattivare la possibilità che i motori di ricerca mostrino i tuoi contenuti. Può servire un po' di tempo prima che spariscano dai risultati.
-
 ## Da dove partire
 
 Apri il tuo profilo e rileggi nome, bio e le didascalie degli ultimi dieci post: ognuna dice chiaramente cosa mostra e dove sei? Riscrivi la bio e, da oggi, aggiungi il testo alternativo a ogni foto.
+
+Se hai un'attività in provincia di Taranto, scopri come lavoriamo con la gestione social a [Taranto](/gestione-social-taranto) e a [Castellaneta](/gestione-social-castellaneta).
 
 Se cerchi visibilità anche su TikTok, leggi la guida alla [SEO su TikTok](/blog/seo-tiktok-search-ads); per scegliere i formati, quella su [reel o post](/blog/reel-o-post-cosa-pubblicare-instagram). Scopri la nostra [gestione social](/gestione-social) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.
 
