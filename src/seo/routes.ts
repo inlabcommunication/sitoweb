@@ -6,6 +6,7 @@
 import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
 import { otherClientPages } from '../data/otherClients';
+import { CLIENT_SEO, withSeoSuffix } from '../data/clientSeo';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
@@ -47,7 +48,7 @@ export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Caste
 // solo la pagina /agenzia-comunicazione-{città}, nessuna pagina per servizio.
 // Le vecchie /{servizio}-massafra restano in redirect 301 (vercel.json): la
 // regola elenca solo gli slug dei servizi, quindi non tocca l'agenzia.
-export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle'];
+export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 /** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
@@ -56,11 +57,13 @@ export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
 /** Pagine servizio in più fuori da CITIES (servizio → città). Brief SEO 05/10, decisione di
  *  Nicola: solo gestione social a Massafra, Gioia del Colle e Bari; gli altri servizi no. */
 export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
-  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari'],
+  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro'],
 };
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
 export const hasServicePage = (slug: string, city: string) => serviceCities(slug).includes(city);
+/** "a Bari", "ad Altamura", "a Ostuni": "ad" solo davanti ad "a" (Direttore 13/10, regola SEO 19/10) */
+export const aCity = (c: string) => (/^a/i.test(c) ? 'ad ' : 'a ') + c;
 export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
 export const SERVICES_SEO = [
@@ -227,6 +230,8 @@ export const organizationJsonLd = () => ({
   contactPoint: { '@type': 'ContactPoint', telephone: BUSINESS.telephone, email: BUSINESS.email, contactType: 'customer service', areaServed: 'IT', availableLanguage: 'Italian' },
   hasMap: BUSINESS.mapsUrl,
   address: { '@type': 'PostalAddress', streetAddress: BUSINESS.street, addressLocality: BUSINESS.city, postalCode: BUSINESS.postalCode, addressRegion: 'TA', addressCountry: 'IT' },
+  // centro di Castellaneta (brief SEO 10/10): da sostituire con le coordinate esatte della scheda Google
+  geo: { '@type': 'GeoCoordinates', latitude: 40.6333, longitude: 16.9333 },
   // città con clienti reali e città seguite (AGENCY_CITIES), più Puglia e Italia
   areaServed: [...AGENCY_CITIES.map((name) => ({ '@type': 'City', name })), { '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
   sameAs: BUSINESS.sameAs,
@@ -360,17 +365,17 @@ export const getSeo = (rawPath: string): Seo => {
     const city = serviceCities(s.slug).find((c) => path === `/${s.slug}-${citySlug(c)}`);
     if (city) {
       // la frase finale più lunga che resta entro i 155 caratteri mostrati da Google
-      const base = `${s.label} a ${city}: ${s.keyword} per aziende e attività locali`;
+      const base = `${s.label} ${aCity(city)}: ${s.keyword} per aziende e attività locali`;
       const desc = [
         ", da un'agenzia con sede a Castellaneta (TA). Preventivo gratuito.",
         ", da un'agenzia di Castellaneta (TA). Preventivo gratuito.",
       ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';
       // testi propri della pagina, se il brief SEO li prevede (src/data/cities.ts → paginaServizio)
       const own = cityInfo(city)?.paginaServizio?.[s.slug];
-      return page(path, own?.title || withBrand(`${s.label} a ${city}`), own?.description || desc, {
+      return page(path, own?.title || withBrand(`${s.label} ${aCity(city)}`), own?.description || desc, {
         sitemap: { priority: 0.6, changefreq: 'monthly' },
         jsonLd: [{
-          '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} a ${city}`, serviceType: s.keyword,
+          '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} ${aCity(city)}`, serviceType: s.keyword,
           url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: city },
         }],
       }, [['Servizi', '/servizi'], [s.label, '/' + s.slug], [city, path]]);
@@ -381,10 +386,10 @@ export const getSeo = (rawPath: string): Seo => {
   if (agencyCity) {
     const c = agencyCity;
     const title = cityInfo(c)?.title || [
-      `Agenzia di comunicazione e marketing a ${c} | InLab`,
-      `Agenzia comunicazione e marketing a ${c} | InLab`,
-      `Agenzia di comunicazione e marketing a ${c}`,
-    ].find((t) => t.length <= 60) || `Agenzia di comunicazione a ${c} | InLab`;
+      `Agenzia di comunicazione e marketing ${aCity(c)} | InLab`,
+      `Agenzia comunicazione e marketing ${aCity(c)} | InLab`,
+      `Agenzia di comunicazione e marketing ${aCity(c)}`,
+    ].find((t) => t.length <= 60) || `Agenzia di comunicazione ${aCity(c)} | InLab`;
     const desc = cityInfo(c)?.description || (c === BUSINESS.city
       ? 'Agenzia di comunicazione e marketing con sede a Castellaneta (TA): social, video, Meta Ads, siti web e branding per attività del paese e della Marina.'
       : [
@@ -394,9 +399,9 @@ export const getSeo = (rawPath: string): Seo => {
     ].find((d) => d.length <= 155)!);
     const seo = page(path, title, desc, {
       sitemap: { priority: 0.7, changefreq: 'monthly' },
-      jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing a ${c}`,
+      jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing ${aCity(c)}`,
         serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }],
-    }, [['Servizi', '/servizi'], [`Agenzia a ${c}`, path]]);
+    }, [['Servizi', '/servizi'], [`Agenzia ${aCity(c)}`, path]]);
     // Fondatore del posto citato nella pagina (sezione "casa nostra")
     const founder = AUTHORS.find((a) => a.slug === cityInfo(c)?.casaNostra?.autore);
     if (founder) (seo.jsonLd[0] as Record<string, unknown>).mentions = { '@id': personId(founder) };
@@ -458,8 +463,10 @@ export const getSeo = (rawPath: string): Seo => {
     const cl = clients().find((c) => path === '/cliente/' + c.id);
     if (cl) {
       const where = cl.location ? ` a ${cl.location.replace(/\s*\(TA\)/, '')}` : '';
-      return page(path, `${cl.name}${where} | Clienti InLab`,
-        cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`,
+      const seo = CLIENT_SEO[cl.id];
+      const desc = cl.summary || cl.description || `${cl.name}: il lavoro di InLab Communication.`;
+      return page(path, seo ? seo.title : `${cl.name}${where} | Clienti InLab`,
+        seo ? withSeoSuffix(desc, seo.label) : desc,
         // scheda "Altri clienti" non ancora pubblicata: la pagina c'è, ma resta fuori da Google e dalla sitemap
         (cl as any).draft ? { noindex: true } : { sitemap: { priority: 0.5, changefreq: 'monthly' } },
         [['Clienti', '/clienti'], [cl.name, path]]);

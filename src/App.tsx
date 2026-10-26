@@ -31,9 +31,12 @@ import { ClientLogoStrip } from "./sections/ClientLogoStrip";
 import { CaseCard, CaseCardGrid } from "./components/CaseCard";
 import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
+import { CLIENT_SEO } from './data/clientSeo';
+import { MAP_CITIES } from './data/mapCities';
+import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
-import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities } from "./seo/routes";
+import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities, aCity } from "./seo/routes";
 import { cityInfo } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
@@ -937,7 +940,7 @@ const PageMetaAds = () => (
           {[
             {t:"Lead Generation",d:"Acquisisci contatti qualificati di persone interessate al tuo prodotto o servizio. Ideale per studi professionali, corsi, servizi B2B."},
             {t:"Traffico al sito",d:"Porta visitatori altamente profilati sul tuo sito o landing page. Retargeting su chi ha già visitato senza convertire."},
-            {t:"Vendite e-commerce",d:"Campagne Dynamic Product Ads, retargeting carrello abbandonato, up-sell e cross-sell automatizzati."},
+            {t:"Vendite e-commerce",d:"Campagne con inserzioni Advantage+ del catalogo, retargeting carrello abbandonato, up-sell e cross-sell automatizzati."},
             {t:"Brand Awareness locale",d:"Fai conoscere la tua attività nelle città target. Perfetto per negozi, ristoranti, professionisti locali."},
             {t:"Appuntamenti",d:"Campagne specifiche per prenotazioni: ristoranti, studi medici, centri estetici, palestre."},
             {t:"App & eventi",d:"Promuovi il download di un'app o la partecipazione a un evento con campagne ottimizzate per la conversione specifica."},
@@ -953,7 +956,7 @@ const PageMetaAds = () => (
  
     <ServiceExamples slug="meta-ads"/>
     <DoveLavoriamo slug="meta-ads"/>
-    <ServiceCTA title="PAGA SOLO I RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
+    <ServiceCTA title="INVESTI DOVE PORTA RISULTATI." sub="Inizia con un budget piccolo. Scalalo quando vedi i ritorni." btn="Parliamo del tuo budget"/>
   </>
 );
  
@@ -968,7 +971,7 @@ const PageSitiWeb = () => (
       cta1="Richiedi un preventivo" cta1to="/contatti" cta2="Vedi portfolio web" cta2to="/clienti"
     />
     <Marquee items={["Design","✦","Sviluppo","✦","SEO","✦","Performance","✦","CMS","✦","E-commerce","✦","Web App","✦"]}/>
-    <StatsRow stats={[{n:"<2s",l:"Tempo di caricamento medio"},{n:"98",l:"Score PageSpeed medio"},{n:"Top 3",l:"Posizione Google media"},{n:"100%",l:"Siti mobile-first"}]}/>
+    <StatsRow stats={[{n:"<2s",l:"Tempo di caricamento medio"},{n:"98",l:"Score PageSpeed medio"},{n:"100%",l:"Siti mobile-first"}]}/>
  
     <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
       <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1.4fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
@@ -1163,11 +1166,11 @@ const PageVideo = () => (
         <div style={{display:"flex",flexDirection:"column",gap:0}}>
           {[
             {n:1,title:"Concept e strategia",desc:"Analizziamo il tuo brand, il target e cosa funziona nel tuo settore. Definiamo il concept del video: tipo di hook, struttura narrativa, call to action. La strategia viene prima della telecamera."},
-            {n:2,title:"Scrittura dello script",desc:"Scriviamo ogni parola, ogni pausa, ogni transizione. Lo script include il hook dei primi 3 secondi (il più critico), la struttura narrativa, il ritmo dei tagli e la CTA finale."},
+            {n:2,title:"Scrittura dello script",desc:"Scriviamo ogni parola, ogni pausa, ogni transizione. Lo script include l'hook dei primi 3 secondi (il più critico), la struttura narrativa, il ritmo dei tagli e la CTA finale."},
             {n:3,title:"Pre-produzione",desc:"Location scouting, cast (se necessario), props, piano di ripresa, planning della giornata. Arrivare sul set preparati fa la differenza tra 4 ore di riprese e 12."},
             {n:4,title:"Riprese",desc:"Regia professionale, stabilizzatore, microfoni direzionali, luce aggiuntiva. Giriamo sempre materiale extra per il montaggio. Qualità cinema con attrezzatura professionale."},
             {n:5,title:"Montaggio e post-produzione",desc:"Color grading, sound design, testo animato, effetti. Il montaggio segue il ritmo psicologico giusto: tagli veloci dove serve attenzione, pause dove serve impatto."},
-            {n:6,title:"Ottimizzazione per ogni piattaforma",desc:"Instagram Reel, TikTok, YouTube Shorts — ogni piattaforma ha le sue specifiche tecniche e il suo comportamento algoritmo. Ottimizziamo ogni versione."},
+            {n:6,title:"Ottimizzazione per ogni piattaforma",desc:"Instagram Reel, TikTok, YouTube Shorts — ogni piattaforma ha le sue specifiche tecniche e il comportamento del suo algoritmo. Ottimizziamo ogni versione."},
           ].map(s=><ProcessStep key={s.n} {...s}/>)}
         </div>
       </div>
@@ -1507,7 +1510,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const provincia=info?.provincia||"provincia di Taranto";
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   const content=useContent() as any;
-  const localClients=normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(city)));
+  // clienti principali + "Altri clienti" pubblicati, città confrontata in modo esatto (brief SEO 10/10 territorio, punto 3)
+  const localClients=clientsInCity(content, city);
   const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
   // Le città fuori da CITIES hanno solo le pagine servizio previste in EXTRA_SERVICE_CITIES
   // (oggi gestione social): gli altri servizi puntano alle pagine generali.
@@ -1515,18 +1519,22 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const isHome=city===BUSINESS.city;
   const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
-  const provinceGroups=city==="Taranto" ? ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")].map(c=>({
+  // Città nuove senza clienti (lavoriVicini): stesso blocco con i lavori dei paesi vicini (brief SEO 10/10 territorio)
+  const nearby=!!(city!=="Taranto"&&info?.lavoriVicini&&!localClients.length&&!localCases.length);
+  const allGroups=(city==="Taranto"||nearby) ? (nearby ? byDistance(city, PROVINCE_CITIES) : ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")]).map(c=>({
     city:c,
     cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
-    clients:normalizeClients((content.clients?.items||[]) as any[]).filter((cl: any)=>norm(cl.location).includes(norm(c))),
+    clients:clientsInCity(content, c),
   })).filter(g=>g.cases.length||g.clients.length) : [];
+  // Città senza clienti: solo 6 schede, dei paesi più vicini (brief SEO 10/10: niente blocco uguale su tante pagine)
+  const provinceGroups=nearby ? limitCards(allGroups, 6) : allGroups;
   return (
     <>
       <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
-          <p className="section-label">Agenzia a {city} — {provincia}</p>
+          <p className="section-label">Agenzia {aCity(city)} — {provincia}</p>
           <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>
-            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>a {city}</span>
+            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(city)}</span>
           </h1>
           <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
             {info?.intro ? <IntroText text={info.intro} link={info.introLink}/> : isHome
@@ -1541,9 +1549,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {info?.focus && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
-            <p className="section-label">A {city}</p>
+            <p className="section-label">{aCity(city).replace(/^a/,"A")}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{info.focus.titolo}</h2>
-            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.focus.testo}</p>
+            <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}><IntroText text={info.focus.testo} link={info.focus.link}/></p>
           </div>
         </section>
       )}
@@ -1552,7 +1560,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {featured && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti a {city}</p>
+            <p className="section-label">Clienti {aCity(city)}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>{featured.titolo}</h2>
             <CaseCardGrid>
               {localCases.map((cs: any, i: number)=>(
@@ -1572,11 +1580,12 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
             <p className="section-label">Il territorio</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare a {city}</h2>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare {aCity(city)}</h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
             {info.sezione && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.sezione.titolo}</h2>
               <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.sezione.testo}</p>
+              {info.sezione.link && <Link to={info.sezione.link.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",fontSize:14,color:"var(--a)"}}>{info.sezione.link.testo} <ArrowRight size={13}/></Link>}
             </>}
             {info.casaNostra && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.casaNostra.titolo}</h2>
@@ -1589,12 +1598,12 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
 
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <p className="section-label">Servizi a {city}</p>
+          <p className="section-label">Servizi {aCity(city)}</p>
           <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
             {SERVICES.map(s=>(
               <Link key={s.slug} to={hasServicePage(s.slug)?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
-                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePage(s.slug)?`${s.label} a ${city}`:s.label}</span></span>
+                <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePage(s.slug)?`${s.label} ${aCity(city)}`:s.label}</span></span>
                 <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info?.servizi?.[s.slug]||s.short}</span>
               </Link>
             ))}
@@ -1605,8 +1614,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {provinceGroups.length>0&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti in provincia di Taranto</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Lavoriamo in tutta la provincia</h2>
+            {/* Città senza clienti fuori provincia: "Lavori nei paesi vicini" (approvato dal Direttore 13/10) */}
+            <p className="section-label">{nearby&&provincia!=="provincia di Taranto" ? "I nostri lavori" : "Clienti in provincia di Taranto"}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>{nearby&&provincia!=="provincia di Taranto" ? "Lavori nei paesi vicini" : "Lavoriamo in tutta la provincia"}</h2>
             {provinceGroups.map(g=>(
               <div key={g.city} style={{marginBottom:"3rem"}}>
                 <h3 style={{fontFamily:"var(--fd)",fontWeight:400,fontSize:"clamp(1.6rem,2.6vw,2.4rem)",lineHeight:1,textTransform:"uppercase",marginBottom:"1.2rem"}}>{g.city}</h3>
@@ -1627,8 +1637,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       {!featured&&provinceGroups.length===0&&(localClients.length>0||localCases.length>0)&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti a {city}</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>I nostri lavori a {city}</h2>
+            <p className="section-label">Clienti {aCity(city)}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>I nostri lavori {aCity(city)}</h2>
             <CaseCardGrid>
               {localCases.map((cs: any, i: number)=>(
                 <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
@@ -1661,7 +1671,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </div>
       </section>
 
-      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO A ${city.toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
+      <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO ${aCity(city).toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
     </>
   );
 };
@@ -1699,8 +1709,25 @@ const DoveSiamo = () => (
   </div>
 );
 
+// Città ordinate dalla più vicina (coordinate della mappa di /dove-lavoriamo)
+const byDistance=(from: string, list: string[])=>{
+  const at=(n: string)=>MAP_CITIES.find(m=>m.name===n);
+  const o=at(from);
+  if(!o) return list;
+  const d=(n: string)=>{ const m=at(n); return m ? Math.hypot(m.lat-o.lat,(m.lon-o.lon)*Math.cos(o.lat*Math.PI/180)) : Infinity; };
+  return [...list].sort((a,b)=>d(a)-d(b));
+};
+// Al massimo `max` schede in tutto, nell'ordine dei gruppi (prima i casi, poi i clienti)
+const limitCards=(groups: {city:string;cases:any[];clients:any[]}[], max: number)=>{
+  let left=max;
+  return groups.map(g=>{
+    const cases=g.cases.slice(0,left); left-=cases.length;
+    const clients=g.clients.slice(0,left); left-=clients.length;
+    return {...g,cases,clients};
+  }).filter(g=>g.cases.length||g.clients.length);
+};
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
-const PROVINCE_CITIES=["Castellaneta","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
+const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
 // Città di un caso studio: quelle salvate in dashboard, altrimenti quelle del
 // caso predefinito con lo stesso id (es. Paresteta: il campo in dashboard è vuoto).
@@ -1757,8 +1784,8 @@ const PageCittaSEO = ({city, service}) => {
   const cityName=serviceCities(svc.slug).find(c=>citySlug(c)===city)||city;
   const otherCities=serviceCities(svc.slug).filter(c=>c!==cityName);
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
-  const localClients=normalizeClients(((useContent() as any).clients?.items||[]) as any[])
-    .filter((cl: any)=>norm(cl.location).includes(norm(cityName)));
+  // per primi i clienti che hanno questo servizio (brief SEO 10/10 territorio, punto 3)
+  const localClients=clientsInCity(useContent(), cityName, svc.slug);
   const localCases=(((useContent() as any).cases?.items||[]) as any[])
     .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
   const info=cityInfo(cityName);
@@ -1775,12 +1802,12 @@ const PageCittaSEO = ({city, service}) => {
           <motion.div initial={false}
             style={{display:"inline-flex",alignItems:"center",gap:8,border:".5px solid var(--b)",borderRadius:100,padding:"5px 14px 5px 5px",marginBottom:"1.5rem"}}>
             <span style={{width:20,height:20,background:"var(--a)",borderRadius:"50%",display:"flex",alignItems:"center",justifyContent:"center"}}><MapPin size={10} color="#000"/></span>
-            <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} a {cityName} — InLab Communication</span>
+            <span style={{fontSize:12,fontWeight:500,letterSpacing:".15em",textTransform:"uppercase",color:"var(--m)"}}>{svc.label} {aCity(cityName)} — InLab Communication</span>
           </motion.div>
           <motion.h1 initial={false}
             style={{fontFamily:"var(--fd)",fontSize:"clamp(3.5rem,10vw,10rem)",lineHeight:.88,marginBottom:"2rem",textTransform:"uppercase"}}>
             {svc.label.toUpperCase()}<br/>
-            <span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>A {cityName.toUpperCase()}</span>
+            <span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(cityName).toUpperCase()}</span>
           </motion.h1>
           <motion.p initial={false}
             style={{maxWidth:560,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
@@ -1797,7 +1824,7 @@ const PageCittaSEO = ({city, service}) => {
       {project && (
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:900,margin:"0 auto"}}>
-            <p className="section-label">Un nostro lavoro a {cityName}</p>
+            <p className="section-label">Un nostro lavoro {aCity(cityName)}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>{project.titolo}</h2>
             {project.immagine && <img src={cld(project.immagine.src, 900)} alt={project.immagine.alt} loading="lazy" decoding="async" style={{width:"100%",borderRadius:20,marginBottom:"1.5rem",display:"block"}}/>}
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8,marginBottom:"1.5rem"}}>{project.testo}</p>
@@ -1821,7 +1848,7 @@ const PageCittaSEO = ({city, service}) => {
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"start"}} className="grid-1-mob">
           <div>
-            <p className="section-label">Perché scegliere InLab a {cityName}</p>
+            <p className="section-label">Perché scegliere InLab {aCity(cityName)}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase"}}>
               CONOSCIAMO<br/><span className="stroke">IL TERRITORIO</span>
             </h2>
@@ -1854,8 +1881,8 @@ const PageCittaSEO = ({city, service}) => {
       {(localClients.length>0||localCases.length>0)&&(
         <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
-            <p className="section-label">Clienti a {cityName}</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>I NOSTRI LAVORI<br/><span className="stroke">A {cityName.toUpperCase()}</span></h2>
+            <p className="section-label">Clienti {aCity(cityName)}</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>I NOSTRI LAVORI<br/><span className="stroke">{aCity(cityName).toUpperCase()}</span></h2>
             <CaseCardGrid>
               {localCases.map((cs: any, i: number)=>(
                 <CaseCard key={"caso-"+cs.id} heading href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
@@ -1873,9 +1900,9 @@ const PageCittaSEO = ({city, service}) => {
       {AGENCY_CITIES.includes(cityName) && (
         <section style={{padding:"3rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",gap:"1rem",flexWrap:"wrap"}}>
-            <p style={{fontSize:15,color:"var(--m)"}}>Ti serve più di un servizio a {cityName}?</p>
+            <p style={{fontSize:15,color:"var(--m)"}}>Ti serve più di un servizio {aCity(cityName)}?</p>
             <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-              <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi a {cityName} <ArrowUpRight size={13}/></Link>
+              <Link to={agencyPath(cityName)} className="btn btn-g">Tutti i servizi {aCity(cityName)} <ArrowUpRight size={13}/></Link>
               {cityName!=="Taranto"&&provincia==="provincia di Taranto"&&<Link to={agencyPath("Taranto")} className="btn btn-g">Agenzia a Taranto <ArrowUpRight size={13}/></Link>}
             </div>
           </div>
@@ -1895,7 +1922,7 @@ const PageCittaSEO = ({city, service}) => {
       </section>
  
       <ServiceExamples slug={svc.slug}/>
-      <ServiceCTA title={`VUOI CRESCERE A ${cityName.toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
+      <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
   );
 };
@@ -1907,6 +1934,8 @@ const PageCittaSEO = ({city, service}) => {
 // basta la qualità "eco" di Cloudinary (~80 KB in meno, richiesta Performance 03/10)
 const cldEco = (url: string, w: number) => cld(url, w).replace('q_auto,', 'q_auto:eco,');
 
+// Nome breve del servizio nei link "{Servizio} a {Paese}"
+const SERVICE_SHORT: Record<string,string> = {"gestione-social":"Gestione social","video":"Video","shooting":"Foto e shooting","siti-web":"Siti web","meta-ads":"Sponsorizzate","branding":"Branding","automazioni-ai":"Automazioni AI"};
 const PageCliente = ({id}: {id: string}) => {
   const {go}=useRouter();
   const c=useContent();
@@ -1928,18 +1957,9 @@ const PageCliente = ({id}: {id: string}) => {
     {label:client?.address ? "Come arrivare" : "", href:client?.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${client.name} ${client.address}`)}` : ""},
   ].filter(link=>link.label && link.href && /^(https?:\/\/|tel:)/.test(String(link.href)));
 
-  if(!client){
-    return (
-      <section style={{minHeight:"70vh",display:"flex",alignItems:"center",justifyContent:"center",padding:"8rem 2rem",textAlign:"center"}}>
-        <div style={{maxWidth:560}}>
-          <p className="section-label">Cliente non trovato</p>
-          <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7rem)",lineHeight:.9,marginBottom:"1.2rem"}}>SCHEDA<br/><span className="stroke">NON DISPONIBILE</span></h1>
-          <p style={{color:"var(--m)",lineHeight:1.7,marginBottom:"2rem"}}>La card selezionata non ha ancora una scheda cliente associata.</p>
-          <button className="btn btn-p" onClick={()=>go("/")}>Torna alla home <ArrowRight size={14}/></button>
-        </div>
-      </section>
-    );
-  }
+  // Cliente inesistente: stessa pagina di 404.html (servita dal server con stato 404),
+  // così HTML e React coincidono (segnalazione analista 10/10)
+  if(!client) return <PageNotFound/>;
 
   return (
     <>
@@ -1959,7 +1979,7 @@ const PageCliente = ({id}: {id: string}) => {
           </Link>
           <div style={{display:"grid",gridTemplateColumns:"1.25fr .75fr",gap:"4rem",alignItems:"end"}} className="grid-1-mob">
             <div>
-              <p className="section-label">{client.sector || "Cliente InLab"}</p>
+              <p className="section-label">{CLIENT_SEO[client.id]?.label || client.sector || "Cliente InLab"}</p>
               <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(4rem,10vw,10rem)",lineHeight:.84,textTransform:"uppercase",marginBottom:"1.5rem"}}>{client.name}</h1>
               <p style={{maxWidth:620,fontSize:17,lineHeight:1.8,color:"rgba(240,237,230,.72)"}}>{client.summary || client.description || "Scheda cliente InLab Communication."}</p>
             </div>
@@ -1994,7 +2014,7 @@ const PageCliente = ({id}: {id: string}) => {
             )}
             {links.length>0&&(
               <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
-                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noreferrer" style={{fontSize:12,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
+                {links.map(link=><a key={link.label} className="btn btn-g" href={link.href} target={link.href.startsWith("tel:") ? undefined : "_blank"} rel="noopener noreferrer" style={{fontSize:12,padding:"9px 16px"}}>{link.label} <ArrowUpRight size={12}/></a>)}
               </div>
             )}
           </div>
@@ -2047,6 +2067,21 @@ const PageCliente = ({id}: {id: string}) => {
 
       <ClientLogoStrip excludeId={client.id} allClients label="Altri brand che hanno scelto InLab" />
 
+      {/* "Lavoriamo a {Paese}": la scheda porta alle pagine del suo paese (brief SEO 10/10 territorio, punto 2) */}
+      {locationCities(client.location).filter((city: string)=>AGENCY_CITIES.includes(city)).map((city: string)=>(
+        <section key={city} style={{padding:"4rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <h2 className="section-label" style={{marginBottom:"1.5rem",fontWeight:400}}>Lavoriamo {aCity(city)}</h2>
+            <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+              <Link to={agencyPath(city)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia di comunicazione {aCity(city)}</Link>
+              {clientServiceSlugs(client).filter((slug: string)=>serviceCities(slug).includes(city)).map((slug: string)=>(
+                <Link key={slug} to={`/${slug}-${citySlug(city)}`} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>{SERVICE_SHORT[slug]||slug} {aCity(city)}</Link>
+              ))}
+              <Link to="/dove-lavoriamo" className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Tutte le città</Link>
+            </div>
+          </div>
+        </section>
+      ))}
       <ServiceCTA title={`VUOI UN PROGETTO COME ${client.name.toUpperCase()}?`} sub="Raccontaci cosa vuoi ottenere e capiamo insieme la direzione migliore." btn="Parliamone"/>
     </>
   );
@@ -2145,7 +2180,7 @@ const PageBranding = () => (
             {n:2,title:"Naming e concept",desc:"Se necessario, lavoriamo sul nome. Poi definiamo il concept creativo che guiderà tutte le scelte visive: forma, personalità, tono."},
             {n:3,title:"Identità visiva",desc:"Logo, palette colori, tipografia, pattern. Ogni elemento è scelto con una logica. Ti consegniamo il brand manual con tutte le istruzioni d'uso."},
             {n:4,title:"Tono di voce",desc:"Come parla il tuo brand? Definire il tono di voce significa dare coerenza a ogni testo — social, sito, campagne, comunicazioni."},
-            {n:5,title:"Applicazioni pratiche",desc:"Mocku su social, biglietti da visita, firme email, template grafici. Il brand prende forma su ogni superficie dove compare."},
+            {n:5,title:"Applicazioni pratiche",desc:"Mockup su social, biglietti da visita, firme email, template grafici. Il brand prende forma su ogni superficie dove compare."},
           ].map(s=><ProcessStep key={s.n} {...s}/>)}
         </div>
       </div>

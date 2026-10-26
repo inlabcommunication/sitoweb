@@ -415,6 +415,7 @@ Dal 2026 puoi anche collegare la scheda a Google Analytics 4 e vedere in un unic
 ## Checklist: cosa deve avere un sito per un'attività locale
 
 - **Caricamento veloce** e ottima resa da telefono: la maggior parte delle visite arriva da smartphone.
+- **Un sito accessibile**: leggibile, usabile da tastiera e con moduli chiari. Per alcune attività è un obbligo: vedi la guida sull'[accessibilità del sito web](/blog/accessibilita-sito-web-european-accessibility-act).
 - **Una pagina per ogni servizio principale**, con un titolo chiaro che contiene il servizio e la zona.
 - **Contatti sempre visibili**: telefono cliccabile, WhatsApp, modulo breve.
 - **Indirizzo, orari e mappa** facili da trovare.
@@ -474,19 +475,20 @@ Se la tua attività è in provincia di Taranto, trovi i dettagli nella pagina su
   {
     slug: 'tracking-pixel-email-garante',
     title: 'Tracking pixel nelle email e Garante Privacy: come mettere in regola la tua newsletter',
-    excerpt: 'Il Garante Privacy equipara i pixel nelle email ai cookie: senza consenso non puoi tracciare chi apre le tue newsletter. Ecco cosa cambia e cosa fare entro fine ottobre 2026.',
+    excerpt: 'Il Garante Privacy equipara i pixel nelle email ai cookie: senza consenso non puoi tracciare chi apre le tue newsletter. Ecco cosa cambia e cosa fare entro il 29 ottobre 2026.',
     category: 'Strategia',
     tags: ['email marketing', 'newsletter', 'gdpr', 'garante privacy', 'tracking pixel', 'consenso'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
+    updated: '2026-10-20',
     cover: '/blog/tracking-pixel-email-garante/cover.jpg',
     coverAlt: 'Busta email con un pixel di tracciamento e l\'interruttore del consenso',
     published: true,
     seoTitle: 'Tracking pixel email e Garante: cosa fare ora | InLab',
     seoDescription: 'Tracking pixel email Garante: cosa prevedono le linee guida, quando serve il consenso e la checklist per adeguare la newsletter entro ottobre 2026.',
-    content: `Se mandi newsletter o DEM, le linee guida del Garante sui **tracking pixel nelle email** ti riguardano da vicino. Il Garante Privacy ha stabilito che il pixel che registra chi apre i tuoi messaggi va trattato come un cookie: serve il consenso, e il tempo per adeguarsi scade **entro fine ottobre 2026**.
+    content: `Se mandi newsletter o DEM, le linee guida del Garante sui **tracking pixel nelle email** ti riguardano da vicino. Il Garante Privacy ha stabilito che il pixel che registra chi apre i tuoi messaggi va trattato come un cookie: serve il consenso, e il tempo per adeguarsi scade il **29 ottobre 2026**.
 
-**Risposta breve: se la tua piattaforma registra chi apre ogni singola email, ti serve un consenso specifico, come per i cookie. Hai tempo fino a fine ottobre 2026 per aggiornare moduli, informativa e impostazioni. Senza consenso puoi contare solo le aperture complessive in forma anonima.**
+**Risposta breve: se la tua piattaforma registra chi apre ogni singola email, ti serve un consenso specifico, come per i cookie. Hai tempo fino al 29 ottobre 2026 per aggiornare moduli, informativa e impostazioni. Senza consenso puoi contare solo le aperture complessive in forma anonima.**
 
 Non è un tema da ufficio legale e basta. Cambia il modo in cui raccogli le iscrizioni, cosa scrivi nell'informativa e perfino come leggi i risultati delle tue campagne. Qui trovi cosa dice il provvedimento, cosa resta permesso e una checklist pratica da seguire.
 
@@ -495,14 +497,14 @@ Non è un tema da ufficio legale e basta. Cambia il modo in cui raccogli le iscr
 - I pixel nelle email rientrano nell'art. 122 del Codice privacy, lo stesso regime dei cookie: serve un consenso preventivo, libero, specifico e informato.
 - Senza consenso puoi misurare solo il tasso di apertura complessivo in forma anonima, oltre ai pixel per sicurezza e comunicazioni obbligatorie per legge.
 - L'utente deve poter togliere solo il tracciamento e continuare a ricevere le email.
-- Scadenza per mettersi in regola: entro fine ottobre 2026.
+- Scadenza per mettersi in regola: 29 ottobre 2026, sei mesi dopo la pubblicazione in Gazzetta Ufficiale del 29 aprile.
 - L'open rate diventerà meno affidabile: conviene spostare l'attenzione su clic, risposte e conversioni.
 
 ## Cosa ha deciso il Garante sui tracking pixel nelle email
 
 Partiamo dalla definizione. Un **tracking pixel** è un'immagine minuscola, spesso invisibile, inserita nel corpo dell'email. Quando il destinatario apre il messaggio, il client di posta scarica quell'immagine e la piattaforma di invio registra l'apertura. Quasi tutti gli strumenti di email marketing, da Mailchimp a Brevo a MailUp, usano questo meccanismo per calcolare il tasso di apertura.
 
-Con il [provvedimento del 17 aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943), pubblicato in Gazzetta Ufficiale il 29 aprile 2026, il Garante ha adottato linee guida specifiche su questo tema. Il testo concede sei mesi per adeguarsi: la scadenza cade quindi entro fine ottobre 2026.
+Con il [provvedimento del 17 aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943), pubblicato in Gazzetta Ufficiale il 29 aprile 2026, il Garante ha adottato linee guida specifiche su questo tema. Il testo concede sei mesi per adeguarsi: la scadenza cade quindi il 29 ottobre 2026.
 
 ### Il pixel come un cookie
 
@@ -566,7 +568,7 @@ C'è un effetto collaterale che riguarda tutti: l'**open rate** perderà valore 
 
 Secondo noi è un'occasione per misurare meglio. Clic, risposte, prenotazioni, vendite e visite al sito dicono molto di più sul valore di una newsletter rispetto a un'apertura, che non garantisce nemmeno che il messaggio sia stato letto. Se il tuo obiettivo è portare persone sul sito, ti conviene [misurare cosa arriva dal sito in GA4](/blog/google-business-profile-ga4) e collegare le campagne ai risultati reali.
 
-## Tracking pixel nelle email: cosa fare entro fine ottobre 2026
+## Tracking pixel nelle email: cosa fare entro il 29 ottobre 2026
 
 Ecco una checklist operativa. Non sostituisce il parere del tuo consulente privacy, ma ti aiuta a non arrivare impreparato.
 
@@ -578,6 +580,16 @@ Ecco una checklist operativa. Non sostituisce il parere del tuo consulente priva
 6. **Rendi la revoca granulare.** Nel footer delle email e nel centro preferenze devono esserci due strade: disiscrizione completa oppure stop al solo tracciamento.
 7. **Gestisci la base iscritti esistente.** Per chi è già in lista e non ha dato un consenso specifico al tracciamento, valuta con il tuo consulente se inviare email senza pixel o chiedere il consenso.
 8. **Rivedi KPI e automazioni.** Sostituisci i flussi basati sulle aperture con trigger legati a clic, acquisti o azioni sul sito. Se usi [automazioni e chatbot AI](/automazioni-ai) collegati al CRM, controlla che rispettino le nuove scelte degli utenti.
+
+### Se mancano pochi giorni: le priorità
+
+Se sei in ritardo, concentrati su quello che si vede da fuori:
+
+- **prima di tutto la piattaforma**: disattiva il tracciamento individuale delle aperture, o rendilo anonimo, per chi non ha dato un consenso specifico;
+- **poi moduli e informativa**: aggiungi il consenso separato al tracciamento e aggiorna il testo dell'informativa;
+- **infine il footer**: inserisci il link per fermare solo il tracciamento, accanto a quello per la disiscrizione.
+
+Le altre voci della checklist, come la revisione delle automazioni e dei KPI, puoi completarle nelle settimane successive. Dal 30 ottobre, però, ogni email con un pixel individuale inviata senza consenso è un trattamento non conforme.
 
 ![Checklist in sei punti per adeguare la newsletter ai tracking pixel entro ottobre](/blog/tracking-pixel-email-garante/checklist-newsletter-tracking-pixel.webp)
 
@@ -609,7 +621,7 @@ Sono immagini minuscole, di solito invisibili, inserite nel corpo dell'email. Qu
 
 ### Entro quando bisogna adeguarsi alle linee guida del Garante?
 
-Il provvedimento del 17 aprile 2026 è stato pubblicato in Gazzetta Ufficiale il 29 aprile 2026 e concede sei mesi per mettersi in regola. La scadenza cade quindi entro fine ottobre 2026.
+Il provvedimento del 17 aprile 2026 è stato pubblicato in Gazzetta Ufficiale il 29 aprile 2026 e concede sei mesi per mettersi in regola. La scadenza cade quindi il 29 ottobre 2026. Dopo questa data le regole si applicano a tutti, e il Garante può verificare e sanzionare chi non si è adeguato.
 
 ### Posso ancora misurare il tasso di apertura senza consenso?
 
@@ -625,7 +637,7 @@ Deve poter continuare a ricevere le tue email, ma senza pixel. Le linee guida ch
 
 ## Mettere in regola la newsletter senza perdere i risultati
 
-Le linee guida del Garante sui tracking pixel non vietano l'email marketing: chiedono trasparenza e scelte reali per chi riceve i tuoi messaggi. Il primo passo pratico è semplice: apri la tua piattaforma di invio, verifica come registra le aperture e aggiorna form e informativa prima di fine ottobre 2026.
+Le linee guida del Garante sui tracking pixel non vietano l'email marketing: chiedono trasparenza e scelte reali per chi riceve i tuoi messaggi. Il primo passo pratico è semplice: apri la tua piattaforma di invio, verifica come registra le aperture e aggiorna form e informativa prima del 29 ottobre 2026.
 
 Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti generati con l'AI](/blog/contenuti-ai-obblighi-ai-act). Se vuoi rivedere form, automazioni e metriche delle tue campagne email, [parliamone](/contatti): possiamo aiutarti a impostare un sistema chiaro e misurabile.
 
@@ -634,6 +646,7 @@ Il 2026 porta novità anche su altri fronti, come gli [obblighi sui contenuti ge
 **Fonti**
 
 - [Linee guida sui tracking pixel nelle comunicazioni di posta elettronica, provvedimento del 17 aprile 2026 – Garante per la protezione dei dati personali, aprile 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241943)
+- [Tracking pixel nelle e-mail, pagina tematica – Garante per la protezione dei dati personali](https://www.garanteprivacy.it/temi/tracking-pixel)
 - [Comunicato sulle linee guida sui tracking pixel nelle email – Garante per la protezione dei dati personali, 2026](https://www.garanteprivacy.it/home/docweb/-/docweb-display/docweb/10241977)
 - [Tracking pixel nelle email: sei mesi per mettersi in regola – Agenda Digitale, 2026](https://www.agendadigitale.eu/sicurezza/privacy/tracking-pixel-nelle-email-sei-mesi-per-mettersi-in-regola/)
 - [Tracking pixel nelle comunicazioni di posta elettronica: le nuove linee guida – Altalex, 8 maggio 2026](https://www.altalex.com/documents/news/2026/05/08/tracking-pixel-comunicazioni-posta-elettronica-nuove-linee-guida)
@@ -1240,7 +1253,7 @@ Con i filtri hostname di tipo "Include" puoi dire a GA4 quali sono i tuoi domini
 - **Categorie**: scegli quella principale con attenzione e aggiungi solo categorie secondarie pertinenti.
 - **Orari**: aggiornali sempre, festivi e chiusure comprese.
 - **Foto reali**: del locale, dei prodotti, delle persone. Meglio una foto vera fatta bene che dieci immagini generiche.
-- **Risposte alle recensioni**: rispondi a tutte, positive e negative, con tono calmo e personale.
+- **Risposte alle recensioni**: rispondi a tutte, positive e negative, con tono calmo e personale. Come chiederle e come rispondere lo spieghiamo nella guida alle [recensioni Google](/blog/recensioni-google-come-chiederle-rispondere).
 - **Post**: novità, eventi, offerte stagionali. Anche pochi post, ma regolari.
 
 ### 6. Controlla nome, indirizzo e telefono
@@ -1463,6 +1476,7 @@ Se vuoi un assistente su misura, collegato ai tuoi strumenti e costruito sulle r
     tags: ['meta ads', 'advantage+', 'facebook ads', 'instagram ads', 'intelligenza artificiale', 'pmi'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
+    updated: '2026-10-20',
     cover: '/blog/meta-ads-creativita-advantage/cover.jpg',
     coverAlt: 'Tre creatività diverse che l\'AI di Meta distribuisce a pubblici diversi',
     published: true,
@@ -1515,6 +1529,19 @@ Poi ci sono le regole UE:
 - **Annunci politici e sociali.** Dal 6 ottobre 2025 Meta [non pubblica più annunci politici, elettorali e su temi sociali](https://about.fb.com/news/2025/07/ending-political-electoral-and-social-issue-advertising-in-the-eu/) nell'Unione europea, per effetto del regolamento TTPA sulla pubblicità politica, in vigore dal 10 ottobre 2025. I contenuti organici restano consentiti.
 - **Annunci meno personalizzati.** A quanto risulta, in base a un impegno preso con la Commissione europea a dicembre 2025 nell'ambito del Digital Markets Act, da gennaio 2026 gli utenti UE possono scegliere tra annunci personalizzati, abbonamento senza pubblicità e annunci "meno personalizzati". Se confermato, una parte del pubblico riceve annunci basati su meno dati, e la creatività deve funzionare anche senza un targeting preciso.
 - **Etichette AI.** Il 28 luglio 2026 Meta ha firmato il Codice di condotta UE sulla trasparenza dei contenuti AI: è ragionevole aspettarsi più etichette sulle creatività generate con l'AI.
+
+## Le novità di ottobre 2026: video con l'AI e assistente per le campagne
+
+Il 6 ottobre 2026, all'Advertising Week di New York, [Meta ha presentato nuove funzioni AI per gli inserzionisti](https://about.fb.com/ltam/news/2026/10/advertising-week-new-york-2026-nuevas-capacidades-de-ia-para-guiar-campanas-y-llegar-a-los-clientes/). Per una piccola attività, quattro cose contano più delle altre.
+
+- **Video dalle foto.** In Advantage+ creative si possono creare video partendo dalle immagini statiche che hai già. Chi ha un catalogo prodotti può trasformare le foto dei prodotti in video.
+- **Ads Creative Studio più diffuso.** Lo spazio per creare e modificare le creatività arriva a più inserzionisti, con dati su quali varianti funzionano meglio.
+- **Assistente AI con più memoria.** L'assistente di Meta AI per le aziende ricorda i test passati, la stagionalità e gli obiettivi che gli hai indicato. Meta sta provando anche l'importazione delle linee guida del brand e la gestione delle campagne in conversazione: creare una campagna, cambiare pubblico o budget, con anteprime e approvazioni.
+- **Strategia per ciclo di vita del cliente.** Ora è disponibile per tutti gli inserzionisti: puoi indicare se una campagna punta a clienti nuovi, a clienti esistenti o a entrambi.
+
+### Cosa cambia per ristoranti, negozi e studi
+
+I video generati dalle foto sono un buon modo per testare più varianti senza girare ogni volta. Funzionano però bene solo se le foto di partenza sono belle e vere: un piatto fotografato male resta un piatto fotografato male, anche in movimento. Per le campagne che contano, come un'apertura, una stagione o un evento, un video girato sul posto con le tue persone resta più credibile. Per questo conviene unire le due cose: pochi [video girati bene](/video) per i messaggi principali e varianti generate per i test.
 
 ## Con l'AI il tuo lavoro si sposta: le leve che restano a te
 
@@ -1597,6 +1624,8 @@ Se vuoi impostare così le tue campagne, la nostra [gestione delle campagne Meta
 
 **Fonti**
 
+- [Advertising Week New York 2026: nuove funzioni AI per guidare le campagne](https://about.fb.com/ltam/news/2026/10/advertising-week-new-york-2026-nuevas-capacidades-de-ia-para-guiar-campanas-y-llegar-a-los-clientes/) – Meta, ottobre 2026
+- [Meta introduces new AI-powered tools at Advertising Week](https://www.marketingdive.com/news/meta-introduces-new-ai-powered-tools-at-advertising-week/832517/) – Marketing Dive, ottobre 2026
 - [Come l'AI guida le performance pubblicitarie nel 2026](https://about.fb.com/news/2026/01/2026-ai-drives-performance/) – Meta, 28 gennaio 2026
 - [Nuovi strumenti e AI contro le truffe](https://about.fb.com/news/2026/03/meta-launches-new-anti-scam-tools-deploys-ai-technology-to-fight-scammers-and-protect-people/) – Meta, 11 marzo 2026
 - [Stop agli annunci politici, elettorali e su temi sociali nell'UE](https://about.fb.com/news/2025/07/ending-political-electoral-and-social-issue-advertising-in-the-eu/) – Meta, luglio 2025`,
@@ -2850,5 +2879,249 @@ No. Su Instagram e Facebook si può aggiungere il social media manager come coll
 Prendi le ultime dieci pubblicazioni sui tuoi profili e segna quante ti hanno portato un messaggio, una chiamata o una visita. Se la risposta è "quasi nessuna" o "non lo so", il problema non è quanto pubblichi, ma il metodo.
 
 Scopri come lavoriamo come [social media manager a Taranto](/gestione-social-taranto) e cosa facciamo come [agenzia di comunicazione a Taranto](/agenzia-comunicazione-taranto). Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'recensioni-google-come-chiederle-rispondere',
+    title: 'Recensioni Google: come chiederle ai clienti e come rispondere (anche a quelle negative)',
+    excerpt: 'Come chiedere le recensioni Google senza violare le regole, come rispondere a quelle positive e negative e cosa fare con le recensioni false.',
+    category: 'Strategia',
+    tags: ['recensioni google', 'google business profile', 'attività locali', 'reputazione online', 'google maps'],
+    author: 'Nicola Carpignano',
+    date: '2026-10-23',
+    cover: '/blog/recensioni-google-come-chiederle-rispondere/cover.jpg',
+    coverAlt: 'Scheda Google di un\'attività locale con stelle e risposte alle recensioni dei clienti',
+    published: true,
+    seoTitle: 'Recensioni Google: come chiederle e rispondere | InLab',
+    seoDescription: 'Come chiedere le recensioni Google ai clienti senza violare le regole, come rispondere a quelle negative e cosa fare con le recensioni false.',
+    content: `Le **recensioni Google** sono spesso la prima cosa che una persona guarda prima di scegliere un ristorante, un negozio o uno studio della zona. Poche stelle in meno, o una critica lasciata senza risposta, possono far scegliere il concorrente. In questa guida vediamo come chiedere le recensioni ai clienti senza violare le regole di Google, come rispondere a quelle positive e negative e cosa fare con le recensioni false.
+
+**Risposta breve: chiedi la recensione a tutti i clienti, non solo a quelli contenti, con il link della tua scheda Google e senza offrire sconti o regali in cambio. Rispondi a tutte le recensioni in pochi giorni: ringrazia per quelle positive, e per quelle negative riconosci il problema, spiega cosa farai e porta la conversazione in privato. Le recensioni false si segnalano a Google, senza litigare in pubblico.**
+
+Le recensioni non sono solo un voto. Sono contenuti che parlano della tua attività con le parole dei clienti, e Google le usa per capire cosa offri e quanto sei affidabile.
+
+## Perché le recensioni Google contano per un'attività locale
+
+Quando qualcuno cerca "pizzeria vicino a me" o "dentista a Castellaneta", Google mostra le schede delle attività con il numero di stelle accanto al nome. Prima ancora di aprire il tuo sito, il cliente ha già un'idea di te.
+
+Le recensioni lavorano su tre fronti:
+
+- **fiducia**: chi non ti conosce si fida del giudizio di chi è già passato da te;
+- **visibilità**: tra i fattori che Google indica per la ricerca locale c'è la "prominenza", che tiene conto anche del numero di recensioni e dei voti;
+- **informazioni**: le recensioni raccontano cosa fai bene, con parole che i clienti usano davvero quando cercano.
+
+Conta anche la freschezza: una scheda con recensioni recenti dice che l'attività è viva. Cinquanta recensioni di tre anni fa valgono meno di venti dell'ultimo anno.
+
+## Come chiedere le recensioni ai clienti (nel modo giusto)
+
+### Usa il link della tua scheda
+
+Dalla scheda Google Business Profile puoi copiare il link per chiedere una recensione: chi lo apre trova subito il modulo con le stelle. Puoi trasformarlo in un QR code da mettere alla cassa, sul tavolo, nello scontrino o nel biglietto da visita.
+
+### Chiedi al momento giusto
+
+Il momento migliore è subito dopo un'esperienza positiva: il cliente che ringrazia alla cassa, il paziente che esce soddisfatto, il cliente che ritira un lavoro finito. Un messaggio su WhatsApp qualche ora dopo, con il link, funziona molto meglio di una richiesta generica sui social.
+
+### Chiedi a tutti, senza filtri
+
+È importante: le regole di Google non permettono di chiedere recensioni solo ai clienti contenti, filtrando gli altri. Allo stesso modo non si possono offrire **sconti, omaggi o premi in cambio di una recensione**, nemmeno se la recensione può essere negativa. Chi viola queste regole rischia la rimozione delle recensioni e limitazioni sulla scheda.
+
+### Rendi la richiesta semplice
+
+Una frase breve e personale basta: "Se ti sei trovato bene, ci aiuti con una recensione? Bastano due minuti". Non suggerire cosa scrivere né quante stelle mettere.
+
+![Come chiedere le recensioni Google ai clienti: link, momento giusto, nessun incentivo e richiesta a tutti](/blog/recensioni-google-come-chiederle-rispondere/chiedere-recensioni-google-clienti.webp)
+
+## Come rispondere alle recensioni Google
+
+Rispondere è gratuito, si fa dalla scheda o dall'app Google Maps, e la risposta è pubblica: la leggono il cliente che ha scritto e tutti quelli che verranno dopo.
+
+### Alle recensioni positive
+
+Ringrazia per nome quando possibile e aggiungi un dettaglio vero: "Grazie Maria, felici che la torta per il compleanno sia piaciuta!". Evita la stessa frase copiata per tutti: si nota, e sembra automatica.
+
+### Alle recensioni negative
+
+Qui si vede la qualità di un'attività. Uno schema che funziona:
+
+1. **ringrazia** per il commento, anche se è duro;
+2. **riconosci** il problema senza giustificarti troppo;
+3. **spiega** cosa farai o cosa hai già fatto;
+4. **porta la conversazione in privato**, con un numero o un indirizzo email.
+
+![I quattro passi per rispondere a una recensione negativa su Google: ringrazia, riconosci, spiega e passa in privato](/blog/recensioni-google-come-chiederle-rispondere/rispondere-recensione-negativa-google.webp)
+
+Rispondi a mente fredda, entro pochi giorni. Non entrare in dettagli personali o sanitari del cliente: per uno studio medico o dentistico, ad esempio, non va mai confermato in pubblico che quella persona è un paziente.
+
+### Alle recensioni senza testo
+
+Anche le sole stelle meritano due righe di ringraziamento: mostrano a chi legge che la scheda è seguita.
+
+## Recensioni false o offensive: cosa fare
+
+Può capitare una recensione di qualcuno che non è mai stato cliente, un attacco di un concorrente o un commento offensivo. In questi casi:
+
+- **segnala la recensione** dalla scheda o da Google Maps, scegliendo il motivo (spam, conflitto di interessi, contenuto offensivo);
+- **rispondi con calma**, in modo breve e cortese, scrivendo che non trovi traccia del cliente e invitandolo a contattarti;
+- **non chiedere recensioni a parenti e amici** per "compensare": è proprio il comportamento che Google considera manipolazione.
+
+Le recensioni vere, anche quelle critiche, non si possono far rimuovere solo perché non piacciono. La risposta giusta resta il modo migliore per difendersi.
+
+## Un esempio pratico: la routine delle recensioni per un locale
+
+Per un bar o un ristorante, una routine semplice può essere questa:
+
+- QR code con il link alla recensione sul bancone e sul conto;
+- il titolare o il personale lo ricorda a voce ai clienti abituali e a chi si complimenta;
+- una volta a settimana, mezz'ora per rispondere a tutte le recensioni nuove;
+- una volta al mese, rileggere le recensioni per capire cosa i clienti apprezzano e cosa migliorare.
+
+Quello che emerge dalle recensioni è anche materiale per i contenuti: se tutti lodano il cornetto al pistacchio, è il prodotto da mettere al centro dei prossimi reel.
+
+## Domande frequenti
+
+### Si possono comprare recensioni Google?
+
+No. Le recensioni false violano le regole di Google e, in Italia, la normativa sulle pratiche commerciali scorrette vieta di pubblicare o commissionare recensioni false. Il rischio è perdere le recensioni, avere limitazioni sulla scheda e danneggiare la reputazione.
+
+### Posso offrire uno sconto a chi lascia una recensione?
+
+No. Google non permette di offrire incentivi in cambio delle recensioni, anche se il cliente è libero di dare il voto che vuole. Puoi chiedere la recensione, ma senza premi.
+
+### Quanto tempo ho per rispondere a una recensione negativa?
+
+Non c'è un limite fisso, ma conviene farlo entro pochi giorni. Una risposta rapida e cortese mostra che l'attività è attenta ai clienti, ed è letta da tutti quelli che arrivano sulla scheda dopo.
+
+### Posso eliminare una recensione negativa?
+
+Non direttamente. Puoi segnalarla a Google se viola le regole, per esempio se è spam, offensiva o scritta da chi non è mai stato cliente. Se è una critica vera, la strada giusta è rispondere bene.
+
+### Le recensioni aiutano a comparire prima su Google Maps?
+
+Sono uno dei segnali che Google considera, insieme alla pertinenza della scheda e alla distanza da chi cerca. Una scheda completa e aggiornata, con recensioni recenti e risposte, ha più possibilità di essere scelta.
+
+## Da dove partire
+
+Oggi stesso copia il link per chiedere recensioni dalla tua scheda Google, crea un QR code e mettilo dove i clienti lo vedono. Poi dedica mezz'ora a rispondere alle recensioni rimaste senza risposta, partendo da quelle negative.
+
+Se vuoi capire anche quanto ti porta la scheda in chiamate e visite, leggi la guida su [Google Business Profile e GA4](/blog/google-business-profile-ga4). Per una scheda e un sito che lavorano insieme, scopri i nostri [siti web per attività locali](/siti-web) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.
+
+**Fonti**
+
+- [Come Google determina il ranking dei risultati locali](https://support.google.com/business/answer/7091?hl=it) – Guida di Google Business Profile
+- [Contenuti vietati e con limitazioni (recensioni)](https://support.google.com/contributionpolicy/answer/7400114?hl=it) – Norme sui contenuti di Google Maps
+- [Rispondere alle recensioni](https://support.google.com/business/answer/3474050?hl=it) – Guida di Google Business Profile`,
+  },
+  {
+    slug: 'accessibilita-sito-web-european-accessibility-act',
+    title: 'Accessibilità del sito web: cosa chiede l\'European Accessibility Act alle attività',
+    excerpt: 'Dal 28 giugno 2025 molti siti e negozi online devono essere accessibili. Chi è obbligato, chi è esentato e cosa controllare per primo sul tuo sito.',
+    category: 'Siti web',
+    tags: ['accessibilità', 'european accessibility act', 'siti web', 'e-commerce', 'seo'],
+    author: 'Nicola Carpignano',
+    date: '2026-10-23',
+    cover: '/blog/accessibilita-sito-web-european-accessibility-act/cover.jpg',
+    coverAlt: 'Sito web accessibile con contrasto leggibile, testi alternativi e navigazione da tastiera',
+    published: true,
+    seoTitle: 'Accessibilità sito web: European Accessibility Act | InLab',
+    seoDescription: 'Accessibilità del sito web e European Accessibility Act: chi è obbligato dal 28 giugno 2025, chi è esentato e la checklist per adeguare il tuo sito.',
+    content: `Dal 28 giugno 2025 l'**accessibilità del sito web** non è più solo una buona pratica: con l'European Accessibility Act molti siti e negozi online che vendono ai consumatori devono essere usabili anche da persone con disabilità. Molti titolari non sanno se la regola li riguarda, e chi la conosce spesso pensa che basti un plugin. In questa guida vediamo chi è obbligato, chi è esentato, cosa significa in pratica un sito accessibile e da dove partire.
+
+**Risposta breve: l'European Accessibility Act, recepito in Italia con il d.lgs. 82/2022, si applica dal 28 giugno 2025 a diversi servizi digitali per i consumatori, tra cui l'e-commerce. Le microimprese che forniscono servizi (meno di 10 dipendenti e fatturato o bilancio fino a 2 milioni di euro) sono esentate. Anche chi è esentato, però, ha buoni motivi per rendere il sito accessibile: lo usano più persone, funziona meglio sul telefono e piace a Google.**
+
+Questa guida non sostituisce il parere di un consulente legale. Serve a capire il tema e a fare le domande giuste a chi segue il tuo sito.
+
+## Cos'è l'European Accessibility Act
+
+L'European Accessibility Act è la direttiva europea 2019/882 sui requisiti di accessibilità di prodotti e servizi. In Italia è stata recepita con il decreto legislativo 82/2022, e le regole si applicano dal **28 giugno 2025**.
+
+L'obiettivo è semplice: chi ha una disabilità visiva, uditiva, motoria o cognitiva deve poter comprare, prenotare e informarsi online come tutti gli altri. Questo vuol dire, per esempio, poter navigare il sito con la tastiera, usare un lettore di schermo, leggere testi con un contrasto sufficiente, capire i moduli e i messaggi di errore.
+
+Tra i servizi coinvolti ci sono quelli di **commercio elettronico**, oltre a banche, trasporti, comunicazioni elettroniche, e-book e altri servizi digitali per i consumatori.
+
+## Chi deve adeguare il sito e chi è esentato
+
+### Chi è coinvolto
+
+In generale sono coinvolte le imprese che vendono prodotti o servizi ai consumatori attraverso un sito o un'app: negozi online, siti con carrello e pagamento, servizi di prenotazione con acquisto. Le aree più delicate sono quelle in cui il cliente compie un'azione: registrazione, carrello, checkout, pagamento.
+
+### Chi è esentato
+
+Le **microimprese che forniscono servizi** sono esentate dagli obblighi sui servizi. Per microimpresa si intende un'azienda con meno di 10 dipendenti e con fatturato annuo o totale di bilancio fino a 2 milioni di euro.
+
+Molte attività locali rientrano in questa definizione. Prima di concludere che la regola non ti riguarda, però, verifica con il tuo consulente i numeri della tua impresa e il tipo di servizio che offri online.
+
+### Se il sito esisteva già
+
+Le regole valgono per i servizi offerti ai consumatori dopo il 28 giugno 2025, anche se il sito è stato creato prima. Per alcuni casi particolari sono previsti periodi transitori: anche questo va verificato caso per caso.
+
+## Cosa vuol dire, in pratica, un sito accessibile
+
+Il riferimento tecnico più usato sono le linee guida WCAG, alla base della norma europea EN 301 549. Non serve conoscerle a memoria: ecco cosa controllare per primo.
+
+- **Testi alternativi alle immagini**: ogni immagine che dà un'informazione ha una descrizione che il lettore di schermo può leggere.
+- **Contrasto e dimensione dei testi**: testi leggibili anche per chi vede poco, e ingrandibili senza rompere la pagina.
+- **Navigazione da tastiera**: menu, pulsanti e moduli si usano anche senza mouse, e si vede sempre dove ci si trova.
+- **Moduli chiari**: ogni campo ha un'etichetta, gli errori sono spiegati a parole e non solo con il colore rosso.
+- **Titoli in ordine**: la pagina ha un titolo principale e sottotitoli logici, utili a chi usa i lettori di schermo.
+- **Video e audio**: sottotitoli per i video importanti, nessun suono che parte da solo.
+- **Checkout senza ostacoli**: carrello, pagamento e conferma d'ordine funzionano con tastiera e lettori di schermo.
+
+Serve anche una **dichiarazione di accessibilità**, una pagina che spiega quanto il servizio è accessibile e come segnalare un problema.
+
+![Checklist dell'accessibilità del sito web: immagini, contrasto, tastiera, moduli, titoli, video e checkout](/blog/accessibilita-sito-web-european-accessibility-act/checklist-accessibilita-sito-web.webp)
+
+## Perché i plugin "magici" non bastano
+
+Esistono strumenti che promettono di rendere un sito accessibile con un pulsante o una barra di icone. Possono aiutare l'utente a cambiare il contrasto o la dimensione del testo, ma **non correggono i problemi nel codice**: un modulo senza etichette o un menu che non si apre con la tastiera restano tali.
+
+L'accessibilità si costruisce nel sito: nella struttura delle pagine, nei colori scelti, nei testi, nei moduli. Per questo conviene pensarci quando si rifà il sito, o con una revisione fatta da chi lo sviluppa.
+
+## Accessibilità e SEO: due problemi, una soluzione
+
+Molte regole dell'accessibilità coincidono con quelle che aiutano un sito a funzionare meglio su Google e sul telefono:
+
+- i **testi alternativi** aiutano Google a capire le immagini;
+- i **titoli in ordine** rendono chiara la struttura della pagina;
+- un **sito leggibile e veloce sul telefono** fa restare di più le persone;
+- **moduli semplici** fanno arrivare più richieste di contatto.
+
+Anche se la tua attività è esentata, rendere il sito accessibile significa servire meglio tutti i clienti: chi ha una disabilità, le persone anziane, chi naviga al sole con il telefono.
+
+![Accessibilità e SEO a confronto: cosa migliora per le persone e cosa per Google](/blog/accessibilita-sito-web-european-accessibility-act/accessibilita-seo-sito-web.webp)
+
+## Domande frequenti
+
+### L'European Accessibility Act riguarda anche il sito di un piccolo negozio?
+
+Dipende. Le microimprese che forniscono servizi, cioè con meno di 10 dipendenti e fatturato o bilancio fino a 2 milioni di euro, sono esentate dagli obblighi sui servizi. Le imprese più grandi che vendono online ai consumatori sono coinvolte. Verifica sempre la tua situazione con un consulente.
+
+### Da quando si applicano le regole?
+
+Dal 28 giugno 2025, anche per i siti creati prima di quella data. Per alcuni casi particolari sono previsti periodi transitori.
+
+### Basta installare un plugin di accessibilità?
+
+No. I plugin possono offrire opzioni utili all'utente, ma non correggono gli errori nel codice del sito, come moduli senza etichette o menu non usabili da tastiera. Serve una verifica del sito e, se necessario, una correzione da parte di chi lo sviluppa.
+
+### Cos'è la dichiarazione di accessibilità?
+
+È una pagina del sito che spiega quanto il servizio è accessibile, quali parti non lo sono ancora e come gli utenti possono segnalare un problema. Chi è soggetto agli obblighi deve pubblicarla.
+
+### Un sito accessibile si posiziona meglio su Google?
+
+L'accessibilità non è un fattore di posizionamento a sé, ma molte delle sue regole, come i testi alternativi, i titoli ordinati e un sito leggibile sul telefono, migliorano anche l'esperienza degli utenti e la comprensione delle pagine da parte di Google.
+
+## Da dove partire
+
+Apri il tuo sito dal telefono e prova a completare un acquisto o una richiesta di contatto senza toccare le immagini e leggendo solo i testi. Poi prova dal computer usando solo il tasto Tab. Se ti blocchi da qualche parte, lì c'è il primo problema da risolvere.
+
+Se il tuo sito ha bisogno di una revisione o lo stai rifacendo, leggi anche perché a un'attività locale servono [sito web e social insieme](/blog/sito-web-o-solo-social-attivita-locale). Scopri i nostri [siti web e landing page](/siti-web) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.
+
+**Fonti**
+
+- [Direttiva (UE) 2019/882 sui requisiti di accessibilità dei prodotti e dei servizi](https://eur-lex.europa.eu/legal-content/IT/TXT/?uri=CELEX:32019L0882) – EUR-Lex
+- [Decreto legislativo 27 maggio 2022, n. 82](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2022-05-27;82) – Normattiva
+- [European Accessibility Act](https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/disability/union-equality-strategy-rights-persons-disabilities-2021-2030/european-accessibility-act_en) – Commissione europea
+- [Siti accessibili per legge: la guida per chi vende online](https://www.agendadigitale.eu/mercati-digitali/siti-accessibili-per-legge-la-guida-per-chi-vende-online/) – Agenda Digitale`,
   },
 ];
