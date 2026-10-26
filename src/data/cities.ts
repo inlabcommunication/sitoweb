@@ -761,6 +761,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per aziende agricole e lidi di Scanzano Jonico: produzione raccontata con immagini vere e contenuti per la stagione al mare." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Ferrandina", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Ferrandina, sulle colline sopra la valle del Basento, è conosciuta per l'oliva Maiatica e per l'oliva infornata di Ferrandina, un prodotto tipico lucano. È un paese di frantoi, aziende agricole e piccole attività.",
+    settori: ["frantoi e produttori di olio", "aziende agricole", "negozi e attività del paese"],
+    faq: { q: "Potete aiutare un frantoio a vendere online?", a: "Sì: foto dei prodotti, social, e-commerce o catalogo con ordini su WhatsApp e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Ferrandina: social, foto, video, siti e campagne per frantoi, produttori e attività del paese. Preventivo gratuito.",
+    intro: "Ferrandina è la terra della Maiatica e della sua oliva al forno. Seguiamo social, foto, video, sponsorizzate e siti per frantoi, produttori e attività del paese, da Castellaneta.",
+    focus: { titolo: "Un prodotto tipico merita un racconto", testo: "Un olio o un'oliva di Ferrandina hanno una storia che si può raccontare: la varietà, la lavorazione, le persone. La trasformiamo in foto, video e contenuti social, in un sito con vendita online o ordini diretti e in campagne per chi cerca prodotti tipici lucani in tutta Italia." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per frantoi e produttori di Ferrandina: varietà, lavorazione e persone raccontate con foto e video." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
