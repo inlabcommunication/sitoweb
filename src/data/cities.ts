@@ -713,6 +713,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per masserie, hotel e ristoranti di Fasano: immagini all'altezza del posto e contenuti in italiano e inglese." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Monopoli", provincia: "provincia di Bari",
+    contesto: "Monopoli ha un centro storico affacciato sul mare, il porto antico con le barche dei pescatori, Cala Porta Vecchia e una lunga costa di calette e spiagge. È una città viva tutto l'anno, con un turismo che cresce anche fuori stagione.",
+    settori: ["ristoranti e locali", "B&B e strutture ricettive", "negozi del centro e lidi"],
+    faq: { q: "Ha senso comunicare anche d'inverno?", a: "A Monopoli sì: c'è un pubblico tutto l'anno. Cambiamo contenuti e campagne in base alla stagione." },
+    description: "Agenzia di comunicazione a Monopoli: social, foto, video e campagne per ristoranti, B&B, lidi e negozi del centro storico e della costa. Preventivo gratuito.",
+    intro: "Monopoli unisce un centro storico sul mare, il porto antico e una costa piena di calette. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, strutture e negozi, da Castellaneta.",
+    focus: { titolo: "Una città che vive tutto l'anno", testo: "A differenza di altre località di mare, Monopoli ha clienti anche d'inverno: residenti, pendolari da Bari, turisti fuori stagione. Per un ristorante o un negozio conviene una comunicazione costante, non solo estiva: contenuti regolari, scheda Google curata e campagne diverse per stagione." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, B&B e negozi di Monopoli: presenza costante tutto l'anno, con campagne diverse per stagione." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
