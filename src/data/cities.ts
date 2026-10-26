@@ -725,6 +725,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, B&B e negozi di Monopoli: presenza costante tutto l'anno, con campagne diverse per stagione." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Turi", provincia: "provincia di Bari",
+    contesto: "Turi è conosciuta in tutta Italia per la ciliegia Ferrovia, una delle varietà più apprezzate, che qui si coltiva e si celebra ogni anno. Accanto ai produttori ci sono negozi, ristoranti e attività che lavorano con i comuni vicini del sud-est barese.",
+    settori: ["produttori di ciliegie e aziende agricole", "negozi e servizi", "ristorazione"],
+    faq: { q: "Potete aiutare un'azienda agricola a vendere direttamente?", a: "Sì: social, foto dei prodotti, sito o catalogo con ordini su WhatsApp e campagne in periodo di raccolta." },
+    description: "Agenzia di comunicazione a Turi: social, foto, video, siti e campagne per produttori di ciliegie, aziende agricole e attività del paese. Preventivo gratuito.",
+    intro: "Turi è la città delle ciliegie. Seguiamo social, foto, video, sponsorizzate e siti per produttori, aziende agricole e attività del paese, da Castellaneta.",
+    focus: { titolo: "Raccontare il prodotto in tutte le stagioni", testo: "La ciliegia dura poche settimane, ma un'azienda agricola lavora tutto l'anno. Raccontiamo la filiera, dal campo alla raccolta, con foto e video veri, così la comunicazione resta viva anche fuori stagione. In periodo di raccolta prepariamo campagne per vendita diretta, grossisti o e-commerce." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per aziende agricole e attività di Turi: la filiera raccontata tutto l'anno e campagne in periodo di raccolta." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

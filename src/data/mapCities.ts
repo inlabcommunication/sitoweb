@@ -55,6 +55,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Gallipoli', region: 'Puglia', lat: 40.056, lon: 17.979 },
   { name: 'Fasano', region: 'Puglia', lat: 40.836, lon: 17.358 },
   { name: 'Monopoli', region: 'Puglia', lat: 40.951, lon: 17.300 },
+  { name: 'Turi', region: 'Puglia', lat: 40.917, lon: 17.020 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
