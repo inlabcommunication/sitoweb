@@ -749,6 +749,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, pescherie e imprese di Molfetta: lavoro vero e freschezza raccontati con foto e video." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Scanzano Jonico", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Scanzano Jonico è un centro agricolo della piana del Metapontino, conosciuto per fragole, ortaggi e frutta, con una costa ionica di spiagge e lidi. Molte aziende del territorio vendono in tutta Italia e all'estero.",
+    settori: ["aziende agricole e ortofrutta", "lidi e strutture della costa", "attività del paese"],
+    faq: { q: "Lavorate con aziende che esportano?", a: "Sì: sito e contenuti anche in inglese, foto e video della produzione e LinkedIn per i contatti commerciali." },
+    description: "Agenzia di comunicazione a Scanzano Jonico: social, foto, video e campagne per aziende agricole, lidi e attività della costa ionica lucana. Preventivo gratuito.",
+    intro: "Scanzano Jonico è nel cuore della piana del Metapontino, tra campi coltivati e mare. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, lidi e attività, da Castellaneta.",
+    focus: { titolo: "Far conoscere chi produce", testo: "Per un'azienda ortofrutticola il nome conta quanto il prodotto: farsi riconoscere da clienti, grossisti e consumatori aiuta a vendere meglio. Raccontiamo campi, raccolta e confezionamento con foto e video veri, creiamo siti chiari e una presenza social costante, anche in inglese per l'estero." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per aziende agricole e lidi di Scanzano Jonico: produzione raccontata con immagini vere e contenuti per la stagione al mare." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
