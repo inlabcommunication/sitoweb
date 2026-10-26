@@ -665,6 +665,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per negozi, ristoranti e servizi di Francavilla Fontana: contenuti riconoscibili e sponsorizzate sulla zona." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Lecce", provincia: "provincia di Lecce",
+    contesto: "Lecce è conosciuta per il barocco in pietra leccese, la Basilica di Santa Croce e l'anfiteatro romano in piazza Sant'Oronzo. È una città universitaria e turistica, con ristoranti, strutture ricettive e negozi che lavorano con un pubblico locale e internazionale.",
+    settori: ["ristoranti e locali del centro", "strutture ricettive e case vacanza", "negozi, studi e servizi"],
+    faq: { q: "Seguite attività di Lecce anche se siete in provincia di Taranto?", a: "Sì: strategia, contenuti e campagne a distanza, con incontri e riprese sul posto quando servono." },
+    description: "Agenzia di comunicazione a Lecce: strategia, social, video, siti e campagne per attività, ristoranti e strutture del Salento. Da Castellaneta, preventivo gratuito.",
+    intro: "Lecce è la capitale del barocco e del Salento, con un mercato vivace e molta concorrenza. Portiamo strategia, social, video, siti e campagne alle attività leccesi, lavorando da Castellaneta e venendo di persona per riprese e incontri.",
+    focus: { titolo: "In una città piena di offerta serve un'identità", testo: "A Lecce molte attività si somigliano: stesso centro storico, stessi turisti, stessi scatti. Per farsi scegliere bisogna avere un'identità precisa, che si riconosce su social, sito e scheda Google. Partiamo da lì, con branding e strategia, e costruiamo contenuti e campagne coerenti, per i leccesi e per chi visita il Salento." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, strutture e negozi di Lecce: identità chiara, contenuti curati e campagne per leccesi e turisti." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
