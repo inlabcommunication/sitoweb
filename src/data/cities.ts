@@ -653,6 +653,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per lidi, aziende e negozi di Policoro: contenuti per la stagione al mare e per i clienti di tutto il Metapontino." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Francavilla Fontana", provincia: "provincia di Brindisi",
+    contesto: "Francavilla Fontana deve il suo nome di Città degli Imperiali alla famiglia che costruì il Castello Imperiali e ne segnò il centro barocco. È un centro commerciale e di servizi per molti comuni vicini, tra la provincia di Brindisi e quella di Taranto.",
+    settori: ["negozi e commercio", "ristoranti e bar", "servizi e professionisti"],
+    faq: { q: "Le sponsorizzate possono raggiungere anche i paesi vicini?", a: "Sì: scegliamo zona e raggio in base a dove abitano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Francavilla Fontana: social, foto, video, siti e campagne per negozi, ristoranti e attività della Città degli Imperiali. Preventivo gratuito.",
+    intro: "Francavilla Fontana è la Città degli Imperiali, a metà strada tra Taranto e Brindisi. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e attività del paese, da Castellaneta.",
+    focus: { titolo: "Farsi scegliere da chi arriva dai paesi vicini", testo: "Molti clienti di un'attività di Francavilla arrivano dai comuni intorno. Per loro contano la scheda Google, le recensioni e un profilo social che faccia capire subito cosa offri. Impostiamo sponsorizzate per raggio su Francavilla e dintorni e contenuti costanti che fanno ricordare il tuo nome quando serve." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per negozi, ristoranti e servizi di Francavilla Fontana: contenuti riconoscibili e sponsorizzate sulla zona." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
