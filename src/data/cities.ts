@@ -701,6 +701,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per lidi, locali e ristoranti di Gallipoli: reel sul posto, eventi e sponsorizzate per farsi notare in stagione." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Fasano", provincia: "provincia di Brindisi",
+    contesto: "Il territorio di Fasano comprende la Selva di Fasano, il Parco archeologico di Egnazia, lo Zoosafari e la costa di Savelletri e Torre Canne, con masserie e strutture di alto livello. È una delle zone più richieste dal turismo internazionale in Puglia.",
+    settori: ["masserie e hotel", "ristoranti e locali", "attività turistiche e del centro"],
+    faq: { q: "Potete aiutare una masseria ad avere più prenotazioni dirette?", a: "Sì: foto e video curati, sito con prenotazione, scheda Google e social, anche in inglese." },
+    description: "Agenzia di comunicazione a Fasano: social, foto, video e campagne per masserie, hotel, ristoranti e attività tra Selva e Savelletri. Preventivo gratuito.",
+    intro: "Fasano va dalla Selva al mare, tra masserie, ulivi e borghi sulla costa. Seguiamo social, foto, video, sponsorizzate e siti per masserie, hotel, ristoranti e attività, da Castellaneta.",
+    focus: { titolo: "Stare al livello delle strutture migliori", testo: "Tra le masserie e gli hotel di Fasano la concorrenza è alta e il pubblico è esigente. Servono foto e video all'altezza, un sito che permetta di prenotare direttamente e contenuti curati, anche in inglese. Costruiamo una comunicazione che valorizzi il posto e porti prenotazioni dirette." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per masserie, hotel e ristoranti di Fasano: immagini all'altezza del posto e contenuti in italiano e inglese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
