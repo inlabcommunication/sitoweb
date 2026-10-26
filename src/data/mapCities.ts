@@ -51,6 +51,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Policoro', region: 'Basilicata', lat: 40.212, lon: 16.678 },
   { name: 'Francavilla Fontana', region: 'Puglia', lat: 40.531, lon: 17.585 },
   { name: 'Lecce', region: 'Puglia', lat: 40.353, lon: 18.172 },
+  { name: 'Nardò', region: 'Puglia', lat: 40.178, lon: 18.033 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

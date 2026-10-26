@@ -677,6 +677,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, strutture e negozi di Lecce: identità chiara, contenuti curati e campagne per leccesi e turisti." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Nardò", provincia: "provincia di Lecce",
+    contesto: "Nardò ha uno dei centri barocchi più belli del Salento, con piazza Salandra, e una costa sullo Ionio che comprende il Parco di Porto Selvaggio e le marine di Santa Maria al Bagno e Santa Caterina. D'estate il turismo cresce molto.",
+    settori: ["lidi e strutture delle marine", "ristoranti e locali", "negozi e attività del centro"],
+    faq: { q: "Quando conviene iniziare la comunicazione per la stagione?", a: "In primavera: a giugno molti turisti hanno già prenotato." },
+    description: "Agenzia di comunicazione a Nardò: social, foto, video e campagne per lidi, ristoranti e strutture di Nardò e Santa Maria al Bagno. Preventivo gratuito.",
+    intro: "Da piazza Salandra al mare di Porto Selvaggio: seguiamo social, foto, video, sponsorizzate e siti per attività, lidi e strutture di Nardò e delle sue marine.",
+    focus: { titolo: "Preparare l'estate in primavera", testo: "Per lidi, ristoranti e strutture delle marine di Nardò, la stagione si decide prima che inizi. Prepariamo foto, video, scheda Google e campagne in primavera, quando i turisti scelgono dove andare, e seguiamo la comunicazione durante l'estate. Per il centro curiamo una presenza costante tutto l'anno." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, ristoranti e strutture di Nardò e delle marine: contenuti per la stagione e presenza costante tutto l'anno." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
