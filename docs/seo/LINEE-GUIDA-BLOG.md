@@ -339,3 +339,58 @@ dentistico).
 sui prezzi, copertine JPG 16:9, tabelle, `updated` solo sugli aggiornamenti,
 coppie di articoli vicini, sezione 11. Google Analytics e Search Console sono
 collegati dal 28/09/2026: le priorità dei prossimi brief nasceranno dai loro dati.*
+
+---
+
+## 11. Regole dal 26/10/2026 (decise da Nicola su proposta SEO)
+
+**Dati che le motivano** (Search Console, 27/09–26/10):
+- **Articoli su Google:** 21 pubblicati, 11 indicizzati, 7 in attesa, 3 bloccati da un errore noindex (segnalato a Sito Inlab).
+- **Peso sul sito:** il blog fa **23 impressioni su 517** e **2 clic su 40**.
+- **Articoli che compaiono su Google:** solo 3. "reel-o-post" in posizione 7,6; "tracking-pixel" in posizione 5,8 con 2 clic; "meta-ads" in posizione 6.
+- **Conclusione:** gli argomenti nazionali e generici ("reel o post", "Meta Ads 2026", "recensioni Google") hanno troppa concorrenza per un sito giovane. Quando un articolo esce, però, esce in prima pagina.
+
+**Le regole**
+1. **Almeno 5 articoli su 8 al mese con un aggancio locale.**
+   - Il territorio sta nel titolo, oppure nella keyword: Taranto, provincia di Taranto, Puglia, Salento, Valle d'Itria, Murgia, costa ionica, Basilicata.
+   - Esempi di formato: "Social media per ristoranti in provincia di Taranto", "Come promuovere un lido sulla costa ionica", "Fotografo per matrimoni in masseria in Puglia", "Sito web per uno studio dentistico in Puglia".
+2. **Ogni articolo linka 2-3 pagine città** `/agenzia-comunicazione-{paese}` o `/gestione-social-{paese}`, quelle coerenti con il tema.
+   - Le città disponibili sono in `/dove-lavoriamo`.
+   - Si aggiungono al link del servizio e a 1-2 link ad altri articoli.
+3. **Almeno 1 caso cliente reale per articolo**, con link a `/cliente/…` o `/casi-studio/…`.
+   - Scegli il cliente coerente con il tema (vedi la mappa clienti sotto).
+   - Niente dati o risultati inventati.
+4. **1 aggiornamento al mese di un articolo che già esce su Google** (Search Console, posizione 5-20).
+   - Cosa aggiornare: sezione nuova, dati aggiornati, FAQ in più, campo `updated`.
+   - Priorità oggi: `reel-o-post-cosa-pubblicare-instagram` e `tracking-pixel-email-garante`.
+5. **Al massimo 3 articoli su 8 su temi nazionali o di novità** (Meta, Google, normative). Solo se c'è una fonte ufficiale e un aggancio pratico per attività locali.
+6. **Ogni articolo ha una FAQ finale** di 2-3 domande, scritte come le farebbe un cliente ("quanto costa…", "quanto tempo serve…"), senza prezzi InLab.
+
+**Mappa clienti per temi** (solo clienti pubblicati):
+
+| Tema | Clienti |
+|---|---|
+| ristoranti e bar | Sottoscala (Mottola), Casa28 (Castellaneta), Pizzeria Hermitage (Laterza) |
+| lidi e mare | Il Paradiso, La Vela (Castellaneta Marina) |
+| pasticcerie e gelaterie | Sublime Tentazione (Palagianello), Pasticceria Naturale (Ferrara) |
+| masserie ed eventi | Masseria Sacramento (Palagianello), Villa Natia (Mottola) |
+| studi professionali e sito | Studio Dentistico Ricciardi (Palagiano) |
+| negozi e ottica | Ottica Occhi Blu (Castellaneta), Vision Ottica (Palagianello/Mottola), Arte e Oro (Palagianello) |
+| automotive | Nunzio Putignano (Palagiano), DIRAM (Palagianello), Splashcar (Laterza), Inox Racing Puglia |
+| immobiliare | Studio Ventimiglia (Castellaneta) |
+| prodotti tipici ed e-commerce | Olio Vanessa (Castellaneta), Tacco (vini, Shopify) |
+| sport | Match Point (Castellaneta) |
+| energia | Emmesse (Taranto) |
+| rebranding e lancio | Paresteta (Ginosa) |
+
+**Argomenti locali pronti** (non ancora coperti nella §10):
+1. Social media per ristoranti in provincia di Taranto (gestione social; Sottoscala, Casa28; Taranto, Mottola, Castellaneta)
+2. Come promuovere un lido sulla costa ionica (meta-ads; Il Paradiso, La Vela; Castellaneta Marina, Ginosa, Pulsano, Nardò)
+3. Video per agenzie immobiliari in Puglia (video; Studio Ventimiglia; Castellaneta, Taranto, Bari)
+4. Sito web per studi dentistici e medici in Puglia (siti-web; Ricciardi; Palagiano, Acquaviva, Altamura)
+5. Comunicazione per pasticcerie e gelaterie (gestione social; Sublime Tentazione, Pasticceria Naturale; Palagianello, Ferrara, Ceglie Messapica)
+6. Matrimoni ed eventi in masseria: come promuovere una location in Puglia (shooting/video; Villa Natia, Masseria Sacramento; Mottola, Conversano, Fasano)
+7. Marketing per officine e autoricambi (video; Nunzio Putignano, DIRAM, Splashcar; Palagiano, Palagianello, Laterza)
+8. Turismo in Valle d'Itria: social per B&B e case vacanza (gestione social; Alberobello, Locorotondo, Ostuni, Cisternino)
+9. Comunicazione per negozi di ottica (gestione social; Occhi Blu, Vision Ottica; Castellaneta, Mottola, Palagianello)
+10. Social media manager a Lecce e nel Salento: cosa fa e come sceglierlo (gestione social; Lecce, Nardò, Gallipoli). Va tenuto distinto da `social-media-manager-taranto`: l'esempio dev'essere diverso.
