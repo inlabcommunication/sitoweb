@@ -269,7 +269,20 @@ const webPage = (path: string, title: string, description: string) => ({
 // Articoli del blog: quelli nel codice + quelli pubblicati dalla dashboard
 // (registrati dal browser dopo il caricamento e dallo script di build).
 let blogPosts: BlogPost[] = [];
-export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filter((p) => p.published); };
+// Nel browser gli articoli arrivano con il codice del blog, dopo il primo
+// calcolo della SEO: finché non sono registrati, la SEO di /blog/… resta quella
+// dell'HTML statico (mai il noindex del ramo "pagina sconosciuta"), poi chi
+// ascolta la riapplica (segnalazione SEO 26/10: 3 articoli esclusi da Google).
+let blogReady = false;
+const blogListeners = new Set<() => void>();
+export const registerBlogPosts = (posts: BlogPost[]) => {
+  blogPosts = posts.filter((p) => p.published);
+  blogReady = true;
+  blogListeners.forEach((fn) => fn());
+};
+export const onBlogPostsChange = (fn: () => void) => { blogListeners.add(fn); return () => { blogListeners.delete(fn); }; };
+/** La SEO di questa pagina si può calcolare adesso? (falso per /blog/… finché gli articoli non sono registrati) */
+export const seoReady = (path: string) => blogReady || !path.startsWith('/blog/');
 export const getBlogPosts = () => blogPosts;
 const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
 

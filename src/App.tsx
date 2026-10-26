@@ -15,7 +15,7 @@ import { getCurrentPath, linkClick, navigate } from "./lib/router";
 import { useAgencyStats } from "./data/stats";
 import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
 import { BrowserMockup } from "./components/BrowserMockup";
-import { getSeo } from "./seo/routes";
+import { getSeo, seoReady, onBlogPostsChange } from "./seo/routes";
 import { applySeo } from "./seo/head";
 import { loadContent, useContent } from "./lib/content";
 import { getClientId, normalizeClients } from "./lib/clientUtils";
@@ -2340,7 +2340,12 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   // SEO: titolo, description, canonical e dati strutturati della pagina corrente
   // (ricalcolati quando arrivano i contenuti salvati dalla dashboard)
   const siteContent = useContent();
-  useEffect(() => { registerContent(siteContent); applySeo(getSeo(route)); }, [route, siteContent]);
+  useEffect(() => {
+    registerContent(siteContent);
+    if (seoReady(route)) applySeo(getSeo(route));
+    // articoli del blog registrati dopo: riapplica la SEO della pagina corrente
+    return onBlogPostsChange(() => applySeo(getSeo(route)));
+  }, [route, siteContent]);
   // Google Analytics (solo con consenso): page_view dopo l'aggiornamento del titolo
   const lastGaRoute = React.useRef(route); // la prima visualizzazione la invia initGa
   useEffect(() => {
