@@ -737,6 +737,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per aziende agricole e attività di Turi: la filiera raccontata tutto l'anno e campagne in periodo di raccolta." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Molfetta", provincia: "provincia di Bari",
+    contesto: "Molfetta, a nord di Bari, è conosciuta per il Duomo di San Corrado affacciato sul mare e per il suo porto peschereccio, tra i più importanti dell'Adriatico. Accanto alla pesca ci sono una zona industriale attiva, commercio e ristorazione.",
+    settori: ["ristoranti di pesce e pescherie", "imprese e aziende", "negozi e servizi"],
+    faq: { q: "Lavorate anche con aziende e imprese?", a: "Sì: sito, branding, foto e video aziendali, LinkedIn e campagne per generare contatti." },
+    description: "Agenzia di comunicazione a Molfetta: social, foto, video, siti e campagne per ristoranti, negozi, imprese e attività del porto. Preventivo gratuito.",
+    intro: "Molfetta è una città di mare e di imprese, con uno dei porti pescherecci più importanti dell'Adriatico. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e aziende.",
+    focus: { titolo: "Dal porto al web", testo: "Per un ristorante di pesce, una pescheria o un'impresa di Molfetta conta mostrare la freschezza e il lavoro vero: il pescato, il porto, le persone. Facciamo foto e video sul posto, curiamo social e scheda Google e costruiamo siti chiari per le aziende che vogliono farsi trovare anche fuori città." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, pescherie e imprese di Molfetta: lavoro vero e freschezza raccontati con foto e video." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
