@@ -13,6 +13,11 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
   - non serve aspettare la sua approvazione prima di scrivere;
   - quando la SEO assegna un compito in un brief, quel compito ha la precedenza;
   - in caso di conflitto sul posizionamento prevale la SEO.
+- **Regole SEO dal 26/10/2026**, approvate da Nicola. Il testo completo è in LINEE-GUIDA-BLOG §11, sul branch SEO:
+  - almeno 5 articoli su 8 al mese con aggancio locale nel titolo o nella keyword, e al massimo 3 su temi nazionali o di novità, solo con fonte ufficiale;
+  - ogni articolo ha 2-3 link a pagine città, almeno 1 cliente reale con link alla sua scheda e una FAQ finale di 2-3 domande;
+  - ogni mese si aggiorna 1 articolo che già esce su Google. Priorità: `reel-o-post-cosa-pubblicare-instagram` e `tracking-pixel-email-garante`;
+  - per i temi nuovi si parte dai 10 "argomenti locali pronti" della §11.
 - **Direttore Operativo** (sessione "Direttore Operativo Inlab."): coordina il progetto, le priorità e i crediti. Si passa da lui quando serve la sessione Sito Inlab, quando c'è un disaccordo o quando un lavoro costa molti crediti. Mappa del progetto: `docs/direzione/MAPPA-PROGETTO.md`.
 - **Pull request:** le apre l'addetto al blog dal proprio branch, solo con file della sua area. Sito Inlab fa il controllo tecnico, Nicola la unisce.
 - **Mappa "Già coperte":** la aggiorna il responsabile SEO. L'addetto al blog scrive le voci nuove nel resoconto, nella sezione "Voci da aggiungere alla mappa".
