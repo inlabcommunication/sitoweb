@@ -24,7 +24,7 @@ Fonti: le regole SEO del 26/10 (LINEE-GUIDA-BLOG §11) e il messaggio della SEO 
    - Solo i fattori che fanno il prezzo. **Nessuna cifra**: è la regola di Nicola, niente soldi sulla gestione.
 2. **"Quanto costa un sito web per un'attività locale"**
    - Keyword: *quanto costa un sito web*.
-   - Solo i fattori, nessuna cifra InLab. Le cifre di fonti esterne solo se ufficiali e citate.
+   - Solo i fattori che fanno il prezzo, **nessuna cifra** (vedi la regola sotto).
 3. **"Come pubblicizzare un'attività locale in provincia di Taranto"** (social e Google).
 4. **"Social media per ristoranti in provincia di Taranto"**
    - Keyword secondarie: *marketing per ristoranti*, *strategie di marketing per ristoranti*.
@@ -42,6 +42,9 @@ Fonti: le regole SEO del 26/10 (LINEE-GUIDA-BLOG §11) e il messaggio della SEO 
 
 ## Aggiornamenti in più (non articoli nuovi)
 - `sponsorizzate-instagram-attivita-locali`: sezione nuova "Come promuovere un reel su Instagram", con keyword *come promuovere un reel su Instagram*.
+
+## Regola di Nicola sui prezzi (26/10)
+Negli articoli "quanto costa", e in tutto il blog, **non si scrive nessuna cifra** per servizi di comunicazione, social, siti, video o foto: né le tariffe InLab né le "fasce di mercato" o le cifre di altre fonti. Il motivo è che un prezzo basso scritto nel blog attirerebbe richieste con aspettative sbagliate. Si spiegano solo i fattori che fanno cambiare il prezzo e si invita a chiedere un preventivo. Restano ammessi solo i costi ufficiali delle piattaforme (per esempio un abbonamento Meta), con la fonte.
 
 ## Regole fisse
 In ogni articolo:
