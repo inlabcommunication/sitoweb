@@ -55,6 +55,8 @@ Nella bio scrivi in una riga cosa fai e dove: "Pasticceria artigianale a Palagia
 
 Nelle impostazioni del profilo professionale scegli la categoria giusta e compila indirizzo, telefono e orari. Sono informazioni che aiutano le persone e rendono il profilo coerente con la tua scheda Google.
 
+> **Vuoi che il tuo profilo Instagram lavori anche su Google?** Ti diciamo cosa cambiare in bio, didascalie e contenuti. [Scrivici e chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
 ## Didascalie e testi alternativi: il cuore della SEO su Instagram
 
 ### Didascalie che spiegano

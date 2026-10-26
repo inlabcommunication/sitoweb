@@ -48,6 +48,7 @@ Negli articoli "quanto costa", e in tutto il blog, **non si scrive nessuna cifra
 
 ## Regole fisse
 In ogni articolo:
+- CTA forte verso /contatti a metà articolo, come riquadro con preventivo gratuito e risposta entro 24 ore, e di nuovo alla fine (regola di Nicola del 26/10);
 - 2-3 link a pagine città;
 - almeno 1 cliente reale con link;
 - FAQ di 2-3 domande.

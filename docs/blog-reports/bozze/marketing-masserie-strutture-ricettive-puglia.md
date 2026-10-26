@@ -63,6 +63,8 @@ Conviene organizzare **sessioni di foto e video professionali** almeno due volte
 
 Trovi qualche consiglio pratico anche nella guida al [servizio fotografico per ristoranti](/blog/servizio-fotografico-ristoranti), che vale per qualsiasi sala.
 
+> **Hai una masseria o una struttura per eventi?** Ti aiutiamo a riempire camere, sale e date con foto, video, social e prenotazioni dirette. [Raccontaci la tua struttura](/contatti): rispondiamo entro 24 ore con un preventivo gratuito.
+
 ## Sito e prenotazioni dirette
 
 I portali di prenotazione portano visibilità, ma ogni prenotazione passa da loro. Un sito ben fatto aiuta a ricevere più **richieste dirette**.

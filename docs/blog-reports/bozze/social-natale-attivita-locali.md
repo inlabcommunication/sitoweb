@@ -81,6 +81,8 @@ Ne è un esempio [Sublime Tentazione](/cliente/sublime-tentazione), gelateria e 
 
 ![Idee di contenuti social di Natale per ristoranti, negozi e laboratori](/blog/social-natale-attivita-locali/idee-contenuti-natale-social.webp)
 
+> **Vuoi arrivare a dicembre con il piano social di Natale già pronto?** Lo prepariamo insieme a te, con foto e video fatti nella tua attività. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
 ## Sponsorizzate a Natale: quando servono
 
 A dicembre la concorrenza per l'attenzione è alta, anche nelle sponsorizzate. Per un'attività locale funzionano bene campagne brevi e mirate:

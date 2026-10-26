@@ -55,6 +55,8 @@ Scrivi in modo chiaro sul sito costi, tempi e zone di spedizione. E chiedi al tu
 
 ![Come spedire vino, olio e latticini venduti online: imballi, catena del freddo e tempi di consegna](/blog/vendere-prodotti-tipici-pugliesi-online/spedizioni-prodotti-tipici-online.webp)
 
+> **Vuoi vendere online i tuoi prodotti?** Ti aiutiamo con negozio online, foto dei prodotti e social che portano al carrello. [Raccontaci la tua azienda](/contatti): rispondiamo entro 24 ore con un preventivo gratuito.
+
 ## Schede prodotto e foto che fanno vendere
 
 Online il cliente non può assaggiare: deve potersi fidare di quello che vede e legge.

@@ -14,6 +14,10 @@ Istruzioni per chi (persona o sessione automatica) cura il blog. Ruolo: SEO stra
   - quando la SEO assegna un compito in un brief, quel compito ha la precedenza;
   - in caso di conflitto sul posizionamento prevale la SEO.
 - **Nessuna cifra sui servizi** (regola di Nicola, 26/10/2026): nel blog non si scrive nessun prezzo di servizi di comunicazione, social, siti, video o foto, né InLab né "di mercato". Negli articoli "quanto costa" si spiegano solo i fattori e si invita al preventivo. Sono ammessi solo i costi ufficiali delle piattaforme, con la fonte.
+- **CTA forte verso i contatti in ogni articolo** (regola di Nicola, 26/10/2026). Ogni articolo porta a /contatti almeno due volte:
+  - **a metà articolo**, un riquadro in citazione (`>`): una domanda in grassetto legata al tema, cosa facciamo noi in una frase e un link a /contatti con "preventivo gratuito" e "rispondiamo entro 24 ore";
+  - **alla fine**, nella sezione "Da dove partire", un invito chiaro a scriverci, con il link a /contatti.
+  Lo scopo degli articoli è portare contatti, non solo visite.
 - **Regole SEO dal 26/10/2026**, approvate da Nicola. Il testo completo è in LINEE-GUIDA-BLOG §11, sul branch SEO:
   - almeno 5 articoli su 8 al mese con aggancio locale nel titolo o nella keyword, e al massimo 3 su temi nazionali o di novità, solo con fonte ufficiale;
   - ogni articolo ha 2-3 link a pagine città, almeno 1 cliente reale con link alla sua scheda e una FAQ finale di 2-3 domande;
