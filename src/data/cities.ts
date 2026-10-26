@@ -689,6 +689,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per lidi, ristoranti e strutture di Nardò e delle marine: contenuti per la stagione e presenza costante tutto l'anno." },
   },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Gallipoli", provincia: "provincia di Lecce",
+    contesto: "Gallipoli ha il centro storico su un'isola collegata alla terraferma, spiagge sabbiose lungo la costa ionica e una lunga tradizione di pesca, famosa per il gambero rosso. D'estate è una delle località più frequentate della Puglia, anche dai giovani.",
+    settori: ["lidi e beach club", "ristoranti di pesce e locali", "strutture ricettive"],
+    faq: { q: "Fate contenuti per locali ed eventi estivi?", a: "Sì: reel, foto, grafiche ed eventi raccontati sui social, con sponsorizzate mirate." },
+    description: "Agenzia di comunicazione a Gallipoli: social, foto, video e campagne per lidi, locali, ristoranti e strutture della Perla dello Ionio. Preventivo gratuito.",
+    intro: "Gallipoli è una delle mete estive più famose del Salento. Seguiamo social, foto, video, sponsorizzate e siti per lidi, locali, ristoranti e strutture, da Castellaneta.",
+    focus: { titolo: "Emergere in piena stagione", testo: "A Gallipoli d'estate tutti comunicano insieme. Per emergere servono contenuti forti e riconoscibili, reel girati sul posto, una scheda Google curata e sponsorizzate mirate a chi è già in zona o sta per arrivare. Fuori stagione puntiamo su chi vive in Salento e sugli eventi." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, locali e ristoranti di Gallipoli: reel sul posto, eventi e sponsorizzate per farsi notare in stagione." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

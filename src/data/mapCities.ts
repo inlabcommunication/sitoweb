@@ -52,6 +52,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Francavilla Fontana', region: 'Puglia', lat: 40.531, lon: 17.585 },
   { name: 'Lecce', region: 'Puglia', lat: 40.353, lon: 18.172 },
   { name: 'Nardò', region: 'Puglia', lat: 40.178, lon: 18.033 },
+  { name: 'Gallipoli', region: 'Puglia', lat: 40.056, lon: 17.979 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
