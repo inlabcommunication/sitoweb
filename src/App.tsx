@@ -1758,7 +1758,7 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
       <div>
         <p className="section-label">Domanda frequente</p>
         <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",marginBottom:"1rem"}}>{info.faq.q}</h3>
-        <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq.a}</p>
+        <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}><IntroText text={info.faq.a} link={info.faq.link}/></p>
         {info.faq2 && <>
           <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{info.faq2.q}</h3>
           <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{info.faq2.a}</p>

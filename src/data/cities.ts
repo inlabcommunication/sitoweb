@@ -7,7 +7,8 @@ export type CityInfo = {
   provincia: string;
   contesto: string;
   settori: string[];
-  faq: { q: string; a: string };
+  /** `link`: collegamento su una parola della risposta (es. un cliente → la sua scheda, brief SEO 26/10) */
+  faq: { q: string; a: string; link?: { testo: string; href: string } };
   /** "Come lavoriamo a {città}" (brief SEO 01/10 sera) */
   metodo?: string;
   faq2?: { q: string; a: string };
