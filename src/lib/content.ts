@@ -103,19 +103,52 @@ const defaultContent = () => (defaults ??= normalizeSiteContent(WEBSITE_CONTENT)
 
 export const getContent = (): SiteContent => cached ?? defaultContent();
 
+// Copia di sessione di site_content (sessionStorage, si cancella alla chiusura
+// della scheda): undefined = da leggere, null = lettura sospesa dopo un errore.
+const SESSION_KEY = 'inlab_sc';
+const SESSION_MAX_AGE = 30 * 60 * 1000;
+const readSessionContent = (): any | null | undefined => {
+  try {
+    const v = sessionStorage.getItem(SESSION_KEY);
+    if (!v) return undefined;
+    const d = JSON.parse(v);
+    if (d?.failed) return Date.now() - d.at < SESSION_MAX_AGE ? null : undefined;
+    return d?.raw && Date.now() - d.at < SESSION_MAX_AGE ? d.raw : undefined;
+  } catch { return undefined; }
+};
+const writeSessionContent = (raw: any) => {
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify({ at: Date.now(), raw })); } catch { /* spazio pieno o non disponibile */ }
+};
+const markSessionContentFailed = () => {
+  try { sessionStorage.setItem(SESSION_KEY, JSON.stringify({ at: Date.now(), failed: true })); } catch { /* niente */ }
+};
+
 /** full = servono i dati completi (dashboard), non la versione ridotta della pagina. */
 export const loadContent = async (forceRefresh = false, full = false): Promise<SiteContent> => {
   if (cached && !forceRefresh && !(full && cachedSlim)) return cached;
   try {
     const db = await getLiteDb();
     if (!db) {
-      if (full && cachedSlim) throw new Error('contenuti completi non disponibili');
+      // dashboard: mai lavorare (e poi salvare) sui contenuti predefiniti al posto di quelli veri
+      if (full) throw new Error('contenuti completi non disponibili');
       cached ??= defaultContent(); return cached;
     }
-    const { doc, getDoc } = await liteFirestore();
-    const snap = await getDoc(doc(db, 'app', 'site_content'));
-    if (snap.exists()) {
-      const raw = snap.data() as any;
+    // Sito pubblico: una lettura di site_content per sessione del visitatore (al
+    // massimo ogni 30 minuti), e dopo un errore (es. quota esaurita, 27/10) nessun
+    // nuovo tentativo in questa sessione. La dashboard (full) legge sempre.
+    const session = !full ? readSessionContent() : undefined;
+    if (session === null) { cached ??= defaultContent(); return cached; }
+    let raw: any;
+    let exists = true;
+    if (session) raw = session;
+    else {
+      const { doc, getDoc } = await liteFirestore();
+      const snap = await getDoc(doc(db, 'app', 'site_content'));
+      exists = snap.exists();
+      raw = exists ? snap.data() : null;
+      if (!full && exists) writeSessionContent(raw);
+    }
+    if (exists) {
       const key = stableKey(slimForPage(raw));
       if (cached && key === savedKey && !(full && cachedSlim)) return cached;
       savedKey = key;
@@ -126,8 +159,11 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
   } catch (e) {
-    // La dashboard non deve mai modificare (e poi salvare) la versione ridotta.
-    if (full && cachedSlim) throw e;
+    // La dashboard non deve mai modificare (e poi salvare) la versione ridotta né i
+    // contenuti predefiniti: se la lettura fallisce (es. quota Firestore esaurita,
+    // 27/10) l'editor mostra l'errore invece di partire dai valori del codice.
+    if (full) throw e;
+    markSessionContentFailed();
     console.warn('[content] fallback ai contenuti statici', e);
     cached ??= defaultContent();
   }
