@@ -11,7 +11,7 @@
 ## 1. Studio Dentistico Ricciardi (Palagiano)
 
 **Risultati**
-- Lead generation ottimizzata: le giornate dedicate vanno sold out nel 70% dei casi ⚠️
+- Lead generation ottimizzata: quasi tutte le giornate dedicate vanno sold out ⚠️
 - Più richieste di appuntamento e più richieste di informazioni
 - Più follower sui profili social
 - Il risultato che conta di più: la crescita reale dei risultati direttamente in studio
@@ -90,7 +90,7 @@
 
 ## Note
 
-- Per la formula "70% dei casi sold out" (Ricciardi) e "oltre il 30% in due mesi" (Sublime Tentazione) serve la tua conferma che siano dati reali e riferiti al periodo giusto: nel resto del sito i dati devono essere "dati indicativi riferiti al periodo della campagna" (decisione del 03/10).
+- Per la formula "quasi tutte le giornate sold out" (Ricciardi, senza percentuale per decisione di Nicola del 27/10) e "oltre il 30% in due mesi" (Sublime Tentazione) serve la tua conferma che siano dati reali e riferiti al periodo giusto: nel resto del sito i dati devono essere "dati indicativi riferiti al periodo della campagna" (decisione del 03/10).
 - Per Nunzio ho scritto "oltre 200.000 visualizzazioni" come hai indicato, senza dire quale reel.
 - Per i dati sui follower (Masseria Sacramento) e le visualizzazioni (Nunzio) vale la stessa conferma: devono essere quelli più recenti.
 - I numeri non sono stati arrotondati verso l'alto: sono quelli scritti da Nicola.
