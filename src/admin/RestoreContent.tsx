@@ -9,7 +9,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore';
 // salva una copia in app/site_content_backup_<data> e la scarica sul computer:
 // se la lettura o la copia non riescono, non scrive niente.
 
-type Summary = { clients: number; otherClients: number; reels: number; images: number; schemaVersion: unknown };
+type Summary = { clients: number; otherClients: number; reels: number; logos: number; images: number; schemaVersion: unknown };
 
 const summarize = (d: any): Summary => {
   const s = JSON.stringify(d ?? {});
@@ -18,10 +18,19 @@ const summarize = (d: any): Summary => {
     clients: items('clients').length,
     otherClients: items('otherClients').length,
     reels: items('clients').reduce((n: number, c: any) => n + (Array.isArray(c?.reels) ? c.reels.filter((r: any) => r?.embed).length : 0), 0),
+    logos: [...items('clients'), ...items('otherClients')].filter((c: any) => c?.logo).length,
     images: (s.match(/res\.cloudinary\.com/g) || []).length,
     schemaVersion: d?.schemaVersion,
   };
 };
+
+// Motivi per cui il file potrebbe non essere quello giusto: servono l'avviso
+// rosso e una seconda conferma prima di scrivere.
+const risks = (f: Summary, cur: Summary) => [
+  f.schemaVersion !== 3 && `il file non è nello schema attuale (3) ma ${String(f.schemaVersion)}`,
+  f.clients < cur.clients && `il file ha meno clienti (${f.clients}) di quelli attuali (${cur.clients})`,
+  f.otherClients < cur.otherClients && `il file ha meno "altri clienti" (${f.otherClients}) di quelli attuali (${cur.otherClients})`,
+].filter(Boolean) as string[];
 
 const download = (name: string, data: unknown) => {
   const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 1)], { type: 'application/json' }));
@@ -32,7 +41,7 @@ const download = (name: string, data: unknown) => {
 
 const Row = ({ label, s }: { label: string; s: Summary }) => (
   <div style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.7 }}>
-    <b style={{ color: 'var(--t)' }}>{label}</b>: {s.clients} clienti, {s.otherClients} altri clienti, {s.reels} reel, {s.images} immagini Cloudinary (schema {String(s.schemaVersion ?? '–')})
+    <b style={{ color: 'var(--t)' }}>{label}</b>: {s.clients} clienti, {s.otherClients} altri clienti, {s.reels} reel, {s.logos} loghi, {s.images} immagini Cloudinary (schema {String(s.schemaVersion ?? '–')})
   </div>
 );
 
@@ -64,6 +73,8 @@ export const RestoreContent = () => {
   const restore = async () => {
     if (!file || !db || done) return;
     if (!window.confirm(`Sostituire i contenuti del sito con "${file.name}"?\nPrima viene salvata una copia di quelli attuali.`)) return;
+    const warn = current ? risks(summarize(file.data), current) : [];
+    if (warn.length && !window.confirm(`ATTENZIONE: ${warn.join('; ')}.\nConfermi lo stesso il ripristino?`)) return;
     setBusy(true); setMsg(null);
     try {
       const snap = await getDoc(doc(db, 'app', 'site_content'));
@@ -89,6 +100,9 @@ export const RestoreContent = () => {
       <input type="file" accept="application/json,.json" disabled={busy || done} onChange={(e) => pick(e.target.files?.[0])} style={{ fontSize: 12, marginBottom: 12 }} />
       {file && <Row label="File" s={summarize(file.data)} />}
       {current && <Row label="Attuali" s={current} />}
+      {file && current && risks(summarize(file.data), current).map((r) => (
+        <div key={r} role="alert" style={{ marginTop: 8, fontSize: 12, color: '#ffb4b4' }}><AlertCircle size={12} style={{ display: 'inline', marginRight: 6 }} />Attenzione: {r}.</div>
+      ))}
       {file && current && (
         <button onClick={restore} disabled={busy || done} className="btn btn-p" style={{ marginTop: 12, opacity: busy || done ? 0.6 : 1 }}>
           {busy ? 'Ripristino…' : 'Ripristina dal file'}
