@@ -109,7 +109,8 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
   try {
     const db = await getLiteDb();
     if (!db) {
-      if (full && cachedSlim) throw new Error('contenuti completi non disponibili');
+      // dashboard: mai lavorare (e poi salvare) sui contenuti predefiniti al posto di quelli veri
+      if (full) throw new Error('contenuti completi non disponibili');
       cached ??= defaultContent(); return cached;
     }
     const { doc, getDoc } = await liteFirestore();
@@ -126,8 +127,10 @@ export const loadContent = async (forceRefresh = false, full = false): Promise<S
       cached = normalizeSiteContent(WEBSITE_CONTENT);
     }
   } catch (e) {
-    // La dashboard non deve mai modificare (e poi salvare) la versione ridotta.
-    if (full && cachedSlim) throw e;
+    // La dashboard non deve mai modificare (e poi salvare) la versione ridotta né i
+    // contenuti predefiniti: se la lettura fallisce (es. quota Firestore esaurita,
+    // 27/10) l'editor mostra l'errore invece di partire dai valori del codice.
+    if (full) throw e;
     console.warn('[content] fallback ai contenuti statici', e);
     cached ??= defaultContent();
   }

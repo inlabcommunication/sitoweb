@@ -46,6 +46,7 @@ const KNOWLEDGE_EXAMPLE = `Esempi di cosa scrivere (una informazione per riga):
 export const Settings = () => {
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
   const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<'idle' | 'saved' | 'error'>('idle');
   const [hadStoredKeys, setHadStoredKeys] = useState(false);
@@ -80,11 +81,12 @@ export const Settings = () => {
         setHadStoredKeys(!!(d.geminiApiKey || d.anthropicApiKey));
       }
       setLoading(false);
-    });
+    }).catch(() => { setLoadFailed(true); setLoading(false); });
   }, []);
 
   const save = async () => {
-    if (!db) return;
+    // impostazioni non lette dal database: salvare ora cancellerebbe quelle vere
+    if (!db || loadFailed) { setStatus('error'); return; }
     setSaving(true); setStatus('idle');
     try {
       // setDoc senza merge: sovrascrive il documento e cancella eventuali chiavi salvate in passato
