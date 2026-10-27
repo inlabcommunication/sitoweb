@@ -3,7 +3,7 @@ import type React from 'react';
 import { motion } from 'motion/react';
 import { TrendingUp, Eye, Clock, MousePointerClick, Monitor, Smartphone, Tablet, Globe } from 'lucide-react';
 import { db } from '../lib/firebase';
-import { collection, query, where, getDocs, Timestamp } from 'firebase/firestore';
+import { collection, query, where, getDocs, limit, Timestamp } from 'firebase/firestore';
 import { isTrackingDisabled, setTrackingDisabled } from '../lib/analytics';
 
 type Range = '7d' | '30d' | '90d';
@@ -29,6 +29,8 @@ const DeviceTracking = () => {
 };
 
 const EVENTS_CACHE = new Map<number, { at: number; events: any[] }>();
+// Tetto alle letture per richiesta (1 evento = 1 lettura Firestore): oltre, si mostrano gli ultimi N
+const MAX_EVENTS = 15000;
 
 export const Analytics = () => {
   // 7 giorni di partenza: ogni evento letto è una lettura Firestore (quota esaurita il 27/10)
@@ -40,6 +42,8 @@ export const Analytics = () => {
   const [referrers, setReferrers] = useState<Referrer[]>([]);
   const [sectionScroll, setSectionScroll] = useState<{ section: string; avg: number; views: number }[]>([]);
 
+  const [capped, setCapped] = useState(false);
+  const [reload, setReload] = useState(0);
   const days = range === '7d' ? 7 : range === '30d' ? 30 : 90;
 
   useEffect(() => {
@@ -54,12 +58,13 @@ export const Analytics = () => {
     const hit = EVENTS_CACHE.get(days);
     const read = hit && Date.now() - hit.at < 10 * 60 * 1000
       ? Promise.resolve(hit.events)
-      : getDocs(query(eventsRef, where('created_at', '>=', since))).then((snap) => {
+      : getDocs(query(eventsRef, where('created_at', '>=', since), limit(MAX_EVENTS))).then((snap) => {
           const ev = snap.docs.map((d) => d.data());
           EVENTS_CACHE.set(days, { at: Date.now(), events: ev });
           return ev;
         });
     read.then((events) => {
+      setCapped(events.length >= MAX_EVENTS);
 
       // Daily aggregation
       const dailyMap = new Map<string, { sessions: Set<string>; pageviews: number; durations: number[]; scrolls: number[] }>();
@@ -122,7 +127,7 @@ export const Analytics = () => {
 
       setLoading(false);
     }).catch((e) => { console.error('[analytics] lettura fallita', e); setLoading(false); });
-  }, [days]);
+  }, [days, reload]);
 
   const totalVisitors = daily.reduce((a, b) => a + (b.unique_visitors || 0), 0);
   const totalViews = daily.reduce((a, b) => a + (b.pageviews || 0), 0);
@@ -139,6 +144,7 @@ export const Analytics = () => {
           <h2 style={{ fontFamily: 'var(--fd)', fontSize: '2.5rem', letterSpacing: '.02em' }}>ANALYTICS</h2>
         </div>
         <div style={{ display: 'flex', gap: 6, padding: 4, background: 'rgba(255,255,255,0.04)', borderRadius: 100, border: '.5px solid var(--b)' }}>
+          <button onClick={() => { EVENTS_CACHE.delete(days); setReload((n) => n + 1); }} title="Rilegge i dati dal database" style={{ padding: '6px 14px', borderRadius: 100, fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', fontWeight: 500, border: 'none', background: 'transparent', color: 'var(--m)' }}>Aggiorna</button>
           {(['7d', '30d', '90d'] as Range[]).map((r) => (
             <button key={r} onClick={() => setRange(r)} style={{ padding: '6px 14px', borderRadius: 100, fontSize: 11, letterSpacing: '.1em', textTransform: 'uppercase', fontWeight: 500, border: 'none', background: range === r ? 'var(--a)' : 'transparent', color: range === r ? '#000' : 'var(--m)', transition: 'all .2s' }}>
               {r === '7d' ? '7 giorni' : r === '30d' ? '30 giorni' : '90 giorni'}
@@ -148,6 +154,7 @@ export const Analytics = () => {
       </div>
 
       <DeviceTracking />
+      {capped && <div role="status" style={{ fontSize: 12, color: 'var(--m)', marginBottom: '1.5rem' }}>Troppi eventi nel periodo: per non consumare la quota del database mostro i primi {MAX_EVENTS.toLocaleString('it-IT')}. Scegli un periodo più breve per dati completi.</div>}
 
       {loading ? (
         <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--m)' }}>Caricamento...</div>
