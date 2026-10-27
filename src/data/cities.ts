@@ -7,7 +7,8 @@ export type CityInfo = {
   provincia: string;
   contesto: string;
   settori: string[];
-  faq: { q: string; a: string };
+  /** `link`: collegamento su una parola della risposta (es. un cliente → la sua scheda, brief SEO 26/10) */
+  faq: { q: string; a: string; link?: { testo: string; href: string } };
   /** "Come lavoriamo a {città}" (brief SEO 01/10 sera) */
   metodo?: string;
   faq2?: { q: string; a: string };
@@ -651,6 +652,126 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Il punto di riferimento della costa lucana", testo: "Policoro serve un'area ampia, dal mare all'entroterra. Per negozi e servizi conta farsi trovare da chi arriva dai paesi vicini; per lidi e strutture conta la stagione estiva; per le aziende agricole conta raccontare il prodotto. Costruiamo una comunicazione diversa per ognuno, con scheda Google, social, sito e campagne." },
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per lidi, aziende e negozi di Policoro: contenuti per la stagione al mare e per i clienti di tutto il Metapontino." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Francavilla Fontana", provincia: "provincia di Brindisi",
+    contesto: "Francavilla Fontana deve il suo nome di Città degli Imperiali alla famiglia che costruì il Castello Imperiali e ne segnò il centro barocco. È un centro commerciale e di servizi per molti comuni vicini, tra la provincia di Brindisi e quella di Taranto.",
+    settori: ["negozi e commercio", "ristoranti e bar", "servizi e professionisti"],
+    faq: { q: "Le sponsorizzate possono raggiungere anche i paesi vicini?", a: "Sì: scegliamo zona e raggio in base a dove abitano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Francavilla Fontana: social, foto, video, siti e campagne per negozi, ristoranti e attività della Città degli Imperiali. Preventivo gratuito.",
+    intro: "Francavilla Fontana è la Città degli Imperiali, a metà strada tra Taranto e Brindisi. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e attività del paese, da Castellaneta.",
+    focus: { titolo: "Farsi scegliere da chi arriva dai paesi vicini", testo: "Molti clienti di un'attività di Francavilla arrivano dai comuni intorno. Per loro contano la scheda Google, le recensioni e un profilo social che faccia capire subito cosa offri. Impostiamo sponsorizzate per raggio su Francavilla e dintorni e contenuti costanti che fanno ricordare il tuo nome quando serve." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per negozi, ristoranti e servizi di Francavilla Fontana: contenuti riconoscibili e sponsorizzate sulla zona." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Lecce", provincia: "provincia di Lecce",
+    contesto: "Lecce è conosciuta per il barocco in pietra leccese, la Basilica di Santa Croce e l'anfiteatro romano in piazza Sant'Oronzo. È una città universitaria e turistica, con ristoranti, strutture ricettive e negozi che lavorano con un pubblico locale e internazionale.",
+    settori: ["ristoranti e locali del centro", "strutture ricettive e case vacanza", "negozi, studi e servizi"],
+    faq: { q: "Seguite attività di Lecce anche se siete in provincia di Taranto?", a: "Sì: strategia, contenuti e campagne a distanza, con incontri e riprese sul posto quando servono." },
+    description: "Agenzia di comunicazione a Lecce: strategia, social, video, siti e campagne per attività, ristoranti e strutture del Salento. Da Castellaneta, preventivo gratuito.",
+    intro: "Lecce è la capitale del barocco e del Salento, con un mercato vivace e molta concorrenza. Portiamo strategia, social, video, siti e campagne alle attività leccesi, lavorando da Castellaneta e venendo di persona per riprese e incontri.",
+    focus: { titolo: "In una città piena di offerta serve un'identità", testo: "A Lecce molte attività si somigliano: stesso centro storico, stessi turisti, stessi scatti. Per farsi scegliere bisogna avere un'identità precisa, che si riconosce su social, sito e scheda Google. Partiamo da lì, con branding e strategia, e costruiamo contenuti e campagne coerenti, per i leccesi e per chi visita il Salento." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, strutture e negozi di Lecce: identità chiara, contenuti curati e campagne per leccesi e turisti." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Nardò", provincia: "provincia di Lecce",
+    contesto: "Nardò ha uno dei centri barocchi più belli del Salento, con piazza Salandra, e una costa sullo Ionio che comprende il Parco di Porto Selvaggio e le marine di Santa Maria al Bagno e Santa Caterina. D'estate il turismo cresce molto.",
+    settori: ["lidi e strutture delle marine", "ristoranti e locali", "negozi e attività del centro"],
+    faq: { q: "Quando conviene iniziare la comunicazione per la stagione?", a: "In primavera: a giugno molti turisti hanno già prenotato." },
+    description: "Agenzia di comunicazione a Nardò: social, foto, video e campagne per lidi, ristoranti e strutture di Nardò e Santa Maria al Bagno. Preventivo gratuito.",
+    intro: "Da piazza Salandra al mare di Porto Selvaggio: seguiamo social, foto, video, sponsorizzate e siti per attività, lidi e strutture di Nardò e delle sue marine.",
+    focus: { titolo: "Preparare l'estate in primavera", testo: "Per lidi, ristoranti e strutture delle marine di Nardò, la stagione si decide prima che inizi. Prepariamo foto, video, scheda Google e campagne in primavera, quando i turisti scelgono dove andare, e seguiamo la comunicazione durante l'estate. Per il centro curiamo una presenza costante tutto l'anno." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, ristoranti e strutture di Nardò e delle marine: contenuti per la stagione e presenza costante tutto l'anno." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Gallipoli", provincia: "provincia di Lecce",
+    contesto: "Gallipoli ha il centro storico su un'isola collegata alla terraferma, spiagge sabbiose lungo la costa ionica e una lunga tradizione di pesca, famosa per il gambero rosso. D'estate è una delle località più frequentate della Puglia, anche dai giovani.",
+    settori: ["lidi e beach club", "ristoranti di pesce e locali", "strutture ricettive"],
+    faq: { q: "Fate contenuti per locali ed eventi estivi?", a: "Sì: reel, foto, grafiche ed eventi raccontati sui social, con sponsorizzate mirate." },
+    description: "Agenzia di comunicazione a Gallipoli: social, foto, video e campagne per lidi, locali, ristoranti e strutture della Perla dello Ionio. Preventivo gratuito.",
+    intro: "Gallipoli è una delle mete estive più famose del Salento. Seguiamo social, foto, video, sponsorizzate e siti per lidi, locali, ristoranti e strutture, da Castellaneta.",
+    focus: { titolo: "Emergere in piena stagione", testo: "A Gallipoli d'estate tutti comunicano insieme. Per emergere servono contenuti forti e riconoscibili, reel girati sul posto, una scheda Google curata e sponsorizzate mirate a chi è già in zona o sta per arrivare. Fuori stagione puntiamo su chi vive in Salento e sugli eventi." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, locali e ristoranti di Gallipoli: reel sul posto, eventi e sponsorizzate per farsi notare in stagione." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Fasano", provincia: "provincia di Brindisi",
+    contesto: "Il territorio di Fasano comprende la Selva di Fasano, il Parco archeologico di Egnazia, lo Zoosafari e la costa di Savelletri e Torre Canne, con masserie e strutture di alto livello. È una delle zone più richieste dal turismo internazionale in Puglia.",
+    settori: ["masserie e hotel", "ristoranti e locali", "attività turistiche e del centro"],
+    faq: { q: "Potete aiutare una masseria ad avere più prenotazioni dirette?", a: "Sì: foto e video curati, sito con prenotazione, scheda Google e social, anche in inglese." },
+    description: "Agenzia di comunicazione a Fasano: social, foto, video e campagne per masserie, hotel, ristoranti e attività tra Selva e Savelletri. Preventivo gratuito.",
+    intro: "Fasano va dalla Selva al mare, tra masserie, ulivi e borghi sulla costa. Seguiamo social, foto, video, sponsorizzate e siti per masserie, hotel, ristoranti e attività, da Castellaneta.",
+    focus: { titolo: "Stare al livello delle strutture migliori", testo: "Tra le masserie e gli hotel di Fasano la concorrenza è alta e il pubblico è esigente. Servono foto e video all'altezza, un sito che permetta di prenotare direttamente e contenuti curati, anche in inglese. Costruiamo una comunicazione che valorizzi il posto e porti prenotazioni dirette." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per masserie, hotel e ristoranti di Fasano: immagini all'altezza del posto e contenuti in italiano e inglese." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Monopoli", provincia: "provincia di Bari",
+    contesto: "Monopoli ha un centro storico affacciato sul mare, il porto antico con le barche dei pescatori, Cala Porta Vecchia e una lunga costa di calette e spiagge. È una città viva tutto l'anno, con un turismo che cresce anche fuori stagione.",
+    settori: ["ristoranti e locali", "B&B e strutture ricettive", "negozi del centro e lidi"],
+    faq: { q: "Ha senso comunicare anche d'inverno?", a: "A Monopoli sì: c'è un pubblico tutto l'anno. Cambiamo contenuti e campagne in base alla stagione." },
+    description: "Agenzia di comunicazione a Monopoli: social, foto, video e campagne per ristoranti, B&B, lidi e negozi del centro storico e della costa. Preventivo gratuito.",
+    intro: "Monopoli unisce un centro storico sul mare, il porto antico e una costa piena di calette. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, strutture e negozi, da Castellaneta.",
+    focus: { titolo: "Una città che vive tutto l'anno", testo: "A differenza di altre località di mare, Monopoli ha clienti anche d'inverno: residenti, pendolari da Bari, turisti fuori stagione. Per un ristorante o un negozio conviene una comunicazione costante, non solo estiva: contenuti regolari, scheda Google curata e campagne diverse per stagione." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, B&B e negozi di Monopoli: presenza costante tutto l'anno, con campagne diverse per stagione." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Turi", provincia: "provincia di Bari",
+    contesto: "Turi è conosciuta in tutta Italia per la ciliegia Ferrovia, una delle varietà più apprezzate, che qui si coltiva e si celebra ogni anno. Accanto ai produttori ci sono negozi, ristoranti e attività che lavorano con i comuni vicini del sud-est barese.",
+    settori: ["produttori di ciliegie e aziende agricole", "negozi e servizi", "ristorazione"],
+    faq: { q: "Potete aiutare un'azienda agricola a vendere direttamente?", a: "Sì: social, foto dei prodotti, sito o catalogo con ordini su WhatsApp e campagne in periodo di raccolta." },
+    description: "Agenzia di comunicazione a Turi: social, foto, video, siti e campagne per produttori di ciliegie, aziende agricole e attività del paese. Preventivo gratuito.",
+    intro: "Turi è la città delle ciliegie. Seguiamo social, foto, video, sponsorizzate e siti per produttori, aziende agricole e attività del paese, da Castellaneta.",
+    focus: { titolo: "Raccontare il prodotto in tutte le stagioni", testo: "La ciliegia dura poche settimane, ma un'azienda agricola lavora tutto l'anno. Raccontiamo la filiera, dal campo alla raccolta, con foto e video veri, così la comunicazione resta viva anche fuori stagione. In periodo di raccolta prepariamo campagne per vendita diretta, grossisti o e-commerce." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per aziende agricole e attività di Turi: la filiera raccontata tutto l'anno e campagne in periodo di raccolta." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Molfetta", provincia: "provincia di Bari",
+    contesto: "Molfetta, a nord di Bari, è conosciuta per il Duomo di San Corrado affacciato sul mare e per il suo porto peschereccio, tra i più importanti dell'Adriatico. Accanto alla pesca ci sono una zona industriale attiva, commercio e ristorazione.",
+    settori: ["ristoranti di pesce e pescherie", "imprese e aziende", "negozi e servizi"],
+    faq: { q: "Lavorate anche con aziende e imprese?", a: "Sì: sito, branding, foto e video aziendali, LinkedIn e campagne per generare contatti." },
+    description: "Agenzia di comunicazione a Molfetta: social, foto, video, siti e campagne per ristoranti, negozi, imprese e attività del porto. Preventivo gratuito.",
+    intro: "Molfetta è una città di mare e di imprese, con uno dei porti pescherecci più importanti dell'Adriatico. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e aziende.",
+    focus: { titolo: "Dal porto al web", testo: "Per un ristorante di pesce, una pescheria o un'impresa di Molfetta conta mostrare la freschezza e il lavoro vero: il pescato, il porto, le persone. Facciamo foto e video sul posto, curiamo social e scheda Google e costruiamo siti chiari per le aziende che vogliono farsi trovare anche fuori città." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, pescherie e imprese di Molfetta: lavoro vero e freschezza raccontati con foto e video." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Scanzano Jonico", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Scanzano Jonico è un centro agricolo della piana del Metapontino, conosciuto per fragole, ortaggi e frutta, con una costa ionica di spiagge e lidi. Molte aziende del territorio vendono in tutta Italia e all'estero.",
+    settori: ["aziende agricole e ortofrutta", "lidi e strutture della costa", "attività del paese"],
+    faq: { q: "Lavorate con aziende che esportano?", a: "Sì: sito e contenuti anche in inglese, foto e video della produzione e LinkedIn per i contatti commerciali." },
+    description: "Agenzia di comunicazione a Scanzano Jonico: social, foto, video e campagne per aziende agricole, lidi e attività della costa ionica lucana. Preventivo gratuito.",
+    intro: "Scanzano Jonico è nel cuore della piana del Metapontino, tra campi coltivati e mare. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, lidi e attività, da Castellaneta.",
+    focus: { titolo: "Far conoscere chi produce", testo: "Per un'azienda ortofrutticola il nome conta quanto il prodotto: farsi riconoscere da clienti, grossisti e consumatori aiuta a vendere meglio. Raccontiamo campi, raccolta e confezionamento con foto e video veri, creiamo siti chiari e una presenza social costante, anche in inglese per l'estero." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per aziende agricole e lidi di Scanzano Jonico: produzione raccontata con immagini vere e contenuti per la stagione al mare." },
+  },
+  {
+    // brief SEO 26/10, lotto 4
+    name: "Ferrandina", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Ferrandina, sulle colline sopra la valle del Basento, è conosciuta per l'oliva Maiatica e per l'oliva infornata di Ferrandina, un prodotto tipico lucano. È un paese di frantoi, aziende agricole e piccole attività.",
+    settori: ["frantoi e produttori di olio", "aziende agricole", "negozi e attività del paese"],
+    faq: { q: "Potete aiutare un frantoio a vendere online?", a: "Sì: foto dei prodotti, social, e-commerce o catalogo con ordini su WhatsApp e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Ferrandina: social, foto, video, siti e campagne per frantoi, produttori e attività del paese. Preventivo gratuito.",
+    intro: "Ferrandina è la terra della Maiatica e della sua oliva al forno. Seguiamo social, foto, video, sponsorizzate e siti per frantoi, produttori e attività del paese, da Castellaneta.",
+    focus: { titolo: "Un prodotto tipico merita un racconto", testo: "Un olio o un'oliva di Ferrandina hanno una storia che si può raccontare: la varietà, la lavorazione, le persone. La trasformiamo in foto, video e contenuti social, in un sito con vendita online o ordini diretti e in campagne per chi cerca prodotti tipici lucani in tutta Italia." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per frantoi e produttori di Ferrandina: varietà, lavorazione e persone raccontate con foto e video." },
   },
 ];
 

@@ -48,7 +48,7 @@ export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Caste
 // solo la pagina /agenzia-comunicazione-{città}, nessuna pagina per servizio.
 // Le vecchie /{servizio}-massafra restano in redirect 301 (vercel.json): la
 // regola elenca solo gli slug dei servizi, quindi non tocca l'agenzia.
-export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro'];
+export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro', 'Francavilla Fontana', 'Lecce', 'Nardò', 'Gallipoli', 'Fasano', 'Monopoli', 'Turi', 'Molfetta', 'Scanzano Jonico', 'Ferrandina'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 /** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
@@ -57,7 +57,7 @@ export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
 /** Pagine servizio in più fuori da CITIES (servizio → città). Brief SEO 05/10, decisione di
  *  Nicola: solo gestione social a Massafra, Gioia del Colle e Bari; gli altri servizi no. */
 export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
-  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro'],
+  'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro', 'Francavilla Fontana', 'Lecce', 'Nardò', 'Gallipoli', 'Fasano', 'Monopoli', 'Turi', 'Molfetta', 'Scanzano Jonico', 'Ferrandina'],
 };
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
@@ -269,7 +269,20 @@ const webPage = (path: string, title: string, description: string) => ({
 // Articoli del blog: quelli nel codice + quelli pubblicati dalla dashboard
 // (registrati dal browser dopo il caricamento e dallo script di build).
 let blogPosts: BlogPost[] = [];
-export const registerBlogPosts = (posts: BlogPost[]) => { blogPosts = posts.filter((p) => p.published); };
+// Nel browser gli articoli arrivano con il codice del blog, dopo il primo
+// calcolo della SEO: finché non sono registrati, la SEO di /blog/… resta quella
+// dell'HTML statico (mai il noindex del ramo "pagina sconosciuta"), poi chi
+// ascolta la riapplica (segnalazione SEO 26/10: 3 articoli esclusi da Google).
+let blogReady = false;
+const blogListeners = new Set<() => void>();
+export const registerBlogPosts = (posts: BlogPost[]) => {
+  blogPosts = posts.filter((p) => p.published);
+  blogReady = true;
+  blogListeners.forEach((fn) => fn());
+};
+export const onBlogPostsChange = (fn: () => void) => { blogListeners.add(fn); return () => { blogListeners.delete(fn); }; };
+/** La SEO di questa pagina si può calcolare adesso? (falso per /blog/… finché gli articoli non sono registrati) */
+export const seoReady = (path: string) => blogReady || !path.startsWith('/blog/');
 export const getBlogPosts = () => blogPosts;
 const plain = (md: string) => md.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[#>*_`]/g, '').replace(/\s+/g, ' ').trim();
 
