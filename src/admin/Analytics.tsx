@@ -28,8 +28,11 @@ const DeviceTracking = () => {
   );
 };
 
+const EVENTS_CACHE = new Map<number, { at: number; events: any[] }>();
+
 export const Analytics = () => {
-  const [range, setRange] = useState<Range>('30d');
+  // 7 giorni di partenza: ogni evento letto è una lettura Firestore (quota esaurita il 27/10)
+  const [range, setRange] = useState<Range>('7d');
   const [loading, setLoading] = useState(true);
   const [daily, setDaily] = useState<Daily[]>([]);
   const [topPages, setTopPages] = useState<TopPage[]>([]);
@@ -46,8 +49,17 @@ export const Analytics = () => {
 
     const eventsRef = collection(db, 'analytics_events');
 
-    getDocs(query(eventsRef, where('created_at', '>=', since))).then((snap) => {
-      const events = snap.docs.map((d) => d.data());
+    // Eventi già letti in questa apertura della dashboard: niente nuove letture
+    // tornando su un periodo già visto (cache valida 10 minuti)
+    const hit = EVENTS_CACHE.get(days);
+    const read = hit && Date.now() - hit.at < 10 * 60 * 1000
+      ? Promise.resolve(hit.events)
+      : getDocs(query(eventsRef, where('created_at', '>=', since))).then((snap) => {
+          const ev = snap.docs.map((d) => d.data());
+          EVENTS_CACHE.set(days, { at: Date.now(), events: ev });
+          return ev;
+        });
+    read.then((events) => {
 
       // Daily aggregation
       const dailyMap = new Map<string, { sessions: Set<string>; pageviews: number; durations: number[]; scrolls: number[] }>();
@@ -109,7 +121,7 @@ export const Analytics = () => {
       setSectionScroll(Array.from(secMap.entries()).map(([section, v]) => ({ section, avg: v.sum / v.count, views: v.count })).sort((a, b) => b.views - a.views));
 
       setLoading(false);
-    });
+    }).catch((e) => { console.error('[analytics] lettura fallita', e); setLoading(false); });
   }, [days]);
 
   const totalVisitors = daily.reduce((a, b) => a + (b.unique_visitors || 0), 0);
