@@ -95,3 +95,26 @@
 - Per i dati sui follower (Masseria Sacramento) e le visualizzazioni (Nunzio) vale la stessa conferma: devono essere quelli più recenti.
 - I numeri non sono stati arrotondati verso l'alto: sono quelli scritti da Nicola.
 - Le scritte in italiano sono pensate per mobile: righe corte, una cosa per riga.
+
+---
+
+## Consenso dei clienti (decisione di Nicola, 27/10: i dati sono corretti, ma non è sicuro che i clienti siano d'accordo)
+
+**Regola proposta:** nessun testo con risultati va online per un cliente finché Nicola non ha il suo OK (anche solo un messaggio). Chi non risponde resta con il testo di oggi.
+
+| Cliente | Testo da far approvare | OK del cliente |
+|---|---|---|
+| Studio Dentistico Ricciardi | risultati + descrizione | da chiedere (attenzione: attività sanitaria, vedi nota) |
+| Nunzio Putignano Autofficina | risultati + descrizione | da chiedere |
+| DIRAM | risultati | da chiedere |
+| Sottoscala | risultati | da chiedere |
+| Studio Ventimiglia Solution | risultati | da chiedere |
+| Sublime Tentazione | risultati + descrizione | da chiedere |
+| Masseria Sacramento | risultati | da chiedere |
+| Villa Natia, Ottica Occhi Blu | solo foto (nessun risultato) | basta l'OK sulle foto |
+
+**Messaggio tipo (WhatsApp, da adattare):** "Ciao [nome], sul sito di InLab stiamo aggiornando la tua scheda con i risultati ottenuti insieme. Ti mando il testo che pensavamo di pubblicare: [testo]. Va bene così? Se vuoi togliere o cambiare qualcosa dimmelo e lo modifico prima di pubblicare."
+
+**Nota sullo studio dentistico:** per le attività sanitarie la pubblicità ha regole proprie (informativa, non promozionale, e le formule come "sold out" o i risultati in studio possono essere giudicate promozionali). Non è una valutazione legale: prima di pubblicare conviene un OK esplicito del titolare dello studio e, se possibile, un controllo professionale sulle formule.
+
+**Se il cliente dice no o non risponde:** si pubblica solo ciò che è già sul sito, oppure una versione senza numeri (solo la parte qualitativa).
