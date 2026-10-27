@@ -111,10 +111,12 @@ const fromValue = (v: any): any => {
 // Su Vercel un build senza i dati della dashboard (quota Firestore esaurita,
 // errore 5xx, timeout) pubblicherebbe pagine con i contenuti predefiniti al posto
 // di quelli veri (27/10): meglio fermare il build, così resta online il deploy
-// precedente buono. In locale si continua con i predefiniti. Il 404 (documento
-// che non esiste) non è un errore. Per forzare: PRERENDER_ALLOW_DEFAULTS=1.
+// precedente buono. Vale solo per il deploy di produzione: le anteprime non
+// vanno online e servono anche per usare la dashboard (che legge Firestore dal
+// vivo). In locale si continua con i predefiniti. Il 404 (documento che non
+// esiste) non è un errore. Per forzare: PRERENDER_ALLOW_DEFAULTS=1.
 const failBuild = (what: string, msg: string) => {
-  if (process.env.VERCEL && process.env.PRERENDER_ALLOW_DEFAULTS !== '1') {
+  if (process.env.VERCEL_ENV === 'production' && process.env.PRERENDER_ALLOW_DEFAULTS !== '1') {
     console.error(`[prerender] ${what} non letti da Firestore (${msg}): build fermato per non pubblicare pagine senza i dati della dashboard.`);
     process.exit(1);
   }
