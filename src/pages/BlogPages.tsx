@@ -150,7 +150,7 @@ export const PageBlog = ({ go }: { go: Go }) => {
   );
 };
 
-export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
+export const PageArticolo = ({ slug, go, notFound }: { slug: string; go: Go; notFound?: React.ReactNode }) => {
   const { posts, loading } = useBlogPosts();
   const post = posts.find((p) => p.slug === slug);
   const text = usePostContent(post);
@@ -160,6 +160,10 @@ export const PageArticolo = ({ slug, go }: { slug: string; go: Go }) => {
   useEffect(() => { applySeo(getSeo('/blog/' + slug)); }, [loading, slug]);
 
   if (!post) {
+    // Articolo inesistente: il server risponde con 404.html (PageNotFound); stessa
+    // pagina anche qui, così l'aggancio di React non dà errore (#418, come /cliente/ nella #96).
+    // Un articolo appena pubblicato dalla dashboard compare appena arriva da Firestore.
+    if (notFound) return <>{notFound}</>;
     if (loading) return <div style={{ minHeight: '100vh' }} />;
     return (
       <section style={{ padding: '10rem 2rem 8rem', minHeight: '60vh' }}>

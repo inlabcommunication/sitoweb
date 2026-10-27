@@ -64,5 +64,9 @@ const tree = (
     </ErrorBoundary>
   </StrictMode>
 );
-if (rootEl.hasChildNodes() && !isAdminRoute()) hydrateRoot(rootEl, tree);
+// 404.html (data-404): l'HTML è quello della pagina 404, ma l'indirizzo può
+// essere di una pagina caricata a parte (es. /blog/… inesistente): niente
+// aggancio, si ridisegna, così React non segnala differenze (#418).
+const is404Doc = rootEl.dataset['404'] === '1';
+if (rootEl.hasChildNodes() && !isAdminRoute() && !is404Doc) hydrateRoot(rootEl, tree);
 else createRoot(rootEl).render(tree);

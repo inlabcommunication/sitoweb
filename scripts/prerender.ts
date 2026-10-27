@@ -261,7 +261,7 @@ const noindex = (html: string, title: string) => html
   .replace(/(<meta name="robots" content=")[^"]*"/, '$1noindex, nofollow"');
 writeFileSync(join(DIST, 'admin.html'), noindex(template, 'Dashboard | InLab Communication'));
 writeFileSync(join(DIST, '404.html'), noindex(template, 'Pagina non trovata | InLab Communication')
-  .replace('<div id="root"></div>', `<div id="root">${await body('/__pagina-non-trovata__')}</div>`));
+  .replace('<div id="root"></div>', `<div id="root" data-404="1">${await body('/__pagina-non-trovata__')}</div>`));
 
 // Testo di ogni articolo in /blog-data/<slug>.json: lo usa il sito quando si
 // apre un articolo navigando (senza ricaricare la pagina).
