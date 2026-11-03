@@ -845,6 +845,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per ristoranti, locali e negozi di Trani: foto e video sul posto e campagne per chi sceglie dove andare." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Barletta", provincia: "provincia di Barletta-Andria-Trani",
+    contesto: "Barletta è famosa per la Disfida del 1503, per il Colosso, la grande statua in bronzo nel centro, e per il castello svevo. È una città di commercio e di imprese, con una zona industriale attiva e un centro storico vivo.",
+    settori: ["negozi e commercio", "imprese e aziende", "ristoranti e servizi"],
+    faq: { q: "Fate anche branding, logo e immagine coordinata?", a: "Sì: identità visiva completa, poi applicata a sito, social, insegne e materiali stampati." },
+    description: "Agenzia di comunicazione a Barletta: strategia, social, video, siti e campagne per negozi, imprese, ristoranti e professionisti. Preventivo gratuito.",
+    intro: "Barletta è la città della Disfida e uno dei capoluoghi della BAT. Portiamo strategia, social, video, siti e campagne a negozi, imprese, ristoranti e professionisti, da Castellaneta.",
+    focus: { titolo: "Una storia forte, anche per il tuo marchio", testo: "Barletta ha un'identità chiara e riconoscibile, e anche la tua attività dovrebbe averla. Partiamo dal branding, logo, colori e tono, e lo portiamo su sito, social e campagne, così chi ti vede una volta ti riconosce la volta dopo. Per le imprese curiamo anche LinkedIn e la comunicazione verso altre aziende." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per negozi, imprese e ristoranti di Barletta: identità riconoscibile e contenuti costanti." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
