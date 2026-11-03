@@ -178,7 +178,8 @@ export const CITY_INFO: CityInfo[] = [
     introLink: { testo: "Nicola Carpignano", href: "/autori/nicola-carpignano-social-media-manager-palagianello" },
     paginaServizio: {
       'gestione-social': {
-        title: "Social media manager a Palagianello | InLab Communication",
+        // brief SEO 03/11: uguale all'H1; "social media manager Palagianello" resta alla pagina di Nicola
+        title: "Gestione social a Palagianello | InLab Communication",
         description: "Social media manager a Palagianello: Nicola Carpignano, cofondatore di InLab, è del paese. Gestione social, reel e sponsorizzate. Preventivo gratuito.",
       },
     },

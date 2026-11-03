@@ -2,12 +2,14 @@
 // (brief SEO 10/10 "territorio e clienti", tabella del punto 1). `label` è
 // l'etichetta sopra l'H1 e la frase aggiunta in fondo alla description.
 // Le schede senza riga qui usano il title generico.
+// Palagianello: nome del cliente prima del paese, così il title non compete con
+// /gestione-social-palagianello (brief SEO 03/11, punto 4).
 export const CLIENT_SEO: Record<string, { label: string; title: string }> = {
   'nunzio-putignano': { label: 'Gestione social a Palagiano', title: 'Gestione social a Palagiano: Nunzio Putignano Autofficina' },
   'studio-dentistico-ricciardi': { label: 'Sito web a Palagiano', title: 'Sito web a Palagiano: Studio Dentistico Ricciardi' },
-  'diram-autoricambi': { label: 'Gestione social a Palagianello', title: 'Gestione social a Palagianello: DIRAM | InLab' },
-  'sublime-tentazione': { label: 'Gestione social a Palagianello', title: 'Gestione social a Palagianello: Sublime Tentazione' },
-  'masseria-sacramento': { label: 'Gestione social a Palagianello', title: 'Gestione social a Palagianello: Masseria Sacramento' },
+  'diram-autoricambi': { label: 'Gestione social a Palagianello', title: 'DIRAM Autoricambi, Palagianello: social | InLab' },
+  'sublime-tentazione': { label: 'Gestione social a Palagianello', title: 'Sublime Tentazione, pasticceria a Palagianello | InLab' },
+  'masseria-sacramento': { label: 'Gestione social a Palagianello', title: 'Masseria Sacramento, Palagianello: social | InLab' },
   'vision-ottica': { label: 'Social media a Palagianello e Mottola', title: 'Social media a Palagianello e Mottola: Vision Ottica' },
   'arte-e-oro': { label: 'Social media a Palagianello', title: 'Social media a Palagianello: Arte e Oro Tamburrano' },
   'sottoscala': { label: 'Gestione social a Mottola', title: 'Gestione social a Mottola: Sottoscala | InLab' },
