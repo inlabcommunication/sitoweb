@@ -108,6 +108,20 @@ const fromValue = (v: any): any => {
   return undefined;
 };
 
+// Su Vercel un build senza i dati della dashboard (quota Firestore esaurita,
+// errore 5xx, timeout) pubblicherebbe pagine con i contenuti predefiniti al posto
+// di quelli veri (27/10): meglio fermare il build, così resta online il deploy
+// precedente buono. Vale solo per il deploy di produzione: le anteprime non
+// vanno online e servono anche per usare la dashboard (che legge Firestore dal
+// vivo). In locale si continua con i predefiniti. Il 404 (documento che non
+// esiste) non è un errore. Per forzare: PRERENDER_ALLOW_DEFAULTS=1.
+const failBuild = (what: string, msg: string) => {
+  if (process.env.VERCEL_ENV === 'production' && process.env.PRERENDER_ALLOW_DEFAULTS !== '1') {
+    console.error(`[prerender] ${what} non letti da Firestore (${msg}): build fermato per non pubblicare pagine senza i dati della dashboard.`);
+    process.exit(1);
+  }
+};
+
 // Contenuti salvati dalla dashboard (documento pubblico app/site_content):
 // dalla versione 3 elenco clienti e casi studio salvati sono quelli definitivi.
 async function fetchSiteContent() {
@@ -116,11 +130,13 @@ async function fetchSiteContent() {
   if (!project || !key) return null;
   try {
     const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents/app/site_content?key=${encodeURIComponent(key)}`, { signal: AbortSignal.timeout(10000) });
+    if (r.status === 404) return null;
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     const doc = (await r.json()) as any;
     return Object.fromEntries(Object.entries(doc.fields || {}).map(([k, v]) => [k, fromValue(v)])) as any;
   } catch (e) {
     console.warn('[prerender] contenuti dashboard non caricati:', (e as Error).message);
+    failBuild('contenuti della dashboard', (e as Error).message);
     return null;
   }
 }
@@ -149,6 +165,7 @@ async function fetchRemotePosts() {
     });
   } catch (e) {
     console.warn('[prerender] articoli Firestore non caricati:', (e as Error).message);
+    failBuild('articoli del blog', (e as Error).message);
     return [];
   }
 }

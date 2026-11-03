@@ -3,6 +3,7 @@ import type React from 'react';
 import { Bot, Key, Save, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { RestoreContent } from './RestoreContent';
 
 // Le chiavi API NON si salvano qui: stanno solo nelle variabili d'ambiente di
 // Vercel (GEMINI_API_KEY, ANTHROPIC_API_KEY), mai nel database.
@@ -170,6 +171,8 @@ export const Settings = () => {
       <button onClick={save} disabled={saving} className="btn btn-p" style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: saving ? 0.6 : 1 }}>
         {status === 'saved' ? <><CheckCircle size={14} /> Salvato</> : status === 'error' ? <><AlertCircle size={14} /> Errore</> : <><Save size={14} /> {saving ? 'Salvataggio...' : 'Salva impostazioni'}</>}
       </button>
+
+      <div style={{ marginTop: '2.5rem' }}><RestoreContent /></div>
     </div>
   );
 };
