@@ -18,7 +18,9 @@ export type CityInfo = {
   altreFaq?: { q: string; a: string }[];
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   /** `link`: collegamento in fondo alla sezione (es. Castellaneta Marina → la sua pagina, decisione SEO 10/10) */
-  sezione?: { titolo: string; testo: string; link?: { testo: string; href: string } };
+  /** `link.href` esterno (https://…): si apre in una nuova scheda (es. Google Maps, brief SEO 03/11).
+   * `nota`: una riga con link dopo la sezione (es. rimando breve a Castellaneta Marina, brief SEO 03/11) */
+  sezione?: { titolo: string; testo: string; link?: { testo: string; href: string }; nota?: { testo: string; link: { testo: string; href: string } } };
   /** Descrizioni proprie dei servizi (slug → testo): sostituiscono quella generica
    * nella pagina agenzia e in /{servizio}-{città} (brief SEO 03/10 Palagianello) */
   servizi?: Record<string, string>;
@@ -33,6 +35,10 @@ export type CityInfo = {
   /** Città senza clienti: nella pagina agenzia il blocco "Lavoriamo in tutta la provincia"
    * con i lavori dei paesi vicini al posto di "I nostri lavori" (brief SEO 10/10 territorio) */
   lavoriVicini?: boolean;
+  /** Link alle pagine agenzia dei paesi vicini, sotto "Il territorio" (brief SEO 03/11) */
+  linkVicini?: { testo: string; href: string }[];
+  /** Bari: H2 con i link alle pagine agenzia dei comuni della provincia di Bari (brief SEO 03/11) */
+  comuniProvincia?: { titolo: string; testo: string };
   /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
   /** `link`: collegamento su una parola del testo (es. un lavoro nostro → il suo caso studio, brief SEO 12/10) */
   focus?: { titolo: string; testo: string; link?: { testo: string; href: string } };
@@ -64,6 +70,8 @@ export type CityInfo = {
 export const CITY_INFO: CityInfo[] = [
   {
     name: 'Taranto', provincia: 'provincia di Taranto',
+    // brief SEO 03/11: link a Massafra, paese vicino
+    linkVicini: [{ testo: 'Agenzia di comunicazione a Massafra', href: '/agenzia-comunicazione-massafra' }],
     contesto: 'Taranto è il capoluogo della provincia e la "città dei due mari", tra Mar Grande e Mar Piccolo. Ha la Città Vecchia sull\'isola, il Borgo con le vie dello shopping e il MArTA, il Museo Archeologico Nazionale. Per un\'attività di Taranto la concorrenza è più alta che nei paesi vicini: farsi trovare su Google e avere social curati fa la differenza tra chi viene scelto e chi resta invisibile.',
     settori: ['negozi e commercio del Borgo', 'ristoranti, bar e locali sul lungomare', 'studi professionali e medici', 'eventi e attività culturali'],
     faq: { q: 'Lavorate con attività di Taranto città?', a: 'Sì. Siamo a Castellaneta, a meno di un\'ora, e veniamo a Taranto per incontri, shooting e riprese. Il resto del lavoro lo seguiamo a distanza, con un contatto diretto con Nicola e Ilaria.' },
@@ -95,8 +103,16 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: 'Avete un ufficio a Castellaneta?', a: 'Sì, InLab Communication ha sede a Castellaneta (TA). Possiamo incontrarci di persona.' },
     metodo: "A Castellaneta il lavoro segue due stagioni: d'estate il pubblico arriva da fuori, con turisti e famiglie a Castellaneta Marina, mentre il resto dell'anno contano i clienti del paese e dei paesi vicini. Per questo prepariamo i contenuti in anticipo sulla stagione e teniamo viva la comunicazione anche d'inverno.",
     faq2: { q: "Lavorate anche per strutture di Castellaneta Marina?", a: "Sì: foto, video, social e sponsorizzate per lidi, ristoranti e strutture della costa, preparati prima dell'estate." },
-    sezione: { titolo: 'Castellaneta Marina', testo: "Castellaneta Marina, sulla costa ionica, vive di turismo estivo, villaggi, lidi e ristorazione. Per le strutture della costa prepariamo foto, video, social e sponsorizzate prima dell'estate, quando i turisti scelgono dove andare, e le seguiamo durante tutta la stagione.", link: { testo: 'Agenzia di comunicazione a Castellaneta Marina', href: '/agenzia-comunicazione-castellaneta-marina' } },
+    // brief SEO 03/11: la sede al posto del blocco Marina, che ha la sua pagina (resta una riga con il link)
+    sezione: {
+      titolo: 'La nostra sede a Castellaneta',
+      testo: "Siamo in Via Regina Margherita 26, nel centro di Castellaneta. Qui incontriamo i clienti, prepariamo le strategie e partiamo per le riprese. Per un'attività del paese vuol dire avere l'agenzia a pochi passi: si passa in studio, si gira in negozio la mattina stessa, si guarda insieme il lavoro.",
+      link: { testo: 'Indicazioni su Google Maps', href: 'https://www.google.com/maps/search/?api=1&query=InLab+Communication+Via+Regina+Margherita+26+Castellaneta' },
+      nota: { testo: "Per lidi, ristoranti e strutture della costa c'è la pagina dedicata: Agenzia di comunicazione a Castellaneta Marina.", link: { testo: 'Agenzia di comunicazione a Castellaneta Marina', href: '/agenzia-comunicazione-castellaneta-marina' } },
+    },
     faq3: { q: "Possiamo vederci di persona a Castellaneta?", a: "Sì, la nostra sede è in Via Regina Margherita 26. Per molte attività del paese il primo incontro lo facciamo direttamente nel locale o in negozio, per capire spazi, clienti e cosa raccontare." },
+    // brief SEO 03/11: title con l'indirizzo; la versione del brief (78 caratteri, 73 senza "(TA)") supera i 65, quindi senza "| InLab"
+    title: "Agenzia di comunicazione a Castellaneta, Via Regina Margherita 26",
     description: "Agenzia di comunicazione a Castellaneta, in Via Regina Margherita 26: video, social e sponsorizzate per il paese e la Marina. Preventivo gratuito.",
     intro: "Siamo a Castellaneta, in Via Regina Margherita 26: per le attività del paese siamo l'agenzia sotto casa. Seguiamo social, video, sponsorizzate, siti e branding, e ci vediamo di persona quando serve, in sede o direttamente da te.",
     focus: {
@@ -105,6 +121,7 @@ export const CITY_INFO: CityInfo[] = [
     },
     altreFaq: [
       { q: "Quanto costa fare un video per la mia attività a Castellaneta?", a: "Dipende da durata, riprese e quante versioni servono per i social. Dopo un primo incontro in sede ti facciamo un preventivo chiaro e gratuito." },
+      { q: "Posso venire in agenzia?", a: "Sì: siamo in Via Regina Margherita 26 a Castellaneta. Scrivici o chiamaci per fissare un incontro." },
     ],
     servizi: {
       'video': "Video brevi che spiegano e fanno scegliere: presentazioni degli immobili per lo Studio Ventimiglia, video simpatici per l'Ottica Occhi Blu. Li giriamo a Castellaneta, a due passi dalla nostra sede.",
@@ -161,13 +178,16 @@ export const CITY_INFO: CityInfo[] = [
     introLink: { testo: "Nicola Carpignano", href: "/autori/nicola-carpignano-social-media-manager-palagianello" },
     paginaServizio: {
       'gestione-social': {
-        title: "Social media manager a Palagianello | InLab Communication",
+        // brief SEO 03/11: uguale all'H1; "social media manager Palagianello" resta alla pagina di Nicola
+        title: "Gestione social a Palagianello | InLab Communication",
         description: "Social media manager a Palagianello: Nicola Carpignano, cofondatore di InLab, è del paese. Gestione social, reel e sponsorizzate. Preventivo gratuito.",
       },
     },
   },
   {
     name: 'Palagiano', provincia: 'provincia di Taranto',
+    // brief SEO 03/11: link a Massafra, paese vicino
+    linkVicini: [{ testo: 'Agenzia di comunicazione a Massafra', href: '/agenzia-comunicazione-massafra' }],
     contesto: 'Palagiano è terra di agrumi, in particolare delle clementine del Golfo di Taranto, con la frazione di Chiatona sul mare. Molte attività sono legate all\'agricoltura, alla vendita di prodotti locali e al turismo estivo sulla costa.',
     settori: ['aziende agricole e produttori', 'negozi e servizi del paese', 'strutture e attività della costa'],
     faq: { q: 'Potete aiutare un\'azienda agricola a vendere online?', a: 'Sì: sito, e-commerce o vetrina sui social, e foto dei prodotti fatte sul posto.' },
@@ -265,6 +285,8 @@ export const CITY_INFO: CityInfo[] = [
   {
     name: 'Massafra', provincia: 'provincia di Taranto',
     contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa.',
+    // brief SEO 03/11: lavori dei paesi vicini (Massafra non ha ancora clienti)
+    lavoriVicini: true,
     settori: ['negozi e commercio', 'aziende agricole', 'ristorazione', 'eventi'],
     faq: { q: 'Lavorate anche con attività di Massafra?', a: 'Sì, Massafra è a pochi chilometri dalla nostra sede: possiamo incontrarci di persona e fare shooting e riprese sul posto.' },
     description: "Agenzia di comunicazione a Massafra: un piano per far crescere la tua attività con social, sponsorizzate, sito e scheda Google. Preventivo gratuito.",
@@ -275,6 +297,8 @@ export const CITY_INFO: CityInfo[] = [
     },
     altreFaq: [
       { q: "Da dove si parte per far crescere un'attività a Massafra?", a: "Da quello che c'è già: scheda Google, profili social, sito. Li analizziamo in un primo incontro e ti diciamo quali sono i due o tre passi che servono subito." },
+      { q: "Seguite la comunicazione di eventi come il Carnevale?", a: "Sì: grafiche, reel, dirette e sponsorizzate per far conoscere eventi e serate, prima e durante." },
+      { q: "Siete vicini a Massafra?", a: "Sì: la nostra sede a Castellaneta è a circa 20 minuti. Veniamo in negozio per incontri, foto e video." },
     ],
     servizi: {
       'gestione-social': "Per un'attività di Massafra i social servono a crescere: farsi trovare da chi non ti conosce ancora, farsi scegliere da chi ti confronta con altri, portare richieste concrete. Costruiamo un piano editoriale chiaro, giriamo foto e reel sul posto, a pochi chilometri dalla nostra sede, e ogni mese guardiamo insieme cosa funziona.",
@@ -289,6 +313,10 @@ export const CITY_INFO: CityInfo[] = [
   },
   {
     name: 'Bari', provincia: 'Città metropolitana di Bari',
+    // brief SEO 03/11: title "e provincia", lavori dei paesi vicini, H2 con i comuni della provincia
+    title: 'Agenzia di comunicazione a Bari e provincia | InLab',
+    lavoriVicini: true,
+    comuniProvincia: { titolo: 'Bari e provincia', testo: 'Lavoriamo con attività di Bari e di tutta la provincia, dalla costa alla Murgia.' },
     contesto: 'Bari è il capoluogo della Puglia, con Bari Vecchia, il lungomare e un tessuto di imprese, professionisti e attività commerciali tra i più grandi del Sud. Per InLab è una città di casa: Nicola Carpignano ha studiato Psicologia a Bari e insegna Marketing e Social Media nei master di EA Formazione.',
     settori: ['aziende e professionisti', 'commercio e ristorazione', 'eventi e formazione'],
     faq: { q: 'Seguite aziende di Bari anche se avete sede a Castellaneta?', a: 'Sì. Lavoriamo a distanza per strategia, contenuti e campagne, e veniamo a Bari per incontri, shooting e riprese.' },
@@ -896,3 +924,7 @@ export const CITY_INFO: CityInfo[] = [
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
+
+/** Comuni della provincia di Bari con la pagina agenzia: collegati dalla pagina Bari e viceversa (brief SEO 03/11) */
+export const isBariProvince = (provincia: string) => provincia === 'provincia di Bari' || provincia === 'Città metropolitana di Bari';
+export const BARI_PROVINCE_CITIES = CITY_INFO.filter((c) => c.name !== 'Bari' && isBariProvince(c.provincia)).map((c) => c.name);
