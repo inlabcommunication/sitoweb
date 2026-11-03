@@ -797,6 +797,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per pasticcerie, ristoranti e negozi di Galatina: prodotti tipici raccontati con foto e video di laboratorio." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Otranto", provincia: "provincia di Lecce",
+    contesto: "Otranto ha un centro storico chiuso dalle mura, il Castello Aragonese e la Cattedrale con il grande mosaico pavimentale del XII secolo. La costa adriatica, con la Baia dei Turchi e le calette verso Santa Maria di Leuca, attira turisti italiani e stranieri.",
+    settori: ["hotel, B&B e case vacanza", "ristoranti e locali", "escursioni e attività turistiche"],
+    faq: { q: "Potete aiutarci ad avere più prenotazioni dirette?", a: "Sì: sito con prenotazione, foto e video curati, scheda Google e campagne, anche in inglese." },
+    description: "Agenzia di comunicazione a Otranto: social, foto, video, siti e campagne per hotel, B&B, ristoranti e attività turistiche. Preventivo gratuito.",
+    intro: "Otranto è il comune più a est d'Italia e una delle mete più amate del Salento. Seguiamo social, foto, video, sponsorizzate e siti per strutture, ristoranti e attività turistiche, da Castellaneta.",
+    focus: { titolo: "Farsi prenotare direttamente", testo: "Per un hotel o un B&B di Otranto le piattaforme di prenotazione portano clienti ma si prendono una commissione. Con un sito chiaro, foto e video all'altezza, scheda Google curata e campagne mirate, aumentiamo le prenotazioni dirette, anche dall'estero." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per hotel, B&B e ristoranti di Otranto: immagini che fanno venire voglia di partire e contenuti anche in inglese." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
