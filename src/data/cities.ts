@@ -881,6 +881,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per lidi, villaggi e aziende di Nova Siri: contenuti per la stagione al mare e presenza tutto l'anno." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Potenza", provincia: "provincia di Potenza (Basilicata)",
+    contesto: "Potenza è il capoluogo della regione e uno dei capoluoghi più alti d'Italia, a oltre 800 metri. È la città degli uffici, dei servizi, dell'università e di molti studi professionali, con un pubblico che arriva da tutta la provincia.",
+    settori: ["studi professionali e medici", "imprese e servizi", "negozi e ristorazione"],
+    faq: { q: "Lavorate anche a distanza?", a: "Sì: strategia, contenuti e campagne si seguono a distanza, con incontri e riprese sul posto quando servono." },
+    description: "Agenzia di comunicazione a Potenza: strategia, social, video, siti e campagne per negozi, imprese, studi e professionisti. Preventivo gratuito.",
+    intro: "Potenza è il capoluogo della Basilicata. Portiamo strategia, social, video, siti e campagne a negozi, imprese, studi e professionisti, lavorando da Castellaneta e venendo di persona quando serve.",
+    focus: { titolo: "Farsi scegliere da professionisti e imprese", testo: "A Potenza molte attività lavorano con altre aziende, enti e professionisti. Per loro contano un sito chiaro, un profilo LinkedIn curato, una scheda Google completa e contenuti che spiegano bene cosa fai. Costruiamo questa presenza e la sosteniamo con campagne mirate." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per studi, imprese e negozi di Potenza: contenuti chiari, LinkedIn e campagne mirate." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
