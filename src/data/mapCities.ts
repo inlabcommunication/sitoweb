@@ -60,6 +60,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Scanzano Jonico', region: 'Basilicata', lat: 40.250, lon: 16.700 },
   { name: 'Ferrandina', region: 'Basilicata', lat: 40.497, lon: 16.456 },
   { name: 'Sava', region: 'Puglia', lat: 40.403, lon: 17.556 },
+  { name: 'Galatina', region: 'Puglia', lat: 40.174, lon: 18.170 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

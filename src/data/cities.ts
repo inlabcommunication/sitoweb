@@ -785,6 +785,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per cantine, aziende agricole e attività di Sava: vigne, vendemmia e prodotti raccontati con immagini vere." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Galatina", provincia: "provincia di Lecce",
+    contesto: "Galatina è conosciuta per la Basilica di Santa Caterina d'Alessandria, con i suoi affreschi, per la tradizione del tarantismo legata alla festa dei Santi Pietro e Paolo e per il pasticciotto, il dolce simbolo del Salento. È un centro commerciale per molti comuni dell'entroterra leccese.",
+    settori: ["pasticcerie e bar", "ristoranti e prodotti tipici", "negozi e servizi del centro"],
+    faq: { q: "Lavorate con pasticcerie e laboratori?", a: "Sì: foto dei prodotti, video in laboratorio, social e campagne, come facciamo con Sublime Tentazione a Palagianello.", link: { testo: "Sublime Tentazione", href: "/cliente/sublime-tentazione" } },
+    description: "Agenzia di comunicazione a Galatina: social, foto, video, siti e campagne per pasticcerie, ristoranti, negozi e attività del centro. Preventivo gratuito.",
+    intro: "Galatina è uno dei centri storici più ricchi del Salento, famosa per il pasticciotto. Seguiamo social, foto, video, sponsorizzate e siti per pasticcerie, ristoranti, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Un prodotto tipico che diventa marchio", testo: "Un pasticciotto, un dolce o un piatto tipico possono diventare il motivo per cui una persona sceglie proprio te. Lo raccontiamo con foto e video di laboratorio, social costanti, scheda Google curata e campagne per chi vive in zona e per i turisti di passaggio." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per pasticcerie, ristoranti e negozi di Galatina: prodotti tipici raccontati con foto e video di laboratorio." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
