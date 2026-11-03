@@ -833,6 +833,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per agriturismi, ristoranti e attività di Cassano delle Murge: il posto mostrato com'è e campagne per chi cerca una gita fuori porta." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Trani", provincia: "provincia di Barletta-Andria-Trani",
+    contesto: "Trani è conosciuta per la Cattedrale romanica affacciata sul mare, il porto e il centro storico in pietra. È una delle città più frequentate del nord barese, con molta ristorazione, locali e negozi e un pubblico che arriva da tutta la provincia BAT e da Bari.",
+    settori: ["ristoranti e locali del porto", "negozi del centro", "strutture ricettive e servizi"],
+    faq: { q: "Fate foto e video per ristoranti?", a: "Sì: piatti, sala e persone, con contenuti pensati per Instagram, TikTok e scheda Google." },
+    description: "Agenzia di comunicazione a Trani: social, foto, video, siti e campagne per ristoranti, locali, negozi e attività del porto. Preventivo gratuito.",
+    intro: "Trani è la città della Cattedrale sul mare, con un porto pieno di ristoranti e locali. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Distinguersi dove la scelta è tanta", testo: "Intorno al porto di Trani ci sono tanti ristoranti e locali, e chi passeggia decide in pochi secondi. Contano la scheda Google, le recensioni, le foto dei piatti e un profilo social curato. Li prepariamo con foto e video sul posto e campagne per chi sta pianificando una serata a Trani." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per ristoranti, locali e negozi di Trani: foto e video sul posto e campagne per chi sceglie dove andare." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

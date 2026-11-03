@@ -64,6 +64,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Otranto', region: 'Puglia', lat: 40.144, lon: 18.491 },
   { name: 'Brindisi', region: 'Puglia', lat: 40.632, lon: 17.936 },
   { name: 'Cassano delle Murge', region: 'Puglia', lat: 40.889, lon: 16.768 },
+  { name: 'Trani', region: 'Puglia', lat: 41.277, lon: 16.418 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
