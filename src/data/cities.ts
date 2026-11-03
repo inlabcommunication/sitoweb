@@ -35,6 +35,8 @@ export type CityInfo = {
   /** Città senza clienti: nella pagina agenzia il blocco "Lavoriamo in tutta la provincia"
    * con i lavori dei paesi vicini al posto di "I nostri lavori" (brief SEO 10/10 territorio) */
   lavoriVicini?: boolean;
+  /** Link alle pagine agenzia dei paesi vicini, sotto "Il territorio" (brief SEO 03/11) */
+  linkVicini?: { testo: string; href: string }[];
   /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
   /** `link`: collegamento su una parola del testo (es. un lavoro nostro → il suo caso studio, brief SEO 12/10) */
   focus?: { titolo: string; testo: string; link?: { testo: string; href: string } };
@@ -66,6 +68,8 @@ export type CityInfo = {
 export const CITY_INFO: CityInfo[] = [
   {
     name: 'Taranto', provincia: 'provincia di Taranto',
+    // brief SEO 03/11: link a Massafra, paese vicino
+    linkVicini: [{ testo: 'Agenzia di comunicazione a Massafra', href: '/agenzia-comunicazione-massafra' }],
     contesto: 'Taranto è il capoluogo della provincia e la "città dei due mari", tra Mar Grande e Mar Piccolo. Ha la Città Vecchia sull\'isola, il Borgo con le vie dello shopping e il MArTA, il Museo Archeologico Nazionale. Per un\'attività di Taranto la concorrenza è più alta che nei paesi vicini: farsi trovare su Google e avere social curati fa la differenza tra chi viene scelto e chi resta invisibile.',
     settori: ['negozi e commercio del Borgo', 'ristoranti, bar e locali sul lungomare', 'studi professionali e medici', 'eventi e attività culturali'],
     faq: { q: 'Lavorate con attività di Taranto città?', a: 'Sì. Siamo a Castellaneta, a meno di un\'ora, e veniamo a Taranto per incontri, shooting e riprese. Il resto del lavoro lo seguiamo a distanza, con un contatto diretto con Nicola e Ilaria.' },
@@ -179,6 +183,8 @@ export const CITY_INFO: CityInfo[] = [
   },
   {
     name: 'Palagiano', provincia: 'provincia di Taranto',
+    // brief SEO 03/11: link a Massafra, paese vicino
+    linkVicini: [{ testo: 'Agenzia di comunicazione a Massafra', href: '/agenzia-comunicazione-massafra' }],
     contesto: 'Palagiano è terra di agrumi, in particolare delle clementine del Golfo di Taranto, con la frazione di Chiatona sul mare. Molte attività sono legate all\'agricoltura, alla vendita di prodotti locali e al turismo estivo sulla costa.',
     settori: ['aziende agricole e produttori', 'negozi e servizi del paese', 'strutture e attività della costa'],
     faq: { q: 'Potete aiutare un\'azienda agricola a vendere online?', a: 'Sì: sito, e-commerce o vetrina sui social, e foto dei prodotti fatte sul posto.' },
@@ -275,7 +281,9 @@ export const CITY_INFO: CityInfo[] = [
   // Città senza clienti per ora (brief SEO 02/10, punto 5): solo la pagina agenzia.
   {
     name: 'Massafra', provincia: 'provincia di Taranto',
-    contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa.',
+    contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa. Massafra è conosciuta per le gravine e le chiese rupestri, come quella della Madonna della Scala, e per il Carnevale massafrese, uno dei più seguiti della Puglia. È il comune più grande tra Taranto e Castellaneta, con commercio e servizi che lavorano con tutta la zona.',
+    // brief SEO 03/11: lavori dei paesi vicini (Massafra non ha ancora clienti)
+    lavoriVicini: true,
     settori: ['negozi e commercio', 'aziende agricole', 'ristorazione', 'eventi'],
     faq: { q: 'Lavorate anche con attività di Massafra?', a: 'Sì, Massafra è a pochi chilometri dalla nostra sede: possiamo incontrarci di persona e fare shooting e riprese sul posto.' },
     description: "Agenzia di comunicazione a Massafra: un piano per far crescere la tua attività con social, sponsorizzate, sito e scheda Google. Preventivo gratuito.",
@@ -286,6 +294,8 @@ export const CITY_INFO: CityInfo[] = [
     },
     altreFaq: [
       { q: "Da dove si parte per far crescere un'attività a Massafra?", a: "Da quello che c'è già: scheda Google, profili social, sito. Li analizziamo in un primo incontro e ti diciamo quali sono i due o tre passi che servono subito." },
+      { q: "Seguite la comunicazione di eventi come il Carnevale?", a: "Sì: grafiche, reel, dirette e sponsorizzate per far conoscere eventi e serate, prima e durante." },
+      { q: "Siete vicini a Massafra?", a: "Sì: la nostra sede a Castellaneta è a circa 20 minuti. Veniamo in negozio per incontri, foto e video." },
     ],
     servizi: {
       'gestione-social': "Per un'attività di Massafra i social servono a crescere: farsi trovare da chi non ti conosce ancora, farsi scegliere da chi ti confronta con altri, portare richieste concrete. Costruiamo un piano editoriale chiaro, giriamo foto e reel sul posto, a pochi chilometri dalla nostra sede, e ogni mese guardiamo insieme cosa funziona.",

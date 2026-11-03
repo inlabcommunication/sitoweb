@@ -1582,6 +1582,10 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             <p className="section-label">Il territorio</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare {aCity(city)}</h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
+            {/* Paesi vicini (brief SEO 03/11) */}
+            {(info.linkVicini||[]).map(l=>(
+              <Link key={l.href} to={l.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",marginRight:"1.5rem",fontSize:14,color:"var(--a)"}}>{l.testo} <ArrowRight size={13}/></Link>
+            ))}
             {info.sezione && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.sezione.titolo}</h2>
               <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.sezione.testo}</p>
