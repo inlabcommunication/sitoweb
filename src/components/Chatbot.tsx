@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
+import { gaEvent } from '../lib/ga';
 
 // ════════════════════════════════════════════════════════════════
 // CHATBOT v3 — Backend serverless /api/chat
@@ -79,6 +80,9 @@ export const Chatbot = () => {
   const [emailCaptured, setEmailCaptured] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  // GA4 (richiesta SEO 03/11): prima apertura e contatto lasciato, una volta per conversazione
+  const openedSent = useRef(false);
+  const leadSent = useRef(false);
 
   // Saluto iniziale
   useEffect(() => {
@@ -92,6 +96,7 @@ export const Chatbot = () => {
         },
       ]);
     }
+    if (open && !openedSent.current) { openedSent.current = true; gaEvent('chatbot_open'); }
     if (open) setTimeout(() => inputRef.current?.focus(), 200);
   }, [open]);
 
@@ -130,6 +135,10 @@ export const Chatbot = () => {
       const email = data.meta?.contact_data?.email;
       if (email && !emailCaptured) {
         setEmailCaptured(email);
+      }
+      if ((data.meta?.lead || email) && !leadSent.current) {
+        leadSent.current = true;
+        gaEvent('generate_lead', { method: 'chatbot' });
       }
     } catch (e) {
       console.error('[chatbot] network error', e);

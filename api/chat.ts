@@ -304,7 +304,9 @@ async function handle(req: VercelRequest, res: VercelResponse) {
     }
 
     // Al browser mandiamo solo la risposta e il minimo indispensabile (niente usage, provider o errori interni)
-    return res.status(200).json({ reply: visibleText, meta: { contact_data: { email } } });
+    // lead: true quando la conversazione ha lasciato un contatto (email o telefono), per il
+    // conteggio in GA4 (richiesta SEO 03/11); il numero di telefono non torna al browser.
+    return res.status(200).json({ reply: visibleText, meta: { contact_data: { email }, lead: !!(email || phone) } });
   } catch (error: any) {
     console.error("Chat API error:", error);
     // "code" indica solo la fase che ha fallito (nessun dettaglio interno), utile per la diagnosi
