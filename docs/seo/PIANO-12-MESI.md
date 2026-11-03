@@ -10,8 +10,10 @@
   - Ultima settimana, senza i picchi del blog: 7 clic e 310 impressioni.
 - **GA4 dal 28/09** (comprende anche le visite di Nicola e Ilaria, il filtro del traffico interno non è ancora attivo):
   - ricerca organica: 78 sessioni da 14 utenti;
-  - **1 richiesta (generate_lead), arrivata dalla ricerca organica**;
+  - 1 generate_lead il 01/10, che era una prova;
   - 0 contact_click.
+- **Richieste vere da settembre: 0.** Lo ha confermato Nicola il 03/11 controllando i Lead della dashboard, che raccolgono chatbot e modulo.
+- **Il chatbot salva i lead in dashboard ma non in GA4.** Ho chiesto a Sito Inlab l'evento generate_lead con method chatbot.
 - **Scheda Google Business:** bloccata.
 - **Bing:** non collegato.
 
