@@ -66,6 +66,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Cassano delle Murge', region: 'Puglia', lat: 40.889, lon: 16.768 },
   { name: 'Trani', region: 'Puglia', lat: 41.277, lon: 16.418 },
   { name: 'Barletta', region: 'Puglia', lat: 41.319, lon: 16.283 },
+  { name: 'Andria', region: 'Puglia', lat: 41.227, lon: 16.296 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

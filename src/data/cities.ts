@@ -857,6 +857,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per negozi, imprese e ristoranti di Barletta: identità riconoscibile e contenuti costanti." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Andria", provincia: "provincia di Barletta-Andria-Trani",
+    contesto: "Andria è una delle città più grandi della Puglia ed è conosciuta per Castel del Monte, patrimonio UNESCO, e per la Burrata di Andria IGP. Il territorio produce anche olio e vino, con molte aziende che vendono in tutta Italia.",
+    settori: ["caseifici e prodotti tipici", "frantoi e cantine", "negozi e servizi"],
+    faq: { q: "Potete aiutare un'azienda a vendere online?", a: "Sì: foto dei prodotti, social, e-commerce o catalogo con ordini su WhatsApp e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione ad Andria: social, foto, video, siti e campagne per caseifici, frantoi, cantine e attività della città. Preventivo gratuito.",
+    intro: "Andria è la città di Castel del Monte e della burrata. Seguiamo social, foto, video, sponsorizzate e siti per caseifici, frantoi, cantine e attività, da Castellaneta.",
+    focus: { titolo: "Vendere un prodotto tipico oltre la città", testo: "Una burrata, un olio o un vino di Andria hanno un nome che già conta. Lo rafforziamo con foto e video della produzione, un sito con vendita online o ordini diretti, social costanti e campagne per chi cerca prodotti pugliesi in tutta Italia." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per caseifici, frantoi e cantine di Andria: produzione raccontata con foto e video veri." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
