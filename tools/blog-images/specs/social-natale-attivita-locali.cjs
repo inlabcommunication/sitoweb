@@ -4,7 +4,7 @@ module.exports = {
     tag: 'SOCIAL MEDIA · NATALE',
     title: 'Social a <span class="acc">Natale</span><br>per attività<br>locali',
     size: 60,
-    sub: 'Il piano da novembre all\'Epifania',
+    sub: 'Negozi e locali in provincia di Taranto: il piano da novembre all\'Epifania',
     visual: `<svg viewBox="0 0 430 470" width="430" height="470" font-family="'Liberation Sans'">
   <rect x="30" y="40" width="370" height="390" rx="24" fill="#262525" stroke="rgba(255,255,255,.1)" stroke-width="2"/>
   ${['NOV','DIC','GEN'].map((m,i)=>`<text x="${80+i*120}" y="85" font-size="16" font-weight="700" letter-spacing="2" fill="${i===1?'#cdb2ff':'rgba(240,237,230,.6)'}">${m}</text>`).join('')}

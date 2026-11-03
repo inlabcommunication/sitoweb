@@ -197,23 +197,39 @@ Vuoi capire come potrebbe funzionare per la tua attività? [Scopri il servizio d
   },
   {
     slug: 'reel-o-post-cosa-pubblicare-instagram',
-    title: 'Reel o post? Cosa pubblicare su Instagram per far crescere un\'attività locale',
+    title: 'Differenza tra reel e post su Instagram: quale usare per far crescere un\'attività locale',
     excerpt: 'Reel, caroselli, foto e storie: a cosa serve ogni formato, quanto deve durare un reel, come aprirlo nei primi 3 secondi e 10 idee concrete divise per settore.',
     category: 'Video & Reel',
     tags: ['reel', 'instagram', 'contenuti', 'video', 'caroselli'],
     author: 'Ilaria Gemma',
     date: '2026-09-28',
-    updated: '2026-09-28',
+    updated: '2026-11-03',
     cover: '/blog/reel-o-post-cosa-pubblicare-instagram/cover.jpg',
     coverAlt: 'Schermate di un reel, di un carosello e delle storie di Instagram affiancate',
     published: true,
-    seoTitle: 'Reel o post su Instagram? Guida e 10 idee | InLab',
-    seoDescription: 'Reel o post su Instagram: a cosa serve ogni formato, quanto deve durare un reel, i primi 3 secondi, 10 idee per settore e un piano settimanale da copiare.',
-    content: `Reel o post? È la domanda che ci fanno più spesso i titolari di attività locali che gestiscono Instagram da soli. In questa guida trovi a cosa serve ogni formato, quanto deve durare un reel, 10 idee concrete divise per settore e un piano settimanale da copiare.
+    seoTitle: 'Differenza tra reel e post su Instagram: quale usare | InLab',
+    seoDescription: 'Differenza tra reel e post su Instagram: a cosa serve ogni formato, quanto dura un reel, chi lo vede e 10 idee per attività locali da copiare.',
+    content: `Qual è la differenza tra reel e post su Instagram, e quale conviene usare? È la domanda che ci fanno più spesso i titolari di attività locali che gestiscono Instagram da soli. In questa guida trovi a cosa serve ogni formato, quanto deve durare un reel, 10 idee concrete divise per settore e un piano settimanale da copiare.
 
 **Risposta breve: i reel servono a farti scoprire da persone che non ti seguono ancora, i caroselli a spiegare e convincere, le storie a restare presenti ogni giorno con chi ti segue già. Per un'attività locale funziona un mix dei tre formati, non uno solo.**
 
 Nessun formato è "il migliore" in assoluto. Ognuno ha un lavoro preciso da fare. Capire quale lavoro ti serve in un certo momento è il primo passo per pubblicare con meno fatica e più risultati.
+
+## Qual è la differenza tra reel e post su Instagram
+
+**La differenza principale sta in chi li vede e a cosa servono. Un reel è un video verticale che Instagram mostra spesso anche a chi non ti segue, quindi serve a farti scoprire da persone nuove. Un post (foto singola o carosello) arriva soprattutto a chi ti segue già e serve a spiegare, informare e convincere.**
+
+Le differenze punto per punto:
+
+- **Formato:** il reel è un video verticale a schermo intero (9:16). Il post è una foto o un carosello di più immagini, di solito in formato 4:5.
+- **Durata:** un reel può arrivare fino a qualche minuto, ma per farsi scoprire funzionano meglio quelli brevi, tra 7 e 30 secondi. Il post non ha durata: si guarda e si scorre al ritmo di chi legge.
+- **Portata:** i reel compaiono anche nella sezione Reel e tra i contenuti suggeriti, quindi raggiungono più facilmente chi non ti conosce. I post compaiono soprattutto nel feed di chi ti segue.
+- **Quando usarlo:** il reel serve quando vuoi farti conoscere, mostrare un'atmosfera o una persona. Il post è adatto quando vuoi spiegare un menu, un servizio, un listino o comunicare una novità precisa.
+- **Esempio:** un reel con la pizza che esce dal forno per farti scoprire; un carosello con il menu della settimana per chi ti segue già.
+
+![Differenza tra reel e post su Instagram: formato, durata, portata e quando usarli](/blog/reel-o-post-cosa-pubblicare-instagram/differenza-reel-post-instagram.webp)
+
+> **Vuoi reel e post che portano clienti nella tua attività?** Li pensiamo, li giriamo e li pubblichiamo per te, con un piano chiaro. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
 
 ## Reel o post su Instagram: a cosa serve ogni formato
 
@@ -307,7 +323,7 @@ Sono **2 reel, 1 carosello e storie quasi ogni giorno**. Poi i numeri dicono cos
 
 ## Cosa abbiamo imparato girando reel per attività locali
 
-Nei progetti che seguiamo in provincia di Taranto, i reel che funzionano meglio sono quelli in cui si riconoscono le persone e il posto. Per [Nunzio Putignano Autofficina](/cliente/nunzio-putignano) a Palagiano abbiamo scelto reel ironici e spontanei, spesso in dialetto, con il titolare e il suo team protagonisti. Per [Ottica Occhi Blu](/cliente/ottica-occhiblu) a Castellaneta i video spiegano i servizi in modo semplice e simpatico.
+Nei progetti che seguiamo in provincia di Taranto, i reel che funzionano meglio sono quelli in cui si riconoscono le persone e il posto. Per [Nunzio Putignano Autofficina](/cliente/nunzio-putignano) a Palagiano abbiamo scelto reel ironici e spontanei, spesso in dialetto, con il titolare e il suo team protagonisti. Per [Ottica Occhi Blu](/cliente/ottica-occhiblu) a Castellaneta i video spiegano i servizi in modo semplice e simpatico. Per [Sottoscala](/cliente/sottoscala), bar di Mottola, i reel valorizzano piatti e atmosfera del locale, mentre i post raccolgono le proposte del menu. È il metodo che usiamo nella gestione social a [Mottola](/gestione-social-mottola) e a [Palagiano](/gestione-social-palagiano).
 
 Sono settori molto diversi, ma il principio è lo stesso: **meglio un video autentico girato bene che un contenuto perfetto e impersonale**. Gli stessi video, con qualche accorgimento, possono farti trovare anche su TikTok, che molti usano come motore di ricerca: te lo spieghiamo nella guida alla [SEO su TikTok](/blog/seo-tiktok-search-ads).
 
@@ -320,25 +336,17 @@ Sono settori molto diversi, ma il principio è lo stesso: **meglio un video aute
 
 ## Domande frequenti
 
-### È meglio pubblicare reel o post su Instagram?
+### È meglio pubblicare reel o post?
 
-Dipende dall'obiettivo. I reel servono soprattutto a raggiungere persone nuove, i caroselli a spiegare e convincere chi è già interessato. Per un'attività locale conviene alternarli, con le storie ogni giorno.
+Dipende dall'obiettivo. I reel servono soprattutto a raggiungere persone nuove, i post e i caroselli a spiegare e convincere chi è già interessato. Per un'attività locale conviene alternarli, con le storie ogni giorno.
 
-### Quanto deve durare un reel per un'attività?
+### I reel arrivano a più persone dei post?
 
-Per farsi scoprire di solito bastano tra 7 e 30 secondi, con un'idea sola. Reel più lunghi vanno bene per tutorial o presentazioni, purché ogni secondo aggiunga qualcosa.
+Di solito sì: Instagram mostra i reel anche a chi non ti segue, nella sezione Reel e tra i contenuti suggeriti. I post arrivano soprattutto a chi ti segue già. Per questo i reel sono il formato migliore per farsi scoprire, i post per farsi scegliere.
 
-### Quanti reel a settimana deve pubblicare un'attività locale?
+### Ogni quanto pubblicare reel?
 
-Un buon punto di partenza sono 2-3 reel a settimana, con storie quasi ogni giorno. È più importante riuscire a mantenere il ritmo nel tempo che pubblicare tanto per un mese e poi fermarsi.
-
-### Serve una videocamera professionale per fare reel?
-
-No, uno smartphone recente basta per la maggior parte dei contenuti. Contano di più luce, audio pulito e un'idea chiara. Per i contenuti più importanti, come un lancio o un evento, una produzione professionale fa la differenza.
-
-### I caroselli funzionano ancora su Instagram?
-
-Sì. Sono il formato più adatto per spiegare e vengono salvati e condivisi spesso. Sono utili soprattutto per menu, listini di servizi, passaggi di un trattamento e domande frequenti.
+Un buon punto di partenza sono 2-3 reel a settimana, con storie quasi ogni giorno. Conta di più mantenere il ritmo nel tempo che pubblicare tanto per un mese: lo spieghiamo nella guida su [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social).
 
 ## Da dove partire
 
@@ -468,7 +476,7 @@ Un sito nuovo viene di solito indicizzato in qualche giorno o settimana, ma per 
 
 ## Da dove partire
 
-Se hai già social attivi, il passo successivo è dare loro una "casa": un sito semplice, veloce, con i tuoi servizi ben spiegati e collegato alla scheda Google. Per curare anche la parte social, leggi [cosa include una gestione social per attività locali](/blog/gestione-social-attivita-locale-cosa-include).
+Se hai già social attivi, il passo successivo è dare loro una "casa": un sito semplice, veloce, con i tuoi servizi ben spiegati e collegato alla scheda Google. Per curare anche la parte social, leggi [cosa include una gestione social per attività locali](/blog/gestione-social-attivita-locale-cosa-include). Se produci vino, olio o altri prodotti del territorio, trovi come venderli online nella guida ai [prodotti tipici pugliesi online](/blog/vendere-prodotti-tipici-pugliesi-online).
 
 Se la tua attività è in provincia di Taranto, trovi i dettagli nella pagina sulla [realizzazione di siti web a Taranto](/siti-web-taranto). Oppure scopri il servizio [Siti Web & Web App](/siti-web) e [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
@@ -1913,7 +1921,7 @@ Non esiste un numero magico. Secondo la nostra esperienza funzionano meglio poch
 
 ## Conclusione: prima farsi trovare, poi sponsorizzarsi
 
-Su TikTok la ricerca è ormai un'abitudine. Il primo passo non costa nulla: rendere ogni video chiaro su cosa mostra e dove sei. Il secondo è testare le Search Ads su poche keyword locali, con un budget piccolo e obiettivi misurabili. Il terzo, se vendi prodotti, è valutare TikTok Shop con i conti alla mano.
+Su TikTok la ricerca è ormai un'abitudine. Il primo passo non costa nulla: rendere ogni video chiaro su cosa mostra e dove sei. Il secondo è testare le Search Ads su poche keyword locali, con un budget piccolo e obiettivi misurabili. Il terzo, se vendi prodotti, è valutare TikTok Shop con i conti alla mano. Lo stesso vale ormai per Instagram: vedi come far trovare i tuoi post con la guida a [Instagram su Google](/blog/instagram-su-google-seo-profilo).
 
 Se hai un ristorante o un bar e cerchi spunti su cosa girare, trovi 15 esempi pronti nella guida alle [idee di reel per ristoranti e bar](/blog/idee-reel-ristoranti).
 
@@ -2093,7 +2101,7 @@ Sì, come supporto. Secondo il 2026 Content Strategy Report di Sprout Social, la
 
 ## Meglio costante che tanto: da dove partire
 
-Non esiste un numero magico valido per tutti. Esistono frequenze di partenza, orari da testare e soprattutto un ritmo che puoi mantenere. Il punto pratico: scegli una o due piattaforme, adotta il piano minimo, fai il test di quattro settimane e decidi in base ai tuoi dati, non a quelli di qualcun altro.
+Non esiste un numero magico valido per tutti. Esistono frequenze di partenza, orari da testare e soprattutto un ritmo che puoi mantenere. Il punto pratico: scegli una o due piattaforme, adotta il piano minimo, fai il test di quattro settimane e decidi in base ai tuoi dati, non a quelli di qualcun altro. Per il periodo delle feste trovi un calendario pronto nella guida ai [social a Natale per negozi e locali](/blog/social-natale-attivita-locali).
 
 Se ti serve una mano a costruire un piano editoriale realistico e a produrre contenuti originali, la nostra [gestione social](/gestione-social) nasce proprio per questo, anche per le attività della provincia con la [gestione social a Taranto](/gestione-social-taranto). Vuoi capire quale ritmo è giusto per te? [Parliamone](/contatti).
 
@@ -2499,7 +2507,7 @@ Sì, se i diritti d'uso concordati con il fotografo lo prevedono. Chiedilo sempr
 
 ## Da dove partire
 
-Scrivi oggi la lista dei cinque piatti che ti rappresentano di più e dei tre angoli del locale che vorresti mostrare. È già metà del lavoro di preparazione.
+Scrivi oggi la lista dei cinque piatti che ti rappresentano di più e dei tre angoli del locale che vorresti mostrare. È già metà del lavoro di preparazione. Se gestisci una masseria o una location per eventi, leggi anche la guida al [marketing per masserie in Puglia](/blog/marketing-masserie-strutture-ricettive-puglia).
 
 Se vuoi un servizio fotografico pensato per menu, social e scheda Google, scopri i nostri [shooting fotografici per attività](/shooting). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
@@ -3123,5 +3131,434 @@ Se il tuo sito ha bisogno di una revisione o lo stai rifacendo, leggi anche perc
 - [Decreto legislativo 27 maggio 2022, n. 82](https://www.normattiva.it/uri-res/N2Ls?urn:nir:stato:decreto.legislativo:2022-05-27;82) – Normattiva
 - [European Accessibility Act](https://commission.europa.eu/strategy-and-policy/policies/justice-and-fundamental-rights/disability/union-equality-strategy-rights-persons-disabilities-2021-2030/european-accessibility-act_en) – Commissione europea
 - [Siti accessibili per legge: la guida per chi vende online](https://www.agendadigitale.eu/mercati-digitali/siti-accessibili-per-legge-la-guida-per-chi-vende-online/) – Agenda Digitale`,
+  },
+  {
+    slug: 'instagram-su-google-seo-profilo',
+    title: 'Instagram su Google: come far trovare i tuoi post anche a chi cerca sul web',
+    excerpt: 'Da luglio 2025 i post pubblici dei profili professionali di Instagram possono comparire su Google. Ecco come scrivere profilo, didascalie e testi alternativi per farti trovare.',
+    category: 'Social media',
+    tags: ['instagram', 'seo', 'google', 'attività locali', 'profilo professionale'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-03',
+    cover: '/blog/instagram-su-google-seo-profilo/cover.jpg',
+    coverAlt: 'Post Instagram di un\'attività locale che compare tra i risultati di ricerca di Google',
+    published: true,
+    seoTitle: 'Instagram su Google: farti trovare con i post | InLab',
+    seoDescription: 'Instagram su Google: da luglio 2025 i post dei profili professionali possono comparire nelle ricerche. Come scrivere profilo, didascalie e alt text.',
+    content: `Per anni Instagram e Google sono stati due mondi separati: quello che pubblicavi sul profilo si vedeva solo dentro l'app. Oggi non è più così. Da **luglio 2025** i post pubblici dei profili professionali possono comparire anche nei risultati di Google e degli altri motori di ricerca. Per un'attività locale vuol dire una cosa semplice: una didascalia scritta bene può portarti clienti anche da chi non ti segue e non usa Instagram.
+
+**Risposta breve: dal 10 luglio 2025 i contenuti pubblici dei profili professionali (aziendali e creator) di maggiorenni possono essere indicizzati da Google e dagli altri motori. Per farti trovare, scrivi un nome profilo e una bio con attività e città, didascalie che spiegano cosa mostri con le parole che usano i clienti, e testi alternativi alle immagini. Se non vuoi comparire, puoi disattivare l'opzione nelle impostazioni.**
+
+## Cosa è cambiato tra Instagram e Google
+
+Meta ha aggiornato le informazioni del suo Centro assistenza: dal 10 luglio 2025 i contenuti pubblici dei **profili professionali**, cioè aziendali e creator, possono essere mostrati dai motori di ricerca come Google e Bing.
+
+Alcune cose restano fuori:
+
+- i **profili personali** e i **profili privati**;
+- i profili di chi ha **meno di 18 anni**;
+- secondo le informazioni diffuse da Meta, i contenuti pubblicati **prima del 1° gennaio 2020**;
+- storie, messaggi diretti e commenti.
+
+Questo non vuol dire che ogni post finirà in prima pagina. Vuol dire che Google **può** leggerlo e mostrarlo, come una pagina web. A quel punto contano le stesse cose della SEO: parole giuste, contenuto utile, coerenza.
+
+## Perché conta per un'attività locale
+
+Molte ricerche locali sono molto specifiche: "torta di compleanno senza glutine Castellaneta", "officina che ripara monopattini Palagianello", "sushi a Mottola". Se un tuo post parla proprio di quello e lo spiega con parole chiare, può comparire tra i risultati, accanto al tuo sito e alla tua scheda Google.
+
+È anche un modo per dare più vita ai contenuti che pubblichi già. Un reel ben descritto lavora sui social nei primi giorni e su Google per mesi.
+
+È il motivo per cui, quando seguiamo i social di un'azienda, curiamo anche i testi. Con [Olio Vanessa](/cliente/olio-vanessa), azienda di olio extravergine di Castellaneta, gestiamo i social dalla strategia a foto, video e grafiche: ogni contenuto racconta prodotto, territorio e lavoro con parole chiare, che oggi possono essere lette anche da Google.
+
+## Come scrivere il profilo per farti trovare su Google
+
+### Nome profilo e nome utente
+
+Il nome visualizzato del profilo può contenere qualcosa in più del solo marchio: per esempio "Gelateria Rossi · Taranto". Il nome utente resta il tuo marchio, semplice e facile da scrivere.
+
+### Bio
+
+Nella bio scrivi in una riga cosa fai e dove: "Pasticceria artigianale a Palagianello · torte su ordinazione". Aggiungi il link al sito o alla scheda Google, e l'indirizzo se hai un punto vendita.
+
+### Categoria e contatti
+
+Nelle impostazioni del profilo professionale scegli la categoria giusta e compila indirizzo, telefono e orari. Sono informazioni che aiutano le persone e rendono il profilo coerente con la tua scheda Google.
+
+> **Vuoi che il tuo profilo Instagram lavori anche su Google?** Ti diciamo cosa cambiare in bio, didascalie e contenuti. [Scrivici e chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
+## Didascalie e testi alternativi: il cuore della SEO su Instagram
+
+### Didascalie che spiegano
+
+La prima riga della didascalia è la più importante: deve dire cosa si vede, con le parole che userebbe un cliente. "Il nostro panettone al pistacchio, fatto a mano a Mottola" funziona meglio di "Ci siamo! 🎄✨".
+
+Qualche regola pratica:
+
+- metti il **prodotto o il servizio** e, quando ha senso, la **città** nelle prime righe;
+- spiega in due o tre frasi a chi serve e come ordinarlo o prenotarlo;
+- usa pochi hashtag mirati, non decine di hashtag generici;
+- evita di ripetere la stessa didascalia su tutti i post.
+
+![Checklist per far trovare il profilo Instagram su Google: profilo pubblico, nome con città, bio, didascalie e testo alternativo](/blog/instagram-su-google-seo-profilo/checklist-instagram-su-google.webp)
+
+### Testi alternativi alle immagini
+
+Instagram permette di scrivere un **testo alternativo** per ogni foto, dalle impostazioni avanzate prima della pubblicazione. Serve a chi usa i lettori di schermo e aiuta i motori a capire l'immagine. Descrivi in una frase cosa c'è nella foto: "Vetrina della gelateria con dieci gusti di gelato artigianale".
+
+### Testo nei reel
+
+Nei reel, quello che dici e scrivi sullo schermo conta: un titolo chiaro nei primi secondi e una didascalia che riassume il video aiutano sia chi guarda sia la ricerca.
+
+## Se non vuoi comparire su Google
+
+Puoi scegliere. Nelle impostazioni della privacy del profilo professionale c'è l'opzione per non permettere ai motori di ricerca di mostrare i tuoi contenuti. In alternativa puoi passare a un profilo privato o personale, ma per un'attività di solito non conviene: perdi gli strumenti del profilo professionale.
+
+Per la maggior parte delle attività locali l'indicizzazione è un'opportunità. Va solo usata con un po' di metodo.
+
+## Domande frequenti
+
+### I post Instagram compaiono davvero su Google?
+
+Sì, i contenuti pubblici dei profili professionali possono essere indicizzati dal 10 luglio 2025. Non è detto che compaiano per ogni ricerca: dipende da quanto il contenuto è pertinente e scritto bene, come per qualsiasi pagina web.
+
+### Vale anche per i profili personali?
+
+No. Riguarda i profili professionali, cioè aziendali e creator, pubblici e di persone maggiorenni. I profili personali e quelli privati restano esclusi.
+
+### Gli hashtag aiutano a comparire su Google?
+
+Poco. Contano di più la prima riga della didascalia, il nome del profilo, la bio e i testi alternativi. Meglio pochi hashtag pertinenti che tanti generici.
+
+## Da dove partire
+
+Apri il tuo profilo e rileggi nome, bio e le didascalie degli ultimi dieci post: ognuna dice chiaramente cosa mostra e dove sei? Riscrivi la bio e, da oggi, aggiungi il testo alternativo a ogni foto.
+
+Se hai un'attività in provincia di Taranto, scopri come lavoriamo con la gestione social a [Taranto](/gestione-social-taranto) e a [Castellaneta](/gestione-social-castellaneta).
+
+Se cerchi visibilità anche su TikTok, leggi la guida alla [SEO su TikTok](/blog/seo-tiktok-search-ads); per scegliere i formati, quella su [reel o post](/blog/reel-o-post-cosa-pubblicare-instagram). Scopri la nostra [gestione social](/gestione-social) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.
+
+**Fonti**
+
+- [Instagram to make public posts searchable on Google and Bing](https://www.socialsamosa.com/news-2/instagram-public-posts-searchable-google-and-bing-9480780) – Social Samosa, luglio 2025
+- [Instagram, i contenuti pubblicati saranno indicizzati da Google: ecco come opporsi](https://en.ilsole24ore.com/art/instagram-published-content-will-be-indexed-by-google-heres-how-to-oppose-it-AHdMkKbB) – Il Sole 24 Ore, luglio 2025
+- [Centro assistenza di Instagram](https://help.instagram.com/) – Meta`,
+  },
+  {
+    slug: 'marketing-masserie-strutture-ricettive-puglia',
+    title: 'Marketing per masserie e strutture ricettive in Puglia: social, sito e prenotazioni',
+    excerpt: 'Come comunicare una masseria, un agriturismo o una struttura per eventi in Puglia: social, foto e video, sito con prenotazioni, scheda Google e recensioni.',
+    category: 'Strategia',
+    tags: ['masserie', 'strutture ricettive', 'puglia', 'social media', 'turismo'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-03',
+    cover: '/blog/marketing-masserie-strutture-ricettive-puglia/cover.jpg',
+    coverAlt: 'Masseria pugliese con ulivi, tavola apparecchiata all\'aperto e contenuti social per le prenotazioni',
+    published: true,
+    seoTitle: 'Marketing per masserie e strutture in Puglia | InLab',
+    seoDescription: 'Marketing per masserie e strutture ricettive in Puglia: social, foto e video, sito con prenotazioni dirette, scheda Google e recensioni. La guida pratica.',
+    content: `Una masseria in Puglia non vende solo una camera o un pranzo: vende un'esperienza fatta di ulivi, pietra, cucina del territorio e tempo lento. Proprio per questo il **marketing per masserie e strutture ricettive** funziona quando fa vedere quell'esperienza prima che l'ospite arrivi. In questa guida vediamo come usare social, foto e video, sito e scheda Google per riempire camere, sale ed eventi, anche fuori stagione.
+
+**Risposta breve: una masseria o una struttura ricettiva ha bisogno di quattro cose che lavorano insieme. Social con foto e video veri degli spazi, della cucina e degli eventi; un sito chiaro con camere, menu, eventi e un modo semplice per prenotare direttamente; una scheda Google completa e piena di recensioni; e un calendario di contenuti che segue le stagioni, dalla primavera ai matrimoni, dall'estate al Natale.**
+
+## Perché le masserie hanno bisogno di una comunicazione propria
+
+Chi sceglie una masseria non cerca solo un posto dove dormire o mangiare: cerca un'atmosfera. Lo decide spesso guardando le foto su Instagram, le recensioni su Google e la pagina del sito, molto prima di chiamare.
+
+Una masseria ha poi pubblici diversi, che vanno raccontati in modo diverso:
+
+- **turisti** che cercano una vacanza in Puglia;
+- **coppie e famiglie** che organizzano matrimoni, battesimi e feste;
+- **aziende** che cercano una location per eventi e cene;
+- **persone della zona** che vengono per il pranzo della domenica o una serata.
+
+Un'unica comunicazione generica non parla bene a nessuno. Serve un piano che dia spazio a ciascuno.
+
+## Social per strutture ricettive: cosa pubblicare
+
+### Gli spazi, nelle ore giuste
+
+Le stanze al mattino, la corte all'ora del tramonto, la sala apparecchiata per un evento, la piscina d'estate. Le stesse foto fatte nell'ora sbagliata perdono metà del fascino.
+
+### La cucina e il territorio
+
+I piatti, i prodotti dell'orto, l'olio, il forno. Per una masseria la cucina è spesso il motivo principale per tornare.
+
+### Gli eventi, prima e dopo
+
+Prima dell'evento servono date, menu e modi per prenotare. Dopo, le foto e i video della serata convincono chi non c'era a venire la volta successiva.
+
+### Le persone
+
+Il titolare che accoglie, lo chef, il personale di sala. Rendono la struttura familiare prima ancora di arrivarci.
+
+Un esempio è [Masseria Sacramento](/cliente/masseria-sacramento) a Palagianello, che unisce eventi, ristorazione e ospitalità. Il calendario è ricco: la festa della birra in estate e, tutto l'anno, serate del venerdì e del sabato con menu fissi e musica live, oltre al pranzo della domenica. La comunicazione accompagna ogni appuntamento per riempire la masseria e far vivere l'esperienza anche online.
+
+![Cosa pubblicare sui social di una masseria: spazi, cucina, eventi e persone](/blog/marketing-masserie-strutture-ricettive-puglia/social-masseria-cosa-pubblicare.webp)
+
+## Foto e video: l'investimento che rende di più
+
+Per una struttura ricettiva le immagini sono il prodotto. Foto scure o fatte con il telefono in fretta comunicano poca cura, anche quando la struttura è bellissima.
+
+Conviene organizzare **sessioni di foto e video professionali** almeno due volte l'anno: una in primavera o estate, con esterni e piscina, e una in autunno o inverno, con sale, camini e cucina. Per le strutture che ospitano matrimoni ed eventi, servizi fotografici e video dei momenti più belli costruiscono nel tempo uno storytelling visivo che nessuna pubblicità può sostituire. È il lavoro che facciamo con [Villa Natia](/cliente/villa-natia), sala ricevimenti e luxury hotel a Mottola.
+
+Trovi qualche consiglio pratico anche nella guida al [servizio fotografico per ristoranti](/blog/servizio-fotografico-ristoranti), che vale per qualsiasi sala.
+
+> **Hai una masseria o una struttura per eventi?** Ti aiutiamo a riempire camere, sale e date con foto, video, social e prenotazioni dirette. [Raccontaci la tua struttura](/contatti): rispondiamo entro 24 ore con un preventivo gratuito.
+
+## Sito e prenotazioni dirette
+
+I portali di prenotazione portano visibilità, ma ogni prenotazione passa da loro. Un sito ben fatto aiuta a ricevere più **richieste dirette**.
+
+Cosa non può mancare:
+
+- pagine chiare per **camere, ristorante, eventi e matrimoni**, ognuna con foto, informazioni e contatti;
+- un modo semplice per **prenotare o chiedere disponibilità**: modulo breve, telefono e WhatsApp;
+- **come arrivare**, con mappa e distanze dalle località vicine;
+- testi in **italiano e in inglese**, se ospiti turisti stranieri;
+- pagine veloci da aprire sul telefono.
+
+## Scheda Google e recensioni
+
+Molti ospiti scoprono una masseria cercando su Google Maps "masseria vicino a me" o il nome di un paese. Per questo la **scheda Google** va curata come una vetrina: categoria giusta, foto aggiornate di ogni ambiente, orari del ristorante, link al sito, post per gli eventi.
+
+Le recensioni contano moltissimo per le strutture ricettive. Chiedile a ogni ospite, rispondi a tutte e usa quello che scrivono per migliorare. Come farlo senza violare le regole di Google lo spieghiamo nella guida alle [recensioni Google](/blog/recensioni-google-come-chiederle-rispondere).
+
+## Domande frequenti
+
+### Quali social usare per una masseria?
+
+Instagram è il canale principale per mostrare spazi, cucina ed eventi. Facebook resta utile per eventi e pubblico locale. Per i matrimoni conviene curare anche le storie in evidenza con foto e video delle cerimonie.
+
+### Come riempire una masseria fuori stagione?
+
+Con un calendario di eventi pensato per i mesi più tranquilli, come serate a tema, pranzi della domenica, degustazioni e cene aziendali, comunicato con anticipo su social, scheda Google e sito.
+
+### Servono le sponsorizzate per una struttura ricettiva?
+
+Aiutano nei momenti decisivi: lancio di un evento, apertura della stagione, promozione dei matrimoni. Funzionano meglio con foto e video di qualità e con un obiettivo chiaro, come le richieste di disponibilità.
+
+## Da dove partire
+
+Apri il tuo profilo Instagram e la scheda Google e guardali con gli occhi di un ospite che non ti conosce: le foto fanno venire voglia di prenotare? Si capisce subito come contattarti? Se la risposta è no, è da lì che partiamo.
+
+Seguiamo masserie e strutture in tutta la Puglia, dalla zona di Crispiano alla Valle d'Itria: trovi come lavoriamo a [Crispiano](/agenzia-comunicazione-crispiano), a [Ostuni](/agenzia-comunicazione-ostuni) e a [Conversano](/agenzia-comunicazione-conversano).
+
+Scopri la nostra [gestione social](/gestione-social) oppure [raccontaci la tua struttura](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'social-natale-attivita-locali',
+    title: 'Social a Natale per negozi e locali in provincia di Taranto: il piano da novembre all\'Epifania',
+    excerpt: 'Come preparare i social di negozi, ristoranti e laboratori per il periodo di Natale: calendario da novembre all\'Epifania, idee di contenuti e sponsorizzate.',
+    category: 'Social media',
+    tags: ['natale', 'piano editoriale', 'social media', 'attività locali', 'instagram'],
+    author: 'Ilaria Gemma',
+    date: '2026-11-03',
+    cover: '/blog/social-natale-attivita-locali/cover.jpg',
+    coverAlt: 'Calendario dei contenuti social di Natale per un negozio locale da novembre a gennaio',
+    published: true,
+    seoTitle: 'Social a Natale per attività a Taranto e provincia | InLab',
+    seoDescription: 'Social a Natale per attività locali: il calendario da novembre all\'Epifania, idee di post e reel per negozi e ristoranti e come usare le sponsorizzate.',
+    content: `Per molte attività locali il periodo di Natale è il più importante dell'anno: regali, cene, ordini di dolci, prenotazioni per le feste. Sui social, però, a dicembre tutti pubblicano di più, e chi inizia all'ultimo momento si perde nel rumore. In questa guida trovi un **piano social per Natale** pensato per negozi, ristoranti, bar e laboratori della provincia di Taranto (e non solo): cosa pubblicare e quando, da novembre all'Epifania.
+
+**Risposta breve: inizia a novembre, non a dicembre. Dividi il periodo in quattro fasi: preparazione (inizio novembre), lancio delle proposte (metà novembre), picco degli acquisti e delle prenotazioni (dicembre), ringraziamenti e saldi (dopo Natale fino all'Epifania). In ogni fase servono pochi contenuti chiari, con date, prezzi e modi per ordinare ben visibili.**
+
+Il segreto non è pubblicare di più, ma pubblicare con un ordine: le persone devono sapere in tempo cosa offri e come averlo.
+
+## Perché preparare i social di Natale già a novembre
+
+Gli acquisti di Natale iniziano prima di quanto sembri. Molte persone cercano idee regalo e prenotano le cene aziendali già a novembre, e il venerdì nero di fine mese ha spostato in avanti una parte degli acquisti.
+
+Iniziare presto serve a:
+
+- farti ricordare **prima** che le persone decidano;
+- raccogliere **ordini e prenotazioni** con calma, senza la corsa dell'ultima settimana;
+- avere tempo per **foto e video** fatti bene, invece di improvvisarli a dicembre.
+
+## Il calendario social di Natale in quattro fasi
+
+### 1. Preparazione (prima metà di novembre)
+
+Decidi le proposte: cesti regalo, menu delle feste, prodotti stagionali, buoni regalo, orari speciali. Organizza una giornata di foto e video per avere materiale per tutto il periodo.
+
+### 2. Lancio (seconda metà di novembre)
+
+Presenta le proposte una alla volta: un post per il menu delle feste, uno per i regali, uno per gli ordini su prenotazione. Indica sempre **come ordinare** e **entro quando**.
+
+### 3. Picco (dicembre)
+
+È il momento dei contenuti che ricordano e rassicurano: date di consegna e ritiro, orari, prodotti disponibili, posti rimasti per le cene. Nelle storie mostra il dietro le quinte: la preparazione, il negozio decorato, le persone al lavoro.
+
+### 4. Dopo Natale (fino all'Epifania)
+
+Ringrazia i clienti, mostra i momenti più belli delle feste e, se le fai, comunica saldi e promozioni di gennaio. È anche il momento per chiedere una recensione a chi ha comprato o festeggiato da te.
+
+![Calendario social di Natale in quattro fasi: preparazione, lancio, picco di dicembre e dopo Natale](/blog/social-natale-attivita-locali/calendario-social-natale-attivita-locali.webp)
+
+## Idee di contenuti per Natale, settore per settore
+
+### Ristoranti e bar
+
+- il menu delle feste spiegato piatto per piatto, in un reel;
+- le sale preparate per le cene di gruppo o aziendali;
+- i dolci e le bevande del periodo;
+- le date e gli orari speciali, in una grafica semplice da salvare.
+
+Trovi altri spunti nelle [idee di reel per ristoranti](/blog/idee-reel-ristoranti).
+
+### Negozi
+
+- tre idee regalo per fasce di prezzo;
+- il confezionamento dei pacchi, che fa vedere la cura;
+- la vetrina e il negozio decorati;
+- i buoni regalo per chi non sa cosa scegliere.
+
+### Laboratori e pasticcerie
+
+- la preparazione dei prodotti di Natale, dall'impasto al prodotto finito;
+- come e fino a quando ordinare;
+- i formati e le confezioni disponibili.
+
+Ne è un esempio [Sublime Tentazione](/cliente/sublime-tentazione), gelateria e pasticceria di Palagianello: i contenuti seguono le stagioni del laboratorio, dal gelato d'estate ai panettoni a Natale, con una presenza social costante che fa venire voglia di passare in negozio.
+
+![Idee di contenuti social di Natale per ristoranti, negozi e laboratori](/blog/social-natale-attivita-locali/idee-contenuti-natale-social.webp)
+
+> **Vuoi arrivare a dicembre con il piano social di Natale già pronto?** Lo prepariamo insieme a te, con foto e video fatti nella tua attività. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
+## Sponsorizzate a Natale: quando servono
+
+A dicembre la concorrenza per l'attenzione è alta, anche nelle sponsorizzate. Per un'attività locale funzionano bene campagne brevi e mirate:
+
+- per le **prenotazioni**, rivolte a chi vive o lavora entro pochi chilometri;
+- per i **regali**, con un'offerta chiara e una data limite;
+- per il **ricordo**, rivolte a chi ha già visto i tuoi video o visitato il profilo.
+
+Conviene partire a novembre, quando la concorrenza è più bassa, e usare dicembre per ricordare le scadenze. Come impostarle lo spieghiamo nella guida alle [sponsorizzate Instagram per attività locali](/blog/sponsorizzate-instagram-attivita-locali).
+
+## Gli errori più comuni sui social a Natale
+
+- **Iniziare a dicembre**, quando molte persone hanno già deciso.
+- **Pubblicare solo auguri**: belli, ma non dicono cosa offri.
+- **Dimenticare le informazioni pratiche**: prezzi, date, orari, come ordinare.
+- **Usare solo immagini di repertorio**: le foto vere del tuo negozio funzionano meglio.
+- **Non rispondere ai messaggi**: a dicembre un messaggio senza risposta è spesso un ordine perso.
+
+## Domande frequenti
+
+### Quando iniziare a pubblicare i contenuti di Natale?
+
+Da inizio novembre per prepararsi e dalla seconda metà del mese per presentare le proposte. A dicembre i contenuti servono soprattutto a ricordare date, orari e disponibilità.
+
+### Quante volte pubblicare a Natale?
+
+Non serve pubblicare tutti i giorni. Due o tre contenuti ben fatti a settimana sul feed, più qualche storia, bastano a molte attività. Per un riferimento generale leggi [quante volte pubblicare sui social](/blog/quante-volte-pubblicare-social).
+
+### Meglio reel o post per Natale?
+
+I reel aiutano a farti scoprire da chi non ti segue. I post e le grafiche funzionano per le informazioni da salvare, come menu, orari e date di ritiro. Conviene usare entrambi.
+
+## Da dove partire
+
+Prendi un calendario e segna tre date: quando presenterai le proposte di Natale, l'ultimo giorno per ordinare e i giorni di chiusura. Sono la base del tuo piano.
+
+In provincia di Taranto seguiamo i social di negozi, locali e laboratori: vedi la nostra gestione social a [Castellaneta](/gestione-social-castellaneta), a [Palagianello](/gestione-social-palagianello) e a [Mottola](/gestione-social-mottola).
+
+Se vuoi un piano social di Natale costruito sulla tua attività, con foto e video fatti sul posto, scopri la nostra [gestione social](/gestione-social) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'vendere-prodotti-tipici-pugliesi-online',
+    title: 'Vendere online i prodotti tipici pugliesi: vino, olio e latticini',
+    excerpt: 'Come vendere online vino, olio, latticini e altri prodotti tipici pugliesi: e-commerce, spedizioni, foto, social e racconto del territorio.',
+    category: 'Siti web',
+    tags: ['e-commerce', 'prodotti tipici', 'puglia', 'vino', 'olio'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-03',
+    cover: '/blog/vendere-prodotti-tipici-pugliesi-online/cover.jpg',
+    coverAlt: 'Bottiglie di vino e olio pugliese con un negozio online aperto sul telefono',
+    published: true,
+    seoTitle: 'Vendere prodotti tipici online in Puglia | InLab',
+    seoDescription: 'Come vendere online i prodotti tipici pugliesi: e-commerce, spedizioni di vino, olio e latticini, foto e social per raccontare territorio e qualità.',
+    content: `Il Primitivo di Manduria, la mozzarella di Gioia del Colle, il pane di Altamura, l'olio extravergine di tutta la regione: i prodotti tipici pugliesi sono conosciuti in Italia e all'estero. Per chi li produce, **vendere online** può portare clienti che non passeranno mai dal negozio. Ma un e-commerce che funziona non è solo un sito con il carrello: servono spedizioni ben organizzate, foto che fanno venire voglia di assaggiare e un racconto del territorio. Vediamo come impostarlo.
+
+**Risposta breve: per vendere online i prodotti tipici servono un negozio online semplice da usare (su piattaforme come Shopify o sul tuo sito), schede prodotto con foto vere e informazioni chiare su origine e uso, spedizioni pensate per ogni prodotto (bottiglie, olio, freschi), e social che raccontano chi produce e dove. Prima di partire, verifica con il tuo consulente le regole fiscali e sanitarie per il tuo tipo di prodotto.**
+
+## Perché vendere online i prodotti tipici
+
+Chi ha assaggiato un vino o un olio in vacanza spesso vorrebbe riordinarlo da casa. Chi è emigrato cerca i sapori di casa. Chi fa un regalo aziendale cerca qualcosa di diverso. Sono tutte persone che non passeranno dal tuo punto vendita, ma possono comprare da te online.
+
+Vendere online ti permette di:
+
+- **raggiungere clienti lontani**, in Italia e, se ti organizzi, all'estero;
+- **far riordinare** chi ti ha conosciuto in cantina, in frantoio o in caseificio;
+- **vendere confezioni regalo** nei periodi di punta, come il Natale;
+- **costruire un marchio** riconoscibile, che non dipende solo dai rivenditori.
+
+## Quale negozio online scegliere
+
+### Piattaforma e-commerce o sito su misura
+
+Piattaforme come Shopify permettono di avere un negozio online completo, con pagamenti, spedizioni e gestione degli ordini. Sono una buona scelta per partire. Un sito su misura ha senso quando servono funzioni particolari o un'integrazione forte con il resto della comunicazione.
+
+Con [Tacco](/cliente/tacco), marchio di vini, abbiamo lavorato sulla grafica e sulla revisione dell'e-commerce già realizzato su Shopify, perché il negozio online fosse più chiaro da navigare e più coerente con l'immagine del marchio. Spesso non serve rifare tutto: basta rendere chiaro il percorso dal prodotto al carrello.
+
+### Marketplace
+
+I grandi marketplace danno visibilità, ma trattengono commissioni e lasciano poco spazio al racconto del marchio. Possono affiancare il tuo negozio, non sostituirlo.
+
+## Spedizioni: il punto più delicato
+
+Ogni prodotto ha le sue esigenze:
+
+- **vino e olio**: imballi pensati per le bottiglie, che proteggono da urti e perdite; per l'olio, confezioni che lo riparano da luce e calore;
+- **latticini e prodotti freschi**: richiedono la catena del freddo e tempi di consegna brevi, spesso solo in alcune zone e in alcuni giorni;
+- **prodotti da forno**: date di consegna che rispettano la freschezza.
+
+Scrivi in modo chiaro sul sito costi, tempi e zone di spedizione. E chiedi al tuo consulente quali adempimenti fiscali e sanitari servono per il tuo prodotto, soprattutto per gli alcolici e gli alimenti freschi, e per le spedizioni all'estero.
+
+![Come spedire vino, olio e latticini venduti online: imballi, catena del freddo e tempi di consegna](/blog/vendere-prodotti-tipici-pugliesi-online/spedizioni-prodotti-tipici-online.webp)
+
+> **Vuoi vendere online i tuoi prodotti?** Ti aiutiamo con negozio online, foto dei prodotti e social che portano al carrello. [Raccontaci la tua azienda](/contatti): rispondiamo entro 24 ore con un preventivo gratuito.
+
+## Schede prodotto e foto che fanno vendere
+
+Online il cliente non può assaggiare: deve potersi fidare di quello che vede e legge.
+
+Una buona scheda prodotto ha:
+
+- **foto vere** del prodotto, della confezione e, se possibile, del prodotto in uso: l'olio sul pane, il vino nel bicchiere;
+- **origine e produzione**: dove nasce, chi lo produce, come;
+- **informazioni pratiche**: formato, abbinamenti, conservazione;
+- **certificazioni e denominazioni**, se ci sono, come DOC, DOP o biologico, indicate in modo corretto.
+
+## Social e racconto del territorio
+
+Un prodotto tipico si vende raccontando il luogo e le persone. I social sono lo strumento giusto per farlo: la raccolta delle olive, la vendemmia, il caseificio al mattino presto, il frantoio in piena attività.
+
+Con [Olio Vanessa](/cliente/olio-vanessa), azienda di olio extravergine pugliese di [Castellaneta](/agenzia-comunicazione-castellaneta), abbiamo gestito i social a 360 gradi, dalla strategia a foto, video e grafiche. L'obiettivo era raccontare il prodotto, il territorio e il lavoro che c'è dietro ogni bottiglia.
+
+Per far crescere il negozio online, i social devono portare al sito: link nella bio, prodotti nei post e nelle storie, sponsorizzate nei periodi di punta. Ricordati infine che un negozio online deve essere facile da usare per tutti: leggi la guida all'[accessibilità del sito web](/blog/accessibilita-sito-web-european-accessibility-act).
+
+![Dal racconto sui social all'acquisto online: territorio, prodotto, scheda e carrello](/blog/vendere-prodotti-tipici-pugliesi-online/social-ecommerce-prodotti-tipici.webp)
+
+## Domande frequenti
+
+### Meglio Shopify o un sito su misura per vendere prodotti tipici?
+
+Per partire, una piattaforma come Shopify è spesso la scelta più semplice: pagamenti, spedizioni e ordini sono già pronti. Un sito su misura conviene quando servono funzioni particolari o quando il negozio è una parte di un sito più grande.
+
+### Si possono vendere online vino e alcolici?
+
+Sì, ma con regole precise sul fisco e sulle spedizioni, che cambiano anche in base al paese di destinazione. Prima di aprire il negozio chiedi al tuo consulente cosa serve nel tuo caso.
+
+### Come spedire latticini e prodotti freschi?
+
+Serve un corriere che garantisca la catena del freddo e consegne veloci. Molti produttori limitano le spedizioni dei freschi ad alcune zone e ad alcuni giorni della settimana, per evitare soste nel fine settimana.
+
+## Da dove partire
+
+Scegli i tre prodotti che vendi meglio e che si spediscono più facilmente: sono la base del tuo primo negozio online. Fai delle foto vere, scrivi per ognuno da dove viene e come si usa, e calcola costi e tempi di spedizione.
+
+Seguiamo produttori in tutta la Puglia: trovi come lavoriamo a [Manduria](/agenzia-comunicazione-manduria), a [Gioia del Colle](/agenzia-comunicazione-gioia-del-colle) e ad [Altamura](/agenzia-comunicazione-altamura).
+
+Scopri i nostri [siti web ed e-commerce](/siti-web) oppure [raccontaci la tua azienda](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
 ];
