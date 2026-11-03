@@ -809,6 +809,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per hotel, B&B e ristoranti di Otranto: immagini che fanno venire voglia di partire e contenuti anche in inglese." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Brindisi", provincia: "provincia di Brindisi",
+    contesto: "Brindisi è conosciuta per il porto naturale, il lungomare e le colonne romane che segnano la fine della via Appia. Con l'aeroporto e il porto è una porta d'ingresso per il Salento, con commercio, servizi e imprese che lavorano anche con la provincia.",
+    settori: ["negozi e commercio", "ristoranti, bar e locali sul lungomare", "imprese e professionisti"],
+    faq: { q: "Lavorate con imprese e professionisti, non solo negozi?", a: "Sì: sito, branding, foto e video aziendali, LinkedIn e campagne per generare contatti." },
+    description: "Agenzia di comunicazione a Brindisi: strategia, social, video, siti e campagne per negozi, ristoranti, imprese e professionisti. Preventivo gratuito.",
+    intro: "Brindisi è un capoluogo di mare, con un porto storico e un aeroporto che collega il Salento. Portiamo strategia, social, video, siti e campagne a negozi, ristoranti, imprese e professionisti, da Castellaneta.",
+    focus: { titolo: "Comunicare per la città e per chi arriva", testo: "Un'attività di Brindisi parla a due pubblici: i brindisini, che la scelgono ogni giorno, e chi arriva in città per lavoro o per viaggio. Impostiamo social, scheda Google e campagne diverse per ciascuno, con contenuti costanti e un sito che trasforma le visite in contatti." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per negozi, ristoranti e imprese di Brindisi: contenuti per chi vive in città e per chi arriva." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

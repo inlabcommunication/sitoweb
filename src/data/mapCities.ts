@@ -62,6 +62,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Sava', region: 'Puglia', lat: 40.403, lon: 17.556 },
   { name: 'Galatina', region: 'Puglia', lat: 40.174, lon: 18.170 },
   { name: 'Otranto', region: 'Puglia', lat: 40.144, lon: 18.491 },
+  { name: 'Brindisi', region: 'Puglia', lat: 40.632, lon: 17.936 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
