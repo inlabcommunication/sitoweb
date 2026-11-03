@@ -415,5 +415,5 @@ collegati dal 28/09/2026: le priorità dei prossimi brief nasceranno dai loro da
    - FAQ dalle query viste;
    - dateModified aggiornata.
    Gli articoli da aggiornare li segnala la SEO.
-7. **Date vere nei dati strutturati.** datePublished è la data di uscita, dateModified quella dell'ultimo aggiornamento. Oggi risultano tutte "2026-09-28": da correggere con Sito Inlab.
+7. **Date vere nei dati strutturati.** datePublished è la data di uscita, dateModified quella dell'ultimo aggiornamento. Verificato il 03/11: il codice le gestisce già bene; i 15 articoli del 28/09 sono usciti davvero quel giorno.
 8. **Link alle pagine città che scendono:** `/agenzia-comunicazione-castellaneta`, `/agenzia-comunicazione-massafra`, `/agenzia-comunicazione-bari`. Oggi nessun articolo le collega.
