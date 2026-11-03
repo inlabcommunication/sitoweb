@@ -926,4 +926,5 @@ export const CITY_INFO: CityInfo[] = [
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
 
 /** Comuni della provincia di Bari con la pagina agenzia: collegati dalla pagina Bari e viceversa (brief SEO 03/11) */
-export const BARI_PROVINCE_CITIES = CITY_INFO.filter((c) => c.provincia === 'provincia di Bari').map((c) => c.name);
+export const isBariProvince = (provincia: string) => provincia === 'provincia di Bari' || provincia === 'Città metropolitana di Bari';
+export const BARI_PROVINCE_CITIES = CITY_INFO.filter((c) => c.name !== 'Bari' && isBariProvince(c.provincia)).map((c) => c.name);

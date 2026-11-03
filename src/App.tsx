@@ -37,7 +37,7 @@ import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localCl
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities, aCity } from "./seo/routes";
-import { cityInfo, BARI_PROVINCE_CITIES } from "./data/cities";
+import { cityInfo, BARI_PROVINCE_CITIES, isBariProvince } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
@@ -1583,7 +1583,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare {aCity(city)}</h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
             {/* Paesi vicini; comuni della provincia di Bari → pagina Bari (brief SEO 03/11) */}
-            {[...(info.linkVicini||[]), ...(provincia==="provincia di Bari"&&AGENCY_CITIES.includes("Bari") ? [{testo:"Agenzia di comunicazione a Bari e provincia",href:agencyPath("Bari")}] : [])].map(l=>(
+            {[...(info.linkVicini||[]), ...(city!=="Bari"&&isBariProvince(provincia)&&AGENCY_CITIES.includes("Bari") ? [{testo:"Agenzia di comunicazione a Bari e provincia",href:agencyPath("Bari")}] : [])].map(l=>(
               <Link key={l.href} to={l.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",marginRight:"1.5rem",fontSize:14,color:"var(--a)"}}>{l.testo} <ArrowRight size={13}/></Link>
             ))}
             {info.sezione && <>
