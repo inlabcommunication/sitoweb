@@ -394,3 +394,26 @@ collegati dal 28/09/2026: le priorità dei prossimi brief nasceranno dai loro da
 8. Turismo in Valle d'Itria: social per B&B e case vacanza (gestione social; Alberobello, Locorotondo, Ostuni, Cisternino)
 9. Comunicazione per negozi di ottica (gestione social; Occhi Blu, Vision Ottica; Castellaneta, Mottola, Palagianello)
 10. Social media manager a Lecce e nel Salento: cosa fa e come sceglierlo (gestione social; Lecce, Nardò, Gallipoli). Va tenuto distinto da `social-media-manager-taranto`: l'esempio dev'essere diverso.
+
+## 12. Come vincere le ricerche: cosa ci insegnano i dati di fine ottobre (03/11/2026)
+
+**Il caso di "differenza tra post e reel":**
+- Il 26-30/10 Google ha provato `reel-o-post-cosa-pubblicare-instagram` in prima pagina (posizione 6-8, 231 impressioni). Poi l'ha tolto.
+- `tracking-pixel-email-garante` ha fatto lo stesso: 328 impressioni, poi 0.
+- È la prova che Google fa agli articoli nuovi: li mette in alto qualche giorno e guarda se la gente clicca e resta.
+- I concorrenti su quella ricerca sono articoli generici, spesso tradotti dall'inglese. Si possono battere con una risposta più chiara e un esempio vero.
+
+**Regole per ogni articolo (in aggiunta alla §11):**
+1. **Risposta subito.** Nelle prime 2 righe c'è la risposta diretta alla domanda del titolo, in 40-50 parole. È la parte che Google e le AI riprendono.
+2. **Una tabella o un elenco di confronto** quando l'argomento lo permette (post o reel, prezzi che dipendono da…, fasi). Senza cifre sui servizi InLab.
+3. **Un esempio vero** di un cliente o del territorio, con il link alla scheda cliente o alla pagina del paese.
+4. **Titolo uguale alla ricerca.** Il title contiene la frase che la gente scrive su Google. Esempio: "Differenza tra post e reel su Instagram: quale usare", non un titolo creativo.
+5. **FAQ: 3 domande prese dalle ricerche vere.** Varianti da Search Console o dai suggerimenti di Google: "che differenza c'è tra…", "meglio post o reel…".
+6. **Aggiornamento dopo la prova.** Se un articolo prende impressioni e poi sparisce, entro 2 settimane va aggiornato:
+   - risposta più chiara in apertura;
+   - un esempio in più;
+   - FAQ dalle query viste;
+   - dateModified aggiornata.
+   Gli articoli da aggiornare li segnala la SEO.
+7. **Date vere nei dati strutturati.** datePublished è la data di uscita, dateModified quella dell'ultimo aggiornamento. Oggi risultano tutte "2026-09-28": da correggere con Sito Inlab.
+8. **Link alle pagine città che scendono:** `/agenzia-comunicazione-castellaneta`, `/agenzia-comunicazione-massafra`, `/agenzia-comunicazione-bari`. Oggi nessun articolo le collega.

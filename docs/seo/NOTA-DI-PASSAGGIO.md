@@ -36,7 +36,24 @@ Serve a far ripartire una sessione SEO nuova con un contesto pulito.
   - Ogni paese ha 2 pagine: agenzia + gestione social.
   - Testi veri e propri; clienti solo se pubblicati.
 - **Pagine città con argomento proprio:** brief del 05/10. Clienti citati per paese.
-- **Schede `/cliente/`:** title "{Servizio} a {Paese}: {Cliente}", con link alle pagine del paese.
+- **Schede `/cliente/`:** title "{Cliente}, {Paese}: {servizio}", con il nome dell'attività per primo (dal 03/11). Il vecchio "Gestione social a Palagianello: …" faceva concorrenza alle pagine del paese. Link alle pagine del paese.
+- **Home (Nicola, 03/11):** title e description con "Castellaneta" **non si toccano**.
+
+## Metodo di lavoro (dal 03/11, richiesta di Nicola: "ottimizza anche te stesso")
+Ogni lunedì, in quest'ordine:
+1. **Controlli prima di scrivere.**
+   - Prima di ogni messaggio, `get_session` sull'ID e controllo del titolo. Il 03/11 un resoconto è finito alla sessione Competitor.
+   - Controllo che la sessione Blog non sia "failed" o ferma da più di 7 giorni.
+2. **Search Console.**
+   - Indicizzazione di tutte le URL in sitemap.
+   - Rendimento per settimana, sempre anche **senza i picchi del blog**.
+   - Pagine vecchie che scendono: per ognuna cerco la causa sul sito, cioè title doppi tra pagine nostre, mancanza di lavori, link, testo.
+3. **Cosa c'è nei risultati di ricerca (SERP)** per 5 ricerche chiave della settimana.
+   - Chi è sopra di noi e che cosa ha più di noi.
+   - Lo strumento di ricerca web di questa sessione non è Google Italia, quindi lo uso solo come segnale. Per le ricerche locali chiedo a Nicola uno screenshot.
+4. **Blog:** articoli del mese su 8, ultimo articolo, aggiornamenti, date nei dati strutturati.
+5. **Lotto** della settimana, poi resoconto al Direttore e messaggio a Nicola.
+- Ogni decisione nuova di Nicola va scritta qui subito.
 - **`/dove-lavoriamo`:** niente nomi per i clienti senza scheda.
 - **Dati ufficiali (NAP):** InLab Communication, Via Regina Margherita 26, 74011 Castellaneta (TA). Geo provvisorio 40.6333, 16.9333.
 - **Nicola:** pagina autore `/autori/nicola-carpignano-social-media-manager-palagianello`.
