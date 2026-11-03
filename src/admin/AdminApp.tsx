@@ -11,6 +11,7 @@ import { ContentEditor } from './ContentEditor';
 import { Settings } from './Settings';
 import { MediaLibraryPage } from './MediaLibrary';
 import { BlogEditor } from './BlogEditor';
+import { disableTrackingForAdmin } from '../lib/analytics';
 
 const DashboardStyles = () => (
   <style>{`
@@ -64,6 +65,8 @@ export const AdminApp = () => {
         try { admin = (await getDoc(doc(db, 'admins', u.uid))).exists(); } catch { admin = false; }
       }
       setIsAdmin(admin);
+      // Admin su questo dispositivo: le sue visite non entrano nelle statistiche interne
+      if (admin) disableTrackingForAdmin();
       setChecking(false);
     });
     return unsub;

@@ -83,7 +83,12 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
   const others = [...agencyCities, ...MAP_CITIES.map((c) => c.name)].filter((c, i, a) => a.indexOf(c) === i && !groups.has(c));
 
   // Ingrandimento: solo l'area delle città pugliesi e lucane con attività
-  const near = onMap.filter((c) => c.region === 'Puglia' || c.region === 'Basilicata');
+  // I puntini vuoti troppo lontani dalla sede (oltre 90 km, es. Salento) vanno
+  // sulla cartina dell'Italia: allargare l'ingrandimento fino a lì sovrappone i
+  // nomi delle città con clienti, che stanno tutte intorno a Castellaneta.
+  const home = MAP_CITIES.find((c) => c.name === MAP_HOME);
+  const km = (c: MapCity) => (home ? Math.hypot((c.lat - home.lat) * 111, (c.lon - home.lon) * 111 * Math.cos((home.lat * Math.PI) / 180)) : 0);
+  const near = onMap.filter((c) => (c.region === 'Puglia' || c.region === 'Basilicata') && (!isEmpty(c) || km(c) <= 90));
   const far = onMap.filter((c) => !near.includes(c));
   const zb: Box = {
     minLat: Math.min(...near.map((c) => c.lat)) - 0.1, maxLat: Math.max(...near.map((c) => c.lat)) + 0.07,

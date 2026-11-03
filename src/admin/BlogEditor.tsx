@@ -65,6 +65,24 @@ export const BlogEditor = () => {
     return [...map.values()].sort((a, b) => b.date.localeCompare(a.date));
   }, [remote]);
 
+  // Ricerca e filtri dell'elenco (richiesta di Nicola 25/10): solo nel browser
+  const [q, setQ] = useState('');
+  const [stato, setStato] = useState<'tutti' | 'pubblicati' | 'bozze'>('tutti');
+  const [periodo, setPeriodo] = useState<'tutti' | '7' | '30' | 'intervallo'>('tutti');
+  const [da, setDa] = useState('');
+  const [a, setA] = useState('');
+  const [ordine, setOrdine] = useState<'recenti' | 'vecchi'>('recenti');
+  const shown = useMemo(() => {
+    const t = q.trim().toLowerCase();
+    const since = periodo === '7' || periodo === '30' ? new Date(Date.now() - Number(periodo) * 864e5).toISOString().slice(0, 10) : '';
+    const list = rows.filter((r) =>
+      (!t || r.title.toLowerCase().includes(t) || r.slug.includes(t) || r.tags.some((g) => g.toLowerCase().includes(t)))
+      && (stato === 'tutti' || (stato === 'pubblicati' ? r.published : !r.published))
+      && (!since || r.date >= since)
+      && (periodo !== 'intervallo' || ((!da || r.date >= da) && (!a || r.date <= a))));
+    return ordine === 'recenti' ? list : [...list].reverse();
+  }, [rows, q, stato, periodo, da, a, ordine]);
+
   const open = (p: BlogPost, fresh = false) => {
     if (dirty && !confirm('Ci sono modifiche non salvate. Continuare?')) return;
     setEdit({ ...p, tags: [...p.tags] }); setIsNew(fresh); setPreview(false); setStatus(null); setDirty(false);
@@ -205,8 +223,30 @@ export const BlogEditor = () => {
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(260px,340px) 1fr', gap: '1.5rem', alignItems: 'start' }} className="blog-admin-grid">
         <style>{`@media(max-width:900px){.blog-admin-grid{grid-template-columns:1fr!important}}`}</style>
         <div style={{ background: 'var(--s)', border: '.5px solid var(--b)', borderRadius: 16, overflow: 'hidden' }}>
+          <div style={{ padding: '12px 14px', borderBottom: '.5px solid var(--b)', display: 'grid', gap: 8 }}>
+            <input style={{ ...input, fontSize: 12 }} value={q} onChange={(e) => setQ(e.target.value)} placeholder="Cerca per titolo, indirizzo o tag" aria-label="Cerca articoli" />
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 6 }}>
+              <select style={{ ...input, fontSize: 12 }} value={stato} onChange={(e) => setStato(e.target.value as any)} aria-label="Stato">
+                <option value="tutti">Tutti</option><option value="pubblicati">Pubblicati</option><option value="bozze">Bozze</option>
+              </select>
+              <select style={{ ...input, fontSize: 12 }} value={periodo} onChange={(e) => setPeriodo(e.target.value as any)} aria-label="Periodo">
+                <option value="tutti">Sempre</option><option value="7">Ultimi 7 giorni</option><option value="30">Ultimi 30 giorni</option><option value="intervallo">Da… a…</option>
+              </select>
+              <select style={{ ...input, fontSize: 12 }} value={ordine} onChange={(e) => setOrdine(e.target.value as any)} aria-label="Ordine">
+                <option value="recenti">Più recenti</option><option value="vecchi">Meno recenti</option>
+              </select>
+            </div>
+            {periodo === 'intervallo' && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+                <input type="date" style={{ ...input, fontSize: 12 }} value={da} onChange={(e) => setDa(e.target.value)} aria-label="Dal giorno" />
+                <input type="date" style={{ ...input, fontSize: 12 }} value={a} onChange={(e) => setA(e.target.value)} aria-label="Al giorno" />
+              </div>
+            )}
+            <div style={{ fontSize: 11, color: 'var(--m)' }} role="status">{shown.length === rows.length ? `${rows.length} articoli` : `${shown.length} di ${rows.length} articoli`}</div>
+          </div>
           {loading && <div style={{ padding: '1rem', fontSize: 12, color: 'var(--m)' }}>Caricamento...</div>}
-          {rows.map((r) => (
+          {!loading && shown.length === 0 && <div style={{ padding: '1rem', fontSize: 12, color: 'var(--m)' }}>Nessun articolo con questi filtri.</div>}
+          {shown.map((r) => (
             <div key={r.slug} onClick={() => open(r)} style={{ padding: '14px 16px', borderBottom: '.5px solid var(--b)', cursor: 'pointer', background: edit?.slug === r.slug && !isNew ? 'rgba(205,178,255,0.08)' : 'transparent' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', gap: 8, marginBottom: 4 }}>{badge(r)}<span style={{ fontSize: 10, color: 'var(--m)' }}>{r.date}</span></div>
               <div style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.35 }}>{r.title}</div>

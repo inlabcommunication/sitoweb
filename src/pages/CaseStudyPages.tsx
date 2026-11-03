@@ -129,12 +129,13 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
       return (
         <Section>
           <Title b={b} />
-          <div style={{ position: 'relative', paddingLeft: 30, marginTop: '3rem' }}>
-            <div style={{ position: 'absolute', left: 29, top: 0, bottom: 0, width: 1, background: 'linear-gradient(180deg, var(--a) 0%, rgba(205,178,255,0.1) 100%)' }} />
+          <div style={{ position: 'relative', marginTop: '3rem' }}>
+            {/* linea al centro dei cerchi (60px), testo dopo i cerchi: niente sovrapposizioni */}
+            <div style={{ position: 'absolute', left: 30, top: 0, bottom: 0, width: 1, background: 'linear-gradient(180deg, var(--a) 0%, rgba(205,178,255,0.1) 100%)' }} />
             {items.map((ph, i) => (
               <motion.div key={i} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-80px' }}
-                transition={{ duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }} style={{ position: 'relative', paddingLeft: 50, paddingBottom: '2.5rem' }}>
-                <div style={{ position: 'absolute', left: -1, top: 0, width: 60, height: 60, borderRadius: '50%', background: 'var(--bg)', border: '.5px solid rgba(205,178,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--fd)', fontSize: 18, color: 'var(--a)' }}>
+                transition={{ duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }} style={{ position: 'relative', paddingLeft: 80, paddingBottom: '2.5rem' }}>
+                <div style={{ position: 'absolute', left: 0, top: 0, width: 60, height: 60, borderRadius: '50%', background: 'var(--bg)', border: '.5px solid rgba(205,178,255,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--fd)', fontSize: 18, color: 'var(--a)' }}>
                   {String(i + 1).padStart(2, '0')}
                 </div>
                 <h3 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(1.4rem, 2.2vw, 2rem)', lineHeight: 1, textTransform: 'uppercase', marginBottom: 10, marginTop: 14 }}>{ph.title}</h3>

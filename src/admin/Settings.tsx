@@ -3,6 +3,7 @@ import type React from 'react';
 import { Bot, Key, Save, CheckCircle, AlertCircle, Zap } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { RestoreContent } from './RestoreContent';
 
 // Le chiavi API NON si salvano qui: stanno solo nelle variabili d'ambiente di
 // Vercel (GEMINI_API_KEY, ANTHROPIC_API_KEY), mai nel database.
@@ -46,6 +47,7 @@ const KNOWLEDGE_EXAMPLE = `Esempi di cosa scrivere (una informazione per riga):
 export const Settings = () => {
   const [settings, setSettings] = useState<Settings>(DEFAULTS);
   const [loading, setLoading] = useState(true);
+  const [loadFailed, setLoadFailed] = useState(false);
   const [saving, setSaving] = useState(false);
   const [status, setStatus] = useState<'idle' | 'saved' | 'error'>('idle');
   const [hadStoredKeys, setHadStoredKeys] = useState(false);
@@ -80,11 +82,12 @@ export const Settings = () => {
         setHadStoredKeys(!!(d.geminiApiKey || d.anthropicApiKey));
       }
       setLoading(false);
-    });
+    }).catch(() => { setLoadFailed(true); setLoading(false); });
   }, []);
 
   const save = async () => {
-    if (!db) return;
+    // impostazioni non lette dal database: salvare ora cancellerebbe quelle vere
+    if (!db || loadFailed) { setStatus('error'); return; }
     setSaving(true); setStatus('idle');
     try {
       // setDoc senza merge: sovrascrive il documento e cancella eventuali chiavi salvate in passato
@@ -168,6 +171,8 @@ export const Settings = () => {
       <button onClick={save} disabled={saving} className="btn btn-p" style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: saving ? 0.6 : 1 }}>
         {status === 'saved' ? <><CheckCircle size={14} /> Salvato</> : status === 'error' ? <><AlertCircle size={14} /> Errore</> : <><Save size={14} /> {saving ? 'Salvataggio...' : 'Salva impostazioni'}</>}
       </button>
+
+      <div style={{ marginTop: '2.5rem' }}><RestoreContent /></div>
     </div>
   );
 };

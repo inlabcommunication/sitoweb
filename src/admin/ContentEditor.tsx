@@ -317,7 +317,8 @@ export const ContentEditor = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    loadContent(false, true)
+    // sempre una lettura nuova dal database: mai partire da una copia di riserva
+    loadContent(true, true)
       .then(c => { setContent(c); setOriginal(c); setLoading(false); })
       .catch(() => setLoadError(true));
   }, []);

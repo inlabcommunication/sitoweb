@@ -42,11 +42,20 @@ export type MediaItem = {
 
 let _items: MediaItem[] = [];
 let _loaded = false;
+// Lettura della libreria fallita (es. quota Firestore esaurita, 27/10): l'elenco
+// in memoria è vuoto ma quello salvato no, quindi nessun salvataggio finché non
+// si ricarica la pagina con la lettura riuscita (altrimenti sovrascriverebbe tutto).
+let _loadFailed = false;
+export const libraryLoadFailed = () => _loadFailed;
 const _listeners = new Set<() => void>();
 
 const notify = () => _listeners.forEach(fn => fn());
 
 const persist = async (items: MediaItem[]) => {
+  if (_loadFailed || !_loaded) {
+    alert('La libreria non è stata letta dal database: ricarica la pagina prima di caricare o modificare file. Nessuna modifica salvata.');
+    return;
+  }
   _items = items;
   notify();
   if (!db) return;
@@ -64,8 +73,13 @@ const loadLibrary = async () => {
   try {
     const snap = await getDoc(doc(db, 'app', 'media_library'));
     if (snap.exists()) _items = snap.data().items || [];
-  } catch {}
-  _loaded = true;
+    _loadFailed = false;
+    _loaded = true;
+  } catch (e) {
+    console.error('[media] lettura della libreria fallita', e);
+    if (!_loadFailed && typeof window !== 'undefined') window.alert('La libreria non si è caricata dal database (forse quota Firestore esaurita): i file NON sono persi. Non caricare né modificare nulla e riprova più tardi.');
+    _loadFailed = true;
+  }
   return _items;
 };
 
