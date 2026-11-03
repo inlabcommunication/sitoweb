@@ -403,33 +403,43 @@ writeFileSync(join(DIST, 'llms-full.txt'), full + '\n');
 console.log(`[prerender] llms-full.txt: ${(full.length / 1024).toFixed(0)} KB`);
 
 // IndexNow (brief SEO GEO 03/11): Bing, Copilot, ChatGPT search, Yandex. Solo nel deploy
-// di produzione, solo le pagine della sitemap nuove o cambiate rispetto al deploy online
-// (confronto con il suo indexnow-state.json). La chiave è pubblica per natura
-// (public/<chiave>.txt). Non blocca mai il build: un errore viene solo scritto nel log.
+// di produzione, solo le pagine della sitemap nuove o cambiate rispetto all'ultimo invio
+// (confronto con /indexnow-state.json del sito online) e al massimo un invio ogni 24 ore:
+// i deploy fatti dai salvataggi della dashboard non mandano niente finché non è passato un
+// giorno, e le modifiche restano in coda per l'invio successivo. Nessuna lettura Firestore.
+// La chiave è pubblica per natura (public/<chiave>.txt). Non blocca mai il build.
 const INDEXNOW_KEY = '1aeb8bdb2788980a01d435ec86e915b2';
+const INDEXNOW_EVERY = 24 * 60 * 60 * 1000;
+type IndexNowState = { sentAt: number; pages: Record<string, string> };
 const sitemapPaths = routes.filter((p) => { const seo = getSeo(p); return !seo.noindex && seo.sitemap; });
-const state = Object.fromEntries(sitemapPaths.map((p) => [getSeo(p).canonical, pageHash.get(p) || '']));
-writeFileSync(join(DIST, 'indexnow-state.json'), JSON.stringify(state));
+const current = Object.fromEntries(sitemapPaths.map((p) => [getSeo(p).canonical, pageHash.get(p) || '']));
+let nextState: IndexNowState = { sentAt: 0, pages: {} };
 if (process.env.VERCEL_ENV === 'production' && process.env.INDEXNOW_DISABLE !== '1') {
   try {
-    let before: Record<string, string> = {};
+    let before: IndexNowState = { sentAt: 0, pages: {} };
     try {
       const r = await fetch(`${SITE_URL}/indexnow-state.json`, { signal: AbortSignal.timeout(8000) });
-      if (r.ok) before = await r.json() as Record<string, string>;
+      const j = r.ok ? await r.json() as Partial<IndexNowState> : null;
+      if (j && typeof j.sentAt === 'number' && j.pages && typeof j.pages === 'object') before = { sentAt: j.sentAt, pages: j.pages };
     } catch { /* primo invio o sito non raggiungibile: si avvisano tutte le pagine */ }
-    const changed = Object.keys(state).filter((u) => before[u] !== state[u]);
-    if (changed.length) {
+    nextState = before;
+    const changed = Object.keys(current).filter((u) => before.pages[u] !== current[u]);
+    if (!changed.length) console.log('[prerender] IndexNow: nessuna pagina cambiata');
+    else if (Date.now() - before.sentAt < INDEXNOW_EVERY) console.log(`[prerender] IndexNow: ${changed.length} pagine in coda, invio al prossimo deploy dopo 24 ore dall'ultimo`);
+    else {
       const r = await fetch('https://api.indexnow.org/indexnow', {
         method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({ host: new URL(SITE_URL).host, key: INDEXNOW_KEY, keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`, urlList: changed.slice(0, 10000) }),
         signal: AbortSignal.timeout(10000),
       });
       console.log(`[prerender] IndexNow: ${changed.length} pagine inviate, risposta ${r.status}`);
-    } else console.log('[prerender] IndexNow: nessuna pagina cambiata');
+      if (r.ok) nextState = { sentAt: Date.now(), pages: current };
+    }
   } catch (e) {
     console.warn('[prerender] IndexNow non inviato:', (e as Error).message);
   }
 }
+writeFileSync(join(DIST, 'indexnow-state.json'), JSON.stringify(nextState));
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
 // il manifest serve solo qui: non va pubblicato
