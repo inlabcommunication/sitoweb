@@ -773,6 +773,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per frantoi e produttori di Ferrandina: varietà, lavorazione e persone raccontate con foto e video." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Sava", provincia: "provincia di Taranto",
+    contesto: "Sava si trova nella parte orientale della provincia di Taranto, tra vigneti e uliveti, ed è uno dei comuni della zona di produzione del Primitivo di Manduria. Accanto alle cantine ci sono negozi, ristoranti e attività che lavorano con i paesi vicini.",
+    settori: ["cantine e aziende vinicole", "aziende agricole e prodotti tipici", "negozi e servizi del paese"],
+    faq: { q: "Seguite anche cantine piccole?", a: "Sì: partiamo da foto, video e social e cresciamo con sito e campagne quando serve." },
+    description: "Agenzia di comunicazione a Sava: social, foto, video, siti e campagne per cantine, aziende agricole e attività del paese. Preventivo gratuito.",
+    intro: "Sava è terra di vigneti, nel cuore della zona del Primitivo di Manduria. Seguiamo social, foto, video, sponsorizzate e siti per cantine, aziende agricole e attività del paese, da Castellaneta.",
+    focus: { titolo: "Dal vigneto alla bottiglia, raccontato bene", testo: "Chi compra un vino vuole sapere da dove viene. Raccontiamo vigne, vendemmia e cantina con foto e video veri, curiamo etichette, sito e social, e prepariamo campagne per enoturismo, vendita diretta e ordini online." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per cantine, aziende agricole e attività di Sava: vigne, vendemmia e prodotti raccontati con immagini vere." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
