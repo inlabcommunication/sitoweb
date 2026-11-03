@@ -31,9 +31,9 @@
 Un commit per punto. Non cambiare gli URL, non aggiungere redirect.
 
 ### 1. Castellaneta: la home porta il marchio, la pagina città porta la ricerca locale
-> **Le 3 voci sulla home (title, description, link) aspettano l'ok di Nicola**, perché la home è una modifica visibile. Il resto del punto 1 si può applicare subito.
+> **Decisione di Nicola (03/11): la home NON si tocca.** Title e description restano con "Castellaneta", perché la home è forte su quella ricerca (posizione 4-6). Le 3 voci sulla home qui sotto sono **annullate**. Si applica solo la parte sulla pagina città, che rafforza la sede e il paese senza togliere niente alla home.
 
-- **Home: title.**
+- ~~**Home: title.**~~ ANNULLATO.
   - Da "InLab Communication Castellaneta | Agenzia di comunicazione"
   - a "InLab Communication | Agenzia di comunicazione in provincia di Taranto".
 - **Home: description.** "InLab Communication, agenzia di comunicazione con sede a Castellaneta (TA): social, video, siti, branding e Meta Ads per aziende della provincia di Taranto e della Puglia."
