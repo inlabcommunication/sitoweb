@@ -284,7 +284,7 @@ export const CITY_INFO: CityInfo[] = [
   // Città senza clienti per ora (brief SEO 02/10, punto 5): solo la pagina agenzia.
   {
     name: 'Massafra', provincia: 'provincia di Taranto',
-    contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa. Massafra è conosciuta per le gravine e le chiese rupestri, come quella della Madonna della Scala, e per il Carnevale massafrese, uno dei più seguiti della Puglia. È il comune più grande tra Taranto e Castellaneta, con commercio e servizi che lavorano con tutta la zona.',
+    contesto: 'Massafra è conosciuta come la "Tebaide d\'Italia" per le sue gravine e gli insediamenti rupestri, ed è famosa per il suo Carnevale. È una città viva per commercio, agricoltura e servizi, a pochi chilometri da Castellaneta e Palagianello: per noi è vicina di casa.',
     // brief SEO 03/11: lavori dei paesi vicini (Massafra non ha ancora clienti)
     lavoriVicini: true,
     settori: ['negozi e commercio', 'aziende agricole', 'ristorazione', 'eventi'],
