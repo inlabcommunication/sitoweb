@@ -37,6 +37,8 @@ export type CityInfo = {
   lavoriVicini?: boolean;
   /** Link alle pagine agenzia dei paesi vicini, sotto "Il territorio" (brief SEO 03/11) */
   linkVicini?: { testo: string; href: string }[];
+  /** Bari: H2 con i link alle pagine agenzia dei comuni della provincia di Bari (brief SEO 03/11) */
+  comuniProvincia?: { titolo: string; testo: string };
   /** Argomento proprio della pagina agenzia: H2 + testo subito dopo l'apertura (brief SEO 05/10 città) */
   /** `link`: collegamento su una parola del testo (es. un lavoro nostro → il suo caso studio, brief SEO 12/10) */
   focus?: { titolo: string; testo: string; link?: { testo: string; href: string } };
@@ -310,6 +312,10 @@ export const CITY_INFO: CityInfo[] = [
   },
   {
     name: 'Bari', provincia: 'Città metropolitana di Bari',
+    // brief SEO 03/11: title "e provincia", lavori dei paesi vicini, H2 con i comuni della provincia
+    title: 'Agenzia di comunicazione a Bari e provincia | InLab',
+    lavoriVicini: true,
+    comuniProvincia: { titolo: 'Bari e provincia', testo: 'Lavoriamo con attività di Bari e di tutta la provincia, dalla costa alla Murgia.' },
     contesto: 'Bari è il capoluogo della Puglia, con Bari Vecchia, il lungomare e un tessuto di imprese, professionisti e attività commerciali tra i più grandi del Sud. Per InLab è una città di casa: Nicola Carpignano ha studiato Psicologia a Bari e insegna Marketing e Social Media nei master di EA Formazione.',
     settori: ['aziende e professionisti', 'commercio e ristorazione', 'eventi e formazione'],
     faq: { q: 'Seguite aziende di Bari anche se avete sede a Castellaneta?', a: 'Sì. Lavoriamo a distanza per strategia, contenuti e campagne, e veniamo a Bari per incontri, shooting e riprese.' },
@@ -917,3 +923,6 @@ export const CITY_INFO: CityInfo[] = [
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
+
+/** Comuni della provincia di Bari con la pagina agenzia: collegati dalla pagina Bari e viceversa (brief SEO 03/11) */
+export const BARI_PROVINCE_CITIES = CITY_INFO.filter((c) => c.provincia === 'provincia di Bari').map((c) => c.name);

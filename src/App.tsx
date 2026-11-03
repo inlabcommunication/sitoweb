@@ -37,7 +37,7 @@ import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localCl
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities, aCity } from "./seo/routes";
-import { cityInfo } from "./data/cities";
+import { cityInfo, BARI_PROVINCE_CITIES } from "./data/cities";
 import { DEFAULT_CASES } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
@@ -1582,8 +1582,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             <p className="section-label">Il territorio</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.5rem",textTransform:"uppercase",fontWeight:400}}>Comunicare {aCity(city)}</h2>
             <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.contesto}</p>
-            {/* Paesi vicini (brief SEO 03/11) */}
-            {(info.linkVicini||[]).map(l=>(
+            {/* Paesi vicini; comuni della provincia di Bari → pagina Bari (brief SEO 03/11) */}
+            {[...(info.linkVicini||[]), ...(provincia==="provincia di Bari"&&AGENCY_CITIES.includes("Bari") ? [{testo:"Agenzia di comunicazione a Bari e provincia",href:agencyPath("Bari")}] : [])].map(l=>(
               <Link key={l.href} to={l.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",marginRight:"1.5rem",fontSize:14,color:"var(--a)"}}>{l.testo} <ArrowRight size={13}/></Link>
             ))}
             {info.sezione && <>
@@ -1593,6 +1593,15 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
                 ? <a href={info.sezione.link.href} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",fontSize:14,color:"var(--a)"}}>{info.sezione.link.testo} <ArrowUpRight size={13}/></a>
                 : <Link to={info.sezione.link.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",fontSize:14,color:"var(--a)"}}>{info.sezione.link.testo} <ArrowRight size={13}/></Link>)}
               {info.sezione.nota && <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8,marginTop:"1.2rem"}}><IntroText text={info.sezione.nota.testo} link={info.sezione.nota.link}/></p>}
+            </>}
+            {info.comuniProvincia && <>
+              <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.comuniProvincia.titolo}</h2>
+              <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8,marginBottom:"1rem"}}>{info.comuniProvincia.testo}</p>
+              <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
+                {BARI_PROVINCE_CITIES.filter(c=>AGENCY_CITIES.includes(c)).map(c=>(
+                  <Link key={c} to={agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia {aCity(c)}</Link>
+                ))}
+              </div>
             </>}
             {info.casaNostra && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.casaNostra.titolo}</h2>
