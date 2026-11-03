@@ -821,6 +821,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per negozi, ristoranti e imprese di Brindisi: contenuti per chi vive in città e per chi arriva." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Cassano delle Murge", provincia: "provincia di Bari",
+    contesto: "Cassano delle Murge si trova sull'altopiano della Murgia, vicino ad Acquaviva delle Fonti e Santeramo in Colle. È conosciuto per la Foresta di Mercadante, meta di passeggiate e gite fuori porta da Bari e dai paesi vicini.",
+    settori: ["agriturismi e masserie", "ristoranti e pizzerie", "negozi e servizi del paese"],
+    faq: { q: "Le sponsorizzate possono raggiungere chi abita a Bari?", a: "Sì: scegliamo zona e raggio in base a da dove arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Cassano delle Murge: social, foto, video, siti e campagne per agriturismi, ristoranti e attività del paese. Preventivo gratuito.",
+    intro: "Cassano delle Murge è il paese della Foresta di Mercadante, sulla Murgia barese. Seguiamo social, foto, video, sponsorizzate e siti per agriturismi, ristoranti e attività, da Castellaneta.",
+    focus: { titolo: "Portare in paese chi cerca una gita fuori porta", testo: "Nei fine settimana molte persone da Bari e dintorni cercano dove mangiare o passare una giornata nel verde. Per un agriturismo o un ristorante di Cassano conta farsi trovare su Google Maps, avere recensioni curate e social che mostrano il posto com'è. Prepariamo contenuti e campagne mirate a chi vive entro un'ora di strada." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per agriturismi, ristoranti e attività di Cassano delle Murge: il posto mostrato com'è e campagne per chi cerca una gita fuori porta." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
