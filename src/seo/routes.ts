@@ -291,6 +291,8 @@ const clients = () => {
   return [...main, ...otherClientPages(siteOtherClients, new Set(main.map((c) => c.id)))];
 };
 const cases = () => siteCases.filter((c) => c && c.id && c.client).map(caseSeo);
+/** Schede cliente (principali + "Altri clienti"): per llms.txt (brief SEO GEO 03/11) */
+export const getClients = () => clients();
 
 const page = (path: string, title: string, description: string, extra: Partial<Seo> = {}, crumbs?: [string, string][]): Seo => {
   const desc = clip(description);

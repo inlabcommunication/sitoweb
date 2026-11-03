@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, EXTRA_SERVICE_CITIES, citySlug, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
+import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, EXTRA_SERVICE_CITIES, citySlug, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getClients, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -320,23 +320,53 @@ const line = (p: string, label?: string) => {
 };
 const org = organizationJsonLd() as any;
 const caseRoutes = routes.filter((p) => p.startsWith('/casi-studio/'));
+const today = new Date().toISOString().slice(0, 10);
+const clientRoutes = routes.filter((p) => p.startsWith('/cliente/')).filter(indexable);
+const clientPages = getClients().filter((c: any) => clientRoutes.includes('/cliente/' + c.id));
+// Tutte le pagine servizio di una città (non solo gestione social), una riga per città
+const servicesByCity = AGENCY_CITIES.map((c) => {
+  const pages = SERVICES_SEO.map((s) => ({ s, p: `/${s.slug}-${citySlug(c)}` })).filter(({ p }) => indexable(p));
+  return pages.length ? `- ${c}: ${pages.map(({ s, p }) => `[${s.label}](${getSeo(p).canonical})`).join(', ')}` : '';
+}).filter(Boolean);
 const llms = [
   `# ${org.name}`, '',
+  `Ultimo aggiornamento: ${today}`, '',
   '> InLab Communication è un\'agenzia di comunicazione e digital marketing con sede a Castellaneta, in provincia di Taranto, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
   org.disambiguatingDescription, '',
   '## Servizi', '',
   ...SERVICES_SEO.map((s) => '/' + s.slug).filter(indexable).map((p) => line(p)),
   '', '## Chi siamo', '',
   ...['/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug))].filter(indexable).map((p) => line(p)),
+  '', '## Domande frequenti', '',
+  `### Chi è InLab Communication?`,
+  `InLab Communication è un'agenzia di comunicazione e digital marketing con sede in ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), fondata da Nicola Carpignano e Ilaria Gemma.`, '',
+  `### Quali servizi offre?`,
+  `Gestione social, video e reel, foto, Meta Ads, siti web, branding e automazioni AI.`, '',
+  `### In quali zone lavora?`,
+  `Nelle province di Taranto, Bari, Brindisi, Lecce, Matera e Potenza, con clienti anche fuori regione (Ferrara). Elenco completo: ${SITE_URL}/dove-lavoriamo`, '',
+  ...AUTHORS.flatMap((a) => [`### Chi è ${a.name}?`, `${((a as any).facts || []).filter((f: string, i: number) => i === 0 || /EA Formazione/.test(f)).join(' ') || a.description} ${SITE_URL}${authorPath(a.slug)}`, '']),
+  `### Per quali attività lavora?`,
+  `Ristoranti, pasticcerie, ottiche, officine, lidi, masserie, studi dentistici, produttori e altre attività locali. Tra i clienti: ${clientPages.map((c: any) => c.name).join(', ')}.`, '',
+  `### Quanto costa?`,
+  `Preventivo gratuito su misura dopo un primo incontro.`, '',
+  `### Come contattarla?`,
+  `Dal modulo ${SITE_URL}/contatti, per email (${BUSINESS.email}) o per telefono (${BUSINESS.telephone}).`, '',
+  `### Lavora a distanza?`,
+  `Sì: strategia, contenuti e campagne si seguono a distanza, con incontri e riprese sul posto nelle zone vicine.`,
   '', '## Casi studio', '',
   ...['/clienti', ...caseRoutes].filter(indexable).map((p) => line(p)),
+  '', '## Clienti', '',
+  ...clientPages.map((c: any) => line('/cliente/' + c.id, [c.name, c.sector, c.location].filter(Boolean).join(', '))),
   '', '## Città in cui lavoriamo', '',
   `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta. Seguiamo anche attività di ${EXTRA_AGENCY_CITIES.join(', ')}.`,
   ...Object.entries(EXTRA_SERVICE_CITIES).flatMap(([slug, cities]) => {
     const label = SERVICES_SEO.find((s) => s.slug === slug)?.label || slug;
     return cities.length ? [`${label} anche a ${cities.join(', ')}: ${cities.map((c) => `${SITE_URL}/${slug}-${citySlug(c)}`).join(', ')}.`] : [];
   }),
+  ...(indexable('/dove-lavoriamo') ? [line('/dove-lavoriamo')] : []),
   '', ...AGENCY_CITIES.map(agencyPath).filter(indexable).map((p) => line(p)),
+  '', '## Servizi per città', '',
+  ...servicesByCity,
   '', '## Blog', '',
   ...(indexable('/blog') ? [line('/blog')] : []),
   ...getBlogPosts().map((p) => '/blog/' + p.slug).filter(indexable).map((p) => line(p)),
