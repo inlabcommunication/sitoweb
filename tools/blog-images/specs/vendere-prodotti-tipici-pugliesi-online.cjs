@@ -12,7 +12,7 @@ module.exports = {
   <rect x="230" y="215" width="120" height="11" rx="5" fill="rgba(240,237,230,.6)"/>
   <rect x="230" y="236" width="80" height="9" rx="4" fill="rgba(240,237,230,.3)"/>
   <rect x="230" y="330" width="150" height="40" rx="12" fill="#cdb2ff"/>
-  <text x="252" y="356" font-size="15" font-weight="700" fill="#1a1919">Aggiungi al carrello</text>
+  <text x="305" y="356" text-anchor="middle" font-size="15" font-weight="700" fill="#1a1919">Al carrello</text>
   <g transform="translate(40,140)"><rect x="0" y="40" width="44" height="150" rx="10" fill="rgba(205,178,255,.35)"/><rect x="12" y="0" width="20" height="44" rx="4" fill="rgba(205,178,255,.35)"/></g>
   <g transform="translate(110,190)"><rect x="0" y="30" width="60" height="100" rx="14" fill="rgba(255,255,255,.12)"/><rect x="18" y="0" width="24" height="32" rx="4" fill="rgba(255,255,255,.12)"/></g>
   <rect x="30" y="340" width="160" height="60" rx="12" fill="#262525" stroke="rgba(255,255,255,.12)"/>

@@ -22,6 +22,9 @@ module.exports = {
 </svg>`
   },
   inline: [
+    { type: 'compare', name: 'differenza-reel-post-instagram', tag: 'REEL O POST', title: 'La differenza <span class="acc">in quattro punti</span>',
+      left: { label: 'Post (foto o carosello)', items: ['Foto o più immagini, formato 4:5', 'Arriva soprattutto a chi ti segue', 'Serve a spiegare e convincere', 'Menu, listini, novità precise'] },
+      right: { label: 'Reel', items: ['Video verticale 9:16, meglio 7-30 secondi', 'Mostrato anche a chi non ti segue', 'Serve a farti scoprire', 'Atmosfera, persone, prodotto in azione'] } },
     { type: 'compare', name: 'formati-instagram-reel-post-storie', tag: 'FORMATI INSTAGRAM', title: 'Ogni formato ha <span class="acc">un lavoro</span>', left: { label: 'Reel e storie', items: ['Reel: farsi scoprire da chi non ti segue', 'Storie: presenza quotidiana con chi ti segue', 'Reel ideale: 7-30 secondi, un\'idea sola', 'Storie: da qui arrivano molti messaggi'] }, right: { label: 'Carosello e foto', items: ['Carosello: spiegare e convincere', 'Ottimo per menu, trattamenti, FAQ', 'Foto singola: annunci veloci', 'Chi scorre fino alla fine è interessato'] } },
     { type: 'timeline', name: 'piano-settimanale', tag: 'ESEMPIO', title: 'Una settimana <span class="acc">tipo</span>', items: [
       ['Lunedì', 'Storia', 'La novità della settimana'],
