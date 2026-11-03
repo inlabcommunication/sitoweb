@@ -31,6 +31,13 @@
 - **Lotto 2:** Grottaglie, Locorotondo, Santeramo in Colle, Montescaglioso (+ Altamura e Alberobello, se Google ha preso bene il lotto 1).
 - **Lotto 3:** San Giorgio Ionico, Alberobello, Altamura, Bernalda.
 - **Poi:** si scende di una riga per colonna ogni settimana.
+- **Lotto 4 (26/10):** Francavilla Fontana, Lecce, Nardò, Gallipoli, Fasano, Monopoli, Turi, Molfetta, Scanzano Jonico, Ferrandina. Il 01/11 erano indicizzate 17 pagine su 20.
+- **Lotto 5 (03/11):** Sava, Galatina, Otranto, Brindisi, Cassano delle Murge, Trani, Barletta, Andria, Nova Siri, Potenza.
+- **Lotto 6 (prossimi candidati):**
+  - Salento: Copertino, Maglie, Santa Maria di Leuca;
+  - Brindisi e Valle d'Itria: Mesagne, Carovigno;
+  - barese: Bitonto, Corato;
+  - Basilicata: Tursi, Rotondella, Melfi.
 
 ## Cosa controllo ogni lunedì
 - Pagine indicizzate dei lotti precedenti, impressioni e query "{servizio} {paese}" in Search Console.
