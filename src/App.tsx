@@ -1585,7 +1585,10 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
             {info.sezione && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.sezione.titolo}</h2>
               <p style={{fontSize:16,color:"var(--m)",lineHeight:1.8}}>{info.sezione.testo}</p>
-              {info.sezione.link && <Link to={info.sezione.link.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",fontSize:14,color:"var(--a)"}}>{info.sezione.link.testo} <ArrowRight size={13}/></Link>}
+              {info.sezione.link && (/^https:\/\//.test(info.sezione.link.href)
+                ? <a href={info.sezione.link.href} target="_blank" rel="noopener noreferrer" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",fontSize:14,color:"var(--a)"}}>{info.sezione.link.testo} <ArrowUpRight size={13}/></a>
+                : <Link to={info.sezione.link.href} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,marginTop:".6rem",fontSize:14,color:"var(--a)"}}>{info.sezione.link.testo} <ArrowRight size={13}/></Link>)}
+              {info.sezione.nota && <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8,marginTop:"1.2rem"}}><IntroText text={info.sezione.nota.testo} link={info.sezione.nota.link}/></p>}
             </>}
             {info.casaNostra && <>
               <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2rem,3.6vw,3.4rem)",lineHeight:.95,margin:"3rem 0 1.2rem",textTransform:"uppercase",fontWeight:400}}>{info.casaNostra.titolo}</h2>
