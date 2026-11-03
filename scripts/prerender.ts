@@ -1,6 +1,7 @@
 // Dopo `vite build`: crea un HTML per ogni pagina con <head> già corretto
 // (titolo, description, canonical, Open Graph, JSON-LD), più sitemap.xml e
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -234,6 +235,10 @@ const imagesOf = (html: string): string[] => {
   return [...out];
 };
 
+// Impronta del contenuto di ogni pagina (title, description, testo): serve a IndexNow
+// per avvisare i motori solo delle pagine cambiate dall'ultimo deploy.
+const pageHash = new Map<string, string>();
+
 const routes = listRoutes();
 for (const path of routes) {
   // cleanUrls di Vercel: /servizi → servizi.html, /casi-studio/paresteta → casi-studio/paresteta.html
@@ -241,6 +246,7 @@ for (const path of routes) {
   mkdirSync(dirname(file), { recursive: true });
   const html = await body(path);
   pageImages.set(path, imagesOf(html));
+  pageHash.set(path, createHash('sha1').update(`${getSeo(path).title}\n${getSeo(path).description}\n${html}`).digest('hex').slice(0, 16));
   writeFileSync(file, render(path, html));
 }
 console.log(`[prerender] HTML statico: ${ssr ? routes.length - ssrFailed : 0}/${routes.length} pagine con testo`);
@@ -342,6 +348,35 @@ const llms = [
   `- Sede: ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
 ].join('\n');
 writeFileSync(join(DIST, 'llms.txt'), llms);
+
+// IndexNow (brief SEO GEO 03/11): Bing, Copilot, ChatGPT search, Yandex. Solo nel deploy
+// di produzione, solo le pagine della sitemap nuove o cambiate rispetto al deploy online
+// (confronto con il suo indexnow-state.json). La chiave è pubblica per natura
+// (public/<chiave>.txt). Non blocca mai il build: un errore viene solo scritto nel log.
+const INDEXNOW_KEY = '1aeb8bdb2788980a01d435ec86e915b2';
+const sitemapPaths = routes.filter((p) => { const seo = getSeo(p); return !seo.noindex && seo.sitemap; });
+const state = Object.fromEntries(sitemapPaths.map((p) => [getSeo(p).canonical, pageHash.get(p) || '']));
+writeFileSync(join(DIST, 'indexnow-state.json'), JSON.stringify(state));
+if (process.env.VERCEL_ENV === 'production' && process.env.INDEXNOW_DISABLE !== '1') {
+  try {
+    let before: Record<string, string> = {};
+    try {
+      const r = await fetch(`${SITE_URL}/indexnow-state.json`, { signal: AbortSignal.timeout(8000) });
+      if (r.ok) before = await r.json() as Record<string, string>;
+    } catch { /* primo invio o sito non raggiungibile: si avvisano tutte le pagine */ }
+    const changed = Object.keys(state).filter((u) => before[u] !== state[u]);
+    if (changed.length) {
+      const r = await fetch('https://api.indexnow.org/indexnow', {
+        method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({ host: new URL(SITE_URL).host, key: INDEXNOW_KEY, keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`, urlList: changed.slice(0, 10000) }),
+        signal: AbortSignal.timeout(10000),
+      });
+      console.log(`[prerender] IndexNow: ${changed.length} pagine inviate, risposta ${r.status}`);
+    } else console.log('[prerender] IndexNow: nessuna pagina cambiata');
+  } catch (e) {
+    console.warn('[prerender] IndexNow non inviato:', (e as Error).message);
+  }
+}
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
 // il manifest serve solo qui: non va pubblicato
