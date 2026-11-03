@@ -869,6 +869,18 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per caseifici, frantoi e cantine di Andria: produzione raccontata con foto e video veri." },
   },
+  {
+    // brief SEO 03/11, lotto 5
+    name: "Nova Siri", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Nova Siri ha un centro sulla collina e la frazione di Nova Siri Marina sulla costa jonica, con spiagge, lidi e villaggi turistici. Nella piana intorno ci sono aziende agricole e ortofrutticole.",
+    settori: ["lidi e villaggi turistici", "aziende agricole e ortofrutta", "ristoranti e attività del paese"],
+    faq: { q: "Seguite anche attività stagionali?", a: "Sì: prepariamo i contenuti prima dell'apertura e seguiamo la comunicazione durante la stagione." },
+    description: "Agenzia di comunicazione a Nova Siri: social, foto, video e campagne per lidi, strutture, aziende agricole e attività della costa jonica. Preventivo gratuito.",
+    intro: "Nova Siri è l'ultimo comune lucano sulla costa jonica prima della Calabria, tra collina e mare. Seguiamo social, foto, video, sponsorizzate e siti per lidi, strutture e aziende agricole, da Castellaneta.",
+    focus: { titolo: "Due stagioni, due comunicazioni", testo: "D'estate contano lidi, villaggi e ristoranti della marina, d'inverno le aziende agricole e le attività del paese. Prepariamo contenuti e campagne per la stagione al mare e una comunicazione costante tutto l'anno per chi lavora con i clienti del territorio." },
+    lavoriVicini: true,
+    servizi: { 'gestione-social': "Social per lidi, villaggi e aziende di Nova Siri: contenuti per la stagione al mare e presenza tutto l'anno." },
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
