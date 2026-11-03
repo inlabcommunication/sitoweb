@@ -238,6 +238,7 @@ const imagesOf = (html: string): string[] => {
 // Impronta del contenuto di ogni pagina (title, description, testo): serve a IndexNow
 // per avvisare i motori solo delle pagine cambiate dall'ultimo deploy.
 const pageHash = new Map<string, string>();
+const pageText = new Map<string, string>();
 
 const routes = listRoutes();
 for (const path of routes) {
@@ -246,6 +247,7 @@ for (const path of routes) {
   mkdirSync(dirname(file), { recursive: true });
   const html = await body(path);
   pageImages.set(path, imagesOf(html));
+  pageText.set(path, html);
   pageHash.set(path, createHash('sha1').update(`${getSeo(path).title}\n${getSeo(path).description}\n${html}`).digest('hex').slice(0, 16));
   writeFileSync(file, render(path, html));
 }
@@ -330,7 +332,7 @@ const servicesByCity = AGENCY_CITIES.map((c) => {
 }).filter(Boolean);
 const llms = [
   `# ${org.name}`, '',
-  `Ultimo aggiornamento: ${today}`, '',
+  `Ultimo aggiornamento: ${today}. Testo completo del sito: ${SITE_URL}/llms-full.txt`, '',
   '> InLab Communication è un\'agenzia di comunicazione e digital marketing con sede a Castellaneta, in provincia di Taranto, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
   org.disambiguatingDescription, '',
   '## Servizi', '',
@@ -378,6 +380,27 @@ const llms = [
   `- Sede: ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
 ].join('\n');
 writeFileSync(join(DIST, 'llms.txt'), llms);
+
+// llms-full.txt (brief SEO GEO 03/11): testo completo delle pagine principali in Markdown,
+// preso dall'HTML statico appena generato, senza menu, footer, pulsanti e grafica.
+const toMarkdown = (h: string) => h
+  .replace(/<(nav|footer|button|svg|script|style|noscript|form)\b[\s\S]*?<\/\1>/g, '')
+  .replace(/<h1\b[^>]*>/g, '\n\n# ').replace(/<h2\b[^>]*>/g, '\n\n## ').replace(/<h3\b[^>]*>/g, '\n\n### ')
+  .replace(/<\/h[1-3]>/g, '\n\n').replace(/<li\b[^>]*>/g, '\n- ').replace(/<(p|div|section|br)\b[^>]*>/g, '\n')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&nbsp;/g, ' ')
+  .split('\n').map((l) => l.replace(/\s+/g, ' ').trim()).join('\n')
+  .replace(/^(#{1,3}) *\n+/gm, '$1 ').replace(/\n{3,}/g, '\n\n').trim();
+const fullSection = (p: string) => `---\n\nURL: ${getSeo(p).canonical}\n\n${toMarkdown(pageText.get(p) || '')}`;
+const blogPaths = getBlogPosts().map((p) => '/blog/' + p.slug).filter(indexable);
+const mainPaths = ['/', '/servizi', ...SERVICES_SEO.map((s) => '/' + s.slug), '/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug)),
+  '/clienti', ...caseRoutes, ...clientRoutes, ...AGENCY_CITIES.map(agencyPath)].filter(indexable).filter((p) => pageText.get(p));
+const fullHead = `# ${org.name} — testo completo del sito\n\nUltimo aggiornamento: ${today}. Indice e pagine: ${SITE_URL}/llms.txt\n\n`;
+let full = fullHead + [...mainPaths, ...blogPaths].map(fullSection).join('\n\n');
+// oltre ~2 MB si tengono solo i link agli articoli (richiesta SEO)
+if (full.length > 2_000_000) full = fullHead + mainPaths.map(fullSection).join('\n\n') + '\n\n---\n\n## Articoli del blog\n\n' + blogPaths.map((p) => line(p)).join('\n');
+writeFileSync(join(DIST, 'llms-full.txt'), full + '\n');
+console.log(`[prerender] llms-full.txt: ${(full.length / 1024).toFixed(0)} KB`);
 
 // IndexNow (brief SEO GEO 03/11): Bing, Copilot, ChatGPT search, Yandex. Solo nel deploy
 // di produzione, solo le pagine della sitemap nuove o cambiate rispetto al deploy online
