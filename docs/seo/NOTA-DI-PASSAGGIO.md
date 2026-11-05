@@ -35,6 +35,19 @@ Serve a far ripartire una sessione SEO nuova con un contesto pulito.
   - Piano gratuito: circa 100 ricerche al mese. Usarle con parsimonia: 3 confronti Trends e 5 SERP a settimana.
 - Cartella Drive "InLab SEO dati" (id 1N-OHhDTikcKtkqnzV5unSefAFWCd0aTy): file CSV di Trends e del Keyword Planner caricati da Nicola.
 
+## Accessi tecnici (aggiornato 05/11)
+- **Account di servizio nuovo:** `claude-seo@sito-web-496819.iam.gserviceaccount.com`, nel progetto Google Cloud "Sito Web" (sito-web-496819, numero 43510592920) di inlab.communication@gmail.com.
+  - La chiave è in `GOOGLE_SA_KEY`, in base64.
+  - Accessi: Search Console Completo, GA4 Visualizzatore, Google Ads Manager in sola lettura.
+  - Il vecchio `claude-seo@inlab-seo…` va tolto da GSC e GA4 dopo la prova del nuovo: la sua chiave è finita per errore in un log il 05/11. Il progetto inlab-seo non è raggiungibile da nessuna mail di Nicola.
+- **Nello stesso progetto c'è `ais-gemini-key-…`:** è del chatbot e NON va toccato.
+- **Google Ads:**
+  - Manager 368-126-8213, account 401-431-8397.
+  - Variabili nell'ambiente: `GOOGLE_ADS_CUSTOMER_ID`, `GOOGLE_ADS_LOGIN_CUSTOMER_ID`, `GOOGLE_ADS_DEVELOPER_TOKEN`.
+  - Livello Test; richiesta del livello **Explorer** inviata il 05/11, in revisione.
+  - Strumento: `docs/seo/strumenti/ads-keyword.mjs`.
+- **Altre chiavi:** `SERPAPI_KEY` e `BING_WEBMASTER_KEY` aggiunte il 05/11.
+
 ## Decisioni in vigore
 - **Blog (Nicola, 23/10):** almeno **8 articoli al mese**, ogni martedì e venerdì. L'Addetto al Blog scrive anche senza brief. Se l'ultimo articolo ha più di 7-10 giorni, o il ritmo è sotto 8 al mese, la SEO sollecita l'Addetto al Blog e propone gli argomenti. È un controllo fisso nella routine del lunedì.
 - **Espansione territorio:** 10 paesi fissi a settimana (decisione di Nicola). Piano a quattro direzioni in `docs/seo/PIANO-ESPANSIONE-TERRITORIO.md`.
