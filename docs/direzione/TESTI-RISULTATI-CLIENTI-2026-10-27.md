@@ -142,3 +142,26 @@
 - Indirizzo: `Via Enrico Toti 27, Laterza (TA)`; telefono: `099 821 6878`
 
 **Mancano:** cosa facciamo per loro (servizi), Instagram, sito se c'è, logo e foto, eventuali risultati, e il consenso a comparire.
+
+### Dott.ssa Ersilia Zingarelli, logopedista (Castellaneta) — clienti principali (dati ricevuti da Nicola il 05/11, da profili pubblici)
+
+**Attenzione, attività sanitaria:** testo solo informativo, nessuna promessa di risultati, nessuna formula promozionale (nessun "sold out", nessuna percentuale, nessun confronto), nessun voto di laurea. Titoli e specializzazioni solo se la professionista li conferma. Contatti personali (cellulare/WhatsApp ed email) solo se lei è d'accordo a pubblicarli.
+
+**Dati ricevuti:**
+- Logopedista; studio in Via Ospedale 48, Castellaneta (TA), presso Studio Medico Losito; consulenze in presenza o online.
+- Pazienti: età evolutiva, adulta e geriatrica.
+- Aree: disturbi del linguaggio e della comunicazione, balbuzie, disturbi della deglutizione e delle funzioni orali, disturbi del feeding, disturbi della voce, terapia miofunzionale e motricità orofacciale.
+- Orari: lunedì–venerdì 9:00–19:30.
+- Contatti: +39 340 169 0019 (telefono/WhatsApp) e un indirizzo email professionale: pubblicarli solo con il suo consenso.
+
+**Bozza scheda (da incollare in dashboard dopo l'OK di Nicola e della professionista):**
+- Nome: `Dott.ssa Ersilia Zingarelli`
+- Settore: `Logopedista`
+- Località: `Castellaneta (TA)`
+- Riassunto: `Logopedista a Castellaneta per bambini, adulti e anziani: linguaggio, voce, deglutizione e motricità orofacciale.`
+- Descrizione: `La Dott.ssa Ersilia Zingarelli è una logopedista di Castellaneta. Si occupa di disturbi del linguaggio e della comunicazione, balbuzie, deglutizione e funzioni orali, alimentazione in età evolutiva, voce e motricità orofacciale, in età evolutiva, adulta e geriatrica. Riceve a Castellaneta e, per le consulenze, anche online. [Cosa facciamo noi per lei: da confermare.]`
+- Servizi nostri: `[da confermare]`
+- Risultati: nessuno (nessun dato sanitario né promesse di risultati).
+- Indirizzo: `Via Ospedale 48, Castellaneta (TA)`
+
+**Mancano:** cosa facciamo noi per lei (social, foto, video, sito), Instagram, logo/foto, e il suo consenso (compreso quello sui contatti e sul titolo del Master).
