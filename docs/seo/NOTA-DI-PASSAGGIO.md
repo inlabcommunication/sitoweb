@@ -63,6 +63,16 @@ Ogni lunedì, in quest'ordine:
 - **Dati ufficiali (NAP):** InLab Communication, Via Regina Margherita 26, 74011 Castellaneta (TA). Geo provvisorio 40.6333, 16.9333.
 - **Nicola:** pagina autore `/autori/nicola-carpignano-social-media-manager-palagianello`.
 
+## Test AI (ogni lunedì, stesse domande a ChatGPT; base del 05/11 fatta da Nicola)
+1. "Agenzia di comunicazione a Castellaneta" → InLab esce bene.
+2. "… a Castellaneta o nei paesi vicini" → esce bene.
+3. "Social media manager a Palagianello"
+4. "Agenzia social a Taranto" → **non esce**: l'AI preferisce le agenzie con sede a Taranto.
+5. "Chi fa reel per ristoranti in provincia di Taranto"
+
+- Bing Webmaster Tools collegato il 05/11.
+- Scheda Google: ferma, Nicola cambia ufficio. Nuovo indirizzo da aggiornare ovunque (sito, JSON-LD, llms.txt, pagina Castellaneta). **Niente elenchi di aziende finché non c'è l'indirizzo nuovo.**
+
 ## Lotti
 - **Lotto 1** (10/10, online): Castellaneta Marina, Ferrara, Crispiano, Statte, Noci, Martina Franca.
 - **Lotto 2** (12/10, consegnato dal Direttore alla nuova Sito Inlab): Grottaglie, San Giorgio Ionico, Locorotondo, Alberobello, Santeramo, Altamura, Acquaviva delle Fonti, Polignano a Mare, Montescaglioso, Bernalda/Metaponto.
