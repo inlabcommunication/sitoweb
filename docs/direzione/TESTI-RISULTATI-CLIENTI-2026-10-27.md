@@ -118,3 +118,27 @@
 **Nota sullo studio dentistico:** per le attività sanitarie la pubblicità ha regole proprie (informativa, non promozionale, e le formule come "sold out" o i risultati in studio possono essere giudicate promozionali). Non è una valutazione legale: prima di pubblicare conviene un OK esplicito del titolare dello studio e, se possibile, un controllo professionale sulle formule.
 
 **Se il cliente dice no o non risponde:** si pubblica solo ciò che è già sul sito, oppure una versione senza numeri (solo la parte qualitativa).
+
+---
+
+## Nuovi clienti da aggiungere (dati ricevuti da Nicola il 05/11)
+
+### Russi Estetica Parrucchieri (Laterza) — clienti principali
+
+**Dati ricevuti (dalla scheda Google pubblica del salone, screenshot di Nicola):**
+- Nome: Russi Estetica Parrucchieri S.n.c. (sul sito: "Russi Estetica Parrucchieri")
+- Settore: parrucchiere, estetica e head spa
+- Città: Laterza (TA); indirizzo: Via Enrico Toti 27, 74014 Laterza TA
+- Telefono: 099 821 6878 (numero aziendale già pubblico su Google)
+- Valutazione Google: 4,9 su 5, 133 recensioni (dato pubblico di Google, non un nostro risultato: non lo scrivo nei risultati)
+
+**Bozza scheda (da incollare in dashboard dopo l'OK di Nicola):**
+- Settore: `Parrucchiere, estetica e head spa`
+- Località: `Laterza (TA)`
+- Riassunto: `Salone di parrucchieri, estetica e head spa a Laterza: [cosa facciamo per loro: da confermare].`
+- Descrizione: `Russi Estetica Parrucchieri è un salone di Laterza che unisce parrucchieri, estetica e head spa. [Cosa facciamo noi: da confermare, per esempio social, video, foto.]`
+- Servizi: `[da confermare]`
+- Risultati: nessuno finché Nicola non dà dati reali.
+- Indirizzo: `Via Enrico Toti 27, Laterza (TA)`; telefono: `099 821 6878`
+
+**Mancano:** cosa facciamo per loro (servizi), Instagram, sito se c'è, logo e foto, eventuali risultati, e il consenso a comparire.
