@@ -30,6 +30,11 @@ Serve a far ripartire una sessione SEO nuova con un contesto pulito.
   - Accesso a Search Console **completo** dal 10/10. "Richiedi indicizzazione" resta manuale e lo fa Nicola.
 - **Routine** "SEO: lotto settimanale nuove città" (`trig_01HHci9SmKUT3nwVt5LugNdt`): lunedì 00:53 ora di Roma.
 
+- `docs/seo/strumenti/serpapi.mjs`: Google Trends (trends, related) e risultati di Google Italia per località (serp), tramite SerpApi.
+  - Legge la chiave solo da `SERPAPI_KEY`, che Nicola ha messo nell'ambiente il 05/11.
+  - Piano gratuito: circa 100 ricerche al mese. Usarle con parsimonia: 3 confronti Trends e 5 SERP a settimana.
+- Cartella Drive "InLab SEO dati" (id 1N-OHhDTikcKtkqnzV5unSefAFWCd0aTy): file CSV di Trends e del Keyword Planner caricati da Nicola.
+
 ## Decisioni in vigore
 - **Blog (Nicola, 23/10):** almeno **8 articoli al mese**, ogni martedì e venerdì. L'Addetto al Blog scrive anche senza brief. Se l'ultimo articolo ha più di 7-10 giorni, o il ritmo è sotto 8 al mese, la SEO sollecita l'Addetto al Blog e propone gli argomenti. È un controllo fisso nella routine del lunedì.
 - **Espansione territorio:** 10 paesi fissi a settimana (decisione di Nicola). Piano a quattro direzioni in `docs/seo/PIANO-ESPANSIONE-TERRITORIO.md`.
