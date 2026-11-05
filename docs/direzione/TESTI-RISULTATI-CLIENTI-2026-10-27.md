@@ -165,3 +165,17 @@
 - Indirizzo: `Via Ospedale 48, Castellaneta (TA)`
 
 **Mancano:** cosa facciamo noi per lei (social, foto, video, sito), Instagram, logo/foto, e il suo consenso (compreso quello sui contatti e sul titolo del Master).
+
+### Autogamma — "Non solo contenuti" (casi studio a blocchi) — dati ricevuti da Nicola il 05/11
+
+**Cosa sappiamo:** salone auto Stellantis con diversi servizi; per loro abbiamo fatto SOLO shooting fotografico e sito web (nessuna gestione social). Per questo va in "Non solo contenuti", non tra i clienti principali. Nicola darà poi i dati su Massafra (non chiaro se la sede è a Massafra: da confermare).
+
+**Struttura proposta dei blocchi (dashboard → Editor → Non solo contenuti):**
+1. **Card:** nome `Autogamma`, categoria `Shooting e sito web`, località `[da confermare, forse Massafra (TA)]`, riassunto: `Salone auto Stellantis: servizio fotografico e nuovo sito web.`
+2. **Blocco Testo** ("Obiettivo"): `Autogamma è un salone auto Stellantis con diversi servizi. Per presentarsi online abbiamo realizzato un servizio fotografico dedicato e un sito web chiaro, pensato per far trovare subito sedi, modelli e servizi. [Dettagli veri da confermare: cosa serviva al cliente e cosa abbiamo scelto di fare.]`
+3. **Blocco Galleria** (foto dello shooting): da caricare dalla Libreria media.
+4. **Blocco Sito web** (indirizzo del sito e pagine principali con una riga ciascuna): `[indirizzo da confermare]`.
+5. **Blocco Elenco** ("Cosa abbiamo fatto"): `Servizio fotografico` / `Sito web` / `[altre voci vere da confermare]`.
+- **Nessun risultato numerico** finché Nicola non dà dati reali. Nessun logo del marchio Stellantis: usare solo il nome in forma descrittiva ("salone auto Stellantis") e solo se Autogamma è davvero concessionario/venditore autorizzato (da confermare). Nessun prezzo.
+
+**Mancano:** indirizzo del sito, foto dello shooting, città/sede esatta, elenco dei servizi del salone (per descrivere bene il sito), consenso a comparire.
