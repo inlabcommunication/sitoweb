@@ -116,8 +116,13 @@ const fromValue = (v: any): any => {
 // vanno online e servono anche per usare la dashboard (che legge Firestore dal
 // vivo). In locale si continua con i predefiniti. Il 404 (documento che non
 // esiste) non è un errore. Per forzare: PRERENDER_ALLOW_DEFAULTS=1.
+// Deploy di produzione: VERCEL_ENV, oppure VERCEL_TARGET_ENV (variabili di sistema di Vercel).
+// Una sola costante per la guardia qui sotto e per IndexNow; l'ambiente va sempre nel log.
+const IS_PROD = process.env.VERCEL_ENV === 'production' || process.env.VERCEL_TARGET_ENV === 'production';
+const ENV_INFO = `VERCEL=${process.env.VERCEL || '-'} VERCEL_ENV=${process.env.VERCEL_ENV || '-'} VERCEL_TARGET_ENV=${process.env.VERCEL_TARGET_ENV || '-'}`;
+console.log(`[prerender] ambiente: ${ENV_INFO}`);
 const failBuild = (what: string, msg: string) => {
-  if (process.env.VERCEL_ENV === 'production' && process.env.PRERENDER_ALLOW_DEFAULTS !== '1') {
+  if (IS_PROD && process.env.PRERENDER_ALLOW_DEFAULTS !== '1') {
     console.error(`[prerender] ${what} non letti da Firestore (${msg}): build fermato per non pubblicare pagine senza i dati della dashboard.`);
     process.exit(1);
   }
@@ -410,11 +415,12 @@ console.log(`[prerender] llms-full.txt: ${(full.length / 1024).toFixed(0)} KB`);
 // La chiave è pubblica per natura (public/<chiave>.txt). Non blocca mai il build.
 const INDEXNOW_KEY = '1aeb8bdb2788980a01d435ec86e915b2';
 const INDEXNOW_EVERY = 24 * 60 * 60 * 1000;
-type IndexNowState = { sentAt: number; pages: Record<string, string> };
+// `esito`: l'ultimo risultato, leggibile da /indexnow-state.json senza aprire i log di Vercel
+type IndexNowState = { sentAt: number; pages: Record<string, string>; esito?: string };
 const sitemapPaths = routes.filter((p) => { const seo = getSeo(p); return !seo.noindex && seo.sitemap; });
 const current = Object.fromEntries(sitemapPaths.map((p) => [getSeo(p).canonical, pageHash.get(p) || '']));
-let nextState: IndexNowState = { sentAt: 0, pages: {} };
-if (process.env.VERCEL_ENV === 'production' && process.env.INDEXNOW_DISABLE !== '1') {
+let nextState: IndexNowState = { sentAt: 0, pages: {}, esito: `non inviato: build non di produzione (${ENV_INFO})` };
+if (IS_PROD && process.env.INDEXNOW_DISABLE !== '1') {
   try {
     let before: IndexNowState = { sentAt: 0, pages: {} };
     try {
@@ -422,20 +428,23 @@ if (process.env.VERCEL_ENV === 'production' && process.env.INDEXNOW_DISABLE !== 
       const j = r.ok ? await r.json() as Partial<IndexNowState> : null;
       if (j && typeof j.sentAt === 'number' && j.pages && typeof j.pages === 'object') before = { sentAt: j.sentAt, pages: j.pages };
     } catch { /* primo invio o sito non raggiungibile: si avvisano tutte le pagine */ }
-    nextState = before;
+    nextState = { ...before };
     const changed = Object.keys(current).filter((u) => before.pages[u] !== current[u]);
-    if (!changed.length) console.log('[prerender] IndexNow: nessuna pagina cambiata');
-    else if (Date.now() - before.sentAt < INDEXNOW_EVERY) console.log(`[prerender] IndexNow: ${changed.length} pagine in coda, invio al prossimo deploy dopo 24 ore dall'ultimo`);
+    const note = (t: string) => { nextState.esito = `${new Date().toISOString()} ${t}`; console.log(`[prerender] IndexNow: ${t}`); };
+    if (!changed.length) note('nessuna pagina cambiata');
+    else if (Date.now() - before.sentAt < INDEXNOW_EVERY) note(`${changed.length} pagine in coda, invio al prossimo deploy dopo 24 ore dall'ultimo`);
     else {
       const r = await fetch('https://api.indexnow.org/indexnow', {
         method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' },
         body: JSON.stringify({ host: new URL(SITE_URL).host, key: INDEXNOW_KEY, keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`, urlList: changed.slice(0, 10000) }),
         signal: AbortSignal.timeout(10000),
       });
-      console.log(`[prerender] IndexNow: ${changed.length} pagine inviate, risposta ${r.status}`);
+      const detail = r.ok ? '' : ` ${(await r.text().catch(() => '')).slice(0, 200)}`;
       if (r.ok) nextState = { sentAt: Date.now(), pages: current };
+      note(`${changed.length} pagine inviate, risposta ${r.status}${detail}`);
     }
   } catch (e) {
+    nextState.esito = `${new Date().toISOString()} non inviato: ${(e as Error).message}`;
     console.warn('[prerender] IndexNow non inviato:', (e as Error).message);
   }
 }
