@@ -292,6 +292,30 @@ const clients = () => {
 };
 const cases = () => siteCases.filter((c) => c && c.id && c.client).map(caseSeo);
 
+// FAQPage (brief SEO GEO 03/11): solo domande già visibili nella pagina, con lo stesso testo.
+const faqPage = (items: { q: string; a: string }[]) => items.length ? [{
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+}] : [];
+/** Domande della sezione FAQ delle pagine città (stesso ordine di CityDetails) */
+const cityFaqs = (city: string) => {
+  const i = cityInfo(city);
+  return i ? [i.faq, i.faq2, i.faq3, ...(i.altreFaq || [])].filter((f): f is { q: string; a: string } => !!f?.q && !!f?.a) : [];
+};
+/** Domande della sezione "## Domande frequenti" di un articolo (### domanda + paragrafi di risposta) */
+const blogFaqs = (md?: string) => {
+  const sec = (md || '').split(/^## Domande frequenti\s*$/m)[1]?.split(/^## /m)[0];
+  if (!sec) return [];
+  return sec.split(/^### /m).slice(1).map((block) => {
+    const [q, ...rest] = block.split('\n');
+    // come plain(), ma lascia i ">" del testo (es. "Impostazioni > Account"): deve restare uguale a quello visibile
+    const text = (t: string) => t.replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1').replace(/[*_`]/g, '').replace(/\s+/g, ' ').trim();
+    return { q: text(q), a: text(rest.join(' ')) };
+  }).filter((f) => f.q && f.a);
+};
+/** Schede cliente (principali + "Altri clienti"): per llms.txt (brief SEO GEO 03/11) */
+export const getClients = () => clients();
+
 const page = (path: string, title: string, description: string, extra: Partial<Seo> = {}, crumbs?: [string, string][]): Seo => {
   const desc = clip(description);
   return {
@@ -390,7 +414,7 @@ export const getSeo = (rawPath: string): Seo => {
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} ${aCity(city)}`, serviceType: s.keyword,
           url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: city },
-        }],
+        }, ...faqPage(cityFaqs(city))],
       }, [['Servizi', '/servizi'], [s.label, '/' + s.slug], [city, path]]);
     }
   }
@@ -413,7 +437,7 @@ export const getSeo = (rawPath: string): Seo => {
     const seo = page(path, title, desc, {
       sitemap: { priority: 0.7, changefreq: 'monthly' },
       jsonLd: [{ '@context': 'https://schema.org', '@type': 'Service', name: `Agenzia di comunicazione e marketing ${aCity(c)}`,
-        serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }],
+        serviceType: 'agenzia di comunicazione e marketing', url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: c } }, ...faqPage(cityFaqs(c))],
     }, [['Servizi', '/servizi'], [`Agenzia ${aCity(c)}`, path]]);
     // Fondatore del posto citato nella pagina (sezione "casa nostra")
     const founder = AUTHORS.find((a) => a.slug === cityInfo(c)?.casaNostra?.autore);
@@ -467,7 +491,7 @@ export const getSeo = (rawPath: string): Seo => {
           author: authorByName(post.author) ? personRef(authorByName(post.author)!) : { '@type': 'Person', name: post.author },
           publisher: orgRef, mainEntityOfPage: abs(path), url: abs(path),
           articleSection: post.category, keywords: post.tags.join(', '), wordCount: words, inLanguage: 'it-IT',
-        }],
+        }, ...faqPage(blogFaqs(post.content))],
       }, [['Blog', '/blog'], [post.title, path]]);
     }
   }

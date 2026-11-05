@@ -1,10 +1,11 @@
 // Dopo `vite build`: crea un HTML per ogni pagina con <head> già corretto
 // (titolo, description, canonical, Open Graph, JSON-LD), più sitemap.xml e
 // robots.txt. Il dominio viene da VITE_SITE_URL (o SITE_URL).
+import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, EXTRA_SERVICE_CITIES, citySlug, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
+import { AGENCY_CITIES, EXTRA_AGENCY_CITIES, EXTRA_SERVICE_CITIES, citySlug, agencyPath, AUTHORS, authorPath, CITIES, getBlogPosts, getClients, getSeo, listRoutes, organizationJsonLd, registerBlogPosts, registerContent, SERVICES_SEO, SITE_URL, BUSINESS } from '../src/seo/routes';
 import { BLOG_SEED, mergePosts, normalizePost } from '../src/data/blogSeed';
 
 const DIST = join(process.cwd(), 'dist');
@@ -234,6 +235,11 @@ const imagesOf = (html: string): string[] => {
   return [...out];
 };
 
+// Impronta del contenuto di ogni pagina (title, description, testo): serve a IndexNow
+// per avvisare i motori solo delle pagine cambiate dall'ultimo deploy.
+const pageHash = new Map<string, string>();
+const pageText = new Map<string, string>();
+
 const routes = listRoutes();
 for (const path of routes) {
   // cleanUrls di Vercel: /servizi → servizi.html, /casi-studio/paresteta → casi-studio/paresteta.html
@@ -241,6 +247,8 @@ for (const path of routes) {
   mkdirSync(dirname(file), { recursive: true });
   const html = await body(path);
   pageImages.set(path, imagesOf(html));
+  pageText.set(path, html);
+  pageHash.set(path, createHash('sha1').update(`${getSeo(path).title}\n${getSeo(path).description}\n${html}`).digest('hex').slice(0, 16));
   writeFileSync(file, render(path, html));
 }
 console.log(`[prerender] HTML statico: ${ssr ? routes.length - ssrFailed : 0}/${routes.length} pagine con testo`);
@@ -314,23 +322,53 @@ const line = (p: string, label?: string) => {
 };
 const org = organizationJsonLd() as any;
 const caseRoutes = routes.filter((p) => p.startsWith('/casi-studio/'));
+const today = new Date().toISOString().slice(0, 10);
+const clientRoutes = routes.filter((p) => p.startsWith('/cliente/')).filter(indexable);
+const clientPages = getClients().filter((c: any) => clientRoutes.includes('/cliente/' + c.id));
+// Tutte le pagine servizio di una città (non solo gestione social), una riga per città
+const servicesByCity = AGENCY_CITIES.map((c) => {
+  const pages = SERVICES_SEO.map((s) => ({ s, p: `/${s.slug}-${citySlug(c)}` })).filter(({ p }) => indexable(p));
+  return pages.length ? `- ${c}: ${pages.map(({ s, p }) => `[${s.label}](${getSeo(p).canonical})`).join(', ')}` : '';
+}).filter(Boolean);
 const llms = [
   `# ${org.name}`, '',
+  `Ultimo aggiornamento: ${today}. Testo completo del sito: ${SITE_URL}/llms-full.txt`, '',
   '> InLab Communication è un\'agenzia di comunicazione e digital marketing con sede a Castellaneta, in provincia di Taranto, fondata da Nicola Carpignano e Ilaria Gemma. Social media, video e reel, Meta Ads, siti web, branding, foto e automazioni AI per attività locali e PMI, in Puglia e in tutta Italia.', '',
   org.disambiguatingDescription, '',
   '## Servizi', '',
   ...SERVICES_SEO.map((s) => '/' + s.slug).filter(indexable).map((p) => line(p)),
   '', '## Chi siamo', '',
   ...['/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug))].filter(indexable).map((p) => line(p)),
+  '', '## Domande frequenti', '',
+  `### Chi è InLab Communication?`,
+  `InLab Communication è un'agenzia di comunicazione e digital marketing con sede in ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), fondata da Nicola Carpignano e Ilaria Gemma.`, '',
+  `### Quali servizi offre?`,
+  `Gestione social, video e reel, foto, Meta Ads, siti web, branding e automazioni AI.`, '',
+  `### In quali zone lavora?`,
+  `Nelle province di Taranto, Bari, Brindisi, Lecce, Matera e Potenza, con clienti anche fuori regione (Ferrara). Elenco completo: ${SITE_URL}/dove-lavoriamo`, '',
+  ...AUTHORS.flatMap((a) => [`### Chi è ${a.name}?`, `${((a as any).facts || []).filter((f: string, i: number) => i === 0 || /EA Formazione/.test(f)).join(' ') || a.description} ${SITE_URL}${authorPath(a.slug)}`, '']),
+  `### Per quali attività lavora?`,
+  `Ristoranti, pasticcerie, ottiche, officine, lidi, masserie, studi dentistici, produttori e altre attività locali. Tra i clienti: ${clientPages.map((c: any) => c.name).join(', ')}.`, '',
+  `### Quanto costa?`,
+  `Preventivo gratuito su misura dopo un primo incontro.`, '',
+  `### Come contattarla?`,
+  `Dal modulo ${SITE_URL}/contatti, per email (${BUSINESS.email}) o per telefono (${BUSINESS.telephone}).`, '',
+  `### Lavora a distanza?`,
+  `Sì: strategia, contenuti e campagne si seguono a distanza, con incontri e riprese sul posto nelle zone vicine.`,
   '', '## Casi studio', '',
   ...['/clienti', ...caseRoutes].filter(indexable).map((p) => line(p)),
+  '', '## Clienti', '',
+  ...clientPages.map((c: any) => line('/cliente/' + c.id, [c.name, c.sector, c.location].filter(Boolean).join(', '))),
   '', '## Città in cui lavoriamo', '',
   `Lavoriamo con attività di ${CITIES.join(', ')}. Ogni servizio ha una pagina per città, ad esempio ${SITE_URL}/gestione-social-castellaneta. Seguiamo anche attività di ${EXTRA_AGENCY_CITIES.join(', ')}.`,
   ...Object.entries(EXTRA_SERVICE_CITIES).flatMap(([slug, cities]) => {
     const label = SERVICES_SEO.find((s) => s.slug === slug)?.label || slug;
     return cities.length ? [`${label} anche a ${cities.join(', ')}: ${cities.map((c) => `${SITE_URL}/${slug}-${citySlug(c)}`).join(', ')}.`] : [];
   }),
+  ...(indexable('/dove-lavoriamo') ? [line('/dove-lavoriamo')] : []),
   '', ...AGENCY_CITIES.map(agencyPath).filter(indexable).map((p) => line(p)),
+  '', '## Servizi per città', '',
+  ...servicesByCity,
   '', '## Blog', '',
   ...(indexable('/blog') ? [line('/blog')] : []),
   ...getBlogPosts().map((p) => '/blog/' + p.slug).filter(indexable).map((p) => line(p)),
@@ -342,6 +380,66 @@ const llms = [
   `- Sede: ${BUSINESS.street}, ${BUSINESS.postalCode} ${BUSINESS.city} (TA), ${BUSINESS.region}`, '',
 ].join('\n');
 writeFileSync(join(DIST, 'llms.txt'), llms);
+
+// llms-full.txt (brief SEO GEO 03/11): testo completo delle pagine principali in Markdown,
+// preso dall'HTML statico appena generato, senza menu, footer, pulsanti e grafica.
+const toMarkdown = (h: string) => h
+  .replace(/<(nav|footer|button|svg|script|style|noscript|form)\b[\s\S]*?<\/\1>/g, '')
+  .replace(/<h1\b[^>]*>/g, '\n\n# ').replace(/<h2\b[^>]*>/g, '\n\n## ').replace(/<h3\b[^>]*>/g, '\n\n### ')
+  .replace(/<\/h[1-3]>/g, '\n\n').replace(/<li\b[^>]*>/g, '\n- ').replace(/<(p|div|section|br)\b[^>]*>/g, '\n')
+  .replace(/<[^>]+>/g, ' ')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#x27;|&#39;/g, "'").replace(/&nbsp;/g, ' ')
+  .split('\n').map((l) => l.replace(/\s+/g, ' ').trim()).join('\n')
+  .replace(/^(#{1,3}) *\n+/gm, '$1 ').replace(/\n{3,}/g, '\n\n').trim();
+const fullSection = (p: string) => `---\n\nURL: ${getSeo(p).canonical}\n\n${toMarkdown(pageText.get(p) || '')}`;
+const blogPaths = getBlogPosts().map((p) => '/blog/' + p.slug).filter(indexable);
+const mainPaths = ['/', '/servizi', ...SERVICES_SEO.map((s) => '/' + s.slug), '/chi-siamo', ...AUTHORS.map((a) => authorPath(a.slug)),
+  '/clienti', ...caseRoutes, ...clientRoutes, ...AGENCY_CITIES.map(agencyPath)].filter(indexable).filter((p) => pageText.get(p));
+const fullHead = `# ${org.name} — testo completo del sito\n\nUltimo aggiornamento: ${today}. Indice e pagine: ${SITE_URL}/llms.txt\n\n`;
+let full = fullHead + [...mainPaths, ...blogPaths].map(fullSection).join('\n\n');
+// oltre ~2 MB si tengono solo i link agli articoli (richiesta SEO)
+if (full.length > 2_000_000) full = fullHead + mainPaths.map(fullSection).join('\n\n') + '\n\n---\n\n## Articoli del blog\n\n' + blogPaths.map((p) => line(p)).join('\n');
+writeFileSync(join(DIST, 'llms-full.txt'), full + '\n');
+console.log(`[prerender] llms-full.txt: ${(full.length / 1024).toFixed(0)} KB`);
+
+// IndexNow (brief SEO GEO 03/11): Bing, Copilot, ChatGPT search, Yandex. Solo nel deploy
+// di produzione, solo le pagine della sitemap nuove o cambiate rispetto all'ultimo invio
+// (confronto con /indexnow-state.json del sito online) e al massimo un invio ogni 24 ore:
+// i deploy fatti dai salvataggi della dashboard non mandano niente finché non è passato un
+// giorno, e le modifiche restano in coda per l'invio successivo. Nessuna lettura Firestore.
+// La chiave è pubblica per natura (public/<chiave>.txt). Non blocca mai il build.
+const INDEXNOW_KEY = '1aeb8bdb2788980a01d435ec86e915b2';
+const INDEXNOW_EVERY = 24 * 60 * 60 * 1000;
+type IndexNowState = { sentAt: number; pages: Record<string, string> };
+const sitemapPaths = routes.filter((p) => { const seo = getSeo(p); return !seo.noindex && seo.sitemap; });
+const current = Object.fromEntries(sitemapPaths.map((p) => [getSeo(p).canonical, pageHash.get(p) || '']));
+let nextState: IndexNowState = { sentAt: 0, pages: {} };
+if (process.env.VERCEL_ENV === 'production' && process.env.INDEXNOW_DISABLE !== '1') {
+  try {
+    let before: IndexNowState = { sentAt: 0, pages: {} };
+    try {
+      const r = await fetch(`${SITE_URL}/indexnow-state.json`, { signal: AbortSignal.timeout(8000) });
+      const j = r.ok ? await r.json() as Partial<IndexNowState> : null;
+      if (j && typeof j.sentAt === 'number' && j.pages && typeof j.pages === 'object') before = { sentAt: j.sentAt, pages: j.pages };
+    } catch { /* primo invio o sito non raggiungibile: si avvisano tutte le pagine */ }
+    nextState = before;
+    const changed = Object.keys(current).filter((u) => before.pages[u] !== current[u]);
+    if (!changed.length) console.log('[prerender] IndexNow: nessuna pagina cambiata');
+    else if (Date.now() - before.sentAt < INDEXNOW_EVERY) console.log(`[prerender] IndexNow: ${changed.length} pagine in coda, invio al prossimo deploy dopo 24 ore dall'ultimo`);
+    else {
+      const r = await fetch('https://api.indexnow.org/indexnow', {
+        method: 'POST', headers: { 'Content-Type': 'application/json; charset=utf-8' },
+        body: JSON.stringify({ host: new URL(SITE_URL).host, key: INDEXNOW_KEY, keyLocation: `${SITE_URL}/${INDEXNOW_KEY}.txt`, urlList: changed.slice(0, 10000) }),
+        signal: AbortSignal.timeout(10000),
+      });
+      console.log(`[prerender] IndexNow: ${changed.length} pagine inviate, risposta ${r.status}`);
+      if (r.ok) nextState = { sentAt: Date.now(), pages: current };
+    }
+  } catch (e) {
+    console.warn('[prerender] IndexNow non inviato:', (e as Error).message);
+  }
+}
+writeFileSync(join(DIST, 'indexnow-state.json'), JSON.stringify(nextState));
 
 console.log(`[prerender] ${routes.length} pagine, ${urls.length} URL in sitemap — dominio ${SITE_URL}`);
 // il manifest serve solo qui: non va pubblicato
