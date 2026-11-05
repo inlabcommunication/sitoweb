@@ -71,6 +71,8 @@ Ogni lunedì, in quest'ordine:
 5. "Chi fa reel per ristoranti in provincia di Taranto"
 
 - Bing Webmaster Tools collegato il 05/11.
+  - La sitemap è caricata: Bing trova 229 pagine.
+  - Strumento `docs/seo/strumenti/bing.mjs` (query, pagine, scansione, URL); chiave `BING_WEBMASTER_KEY` nell'ambiente.
 - Scheda Google: ferma, Nicola cambia ufficio. Nuovo indirizzo da aggiornare ovunque (sito, JSON-LD, llms.txt, pagina Castellaneta). **Niente elenchi di aziende finché non c'è l'indirizzo nuovo.**
 
 ## Lotti
