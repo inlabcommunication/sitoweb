@@ -44,7 +44,10 @@ Serve a far ripartire una sessione SEO nuova con un contesto pulito.
 - **Google Ads:**
   - Manager 368-126-8213, account 401-431-8397.
   - Variabili nell'ambiente: `GOOGLE_ADS_CUSTOMER_ID`, `GOOGLE_ADS_LOGIN_CUSTOMER_ID`, `GOOGLE_ADS_DEVELOPER_TOKEN`.
-  - Livello Test; richiesta del livello **Explorer** inviata il 05/11, in revisione.
+  - **Prova del 06/11:**
+    - Explorer è approvato, ma il Keyword Planner via API **non** è permesso con Explorer: serve **Basic**.
+    - L'account 401-431-8397 non è ancora attivo (CUSTOMER_NOT_ENABLED, configurazione non finita).
+- **Account di servizio nuovo provato il 06/11:** GSC e GA4 funzionano.
   - Strumento: `docs/seo/strumenti/ads-keyword.mjs`.
 - **Altre chiavi:** `SERPAPI_KEY` e `BING_WEBMASTER_KEY` aggiunte il 05/11.
 
