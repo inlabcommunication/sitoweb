@@ -390,6 +390,7 @@ writeFileSync(join(DIST, 'llms.txt'), llms);
 // preso dall'HTML statico appena generato, senza menu, footer, pulsanti e grafica.
 const toMarkdown = (h: string) => h
   .replace(/<(nav|footer|button|svg|script|style|noscript|form)\b[\s\S]*?<\/\1>/g, '')
+  .replace(/<a\b[^>]*class="skip-link"[^>]*>[\s\S]*?<\/a>/g, '')
   .replace(/<h1\b[^>]*>/g, '\n\n# ').replace(/<h2\b[^>]*>/g, '\n\n## ').replace(/<h3\b[^>]*>/g, '\n\n### ')
   .replace(/<\/h[1-3]>/g, '\n\n').replace(/<li\b[^>]*>/g, '\n- ').replace(/<(p|div|section|br)\b[^>]*>/g, '\n')
   .replace(/<[^>]+>/g, ' ')
