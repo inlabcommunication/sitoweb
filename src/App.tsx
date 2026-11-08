@@ -67,6 +67,9 @@ const G = () => (
     a{color:inherit;text-decoration:none;cursor:pointer}
     button{cursor:pointer;font-family:var(--fb)}
     img{max-width:100%}
+    .skip-link{position:absolute;left:-9999px;top:16px;z-index:10001;background:var(--a);color:#000;font-weight:500;padding:.7rem 1.1rem;border-radius:999px}
+    .skip-link:focus{left:16px}
+    #contenuto:focus{outline:none}
  
     .fd{font-family:var(--fd)}
     .fs{font-family:var(--fs)}
@@ -2375,12 +2378,20 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   return (
     <RouterCtx.Provider value={{route,go}}>
       <G/>
+      {/* Accessibilità: primo elemento raggiungibile con Tab, visibile solo al focus */}
+      <a href="#contenuto" className="skip-link" onClick={(e) => {
+        const m = document.getElementById('contenuto');
+        if (!m) return;
+        e.preventDefault(); // niente "#contenuto" nell'indirizzo né voce in cronologia
+        m.focus();
+        m.scrollIntoView();
+      }}>Vai al contenuto</a>
       <Navbar/>
       {/* Cambio pagina senza dissolvenza: con la transizione (uscita + entrata
           a opacità 0) su Safari lento la pagina poteva restare nera (03/10). */}
-      <div key={route}>
+      <main id="contenuto" tabIndex={-1} key={route}>
         {renderPage(pageInfo)}
-      </div>
+      </main>
       <Footer/>
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
       {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}
