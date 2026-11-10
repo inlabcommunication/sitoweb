@@ -15,7 +15,7 @@ import { getCurrentPath, linkClick, navigate } from "./lib/router";
 import { useAgencyStats } from "./data/stats";
 import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
 import { BrowserMockup } from "./components/BrowserMockup";
-import { getSeo, seoReady, onBlogPostsChange } from "./seo/routes";
+import { getSeo, seoReady, onBlogPostsChange, getBlogPosts } from "./seo/routes";
 import { applySeo } from "./seo/head";
 import { loadContent, useContent } from "./lib/content";
 import { getClientId, normalizeClients } from "./lib/clientUtils";
@@ -1506,6 +1506,42 @@ const IntroText = ({text, link}: {text: string; link?: {testo: string; href: str
   return <>{text.slice(0, i)}<Link to={link.href} style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>{link.testo}</Link>{text.slice(i + link.testo.length)}</>;
 };
 
+/* Blocco "Dal blog" nelle pagine agenzia e gestione social per città (brief SEO R3):
+   prima gli articoli che citano la città, poi quelli che citano la provincia, poi quelli del servizio. */
+const SOCIAL_BLOG_SLUGS=["reel-o-post-cosa-pubblicare-instagram","idee-reel-ristoranti","quante-volte-pubblicare-social","gestione-social-attivita-locale-cosa-include"];
+const useBlogPosts=()=>{
+  const [,tick]=useState(0);
+  useEffect(()=>onBlogPostsChange(()=>tick(n=>n+1)),[]);
+  return getBlogPosts();
+};
+const BlogForCity=({city,provincia}:{city:string;provincia:string})=>{
+  const posts=useBlogPosts();
+  const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const c=norm(city), pv=norm(provincia).replace(/^provincia (di |del |della )?/,"");
+  const ranked=posts.map(p=>{
+    const t=norm(`${p.title} ${p.excerpt} ${p.content}`);
+    const rank=t.includes(c)?0:(pv&&t.includes(`provincia di ${pv}`))?1:SOCIAL_BLOG_SLUGS.includes(p.slug)?2:9;
+    return {p,rank};
+  }).filter(x=>x.rank<9).sort((a,b)=>a.rank-b.rank||(b.p.date>a.p.date?1:-1)).slice(0,3);
+  if(!ranked.length) return null;
+  return (
+    <section style={{padding:"5rem 2rem",borderTop:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto"}}>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3.5vw,3rem)",lineHeight:1,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Dal blog: idee per le attività di {city}</h2>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(260px,1fr))",gap:"1.5rem"}}>
+          {ranked.map(({p})=>(
+            <Link key={p.slug} to={`/blog/${p.slug}`} style={{display:"block",border:".5px solid var(--b)",borderRadius:12,padding:"1.5rem",color:"var(--t)",textDecoration:"none"}}>
+              <p style={{fontSize:12,letterSpacing:".12em",textTransform:"uppercase",color:"var(--m)",marginBottom:".6rem"}}>{p.category}</p>
+              <p style={{fontSize:18,lineHeight:1.3,marginBottom:".6rem"}}>{p.title}</p>
+              <p style={{fontSize:14,lineHeight:1.6,color:"var(--m)",fontWeight:300}}>{p.excerpt}</p>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
 /* Pagina "Agenzia di comunicazione e marketing a {città}" (brief SEO 01/10) */
 const PageAgenziaCitta = ({city}: {city: string}) => {
   const {go}=useRouter();
@@ -1690,6 +1726,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </div>
       </section>
 
+      <BlogForCity city={city} provincia={provincia}/>
       <ServiceCTA title={`PARLIAMO DEL TUO PROGETTO ${aCity(city).toUpperCase()}`} sub="Raccontaci la tua attività: ti diciamo da dove partire." btn="Richiedi un preventivo gratuito"/>
     </>
   );
@@ -1941,6 +1978,7 @@ const PageCittaSEO = ({city, service}) => {
       </section>
  
       <ServiceExamples slug={svc.slug}/>
+      {svc.slug==="gestione-social" && <BlogForCity city={cityName} provincia={provincia}/>}
       <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
   );
