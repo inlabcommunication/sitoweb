@@ -311,7 +311,7 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
             {hero.label || [`Caso ${cs.number || ''}`.trim(), cs.category].filter(Boolean).join(' — ')}
           </motion.p>
           <motion.h1 initial={false}
-            style={{ fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
+            style={{ fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 40 ? 'clamp(2rem, 5vw, 5rem)' : (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
             {hero.title || cs.client}
           </motion.h1>
           <motion.p initial={false}

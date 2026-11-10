@@ -60,8 +60,8 @@ export const DEFAULT_CASES: CaseStudy[] = [
     seoDescription: 'Caso studio Paresteta: campagna in 5 fasi tra teaser, QR code, video lancio e attività offline per trasformare un cambio insegna in un evento locale.',
     hero: {
       label: 'Caso 01 — Eventi · Branding · Lead generation',
-      title: 'Paresteta',
-      subtitle: 'Dal rebranding all\'inaugurazione.',
+      title: 'Paresteta:\ndal rebranding all\'inaugurazione',
+      subtitle: 'Una campagna in 5 fasi, online e offline.',
       intro: 'Una strategia integrata online e offline per trasformare un cambio insegna in un evento locale.',
     },
     blocks: [
@@ -112,7 +112,7 @@ export const DEFAULT_CASES: CaseStudy[] = [
     seoDescription: 'Caso studio Studio Dentistico Ricciardi: nuovo sito Lumina, campagne di lead generation e social per trasformare la fiducia online in prenotazioni.',
     hero: {
       label: 'Caso 02 — Sito web · Lead generation · Social',
-      title: 'Studio Dentistico\nRicciardi',
+      title: 'Studio Dentistico Ricciardi:\nsito e campagne che portano prenotazioni',
       subtitle: 'Lumina: dalla fiducia online alle prenotazioni.',
       intro: 'Un progetto completo per lo studio del Dott. Francesco Ricciardi a Palagiano: il nuovo sito Lumina, campagne di lead generation e una comunicazione social chiara, professionale e rassicurante.',
       ctaLabel: 'Visita luminaricciardi.it',
