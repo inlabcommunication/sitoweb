@@ -156,6 +156,24 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
         </div>
       </section>
 
+      {/* Una frase per area, con il link alla pagina del capoluogo (analisi SEO 08/11, R7) */}
+      <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,300px),1fr))', gap: '2rem 3rem' }}>
+          {([
+            ['Provincia di Taranto', 'Taranto', 'Lavoriamo da Castellaneta con attività di Palagianello, Mottola, Palagiano, Ginosa, Laterza e Taranto: ci vediamo di persona per riunioni, foto e riprese.'],
+            ['Provincia di Bari', 'Bari', 'Lavoriamo anche in provincia di Bari, per esempio a Gravina in Puglia, e possiamo seguire attività di Bari e dei paesi vicini con strategia, contenuti e campagne su misura.'],
+            ['Provincia di Matera', 'Matera', 'Matera è a due passi dalla Puglia: possiamo seguire le attività della città e della provincia, a distanza e dal vivo quando servono foto o video.'],
+            ['Provincia di Ferrara', 'Ferrara', 'A Ferrara gestiamo i social della Pasticceria Naturale: strategia e testi nostri, foto e video girati sul posto.'],
+          ] as [string, string, string][]).filter(([, c]) => hasPage(c)).map(([t, c, d]) => (
+            <div key={t}>
+              <h2 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(1.6rem,2.6vw,2.2rem)', lineHeight: 1, textTransform: 'uppercase', fontWeight: 400, marginBottom: '.6rem' }}>{t}</h2>
+              <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.7, marginBottom: '.4rem' }}>{d}</p>
+              <a href={agencyPath(c)} onClick={linkTo(go, agencyPath(c))} className="foot-link" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 14, color: 'var(--a)' }}>Agenzia di comunicazione a {c}</a>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {others.length > 0 && (
         <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
           <div style={{ maxWidth: 1280, margin: '0 auto' }}>

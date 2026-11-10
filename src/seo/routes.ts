@@ -66,6 +66,47 @@ export const hasServicePage = (slug: string, city: string) => serviceCities(slug
 export const aCity = (c: string) => (/^a/i.test(c) ? 'ad ' : 'a ') + c;
 export const agencyPath = (c: string) => `/agenzia-comunicazione-${citySlug(c)}`;
 
+/** Pagine servizio×città mai lette da Google (analisi SEO 08/11, R2): `noindex, follow` e fuori da
+ *  sitemap, llms.txt e IndexNow. Restano online e raggiungibili; per riattivarne una basta toglierla da qui. */
+const NOINDEX_SERVICE_CITY_PAGES = new Set([
+  '/automazioni-ai-gravina-in-puglia',
+  '/automazioni-ai-palagianello',
+  '/automazioni-ai-palagiano',
+  '/branding-castellaneta',
+  '/branding-gravina-in-puglia',
+  '/branding-laterza',
+  '/branding-mottola',
+  '/branding-palagianello',
+  '/branding-taranto',
+  '/meta-ads-castellaneta',
+  '/meta-ads-ginosa',
+  '/meta-ads-gravina-in-puglia',
+  '/meta-ads-laterza',
+  '/meta-ads-mottola',
+  '/meta-ads-palagiano',
+  '/shooting-castellaneta',
+  '/shooting-gravina-in-puglia',
+  '/shooting-laterza',
+  '/shooting-mottola',
+  '/shooting-palagianello',
+  '/shooting-palagiano',
+  '/shooting-taranto',
+  '/siti-web-castellaneta',
+  '/siti-web-ginosa',
+  '/siti-web-gravina-in-puglia',
+  '/siti-web-laterza',
+  '/siti-web-mottola',
+  '/siti-web-palagianello',
+  '/siti-web-palagiano',
+  '/siti-web-taranto',
+  '/video-castellaneta',
+  '/video-ginosa',
+  '/video-gravina-in-puglia',
+  '/video-mottola',
+  '/video-palagianello',
+  '/video-taranto',
+]);
+
 export const SERVICES_SEO = [
   { slug: 'gestione-social', label: 'Gestione Social', keyword: 'gestione social media',
     description: 'Gestione social media professionale per aziende: strategia, piano editoriale, contenuti, reel e community su Instagram, Facebook, TikTok e LinkedIn.' },
@@ -411,6 +452,7 @@ export const getSeo = (rawPath: string): Seo => {
       const own = cityInfo(city)?.paginaServizio?.[s.slug];
       return page(path, own?.title || withBrand(`${s.label} ${aCity(city)}`), own?.description || desc, {
         sitemap: { priority: 0.6, changefreq: 'monthly' },
+        ...(NOINDEX_SERVICE_CITY_PAGES.has(path) ? { noindex: true } : {}),
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} ${aCity(city)}`, serviceType: s.keyword,
           url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: city },

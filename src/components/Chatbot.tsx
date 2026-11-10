@@ -91,7 +91,7 @@ export const Chatbot = () => {
         {
           role: 'assistant',
           content:
-            'Ciao! 👋 Sono l\'assistente di InLab. Come posso aiutarti? Cerchi info su social, sito web, video, foto o automazioni AI?',
+            'Ciao! 👋 Sono l\'assistente virtuale di InLab: stai parlando con un\'intelligenza artificiale, non con una persona. Come posso aiutarti? Cerchi info su social, sito web, video, foto o automazioni AI?',
           ts: Date.now(),
         },
       ]);
@@ -283,7 +283,7 @@ export const Chatbot = () => {
               <div>
                 <div style={{ fontFamily: 'var(--fd)', fontSize: 16, letterSpacing: '.1em' }}>INLAB AI</div>
                 <div style={{ fontSize: 12, color: 'var(--m)', letterSpacing: '.1em', textTransform: 'uppercase' }}>
-                  {loading ? '✦ sta scrivendo...' : '✦ online · risponde subito'}
+                  {loading ? '✦ sta scrivendo...' : '✦ assistente IA · risponde subito'}
                 </div>
               </div>
               <button onClick={() => setOpen(false)} aria-label="Chiudi la chat" style={{ margin: '-9px -9px -9px auto', background: 'none', border: 'none', color: 'var(--m)', cursor: 'pointer', padding: 13 }}>
