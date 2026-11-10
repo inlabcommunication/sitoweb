@@ -1672,6 +1672,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       )}
 
       {info && <CityDetails info={info}/>}
+      <CityBlogBlock city={city} provincia={provincia}/>
 
       {isHome && (
         <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
@@ -1798,6 +1799,43 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
   </section>
 );
 
+/* Blocco "Dal blog" nelle pagine dei paesi (analisi SEO 08/11, R3). Elenco fisso (nessun dato che cambia
+   tra server e browser): articoli del territorio per la provincia di Taranto, altrimenti quelli sul servizio.
+   Si ruotano per città per non avere lo stesso blocco ovunque. */
+const BLOG_TARANTO: [string,string][] = [
+  ["social-media-ristoranti-provincia-taranto","Social media per ristoranti in provincia di Taranto: strategie che riempiono i tavoli"],
+  ["social-natale-attivita-locali","Social a Natale per negozi e locali in provincia di Taranto: il piano da novembre all'Epifania"],
+  ["agenzia-comunicazione-taranto-come-scegliere","Come scegliere un'agenzia di comunicazione a Taranto: 7 domande da fare prima di firmare"],
+  ["social-media-manager-taranto","Social media manager a Taranto: cosa fa e quando conviene affidarsi a un professionista"],
+  ["marketing-masserie-strutture-ricettive-puglia","Marketing per masserie e strutture ricettive in Puglia: social, sito e prenotazioni"],
+];
+const BLOG_SOCIAL: [string,string][] = [
+  ["gestione-social-attivita-locale-cosa-include","Gestione social per attività locali: cosa include davvero (e come sceglierla)"],
+  ["reel-o-post-cosa-pubblicare-instagram","Differenza tra reel e post su Instagram: quale usare per far crescere un'attività locale"],
+  ["quante-volte-pubblicare-social","Quante volte pubblicare sui social nel 2026: frequenza, orari e un piano sostenibile per PMI"],
+  ["idee-reel-ristoranti","15 idee di reel per ristoranti e bar (con esempi da girare subito)"],
+];
+const CityBlogBlock = ({city, provincia}: {city: string; provincia: string}) => {
+  const pool = provincia==="provincia di Taranto" ? BLOG_TARANTO : BLOG_SOCIAL;
+  const start = Array.from(city).reduce((a,ch)=>a+ch.charCodeAt(0),0) % pool.length;
+  const picks = [0,1,2].map(i=>pool[(start+i)%pool.length]);
+  return (
+    <section style={{padding:"4rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto"}}>
+        <p className="section-label">Dal blog</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:1,marginBottom:"1.2rem",textTransform:"uppercase",fontWeight:400}}>Dal blog: idee per le attività di {city}</h2>
+        <ul style={{listStyle:"none",padding:0,margin:0}}>
+          {picks.map(([slug,title])=>(
+            <li key={slug} style={{borderBottom:".5px solid var(--b)"}}>
+              <Link to={"/blog/"+slug} className="foot-link" style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,minHeight:44,padding:".7rem 0",fontSize:15,color:"var(--t)"}}>{title} <ArrowRight size={13} style={{flexShrink:0,color:"var(--a)"}}/></Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
+
 const PageCittaSEO = ({city, service}) => {
   const {go}=useRouter();
   const svc=SERVICES.find(s=>s.slug===service)||SERVICES[0];
@@ -1907,6 +1945,7 @@ const PageCittaSEO = ({city, service}) => {
       )}
 
       {info && <CityDetails info={info}/>}
+      {svc.slug==="gestione-social" && <CityBlogBlock city={cityName} provincia={provincia}/>}
 
       {AGENCY_CITIES.includes(cityName) && (
         <section style={{padding:"3rem 2rem",borderBottom:".5px solid var(--b)"}}>
