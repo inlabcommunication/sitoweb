@@ -1802,6 +1802,8 @@ const PageCittaSEO = ({city, service}) => {
   const svc=SERVICES.find(s=>s.slug===service)||SERVICES[0];
   const cityName=serviceCities(svc.slug).find(c=>citySlug(c)===city)||city;
   const otherCities=serviceCities(svc.slug).filter(c=>c!==cityName);
+  // solo le città più vicine per provincia (le altre si trovano da "Dove lavoriamo"): meno testo uguale tra le pagine
+  const nearCities=[...otherCities.filter(c=>(cityInfo(c)?.provincia||"provincia di Taranto")===(cityInfo(cityName)?.provincia||"provincia di Taranto")),...otherCities].filter((c,i,a)=>a.indexOf(c)===i).slice(0,10);
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   // per primi i clienti che hanno questo servizio (brief SEO 10/10 territorio, punto 3)
   const localClients=clientsInCity(useContent(), cityName, svc.slug);
@@ -1878,20 +1880,9 @@ const PageCittaSEO = ({city, service}) => {
             )}
           </div>
           <div style={{display:"flex",flexDirection:"column",gap:0}}>
-            {[
-              {t:"Conoscenza del mercato locale",d:`Lavoriamo da Castellaneta con attività della ${provincia}: conosciamo stagionalità e abitudini del territorio.`},
-              {t:"Presenza sul territorio",d:"Possiamo venire da voi per shooting, riprese o riunioni. La qualità del lavoro è superiore quando lavoriamo di persona."},
-              {t:"Risultati misurabili",d:"Non vendiamo aria fritta. Definiamo insieme KPI chiari e ti mostriamo ogni mese se stiamo raggiungendo gli obiettivi."},
-              {t:"Supporto continuo",d:"Parli direttamente con noi, Nicola e Ilaria."},
-            ].map((item,i)=>(
-              <div key={i} style={{display:"flex",gap:"1rem",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
-                <Check size={16} style={{color:"var(--a)",flexShrink:0,marginTop:3}}/>
-                <div>
-                  <div style={{fontSize:14,fontWeight:500,marginBottom:.3+"rem"}}>{item.t}</div>
-                  <div style={{fontSize:13,color:"var(--m)",lineHeight:1.65}}>{item.d}</div>
-                </div>
-              </div>
-            ))}
+            {/* Il metodo uguale per tutte le città sta in una pagina sola, quella del servizio (analisi SEO 08/11, R1) */}
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>Lavoriamo di persona con attività della {provincia}, con obiettivi chiari e risultati che ti mostriamo ogni mese. Parli direttamente con Nicola e Ilaria.</p>
+            <Link to={"/"+svc.slug} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>Come lavoriamo: {svc.label.toLowerCase()} <ArrowRight size={13}/></Link>
           </div>
         </div>
       </section>
@@ -1933,14 +1924,19 @@ const PageCittaSEO = ({city, service}) => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Operiamo anche in queste città</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-            {otherCities.map(c=>(
+            {nearCities.map(c=>(
               <Link key={c} to={`/${svc.slug}-${citySlug(c)}`} className="tag tag-g city-link" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}>{svc.label} a {c}</Link>
             ))}
           </div>
         </div>
       </section>
  
-      <ServiceExamples slug={svc.slug}/>
+      {/* Gli esempi uguali per tutte le città stanno solo nella pagina del servizio (analisi SEO 08/11, R1) */}
+      <section style={{padding:"2rem 2rem 3rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <Link to={"/"+svc.slug} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:15,color:"var(--a)"}}>Guarda gli esempi di lavori: {svc.label.toLowerCase()} <ArrowRight size={13}/></Link>
+        </div>
+      </section>
       <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
     </>
   );
