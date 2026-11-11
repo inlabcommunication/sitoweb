@@ -59,6 +59,47 @@ export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
 export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
   'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro', 'Francavilla Fontana', 'Lecce', 'Nardò', 'Gallipoli', 'Fasano', 'Monopoli', 'Turi', 'Molfetta', 'Scanzano Jonico', 'Ferrandina', 'Sava', 'Galatina', 'Otranto', 'Brindisi', 'Cassano delle Murge', 'Trani', 'Barletta', 'Andria', 'Nova Siri', 'Potenza'],
 };
+/** Pagine servizio×città mai lette da Google: `noindex, follow` e fuori sitemap, restano
+ *  online e raggiungibili dai link (analisi SEO 08/11, R2). Per annullare basta togliere
+ *  il percorso da qui. Le 12 indicizzate (es. /meta-ads-taranto) non sono nell'elenco. */
+export const SERVICE_CITY_NOINDEX = new Set<string>([
+  '/automazioni-ai-gravina-in-puglia',
+  '/automazioni-ai-palagianello',
+  '/automazioni-ai-palagiano',
+  '/branding-castellaneta',
+  '/branding-gravina-in-puglia',
+  '/branding-laterza',
+  '/branding-mottola',
+  '/branding-palagianello',
+  '/branding-taranto',
+  '/meta-ads-castellaneta',
+  '/meta-ads-ginosa',
+  '/meta-ads-gravina-in-puglia',
+  '/meta-ads-laterza',
+  '/meta-ads-mottola',
+  '/meta-ads-palagiano',
+  '/shooting-castellaneta',
+  '/shooting-gravina-in-puglia',
+  '/shooting-laterza',
+  '/shooting-mottola',
+  '/shooting-palagianello',
+  '/shooting-palagiano',
+  '/shooting-taranto',
+  '/siti-web-castellaneta',
+  '/siti-web-ginosa',
+  '/siti-web-gravina-in-puglia',
+  '/siti-web-laterza',
+  '/siti-web-mottola',
+  '/siti-web-palagianello',
+  '/siti-web-palagiano',
+  '/siti-web-taranto',
+  '/video-castellaneta',
+  '/video-ginosa',
+  '/video-gravina-in-puglia',
+  '/video-mottola',
+  '/video-palagianello',
+  '/video-taranto',
+]);
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
 export const hasServicePage = (slug: string, city: string) => serviceCities(slug).includes(city);
@@ -410,7 +451,7 @@ export const getSeo = (rawPath: string): Seo => {
       // testi propri della pagina, se il brief SEO li prevede (src/data/cities.ts → paginaServizio)
       const own = cityInfo(city)?.paginaServizio?.[s.slug];
       return page(path, own?.title || withBrand(`${s.label} ${aCity(city)}`), own?.description || desc, {
-        sitemap: { priority: 0.6, changefreq: 'monthly' },
+        ...(SERVICE_CITY_NOINDEX.has(path) ? { noindex: true } : { sitemap: { priority: 0.6, changefreq: 'monthly' } }),
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} ${aCity(city)}`, serviceType: s.keyword,
           url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: city },
