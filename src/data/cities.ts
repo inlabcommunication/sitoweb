@@ -976,6 +976,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Il centro storico come vetrina", testo: "Un locale nel centro storico di Mesagne ha già uno sfondo che si fa notare. Lo usiamo per foto e video che fanno venire voglia di passare, curiamo social e scheda Google e prepariamo campagne per chi abita a Brindisi e nei paesi vicini." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Carovigno", provincia: "provincia di Brindisi",
+    contesto: "Carovigno ha un centro storico dominato dal Castello Dentice di Frasso e un territorio che arriva alla Riserva naturale di Torre Guaceto. È conosciuta anche per la 'Nzegna, la festa con lo sbandieramento che si tiene ogni anno dopo Pasqua.",
+    settori: ["masserie e B&B", "lidi e attività sul mare", "ristoranti e attività del paese"],
+    faq: { q: "Potete aiutarci ad avere più prenotazioni dirette?", a: "Sì: sito con prenotazione, foto e video, scheda Google e campagne, anche in inglese." },
+    description: "Agenzia di comunicazione a Carovigno: social, foto, video e campagne per masserie, B&B, lidi e attività vicino a Torre Guaceto. Preventivo gratuito.",
+    intro: "Carovigno è tra il castello e il mare di Torre Guaceto. Seguiamo social, foto, video, sponsorizzate e siti per masserie, B&B, lidi e attività, da Castellaneta.",
+    focus: { titolo: "Prenotazioni dirette, non solo dalle piattaforme", testo: "Masserie e B&B vicino a Torre Guaceto lavorano molto con le piattaforme di prenotazione. Con un sito chiaro, foto e video all'altezza e campagne mirate, una parte delle prenotazioni può arrivare direttamente, anche dall'estero. Costruiamo la presenza che serve a farlo." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
