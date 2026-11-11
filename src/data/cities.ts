@@ -954,6 +954,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Farsi trovare da chi arriva in città", testo: "Tra pellegrini, visitatori del castello e chi passa verso il mare, Copertino ha un pubblico che cambia tutto l'anno. Per un ristorante o un negozio servono una scheda Google curata, foto vere e social che dicano subito cosa offri e dove sei. Li prepariamo insieme a campagne per chi è già in zona." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Maglie", provincia: "provincia di Lecce",
+    contesto: "Maglie è la città natale di Aldo Moro ed è da sempre un punto di riferimento per il commercio e i servizi dei paesi vicini. Ogni estate ospita il Mercatino del Gusto, una delle rassegne enogastronomiche più note del Salento.",
+    settori: ["negozi e commercio", "pasticcerie, ristoranti e prodotti tipici", "studi e professionisti"],
+    faq: { q: "Le sponsorizzate possono raggiungere i paesi vicini?", a: "Sì: impostiamo zona e raggio sui comuni da cui arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Maglie: social, foto, video, siti e campagne per negozi, pasticcerie, ristoranti e professionisti. Preventivo gratuito.",
+    intro: "Maglie è uno dei centri commerciali del Salento interno, crocevia tra Lecce e Otranto. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e professionisti, da Castellaneta.",
+    focus: { titolo: "Il negozio di riferimento della zona", testo: "A Maglie arrivano a fare acquisti da molti paesi intorno. Per un negozio o uno studio conta essere il primo nome che viene in mente: scheda Google completa, recensioni, social costanti e sponsorizzate sul raggio giusto. Lo costruiamo insieme, con contenuti veri del tuo lavoro." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
