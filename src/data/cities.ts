@@ -965,6 +965,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Il negozio di riferimento della zona", testo: "A Maglie arrivano a fare acquisti da molti paesi intorno. Per un negozio o uno studio conta essere il primo nome che viene in mente: scheda Google completa, recensioni, social costanti e sponsorizzate sul raggio giusto. Lo costruiamo insieme, con contenuti veri del tuo lavoro." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Mesagne", provincia: "provincia di Brindisi",
+    contesto: "Mesagne è conosciuta per il centro storico, il Castello normanno-svevo e il Museo archeologico Ugo Granafei. Si trova a pochi chilometri da Brindisi ed è un centro di commercio e servizi per l'entroterra.",
+    settori: ["ristoranti e locali del centro", "negozi e commercio", "servizi e professionisti"],
+    faq: { q: "Fate foto e video nei locali?", a: "Sì: veniamo sul posto per foto e video di piatti, ambienti e persone." },
+    description: "Agenzia di comunicazione a Mesagne: social, foto, video, siti e campagne per ristoranti, negozi e attività del centro storico. Preventivo gratuito.",
+    intro: "Mesagne ha un centro storico barocco tra i più curati del Brindisino. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Il centro storico come vetrina", testo: "Un locale nel centro storico di Mesagne ha già uno sfondo che si fa notare. Lo usiamo per foto e video che fanno venire voglia di passare, curiamo social e scheda Google e prepariamo campagne per chi abita a Brindisi e nei paesi vicini." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
