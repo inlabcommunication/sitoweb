@@ -1574,7 +1574,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
               {localClients.map((cl: any, i: number)=>{
                 const v=featured.voci.find(x=>x.cliente===cl.id);
                 return <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"
-                  note={v?.riga} secondary={v?.caso ? {href:`/casi-studio/${v.caso}`,label:"Leggi il caso studio"} : undefined}/>;
+                  note={v?.riga} secondary={v?.caso ? {href:`/casi-studio/${v.caso}`,label:"Leggi il caso completo"} : undefined}/>;
               })}
             </CaseCardGrid>
           </div>
