@@ -1020,6 +1020,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Raccontare un posto che pochi conoscono", testo: "La Rabatana e Anglona sono luoghi che colpiscono chi li vede. Per strutture, aziende e attività di Tursi li trasformiamo in foto, video e contenuti che fanno conoscere il territorio e portano visitatori e clienti, con campagne per chi cerca la Basilicata autentica." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Montalbano Jonico", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Montalbano Jonico è conosciuto per la Riserva naturale dei Calanchi, paesaggi di argilla scolpiti dalla pioggia. Il territorio è agricolo, vicino alla piana del Metapontino, con aziende di ortofrutta e prodotti tipici.",
+    settori: ["aziende agricole e ortofrutta", "prodotti tipici", "attività del paese"],
+    faq: { q: "Lavorate con aziende che vendono fuori regione?", a: "Sì: sito, foto e video della produzione, LinkedIn e campagne per i contatti commerciali." },
+    description: "Agenzia di comunicazione a Montalbano Jonico: social, foto, video e siti per aziende agricole e attività tra i Calanchi e il Metapontino. Preventivo gratuito.",
+    intro: "Montalbano Jonico è affacciato sui Calanchi, vicino alla piana del Metapontino. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole e attività, da Castellaneta.",
+    focus: { titolo: "Dal paesaggio al prodotto", testo: "I Calanchi sono un paesaggio unico, e i prodotti di questa terra possono raccontarlo. Mostriamo campi, raccolta e lavorazione con foto e video veri, creiamo siti chiari e una presenza social costante per farsi conoscere da clienti, grossisti e visitatori." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
