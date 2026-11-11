@@ -932,6 +932,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Il mare vicino alla città", testo: "Chi vive a Taranto sceglie spesso Leporano per il mare e per una cena fuori. Per un lido o un ristorante conta farsi trovare su Google Maps, avere foto vere del posto e social aggiornati quando le persone decidono dove andare. Prepariamo contenuti e sponsorizzate mirate a chi abita entro mezz'ora di strada." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Lizzano", provincia: "provincia di Taranto",
+    contesto: "Lizzano si trova nella parte orientale della provincia di Taranto. Il suo territorio dà il nome al vino Lizzano DOC e fa parte della zona del Primitivo, con una costa sullo Ionio frequentata d'estate.",
+    settori: ["cantine e aziende vinicole", "aziende agricole", "attività del paese e della marina"],
+    faq: { q: "Potete aiutare una cantina a vendere online?", a: "Sì: foto dei prodotti, social, sito o catalogo con ordini e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Lizzano: social, foto, video e siti per cantine, aziende agricole e attività del paese e della marina. Preventivo gratuito.",
+    intro: "Lizzano è terra di vigneti, con un vino che porta il suo nome e una marina sullo Ionio. Seguiamo social, foto, video, sponsorizzate e siti per cantine, aziende agricole e attività, da Castellaneta.",
+    focus: { titolo: "Un vino con il nome del paese", testo: "Quando il nome del paese è anche il nome del vino, il racconto è già a metà. Mostriamo vigne, cantina e persone con foto e video veri, curiamo etichette, sito e social, e prepariamo campagne per la vendita diretta, l'enoturismo e gli ordini online." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
