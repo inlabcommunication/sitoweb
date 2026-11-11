@@ -1291,7 +1291,9 @@ const PageChiSiamo = () => {
                     <div style={{fontSize:16,fontWeight:500}}>{authorByName(p.name) ? <Link to={authorPath(authorByName(p.name)!.slug)} style={{color:"inherit"}}>{p.name}</Link> : p.name}</div>
                   </div>
                 </div>
-                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}{authorByName(p.name)?.inBreve ? " "+authorByName(p.name)!.inBreve : ""}</p>
+                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:authorByName(p.name)?".8rem":"1.5rem"}}>{p.bio}{authorByName(p.name)?.inBreve ? " "+authorByName(p.name)!.inBreve : ""}</p>
+                {/* Link testuale alla pagina autore (analisi SEO 08/11, R5) */}
+                {authorByName(p.name) && <Link to={authorPath(authorByName(p.name)!.slug)} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)",marginBottom:"1rem"}}>{p.name}, {authorByName(p.name)!.jobTitle.toLowerCase()} <ArrowRight size={13}/></Link>}
                 {p.edu?.length>0&&(
                   <div style={{marginBottom:"1.5rem",padding:"1rem 1.1rem",borderRadius:14,background:"rgba(205,178,255,0.06)",border:".5px solid rgba(205,178,255,0.2)"}}>
                     <div style={{display:"flex",alignItems:"center",gap:6,fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
