@@ -1009,6 +1009,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Un prodotto famoso, un marchio da costruire", testo: "Tutti conoscono la Coratina, ma pochi conoscono il nome di chi la produce. Aiutiamo aziende e produttori di Corato a farsi riconoscere: identità, foto e video veri, sito, social e campagne per vendere in Italia e all'estero." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Tursi", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Tursi è conosciuta per la Rabatana, l'antico quartiere arroccato sulla collina, per il santuario di Santa Maria d'Anglona e per il poeta Albino Pierro, che scriveva nel dialetto del paese. Intorno ci sono aziende agricole e la vicina costa jonica.",
+    settori: ["aziende agricole e prodotti tipici", "strutture ricettive", "attività del paese"],
+    faq: { q: "Lavorate anche con attività piccole?", a: "Sì: partiamo da social e foto e cresciamo con sito e campagne quando serve." },
+    description: "Agenzia di comunicazione a Tursi: social, foto, video e siti per aziende agricole, strutture e attività tra la Rabatana e la costa jonica. Preventivo gratuito.",
+    intro: "Tursi è il paese della Rabatana, tra le colline e la costa jonica lucana. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, strutture e attività, da Castellaneta.",
+    focus: { titolo: "Raccontare un posto che pochi conoscono", testo: "La Rabatana e Anglona sono luoghi che colpiscono chi li vede. Per strutture, aziende e attività di Tursi li trasformiamo in foto, video e contenuti che fanno conoscere il territorio e portano visitatori e clienti, con campagne per chi cerca la Basilicata autentica." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

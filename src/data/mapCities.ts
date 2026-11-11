@@ -77,6 +77,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Carovigno', region: 'Puglia', lat: 40.707, lon: 17.658 },
   { name: 'Bitonto', region: 'Puglia', lat: 41.109, lon: 16.691 },
   { name: 'Corato', region: 'Puglia', lat: 41.153, lon: 16.411 },
+  { name: 'Tursi', region: 'Basilicata', lat: 40.246, lon: 16.471 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
