@@ -71,6 +71,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Potenza', region: 'Basilicata', lat: 40.640, lon: 15.806 },
   { name: 'Leporano', region: 'Puglia', lat: 40.382, lon: 17.334 },
   { name: 'Lizzano', region: 'Puglia', lat: 40.391, lon: 17.447 },
+  { name: 'Copertino', region: 'Puglia', lat: 40.270, lon: 18.054 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

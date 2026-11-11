@@ -943,6 +943,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Un vino con il nome del paese", testo: "Quando il nome del paese è anche il nome del vino, il racconto è già a metà. Mostriamo vigne, cantina e persone con foto e video veri, curiamo etichette, sito e social, e prepariamo campagne per la vendita diretta, l'enoturismo e gli ordini online." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Copertino", provincia: "provincia di Lecce",
+    contesto: "Copertino è conosciuta per il Castello, uno dei più grandi del Salento, e per San Giuseppe da Copertino, il santo protettore degli studenti, che porta in città pellegrini tutto l'anno. È un centro vivace a pochi chilometri da Lecce e dalla costa di Porto Cesareo.",
+    settori: ["ristoranti e bar", "negozi del centro", "strutture ricettive e servizi"],
+    faq: { q: "Fate contenuti per attività che lavorano con i turisti?", a: "Sì: foto e video del posto, scheda Google, social e campagne per chi sta arrivando in zona." },
+    description: "Agenzia di comunicazione a Copertino: social, foto, video, siti e campagne per negozi, ristoranti e attività del centro. Preventivo gratuito.",
+    intro: "Copertino è la città di San Giuseppe e del suo castello, nel nord del Salento. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e attività, da Castellaneta.",
+    focus: { titolo: "Farsi trovare da chi arriva in città", testo: "Tra pellegrini, visitatori del castello e chi passa verso il mare, Copertino ha un pubblico che cambia tutto l'anno. Per un ristorante o un negozio servono una scheda Google curata, foto vere e social che dicano subito cosa offri e dove sei. Li prepariamo insieme a campagne per chi è già in zona." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
