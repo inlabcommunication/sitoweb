@@ -998,6 +998,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Dall'uliveto al cliente finale", testo: "Un olio di Bitonto ha già un nome che conta. Lo rafforziamo con foto e video della raccolta e della molitura, un sito con vendita online o ordini diretti, social costanti e campagne per chi cerca olio pugliese di qualità." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Corato", provincia: "provincia di Bari",
+    contesto: "Corato si trova sulla Murgia nord-barese, tra Bari e Andria. La varietà di oliva Coratina prende il nome dalla città, e intorno all'olio e all'agricoltura lavorano molte aziende, accanto a commercio e imprese.",
+    settori: ["produttori di olio e aziende agricole", "imprese e aziende", "negozi e servizi"],
+    faq: { q: "Fate branding per aziende agricole?", a: "Sì: nome, logo, etichette e identità, poi applicati a sito, social e materiali." },
+    description: "Agenzia di comunicazione a Corato: social, foto, video, siti e campagne per produttori, aziende, negozi e attività della città. Preventivo gratuito.",
+    intro: "Corato dà il nome alla Coratina, una delle olive più conosciute d'Italia. Seguiamo social, foto, video, sponsorizzate e siti per produttori, aziende e negozi, da Castellaneta.",
+    focus: { titolo: "Un prodotto famoso, un marchio da costruire", testo: "Tutti conoscono la Coratina, ma pochi conoscono il nome di chi la produce. Aiutiamo aziende e produttori di Corato a farsi riconoscere: identità, foto e video veri, sito, social e campagne per vendere in Italia e all'estero." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
