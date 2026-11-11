@@ -142,3 +142,11 @@ In `docs/blog-reports/AAAA-MM-GG.md`:
 4. Decisione: pubblicato / non pubblicato.
 5. Se pubblicato: URL dell'articolo, keyword target, fonti usate.
 6. Prossime opportunità editoriali.
+
+## File generato dalla build (avviso di Sito Inlab, 11/11/2026)
+
+Dopo la PR #119, che aggiunge il blocco "Dal blog" nelle pagine città, `npm run build` rigenera `src/data/blogCityLinks.generated.ts`.
+
+- Questo file è fuori dall'area Blog: **non va mai incluso nei commit**. Lo rigenera la build su Vercel.
+- Se compare modificato, ripristinalo con `git checkout -- src/data/blogCityLinks.generated.ts`.
+- Per i controlli del blog basta `tsc` su `src/data/blogSeed.ts`.
