@@ -33,6 +33,7 @@ import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
 import { CLIENT_SEO } from './data/clientSeo';
 import { MAP_CITIES } from './data/mapCities';
+import { BLOG_CITY_LINKS, BLOG_TITLES } from "./data/blogCityLinks.generated";
 import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
@@ -1680,6 +1681,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </section>
       )}
 
+      <BlogCityLinks city={city}/>
+
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia anche in queste città</p>
@@ -1756,6 +1759,27 @@ const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Pala
 const caseLocations = (cs: any): string[] =>
   Array.isArray(cs?.locations) && cs.locations.length ? cs.locations
     : ((DEFAULT_CASES.find((d: any)=>d.id===cs?.id) as any)?.locations || []);
+
+// "Dal blog" nelle pagine agenzia e gestione social (analisi SEO 08/11, R3): 2-3 articoli
+// scelti a ogni build da scripts/blog-city-links.ts (prima quelli che citano la città o la provincia)
+const BlogCityLinks = ({city}: {city: string}) => {
+  const slugs=(BLOG_CITY_LINKS[city]||[]).filter(s=>BLOG_TITLES[s]);
+  if(slugs.length<2) return null;
+  return (
+    <section style={{padding:"4rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto"}}>
+        <h2 className="section-label" style={{marginBottom:"1.2rem"}}>Dal blog: idee per le attività di {city}</h2>
+        <ul style={{listStyle:"none",padding:0,margin:0,display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:"0 2rem"}}>
+          {slugs.map(s=>(
+            <li key={s} style={{borderBottom:".5px solid var(--b)"}}>
+              <Link to={`/blog/${s}`} className="foot-link" style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,minHeight:44,padding:".9rem 0",fontSize:15,color:"var(--t)",lineHeight:1.5}}>{BLOG_TITLES[s]} <ArrowRight size={14} style={{flexShrink:0,color:"var(--a)"}}/></Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
 // Settori e domanda frequente della città (testi in src/data/cities.ts)
 const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) => (
@@ -1929,6 +1953,8 @@ const PageCittaSEO = ({city, service}) => {
           </div>
         </section>
       )}
+
+      {svc.slug==="gestione-social" && <BlogCityLinks city={cityName}/>}
 
       {/* Other cities */}
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
