@@ -75,6 +75,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Maglie', region: 'Puglia', lat: 40.118, lon: 18.298 },
   { name: 'Mesagne', region: 'Puglia', lat: 40.558, lon: 17.807 },
   { name: 'Carovigno', region: 'Puglia', lat: 40.707, lon: 17.658 },
+  { name: 'Bitonto', region: 'Puglia', lat: 41.109, lon: 16.691 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

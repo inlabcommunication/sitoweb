@@ -987,6 +987,17 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Prenotazioni dirette, non solo dalle piattaforme", testo: "Masserie e B&B vicino a Torre Guaceto lavorano molto con le piattaforme di prenotazione. Con un sito chiaro, foto e video all'altezza e campagne mirate, una parte delle prenotazioni può arrivare direttamente, anche dall'estero. Costruiamo la presenza che serve a farlo." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Bitonto", provincia: "provincia di Bari",
+    contesto: "Bitonto è conosciuta per la Cattedrale romanica e per il centro storico, ed è da secoli una delle capitali dell'olio extravergine pugliese. Molte aziende del territorio vendono in tutta Italia e all'estero.",
+    settori: ["frantoi e produttori di olio", "aziende e imprese", "negozi e attività del centro"],
+    faq: { q: "Potete aiutare un frantoio a vendere online?", a: "Sì: foto dei prodotti, social, e-commerce o catalogo con ordini e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Bitonto: social, foto, video, siti e campagne per frantoi, aziende, negozi e attività del centro. Preventivo gratuito.",
+    intro: "Bitonto è la città dell'olio e della cattedrale romanica, alle porte di Bari. Seguiamo social, foto, video, sponsorizzate e siti per frantoi, aziende, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Dall'uliveto al cliente finale", testo: "Un olio di Bitonto ha già un nome che conta. Lo rafforziamo con foto e video della raccolta e della molitura, un sito con vendita online o ordini diretti, social costanti e campagne per chi cerca olio pugliese di qualità." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
