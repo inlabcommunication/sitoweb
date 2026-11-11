@@ -15,7 +15,9 @@ export type CityInfo = {
   /** Terza domanda (brief SEO 02/10 pomeriggio) */
   faq3?: { q: string; a: string };
   /** Domande in più dopo la terza (brief SEO 03/10 Taranto) */
-  altreFaq?: { q: string; a: string }[];
+  altreFaq?: { q: string; a: string; link?: { testo: string; href: string } }[];
+  /** H1 proprio della pagina agenzia, finisce con "a {città}" (analisi SEO 08/11, R4 Ferrara) */
+  h1?: string;
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   /** `link`: collegamento in fondo alla sezione (es. Castellaneta Marina → la sua pagina, decisione SEO 10/10) */
   /** `link.href` esterno (https://…): si apre in una nuova scheda (es. Google Maps, brief SEO 03/11).
@@ -388,7 +390,11 @@ export const CITY_INFO: CityInfo[] = [
     contesto: "Ferrara è la città degli Estensi, con il Castello Estense, le Mura e un centro rinascimentale patrimonio UNESCO. È una città di botteghe, locali e attività storiche, dove la qualità si racconta bene con immagini curate.",
     settori: ["pasticcerie e botteghe", "locali e ristoranti", "attività storiche del centro"],
     faq: { q: "Seguite attività di Ferrara anche se siete in Puglia?", a: "Sì: per la Pasticceria Naturale gestiamo i social a distanza e facciamo foto e video sul posto." },
-    description: "Agenzia di comunicazione per attività di Ferrara: gestione social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    // analisi SEO 08/11, R4: "studio di comunicazione ferrara"
+    title: "Agenzia e studio di comunicazione a Ferrara | InLab",
+    h1: "Agenzia e studio di comunicazione a Ferrara",
+    description: "Studio di comunicazione per attività di Ferrara: social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    altreFaq: [{ q: "Siete uno studio di comunicazione o un'agenzia?", a: "Siamo uno studio di comunicazione e marketing: seguiamo social, foto, video, siti e campagne. A Ferrara lavoriamo con attività come Pasticceria Naturale.", link: { testo: "Pasticceria Naturale", href: "/cliente/pasticceria-naturale" } }],
     intro: "A Ferrara gestiamo i social della Pasticceria Naturale: strategia, idee e testi nostri, foto e video realizzati sul posto. Seguiamo attività di Ferrara con lo stesso metodo che usiamo in Puglia, lavorando a distanza e venendo di persona per le riprese.",
     focus: { titolo: "Seguire un'attività a distanza, senza perdere il contatto", testo: "Con la Pasticceria Naturale lavoriamo così: strategia e piano editoriale condivisi, testi e idee scritti da noi, foto e video girati sul posto. Il resto si fa a distanza, con un contatto diretto e report chiari. Per un'attività di Ferrara significa avere un social media manager dedicato, non un account gestito in serie." },
     servizi: { 'gestione-social': "Gestione social a Ferrara come per la Pasticceria Naturale: strategia, testi, idee per i contenuti e foto e video realizzati sul posto." },

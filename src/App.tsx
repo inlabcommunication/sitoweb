@@ -1539,7 +1539,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
           <p className="section-label">Agenzia {aCity(city)} — {provincia}</p>
           <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>
-            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(city)}</span>
+            {info?.h1?.endsWith(aCity(city)) ? info.h1.slice(0,-aCity(city).length).trim() : "Agenzia di comunicazione e marketing"}<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(city)}</span>
           </h1>
           <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
             {info?.intro ? <IntroText text={info.intro} link={info.introLink}/> : isHome
@@ -1791,7 +1791,7 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
         {(info.altreFaq||[]).map(f=>(
           <React.Fragment key={f.q}>
             <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{f.q}</h3>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{f.a}</p>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}><IntroText text={f.a} link={f.link}/></p>
           </React.Fragment>
         ))}
       </div>
