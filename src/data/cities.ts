@@ -921,6 +921,17 @@ export const CITY_INFO: CityInfo[] = [
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per studi, imprese e negozi di Potenza: contenuti chiari, LinkedIn e campagne mirate." },
   },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Leporano", provincia: "provincia di Taranto",
+    contesto: "Leporano ha una costa frequentata d'estate dai tarantini e dai turisti, con le spiagge di Gandoli e Saturo, e il Parco archeologico di Saturo, dove sorgeva l'antica Satyrion. Accanto al turismo ci sono attività che lavorano tutto l'anno con Taranto e i paesi vicini.",
+    settori: ["lidi e strutture balneari", "ristoranti e locali sul mare", "attività e servizi del paese"],
+    faq: { q: "Le sponsorizzate possono raggiungere chi abita a Taranto?", a: "Sì: scegliamo zona e raggio in base a da dove arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Leporano: social, foto, video e campagne per lidi, ristoranti e attività di Saturo e Gandoli. Da Castellaneta, preventivo gratuito.",
+    intro: "Leporano è sulla costa ionica, a sud di Taranto, tra le spiagge di Gandoli e Saturo. Seguiamo social, foto, video, sponsorizzate e siti per lidi, ristoranti e attività del paese, da Castellaneta.",
+    focus: { titolo: "Il mare vicino alla città", testo: "Chi vive a Taranto sceglie spesso Leporano per il mare e per una cena fuori. Per un lido o un ristorante conta farsi trovare su Google Maps, avere foto vere del posto e social aggiornati quando le persone decidono dove andare. Prepariamo contenuti e sponsorizzate mirate a chi abita entro mezz'ora di strada." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
