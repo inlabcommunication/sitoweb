@@ -232,7 +232,7 @@ export const ClientsEditor = ({ content, set }: Props) => {
             if (!confirm(msg)) return;
             const a = clone(items); const [x] = a.splice(i, 1);
             set('clients.items', a);
-            set('otherClients.items', [...clone(others), { ...x, published: true }]);
+            set('otherClients.items', [...clone(others), { ...x, id, published: true }]);
             if (homeIds) set('clients.homeIds', homeIds.filter((h) => h !== id));
           }} />
           <MoveBtn label="Crea caso studio da questo cliente" onClick={() => {
@@ -478,7 +478,7 @@ export const OtherClientsEditor = ({ content, set }: Props) => {
               // Home invariata: se oggi la home mostra tutti i loghi (nessuna scelta salvata), si salva
               // quella scelta così com'è, prima di aggiungere il nuovo cliente, che quindi non entra in home
               if (!homeIds) set('clients.homeIds', main.filter((m: any) => m.logo).map((m: any, j: number) => getClientId(m, j)));
-              set('clients.items', [...clone(main), x]);
+              set('clients.items', [...clone(main), { ...x, id }]);
             }} />
             <MoveBtn label="Crea caso studio da questo cliente" onClick={() => {
               const caseId = uniqueId(id, new Set(cases.map((x: any) => x.id)));
