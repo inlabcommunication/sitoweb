@@ -72,5 +72,8 @@ Inoltre: risposte alle 30 domande finali, con prove, limiti, decisione e risulta
   - prima/dopo;
   - proposta per il mese successivo.
 
+## Decisioni di Nicola
+- **12/11:** il servizio prioritario è la **GESTIONE SOCIAL**. Contenuti, pagine, CTA e misure partono da lì. Piano: `docs/seo/brief/2026-11-12-focus-gestione-social.md`.
+
 ## Stato
 - **12/11:** audit iniziale e prime 10 priorità in `docs/seo/audit/2026-11-12-audit-iniziale-prime-10-priorita.md`.
