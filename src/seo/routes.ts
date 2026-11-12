@@ -429,7 +429,10 @@ export const getSeo = (rawPath: string): Seo => {
 
   const svc = SERVICES_SEO.find((s) => '/' + s.slug === path);
   if (svc) {
-    return page(path, withBrand(`${svc.label} per aziende in Puglia`), svc.description, {
+    // Gestione social: servizio prioritario, title e description del brief SEO 12/11 (GS-1)
+    const gs = svc.slug === 'gestione-social';
+    return page(path, gs ? 'Gestione social media per aziende in Puglia | InLab' : withBrand(`${svc.label} per aziende in Puglia`),
+      gs ? 'Gestione social per aziende: strategia, piano editoriale, reel, foto e community su Instagram, Facebook e TikTok. Agenzia a Castellaneta, preventivo gratuito.' : svc.description, {
       sitemap: { priority: 0.9, changefreq: 'monthly' },
       jsonLd: [{
         '@context': 'https://schema.org', '@type': 'Service', name: svc.label, serviceType: svc.keyword,
@@ -450,7 +453,14 @@ export const getSeo = (rawPath: string): Seo => {
       ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';
       // testi propri della pagina, se il brief SEO li prevede (src/data/cities.ts → paginaServizio)
       const own = cityInfo(city)?.paginaServizio?.[s.slug];
-      return page(path, own?.title || withBrand(`${s.label} ${aCity(city)}`), own?.description || desc, {
+      // Gestione social (brief SEO 12/11, GS-1): "Gestione social media a {Città} | InLab",
+      // senza " | InLab" se supera i 60 caratteri; Taranto con title e description propri
+      const gsTitle = (c: string) => c === 'Taranto' ? 'Gestione social media a Taranto | Agenzia InLab'
+        : [`Gestione social media ${aCity(c)} | InLab`, `Gestione social media ${aCity(c)}`].find((t) => t.length <= 60) || `Gestione social media ${aCity(c)}`;
+      const gsTaranto = 'Gestione social media per aziende di Taranto: piano editoriale, reel, foto, community e sponsorizzate. Agenzia da Castellaneta, preventivo gratuito.';
+      const isGs = s.slug === 'gestione-social';
+      return page(path, isGs ? gsTitle(city) : own?.title || withBrand(`${s.label} ${aCity(city)}`),
+        isGs && city === 'Taranto' ? gsTaranto : own?.description || desc, {
         ...(SERVICE_CITY_NOINDEX.has(path) ? { noindex: true } : { sitemap: { priority: 0.6, changefreq: 'monthly' } }),
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} ${aCity(city)}`, serviceType: s.keyword,
