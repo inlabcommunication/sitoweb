@@ -75,5 +75,10 @@ Inoltre: risposte alle 30 domande finali, con prove, limiti, decisione e risulta
 ## Decisioni di Nicola
 - **12/11:** il servizio prioritario è la **GESTIONE SOCIAL**. Contenuti, pagine, CTA e misure partono da lì. Piano: `docs/seo/brief/2026-11-12-focus-gestione-social.md`.
 
+- **12/11, fonte dei clienti (Nicola):** oggi i lavori arrivano soprattutto dal **passaparola** e da chi **vede i lavori sui social dei clienti**.
+  - **Conseguenza:** il sito deve convertire chi arriva cercando il nome "InLab", o il nome di un cliente + chi ne cura i social.
+  - Servono anche l'attribuzione dei social dei clienti (tag e "social a cura di") e la misura con UTM del link in bio.
+  - La SEO locale aggiunge un canale nuovo, ma non sostituisce questi due.
+
 ## Stato
 - **12/11:** audit iniziale e prime 10 priorità in `docs/seo/audit/2026-11-12-audit-iniziale-prime-10-priorita.md`.
