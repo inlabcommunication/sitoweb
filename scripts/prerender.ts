@@ -131,11 +131,13 @@ const failBuild = (what: string, msg: string) => {
 // Contenuti salvati dalla dashboard (documento pubblico app/site_content):
 // dalla versione 3 elenco clienti e casi studio salvati sono quelli definitivi.
 async function fetchSiteContent() {
+  // Senza ?key=: il documento è pubblico e si legge anche senza chiave. Con la chiave, una
+  // restrizione per HTTP referrer (SECURITY.md punto 6) farebbe fallire il build, perché dal
+  // server di Vercel non parte nessun Referer (segnalazione analista 12/11).
   const project = process.env.VITE_FIREBASE_PROJECT_ID;
-  const key = process.env.VITE_FIREBASE_API_KEY;
-  if (!project || !key) return null;
+  if (!project) return null;
   try {
-    const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents/app/site_content?key=${encodeURIComponent(key)}`, { signal: AbortSignal.timeout(10000) });
+    const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents/app/site_content`, { signal: AbortSignal.timeout(10000) });
     if (r.status === 404) return null;
     if (!r.ok) throw new Error(`HTTP ${r.status}`);
     const doc = (await r.json()) as any;
@@ -148,11 +150,11 @@ async function fetchSiteContent() {
 }
 
 async function fetchRemotePosts() {
+  // Senza ?key=, come fetchSiteContent: gli articoli pubblicati si leggono senza chiave
   const project = process.env.VITE_FIREBASE_PROJECT_ID;
-  const key = process.env.VITE_FIREBASE_API_KEY;
-  if (!project || !key) return [];
+  if (!project) return [];
   try {
-    const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents:runQuery?key=${encodeURIComponent(key)}`, {
+    const r = await fetch(`https://firestore.googleapis.com/v1/projects/${encodeURIComponent(project)}/databases/(default)/documents:runQuery`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ structuredQuery: {

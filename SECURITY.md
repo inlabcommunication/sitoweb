@@ -40,6 +40,7 @@ Firebase Console → Authentication → Settings → **User actions** → disatt
 
 ### 6. Limita la chiave pubblica di Firebase
 Google Cloud Console → APIs & Services → Credentials → chiave "Browser key" → **Application restrictions: HTTP referrers** → aggiungi il tuo dominio (e `*.vercel.app` se usi le anteprime).
+Prima di farlo, il build deve leggere Firestore senza chiave (il server di Vercel non manda il Referer e con la restrizione riceverebbe 403): fatto in `scripts/prerender.ts` il 12/11 (lettura di `app/site_content` e degli articoli pubblicati senza `?key=`). Fai questo punto solo quando quella modifica è online.
 
 ### 7. Cloudinary
 1. Settings → Upload → preset `ml_default` → **Signing mode: Signed**.
