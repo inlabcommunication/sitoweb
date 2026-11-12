@@ -196,11 +196,13 @@ export const ClientsEditor = ({ content, set }: Props) => {
             const id = getClientId(c, i);
             const others = otherItemsOf(content);
             if (others.some((x: any, j: number) => getClientId(x, j) === id)) { alert(`In "Collaborazioni su misura" c'è già un cliente con l'indirizzo /cliente/${id}: cambia prima l'indirizzo di uno dei due.`); return; }
+            // La home non deve cambiare (regola di Nicola, Direttore 12/11): un cliente il cui logo è
+            // nella striscia della home per ora non si sposta (la striscia mostra solo i Progetti raccontati)
             const inHome = !!c.logo && (homeIds ? homeIds.includes(id) : true);
+            if (inHome) { alert(`Il logo di "${c.name}" è nella striscia della home: spostandolo la home cambierebbe. Per ora non si può spostare (la decisione sulla home è in attesa di Nicola). ${homeIds ? 'Puoi togliere la spunta in "Loghi in home" e poi spostarlo.' : ''}`.trim()); return; }
             const refs = examplesUsing(content, id);
             const msg = [`Spostare "${c.name}" in "Collaborazioni su misura"?`, '',
               `- Va in fondo a quella sezione con tutti i suoi dati; la pagina /cliente/${id} resta uguale e resta su Google.`,
-              ...(inHome ? ['- Il suo logo non comparirà più nella striscia della home (la home mostra solo i Progetti raccontati).'] : []),
               ...(refs.length ? [`- È negli esempi di ${refs.join(', ')}: lì non comparirà più finché non cambi l'esempio.`] : []),
               '', 'La modifica va online quando premi Salva.'].join('\n');
             if (!confirm(msg)) return;
@@ -427,11 +429,14 @@ export const OtherClientsEditor = ({ content, set }: Props) => {
               const msg = [`Spostare "${c.name}" in "Progetti raccontati"?`, '',
                 `- Va in fondo a quella sezione con tutti i suoi dati; la pagina /cliente/${id} resta uguale.`,
                 ...(!live ? ['- Oggi è una bozza fuori da Google: nei Progetti raccontati la scheda è sempre pubblica e va su Google.' + (ready ? '' : ' Manca anche il riassunto: compilalo prima di salvare.')] : []),
-                ...(c.logo && !homeIds ? ['- Il suo logo comparirà nella striscia della home (oggi la home mostra tutti i loghi dei Progetti raccontati).'] : []),
+                '- La striscia dei loghi in home resta com\'è oggi.',
                 '', 'La modifica va online quando premi Salva.'].join('\n');
               if (!confirm(msg)) return;
               const a = clone(items); const [x] = a.splice(i, 1);
               set('otherClients.items', a);
+              // Home invariata: se oggi la home mostra tutti i loghi (nessuna scelta salvata), si salva
+              // quella scelta così com'è, prima di aggiungere il nuovo cliente, che quindi non entra in home
+              if (!homeIds) set('clients.homeIds', main.filter((m: any) => m.logo).map((m: any, j: number) => getClientId(m, j)));
               set('clients.items', [...clone(main), x]);
             }} />
             <SectionTitle>Pubblicazione</SectionTitle>
