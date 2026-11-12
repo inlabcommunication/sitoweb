@@ -41,7 +41,13 @@ export type CaseStudy = {
   /** SEO */
   seoTitle?: string;
   seoDescription?: string;
+  /** false = bozza: pagina noindex, fuori da elenchi, pagine città e sitemap. I casi già
+   *  salvati senza questo campo restano pubblicati (richiesta Direttore 12/11). */
+  published?: boolean;
 };
+
+/** Caso studio da mostrare sul sito: tutti tranne le bozze (published === false). */
+export const isPublishedCase = (c: any): boolean => !!c && c.published !== false;
 
 const LUMINA = 'https://luminaricciardi.it/';
 

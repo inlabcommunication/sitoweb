@@ -136,6 +136,7 @@ export const registerContent = (content: any) => {
   if (Array.isArray(content?.otherClients?.items)) siteOtherClients = content.otherClients.items;
 };
 const caseSeo = (c: any) => ({
+  draft: c.published === false,
   id: String(c.id),
   title: c.seoTitle || `${c.client}: ${c.title}`,
   description: c.seoDescription || c.problem || c.hero?.intro || c.title || '',
@@ -376,7 +377,8 @@ export const listRoutes = (): string[] => [
   ...SERVICES_SEO.map((s) => '/' + s.slug),
   ...SERVICES_SEO.flatMap((s) => serviceCities(s.slug).map((c) => `/${s.slug}-${citySlug(c)}`)),
   ...AGENCY_CITIES.map(agencyPath),
-  ...cases().map((c) => '/casi-studio/' + c.id),
+  // le bozze non hanno pagina (come un caso che non esiste): niente HTML statico né sitemap
+  ...cases().filter((c) => !c.draft).map((c) => '/casi-studio/' + c.id),
   ...clients().map((c) => '/cliente/' + c.id),
   '/blog', '/privacy',
   ...AUTHORS.map((a) => authorPath(a.slug)),
@@ -497,7 +499,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
 
   if (path.startsWith('/casi-studio/')) {
-    const cs = cases().find((c) => path === '/casi-studio/' + c.id);
+    const cs = cases().find((c) => !c.draft && path === '/casi-studio/' + c.id);
     if (cs) {
       return page(path, withBrand(cs.title), cs.description, {
         sitemap: { priority: 0.7, changefreq: 'monthly' },
