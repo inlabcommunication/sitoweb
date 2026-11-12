@@ -121,6 +121,7 @@ export const Chatbot = () => {
         body: JSON.stringify({
           messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
           sessionId: getSessionId(),
+          page: window.location.pathname,
         }),
       });
 

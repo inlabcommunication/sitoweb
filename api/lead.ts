@@ -6,6 +6,7 @@
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
+import { cleanPath, notifyLead } from "./_lib/notify";
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
@@ -57,6 +58,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     company: str(b.company, 120) || null,
     service: str(b.service, 80),
     message: str(b.message, 3000),
+    page: cleanPath(b.page),
   };
   if (!lead.name || !lead.message || !EMAIL_RE.test(lead.email) || b.privacy !== true) {
     return res.status(400).json({ error: "Dati non validi" });
@@ -76,8 +78,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       source: "contact_form",
       status: "new",
       notes: lead.message,
+      page: lead.page,
       created_at: new Date().toISOString(),
     });
+    // Notifica immediata a InLab (P0-1): non blocca né cambia la risposta se fallisce
+    await notifyLead({ source: "contact_form", ...lead });
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error("Lead API error:", e);

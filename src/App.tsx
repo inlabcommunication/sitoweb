@@ -1373,7 +1373,7 @@ const PageContatti = () => {
         body: JSON.stringify({
           name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
           service: form.servizio, message: form.msg, privacy: form.privacy,
-          website: honeypot, formToken: await tokenForSubmit(),
+          website: honeypot, formToken: await tokenForSubmit(), page: window.location.pathname,
         }),
       });
       if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
