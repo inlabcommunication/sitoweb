@@ -101,7 +101,10 @@ export const Leads = () => {
   const exportCsv = () => {
     const rows = [['Email', 'Nome', 'Telefono', 'Intento', 'Stato', 'Data', 'Fonte', 'Prima pagina', 'Pagina del contatto', 'Valore €', 'Note']];
     leads.forEach((l) => rows.push([l.email ?? '', l.name ?? '', l.phone ?? '', l.intent ?? '', STATUS_LABEL[statusOf(l)], new Date(l.created_at).toLocaleString('it'), l.fonte ?? '', l.attribution?.landing ?? '', l.page ?? l.attribution?.page ?? '', l.value_eur != null ? String(l.value_eur) : '', (l.notes ?? '').replace(/\n/g, ' ')]));
-    const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+    // Celle che iniziano con = + - @ tab o a capo: apostrofo davanti, così Excel/Sheets non le
+    // eseguono come formule (i nomi arrivano dal modulo pubblico; proposta analista 12/11)
+    const safe = (c: string) => (/^[=+\-@\t\r]/.test(c) ? `'${c}` : c);
+    const csv = rows.map((r) => r.map((c) => `"${safe(String(c)).replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a'); a.href = url; a.download = `inlab-leads-${new Date().toISOString().split('T')[0]}.csv`; a.click();
