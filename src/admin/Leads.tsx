@@ -16,7 +16,7 @@ type Lead = {
   status: Status;
   notes: string | null;
   /** da dove arriva la visita (P1-2, dal 12/11): prima pagina, provenienza, UTM */
-  attribution?: { landing: string | null; page: string | null; referrer: string | null; utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; click: string | null } | null;
+  attribution?: { landing: string | null; page: string | null; referrer: string | null; utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; click: string | null; servizio?: string | null } | null;
   fonte?: string | null;
   page?: string | null;
   /** valore del contratto in euro: solo interno, mai pubblicato */
@@ -203,6 +203,7 @@ export const Leads = () => {
                   <Field icon={<Tag size={14} />} label="Prima pagina vista">{pageUrl(selected.attribution.landing)}</Field>
                   <Field icon={<Tag size={14} />} label="Pagina del contatto">{pageUrl(selected.page || selected.attribution.page)}</Field>
                   {selected.attribution.referrer && <Field icon={<Tag size={14} />} label="Sito di provenienza">{selected.attribution.referrer}</Field>}
+                  {selected.attribution.servizio && <Field icon={<Tag size={14} />} label="Arrivato dal link del servizio">{selected.attribution.servizio}</Field>}
                 </> : selected.page ? <Field icon={<Tag size={14} />} label="Pagina del contatto">{selected.page}</Field> : null}
                 <div>
                   <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 8 }}>Stato</div>

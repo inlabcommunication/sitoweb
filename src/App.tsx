@@ -457,6 +457,8 @@ const DoveLavoriamo = ({slug}: {slug: string}) => (
   </section>
 );
 
+// Link ai contatti dalle pagine gestione social: il modulo preseleziona il servizio (brief SEO 12/11, GS-2)
+const CONTACT_GS = "/contatti?servizio=gestione-social";
 const ServiceCTA = ({title="Vuoi questo servizio?",sub="Parliamo del tuo progetto senza impegno.",btn="Richiedi un preventivo",to="/contatti"}) => {
   const {go}=useRouter();
   return (
@@ -847,7 +849,7 @@ const PageGestioneSocial = () => (
       h1b="IL TUO BRAND"
       italic="con la giusta comunicazione social."
       sub="Non pubblichiamo solo post. Costruiamo una presenza digitale strategica che trasforma follower in clienti reali."
-      cta1="Richiedi un preventivo" cta1to="/contatti"
+      cta1="Richiedi un preventivo" cta1to={CONTACT_GS}
       cta2="Vedi i risultati" cta2to="/clienti"
     />
     <Marquee items={["Analisi","✦","Strategia","✦","Contenuti","✦","Pubblicazione","✦","Ottimizzazione","✦","Crescita","✦"]}/>
@@ -900,7 +902,7 @@ const PageGestioneSocial = () => (
  
     <ServiceExamples slug="gestione-social"/>
     <DoveLavoriamo slug="gestione-social"/>
-    <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito"/>
+    <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito" to={CONTACT_GS}/>
   </>
 );
  
@@ -1340,6 +1342,11 @@ const PageChiSiamo = () => {
 const PageContatti = () => {
   const contact = ((useContent() as any).contact) || {};
   const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
+  // Arrivo da una pagina gestione social (?servizio=gestione-social): servizio preselezionato,
+  // sempre modificabile. Dopo il primo render, così l'HTML statico resta uguale (GS-2)
+  useEffect(()=>{
+    if(new URLSearchParams(window.location.search).get("servizio")==="gestione-social") setForm(f=>f.servizio?f:{...f,servizio:"Gestione social"});
+  },[]);
   // Anti-bot: campo nascosto (le persone non lo vedono) e ora di apertura del modulo
   const [honeypot,setHoneypot]=useState("");
   // Token firmato dal server all'apertura del modulo (anti-bot sul tempo di compilazione)
@@ -1868,7 +1875,7 @@ const PageCittaSEO = ({city, service}) => {
             {info?.servizi?.[svc.slug] ? <IntroText text={info.servizi[svc.slug]} link={info.introLink}/> : `InLab Communication segue ${svc.label} per attività di ${cityName} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-            <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
+            <button className="btn btn-p" onClick={()=>go(svc.slug==="gestione-social"?CONTACT_GS:"/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
             <button className="btn btn-g" onClick={()=>go("/"+svc.slug)}>Scopri il servizio</button>
           </div>
         </div>
@@ -1995,7 +2002,7 @@ const PageCittaSEO = ({city, service}) => {
           </div>
         </section>
       ) : <ServiceExamples slug={svc.slug}/>)}
-      <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
+      <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita" to={svc.slug==="gestione-social"?CONTACT_GS:"/contatti"}/>
     </>
   );
 };

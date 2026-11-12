@@ -10,9 +10,11 @@ export type Attribution = {
   utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; utm_term: string | null; utm_content: string | null;
   click: 'gclid' | 'fbclid' | null;
   page: string;
+  /** servizio passato dal link verso i contatti (es. ?servizio=gestione-social, GS-2) */
+  servizio: string | null;
 };
 
-let first: Omit<Attribution, 'page'> | null = null;
+let first: Omit<Attribution, 'page' | 'servizio'> | null = null;
 
 /** Da chiamare all'avvio, prima che il sito cambi pagina. */
 export const captureAttribution = () => {
@@ -36,5 +38,6 @@ export const captureAttribution = () => {
 export const getAttribution = (): Attribution | null => {
   if (typeof window === 'undefined') return null;
   captureAttribution();
-  return { ...first!, page: window.location.pathname };
+  const servizio = (new URLSearchParams(window.location.search).get('servizio') || '').replace(/[^a-z0-9-]/g, '').slice(0, 40) || null;
+  return { ...first!, page: window.location.pathname, servizio };
 };

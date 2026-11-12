@@ -9,6 +9,8 @@ export type LeadAttribution = {
   landing: string | null; page: string | null; referrer: string | null;
   utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; utm_term: string | null; utm_content: string | null;
   click: "gclid" | "fbclid" | null;
+  /** servizio dal link verso i contatti, es. "gestione-social" (GS-2) */
+  servizio: string | null;
 };
 
 const utm = (v: unknown) => (typeof v === "string" ? v.replace(/[^\p{L}\p{N} ._+%-]/gu, "").trim().slice(0, 100) : "") || null;
@@ -21,6 +23,7 @@ export const cleanAttribution = (a: any): LeadAttribution | null => {
     utm_source: utm(a.utm_source), utm_medium: utm(a.utm_medium), utm_campaign: utm(a.utm_campaign),
     utm_term: utm(a.utm_term), utm_content: utm(a.utm_content),
     click: a.click === "gclid" || a.click === "fbclid" ? a.click : null,
+    servizio: typeof a.servizio === "string" && /^[a-z0-9-]{1,40}$/.test(a.servizio) ? a.servizio : null,
   };
 };
 
