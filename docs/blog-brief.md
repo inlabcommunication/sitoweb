@@ -142,3 +142,24 @@ In `docs/blog-reports/AAAA-MM-GG.md`:
 4. Decisione: pubblicato / non pubblicato.
 5. Se pubblicato: URL dell'articolo, keyword target, fonti usate.
 6. Prossime opportunità editoriali.
+
+## File generato dalla build (avviso di Sito Inlab, 11/11/2026)
+
+Dopo la PR #119, che aggiunge il blocco "Dal blog" nelle pagine città, `npm run build` rigenera `src/data/blogCityLinks.generated.ts`.
+
+- Questo file è fuori dall'area Blog: **non va mai incluso nei commit**. Lo rigenera la build su Vercel.
+- Se compare modificato, ripristinalo con `git checkout -- src/data/blogCityLinks.generated.ts`.
+- Per i controlli del blog basta `tsc` su `src/data/blogSeed.ts`.
+
+## Contenuti non ripetitivi (richiesta di Nicola, 12/11/2026)
+
+Prima di ogni PR, misura quanto il nuovo articolo somiglia agli altri:
+- confronta le sequenze di 6 parole di ogni coppia di articoli e bozze;
+- se una coppia supera il **5%** di testo in comune, riscrivi le frasi che si ripetono.
+
+Regole di scrittura:
+- **Frasi d'apertura e di chiusura:** ogni articolo ha le sue. Non riusare "In questo articolo non trovi cifre…", "Confronta sempre le voci incluse…" e simili.
+- **Invito finale:** la frase "raccontaci la tua attività: in 24 ore ti diciamo da dove partiremmo" è già in 12 articoli. Nei nuovi va scritta in modo diverso e legata al tema. Restano fissi solo il link a /contatti e "entro 24 ore".
+- **FAQ:** le domande non si ripetono tra un articolo e l'altro.
+- **Argomenti:** un articolo nuovo deve rispondere a una ricerca diversa da quelle già coperte. Se l'argomento è già trattato, si aggiorna l'articolo esistente invece di scriverne un altro.
+- **Esempi e clienti:** ogni articolo porta un esempio concreto suo. Si varia il cliente citato quando è possibile.
