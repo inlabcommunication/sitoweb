@@ -7,6 +7,8 @@ import { BLOCK_LABELS, emptyBlock, type CaseBlock } from '../data/caseStudies';
 import { SERVICES_SEO } from '../seo/routes';
 import { ReelsList } from './ReelCoverImport';
 import { getClientId } from '../lib/clientUtils';
+import { SERVICE_EXAMPLES } from '../data/serviceExamples';
+import { OTHER_CLIENTS_DEFAULT } from '../data/otherClients';
 // Durante la digitazione: minuscole, niente spazi o accenti (i trattini finali restano)
 const slugify = (v: string) => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').slice(0, 80);
 
@@ -22,6 +24,21 @@ const moved = <T,>(arr: T[], i: number, d: number) => {
   [a[i], a[j]] = [a[j], a[i]];
   return a;
 };
+
+// ── Sposta cliente tra "Progetti raccontati" e "Collaborazioni su misura" (richiesta di
+// Nicola tramite il Direttore, 12/11). Stessi campi, stesso indirizzo /cliente/{id}: si sposta
+// la scheda intera, in fondo alla sezione di destinazione, dopo una conferma. Va online con Salva.
+const otherItemsOf = (content: any): any[] => content.otherClients?.items ?? OTHER_CLIENTS_DEFAULT.items;
+/** Pagine servizio i cui "esempi" mostrano questo cliente (leggono solo i Progetti raccontati). */
+const examplesUsing = (content: any, id: string): string[] => {
+  const all: Record<string, any[]> = content.serviceExamples || SERVICE_EXAMPLES;
+  return Object.entries(all).filter(([, list]) => (list || []).some((e: any) => e?.kind === 'client' && e.clientId === id)).map(([slug]) => '/' + slug);
+};
+const MoveBtn = ({ label, onClick }: { label: string; onClick: () => void }) => (
+  <button onClick={onClick} style={{ margin: '4px 0 12px', padding: '7px 12px', background: 'rgba(205,178,255,0.06)', border: '.5px solid #cdb2ff44', borderRadius: 8, color: '#cdb2ff', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer' }}>
+    {label}
+  </button>
+);
 
 const Select = ({ label, value, onChange, options, hint }: { label: string; value: string; onChange: (v: string) => void; options: [string, string][]; hint?: string }) => (
   <div style={{ marginBottom: 12 }}>
@@ -175,6 +192,23 @@ export const ClientsEditor = ({ content, set }: Props) => {
           onUp={i > 0 ? () => set('clients.items', moved(items, i, -1)) : undefined}
           onDown={i < items.length - 1 ? () => set('clients.items', moved(items, i, 1)) : undefined}
           onDelete={() => { const a = clone(items); a.splice(i, 1); set('clients.items', a); }}>
+          <MoveBtn label='Sposta in "Collaborazioni su misura"' onClick={() => {
+            const id = getClientId(c, i);
+            const others = otherItemsOf(content);
+            if (others.some((x: any, j: number) => getClientId(x, j) === id)) { alert(`In "Collaborazioni su misura" c'è già un cliente con l'indirizzo /cliente/${id}: cambia prima l'indirizzo di uno dei due.`); return; }
+            const inHome = !!c.logo && (homeIds ? homeIds.includes(id) : true);
+            const refs = examplesUsing(content, id);
+            const msg = [`Spostare "${c.name}" in "Collaborazioni su misura"?`, '',
+              `- Va in fondo a quella sezione con tutti i suoi dati; la pagina /cliente/${id} resta uguale e resta su Google.`,
+              ...(inHome ? ['- Il suo logo non comparirà più nella striscia della home (la home mostra solo i Progetti raccontati).'] : []),
+              ...(refs.length ? [`- È negli esempi di ${refs.join(', ')}: lì non comparirà più finché non cambi l'esempio.`] : []),
+              '', 'La modifica va online quando premi Salva.'].join('\n');
+            if (!confirm(msg)) return;
+            const a = clone(items); const [x] = a.splice(i, 1);
+            set('clients.items', a);
+            set('otherClients.items', [...clone(others), { ...x, published: true }]);
+            if (homeIds) set('clients.homeIds', homeIds.filter((h) => h !== id));
+          }} />
           <ClientFields c={c} cases={cases} patch={(o) => patch(i, o)} />
         </CardBlock>
       ))}
@@ -386,6 +420,20 @@ export const OtherClientsEditor = ({ content, set }: Props) => {
             onUp={i > 0 ? () => set('otherClients.items', moved(items, i, -1)) : undefined}
             onDown={i < items.length - 1 ? () => set('otherClients.items', moved(items, i, 1)) : undefined}
             onDelete={() => { const a = clone(items); a.splice(i, 1); set('otherClients.items', a); }}>
+            <MoveBtn label='Sposta in "Progetti raccontati"' onClick={() => {
+              const main: any[] = content.clients?.items || [];
+              if (clash) { alert(`In "Progetti raccontati" c'è già un cliente con l'indirizzo /cliente/${id}: cambia prima l'indirizzo di uno dei due.`); return; }
+              const homeIds: string[] | undefined = Array.isArray(content.clients?.homeIds) ? content.clients.homeIds : undefined;
+              const msg = [`Spostare "${c.name}" in "Progetti raccontati"?`, '',
+                `- Va in fondo a quella sezione con tutti i suoi dati; la pagina /cliente/${id} resta uguale.`,
+                ...(!live ? ['- Oggi è una bozza fuori da Google: nei Progetti raccontati la scheda è sempre pubblica e va su Google.' + (ready ? '' : ' Manca anche il riassunto: compilalo prima di salvare.')] : []),
+                ...(c.logo && !homeIds ? ['- Il suo logo comparirà nella striscia della home (oggi la home mostra tutti i loghi dei Progetti raccontati).'] : []),
+                '', 'La modifica va online quando premi Salva.'].join('\n');
+              if (!confirm(msg)) return;
+              const a = clone(items); const [x] = a.splice(i, 1);
+              set('otherClients.items', a);
+              set('clients.items', [...clone(main), x]);
+            }} />
             <SectionTitle>Pubblicazione</SectionTitle>
             <Check label={`Pubblica la scheda su Google (pagina /cliente/${id})`} value={c.published === true} onChange={(v) => patch(i, { published: v })} />
             <Note>{clash ? `L'indirizzo /cliente/${id} è già usato da un cliente di "Progetti raccontati": cambia "Indirizzo pagina (ID)" qui sotto.`
