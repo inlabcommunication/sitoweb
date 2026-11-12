@@ -10,7 +10,13 @@
  *
  * Non blocca mai il salvataggio del lead: errori e tempi lunghi finiscono nel log,
  * senza dati personali, e la risposta al visitatore non cambia.
+
+ * Tetto giornaliero (proposta analista 12/11): al massimo LEAD_NOTIFY_DAILY_MAX email al
+ * giorno (predefinito 50). Oltre, il lead si salva lo stesso e si salta solo l'email:
+ * un abuso da molti IP non riempie la casella né consuma la quota del fornitore.
  */
+import type { Firestore } from "firebase-admin/firestore";
+import { dailyCap } from "./security";
 
 export type LeadNotice = {
   source: "contact_form" | "chatbot";
@@ -85,3 +91,12 @@ export const cleanPath = (v: unknown): string | null => {
   const p = v.split(/[?#]/)[0].slice(0, 200);
   return /^\/[\w\-./%]*$/.test(p) ? p : null;
 };
+
+/** notifyLead con il tetto giornaliero; se il contatore non risponde, l'email parte comunque. */
+export async function notifyLeadCapped(db: Firestore, l: LeadNotice): Promise<void> {
+  const max = Number(process.env.LEAD_NOTIFY_DAILY_MAX) || 50;
+  let allowed = true;
+  try { allowed = await dailyCap(db, "lead_notify", max); } catch { /* contatore non disponibile */ }
+  if (!allowed) { console.warn(`[lead-notify] tetto giornaliero di ${max} email raggiunto: notifica saltata`); return; }
+  await notifyLead(l);
+}

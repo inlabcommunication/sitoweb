@@ -7,7 +7,7 @@
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import type Anthropic from "@anthropic-ai/sdk";
 import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
-import { cleanPath, notifyLead } from "./_lib/notify";
+import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
 
 // Limiti anti-abuso (sovrascrivibili da variabili d'ambiente su Vercel)
@@ -304,7 +304,7 @@ async function handle(req: VercelRequest, res: VercelResponse) {
           });
           // Notifica immediata (P0-1): solo alla creazione, così ogni conversazione ne manda una
           const said = messages.filter((x) => x.role === "user").slice(-4).map((x) => `- ${x.content}`).join("\n");
-          await notifyLead({ source: "chatbot", name, email, phone, service: `${classification}${tags.length ? `: ${tags.join(", ")}` : ""}`, message: `Ultimi messaggi del visitatore:\n${said}`, page, fonte: fonteOf(attribution), landing: attribution?.landing });
+          await notifyLeadCapped(db, { source: "chatbot", name, email, phone, service: `${classification}${tags.length ? `: ${tags.join(", ")}` : ""}`, message: `Ultimi messaggi del visitatore:\n${said}`, page, fonte: fonteOf(attribution), landing: attribution?.landing });
         }
       } catch (e) {
         console.error("Save lead failed:", e);

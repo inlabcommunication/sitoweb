@@ -6,7 +6,7 @@
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
-import { cleanPath, notifyLead } from "./_lib/notify";
+import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
@@ -88,7 +88,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       created_at: new Date().toISOString(),
     });
     // Notifica immediata a InLab (P0-1): non blocca né cambia la risposta se fallisce
-    await notifyLead({ source: "contact_form", ...lead, fonte, landing: attribution?.landing });
+    await notifyLeadCapped(db, { source: "contact_form", ...lead, fonte, landing: attribution?.landing });
     return res.status(200).json({ ok: true });
   } catch (e) {
     console.error("Lead API error:", e);
