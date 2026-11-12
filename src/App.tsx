@@ -33,6 +33,7 @@ import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
 import { CLIENT_SEO } from './data/clientSeo';
 import { MAP_CITIES } from './data/mapCities';
+import { getAttribution } from './lib/attribution';
 import { BLOG_CITY_LINKS, BLOG_TITLES } from "./data/blogCityLinks.generated";
 import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
@@ -1373,7 +1374,7 @@ const PageContatti = () => {
         body: JSON.stringify({
           name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
           service: form.servizio, message: form.msg, privacy: form.privacy,
-          website: honeypot, formToken: await tokenForSubmit(), page: window.location.pathname,
+          website: honeypot, formToken: await tokenForSubmit(), page: window.location.pathname, attribution: getAttribution(),
         }),
       });
       if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }

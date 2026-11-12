@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import { gaEvent } from '../lib/ga';
+import { getAttribution } from '../lib/attribution';
 
 // ════════════════════════════════════════════════════════════════
 // CHATBOT v3 — Backend serverless /api/chat
@@ -122,6 +123,7 @@ export const Chatbot = () => {
           messages: newMessages.map((m) => ({ role: m.role, content: m.content })),
           sessionId: getSessionId(),
           page: window.location.pathname,
+          attribution: getAttribution(),
         }),
       });
 

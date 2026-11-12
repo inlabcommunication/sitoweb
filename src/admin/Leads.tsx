@@ -13,8 +13,14 @@ type Lead = {
   phone: string | null;
   intent: string | null;
   source: string;
-  status: 'new' | 'contacted' | 'qualified' | 'closed';
+  status: Status;
   notes: string | null;
+  /** da dove arriva la visita (P1-2, dal 12/11): prima pagina, provenienza, UTM */
+  attribution?: { landing: string | null; page: string | null; referrer: string | null; utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; click: string | null } | null;
+  fonte?: string | null;
+  page?: string | null;
+  /** valore del contratto in euro: solo interno, mai pubblicato */
+  value_eur?: number | null;
   conversation: any[] | null;
   created_at: string;
 };
@@ -22,14 +28,20 @@ type Lead = {
 /** Titolo del lead: email, altrimenti telefono o nome (la chat può raccogliere solo il telefono). */
 const leadTitle = (l: Lead) => l.email || l.phone || l.name || 'Contatto senza recapito';
 
-const STATUS_LABEL: Record<Lead['status'], string> = { new: 'Nuovo', contacted: 'Contattato', qualified: 'Qualificato', closed: 'Chiuso' };
-const STATUS_COLOR: Record<Lead['status'], string> = { new: '#cdb2ff', contacted: '#ffd699', qualified: '#a3e4a3', closed: 'rgba(255,255,255,0.3)' };
+// Stato commerciale (richiesta SEO 12/11, P1-2). "contacted" e "closed" sono i vecchi stati:
+// restano leggibili sui lead già salvati, ma non si scelgono più.
+type Status = 'new' | 'qualified' | 'call' | 'quote' | 'won' | 'lost' | 'irrelevant' | 'contacted' | 'closed';
+const STATUSES = ['new', 'qualified', 'call', 'quote', 'won', 'lost', 'irrelevant'] as const;
+const STATUS_LABEL: Record<Status, string> = { new: 'Nuovo', qualified: 'Qualificato', call: 'Call fatta', quote: 'Preventivo inviato', won: 'Vinto', lost: 'Perso', irrelevant: 'Non pertinente', contacted: 'Contattato', closed: 'Chiuso' };
+const STATUS_COLOR: Record<Status, string> = { new: '#cdb2ff', qualified: '#a3e4a3', call: '#9fd3ff', quote: '#ffd699', won: '#5fe08a', lost: '#ff9b9b', irrelevant: 'rgba(255,255,255,0.3)', contacted: '#ffd699', closed: 'rgba(255,255,255,0.3)' };
+const statusOf = (l: Lead): Status => (l.status in STATUS_LABEL ? l.status : 'new');
+const pageUrl = (p?: string | null) => (p ? p : '—');
 
 export const Leads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
   const [selected, setSelected] = useState<Lead | null>(null);
-  const [filter, setFilter] = useState<'all' | Lead['status']>('all');
+  const [filter, setFilter] = useState<'all' | Status>('all');
   const [search, setSearch] = useState('');
   const [loadError, setLoadError] = useState('');
   const [check, setCheck] = useState<{ project?: string; total?: number; last?: { created_at: string; source: string } | null; error?: string } | null>(null);
@@ -87,8 +99,8 @@ export const Leads = () => {
   };
 
   const exportCsv = () => {
-    const rows = [['Email', 'Nome', 'Telefono', 'Intento', 'Stato', 'Data', 'Note']];
-    leads.forEach((l) => rows.push([l.email ?? '', l.name ?? '', l.phone ?? '', l.intent ?? '', STATUS_LABEL[l.status], new Date(l.created_at).toLocaleString('it'), (l.notes ?? '').replace(/\n/g, ' ')]));
+    const rows = [['Email', 'Nome', 'Telefono', 'Intento', 'Stato', 'Data', 'Fonte', 'Prima pagina', 'Pagina del contatto', 'Valore €', 'Note']];
+    leads.forEach((l) => rows.push([l.email ?? '', l.name ?? '', l.phone ?? '', l.intent ?? '', STATUS_LABEL[statusOf(l)], new Date(l.created_at).toLocaleString('it'), l.fonte ?? '', l.attribution?.landing ?? '', l.page ?? l.attribution?.page ?? '', l.value_eur != null ? String(l.value_eur) : '', (l.notes ?? '').replace(/\n/g, ' ')]));
     const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
     const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -97,12 +109,14 @@ export const Leads = () => {
   };
 
   const filtered = leads.filter((l) => {
-    if (filter !== 'all' && l.status !== filter) return false;
+    if (filter !== 'all' && statusOf(l) !== filter) return false;
     if (search) { const q = search.toLowerCase(); if (!(l.email ?? '').toLowerCase().includes(q) && !(l.phone ?? '').includes(q) && !(l.intent ?? '').toLowerCase().includes(q) && !(l.name ?? '').toLowerCase().includes(q)) return false; }
     return true;
   });
 
-  const counts = { all: leads.length, new: leads.filter((l) => l.status === 'new').length, contacted: leads.filter((l) => l.status === 'contacted').length, qualified: leads.filter((l) => l.status === 'qualified').length, closed: leads.filter((l) => l.status === 'closed').length };
+  const counts = Object.fromEntries((Object.keys(STATUS_LABEL) as Status[]).map((s) => [s, leads.filter((l) => statusOf(l) === s).length])) as Record<Status, number>;
+  // vecchi stati nei filtri solo se qualche lead li ha ancora
+  const filterStatuses: Status[] = [...STATUSES, ...(['contacted', 'closed'] as const).filter((s) => counts[s] > 0)];
 
   return (
     <div style={{ padding: '2rem', maxWidth: 1280, margin: '0 auto' }}>
@@ -134,9 +148,9 @@ export const Leads = () => {
       })()}
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: '1rem' }}>
-        {(['all', 'new', 'contacted', 'qualified', 'closed'] as const).map((s) => (
+        {(['all', ...filterStatuses] as const).map((s) => (
           <button key={s} onClick={() => setFilter(s)} style={{ padding: '6px 14px', borderRadius: 100, fontSize: 11, fontWeight: 500, letterSpacing: '.12em', textTransform: 'uppercase', border: '.5px solid var(--b)', background: filter === s ? 'var(--a)' : 'transparent', color: filter === s ? '#000' : 'var(--m)', cursor: 'pointer', transition: 'all .2s' }}>
-            {s === 'all' ? 'Tutti' : STATUS_LABEL[s]} · {counts[s]}
+            {s === 'all' ? 'Tutti' : STATUS_LABEL[s]} · {s === 'all' ? leads.length : counts[s]}
           </button>
         ))}
       </div>
@@ -159,10 +173,10 @@ export const Leads = () => {
             <motion.div key={l.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.02 }} onClick={() => setSelected(l)}
               style={{ padding: '1rem 1.25rem', background: 'var(--s)', border: '.5px solid var(--b)', borderRadius: 14, cursor: 'pointer', display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: 16, alignItems: 'center', transition: 'border-color .2s' }}
               whileHover={{ borderColor: 'rgba(205,178,255,0.3)', x: 2 }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: STATUS_COLOR[l.status] }} />
-              <div><div style={{ fontSize: 14, color: 'var(--t)', marginBottom: 2 }}>{leadTitle(l)}</div><div style={{ fontSize: 12, color: 'var(--m)' }}>{l.intent ?? 'Contatto generico'}</div></div>
+              <div style={{ width: 8, height: 8, borderRadius: '50%', background: STATUS_COLOR[statusOf(l)] }} />
+              <div><div style={{ fontSize: 14, color: 'var(--t)', marginBottom: 2 }}>{leadTitle(l)}</div><div style={{ fontSize: 12, color: 'var(--m)' }}>{l.intent ?? 'Contatto generico'}{l.fonte ? ` · ${l.fonte}` : ''}</div></div>
               <div style={{ fontSize: 11, color: 'var(--m)', textAlign: 'right' }}>{new Date(l.created_at).toLocaleDateString('it', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}</div>
-              <div style={{ fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: STATUS_COLOR[l.status], fontWeight: 500 }}>{STATUS_LABEL[l.status]}</div>
+              <div style={{ fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: STATUS_COLOR[statusOf(l)], fontWeight: 500 }}>{STATUS_LABEL[statusOf(l)]}</div>
             </motion.div>
           ))}
         </div>
@@ -183,15 +197,29 @@ export const Leads = () => {
                 {selected.name && <Field icon={<Tag size={14} />} label="Nome">{selected.name}</Field>}
                 {selected.phone && <Field icon={<Phone size={14} />} label="Telefono">{selected.phone}</Field>}
                 {selected.intent && <Field icon={<Tag size={14} />} label="Intento">{selected.intent}</Field>}
+                {/* Da dove arriva (P1-2): presente sui lead dal 12/11 */}
+                {selected.attribution ? <>
+                  <Field icon={<Tag size={14} />} label="Fonte">{selected.fonte || '—'}{selected.attribution.utm_campaign ? ` · campagna ${selected.attribution.utm_campaign}` : ''}</Field>
+                  <Field icon={<Tag size={14} />} label="Prima pagina vista">{pageUrl(selected.attribution.landing)}</Field>
+                  <Field icon={<Tag size={14} />} label="Pagina del contatto">{pageUrl(selected.page || selected.attribution.page)}</Field>
+                  {selected.attribution.referrer && <Field icon={<Tag size={14} />} label="Sito di provenienza">{selected.attribution.referrer}</Field>}
+                </> : selected.page ? <Field icon={<Tag size={14} />} label="Pagina del contatto">{selected.page}</Field> : null}
                 <div>
                   <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 8 }}>Stato</div>
                   <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                    {(['new', 'contacted', 'qualified', 'closed'] as const).map((s) => (
-                      <button key={s} onClick={() => updateLead(selected.id, { status: s })} style={{ padding: '6px 12px', borderRadius: 100, fontSize: 11, fontWeight: 500, letterSpacing: '.1em', textTransform: 'uppercase', border: `.5px solid ${selected.status === s ? STATUS_COLOR[s] : 'var(--b)'}`, background: selected.status === s ? `${STATUS_COLOR[s]}22` : 'transparent', color: selected.status === s ? STATUS_COLOR[s] : 'var(--m)', cursor: 'pointer' }}>
+                    {STATUSES.map((s) => (
+                      <button key={s} onClick={() => updateLead(selected.id, { status: s })} style={{ padding: '6px 12px', borderRadius: 100, fontSize: 11, fontWeight: 500, letterSpacing: '.1em', textTransform: 'uppercase', border: `.5px solid ${statusOf(selected) === s ? STATUS_COLOR[s] : 'var(--b)'}`, background: statusOf(selected) === s ? `${STATUS_COLOR[s]}22` : 'transparent', color: statusOf(selected) === s ? STATUS_COLOR[s] : 'var(--m)', cursor: 'pointer' }}>
                         {STATUS_LABEL[s]}
                       </button>
                     ))}
                   </div>
+                </div>
+                <div>
+                  <label htmlFor="lead-value" style={{ display: 'block', fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 8 }}>Valore contratto € (facoltativo, solo interno)</label>
+                  <input id="lead-value" type="number" min={0} step={1} inputMode="numeric" value={selected.value_eur ?? ''}
+                    onChange={(e) => setSelected({ ...selected, value_eur: e.target.value === '' ? null : Math.max(0, Number(e.target.value)) })}
+                    onBlur={() => updateLead(selected.id, { value_eur: Number.isFinite(selected.value_eur as number) ? selected.value_eur : null })}
+                    style={{ width: 180, padding: '10px 12px', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 12, color: 'var(--t)', fontSize: 13, fontFamily: 'var(--fb)', outline: 'none' }} />
                 </div>
                 <div>
                   <div style={{ fontSize: 10, letterSpacing: '.15em', textTransform: 'uppercase', color: 'var(--m)', marginBottom: 8 }}>Note interne</div>

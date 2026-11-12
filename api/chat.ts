@@ -8,6 +8,7 @@ import type { VercelRequest, VercelResponse } from "./_lib/types";
 import type Anthropic from "@anthropic-ai/sdk";
 import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
 import { cleanPath, notifyLead } from "./_lib/notify";
+import { cleanAttribution, fonteOf } from "./_lib/attribution";
 
 // Limiti anti-abuso (sovrascrivibili da variabili d'ambiente su Vercel)
 const LIMIT_PER_IP_10MIN = Number(process.env.CHAT_LIMIT_PER_IP_10MIN || 15);
@@ -217,7 +218,8 @@ async function handle(req: VercelRequest, res: VercelResponse) {
   const messages = sanitizeMessages(req.body?.messages);
   if (!messages) return res.status(400).json({ error: "Invalid request", reply: "Messaggio non valido o troppo lungo." });
   const sessionId = str(req.body?.sessionId, 64).replace(/[^a-zA-Z0-9_-]/g, "") || null;
-  const page = cleanPath(req.body?.page);
+  const attribution = cleanAttribution(req.body?.attribution);
+  const page = attribution?.page || cleanPath(req.body?.page);
 
   try {
     const ip = clientIp(req);
@@ -297,11 +299,12 @@ async function handle(req: VercelRequest, res: VercelResponse) {
             email, name, phone,
             intent: `[${classification.toUpperCase()}] ${tags.join(", ")}`,
             conversation, source: "chatbot", status: "new", page,
+            attribution, fonte: fonteOf(attribution),
             session_id: sessionId, created_at: new Date().toISOString(),
           });
           // Notifica immediata (P0-1): solo alla creazione, così ogni conversazione ne manda una
           const said = messages.filter((x) => x.role === "user").slice(-4).map((x) => `- ${x.content}`).join("\n");
-          await notifyLead({ source: "chatbot", name, email, phone, service: `${classification}${tags.length ? `: ${tags.join(", ")}` : ""}`, message: `Ultimi messaggi del visitatore:\n${said}`, page });
+          await notifyLead({ source: "chatbot", name, email, phone, service: `${classification}${tags.length ? `: ${tags.join(", ")}` : ""}`, message: `Ultimi messaggi del visitatore:\n${said}`, page, fonte: fonteOf(attribution), landing: attribution?.landing });
         }
       } catch (e) {
         console.error("Save lead failed:", e);

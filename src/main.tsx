@@ -2,6 +2,10 @@ import { StrictMode, Suspense, lazy, useEffect, useState } from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App.tsx';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { captureAttribution } from './lib/attribution';
+
+// Prima pagina vista e provenienza della visita, prima di ogni cambio pagina (P1-2)
+captureAttribution();
 import './fonts.css';
 import './index.css';
 
