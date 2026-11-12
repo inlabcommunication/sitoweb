@@ -23,11 +23,11 @@ immagini: spec in tools/blog-images/specs/quanto-costa-sito-web-attivita-locale-
 
 **Risposta breve: il prezzo di un sito web dipende da quante pagine servono, da chi scrive i testi e fa le foto, dalle funzioni (prenotazioni, moduli, e-commerce), dal lavoro di SEO per farsi trovare su Google, dall'accessibilità e da chi si occupa di aggiornamenti e manutenzione dopo la consegna. Due preventivi si confrontano solo voce per voce.**
 
-In questo articolo non trovi cifre: ogni attività ha esigenze diverse, e un numero scritto qui direbbe poco sul tuo caso. Trovi invece le domande giuste da fare prima di scegliere.
+Qui non diamo cifre, ed è una scelta: il costo di un sito si capisce solo dopo aver chiarito a cosa deve servire. Partiamo da lì.
 
-## Da cosa dipende il prezzo di un sito web
+## Le sette voci di un preventivo per un sito
 
-Le voci che fanno cambiare di più il preventivo sono sette:
+Ogni preventivo serio si può scomporre in queste parti, e il totale dipende da come sono dosate:
 
 1. **Il numero di pagine**: una pagina unica è diversa da un sito con una pagina per ogni servizio, trattamento o prodotto.
 2. **I testi**: se li scrivi tu o se li scrive chi fa il sito, pensati per i clienti e per Google.
@@ -68,9 +68,9 @@ Un preventivo più basso che lascia fuori queste voci può costarti di più dopo
 
 ## Domande frequenti
 
-### Perché i prezzi dei siti web sono così diversi?
+### Meglio un sito fatto su misura o un modello già pronto?
 
-Perché sotto lo stesso nome ci sono lavori molto diversi: da una pagina con i contatti a un sito con prenotazioni ed e-commerce, con o senza testi, foto e SEO. Confronta sempre le voci incluse, non solo il totale.
+Un modello già pronto va bene per partire in fretta con poche pagine. Se il sito deve farti trovare su Google, ricevere prenotazioni o vendere, conviene una struttura pensata per la tua attività, che si possa ampliare senza ricominciare.
 
 ### Si può partire da un sito piccolo e farlo crescere?
 
@@ -82,6 +82,6 @@ Il progetto sì, ma dominio, hosting e manutenzione hanno costi che continuano n
 
 ## Da dove partire
 
-Prima di chiedere un preventivo, scrivi in poche righe cosa deve fare il sito: presentare l'attività, ricevere prenotazioni o vendere online. Aggiungi le pagine che immagini, se hai già testi e foto e chi lo aggiornerà. Con queste informazioni ogni preventivo sarà più chiaro e confrontabile.
+Apri il telefono e cerca la tua attività su Google come farebbe un cliente: cosa trova? Annota cosa manca (orari, servizi, foto, un modo per prenotare) e quali siti dei concorrenti ti sembrano più chiari. Quella lista è già una traccia per il tuo futuro sito, e la base per chiedere preventivi confrontabili.
 
-Realizziamo siti per attività in tutta la Puglia: vedi i nostri siti web a [Taranto](/siti-web-taranto) e a [Castellaneta](/siti-web-castellaneta), o la nostra agenzia di comunicazione a [Bari](/agenzia-comunicazione-bari). Scopri il servizio di [siti web](/siti-web) oppure [chiedici un preventivo](/contatti): in 24 ore ti diciamo da dove partiremmo.
+Realizziamo siti per attività in tutta la Puglia: vedi i nostri siti web a [Taranto](/siti-web-taranto) e a [Castellaneta](/siti-web-castellaneta), o la nostra agenzia di comunicazione a [Bari](/agenzia-comunicazione-bari). Scopri il servizio di [siti web](/siti-web) oppure [mandaci la tua lista](/contatti): ti rispondiamo entro 24 ore con le pagine che faremmo per prime.
