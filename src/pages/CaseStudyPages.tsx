@@ -310,14 +310,20 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
           <motion.p initial={false} className="section-label" style={{ marginBottom: '1rem' }}>
             {hero.label || [`Caso ${cs.number || ''}`.trim(), cs.category].filter(Boolean).join(' — ')}
           </motion.p>
-          <motion.h1 initial={false}
-            style={{ fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
-            {hero.title || cs.client}
-          </motion.h1>
-          <motion.p initial={false}
-            style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', color: 'var(--a)', maxWidth: 720, lineHeight: 1.3, marginBottom: '1.5rem' }}>
-            {hero.subtitle || cs.title}
-          </motion.p>
+          {/* H1 = nome + sottotitolo (stesso aspetto di prima: due righe con stili diversi), così
+              è diverso dall'H1 della scheda cliente (analisi SEO 08/11, R6). I testi restano quelli
+              della dashboard. */}
+          <h1 style={{ margin: 0 }}>
+            <span style={{ display: 'block', fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
+              {hero.title || cs.client}
+            </span>
+            {(hero.subtitle || cs.title) && <>
+              <span style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' }}>: </span>
+              <span style={{ display: 'block', fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 300, fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', color: 'var(--a)', maxWidth: 720, lineHeight: 1.3, marginBottom: '1.5rem' }}>
+                {hero.subtitle || cs.title}
+              </span>
+            </>}
+          </h1>
           {hero.intro && <motion.p initial={false} style={{ fontSize: 16, color: 'var(--m)', maxWidth: 640, lineHeight: 1.7, marginBottom: '2rem' }}>{hero.intro}</motion.p>}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             {cta && <a className="btn btn-p" href={cta} target="_blank" rel="noopener noreferrer">{hero.ctaLabel || 'Visita il sito'} <ArrowUpRight size={14} /></a>}

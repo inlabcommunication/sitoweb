@@ -48,7 +48,7 @@ export const CITIES = ['Taranto', 'Palagiano', 'Palagianello', 'Mottola', 'Caste
 // solo la pagina /agenzia-comunicazione-{città}, nessuna pagina per servizio.
 // Le vecchie /{servizio}-massafra restano in redirect 301 (vercel.json): la
 // regola elenca solo gli slug dei servizi, quindi non tocca l'agenzia.
-export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro', 'Francavilla Fontana', 'Lecce', 'Nardò', 'Gallipoli', 'Fasano', 'Monopoli', 'Turi', 'Molfetta', 'Scanzano Jonico', 'Ferrandina', 'Sava', 'Galatina', 'Otranto', 'Brindisi', 'Cassano delle Murge', 'Trani', 'Barletta', 'Andria', 'Nova Siri', 'Potenza'];
+export const EXTRA_AGENCY_CITIES = ['Massafra', 'Bari', 'Matera', 'Gioia del Colle', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro', 'Francavilla Fontana', 'Lecce', 'Nardò', 'Gallipoli', 'Fasano', 'Monopoli', 'Turi', 'Molfetta', 'Scanzano Jonico', 'Ferrandina', 'Sava', 'Galatina', 'Otranto', 'Brindisi', 'Cassano delle Murge', 'Trani', 'Barletta', 'Andria', 'Nova Siri', 'Potenza', 'Leporano', 'Lizzano', 'Copertino', 'Maglie', 'Mesagne', 'Carovigno', 'Bitonto', 'Corato', 'Tursi', 'Montalbano Jonico'];
 /** Parte dell'indirizzo della città: "Gravina in Puglia" → "gravina-in-puglia". */
 export const citySlug = (c: string) => c.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 /** Pagine "Agenzia di comunicazione e marketing a {città}": tutte le città,
@@ -59,6 +59,47 @@ export const AGENCY_CITIES = [...CITIES, ...EXTRA_AGENCY_CITIES];
 export const EXTRA_SERVICE_CITIES: Record<string, string[]> = {
   'gestione-social': ['Massafra', 'Gioia del Colle', 'Bari', 'Castellaneta Marina', 'Ferrara', 'Crispiano', 'Statte', 'Noci', 'Martina Franca', 'Grottaglie', 'San Giorgio Ionico', 'Locorotondo', 'Alberobello', 'Santeramo in Colle', 'Altamura', 'Acquaviva delle Fonti', 'Polignano a Mare', 'Montescaglioso', 'Bernalda', 'Pulsano', 'Manduria', 'Cisternino', 'Ceglie Messapica', 'Ostuni', 'Putignano', 'Castellana Grotte', 'Conversano', 'Pisticci', 'Policoro', 'Francavilla Fontana', 'Lecce', 'Nardò', 'Gallipoli', 'Fasano', 'Monopoli', 'Turi', 'Molfetta', 'Scanzano Jonico', 'Ferrandina', 'Sava', 'Galatina', 'Otranto', 'Brindisi', 'Cassano delle Murge', 'Trani', 'Barletta', 'Andria', 'Nova Siri', 'Potenza'],
 };
+/** Pagine servizio×città mai lette da Google: `noindex, follow` e fuori sitemap, restano
+ *  online e raggiungibili dai link (analisi SEO 08/11, R2). Per annullare basta togliere
+ *  il percorso da qui. Le 12 indicizzate (es. /meta-ads-taranto) non sono nell'elenco. */
+export const SERVICE_CITY_NOINDEX = new Set<string>([
+  '/automazioni-ai-gravina-in-puglia',
+  '/automazioni-ai-palagianello',
+  '/automazioni-ai-palagiano',
+  '/branding-castellaneta',
+  '/branding-gravina-in-puglia',
+  '/branding-laterza',
+  '/branding-mottola',
+  '/branding-palagianello',
+  '/branding-taranto',
+  '/meta-ads-castellaneta',
+  '/meta-ads-ginosa',
+  '/meta-ads-gravina-in-puglia',
+  '/meta-ads-laterza',
+  '/meta-ads-mottola',
+  '/meta-ads-palagiano',
+  '/shooting-castellaneta',
+  '/shooting-gravina-in-puglia',
+  '/shooting-laterza',
+  '/shooting-mottola',
+  '/shooting-palagianello',
+  '/shooting-palagiano',
+  '/shooting-taranto',
+  '/siti-web-castellaneta',
+  '/siti-web-ginosa',
+  '/siti-web-gravina-in-puglia',
+  '/siti-web-laterza',
+  '/siti-web-mottola',
+  '/siti-web-palagianello',
+  '/siti-web-palagiano',
+  '/siti-web-taranto',
+  '/video-castellaneta',
+  '/video-ginosa',
+  '/video-gravina-in-puglia',
+  '/video-mottola',
+  '/video-palagianello',
+  '/video-taranto',
+]);
 /** Città che hanno la pagina /{servizio}-{città} per quel servizio */
 export const serviceCities = (slug: string): string[] => [...CITIES, ...(EXTRA_SERVICE_CITIES[slug] || [])];
 export const hasServicePage = (slug: string, city: string) => serviceCities(slug).includes(city);
@@ -388,7 +429,10 @@ export const getSeo = (rawPath: string): Seo => {
 
   const svc = SERVICES_SEO.find((s) => '/' + s.slug === path);
   if (svc) {
-    return page(path, withBrand(`${svc.label} per aziende in Puglia`), svc.description, {
+    // Gestione social: servizio prioritario, title e description del brief SEO 12/11 (GS-1)
+    const gs = svc.slug === 'gestione-social';
+    return page(path, gs ? 'Gestione social media per aziende in Puglia | InLab' : withBrand(`${svc.label} per aziende in Puglia`),
+      gs ? 'Gestione social per aziende: strategia, piano editoriale, reel, foto e community su Instagram, Facebook e TikTok. Agenzia a Castellaneta, preventivo gratuito.' : svc.description, {
       sitemap: { priority: 0.9, changefreq: 'monthly' },
       jsonLd: [{
         '@context': 'https://schema.org', '@type': 'Service', name: svc.label, serviceType: svc.keyword,
@@ -409,8 +453,15 @@ export const getSeo = (rawPath: string): Seo => {
       ].map((t) => base + t).find((d) => d.length <= 155) || base + '.';
       // testi propri della pagina, se il brief SEO li prevede (src/data/cities.ts → paginaServizio)
       const own = cityInfo(city)?.paginaServizio?.[s.slug];
-      return page(path, own?.title || withBrand(`${s.label} ${aCity(city)}`), own?.description || desc, {
-        sitemap: { priority: 0.6, changefreq: 'monthly' },
+      // Gestione social (brief SEO 12/11, GS-1): "Gestione social media a {Città} | InLab",
+      // senza " | InLab" se supera i 60 caratteri; Taranto con title e description propri
+      const gsTitle = (c: string) => c === 'Taranto' ? 'Gestione social media a Taranto | Agenzia InLab'
+        : [`Gestione social media ${aCity(c)} | InLab`, `Gestione social media ${aCity(c)}`].find((t) => t.length <= 60) || `Gestione social media ${aCity(c)}`;
+      const gsTaranto = 'Gestione social media per aziende di Taranto: piano editoriale, reel, foto, community e sponsorizzate. Agenzia da Castellaneta, preventivo gratuito.';
+      const isGs = s.slug === 'gestione-social';
+      return page(path, isGs ? gsTitle(city) : own?.title || withBrand(`${s.label} ${aCity(city)}`),
+        isGs && city === 'Taranto' ? gsTaranto : own?.description || desc, {
+        ...(SERVICE_CITY_NOINDEX.has(path) ? { noindex: true } : { sitemap: { priority: 0.6, changefreq: 'monthly' } }),
         jsonLd: [{
           '@context': 'https://schema.org', '@type': 'Service', name: `${s.label} ${aCity(city)}`, serviceType: s.keyword,
           url: abs(path), provider: orgRef, areaServed: { '@type': 'City', name: city },

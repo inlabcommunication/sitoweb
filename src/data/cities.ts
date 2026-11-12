@@ -15,7 +15,9 @@ export type CityInfo = {
   /** Terza domanda (brief SEO 02/10 pomeriggio) */
   faq3?: { q: string; a: string };
   /** Domande in più dopo la terza (brief SEO 03/10 Taranto) */
-  altreFaq?: { q: string; a: string }[];
+  altreFaq?: { q: string; a: string; link?: { testo: string; href: string } }[];
+  /** H1 proprio della pagina agenzia, finisce con "a {città}" (analisi SEO 08/11, R4 Ferrara) */
+  h1?: string;
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   /** `link`: collegamento in fondo alla sezione (es. Castellaneta Marina → la sua pagina, decisione SEO 10/10) */
   /** `link.href` esterno (https://…): si apre in una nuova scheda (es. Google Maps, brief SEO 03/11).
@@ -388,7 +390,11 @@ export const CITY_INFO: CityInfo[] = [
     contesto: "Ferrara è la città degli Estensi, con il Castello Estense, le Mura e un centro rinascimentale patrimonio UNESCO. È una città di botteghe, locali e attività storiche, dove la qualità si racconta bene con immagini curate.",
     settori: ["pasticcerie e botteghe", "locali e ristoranti", "attività storiche del centro"],
     faq: { q: "Seguite attività di Ferrara anche se siete in Puglia?", a: "Sì: per la Pasticceria Naturale gestiamo i social a distanza e facciamo foto e video sul posto." },
-    description: "Agenzia di comunicazione per attività di Ferrara: gestione social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    // analisi SEO 08/11, R4: "studio di comunicazione ferrara"
+    title: "Agenzia e studio di comunicazione a Ferrara | InLab",
+    h1: "Agenzia e studio di comunicazione a Ferrara",
+    description: "Studio di comunicazione per attività di Ferrara: social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    altreFaq: [{ q: "Siete uno studio di comunicazione o un'agenzia?", a: "Siamo uno studio di comunicazione e marketing: seguiamo social, foto, video, siti e campagne. A Ferrara lavoriamo con attività come Pasticceria Naturale.", link: { testo: "Pasticceria Naturale", href: "/cliente/pasticceria-naturale" } }],
     intro: "A Ferrara gestiamo i social della Pasticceria Naturale: strategia, idee e testi nostri, foto e video realizzati sul posto. Seguiamo attività di Ferrara con lo stesso metodo che usiamo in Puglia, lavorando a distanza e venendo di persona per le riprese.",
     focus: { titolo: "Seguire un'attività a distanza, senza perdere il contatto", testo: "Con la Pasticceria Naturale lavoriamo così: strategia e piano editoriale condivisi, testi e idee scritti da noi, foto e video girati sul posto. Il resto si fa a distanza, con un contatto diretto e report chiari. Per un'attività di Ferrara significa avere un social media manager dedicato, non un account gestito in serie." },
     servizi: { 'gestione-social': "Gestione social a Ferrara come per la Pasticceria Naturale: strategia, testi, idee per i contenuti e foto e video realizzati sul posto." },
@@ -920,6 +926,116 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Farsi scegliere da professionisti e imprese", testo: "A Potenza molte attività lavorano con altre aziende, enti e professionisti. Per loro contano un sito chiaro, un profilo LinkedIn curato, una scheda Google completa e contenuti che spiegano bene cosa fai. Costruiamo questa presenza e la sosteniamo con campagne mirate." },
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per studi, imprese e negozi di Potenza: contenuti chiari, LinkedIn e campagne mirate." },
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Leporano", provincia: "provincia di Taranto",
+    contesto: "Leporano ha una costa frequentata d'estate dai tarantini e dai turisti, con le spiagge di Gandoli e Saturo, e il Parco archeologico di Saturo, dove sorgeva l'antica Satyrion. Accanto al turismo ci sono attività che lavorano tutto l'anno con Taranto e i paesi vicini.",
+    settori: ["lidi e strutture balneari", "ristoranti e locali sul mare", "attività e servizi del paese"],
+    faq: { q: "Le sponsorizzate possono raggiungere chi abita a Taranto?", a: "Sì: scegliamo zona e raggio in base a da dove arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Leporano: social, foto, video e campagne per lidi, ristoranti e attività di Saturo e Gandoli. Preventivo gratuito.",
+    intro: "Leporano è sulla costa ionica, a sud di Taranto, tra le spiagge di Gandoli e Saturo. Seguiamo social, foto, video, sponsorizzate e siti per lidi, ristoranti e attività del paese, da Castellaneta.",
+    focus: { titolo: "Il mare vicino alla città", testo: "Chi vive a Taranto sceglie spesso Leporano per il mare e per una cena fuori. Per un lido o un ristorante conta farsi trovare su Google Maps, avere foto vere del posto e social aggiornati quando le persone decidono dove andare. Prepariamo contenuti e sponsorizzate mirate a chi abita entro mezz'ora di strada." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Lizzano", provincia: "provincia di Taranto",
+    contesto: "Lizzano si trova nella parte orientale della provincia di Taranto. Il suo territorio dà il nome al vino Lizzano DOC e fa parte della zona del Primitivo, con una costa sullo Ionio frequentata d'estate.",
+    settori: ["cantine e aziende vinicole", "aziende agricole", "attività del paese e della marina"],
+    faq: { q: "Potete aiutare una cantina a vendere online?", a: "Sì: foto dei prodotti, social, sito o catalogo con ordini e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Lizzano: social, foto, video e siti per cantine, aziende agricole e attività del paese e della marina. Preventivo gratuito.",
+    intro: "Lizzano è terra di vigneti, con un vino che porta il suo nome e una marina sullo Ionio. Seguiamo social, foto, video, sponsorizzate e siti per cantine, aziende agricole e attività, da Castellaneta.",
+    focus: { titolo: "Un vino con il nome del paese", testo: "Quando il nome del paese è anche il nome del vino, il racconto è già a metà. Mostriamo vigne, cantina e persone con foto e video veri, curiamo etichette, sito e social, e prepariamo campagne per la vendita diretta, l'enoturismo e gli ordini online." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Copertino", provincia: "provincia di Lecce",
+    contesto: "Copertino è conosciuta per il Castello, uno dei più grandi del Salento, e per San Giuseppe da Copertino, il santo protettore degli studenti, che porta in città pellegrini tutto l'anno. È un centro vivace a pochi chilometri da Lecce e dalla costa di Porto Cesareo.",
+    settori: ["ristoranti e bar", "negozi del centro", "strutture ricettive e servizi"],
+    faq: { q: "Fate contenuti per attività che lavorano con i turisti?", a: "Sì: foto e video del posto, scheda Google, social e campagne per chi sta arrivando in zona." },
+    description: "Agenzia di comunicazione a Copertino: social, foto, video, siti e campagne per negozi, ristoranti e attività del centro. Preventivo gratuito.",
+    intro: "Copertino è la città di San Giuseppe e del suo castello, nel nord del Salento. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e attività, da Castellaneta.",
+    focus: { titolo: "Farsi trovare da chi arriva in città", testo: "Tra pellegrini, visitatori del castello e chi passa verso il mare, Copertino ha un pubblico che cambia tutto l'anno. Per un ristorante o un negozio servono una scheda Google curata, foto vere e social che dicano subito cosa offri e dove sei. Li prepariamo insieme a campagne per chi è già in zona." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Maglie", provincia: "provincia di Lecce",
+    contesto: "Maglie è la città natale di Aldo Moro ed è da sempre un punto di riferimento per il commercio e i servizi dei paesi vicini. Ogni estate ospita il Mercatino del Gusto, una delle rassegne enogastronomiche più note del Salento.",
+    settori: ["negozi e commercio", "pasticcerie, ristoranti e prodotti tipici", "studi e professionisti"],
+    faq: { q: "Le sponsorizzate possono raggiungere i paesi vicini?", a: "Sì: impostiamo zona e raggio sui comuni da cui arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Maglie: social, foto, video, siti e campagne per negozi, pasticcerie, ristoranti e professionisti. Preventivo gratuito.",
+    intro: "Maglie è uno dei centri commerciali del Salento interno, crocevia tra Lecce e Otranto. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e professionisti, da Castellaneta.",
+    focus: { titolo: "Il negozio di riferimento della zona", testo: "A Maglie arrivano a fare acquisti da molti paesi intorno. Per un negozio o uno studio conta essere il primo nome che viene in mente: scheda Google completa, recensioni, social costanti e sponsorizzate sul raggio giusto. Lo costruiamo insieme, con contenuti veri del tuo lavoro." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Mesagne", provincia: "provincia di Brindisi",
+    contesto: "Mesagne è conosciuta per il centro storico, il Castello normanno-svevo e il Museo archeologico Ugo Granafei. Si trova a pochi chilometri da Brindisi ed è un centro di commercio e servizi per l'entroterra.",
+    settori: ["ristoranti e locali del centro", "negozi e commercio", "servizi e professionisti"],
+    faq: { q: "Fate foto e video nei locali?", a: "Sì: veniamo sul posto per foto e video di piatti, ambienti e persone." },
+    description: "Agenzia di comunicazione a Mesagne: social, foto, video, siti e campagne per ristoranti, negozi e attività del centro storico. Preventivo gratuito.",
+    intro: "Mesagne ha un centro storico barocco tra i più curati del Brindisino. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Il centro storico come vetrina", testo: "Un locale nel centro storico di Mesagne ha già uno sfondo che si fa notare. Lo usiamo per foto e video che fanno venire voglia di passare, curiamo social e scheda Google e prepariamo campagne per chi abita a Brindisi e nei paesi vicini." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Carovigno", provincia: "provincia di Brindisi",
+    contesto: "Carovigno ha un centro storico dominato dal Castello Dentice di Frasso e un territorio che arriva alla Riserva naturale di Torre Guaceto. È conosciuta anche per la 'Nzegna, la festa con lo sbandieramento che si tiene ogni anno dopo Pasqua.",
+    settori: ["masserie e B&B", "lidi e attività sul mare", "ristoranti e attività del paese"],
+    faq: { q: "Potete aiutarci ad avere più prenotazioni dirette?", a: "Sì: sito con prenotazione, foto e video, scheda Google e campagne, anche in inglese." },
+    description: "Agenzia di comunicazione a Carovigno: social, foto, video e campagne per masserie, B&B, lidi e attività vicino a Torre Guaceto. Preventivo gratuito.",
+    intro: "Carovigno è tra il castello e il mare di Torre Guaceto. Seguiamo social, foto, video, sponsorizzate e siti per masserie, B&B, lidi e attività, da Castellaneta.",
+    focus: { titolo: "Prenotazioni dirette, non solo dalle piattaforme", testo: "Masserie e B&B vicino a Torre Guaceto lavorano molto con le piattaforme di prenotazione. Con un sito chiaro, foto e video all'altezza e campagne mirate, una parte delle prenotazioni può arrivare direttamente, anche dall'estero. Costruiamo la presenza che serve a farlo." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Bitonto", provincia: "provincia di Bari",
+    contesto: "Bitonto è conosciuta per la Cattedrale romanica e per il centro storico, ed è da secoli una delle capitali dell'olio extravergine pugliese. Molte aziende del territorio vendono in tutta Italia e all'estero.",
+    settori: ["frantoi e produttori di olio", "aziende e imprese", "negozi e attività del centro"],
+    faq: { q: "Potete aiutare un frantoio a vendere online?", a: "Sì: foto dei prodotti, social, e-commerce o catalogo con ordini e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Bitonto: social, foto, video, siti e campagne per frantoi, aziende, negozi e attività del centro. Preventivo gratuito.",
+    intro: "Bitonto è la città dell'olio e della cattedrale romanica, alle porte di Bari. Seguiamo social, foto, video, sponsorizzate e siti per frantoi, aziende, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Dall'uliveto al cliente finale", testo: "Un olio di Bitonto ha già un nome che conta. Lo rafforziamo con foto e video della raccolta e della molitura, un sito con vendita online o ordini diretti, social costanti e campagne per chi cerca olio pugliese di qualità." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Corato", provincia: "provincia di Bari",
+    contesto: "Corato si trova sulla Murgia nord-barese, tra Bari e Andria. La varietà di oliva Coratina prende il nome dalla città, e intorno all'olio e all'agricoltura lavorano molte aziende, accanto a commercio e imprese.",
+    settori: ["produttori di olio e aziende agricole", "imprese e aziende", "negozi e servizi"],
+    faq: { q: "Fate branding per aziende agricole?", a: "Sì: nome, logo, etichette e identità, poi applicati a sito, social e materiali." },
+    description: "Agenzia di comunicazione a Corato: social, foto, video, siti e campagne per produttori, aziende, negozi e attività della città. Preventivo gratuito.",
+    intro: "Corato dà il nome alla Coratina, una delle olive più conosciute d'Italia. Seguiamo social, foto, video, sponsorizzate e siti per produttori, aziende e negozi, da Castellaneta.",
+    focus: { titolo: "Un prodotto famoso, un marchio da costruire", testo: "Tutti conoscono la Coratina, ma pochi conoscono il nome di chi la produce. Aiutiamo aziende e produttori di Corato a farsi riconoscere: identità, foto e video veri, sito, social e campagne per vendere in Italia e all'estero." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Tursi", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Tursi è conosciuta per la Rabatana, l'antico quartiere arroccato sulla collina, per il santuario di Santa Maria d'Anglona e per il poeta Albino Pierro, che scriveva nel dialetto del paese. Intorno ci sono aziende agricole e la vicina costa jonica.",
+    settori: ["aziende agricole e prodotti tipici", "strutture ricettive", "attività del paese"],
+    faq: { q: "Lavorate anche con attività piccole?", a: "Sì: partiamo da social e foto e cresciamo con sito e campagne quando serve." },
+    description: "Agenzia di comunicazione a Tursi: social, foto, video e siti per aziende agricole, strutture e attività della Rabatana. Preventivo gratuito.",
+    intro: "Tursi è il paese della Rabatana, tra le colline e la costa jonica lucana. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, strutture e attività, da Castellaneta.",
+    focus: { titolo: "Raccontare un posto che pochi conoscono", testo: "La Rabatana e Anglona sono luoghi che colpiscono chi li vede. Per strutture, aziende e attività di Tursi li trasformiamo in foto, video e contenuti che fanno conoscere il territorio e portano visitatori e clienti, con campagne per chi cerca la Basilicata autentica." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (solo pagina agenzia)
+    name: "Montalbano Jonico", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Montalbano Jonico è conosciuto per la Riserva naturale dei Calanchi, paesaggi di argilla scolpiti dalla pioggia. Il territorio è agricolo, vicino alla piana del Metapontino, con aziende di ortofrutta e prodotti tipici.",
+    settori: ["aziende agricole e ortofrutta", "prodotti tipici", "attività del paese"],
+    faq: { q: "Lavorate con aziende che vendono fuori regione?", a: "Sì: sito, foto e video della produzione, LinkedIn e campagne per i contatti commerciali." },
+    description: "Agenzia di comunicazione a Montalbano Jonico: social, foto, video e siti per aziende agricole e attività tra i Calanchi. Preventivo gratuito.",
+    intro: "Montalbano Jonico è affacciato sui Calanchi, vicino alla piana del Metapontino. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole e attività, da Castellaneta.",
+    focus: { titolo: "Dal paesaggio al prodotto", testo: "I Calanchi sono un paesaggio unico, e i prodotti di questa terra possono raccontarlo. Mostriamo campi, raccolta e lavorazione con foto e video veri, creiamo siti chiari e una presenza social costante per farsi conoscere da clienti, grossisti e visitatori." },
+    lavoriVicini: true,
   },
 ];
 
