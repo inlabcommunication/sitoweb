@@ -34,7 +34,7 @@ const match = (h: string, list: [RegExp, string][]) => list.find(([r]) => r.test
 
 /** "sorgente/mezzo" come in GA4: UTM se presenti, poi clic pubblicitario, poi dominio di provenienza. */
 export const fonteOf = (a: LeadAttribution | null): string => {
-  if (!a) return "(non disponibile)";
+  if (!a) return "(senza consenso)"; // il browser manda la provenienza solo con il consenso ai cookie statistici
   if (a.utm_source) return `${a.utm_source}/${a.utm_medium || "(not set)"}`;
   if (a.click === "gclid") return "google/cpc";
   const h = a.referrer;

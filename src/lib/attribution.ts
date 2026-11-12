@@ -3,7 +3,11 @@
 // - prima pagina vista (solo il percorso), sito di provenienza (solo il nome del
 //   dominio), parametri UTM e il tipo di clic pubblicitario (gclid/fbclid, senza il valore);
 // - restano solo in memoria finché la pagina è aperta (nessun cookie, niente
-//   localStorage/sessionStorage) e partono solo insieme a un lead; niente a GA4.
+//   localStorage/sessionStorage) e partono solo insieme a un lead; niente a GA4;
+// - partono SOLO se il visitatore ha accettato i cookie statistici (stesso consenso di
+//   GA4, richiesta del Direttore 12/11): senza consenso il lead arriva senza provenienza.
+import { getConsent } from './ga';
+
 export type Attribution = {
   landing: string;
   referrer: string | null;
@@ -36,7 +40,7 @@ export const captureAttribution = () => {
 };
 
 export const getAttribution = (): Attribution | null => {
-  if (typeof window === 'undefined') return null;
+  if (typeof window === 'undefined' || getConsent() !== 'granted') return null;
   captureAttribution();
   const servizio = (new URLSearchParams(window.location.search).get('servizio') || '').replace(/[^a-z0-9-]/g, '').slice(0, 40) || null;
   return { ...first!, page: window.location.pathname, servizio };
