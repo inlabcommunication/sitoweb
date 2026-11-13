@@ -40,7 +40,7 @@ import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities, aCity } from "./seo/routes";
 import { cityInfo, BARI_PROVINCE_CITIES, isBariProvince } from "./data/cities";
-import { DEFAULT_CASES, isPublishedCase } from "./data/caseStudies";
+import { DEFAULT_CASES, isPublishedCase, hasPublishedCase } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 import { workAlt } from "./lib/altText";
@@ -814,7 +814,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
               <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
               <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
                 <a className="btn btn-p" href={site.url} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
-                {site.caseStudy && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
+                {site.caseStudy && cases.some((x: any)=>x.id===site.caseStudy) && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
               </div>
             </div>
           </div>
@@ -1583,7 +1583,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
               {localClients.map((cl: any, i: number)=>{
                 const v=featured.voci.find(x=>x.cliente===cl.id);
                 return <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"
-                  note={v?.riga} secondary={v?.caso ? {href:`/casi-studio/${v.caso}`,label:"Leggi il caso completo"} : undefined}/>;
+                  note={v?.riga} secondary={v?.caso && hasPublishedCase(content, v.caso) ? {href:`/casi-studio/${v.caso}`,label:"Leggi il caso completo"} : undefined}/>;
               })}
             </CaseCardGrid>
           </div>
@@ -1896,7 +1896,7 @@ const PageCittaSEO = ({city, service}) => {
               </ul>
             </> : null}
             <div style={{display:"flex",flexWrap:"wrap",gap:"0 1.5rem"}}>
-              {project.caso && <Link to={`/casi-studio/${project.caso}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>Leggi il caso studio <ArrowRight size={13}/></Link>}
+              {project.caso && hasPublishedCase(content, project.caso) && <Link to={`/casi-studio/${project.caso}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>Leggi il caso studio <ArrowRight size={13}/></Link>}
               {project.sito && /^https:\/\//.test(project.sito.url) && <a href={project.sito.url} target="_blank" rel="noopener" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>{project.sito.label} <ArrowUpRight size={13}/></a>}
             </div>
           </div>
