@@ -3,11 +3,11 @@ import { linkClick } from '../lib/router';
 import { motion } from 'motion/react';
 import { ArrowUpRight } from 'lucide-react';
 import { useContent } from '../lib/content';
-import { DEFAULT_CASES, type CaseStudy } from '../data/caseStudies';
+import { DEFAULT_CASES, isPublishedCase, type CaseStudy } from '../data/caseStudies';
 
 // I casi studio arrivano dalla dashboard (content.cases.items); i valori
 // predefiniti sono in src/data/caseStudies.ts.
-const useCases = (): CaseStudy[] => ((useContent() as any).cases?.items || DEFAULT_CASES) as CaseStudy[];
+const useCases = (): CaseStudy[] => (((useContent() as any).cases?.items || DEFAULT_CASES) as CaseStudy[]).filter(isPublishedCase);
 
 interface CaseStudiesSectionProps {
   onCaseClick: (id: string) => void;

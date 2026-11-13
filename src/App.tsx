@@ -40,7 +40,7 @@ import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities, aCity } from "./seo/routes";
 import { cityInfo, BARI_PROVINCE_CITIES, isBariProvince } from "./data/cities";
-import { DEFAULT_CASES } from "./data/caseStudies";
+import { DEFAULT_CASES, isPublishedCase } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 import { workAlt } from "./lib/altText";
@@ -792,7 +792,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
   const content = useContent();
   const examples = (((content as any).serviceExamples || SERVICE_EXAMPLES)[slug] || []) as ServiceExample[];
   if (!examples.length) return null;
-  const cases = ((content as any).cases?.items || []) as any[];
+  const cases = (((content as any).cases?.items || []) as any[]).filter(isPublishedCase);
   const clients = normalizeClients(((content as any).clients?.items || []) as any[]);
   const sites = examples.filter((e): e is Extract<ServiceExample, { kind: 'site' }> => e.kind === 'site');
   const cards = examples.filter(e => e.kind !== 'site');
@@ -1526,7 +1526,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const content=useContent() as any;
   // clienti principali + "Altri clienti" pubblicati, città confrontata in modo esatto (brief SEO 10/10 territorio, punto 3)
   const localClients=clientsInCity(content, city);
-  const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
+  const localCases=((content.cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
   // Le città fuori da CITIES hanno solo le pagine servizio previste in EXTRA_SERVICE_CITIES
   // (oggi gestione social): gli altri servizi puntano alle pagine generali.
   const hasServicePage=(slug: string)=>serviceCities(slug).includes(city);
@@ -1537,7 +1537,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const nearby=!!(city!=="Taranto"&&info?.lavoriVicini&&!localClients.length&&!localCases.length);
   const allGroups=(city==="Taranto"||nearby) ? (nearby ? byDistance(city, PROVINCE_CITIES) : ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")]).map(c=>({
     city:c,
-    cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
+    cases:((content.cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
     clients:clientsInCity(content, c),
   })).filter(g=>g.cases.length||g.clients.length) : [];
   // Città senza clienti: solo 6 schede, dei paesi più vicini (brief SEO 10/10: niente blocco uguale su tante pagine)
@@ -1719,7 +1719,7 @@ const PageDoveLavoriamoWrap = () => {
   const clients=normalizeClients((c.clients?.items||[]) as any[]);
   const activities=[
     ...clients.filter((cl: any)=>cl.location&&cl.sector).map((cl: any)=>({city:cityName(cl.location),sector:String(cl.sector),services:splitList(cl.services),href:`/cliente/${cl.id}`})),
-    ...((c.cases?.items||[]) as any[]).filter((cs: any)=>!clients.some((cl: any)=>cl.id===cs.clientId)).flatMap((cs: any)=>{
+    ...((c.cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>!clients.some((cl: any)=>cl.id===cs.clientId)).flatMap((cs: any)=>{
       const sector=cs.sector||(DEFAULT_CASES.find((d: any)=>d.id===cs.id) as any)?.sector;
       return sector ? caseLocations(cs).map((city: string)=>({city:cityName(city),sector,services:splitList(cs.category),href:`/casi-studio/${cs.id}`})) : [];
     }),
@@ -1839,7 +1839,7 @@ const PageCittaSEO = ({city, service}) => {
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   // per primi i clienti che hanno questo servizio (brief SEO 10/10 territorio, punto 3)
   const localClients=clientsInCity(useContent(), cityName, svc.slug);
-  const localCases=(((useContent() as any).cases?.items||[]) as any[])
+  const localCases=(((useContent() as any).cases?.items||[]) as any[]).filter(isPublishedCase)
     .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
   const info=cityInfo(cityName);
   const provincia=info?.provincia||"provincia di Taranto";
@@ -1849,7 +1849,7 @@ const PageCittaSEO = ({city, service}) => {
   const nearbyGroups=(localClients.length||localCases.length) ? [] : limitCards(
     byDistance(cityName, AGENCY_CITIES.filter(c=>c!==cityName)).map(c=>({
       city:c,
-      cases:(((content as any).cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
+      cases:(((content as any).cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
       clients:clientsInCity(content, c),
     })).filter(g=>g.cases.length||g.clients.length), 4);
  
@@ -2026,7 +2026,7 @@ const PageCliente = ({id}: {id: string}) => {
   const heroImage=client?.image || client?.gallery?.[0];
   const reels=((client?.reels || []) as any[]).filter((r: any)=>hasReel(r));
   const gallery=((client?.gallery || []) as string[]).filter((u)=>/^https:\/\//.test(u));
-  const linkedCase=(((c as any).cases?.items || []) as any[]).find((x: any)=>x.id===client?.caseStudy || x.clientId===client?.id);
+  const linkedCase=(((c as any).cases?.items || []) as any[]).filter(isPublishedCase).find((x: any)=>x.id===client?.caseStudy || x.clientId===client?.id);
   const links=[
     {label:"Sito web", href:client?.website || client?.url},
     {label:"Instagram", href:client?.instagram},
@@ -2212,7 +2212,7 @@ const PageCaso = ({id}: {id:string}) => {
 
   const page = (el: React.ReactNode) => <Suspense fallback={<div style={{minHeight:"100vh"}}/>}>{el}</Suspense>;
 
-  const cs = (((useContent() as any).cases?.items || []) as any[]).find((x: any) => x.id === id);
+  const cs = (((useContent() as any).cases?.items || []) as any[]).filter(isPublishedCase).find((x: any) => x.id === id);
   switch(Boolean(cs)){
     case true: return page(<CasePage cs={cs} onBack={onBack} onContact={onContact} onClient={(cid: string) => go(`/cliente/${cid}`)}/>);
     default:
