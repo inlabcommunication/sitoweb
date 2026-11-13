@@ -15,7 +15,7 @@ export const linksToCase = (content: any, id: string) => {
   const broken = BLOG_SEED.filter((p) => p.published !== false && linksTo(p.content || '')).map((p) => `/blog/${p.slug}`);
   const hidden: string[] = [];
   const ex: Record<string, any[]> = content.serviceExamples || SERVICE_EXAMPLES;
-  Object.entries(ex).forEach(([slug, list]) => { if ((list || []).some((e: any) => e?.caseStudy === id)) hidden.push(`esempi di /${slug}`); });
+  Object.entries(ex).forEach(([slug, list]) => { if ((list || []).some((e: any) => e?.caseStudy === id || (e?.kind === 'case' && e?.caseId === id))) hidden.push(`esempi di /${slug}`); });
   CITY_INFO.forEach((c) => {
     if (c.clientiInEvidenza?.voci.some((v) => v.caso === id)) hidden.push(`clienti in evidenza a ${c.name}`);
     Object.entries(c.paginaServizio || {}).forEach(([svc, v]) => { if (v?.progettoInEvidenza?.caso === id) hidden.push(`progetto in evidenza di ${svc} a ${c.name}`); });
