@@ -81,7 +81,8 @@ function extractMetaAndCleanResponse(rawText: string): { visibleText: string; me
     try {
       meta = JSON.parse(metaMatch[1].trim());
     } catch (e) {
-      console.warn("Meta JSON parse failed:", metaMatch[1]);
+      // solo la lunghezza: il META può contenere nome, email e telefono del visitatore (nota analista 13/11)
+      console.warn("Meta JSON parse failed, length:", metaMatch[1].length);
     }
   }
   return { visibleText, meta };
