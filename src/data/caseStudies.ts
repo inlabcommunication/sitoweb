@@ -48,6 +48,9 @@ export type CaseStudy = {
 
 /** Caso studio da mostrare sul sito: tutti tranne le bozze (published === false). */
 export const isPublishedCase = (c: any): boolean => !!c && c.published !== false;
+/** true se il caso con questo id esiste ed è pubblicato: i link "Leggi il caso studio" scritti nei dati statici spariscono se il caso passa a bozza */
+export const hasPublishedCase = (content: any, id: string): boolean =>
+  ((content?.cases?.items || []) as any[]).some((c: any) => c?.id === id && isPublishedCase(c));
 
 const LUMINA = 'https://luminaricciardi.it/';
 
