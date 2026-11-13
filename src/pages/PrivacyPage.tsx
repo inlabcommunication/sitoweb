@@ -27,8 +27,9 @@ export const PagePrivacy: React.FC = () => (
 
       <H>Quali dati raccogliamo</H>
       <ul style={{ paddingLeft: '1.2rem' }}>
-        <Li><b>Modulo contatti</b>: nome, email, telefono e azienda (facoltativi), servizio di interesse e messaggio. Li usiamo solo per rispondere alla tua richiesta e, se lo chiedi, per preparare un preventivo. Base giuridica: misure precontrattuali su tua richiesta (art. 6.1.b GDPR).</Li>
-        <Li><b>Chat sul sito</b>: i messaggi vengono elaborati da un servizio di intelligenza artificiale (Google Gemini o Anthropic Claude) per generare la risposta e non vengono usati per altri scopi. Se nella chat lasci nome, email o telefono, li salviamo come richiesta di contatto. Non scrivere in chat dati sensibili.</Li>
+        <Li><b>Modulo contatti</b>: nome, email, telefono e azienda (facoltativi), servizio di interesse, messaggio e la pagina del sito da cui ci scrivi. Li usiamo solo per rispondere alla tua richiesta e, se lo chiedi, per preparare un preventivo. Base giuridica: misure precontrattuali su tua richiesta (art. 6.1.b GDPR).</Li>
+        <Li><b>Chat sul sito</b>: i messaggi vengono elaborati da un servizio di intelligenza artificiale (Google Gemini o Anthropic Claude) per generare la risposta e non vengono usati per altri scopi. Se nella chat lasci un'email o un numero di telefono, salviamo una richiesta di contatto con i dati che hai scritto (nome, email, telefono), la pagina da cui hai scritto, la conversazione (gli ultimi 30 messaggi) e una classificazione automatica dell'interesse fatta dallo stesso servizio di intelligenza artificiale (per esempio «freddo», «caldo» o «urgente» e il servizio che ti interessa), che ci aiuta a capire a quali richieste rispondere prima. Se non lasci un contatto, la conversazione non viene salvata. Non scrivere in chat dati sensibili.</Li>
+        <Li><b>Provenienza della richiesta</b> (solo se hai accettato i cookie statistici): quando ci scrivi dal modulo o lasci un contatto in chat, salviamo insieme alla richiesta la prima pagina del sito che hai visto, il sito da cui sei arrivato (solo il nome del dominio, per esempio google.com), gli eventuali parametri UTM del link (per esempio utm_source=instagram), se il link veniva da un annuncio Google o Meta (senza il codice dell'annuncio) e l'eventuale servizio indicato nel link verso la pagina contatti. Ci serve solo per capire quali pagine e canali portano richieste; la conserviamo per lo stesso tempo della richiesta. Se non accetti i cookie statistici non viene salvata.</Li>
         <Li><b>Statistiche interne</b>: pagine visitate, tipo di dispositivo e profondità di scorrimento, collegati a un codice di sessione casuale che si cancella alla chiusura del browser. Non identificano la persona e servono solo a migliorare il sito (legittimo interesse, art. 6.1.f).</Li>
         <Li><b>Dati tecnici</b>: per proteggere il sito da abusi (per esempio l'invio massivo di messaggi) l'indirizzo IP viene usato solo in forma cifrata e non reversibile, per limitare il numero di richieste; questi contatori vengono eliminati dopo poche ore.</Li>
         {GA_ID && <Li><b>Google Analytics 4</b> (solo con il tuo consenso): statistiche aggregate sull'uso del sito. Gli annunci personalizzati sono disattivati.</Li>}
@@ -50,7 +51,7 @@ export const PagePrivacy: React.FC = () => (
       <H>I tuoi diritti</H>
       <P>Puoi chiedere in qualsiasi momento di accedere ai tuoi dati, correggerli, cancellarli, limitarne l'uso o opporti al trattamento, e revocare il consenso ai cookie statistici, scrivendo a <a href="mailto:inlab.communication@gmail.com" style={{ color: 'var(--a)' }}>inlab.communication@gmail.com</a>. Hai anche diritto di presentare reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--a)' }}>garanteprivacy.it</a>).</P>
 
-      <P><span style={{ fontSize: 12, color: 'var(--m)' }}>Ultimo aggiornamento: 28 settembre 2026.</span></P>
+      <P><span style={{ fontSize: 12, color: 'var(--m)' }}>Ultimo aggiornamento: 13 novembre 2026.</span></P>
     </div>
   </section>
 );
