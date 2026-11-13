@@ -163,3 +163,11 @@ Regole di scrittura:
 - **FAQ:** le domande non si ripetono tra un articolo e l'altro.
 - **Argomenti:** un articolo nuovo deve rispondere a una ricerca diversa da quelle già coperte. Se l'argomento è già trattato, si aggiorna l'articolo esistente invece di scriverne un altro.
 - **Esempi e clienti:** ogni articolo porta un esempio concreto suo. Si varia il cliente citato quando è possibile.
+
+## Casi studio in bozza (avviso dell'analista, tramite Sito Inlab, 13/11/2026)
+
+Dal 13/11 un caso studio si può mettere in bozza dalla dashboard. In quel caso, i link scritti a mano negli articoli verso `/casi-studio/…` danno errore 404.
+
+- Se il Direttore avvisa che un caso studio passa in bozza, togli quei link o sostituiscili, per esempio con la scheda `/cliente/…` dello stesso cliente, se esiste.
+- Prima di pubblicare, cerca gli articoli che linkano quel caso con `grep -n "/casi-studio/" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`.
+- Oggi sono linkati `paresteta` e `ricciardi`.
