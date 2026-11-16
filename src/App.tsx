@@ -1703,7 +1703,8 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
             {/* Solo le 8 città più vicine (prima: tutte, 67 link uguali in ogni pagina; brief SEO 16/11, R9
                 come R1). Tutte le altre restano raggiungibili da /dove-lavoriamo, linkata qui sotto. */}
-            {byDistance(city, AGENCY_CITIES.filter(c=>c!==city)).slice(0,8).map(c=>(
+            {/* più, sempre, le città principali (richiesta SEO 16/11), senza ripetere quelle già vicine */}
+            {[...new Set([...byDistance(city, AGENCY_CITIES.filter(c=>c!==city)).slice(0,8), ...MAIN_AGENCY_CITIES.filter(c=>c!==city&&AGENCY_CITIES.includes(c))])].map(c=>(
               <Link key={c} to={agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
             ))}
           </div>
@@ -1766,6 +1767,8 @@ const limitCards=(groups: {city:string;cases:any[];clients:any[]}[], max: number
     return {...g,cases,clients};
   }).filter(g=>g.cases.length||g.clients.length);
 };
+// Città principali sempre linkate dalle pagine agenzia, oltre alle 8 più vicine (richiesta SEO 16/11, R9)
+const MAIN_AGENCY_CITIES=["Castellaneta","Taranto","Palagianello","Palagiano","Mottola","Massafra","Ginosa","Laterza","Bari","Ferrara"];
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
 const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
