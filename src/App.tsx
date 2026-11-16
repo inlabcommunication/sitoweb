@@ -1541,7 +1541,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
     clients:clientsInCity(content, c),
   })).filter(g=>g.cases.length||g.clients.length) : [];
   // Città senza clienti: solo 6 schede, dei paesi più vicini (brief SEO 10/10: niente blocco uguale su tante pagine)
-  const provinceGroups=nearby ? limitCards(allGroups, 6) : allGroups;
+  const provinceGroups=nearby ? limitCards(allGroups, 4) : allGroups; // 4 schede come R1 (brief SEO 16/11, R9; prima 6)
   return (
     <>
       <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
@@ -1629,12 +1629,18 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label">Servizi {aCity(city)}</p>
-          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
+          {/* Descrizioni generiche dei servizi tolte dalle schede (uguali in tutte le pagine agenzia):
+              restano solo quelle scritte per la città; il resto è in /servizi (brief SEO 16/11, R9) */}
+          <p style={{maxWidth:760,fontSize:15,color:"var(--m)",lineHeight:1.75,marginBottom:"2rem"}}>
+            Scegli il servizio che ti serve: ogni scheda porta alla pagina con il metodo e gli esempi. Tutti i servizi insieme, con cosa comprendono, sono nella pagina{" "}
+            <Link to="/servizi" className="foot-link" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>Servizi</Link>.
+          </p>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
             {SERVICES.map(s=>(
               <Link key={s.slug} to={hasServicePage(s.slug)?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
                 <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePage(s.slug)?`${s.label} ${aCity(city)}`:s.label}</span></span>
-                <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info?.servizi?.[s.slug]||s.short}</span>
+                {info?.servizi?.[s.slug] && <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info.servizi[s.slug]}</span>}
               </Link>
             ))}
           </div>
@@ -1695,7 +1701,10 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia anche in queste città</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-            {AGENCY_CITIES.filter(c=>c!==city).map(c=>(
+            {/* Solo le 8 città più vicine (prima: tutte, 67 link uguali in ogni pagina; brief SEO 16/11, R9
+                come R1). Tutte le altre restano raggiungibili da /dove-lavoriamo, linkata qui sotto. */}
+            {/* più, sempre, le città principali (richiesta SEO 16/11), senza ripetere quelle già vicine */}
+            {[...new Set([...byDistance(city, AGENCY_CITIES.filter(c=>c!==city)).slice(0,8), ...MAIN_AGENCY_CITIES.filter(c=>c!==city&&AGENCY_CITIES.includes(c))])].map(c=>(
               <Link key={c} to={agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
             ))}
           </div>
@@ -1758,6 +1767,8 @@ const limitCards=(groups: {city:string;cases:any[];clients:any[]}[], max: number
     return {...g,cases,clients};
   }).filter(g=>g.cases.length||g.clients.length);
 };
+// Città principali sempre linkate dalle pagine agenzia, oltre alle 8 più vicine (richiesta SEO 16/11, R9)
+const MAIN_AGENCY_CITIES=["Castellaneta","Taranto","Palagianello","Palagiano","Mottola","Massafra","Ginosa","Laterza","Bari","Ferrara"];
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
 const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
