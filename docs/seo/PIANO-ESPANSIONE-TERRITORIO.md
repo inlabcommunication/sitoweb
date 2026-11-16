@@ -34,7 +34,8 @@
 - **Lotto 4 (26/10):** Francavilla Fontana, Lecce, Nardò, Gallipoli, Fasano, Monopoli, Turi, Molfetta, Scanzano Jonico, Ferrandina. Il 01/11 erano indicizzate 17 pagine su 20.
 - **Lotto 5 (03/11):** Sava, Galatina, Otranto, Brindisi, Cassano delle Murge, Trani, Barletta, Andria, Nova Siri, Potenza.
 - **Lotto 6 (09/11), solo pagine agenzia:** Leporano, Lizzano, Copertino, Maglie, Mesagne, Carovigno, Bitonto, Corato, Tursi, Montalbano Jonico. Le pagine gestione social arrivano dopo R1 (analisi dell'08/11).
-- **Lotto 7 (candidati):** Avetrana, Maruggio (TA); Tricase, Castrignano del Capo/Santa Maria di Leuca (LE); Latiano (BR); Bisceglie, Giovinazzo, Grumo Appula (BA/BAT); Rotondella, Irsina (MT).
+- **Lotto 7 (16/11):** niente paesi nuovi. Pagine gestione social del lotto 6 + correzione del template agenzia (R9), perché 5 pagine agenzia del lotto 5 sono ancora scartate.
+- **Lotto 8 (candidati, dal 23/11 se il lotto 5 rientra):** San Marzano di San Giuseppe, Maruggio (TA); Tricase, Castrignano del Capo/Santa Maria di Leuca (LE); Oria (BR); Bisceglie, Giovinazzo, Rutigliano (BA/BAT); Rotondella, Irsina (MT).
 
 ## Cosa controllo ogni lunedì
 - Pagine indicizzate dei lotti precedenti, impressioni e query "{servizio} {paese}" in Search Console.

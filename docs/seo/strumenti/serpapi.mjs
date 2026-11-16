@@ -34,7 +34,7 @@ if (cmd === 'trends') {
 } else if (cmd === 'serp') {
   const j = await call({ engine: 'google', q, location: a2 || 'Castellaneta,Apulia,Italy', google_domain: 'google.it', gl: 'it', hl: 'it', num: '20' });
   console.log('MAPPA:'); (j.local_results?.places || []).forEach((p, i) => console.log(` ${i + 1}. ${p.title} | ${p.rating ?? '-'}★ (${p.reviews ?? 0}) | ${p.address ?? ''}`));
-  console.log('RISULTATI:'); (j.organic_results || []).forEach(r => console.log(` ${r.position}. ${r.link}`));
+  console.log('RISULTATI:'); (j.organic_results || []).forEach(r => console.log(` ${r.position}. ${(r.link||"").includes("google.it/goto") ? (r.displayed_link||r.source||r.title) : r.link}`));
 } else {
   console.log('Comandi: trends | related | serp');
 }
