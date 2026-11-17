@@ -80,5 +80,7 @@ Inoltre: risposte alle 30 domande finali, con prove, limiti, decisione e risulta
   - Servono anche l'attribuzione dei social dei clienti (tag e "social a cura di") e la misura con UTM del link in bio.
   - La SEO locale aggiunge un canale nuovo, ma non sostituisce questi due.
 
+- **17/11, messaggio sui clienti (Nicola):** ogni cliente usa tecniche comunicative diverse, coerenti con il proprio brand, con un obiettivo comune: diventare autorevole nel proprio settore. Si usa riscritto ogni volta, mai uguale su più pagine.
+
 ## Stato
 - **12/11:** audit iniziale e prime 10 priorità in `docs/seo/audit/2026-11-12-audit-iniziale-prime-10-priorita.md`.
