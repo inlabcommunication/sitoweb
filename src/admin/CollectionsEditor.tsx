@@ -284,6 +284,7 @@ const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: 
       <Field label="Testo" value={b.body} onChange={(v: string) => u('body', v)} multiline rows={4} />
       <Field label="Indirizzo del sito" value={b.url} onChange={(v: string) => u('url', v)} placeholder="https://..." />
       <ImageField label="Screenshot (facoltativo, altrimenti generato in automatico)" value={b.image} onChange={(v: string) => u('image', v)} />
+      <Field label="Testo del bottone (facoltativo)" value={b.cta} onChange={(v: string) => u('cta', v)} placeholder="Visita il sito" hint="Per una web app, per esempio: Apri l'app. Il link si apre in una nuova scheda." />
       <ObjList items={b.pages || []} onChange={(a) => u('pages', a)} addLabel="Aggiungi pagina del sito" newItem={() => ({ url: 'https://', label: '', text: '' })} titleOf={(x, i) => x.label || `Pagina ${i + 1}`}
         fields={[{ key: 'label', label: 'Nome pagina' }, { key: 'url', label: 'Indirizzo pagina' }, { key: 'text', label: 'Descrizione', kind: 'textarea' }]} /></>;
     case 'stats': return <>{titles}
