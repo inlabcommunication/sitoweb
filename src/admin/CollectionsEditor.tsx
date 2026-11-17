@@ -133,6 +133,8 @@ const REEL_FIELDS: FieldDef[] = [
   { key: 'showViews', label: 'Mostra visualizzazioni', kind: 'check', showIf: (r) => !!(r.embed || '').trim(), getValue: (r) => r.showViews ?? !!r.views },
   { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M', hint: 'Scrivi solo il numero: "visualizzazioni" lo aggiunge il sito (Instagram non lo passa nell\'embed)',
     showIf: (r) => !(r.embed || '').trim() || (r.showViews ?? !!r.views) },
+  { key: 'video', label: 'Oppure: video MP4 dalla libreria, verticale e leggero (al posto dell\'embed)', kind: 'video', showIf: (r) => !(r.embed || '').trim(),
+    hint: 'Per un video tuo, non pubblicato su Instagram. Meglio verticale 9:16 e leggero (pochi MB): parte solo quando il visitatore preme play.' },
   { key: 'cover', label: 'Copertina (facoltativa)', kind: 'image', showIf: (r) => !!(r.embed || '').trim(),
     hint: 'Immagine mostrata prima che il visitatore avvii il reel. Si importa da sola da Instagram quando incolli il reel; puoi anche caricarla a mano.' },
 ];
