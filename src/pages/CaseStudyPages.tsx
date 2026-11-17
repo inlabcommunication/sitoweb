@@ -214,7 +214,7 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
             </div>
           )}
           <div style={{ marginTop: '2rem' }}>
-            <a className="btn btn-g" href={url} target="_blank" rel="noopener noreferrer">Visita il sito <ArrowUpRight size={13} /></a>
+            <a className="btn btn-g" href={url} target="_blank" rel="noopener noreferrer">{b.cta?.trim() || 'Visita il sito'} <ArrowUpRight size={13} /></a>
           </div>
         </Section>
       );

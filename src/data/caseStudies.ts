@@ -13,7 +13,7 @@ export type CaseBlock =
   | { type: 'timeline'; tag?: string; title?: string; titleAccent?: string; items: { title: string; desc?: string }[] }
   | { type: 'checklist'; tag?: string; title?: string; titleAccent?: string; numbered?: boolean; items: string[] }
   | { type: 'steps'; tag?: string; title?: string; titleAccent?: string; body?: string; items: { title: string; desc?: string }[] }
-  | { type: 'website'; tag?: string; title?: string; titleAccent?: string; body?: string; url: string; image?: string; pages?: { url: string; label: string; text?: string }[] }
+  | { type: 'website'; tag?: string; title?: string; titleAccent?: string; body?: string; url: string; image?: string; /** testo del bottone, es. "Apri l'app" (vuoto: "Visita il sito") */ cta?: string; pages?: { url: string; label: string; text?: string }[] }
   | { type: 'stats'; tag?: string; title?: string; titleAccent?: string; body?: string; items: { value: string; label: string }[]; note?: string }
   | { type: 'reels'; tag?: string; title?: string; titleAccent?: string; items: Reel[] }
   | { type: 'gallery'; tag?: string; title?: string; titleAccent?: string; images: string[] }
