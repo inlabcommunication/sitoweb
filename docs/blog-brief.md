@@ -178,3 +178,14 @@ Dall'08/11 le pagine `/siti-web-{città}` sono in "noindex" (R2 della SEO): funz
 
 - Negli articoli non vanno linkate. Al loro posto usa `/siti-web` oppure le pagine `/agenzia-comunicazione-{città}`.
 - Prima di linkare una pagina città, controlla che non sia in noindex.
+
+## Unione delle PR del blog (decisione del Direttore, 17/11/2026)
+
+Sito Inlab unisce le PR del blog senza chiedere ogni volta il via al Direttore, se sono rispettate tutte queste condizioni:
+- la PR tocca solo l'area Blog (articoli, immagini, bozze, report, spec);
+- nessuna cifra di prezzo;
+- build ok e link esistenti;
+- OK dell'analista;
+- anteprima Vercel verde.
+
+Se una PR tocca qualcosa fuori da questi casi, serve di nuovo il via del Direttore.
