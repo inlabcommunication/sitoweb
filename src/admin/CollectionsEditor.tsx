@@ -8,7 +8,7 @@ import { SERVICES_SEO } from '../seo/routes';
 import { ReelsList } from './ReelCoverImport';
 import { getClientId } from '../lib/clientUtils';
 import { SERVICE_EXAMPLES } from '../data/serviceExamples';
-import { OTHER_CLIENTS_DEFAULT } from '../data/otherClients';
+import { caseLinksWarning, otherItemsOf } from './caseLinks';
 // Durante la digitazione: minuscole, niente spazi o accenti (i trattini finali restano)
 const slugify = (v: string) => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').slice(0, 80);
 
@@ -28,7 +28,6 @@ const moved = <T,>(arr: T[], i: number, d: number) => {
 // ── Sposta cliente tra "Progetti raccontati" e "Collaborazioni su misura" (richiesta di
 // Nicola tramite il Direttore, 12/11). Stessi campi, stesso indirizzo /cliente/{id}: si sposta
 // la scheda intera, in fondo alla sezione di destinazione, dopo una conferma. Va online con Salva.
-const otherItemsOf = (content: any): any[] => content.otherClients?.items ?? OTHER_CLIENTS_DEFAULT.items;
 /** Pagine servizio i cui "esempi" mostrano questo cliente (leggono solo i Progetti raccontati). */
 const examplesUsing = (content: any, id: string): string[] => {
   const all: Record<string, any[]> = content.serviceExamples || SERVICE_EXAMPLES;
@@ -316,13 +315,17 @@ export const CasesEditor = ({ content, set }: Props) => {
       <Note>Ogni caso studio ha una <b>card</b> (nell'elenco) e una <b>pagina</b> fatta di blocchi: aggiungi solo quelli che ti servono (testo, fasi, sito web, numeri, reel, foto, citazione) e ordinali con le frecce. La pagina mostra solo i blocchi compilati.</Note>
       {items.map((cs, i) => (
         <CardBlock key={cs.id || i} title={cs.client || 'Nuovo caso studio'} collapsed accent
-          confirmDelete={`Eliminare il caso studio "${cs.client}"?`}
+          confirmDelete={`Eliminare il caso studio "${cs.client}"?${(() => { const w = caseLinksWarning(content, cs.id, 'senza il caso'); return w ? `\n\n${w}` : ''; })()}`}
           onUp={i > 0 ? () => set('cases.items', moved(items, i, -1)) : undefined}
           onDown={i < items.length - 1 ? () => set('cases.items', moved(items, i, 1)) : undefined}
           onDelete={() => { const a = clone(items); a.splice(i, 1); set('cases.items', a); }}>
 
           <SectionTitle>Pubblicazione</SectionTitle>
-          <Check label={`Pubblica il caso studio (pagina /casi-studio/${cs.id || '…'})`} value={cs.published !== false} onChange={(v) => updCase(i, { published: v })} />
+          <Check label={`Pubblica il caso studio (pagina /casi-studio/${cs.id || '…'})`} value={cs.published !== false} onChange={(v) => {
+            const warn = v ? null : caseLinksWarning(content, cs.id, 'con il caso in bozza');
+            if (warn && !confirm(`Mettere in bozza il caso "${cs.client}"?\n\n${warn}\nLa modifica va online quando premi Salva.`)) return;
+            updCase(i, { published: v });
+          }} />
           <Note>{cs.published === false ? 'Bozza: il caso non compare sul sito (né in elenco, né nelle pagine città, né su Google) finché non spunti "Pubblica".' : 'Pubblicato: compare in "Non solo contenuti" e ha la sua pagina.'}</Note>
           <MoveBtn label='Crea scheda cliente da questo caso' onClick={() => {
             const others = otherItemsOf(content);
