@@ -53,10 +53,10 @@ export const OTHER_CLIENTS_PREFILL: Record<string, Partial<OtherClient>> = {
   },
   'inox-racing-puglia': {
     sector: 'Marmitte sportive in acciaio inox',
-    summary: 'Marmitte sportive in acciaio inox per auto sportive e storiche. In due anni da 790 a oltre 3.000 follower e 4 mesi di prenotazioni fisse.',
-    description: "Inox Racing Puglia realizza marmitte sportive in acciaio inox. Angelo, il titolare, lavora per due tipi di clienti: chi ha un'auto sportiva e chi ha un'auto storica. Lo seguiamo nella strategia e lo supportiamo nella pubblicazione dei contenuti. In due anni il profilo è passato da 790 a più di 3.000 follower, ma il risultato che conta davvero sono le richieste: oggi Angelo ha quattro mesi di prenotazioni fisse.",
+    summary: 'Marmitte sportive in acciaio inox per auto sportive e storiche. In due anni da circa 800 a quasi 4.000 follower e da un mese a 4 mesi di agenda piena.',
+    description: "Inox Racing Puglia realizza marmitte sportive in acciaio inox. Angelo, il titolare, lavora per due tipi di clienti: chi ha un'auto sportiva e chi ha un'auto storica. Lo seguiamo nella strategia e lo supportiamo nella pubblicazione dei contenuti. In due anni il profilo è passato da circa 800 a quasi 4.000 follower, ma il risultato che conta davvero sono le richieste: oggi Angelo ha l'agenda piena da un mese fino a quattro mesi, in continuo.",
     services: ['Strategia social', 'Supporto alla pubblicazione'],
-    results: ['Da 790 a oltre 3.000 follower in 2 anni', '4 mesi di prenotazioni fisse'],
+    results: ['Da circa 800 a quasi 4.000 follower in 2 anni', 'Da un mese a 4 mesi di agenda piena'],
   },
   'casa28': {
     sector: 'Ristorante', location: 'Castellaneta (TA)',
