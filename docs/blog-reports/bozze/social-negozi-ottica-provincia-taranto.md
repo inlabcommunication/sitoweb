@@ -1,5 +1,5 @@
 ---
-pubblicare: martedì 24/11/2026
+pubblicare: venerdì 27/11/2026
 slug: social-negozi-ottica-provincia-taranto
 title: "Social media per negozi di ottica in provincia di Taranto: far scegliere l'occhiale prima di entrare"
 excerpt: "Come usare Instagram e Facebook per un negozio di ottica in provincia di Taranto: reel sulle montature, le persone del negozio, i brand, le lenti spiegate semplici e i messaggi per prenotare."
