@@ -21,8 +21,8 @@ export const SERVICE_EXAMPLES: Record<string, ServiceExample[]> = {
       tags: ['Sito web', 'Lead generation', 'Brand Lumina'],
       caseStudy: 'ricciardi',
     },
-    // Web app in arrivo: Pala Padel (web app dei campionati), gestionale per
-    // attività, menu digitale per locali. Aggiungerle qui come kind: 'site'.
+    // Valori di riserva: gli esempi online si modificano dalla dashboard (serviceExamples in
+    // Firestore). Web app in arrivo (es. Pala Padel, web app dei campionati): aggiungerle da lì.
   ],
   'gestione-social': [
     { kind: 'client', clientId: 'studio-dentistico-ricciardi' },
