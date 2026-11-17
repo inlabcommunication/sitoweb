@@ -163,3 +163,29 @@ Regole di scrittura:
 - **FAQ:** le domande non si ripetono tra un articolo e l'altro.
 - **Argomenti:** un articolo nuovo deve rispondere a una ricerca diversa da quelle già coperte. Se l'argomento è già trattato, si aggiorna l'articolo esistente invece di scriverne un altro.
 - **Esempi e clienti:** ogni articolo porta un esempio concreto suo. Si varia il cliente citato quando è possibile.
+
+## Casi studio in bozza (avviso dell'analista, tramite Sito Inlab, 13/11/2026)
+
+Dal 13/11 un caso studio si può mettere in bozza dalla dashboard. In quel caso, i link scritti a mano negli articoli verso `/casi-studio/…` danno errore 404.
+
+- Se il Direttore avvisa che un caso studio passa in bozza, togli quei link o sostituiscili, per esempio con la scheda `/cliente/…` dello stesso cliente, se esiste.
+- Prima di pubblicare, cerca gli articoli che linkano quel caso con `grep -n "/casi-studio/" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`.
+- Oggi sono linkati `paresteta` e `ricciardi`.
+
+## Pagine città escluse da Google (avviso di Sito Inlab, 17/11/2026)
+
+Dall'08/11 le pagine `/siti-web-{città}` sono in "noindex" (R2 della SEO): funzionano, ma Google non le mostra.
+
+- Negli articoli non vanno linkate. Al loro posto usa `/siti-web` oppure le pagine `/agenzia-comunicazione-{città}`.
+- Prima di linkare una pagina città, controlla che non sia in noindex.
+
+## Unione delle PR del blog (decisione del Direttore, 17/11/2026)
+
+Sito Inlab unisce le PR del blog senza chiedere ogni volta il via al Direttore, se sono rispettate tutte queste condizioni:
+- la PR tocca solo l'area Blog (articoli, immagini, bozze, report, spec);
+- nessuna cifra di prezzo;
+- build ok e link esistenti;
+- OK dell'analista;
+- anteprima Vercel verde.
+
+Se una PR tocca qualcosa fuori da questi casi, serve di nuovo il via del Direttore.
