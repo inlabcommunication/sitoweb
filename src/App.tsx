@@ -2198,7 +2198,8 @@ const PageCasiStudio = () => {
             initial={false}
             style={{fontSize:16,color:"var(--m)",maxWidth:640,lineHeight:1.75}}
           >
-            Non solo contenuti. Progetti costruiti con strategia, direzione creativa e obiettivi concreti — raccontati passo per passo.
+            {/* Richiesta di Nicola 17/11 (tramite il Direttore) */}
+            Ogni progetto parte dal brand: i nostri clienti hanno usato tecniche comunicative diverse, ciascuna coerente con la propria identità, ma con un obiettivo comune: diventare autorevoli nel proprio settore.
           </motion.p>
         </div>
       </section>
