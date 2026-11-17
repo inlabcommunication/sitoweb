@@ -416,10 +416,10 @@ export const ServiceExamplesEditor = ({ content, set }: Props) => {
           <Select label="Tipo" value={e.kind} onChange={(v) => upd(i, v === 'site' ? { kind: v, title: e.title || '', url: e.url || 'https://', desc: e.desc || '' } : v === 'client' ? { kind: v, clientId: e.clientId || clients[0]?.id } : { kind: v, caseId: e.caseId || cases[0]?.id, title: e.title || '', desc: e.desc || '' })}
             options={[['site', 'Sito web / web app'], ['client', 'Scheda cliente'], ['case', 'Caso studio']]} />
           {e.kind === 'site' && <>
-            <Field label="Titolo" value={e.title} onChange={(v: string) => upd(i, { title: v })} placeholder="Es. Pala Padel — prenotazione campi" />
+            <Field label="Titolo" value={e.title} onChange={(v: string) => upd(i, { title: v })} placeholder="Es. Pala Padel — web app dei campionati" />
             <Field label="Indirizzo" value={e.url} onChange={(v: string) => upd(i, { url: v })} placeholder="https://..." />
             <Field label="Descrizione" value={e.desc} onChange={(v: string) => upd(i, { desc: v })} multiline rows={3} />
-            <Field label="Etichette (separate da virgola)" value={(e.tags || []).join(', ')} onChange={(v: string) => upd(i, { tags: v.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="Web app, Prenotazioni" />
+            <Field label="Etichette (separate da virgola)" value={(e.tags || []).join(', ')} onChange={(v: string) => upd(i, { tags: v.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="Web app, Campionati" />
             <ImageField label="Screenshot (facoltativo, altrimenti generato in automatico)" value={e.image} onChange={(v: string) => upd(i, { image: v })} />
             <Select label="Caso studio collegato" value={e.caseStudy || ''} onChange={(v) => upd(i, { caseStudy: v || undefined })}
               options={[['', '— Nessuno —'], ...cases.map((c: any) => [c.id, c.client] as [string, string])]} />

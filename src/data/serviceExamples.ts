@@ -21,7 +21,7 @@ export const SERVICE_EXAMPLES: Record<string, ServiceExample[]> = {
       tags: ['Sito web', 'Lead generation', 'Brand Lumina'],
       caseStudy: 'ricciardi',
     },
-    // Web app in arrivo: Pala Padel (prenotazioni campi), gestionale per
+    // Web app in arrivo: Pala Padel (web app dei campionati), gestionale per
     // attività, menu digitale per locali. Aggiungerle qui come kind: 'site'.
   ],
   'gestione-social': [
