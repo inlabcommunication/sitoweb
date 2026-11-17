@@ -179,13 +179,16 @@ Dall'08/11 le pagine `/siti-web-{città}` sono in "noindex" (R2 della SEO): funz
 - Negli articoli non vanno linkate. Al loro posto usa `/siti-web` oppure le pagine `/agenzia-comunicazione-{città}`.
 - Prima di linkare una pagina città, controlla che non sia in noindex.
 
-## Unione delle PR del blog (decisione del Direttore, 17/11/2026)
+## Unione delle PR del blog (decisione del Direttore, 17/11/2026, con la precisazione dell'analista)
 
-Sito Inlab unisce le PR del blog senza chiedere ogni volta il via al Direttore, se sono rispettate tutte queste condizioni:
-- la PR tocca solo l'area Blog (articoli, immagini, bozze, report, spec);
-- nessuna cifra di prezzo;
-- build ok e link esistenti;
-- OK dell'analista;
-- anteprima Vercel verde.
+Per le PR solo-blog, il Direttore ha dato un via fisso. Questo via sostituisce **solo il suo via** per ogni PR. Sono PR solo-blog quelle che toccano solo articoli, immagini, bozze, report e spec, senza cifre di prezzo.
 
-Se una PR tocca qualcosa fuori da questi casi, serve di nuovo il via del Direttore.
+Per ogni PR restano comunque obbligatori:
+- il controllo tecnico di Sito Inlab (build ok, link esistenti);
+- l'OK dell'analista sull'**ultimo** commit;
+- l'anteprima Vercel verde.
+
+Ne segue:
+- **Chi unisce:** sempre Sito Inlab.
+- **Commit aggiunti dopo un controllo:** fanno ripartire i controlli, quindi vanno evitati.
+- **PR che toccano altro:** serve di nuovo il via del Direttore.
