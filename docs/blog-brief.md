@@ -171,3 +171,10 @@ Dal 13/11 un caso studio si può mettere in bozza dalla dashboard. In quel caso,
 - Se il Direttore avvisa che un caso studio passa in bozza, togli quei link o sostituiscili, per esempio con la scheda `/cliente/…` dello stesso cliente, se esiste.
 - Prima di pubblicare, cerca gli articoli che linkano quel caso con `grep -n "/casi-studio/" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`.
 - Oggi sono linkati `paresteta` e `ricciardi`.
+
+## Pagine città escluse da Google (avviso di Sito Inlab, 17/11/2026)
+
+Dall'08/11 le pagine `/siti-web-{città}` sono in "noindex" (R2 della SEO): funzionano, ma Google non le mostra.
+
+- Negli articoli non vanno linkate. Al loro posto usa `/siti-web` oppure le pagine `/agenzia-comunicazione-{città}`.
+- Prima di linkare una pagina città, controlla che non sia in noindex.

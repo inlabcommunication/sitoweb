@@ -478,7 +478,7 @@ Un sito nuovo viene di solito indicizzato in qualche giorno o settimana, ma per 
 
 Se hai già social attivi, il passo successivo è dare loro una "casa": un sito semplice, veloce, con i tuoi servizi ben spiegati e collegato alla scheda Google. Per capire da cosa dipende il preventivo, leggi [quanto costa un sito web per un'attività locale](/blog/quanto-costa-sito-web-attivita-locale-puglia). Per curare anche la parte social, leggi [cosa include una gestione social per attività locali](/blog/gestione-social-attivita-locale-cosa-include). Se produci vino, olio o altri prodotti del territorio, trovi come venderli online nella guida ai [prodotti tipici pugliesi online](/blog/vendere-prodotti-tipici-pugliesi-online).
 
-Se la tua attività è in provincia di Taranto, trovi i dettagli nella pagina sulla [realizzazione di siti web a Taranto](/siti-web-taranto). Oppure scopri il servizio [Siti Web & Web App](/siti-web) e [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+Se la tua attività è in provincia di Taranto, trovi come lavoriamo nella pagina della nostra [agenzia di comunicazione a Taranto](/agenzia-comunicazione-taranto). Oppure scopri il servizio [Siti Web & Web App](/siti-web) e [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
   {
     slug: 'tracking-pixel-email-garante',
@@ -1316,7 +1316,7 @@ Il punto pratico: collega la scheda, scegli tre metriche e guardale ogni mese, s
 
 Se ti chiedi se ti serve ancora un sito quando hai già la scheda e i social, leggi [sito web o solo social: cosa serve a un'attività locale](/blog/sito-web-o-solo-social-attivita-locale).
 
-Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, sito e misurazione, possiamo aiutarti con i [siti web a Taranto](/siti-web-taranto) e con la [gestione social a Taranto](/gestione-social-taranto), così che le informazioni siano coerenti ovunque. Se vuoi partire da un controllo della tua scheda, [parliamone](/contatti).
+Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, sito e misurazione, possiamo aiutarti con i [siti web](/siti-web) e con la [gestione social a Taranto](/gestione-social-taranto), così che le informazioni siano coerenti ovunque. Se vuoi partire da un controllo della tua scheda, [parliamone](/contatti).
 
 **Fonti**
 
@@ -3873,6 +3873,6 @@ Il progetto sì, ma dominio, hosting e manutenzione hanno costi che continuano n
 
 Apri il telefono e cerca la tua attività su Google come farebbe un cliente: cosa trova? Annota cosa manca (orari, servizi, foto, un modo per prenotare) e quali siti dei concorrenti ti sembrano più chiari. Quella lista è già una traccia per il tuo futuro sito, e la base per chiedere preventivi confrontabili.
 
-Realizziamo siti per attività in tutta la Puglia: vedi i nostri siti web a [Taranto](/siti-web-taranto) e a [Castellaneta](/siti-web-castellaneta), o la nostra agenzia di comunicazione a [Bari](/agenzia-comunicazione-bari). Scopri il servizio di [siti web](/siti-web) oppure [mandaci la tua lista](/contatti): ti rispondiamo entro 24 ore con le pagine che faremmo per prime.`,
+Realizziamo siti per attività in tutta la Puglia: vedi la nostra agenzia di comunicazione a [Taranto](/agenzia-comunicazione-taranto), a [Castellaneta](/agenzia-comunicazione-castellaneta) e a [Bari](/agenzia-comunicazione-bari). Scopri il servizio di [siti web](/siti-web) oppure [mandaci la tua lista](/contatti): ti rispondiamo entro 24 ore con le pagine che faremmo per prime.`,
   },
 ];
