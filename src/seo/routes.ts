@@ -419,7 +419,7 @@ export const getSeo = (rawPath: string): Seo => {
   }
   if (path === '/clienti') {
     return page(path, `Clienti e casi studio | ${BRAND}`,
-      'Progetti raccontati passo per passo: strategie social, siti web, lead generation e contenuti per aziende e attività in provincia di Taranto e in Puglia.',
+      'Clienti InLab in Puglia: ogni progetto usa tecniche diverse, coerenti con il brand, con un obiettivo comune: diventare autorevoli nel proprio settore.',
       { sitemap: { priority: 0.8, changefreq: 'monthly' } }, [['Clienti', '/clienti']]);
   }
   if (path === '/contatti') {
