@@ -1,0 +1,93 @@
+rules_version = '2';
+// Regole Firestore di Drinkave.
+// - Contenuti (menu, news, podcast): li leggono tutti, li modifica solo l'admin.
+// - Clienti: chiunque può iscriversi, ma solo l'admin vede l'elenco.
+// - Parola segreta: la legge solo chi è iscritto (o è entrato con un numero iscritto) e l'admin.
+// Un admin è un utente con email/password che ha un documento in /admins/{uid} (creato a mano dalla console).
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    function isAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/admins/$(request.auth.uid));
+    }
+    function str(v, min, max) { return v is string && v.size() >= min && v.size() <= max; }
+    function tel(v) { return v is string && v.matches('^\\+[0-9]{8,15}$'); }
+
+    match /admins/{uid} {
+      allow read: if signedIn() && request.auth.uid == uid;
+      allow write: if false;
+    }
+
+    match /contenuti/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /news/{id} {
+      allow read: if resource.data.pubblicata == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    match /podcast/{id} {
+      allow read: if resource.data.pubblicato == true || isAdmin();
+      allow write: if isAdmin();
+    }
+
+    // Iscrizione: va creata insieme a /telefoni/{numero} nello stesso batch.
+    match /clienti/{uid} {
+      allow read, delete: if isAdmin();
+      allow update: if false;
+      allow create: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['nome', 'cognome', 'telefono', 'email', 'consensoMarketing', 'creato'])
+        && str(request.resource.data.nome, 1, 60)
+        && str(request.resource.data.cognome, 1, 60)
+        && tel(request.resource.data.telefono)
+        && str(request.resource.data.email, 0, 120)
+        && request.resource.data.consensoMarketing is bool
+        && request.resource.data.creato == request.time
+        && getAfter(/databases/$(database)/documents/telefoni/$(request.resource.data.telefono)).data.uid == uid;
+    }
+
+    // Indice dei numeri iscritti: nessuno lo legge, serve solo alle regole.
+    match /telefoni/{numero} {
+      allow read: if false;
+      allow delete: if isAdmin();
+      allow update: if false;
+      allow create: if signedIn() && tel(numero)
+        && request.resource.data.keys().hasOnly(['uid'])
+        && request.resource.data.uid == request.auth.uid
+        && existsAfter(/databases/$(database)/documents/clienti/$(request.auth.uid));
+    }
+
+    // "Accedi" da un altro dispositivo: consentito solo se il numero è iscritto.
+    match /accessi/{uid} {
+      allow read: if isAdmin();
+      allow create, update: if signedIn() && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['telefono', 'quando'])
+        && tel(request.resource.data.telefono)
+        && request.resource.data.quando == request.time
+        && exists(/databases/$(database)/documents/telefoni/$(request.resource.data.telefono));
+      allow delete: if isAdmin();
+    }
+
+    match /segreto/{id} {
+      allow read: if isAdmin()
+        || (signedIn() && exists(/databases/$(database)/documents/clienti/$(request.auth.uid)))
+        || (signedIn()
+            && exists(/databases/$(database)/documents/accessi/$(request.auth.uid))
+            && exists(/databases/$(database)/documents/telefoni/$(get(/databases/$(database)/documents/accessi/$(request.auth.uid)).data.telefono)));
+      allow write: if isAdmin();
+    }
+
+    // Token per le notifiche push: si possono solo aggiungere; li legge il server (Admin SDK).
+    match /pushTokens/{token} {
+      allow read: if false;
+      allow create, update: if signedIn()
+        && request.resource.data.keys().hasOnly(['token', 'creato'])
+        && request.resource.data.token == token
+        && token.size() < 400
+        && request.resource.data.creato == request.time;
+      allow delete: if isAdmin();
+    }
+  }
+}
