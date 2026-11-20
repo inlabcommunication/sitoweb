@@ -133,6 +133,8 @@ const REEL_FIELDS: FieldDef[] = [
   { key: 'showViews', label: 'Mostra visualizzazioni', kind: 'check', showIf: (r) => !!(r.embed || '').trim(), getValue: (r) => r.showViews ?? !!r.views },
   { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M', hint: 'Scrivi solo il numero: "visualizzazioni" lo aggiunge il sito (Instagram non lo passa nell\'embed)',
     showIf: (r) => !(r.embed || '').trim() || (r.showViews ?? !!r.views) },
+  { key: 'video', label: 'Oppure: video MP4 dalla libreria, verticale e leggero (al posto dell\'embed)', kind: 'video', showIf: (r) => !(r.embed || '').trim(),
+    hint: 'Per un video tuo, non pubblicato su Instagram. Meglio verticale 9:16 e leggero (pochi MB): parte solo quando il visitatore preme play.' },
   { key: 'cover', label: 'Copertina (facoltativa)', kind: 'image', showIf: (r) => !!(r.embed || '').trim(),
     hint: 'Immagine mostrata prima che il visitatore avvii il reel. Si importa da sola da Instagram quando incolli il reel; puoi anche caricarla a mano.' },
 ];
@@ -284,6 +286,7 @@ const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: 
       <Field label="Testo" value={b.body} onChange={(v: string) => u('body', v)} multiline rows={4} />
       <Field label="Indirizzo del sito" value={b.url} onChange={(v: string) => u('url', v)} placeholder="https://..." />
       <ImageField label="Screenshot (facoltativo, altrimenti generato in automatico)" value={b.image} onChange={(v: string) => u('image', v)} />
+      <Field label="Testo del bottone (facoltativo)" value={b.cta} onChange={(v: string) => u('cta', v)} placeholder="Visita il sito" hint="Per una web app, per esempio: Apri l'app. Il link si apre in una nuova scheda." />
       <ObjList items={b.pages || []} onChange={(a) => u('pages', a)} addLabel="Aggiungi pagina del sito" newItem={() => ({ url: 'https://', label: '', text: '' })} titleOf={(x, i) => x.label || `Pagina ${i + 1}`}
         fields={[{ key: 'label', label: 'Nome pagina' }, { key: 'url', label: 'Indirizzo pagina' }, { key: 'text', label: 'Descrizione', kind: 'textarea' }]} /></>;
     case 'stats': return <>{titles}
@@ -416,10 +419,10 @@ export const ServiceExamplesEditor = ({ content, set }: Props) => {
           <Select label="Tipo" value={e.kind} onChange={(v) => upd(i, v === 'site' ? { kind: v, title: e.title || '', url: e.url || 'https://', desc: e.desc || '' } : v === 'client' ? { kind: v, clientId: e.clientId || clients[0]?.id } : { kind: v, caseId: e.caseId || cases[0]?.id, title: e.title || '', desc: e.desc || '' })}
             options={[['site', 'Sito web / web app'], ['client', 'Scheda cliente'], ['case', 'Caso studio']]} />
           {e.kind === 'site' && <>
-            <Field label="Titolo" value={e.title} onChange={(v: string) => upd(i, { title: v })} placeholder="Es. Pala Padel — prenotazione campi" />
+            <Field label="Titolo" value={e.title} onChange={(v: string) => upd(i, { title: v })} placeholder="Es. Pala Padel — web app dei campionati" />
             <Field label="Indirizzo" value={e.url} onChange={(v: string) => upd(i, { url: v })} placeholder="https://..." />
             <Field label="Descrizione" value={e.desc} onChange={(v: string) => upd(i, { desc: v })} multiline rows={3} />
-            <Field label="Etichette (separate da virgola)" value={(e.tags || []).join(', ')} onChange={(v: string) => upd(i, { tags: v.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="Web app, Prenotazioni" />
+            <Field label="Etichette (separate da virgola)" value={(e.tags || []).join(', ')} onChange={(v: string) => upd(i, { tags: v.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="Web app, Campionati" />
             <ImageField label="Screenshot (facoltativo, altrimenti generato in automatico)" value={e.image} onChange={(v: string) => upd(i, { image: v })} />
             <Select label="Caso studio collegato" value={e.caseStudy || ''} onChange={(v) => upd(i, { caseStudy: v || undefined })}
               options={[['', '— Nessuno —'], ...cases.map((c: any) => [c.id, c.client] as [string, string])]} />
