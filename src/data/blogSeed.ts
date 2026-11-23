@@ -2776,6 +2776,7 @@ Se hai un'attività a Taranto o in provincia, scopri come lavoriamo come [agenzi
     tags: ['social media manager', 'Taranto', 'gestione social', 'instagram', 'attività locali'],
     author: 'Nicola Carpignano',
     date: '2026-10-03',
+    updated: '2026-11-23',
     cover: '/blog/social-media-manager-taranto/cover.jpg',
     coverAlt: 'Social media manager a Taranto che pianifica contenuti, riprese e report per un\'attività',
     published: true,
@@ -2877,7 +2878,7 @@ Per strategia, testi, pubblicazione e messaggi sì. Per foto e video invece serv
 
 ### Quanto tempo serve per vedere risultati?
 
-I primi segnali, come più messaggi e più interazioni dalle persone della zona, arrivano di solito nei primi mesi. Una crescita stabile richiede costanza nel tempo. Le sponsorizzate possono accelerare, se c'è un'offerta chiara.
+Più messaggi e più interazioni dalle persone della zona si notano già dopo il primo mese. Da lì in poi conta la costanza: un social media manager lavora bene se ha tempo per costruire, non se viene giudicato dopo poche settimane. Le sponsorizzate possono accelerare, se c'è un'offerta chiara.
 
 ### Devo dare la password dei miei profili?
 
