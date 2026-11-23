@@ -17,7 +17,15 @@ export type CaseBlock =
   | { type: 'stats'; tag?: string; title?: string; titleAccent?: string; body?: string; items: { value: string; label: string }[]; note?: string }
   | { type: 'reels'; tag?: string; title?: string; titleAccent?: string; items: Reel[] }
   | { type: 'gallery'; tag?: string; title?: string; titleAccent?: string; images: string[] }
-  | { type: 'quote'; text: string; author?: string };
+  | { type: 'quote'; text: string; author?: string }
+  /** Presentazione a slide (es. il piano presentato al cliente): immagini a scorrimento e, se c'è il file,
+   *  pulsante di download con modulo (richiesta Nicola 23/11, Paresteta). Il file è privato su Cloudinary. */
+  | { type: 'presentation'; tag?: string; title?: string; titleAccent?: string; body?: string; slides: PresentationSlide[]; cta?: string; file?: PresentationFile | null };
+
+/** Slide: immagine, testo alternativo (8-15 parole) e didascalia facoltativa (es. "visual di concept del piano") */
+export type PresentationSlide = { image: string; alt?: string; caption?: string };
+/** File da scaricare: caricato su Cloudinary come file privato ("authenticated"), mai con un indirizzo pubblico */
+export type PresentationFile = { publicId: string; name?: string; bytes?: number };
 
 export type CaseStudy = {
   id: string;
@@ -182,6 +190,7 @@ export const BLOCK_LABELS: Record<CaseBlock['type'], string> = {
   reels: 'Reel',
   gallery: 'Galleria foto',
   quote: 'Citazione / recensione',
+  presentation: 'Presentazione (slide + download)',
 };
 
 export const emptyBlock = (type: CaseBlock['type']): CaseBlock => {
@@ -195,5 +204,6 @@ export const emptyBlock = (type: CaseBlock['type']): CaseBlock => {
     case 'reels': return { type, tag: 'I reel', title: 'Contenuti', titleAccent: 'che girano.', items: [{ title: '', embed: '', showViews: false, views: '' }] };
     case 'gallery': return { type, tag: 'Foto', title: '', titleAccent: '', images: [] };
     case 'quote': return { type, text: '', author: '' };
+    case 'presentation': return { type, tag: 'La presentazione', title: '', titleAccent: '', body: '', slides: [], cta: 'Scarica la presentazione', file: null };
   }
 };

@@ -5,6 +5,7 @@ import { BrowserMockup } from '../components/BrowserMockup';
 import { ReelsGrid, Gallery, hasReel } from '../components/ReelCard';
 import type { CaseBlock, CaseStudy } from '../data/caseStudies';
 import { workAlt } from '../lib/altText';
+import { cld } from '../lib/media';
 
 // ──────────────────────────────────────────────────────────────
 // Componenti helper riutilizzabili tra le pagine caso studio
@@ -102,7 +103,47 @@ const StatValue: React.FC<{ value: string }> = ({ value }) => {
 
 const safeUrl = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
-const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, name, photoAlt }) => {
+/** Slide della presentazione: scorrimento orizzontale (dito, rotellina, frecce e tastiera), nessun iframe.
+ *  Prima slide caricata subito, le altre in lazy loading. */
+const Slides: React.FC<{ slides: { image: string; alt?: string; caption?: string }[]; name: string }> = ({ slides, name }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [at, setAt] = React.useState(0);
+  const go = (d: number) => {
+    const el = ref.current; if (!el) return;
+    const i = Math.max(0, Math.min(slides.length - 1, at + d));
+    el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' });
+  };
+  const onScroll = () => { const el = ref.current; if (el && el.clientWidth) setAt(Math.round(el.scrollLeft / el.clientWidth)); };
+  const btn: React.CSSProperties = { width: 40, height: 40, borderRadius: '50%', border: '.5px solid var(--b)', background: 'rgba(255,255,255,0.05)', color: 'var(--t)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' };
+  return (
+    <div>
+      <div ref={ref} onScroll={onScroll} tabIndex={0} role="region" aria-roledescription="carosello" aria-label={`Slide della presentazione per ${name}`}
+        onKeyDown={(e) => { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } }}
+        style={{ display: 'flex', overflowX: 'auto', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', borderRadius: 18, border: '.5px solid var(--b)', background: '#0b0b0b' }}>
+        {slides.map((s, i) => (
+          <figure key={i} style={{ flex: '0 0 100%', scrollSnapAlign: 'start', margin: 0 }} aria-label={`Slide ${i + 1} di ${slides.length}`}>
+            <img src={cld(s.image, 1600)} srcSet={[800, 1200, 1600].map((w) => `${cld(s.image, w)} ${w}w`).join(', ')} sizes="(max-width: 1280px) 100vw, 1216px"
+              alt={s.alt || `Slide ${i + 1} della presentazione per ${name}`} width={1600} height={900}
+              loading={i === 0 ? 'eager' : 'lazy'} decoding="async"
+              style={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'contain', display: 'block' }} />
+            {s.caption && <figcaption style={{ padding: '.7rem 1rem', fontSize: 12, letterSpacing: '.08em', color: 'var(--m)', borderTop: '.5px solid var(--b)' }}>{s.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+      {slides.length > 1 && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem' }}>
+          <span style={{ fontSize: 12, letterSpacing: '.15em', color: 'var(--m)' }} aria-live="polite">{at + 1} / {slides.length}</span>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button type="button" style={{ ...btn, opacity: at === 0 ? 0.35 : 1 }} disabled={at === 0} onClick={() => go(-1)} aria-label="Slide precedente"><ArrowLeft size={16} /></button>
+            <button type="button" style={{ ...btn, opacity: at === slides.length - 1 ? 0.35 : 1 }} disabled={at === slides.length - 1} onClick={() => go(1)} aria-label="Slide successiva"><ArrowRight size={16} /></button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string; caseId: string }> = ({ b, name, photoAlt, caseId }) => {
   switch (b.type) {
     case 'text':
       if (!b.body && !b.boxBody) return null;
@@ -275,6 +316,18 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
           </motion.blockquote>
         </Section>
       );
+
+    case 'presentation': {
+      const slides = (b.slides || []).filter((s) => safeUrl(s?.image));
+      if (!slides.length) return null;
+      return (
+        <Section>
+          <Title b={b} />
+          {b.body && <p style={{ fontSize: 17, color: 'var(--m)', lineHeight: 1.85, maxWidth: 760, margin: '1.5rem 0 0', whiteSpace: 'pre-line' }}>{b.body}</p>}
+          <div style={{ marginTop: '2rem' }}><Slides slides={slides} name={name} /></div>
+        </Section>
+      );
+    }
   }
   return null;
 };
@@ -332,7 +385,7 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
         </div>
       </section>
 
-      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} photoAlt={workAlt({ name: cs.client, location: cs.locations?.[0] })} />)}
+      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} caseId={cs.id} photoAlt={workAlt({ name: cs.client, location: cs.locations?.[0] })} />)}
 
       <CTABottom onClick={onContact} />
     </>
