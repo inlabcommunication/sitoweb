@@ -1120,6 +1120,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per pasticcerie, ristoranti e negozi di Bisceglie: prodotti tipici e lavoro vero raccontati con foto e video." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Giovinazzo", provincia: "provincia di Bari",
+    contesto: "Giovinazzo, a pochi chilometri da Bari, ha un centro storico affacciato sul porto, con la Cattedrale romanica. Le sere d'estate è frequentata da molti baresi per cena e passeggiate.",
+    settori: ["ristoranti e locali", "negozi del centro", "strutture ricettive"],
+    faq: { q: "Le sponsorizzate possono raggiungere chi abita a Bari?", a: "Sì: impostiamo zona e raggio sulle zone da cui arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Giovinazzo: social, foto, video e campagne per ristoranti, locali e negozi del centro storico sul mare. Preventivo gratuito.",
+    intro: "Giovinazzo ha un centro storico sul mare tra i più belli del nord barese. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, locali e negozi, da Castellaneta.",
+    focus: { titolo: "Una serata a Giovinazzo si decide sul telefono", testo: "Chi parte da Bari per cenare a Giovinazzo sceglie il locale guardando foto, recensioni e reel. Curiamo la scheda Google, i social e campagne mirate a chi abita nel raggio di mezz'ora, con contenuti che mostrano il posto com'è." },
+    servizi: { 'gestione-social': "Social per ristoranti, locali e negozi di Giovinazzo: contenuti che fanno scegliere il tuo posto per la serata." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
