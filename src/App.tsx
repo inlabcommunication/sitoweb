@@ -170,7 +170,6 @@ const G = () => (
       /* Schede cliente e casi studio più compatte da telefono (richiesta Nicola 23/11): solo spazi,
          stessa grafica. Le classi sono usate solo in quelle pagine (la home non cambia). */
       .sec-mob{padding-top:3.5rem!important;padding-bottom:3.5rem!important}
-      .hero-mob{min-height:auto!important;padding-top:7rem!important;padding-bottom:2.5rem!important}
       .gap-mob{gap:2rem!important}
       .h2-mob{margin-bottom:1.5rem!important}
       /* Reel da telefono: scorrimento orizzontale a scatti (una card al 78%, si vede che ce n'è un'altra)
@@ -2093,7 +2092,7 @@ const PageCliente = ({id}: {id: string}) => {
 
   return (
     <>
-      <section className="hero-mob" style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
+      <section style={{minHeight:"92vh",display:"flex",alignItems:"flex-end",position:"relative",overflow:"hidden",padding:"9rem 2rem 4rem",borderBottom:".5px solid var(--b)"}}>
         {heroImage
           ? <img src={cldEco(heroImage, 1600)} alt={workAlt(client)} fetchPriority="high"
               // versioni ridotte da Cloudinary per i telefoni (richiesta Performance 2, 03/10)

@@ -435,7 +435,7 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
 
   return (
     <>
-      <section ref={heroRef} className="hero-mob" style={{ minHeight: '88vh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '8rem 2rem 4rem', overflow: 'hidden', borderBottom: '.5px solid var(--b)' }}>
+      <section ref={heroRef} style={{ minHeight: '88vh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '8rem 2rem 4rem', overflow: 'hidden', borderBottom: '.5px solid var(--b)' }}>
         <motion.div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 30%, rgba(205,178,255,0.18) 0%, transparent 50%), linear-gradient(135deg, #1e1d1d 0%, #2a1f3d 100%)', y: heroY, opacity: heroOpacity }} />
         {heroImage && (
           <>
