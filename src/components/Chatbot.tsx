@@ -84,6 +84,15 @@ export const Chatbot = () => {
   // GA4 (richiesta SEO 03/11): prima apertura e contatto lasciato, una volta per conversazione
   const openedSent = useRef(false);
   const leadSent = useRef(false);
+  // GA4 (Nicola 23/11): primo messaggio scritto dal visitatore, una sola volta per sessione del
+  // browser (anche se ricarica la pagina). Senza testo del messaggio né dati personali.
+  const messageSent = useRef(false);
+  const trackFirstMessage = () => {
+    if (messageSent.current) return;
+    messageSent.current = true;
+    try { if (sessionStorage.getItem('inlab_chat_msg_ga')) return; sessionStorage.setItem('inlab_chat_msg_ga', '1'); } catch { /* navigazione privata: vale il ref */ }
+    gaEvent('chatbot_message', { page_path: window.location.pathname });
+  };
 
   // Saluto iniziale
   useEffect(() => {
@@ -114,6 +123,7 @@ export const Chatbot = () => {
     setMessages(newMessages);
     setInput('');
     setLoading(true);
+    trackFirstMessage();
 
     try {
       const response = await fetch('/api/chat', {
