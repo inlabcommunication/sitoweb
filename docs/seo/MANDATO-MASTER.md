@@ -82,5 +82,7 @@ Inoltre: risposte alle 30 domande finali, con prove, limiti, decisione e risulta
 
 - **17/11, messaggio sui clienti (Nicola):** ogni cliente usa tecniche comunicative diverse, coerenti con il proprio brand, con un obiettivo comune: diventare autorevole nel proprio settore. Si usa riscritto ogni volta, mai uguale su più pagine.
 
+- **23/11:** Nicola per ora NON attiva le email dei lead (né Resend né Brevo). Non chiederlo più nei resoconti.
+
 ## Stato
 - **12/11:** audit iniziale e prime 10 priorità in `docs/seo/audit/2026-11-12-audit-iniziale-prime-10-priorita.md`.
