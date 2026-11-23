@@ -88,6 +88,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: "Giovinazzo", region: 'Puglia', lat: 41.186, lon: 16.669 },
   { name: "Rutigliano", region: 'Puglia', lat: 41.01, lon: 17.006 },
   { name: "Rotondella", region: 'Basilicata', lat: 40.172, lon: 16.525 },
+  { name: "Irsina", region: 'Basilicata', lat: 40.743, lon: 16.241 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },

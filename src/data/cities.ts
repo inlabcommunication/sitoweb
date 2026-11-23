@@ -1156,6 +1156,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per aziende e strutture di Rotondella: il balcone dello Jonio raccontato con immagini vere." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Irsina", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Irsina conserva un centro storico antico e la Cattedrale con la statua di Sant'Eufemia, attribuita ad Andrea Mantegna. Intorno, campagne di grano e aziende agricole.",
+    settori: ["strutture ricettive", "produttori e aziende agricole", "attività del paese"],
+    faq: { q: "Potete aiutare una struttura a farsi trovare da chi visita Matera?", a: "Sì: scheda Google, sito, foto e video e campagne mirate a chi cerca dove stare vicino a Matera." },
+    description: "Agenzia di comunicazione a Irsina: social, foto, video e siti per strutture, produttori e attività di uno dei borghi più antichi della Basilicata.",
+    intro: "Irsina è un borgo sulla collina tra Matera e Potenza, con una cattedrale che custodisce un'opera attribuita a Mantegna. Seguiamo social, foto, video, sponsorizzate e siti per strutture, produttori e attività, da Castellaneta.",
+    focus: { titolo: "Far scoprire un borgo poco conosciuto", testo: "Irsina ha molto da raccontare a chi non la conosce ancora. Per strutture, produttori e attività creiamo contenuti che fanno scoprire il borgo e i suoi prodotti, con campagne per chi cerca la Basilicata autentica, vicino a Matera." },
+    servizi: { 'gestione-social': "Social per strutture e produttori di Irsina: il borgo e i suoi prodotti raccontati per chi cerca la Basilicata autentica." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
