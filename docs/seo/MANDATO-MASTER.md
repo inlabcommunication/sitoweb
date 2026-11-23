@@ -92,5 +92,12 @@ Inoltre: risposte alle 30 domande finali, con prove, limiti, decisione e risulta
   - nessun numero garantito, nessun prezzo;
   - testi in `brief/2026-11-23-tempi-risultati.md`.
 
+- **23/11, grafici nei report (Nicola, tramite il Direttore):** dal report del 30/11, ogni report con dati statistici (analisi del lunedì, brief con numeri) ha almeno 1-2 grafici.
+  - **Tipo:** barre o linee, una sola serie, valori scritti sul grafico, niente doppio asse.
+  - **Testi:** il titolo dice cosa si guarda; sotto ci sono fonte e data.
+  - **File:** PNG in `docs/seo/analisi/grafici/AAAA-MM-GG-nome.png`, inserito nel testo.
+  - **Dati mancanti:** si scrive "non disponibile", non si inventa.
+  - **Esempi:** pagine indicizzate nel tempo, quota indicizzata, impressioni e clic per settimana, posizioni locali.
+
 ## Stato
 - **12/11:** audit iniziale e prime 10 priorità in `docs/seo/audit/2026-11-12-audit-iniziale-prime-10-priorita.md`.
