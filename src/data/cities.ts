@@ -1047,6 +1047,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per aziende agricole e attività di Montalbano Jonico: campi, prodotti e Calanchi raccontati con immagini vere." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "San Marzano di San Giuseppe", provincia: "provincia di Taranto",
+    contesto: "San Marzano è una delle comunità arbëreshë della Puglia, di origine albanese, dove lingua e tradizioni si tramandano ancora oggi. Il territorio è coltivato a vigneto, nella zona del Primitivo.",
+    settori: ["cantine e aziende vinicole", "aziende agricole", "negozi e attività del paese"],
+    faq: { q: "Fate contenuti per cantine e prodotti tipici?", a: "Sì: foto e video di vigne e prodotti, etichette, social e campagne per la vendita diretta e online." },
+    description: "Agenzia di comunicazione a San Marzano di San Giuseppe: social, foto, video e siti per cantine, aziende e attività del paese. Preventivo gratuito.",
+    intro: "San Marzano di San Giuseppe è un paese di vigneti e di tradizioni arbëreshë, a est di Taranto. Seguiamo social, foto, video, sponsorizzate e siti per cantine, aziende e attività, da Castellaneta.",
+    focus: { titolo: "Un'identità che si riconosce", testo: "Poche zone hanno una storia così riconoscibile. Per una cantina o un'attività di San Marzano, raccontare le radici del paese e il lavoro di ogni giorno rende il marchio diverso da tutti gli altri. Lo facciamo con foto e video veri, social costanti e un sito che parla anche a chi compra da fuori." },
+    servizi: { 'gestione-social': "Social per cantine e attività di San Marzano: vigne, tradizioni e prodotti raccontati con immagini vere." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
