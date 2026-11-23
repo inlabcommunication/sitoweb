@@ -66,7 +66,7 @@ export const BLOG_SEED: BlogPost[] = [
     tags: ['gestione social', 'attività locali', 'instagram', 'facebook', 'piano editoriale'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
-    updated: '2026-09-28',
+    updated: '2026-11-23',
     cover: '/blog/gestione-social-attivita-locale-cosa-include/cover.jpg',
     coverAlt: 'Calendario del piano editoriale mensile di una pizzeria con reel, caroselli e storie',
     published: true,
@@ -155,7 +155,7 @@ Non esiste la scelta giusta per tutti. Dipende dal tempo che hai e da quanto con
 - **Usare solo foto di repertorio.** Le persone vogliono vedere il tuo locale, i tuoi piatti, le tue facce.
 - **Ignorare i messaggi.** Chi scrive in privato spesso è pronto a prenotare o comprare.
 - **Guardare solo i follower.** Mille follower del tuo paese valgono più di diecimila sconosciuti.
-- **Fermarsi dopo un mese.** I social danno risultati con la costanza: servono almeno tre mesi per capire cosa funziona.
+- **Fermarsi dopo un mese.** I primi segnali arrivano già dopo il primo mese, ma è la continuità a trasformarli in clienti. Chi parte con l'idea di smettere subito trasforma un investimento in una spesa.
 
 ## Cosa abbiamo imparato gestendo i social di attività locali
 
@@ -173,7 +173,7 @@ Definisce la strategia, prepara il piano editoriale, crea o coordina foto e vide
 
 ### Quanto tempo serve per vedere risultati dalla gestione social?
 
-Di solito servono almeno tre mesi di pubblicazione costante per capire cosa funziona e vedere una crescita stabile. Con le sponsorizzate i primi contatti possono arrivare prima, ma la base resta un profilo curato.
+I primi segnali si vedono già dopo il primo mese: più visualizzazioni, più interazioni, i primi messaggi. Pubblicando con costanza capisci presto cosa funziona meglio, e la crescita diventa stabile. Le sponsorizzate possono anticipare i primi contatti, ma la base resta un profilo curato.
 
 ### Devo dare le password dei miei profili all'agenzia?
 
