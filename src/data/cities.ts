@@ -1071,6 +1071,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per lidi, B&B e ristoranti di Maruggio e Campomarino: contenuti per la stagione e presenza tutto l'anno." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Tricase", provincia: "provincia di Lecce",
+    contesto: "Tricase ha un centro storico dominato da Palazzo Gallone, un porto sulla costa adriatica e, nelle campagne, una grande quercia vallonea secolare. È un punto di riferimento per il commercio del Capo di Leuca.",
+    settori: ["ristoranti e locali del porto", "strutture ricettive", "negozi e servizi del centro"],
+    faq: { q: "Le campagne possono raggiungere i paesi vicini?", a: "Sì: scegliamo zona e raggio in base a dove abitano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Tricase: social, foto, video e siti per ristoranti, strutture e attività del porto e del centro. Preventivo gratuito.",
+    intro: "Tricase è nel Capo di Leuca, tra il porto, Palazzo Gallone e la costa adriatica. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, strutture e attività, da Castellaneta.",
+    focus: { titolo: "Il riferimento del Capo di Leuca", testo: "Molti paesi del Capo di Leuca guardano a Tricase per acquisti e servizi. Per un negozio o un ristorante conta essere il primo nome trovato su Google e sui social: lo costruiamo con contenuti veri e campagne sul raggio giusto, per residenti e turisti." },
+    servizi: { 'gestione-social': "Social per ristoranti, strutture e negozi di Tricase: presenza costante per residenti e turisti del Capo di Leuca." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
