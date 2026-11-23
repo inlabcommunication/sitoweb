@@ -192,3 +192,13 @@ Ne segue:
 - **Chi unisce:** sempre Sito Inlab.
 - **Commit aggiunti dopo un controllo:** fanno ripartire i controlli, quindi vanno evitati.
 - **PR che toccano altro:** serve di nuovo il via del Direttore.
+
+## Tempi dei risultati (regola di Nicola del 23/11/2026)
+
+Per il testo completo vedi `docs/seo/LINEE-GUIDA-BLOG.md` §13 e il brief SEO `2026-11-23-tempi-risultati.md`.
+
+- **Frasi vietate:** "alcuni mesi", "almeno tre mesi", "nei primi mesi", "4-6 mesi" o simili, quando si parla del tempo che serve per vedere i risultati.
+- **Cosa dire invece:** i primi risultati si vedono **già dopo il primo mese**, poi crescono con la continuità. I social sono un investimento, non una spesa.
+- **Cosa non promettere:** numeri garantiti, prezzi, tempi per le posizioni su Google.
+- **Regola anti-somiglianza:** la frase "se pensi di fermarti dopo un mese, meglio non iniziare" resta solo nella FAQ di `/gestione-social`. Negli articoli lo stesso concetto va scritto con parole nuove.
+- **Prima di ogni PR:** `grep -n -i "alcuni mesi\|tre mesi\|primi mesi\|qualche mese" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`. Restano ammessi i "mesi" che indicano altro: scadenze di legge, contratti, piano editoriale, i "4 mesi di agenda piena" di Inox Racing.
