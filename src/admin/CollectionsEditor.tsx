@@ -9,6 +9,7 @@ import { ReelsList } from './ReelCoverImport';
 import { getClientId } from '../lib/clientUtils';
 import { SERVICE_EXAMPLES } from '../data/serviceExamples';
 import { caseLinksWarning, otherItemsOf } from './caseLinks';
+import { PrivateFileField } from './PrivateFileField';
 // Durante la digitazione: minuscole, niente spazi o accenti (i trattini finali restano)
 const slugify = (v: string) => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').slice(0, 80);
 
@@ -264,7 +265,7 @@ const TITLE_FIELDS: FieldDef[] = [
   { key: 'titleAccent', label: 'Titolo (seconda riga, in evidenza)' },
 ];
 
-const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: CaseBlock) => void; clientName: string }) => {
+const BlockFields = ({ b, onChange, clientName, caseId }: { b: CaseBlock; onChange: (b: CaseBlock) => void; clientName: string; caseId: string }) => {
   const u = (k: string, v: any) => onChange({ ...(b as any), [k]: v });
   const titles = TITLE_FIELDS.map((f) => <FieldFor key={f.key} f={f} value={(b as any)[f.key]} onChange={(v) => u(f.key, v)} />);
   switch (b.type) {
@@ -301,7 +302,9 @@ const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: 
     case 'presentation': return <>{titles}
       <Field label="Testo" value={b.body} onChange={(v: string) => u('body', v)} multiline rows={4} hint="Presentala come piano o proposta, non come risultato ottenuto." />
       <ObjList items={b.slides || []} onChange={(a) => u('slides', a)} addLabel="Aggiungi slide" newItem={() => ({ image: '', alt: '', caption: '' })} titleOf={(x, i) => `Slide ${i + 1}${x.caption ? ` — ${x.caption}` : ''}`}
-        fields={[{ key: 'image', label: 'Immagine della slide (16:9)', kind: 'image' }, { key: 'alt', label: 'Testo alternativo', hint: '8-15 parole: cosa mostra la slide (per chi non vede le immagini e per Google)' }, { key: 'caption', label: 'Didascalia (facoltativa)', placeholder: 'Es. Visual di concept del piano' }]} /></>;
+        fields={[{ key: 'image', label: 'Immagine della slide (16:9)', kind: 'image' }, { key: 'alt', label: 'Testo alternativo', hint: '8-15 parole: cosa mostra la slide (per chi non vede le immagini e per Google)' }, { key: 'caption', label: 'Didascalia (facoltativa)', placeholder: 'Es. Visual di concept del piano' }]} />
+      <Field label="Testo del pulsante" value={b.cta} onChange={(v: string) => u('cta', v)} placeholder="Scarica la presentazione" />
+      <PrivateFileField value={b.file} onChange={(v) => u('file', v)} caseId={caseId} /></>;
     case 'quote': return <>
       <Field label="Citazione / recensione" value={b.text} onChange={(v: string) => u('text', v)} multiline rows={3} />
       <Field label="Autore" value={b.author} onChange={(v: string) => u('author', v)} placeholder="Es. Dott. Francesco Ricciardi" /></>;
@@ -370,7 +373,7 @@ export const CasesEditor = ({ content, set }: Props) => {
               onUp={j > 0 ? () => setBlocks(i, moved(cs.blocks, j, -1)) : undefined}
               onDown={j < cs.blocks.length - 1 ? () => setBlocks(i, moved(cs.blocks, j, 1)) : undefined}
               onDelete={() => { const a = clone(cs.blocks); a.splice(j, 1); setBlocks(i, a); }}>
-              <BlockFields b={b} clientName={cs.client} onChange={(nb) => { const a = clone(cs.blocks); a[j] = nb; setBlocks(i, a); }} />
+              <BlockFields b={b} clientName={cs.client} caseId={cs.id} onChange={(nb) => { const a = clone(cs.blocks); a[j] = nb; setBlocks(i, a); }} />
             </CardBlock>
           ))}
           <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>

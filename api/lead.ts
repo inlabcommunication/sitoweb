@@ -8,17 +8,32 @@ import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, safeEqu
 import { getApps } from "firebase-admin/app";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
+import { createHash } from "node:crypto";
 
 // "Come ci hai conosciuto?" (GS-3, Nicola 23/11): solo queste voci, uguali a quelle del modulo in src/App.tsx
 const HOW_FOUND = new Set(["Passaparola", "Ho visto un vostro lavoro sui social di un cliente", "Instagram o Facebook di InLab", "Ricerca su Google", "ChatGPT o altre AI", "Altro"]);
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
-/** Blocco «Presentazione» con file del caso pubblicato (dati della dashboard: app/site_content) */
-async function findPresentation(db: ReturnType<typeof getAdminDb>, caseId: string) {
+/** Link di download firmato per un file privato ("authenticated", raw) di Cloudinary, valido 10 minuti.
+ *  Il file non passa da questa funzione (nessun limite di 4,5 MB). Vuoto se manca la chiave segreta. */
+function signedDownload(publicId: string): string {
+  const secret = process.env.CLOUDINARY_API_SECRET;
+  if (!secret || !publicId) return "";
+  const cloud = process.env.CLOUDINARY_CLOUD_NAME || "dp2l14rly";
+  const key = process.env.CLOUDINARY_API_KEY || "189381191389964";
+  const now = Math.floor(Date.now() / 1000);
+  const p: Record<string, string> = { attachment: "true", expires_at: String(now + 600), public_id: publicId, timestamp: String(now), type: "authenticated" };
+  const signature = createHash("sha1").update(Object.keys(p).sort().map((k) => `${k}=${p[k]}`).join("&") + secret).digest("hex");
+  const qs = new URLSearchParams({ ...p, api_key: key, signature }).toString();
+  return `https://api.cloudinary.com/v1_1/${cloud}/raw/download?${qs}`;
+}
+
+/** Blocco «Presentazione» con file del caso (dati della dashboard: app/site_content); le bozze solo per la prova dell'admin */
+async function findPresentation(db: ReturnType<typeof getAdminDb>, caseId: string, allowDraft = false) {
   const snap = await db.doc("app/site_content").get();
   const cs = ((snap.data()?.cases?.items || []) as any[]).find((c) => c?.id === caseId);
-  if (!cs || cs.published === false) return null;
+  if (!cs || (cs.published === false && !allowDraft)) return null;
   const block = ((cs.blocks || []) as any[]).find((x) => x?.type === "presentation" && typeof x?.file?.publicId === "string" && x.file.publicId);
   return block ? { client: str(cs.client, 80), publicId: str(block.file.publicId, 200) } : null;
 }
@@ -33,6 +48,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Nessun dato personale: solo ID del progetto, conteggio, data e origine dell'ultimo.
     if (req.headers.authorization) {
       if (!(await requireAdmin(req))) return res.status(401).json({ error: "Non autorizzato" });
+      // Prova del download dalla dashboard (anche con il caso in bozza): nessun lead salvato
+      const testCase = str(req.query?.download, 80).replace(/[^a-z0-9-]/gi, "");
+      if (testCase) {
+        try {
+          const doc = await findPresentation(getAdminDb(), testCase, true);
+          if (!doc) return res.status(404).json({ error: "Nessun PDF salvato in questo caso: salva le modifiche e riprova." });
+          const url = signedDownload(doc.publicId);
+          return url ? res.status(200).json({ url }) : res.status(501).json({ error: "Manca CLOUDINARY_API_SECRET su Vercel" });
+        } catch (e) {
+          console.error("Download test error:", e);
+          return res.status(500).json({ error: "Database del server non raggiungibile" });
+        }
+      }
       try {
         const db = getAdminDb();
         let project = "";
@@ -110,7 +138,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         created_at: new Date().toISOString(),
       });
       await notifyLeadCapped(db, { source: "contact_form", name: lead.name, email: lead.email, company: lead.company, service: `Download: ${tag}`, page: lead.page, fonte, landing: attribution?.landing });
-      return res.status(200).json({ ok: true });
+      return res.status(200).json({ ok: true, url: signedDownload(doc.publicId) });
     }
     await db.collection("leads").add({
       name: lead.name,
