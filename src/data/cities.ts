@@ -1059,6 +1059,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per cantine e attività di San Marzano: vigne, tradizioni e prodotti raccontati con immagini vere." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Maruggio", provincia: "provincia di Taranto",
+    contesto: "Il centro storico di Maruggio conserva le tracce della Commenda dei Cavalieri di Malta. La marina di Campomarino, con spiagge e dune sullo Ionio, d'estate si riempie di turisti.",
+    settori: ["lidi e strutture balneari", "B&B e case vacanza", "ristoranti e attività del borgo"],
+    faq: { q: "Quando conviene iniziare a comunicare per l'estate?", a: "In primavera: molti turisti scelgono dove andare già da aprile." },
+    description: "Agenzia di comunicazione a Maruggio: social, foto, video e campagne per lidi, B&B e attività del borgo e di Campomarino. Preventivo gratuito.",
+    intro: "Maruggio unisce un borgo legato ai Cavalieri di Malta e il mare di Campomarino. Seguiamo social, foto, video, sponsorizzate e siti per lidi, B&B e attività, da Castellaneta.",
+    focus: { titolo: "Il borgo e il mare nella stessa comunicazione", testo: "Chi arriva a Campomarino per il mare spesso non conosce il borgo, e viceversa. Per lidi, B&B e ristoranti costruiamo contenuti che raccontano entrambi, una scheda Google curata e campagne mirate a chi sta scegliendo dove passare l'estate." },
+    servizi: { 'gestione-social': "Social per lidi, B&B e ristoranti di Maruggio e Campomarino: contenuti per la stagione e presenza tutto l'anno." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

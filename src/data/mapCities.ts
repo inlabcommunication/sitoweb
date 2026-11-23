@@ -80,6 +80,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: 'Tursi', region: 'Basilicata', lat: 40.246, lon: 16.471 },
   { name: 'Montalbano Jonico', region: 'Basilicata', lat: 40.288, lon: 16.567 },
   { name: "San Marzano di San Giuseppe", region: 'Puglia', lat: 40.454, lon: 17.506 },
+  { name: "Maruggio", region: 'Puglia', lat: 40.322, lon: 17.572 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
