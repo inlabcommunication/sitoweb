@@ -20,7 +20,9 @@ export type CaseBlock =
   | { type: 'quote'; text: string; author?: string }
   /** Presentazione a slide (es. il piano presentato al cliente): immagini a scorrimento e, se c'è il file,
    *  pulsante di download con modulo (richiesta Nicola 23/11, Paresteta). Il file è privato su Cloudinary. */
-  | { type: 'presentation'; tag?: string; title?: string; titleAccent?: string; body?: string; slides: PresentationSlide[]; cta?: string; file?: PresentationFile | null };
+  | { type: 'presentation'; tag?: string; title?: string; titleAccent?: string; body?: string; slides: PresentationSlide[]; cta?: string; file?: PresentationFile | null;
+      /** il blocco compare sul sito solo se true, anche se il caso è pubblicato (Paresteta: serve il consenso del cliente) */
+      published?: boolean };
 
 /** Slide: immagine, testo alternativo (8-15 parole) e didascalia facoltativa (es. "visual di concept del piano") */
 export type PresentationSlide = { image: string; alt?: string; caption?: string };
@@ -204,6 +206,6 @@ export const emptyBlock = (type: CaseBlock['type']): CaseBlock => {
     case 'reels': return { type, tag: 'I reel', title: 'Contenuti', titleAccent: 'che girano.', items: [{ title: '', embed: '', showViews: false, views: '' }] };
     case 'gallery': return { type, tag: 'Foto', title: '', titleAccent: '', images: [] };
     case 'quote': return { type, text: '', author: '' };
-    case 'presentation': return { type, tag: 'La presentazione', title: '', titleAccent: '', body: '', slides: [], cta: 'Scarica la presentazione', file: null };
+    case 'presentation': return { type, tag: 'La presentazione', title: '', titleAccent: '', body: '', slides: [], cta: 'Scarica la presentazione', file: null, published: false };
   }
 };

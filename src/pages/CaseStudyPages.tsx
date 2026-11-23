@@ -388,7 +388,7 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string; caseId: st
 
     case 'presentation': {
       const slides = (b.slides || []).filter((s) => safeUrl(s?.image));
-      if (!slides.length) return null;
+      if (b.published !== true || !slides.length) return null;
       return (
         <Section>
           <Title b={b} />

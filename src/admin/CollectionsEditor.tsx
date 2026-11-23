@@ -299,7 +299,9 @@ const BlockFields = ({ b, onChange, clientName, caseId }: { b: CaseBlock; onChan
       <ReelsList List={ObjList} items={b.items} onChange={(a) => u('items', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel" titleOf={(r, j) => r.title || `Reel ${j + 1}`} /></>;
     case 'gallery': return <>{titles}
       <Images label={`Foto — ${clientName}`} value={b.images} onChange={(a) => u('images', a)} /></>;
-    case 'presentation': return <>{titles}
+    case 'presentation': return <>
+      <Check label="Mostra sul sito (solo dopo il consenso del cliente: il caso Paresteta è già pubblicato)" value={b.published === true} onChange={(v) => u('published', v)} />
+      {titles}
       <Field label="Testo" value={b.body} onChange={(v: string) => u('body', v)} multiline rows={4} hint="Presentala come piano o proposta, non come risultato ottenuto." />
       <ObjList items={b.slides || []} onChange={(a) => u('slides', a)} addLabel="Aggiungi slide" newItem={() => ({ image: '', alt: '', caption: '' })} titleOf={(x, i) => `Slide ${i + 1}${x.caption ? ` — ${x.caption}` : ''}`}
         fields={[{ key: 'image', label: 'Immagine della slide (16:9)', kind: 'image' }, { key: 'alt', label: 'Testo alternativo', hint: '8-15 parole: cosa mostra la slide (per chi non vede le immagini e per Google)' }, { key: 'caption', label: 'Didascalia (facoltativa)', placeholder: 'Es. Visual di concept del piano' }]} />

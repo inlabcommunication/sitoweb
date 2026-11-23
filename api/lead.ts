@@ -34,7 +34,7 @@ async function findPresentation(db: ReturnType<typeof getAdminDb>, caseId: strin
   const snap = await db.doc("app/site_content").get();
   const cs = ((snap.data()?.cases?.items || []) as any[]).find((c) => c?.id === caseId);
   if (!cs || (cs.published === false && !allowDraft)) return null;
-  const block = ((cs.blocks || []) as any[]).find((x) => x?.type === "presentation" && typeof x?.file?.publicId === "string" && x.file.publicId);
+  const block = ((cs.blocks || []) as any[]).find((x) => x?.type === "presentation" && (x.published === true || allowDraft) && typeof x?.file?.publicId === "string" && x.file.publicId);
   return block ? { client: str(cs.client, 80), publicId: str(block.file.publicId, 200) } : null;
 }
 
