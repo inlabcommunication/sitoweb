@@ -35,3 +35,12 @@ Verificato: follower da circa 2.400 a oltre 6.000 nel 2026; il 95% degli eventi 
 
 ## Dopo il salvataggio
 Scrivere "fatto" al Direttore: Sito Inlab controlla /cliente/inox-racing-puglia, /cliente/nunzio-putignano, /cliente/sublime-tentazione, /cliente/masseria-sacramento e poi unisce l'articolo del Blog.
+
+## Nunzio Putignano — descrizione riscritta (Nicola, 23/11)
+Scheda → campo **Descrizione**:
+
+Nunzio Putignano è un'autofficina di Palagiano. Siamo partiti dalla strada più naturale: reel simpatici e spontanei, spesso in dialetto, con il titolare e il suo team in prima linea. Una comunicazione vicina alle persone, che fa sorridere e rende l'officina riconoscibile in paese e sui social.
+
+Una volta ottenuta attenzione e visibilità, ci siamo concentrati sulle informazioni tecniche, per costruire la sua autorevolezza: consigli e spiegazioni sul mondo delle auto, anche con contenuti in collaborazione con altri esperti del settore.
+
+Nunzio è partito da zero con noi ed è diventato un punto di riferimento nel mondo delle auto in zona. I social gli hanno portato clienti anche da lontano e una vera autorevolezza: oggi la gente non gli chiede solo di riparare l'auto, ma anche cosa comprare.
