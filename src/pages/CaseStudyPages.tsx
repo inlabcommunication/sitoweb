@@ -152,6 +152,13 @@ const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }
   const [f, setF] = React.useState({ nome: '', email: '', azienda: '', privacy: false });
   const [hp, setHp] = React.useState('');
   const [state, setState] = React.useState<{ sending?: boolean; error?: string; done?: boolean; url?: string }>({});
+  // il link firmato vale 10 minuti: poi i pulsanti lasciano il posto a un messaggio chiaro
+  const [expired, setExpired] = React.useState(false);
+  React.useEffect(() => {
+    if (!state.url) return;
+    const t = setTimeout(() => setExpired(true), 9.5 * 60 * 1000);
+    return () => clearTimeout(t);
+  }, [state.url]);
   const token = useRef('');
   const getToken = async () => {
     if (token.current) return token.current;
@@ -189,10 +196,15 @@ const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }
   if (!open) return <button type="button" className="btn btn-p" onClick={openForm} style={{ marginTop: '2rem' }}>{cta} <ArrowRight size={14} /></button>;
   if (state.done) return (
     <div style={{ marginTop: '2rem', padding: '1.5rem', border: '.5px solid rgba(205,178,255,0.25)', borderRadius: 18, background: 'rgba(205,178,255,0.05)' }}>
-      {state.url ? <>
-        <p style={{ fontSize: 15, color: 'var(--t)', marginBottom: '1rem' }}>Grazie! Il download è pronto: il link vale per 10 minuti.</p>
-        <a className="btn btn-p" href={state.url} rel="noopener nofollow">Scarica ora <ArrowRight size={14} /></a>
-      </> : <p style={{ fontSize: 15, color: 'var(--t)' }}>Grazie! Il download non è disponibile in questo momento: ti scriviamo noi all'indirizzo che hai lasciato.</p>}
+      {state.url ? (expired
+        ? <p style={{ fontSize: 15, color: 'var(--t)' }}>Il link per scaricare è scaduto (vale 10 minuti). Ricarica la pagina per richiederne uno nuovo, oppure scrivici a inlab.communication@gmail.com.</p>
+        : <>
+          <p style={{ fontSize: 15, color: 'var(--t)', marginBottom: '1rem' }}>Grazie! Il download è pronto: il link resta valido per 10 minuti. Se non parte, tocca «Scarica di nuovo».</p>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <a className="btn btn-p" href={state.url} rel="noopener nofollow">Scarica ora <ArrowRight size={14} /></a>
+            <a className="btn btn-g" href={state.url} rel="noopener nofollow">Scarica di nuovo</a>
+          </div>
+        </>) : <p style={{ fontSize: 15, color: 'var(--t)' }}>Grazie! Il download non è disponibile in questo momento: ti scriviamo noi all'indirizzo che hai lasciato.</p>}
     </div>
   );
   return (
