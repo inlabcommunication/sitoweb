@@ -107,3 +107,8 @@ Ogni lunedì, in quest'ordine:
 - **Citazioni esterne:** crediti sui siti dei clienti, EA Formazione, Bing/Apple/Pagine Gialle, stampa locale.
 - **Richieste di indicizzazione:** pagine dei lotti, autore, `/clienti`.
 - **"Dove lavoriamo" in dashboard:** attività di Ferrara, Bologna e Roma.
+
+## Grafici nei report (dal 30/11)
+- Si generano con `/usr/bin/python3` e matplotlib (backend `Agg`). Il `python3` di default ha PIL rotto.
+- Il PNG va in `docs/seo/analisi/grafici/AAAA-MM-GG-nome.png`.
+- Le regole sono in MANDATO-MASTER, decisione del 23/11.
