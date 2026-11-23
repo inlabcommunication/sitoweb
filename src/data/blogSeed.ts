@@ -66,7 +66,7 @@ export const BLOG_SEED: BlogPost[] = [
     tags: ['gestione social', 'attività locali', 'instagram', 'facebook', 'piano editoriale'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
-    updated: '2026-09-28',
+    updated: '2026-11-23',
     cover: '/blog/gestione-social-attivita-locale-cosa-include/cover.jpg',
     coverAlt: 'Calendario del piano editoriale mensile di una pizzeria con reel, caroselli e storie',
     published: true,
@@ -155,7 +155,7 @@ Non esiste la scelta giusta per tutti. Dipende dal tempo che hai e da quanto con
 - **Usare solo foto di repertorio.** Le persone vogliono vedere il tuo locale, i tuoi piatti, le tue facce.
 - **Ignorare i messaggi.** Chi scrive in privato spesso è pronto a prenotare o comprare.
 - **Guardare solo i follower.** Mille follower del tuo paese valgono più di diecimila sconosciuti.
-- **Fermarsi dopo un mese.** I social danno risultati con la costanza: servono almeno tre mesi per capire cosa funziona.
+- **Fermarsi dopo un mese.** I primi segnali arrivano già dopo il primo mese, ma è la continuità a trasformarli in clienti. Chi parte con l'idea di smettere subito trasforma un investimento in una spesa.
 
 ## Cosa abbiamo imparato gestendo i social di attività locali
 
@@ -173,7 +173,7 @@ Definisce la strategia, prepara il piano editoriale, crea o coordina foto e vide
 
 ### Quanto tempo serve per vedere risultati dalla gestione social?
 
-Di solito servono almeno tre mesi di pubblicazione costante per capire cosa funziona e vedere una crescita stabile. Con le sponsorizzate i primi contatti possono arrivare prima, ma la base resta un profilo curato.
+I primi segnali si vedono già dopo il primo mese: più visualizzazioni, più interazioni, i primi messaggi. Pubblicando con costanza capisci presto cosa funziona meglio, e la crescita diventa stabile. Le sponsorizzate possono anticipare i primi contatti, ma la base resta un profilo curato.
 
 ### Devo dare le password dei miei profili all'agenzia?
 
@@ -2651,6 +2651,7 @@ Scopri il nostro servizio di [branding e identità visiva](/branding) oppure [ra
     tags: ['agenzia di comunicazione', 'Taranto', 'attività locali', 'marketing locale', 'social media'],
     author: 'Nicola Carpignano',
     date: '2026-10-03',
+    updated: '2026-11-23',
     cover: '/blog/agenzia-comunicazione-taranto-come-scegliere/cover.jpg',
     coverAlt: 'Checklist con le domande per scegliere un\'agenzia di comunicazione a Taranto',
     published: true,
@@ -2751,7 +2752,7 @@ Un freelance può bastare se ti serve una sola competenza, per esempio solo i te
 
 ### Quanto tempo serve per vedere i primi risultati?
 
-Con le sponsorizzate i primi contatti possono arrivare in poche settimane. La crescita dei social e la visibilità su Google richiedono invece alcuni mesi di lavoro costante. Diffida di chi promette risultati importanti in pochi giorni.
+Un buon lavoro mostra i primi risultati già dopo il primo mese, e con le sponsorizzate i primi contatti possono arrivare anche prima. Da lì i risultati crescono solo se la comunicazione continua: va pensata come un investimento, non come un tentativo di poche settimane. Diffida di chi promette risultati importanti in pochi giorni, e chiedi all'agenzia cosa misurerete insieme già alla fine del primo mese.
 
 ### Posso cambiare agenzia senza perdere i profili?
 
@@ -2775,6 +2776,7 @@ Se hai un'attività a Taranto o in provincia, scopri come lavoriamo come [agenzi
     tags: ['social media manager', 'Taranto', 'gestione social', 'instagram', 'attività locali'],
     author: 'Nicola Carpignano',
     date: '2026-10-03',
+    updated: '2026-11-23',
     cover: '/blog/social-media-manager-taranto/cover.jpg',
     coverAlt: 'Social media manager a Taranto che pianifica contenuti, riprese e report per un\'attività',
     published: true,
@@ -2876,7 +2878,7 @@ Per strategia, testi, pubblicazione e messaggi sì. Per foto e video invece serv
 
 ### Quanto tempo serve per vedere risultati?
 
-I primi segnali, come più messaggi e più interazioni dalle persone della zona, arrivano di solito nei primi mesi. Una crescita stabile richiede costanza nel tempo. Le sponsorizzate possono accelerare, se c'è un'offerta chiara.
+Più messaggi e più interazioni dalle persone della zona si notano già dopo il primo mese. Da lì in poi conta la costanza: un social media manager lavora bene se ha tempo per costruire, non se viene giudicato dopo poche settimane. Le sponsorizzate possono accelerare, se c'è un'offerta chiara.
 
 ### Devo dare la password dei miei profili?
 
@@ -3648,6 +3650,7 @@ Seguiamo ristoranti e bar in tutta la provincia: vedi la nostra gestione social 
     tags: ['pubblicità locale', 'attività locali', 'taranto', 'google', 'social media'],
     author: 'Nicola Carpignano',
     date: '2026-11-10',
+    updated: '2026-11-23',
     cover: '/blog/pubblicizzare-attivita-locale-provincia-taranto/cover.jpg',
     coverAlt: 'Mappa della provincia di Taranto con i canali per pubblicizzare un\'attività locale',
     published: true,
@@ -3707,7 +3710,7 @@ Servono entrambi. Su Google ti trova chi cerca già un'attività come la tua; su
 
 ### Quanto tempo serve per vedere risultati?
 
-Le sponsorizzate danno i primi contatti in poche settimane. Scheda Google, recensioni e social crescono in qualche mese di lavoro costante.
+Le sponsorizzate possono dare i primi contatti in poche settimane, e già dopo il primo mese si vedono i primi effetti anche sui social. Scheda Google e recensioni migliorano passo dopo passo: più a lungo lavori con costanza, più la pubblicità rende.
 
 ## Da dove partire
 
@@ -3883,6 +3886,7 @@ Realizziamo siti per attività in tutta la Puglia: vedi la nostra agenzia di com
     tags: ['gestione social', 'risultati', 'clienti', 'taranto', 'attività locali'],
     author: 'Nicola Carpignano',
     date: '2026-11-20',
+    updated: '2026-11-23',
     cover: '/blog/social-investimento-risultati-clienti/cover.jpg',
     coverAlt: 'I risultati di quattro clienti InLab dopo la gestione dei social: follower, prenotazioni, vendite ed eventi sold out',
     published: true,
@@ -3925,7 +3929,7 @@ Sono quattro attività molto diverse: un'azienda artigiana, un'officina, una pas
 1. **Un obiettivo preciso**: prenotazioni, clienti nuovi, vendite in negozio o posti agli eventi, non solo "più like".
 2. **Contenuti veri**: le persone, il lavoro, i prodotti, senza immagini prese da internet.
 3. **Costanza**: un piano mese per mese, anche quando sembra che non succeda niente.
-4. **Pazienza**: i risultati più grandi arrivano dopo mesi, non dopo il primo post.
+4. **Continuità**: i primi segnali arrivano già nel primo mese, quelli più grandi crescono restando costanti.
 
 Quanto costa un lavoro così dipende da molte voci, che spieghiamo nella guida su [quanto costa un social media manager in Puglia](/blog/quanto-costa-social-media-manager-puglia).
 
@@ -3933,7 +3937,7 @@ Quanto costa un lavoro così dipende da molte voci, che spieghiamo nella guida s
 
 ### In quanto tempo si vedono i risultati sui social?
 
-Dipende dall'attività e dall'obiettivo. I primi segnali, come più messaggi e più richieste, arrivano spesso nei primi mesi; i risultati più solidi, come agenda piena o eventi sold out, si costruiscono nel tempo.
+Dipende dall'attività e dall'obiettivo, ma i primi segnali, come più messaggi e più richieste, si vedono già dopo il primo mese. I risultati più solidi, come agenda piena o eventi sold out, arrivano con la continuità. È proprio questa la differenza tra spesa e investimento: chi smette dopo poche settimane paga senza raccogliere.
 
 ### Come si misura se la gestione social sta funzionando?
 
