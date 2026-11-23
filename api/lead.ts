@@ -14,6 +14,15 @@ const HOW_FOUND = new Set(["Passaparola", "Ho visto un vostro lavoro sui social 
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
+/** Blocco «Presentazione» con file del caso pubblicato (dati della dashboard: app/site_content) */
+async function findPresentation(db: ReturnType<typeof getAdminDb>, caseId: string) {
+  const snap = await db.doc("app/site_content").get();
+  const cs = ((snap.data()?.cases?.items || []) as any[]).find((c) => c?.id === caseId);
+  if (!cs || cs.published === false) return null;
+  const block = ((cs.blocks || []) as any[]).find((x) => x?.type === "presentation" && typeof x?.file?.publicId === "string" && x.file.publicId);
+  return block ? { client: str(cs.client, 80), publicId: str(block.file.publicId, 200) } : null;
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   securityHeaders(res);
   // GET: il server emette un token firmato con l'ora di apertura del modulo,
@@ -69,7 +78,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const attribution = cleanAttribution(b.attribution);
   const fonte = fonteOf(attribution);
   if (attribution?.page) lead.page = attribution.page;
-  if (!lead.name || !lead.message || !EMAIL_RE.test(lead.email) || b.privacy !== true) {
+  // Download di una presentazione dei casi studio (Paresteta, 23/11): niente messaggio, solo nome, email,
+  // azienda facoltativa e informativa. Il caso deve esistere, essere pubblicato e avere il file.
+  const downloadCase = b.download ? str(b.download?.caseId, 80).replace(/[^a-z0-9-]/gi, "") : "";
+  if (b.download && !downloadCase) return res.status(400).json({ error: "Dati non validi" });
+  if (!lead.name || (!downloadCase && !lead.message) || !EMAIL_RE.test(lead.email) || b.privacy !== true) {
     return res.status(400).json({ error: "Dati non validi" });
   }
 
@@ -77,6 +90,27 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const db = getAdminDb();
     if (!(await rateLimit(db, "lead", clientIp(req), 5, 3600))) {
       return res.status(429).json({ error: "Troppi invii. Riprova più tardi." });
+    }
+    if (downloadCase) {
+      const doc = await findPresentation(db, downloadCase);
+      if (!doc) return res.status(404).json({ error: "Documento non disponibile" });
+      const tag = `download-presentazione-${downloadCase}`;
+      await db.collection("leads").add({
+        name: lead.name,
+        email: lead.email,
+        phone: null,
+        company: lead.company,
+        intent: `[DOWNLOAD] Presentazione ${doc.client}`,
+        source: "download",
+        download: tag,
+        status: "new",
+        notes: null,
+        page: lead.page,
+        attribution, fonte,
+        created_at: new Date().toISOString(),
+      });
+      await notifyLeadCapped(db, { source: "contact_form", name: lead.name, email: lead.email, company: lead.company, service: `Download: ${tag}`, page: lead.page, fonte, landing: attribution?.landing });
+      return res.status(200).json({ ok: true });
     }
     await db.collection("leads").add({
       name: lead.name,

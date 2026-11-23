@@ -6,6 +6,7 @@ import { ReelsGrid, Gallery, hasReel } from '../components/ReelCard';
 import type { CaseBlock, CaseStudy } from '../data/caseStudies';
 import { workAlt } from '../lib/altText';
 import { cld } from '../lib/media';
+import { getAttribution } from '../lib/attribution';
 
 // ──────────────────────────────────────────────────────────────
 // Componenti helper riutilizzabili tra le pagine caso studio
@@ -140,6 +141,74 @@ const Slides: React.FC<{ slides: { image: string; alt?: string; caption?: string
         </div>
       )}
     </div>
+  );
+};
+
+/** Download della presentazione: prima i dati (nome, email, azienda facoltativa, informativa), poi il file.
+ *  Il lead lo salva /api/lead con le stesse protezioni del modulo contatti (token firmato, campo trappola, limiti). */
+const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }) => {
+  const [open, setOpen] = React.useState(false);
+  const [f, setF] = React.useState({ nome: '', email: '', azienda: '', privacy: false });
+  const [hp, setHp] = React.useState('');
+  const [state, setState] = React.useState<{ sending?: boolean; error?: string; done?: boolean; url?: string }>({});
+  const token = useRef('');
+  const getToken = async () => {
+    if (token.current) return token.current;
+    try { const r = await fetch('/api/lead'); token.current = String((await r.json()).token || ''); } catch { /* riprova all'invio */ }
+    return token.current;
+  };
+  const openForm = () => { setOpen(true); getToken(); };
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!f.nome.trim() || !f.email.trim()) return setState({ error: 'Inserisci nome ed email.' });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) return setState({ error: 'Inserisci un indirizzo email valido.' });
+    if (!f.privacy) return setState({ error: "Per scaricare accetta l'informativa privacy." });
+    setState({ sending: true });
+    try {
+      const had = !!token.current;
+      const t = await getToken();
+      if (!had) await new Promise((r) => setTimeout(r, 3200)); // tempo minimo richiesto dal server
+      const r = await fetch('/api/lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: f.nome, email: f.email, company: f.azienda, privacy: f.privacy, download: { caseId },
+          website: hp, formToken: t, page: window.location.pathname, attribution: getAttribution() }),
+      });
+      if (r.status === 429) return setState({ error: "Hai fatto troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com" });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const d = await r.json().catch(() => ({}));
+      setState({ done: true, url: safeUrl(d?.url) });
+    } catch {
+      setState({ error: 'Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com' });
+    }
+  };
+  const input: React.CSSProperties = { width: '100%', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 12, padding: '12px 16px', color: 'var(--t)', fontSize: 16, fontFamily: 'var(--fb)' };
+  const label: React.CSSProperties = { fontSize: 12, fontWeight: 500, letterSpacing: '.13em', textTransform: 'uppercase', color: 'var(--m)', display: 'block', marginBottom: 6 };
+  if (!open) return <button type="button" className="btn btn-p" onClick={openForm} style={{ marginTop: '2rem' }}>{cta} <ArrowRight size={14} /></button>;
+  if (state.done) return (
+    <div style={{ marginTop: '2rem', padding: '1.5rem', border: '.5px solid rgba(205,178,255,0.25)', borderRadius: 18, background: 'rgba(205,178,255,0.05)' }}>
+      {state.url ? <>
+        <p style={{ fontSize: 15, color: 'var(--t)', marginBottom: '1rem' }}>Grazie! Il download è pronto: il link vale per 10 minuti.</p>
+        <a className="btn btn-p" href={state.url} rel="noopener nofollow">Scarica ora <ArrowRight size={14} /></a>
+      </> : <p style={{ fontSize: 15, color: 'var(--t)' }}>Grazie! Il download non è disponibile in questo momento: ti scriviamo noi all'indirizzo che hai lasciato.</p>}
+    </div>
+  );
+  return (
+    <form onSubmit={submit} noValidate style={{ marginTop: '2rem', maxWidth: 560, display: 'grid', gap: '1rem', padding: '1.5rem', border: '.5px solid var(--b)', borderRadius: 18, position: 'relative' }}>
+      <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.6 }}>Lasciaci i tuoi dati e scarica la presentazione.</p>
+      <div><label htmlFor="dl-nome" style={label}>Nome *</label><input id="dl-nome" style={input} autoComplete="name" required aria-required="true" value={f.nome} onChange={(e) => setF({ ...f, nome: e.target.value })} /></div>
+      <div><label htmlFor="dl-email" style={label}>Email *</label><input id="dl-email" type="email" style={input} autoComplete="email" required aria-required="true" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} /></div>
+      <div><label htmlFor="dl-azienda" style={label}>Azienda o attività</label><input id="dl-azienda" style={input} autoComplete="organization" value={f.azienda} onChange={(e) => setF({ ...f, azienda: e.target.value })} /></div>
+      {/* campo trappola anti-bot, invisibile alle persone (come nel modulo contatti) */}
+      <input type="text" name="inlab_hp_field" value={hp} onChange={(e) => setHp(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }} />
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+        <input type="checkbox" id="dl-privacy" checked={f.privacy} onChange={(e) => setF({ ...f, privacy: e.target.checked })} style={{ marginTop: 3, accentColor: 'var(--a)', width: 14, height: 14, flexShrink: 0 }} />
+        <label htmlFor="dl-privacy" style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.6, cursor: 'pointer' }}>
+          Ho letto e accetto la <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'var(--a)', textDecoration: 'underline' }}>privacy policy</a>. I dati servono per darti il documento e per ricontattarti in merito. *
+        </label>
+      </div>
+      {state.error && <p role="alert" style={{ fontSize: 13, color: '#ff8888' }}>{state.error}</p>}
+      <button type="submit" className="btn btn-p" disabled={state.sending} style={{ justifySelf: 'start', opacity: state.sending ? 0.6 : 1 }}>{state.sending ? 'Invio…' : 'Invia e scarica'} <ArrowRight size={14} /></button>
+    </form>
   );
 };
 
@@ -325,6 +394,7 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string; caseId: st
           <Title b={b} />
           {b.body && <p style={{ fontSize: 17, color: 'var(--m)', lineHeight: 1.85, maxWidth: 760, margin: '1.5rem 0 0', whiteSpace: 'pre-line' }}>{b.body}</p>}
           <div style={{ marginTop: '2rem' }}><Slides slides={slides} name={name} /></div>
+          {b.file?.publicId && <DownloadForm caseId={caseId} cta={b.cta?.trim() || 'Scarica la presentazione'} />}
         </Section>
       );
     }
