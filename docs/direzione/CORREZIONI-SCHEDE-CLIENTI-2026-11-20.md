@@ -6,7 +6,7 @@ Fonte: confronto di Sito Inlab (20/11) tra le schede online e `docs/seo/RISULTAT
 - **Riassunto:** "…In due anni da circa 800 a quasi 4.000 follower e da un mese a 4 mesi di agenda piena."
 - **Descrizione, frase 1:** "In due anni il profilo è passato da circa 800 a quasi 4.000 follower"
 - **Descrizione, frase 2:** "oggi Angelo ha l'agenda piena da un mese fino a quattro mesi, in continuo"
-- **Risultati:** "Da circa 800 a quasi 4.000 follower in 2 anni" / "Da un mese a 4 mesi di agenda piena"
+- **Risultati:** "Da circa 800 a quasi 4.000 follower in 2 anni" / "Da 1 mese a 4 mesi di agenda piena" (testo scelto da Nicola il 23/11, senza «in continuo»)
 
 ## 2) Nunzio Putignano (Progetti raccontati)
 Online oggi: Pagina aperta insieme a noi da zero e cresciuta fino a diventare molto riconosciuta / Video con oltre 200.000 visualizzazioni, tutte organiche, senza sponsorizzazioni / Nuovi clienti anche da paesi lontani, fino alla provincia di Bari / Un mese di appuntamenti fissi per i lavori più impegnativi / Gli viene chiesto un parere anche per l'acquisto di auto nuove.
