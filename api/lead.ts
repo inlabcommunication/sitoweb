@@ -16,6 +16,15 @@ const HOW_FOUND = new Set(["Passaparola", "Ho visto un vostro lavoro sui social 
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
+/** Tetto giornaliero per istanza alle scritture del contatore degli scarti (il numero in dashboard è «almeno N») */
+const TRAP_MAX_PER_DAY = 50;
+let trapDay = "", trapCount = 0;
+function trapBudget(): boolean {
+  const day = new Date().toISOString().slice(0, 10);
+  if (day !== trapDay) { trapDay = day; trapCount = 0; }
+  return ++trapCount <= TRAP_MAX_PER_DAY;
+}
+
 /** Link di download firmato per un file privato ("authenticated", raw) di Cloudinary, valido 10 minuti.
  *  Il file non passa da questa funzione (nessun limite di 4,5 MB). Vuoto se manca la chiave segreta. */
 function signedDownload(publicId: string): string {
@@ -73,7 +82,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         // invii scartati dagli ultimi 7 giorni (solo numeri), per vedere se il campo trappola blocca persone vere
         const days = Array.from({ length: 7 }, (_, i) => new Date(Date.now() - i * 86_400_000).toISOString().slice(0, 10));
         const snaps = await db.getAll(...days.map((d) => db.collection("_usage").doc(`lead_scartati_${d}`)));
-        const discarded = { trappola: 0, trappola_token_valido: 0 };
+        const discarded = { trappola_token_valido: 0 };
         for (const s of snaps) for (const k of Object.keys(discarded) as (keyof typeof discarded)[]) discarded[k] += Number(s.data()?.[k] || 0);
         return res.status(200).json({ project, total, last: l ? { created_at: str(l.created_at, 40), source: str(l.source, 40) } : null, discarded });
       } catch (e) {
@@ -100,9 +109,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // spesso con token valido, è la compilazione automatica di un browser e si perdono lead veri.
     const reason = trap ? (validToken && elapsed >= 3000 ? "trappola_token_valido" : "trappola") : "token";
     console.warn(`[lead] invio scartato: ${reason}${b.download ? " (download)" : ""}`);
-    // contatore solo per il campo trappola (gli invii con token non valido, i più frequenti dei bot, solo nel log:
-    // nessuna scrittura sul database per ogni richiesta di un attacco)
-    if (trap) try {
+    // Contatore nel database SOLO per «campo pieno con tempi da persona» (possibile autocompilazione, cioè
+    // lead veri persi), con un tetto in memoria per istanza: oltre il tetto solo log. Gli altri scarti solo
+    // nel log. Così un attacco non consuma la quota di scritture di Firestore (analista 23/11).
+    if (reason === "trappola_token_valido" && trapBudget()) try {
       const day = new Date().toISOString().slice(0, 10);
       await getAdminDb().collection("_usage").doc(`lead_scartati_${day}`).set({ day, [reason]: FieldValue.increment(1) }, { merge: true });
     } catch { /* il contatore non deve mai cambiare la risposta */ }
