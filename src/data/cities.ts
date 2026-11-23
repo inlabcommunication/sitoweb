@@ -1096,6 +1096,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per strutture, ristoranti ed escursioni a Santa Maria di Leuca: immagini che fanno partire e contenuti anche in inglese." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Oria", provincia: "provincia di Brindisi",
+    contesto: "Oria domina la pianura tra Brindisi e Taranto dal suo Castello svevo. Ogni estate ospita il corteo storico di Federico II e il Torneo dei Rioni, che attirano visitatori da tutta la regione.",
+    settori: ["ristoranti e locali del centro", "negozi e prodotti tipici", "attività e servizi"],
+    faq: { q: "Seguite la comunicazione di eventi?", a: "Sì: grafiche, reel, dirette e sponsorizzate prima e durante l'evento." },
+    description: "Agenzia di comunicazione a Oria: social, foto, video, siti e campagne per ristoranti, negozi e attività della città federiciana. Preventivo gratuito.",
+    intro: "Oria è la città del Castello svevo e del corteo storico di Federico II. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Un evento che può portare clienti tutto l'anno", testo: "Il corteo storico porta a Oria migliaia di persone in pochi giorni. Per ristoranti e negozi è il momento di farsi conoscere, ma il lavoro vero è non farsi dimenticare dopo: contenuti costanti, scheda Google e campagne che riportano i visitatori anche nel resto dell'anno." },
+    servizi: { 'gestione-social': "Social per ristoranti e negozi di Oria: eventi raccontati bene e presenza costante tutto l'anno." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
