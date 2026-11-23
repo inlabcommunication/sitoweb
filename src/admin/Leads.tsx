@@ -46,7 +46,7 @@ export const Leads = () => {
   const [filter, setFilter] = useState<'all' | Status>('all');
   const [search, setSearch] = useState('');
   const [loadError, setLoadError] = useState('');
-  const [check, setCheck] = useState<{ project?: string; total?: number; last?: { created_at: string; source: string } | null; error?: string } | null>(null);
+  const [check, setCheck] = useState<{ project?: string; total?: number; last?: { created_at: string; source: string } | null; error?: string; discarded?: { trappola_token_valido: number } } | null>(null);
   const [checking, setChecking] = useState(false);
 
   const load = async () => {
@@ -147,6 +147,7 @@ export const Leads = () => {
               {mismatch && <><br /><b>I due progetti sono diversi:</b> la chiave FIREBASE_SERVICE_ACCOUNT_KEY su Vercel appartiene a un altro progetto Firebase. Va sostituita con una chiave del progetto {dashboardProject}.</>}
               {!mismatch && missing && <><br /><b>Il server vede più lead della dashboard:</b> controlla che il tuo account sia tra gli admin e che le regole Firestore siano pubblicate.</>}
               {ok && <> Collegamento corretto.</>}
+              {check.discarded && check.discarded.trappola_token_valido > 0 && <><br /><b>Attenzione:</b> negli ultimi 7 giorni almeno <b>{check.discarded.trappola_token_valido}</b> invii sono stati scartati con il campo nascosto pieno ma tempi da persona: potrebbe essere la compilazione automatica di un browser (lead veri persi). Avvisa Sito Inlab.</>}
             </>}
           </div>
         );
