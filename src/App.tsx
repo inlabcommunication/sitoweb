@@ -1531,6 +1531,9 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   // (oggi gestione social): gli altri servizi puntano alle pagine generali.
   const hasServicePage=(slug: string)=>serviceCities(slug).includes(city);
   const isHome=city===BUSINESS.city;
+  // H1 personalizzato (R4): prima riga fino a "a {città}", seconda riga da lì in poi; così l'H1 può
+  // continuare dopo il nome della città, es. "a Castrignano del Capo e Santa Maria di Leuca" (lotto 8)
+  const h1At=info?.h1 ? info.h1.indexOf(aCity(city)) : -1;
   const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
   // Città nuove senza clienti (lavoriVicini): stesso blocco con i lavori dei paesi vicini (brief SEO 10/10 territorio)
@@ -1548,7 +1551,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
           <p className="section-label">Agenzia {aCity(city)} — {provincia}</p>
           <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>
-            {info?.h1?.endsWith(aCity(city)) ? info.h1.slice(0,-aCity(city).length).trim() : "Agenzia di comunicazione e marketing"}<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(city)}</span>
+            {h1At>0 ? info!.h1!.slice(0,h1At).trim() : "Agenzia di comunicazione e marketing"}<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{h1At>0 ? info!.h1!.slice(h1At) : aCity(city)}</span>
           </h1>
           <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
             {info?.intro ? <IntroText text={info.intro} link={info.introLink}/> : isHome
