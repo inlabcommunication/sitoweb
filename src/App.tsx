@@ -1355,7 +1355,7 @@ const PageChiSiamo = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
   const contact = ((useContent() as any).contact) || {};
-  const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
+  const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",come:"",msg:"",privacy:false});
   // Arrivo da una pagina gestione social (?servizio=gestione-social): servizio preselezionato,
   // sempre modificabile. Dopo il primo render, così l'HTML statico resta uguale (GS-2)
   useEffect(()=>{
@@ -1394,7 +1394,7 @@ const PageContatti = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
-          service: form.servizio, message: form.msg, privacy: form.privacy,
+          service: form.servizio, howFound: form.come, message: form.msg, privacy: form.privacy,
           website: honeypot, formToken: await tokenForSubmit(), page: window.location.pathname, attribution: getAttribution(),
         }),
       });
@@ -1476,6 +1476,15 @@ const PageContatti = () => {
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
                       <option value="">Seleziona un servizio</option>
                       {["Strategia social","Gestione social","Foto & video","Branding","Campagne Meta Ads","Sito o landing page","Organizzazione eventi","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
+                    </select>
+                  </div>
+                  {/* GS-3 (Nicola 23/11): facoltativo, salvato col lead; non va a GA4. Stesse voci in api/lead.ts */}
+                  <div>
+                    <label htmlFor="f-come" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Come ci hai conosciuto?</label>
+                    <select id="f-come" className="form-field" value={form.come} onChange={e=>setForm({...form,come:e.target.value})}
+                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.come?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
+                      <option value="">Seleziona</option>
+                      {["Passaparola","Ho visto un vostro lavoro sui social di un cliente","Instagram o Facebook di InLab","Ricerca su Google","ChatGPT o altre AI","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
                     </select>
                   </div>
                   <div>

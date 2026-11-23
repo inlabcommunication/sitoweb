@@ -9,6 +9,9 @@ import { getApps } from "firebase-admin/app";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
 
+// "Come ci hai conosciuto?" (GS-3, Nicola 23/11): solo queste voci, uguali a quelle del modulo in src/App.tsx
+const HOW_FOUND = new Set(["Passaparola", "Ho visto un vostro lavoro sui social di un cliente", "Instagram o Facebook di InLab", "Ricerca su Google", "ChatGPT o altre AI", "Altro"]);
+
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -58,6 +61,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     phone: str(b.phone, 30).replace(/[^\d+ ().-]/g, "") || null,
     company: str(b.company, 120) || null,
     service: str(b.service, 80),
+    come_ci_hai_conosciuto: HOW_FOUND.has(str(b.howFound, 80)) ? str(b.howFound, 80) : null,
     message: str(b.message, 3000),
     page: cleanPath(b.page),
   };
@@ -84,6 +88,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       status: "new",
       notes: lead.message,
       page: lead.page,
+      come_ci_hai_conosciuto: lead.come_ci_hai_conosciuto,
       attribution, fonte,
       created_at: new Date().toISOString(),
     });

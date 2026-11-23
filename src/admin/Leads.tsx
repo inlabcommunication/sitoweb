@@ -18,6 +18,8 @@ type Lead = {
   /** da dove arriva la visita (P1-2, dal 12/11): prima pagina, provenienza, UTM */
   attribution?: { landing: string | null; page: string | null; referrer: string | null; utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; click: string | null; servizio?: string | null } | null;
   fonte?: string | null;
+  /** risposta a "Come ci hai conosciuto?" del modulo contatti (GS-3, dal 23/11) */
+  come_ci_hai_conosciuto?: string | null;
   page?: string | null;
   /** valore del contratto in euro: solo interno, mai pubblicato */
   value_eur?: number | null;
@@ -99,8 +101,8 @@ export const Leads = () => {
   };
 
   const exportCsv = () => {
-    const rows = [['Email', 'Nome', 'Telefono', 'Intento', 'Stato', 'Data', 'Fonte', 'Prima pagina', 'Pagina del contatto', 'Valore €', 'Note']];
-    leads.forEach((l) => rows.push([l.email ?? '', l.name ?? '', l.phone ?? '', l.intent ?? '', STATUS_LABEL[statusOf(l)], new Date(l.created_at).toLocaleString('it'), l.fonte ?? '', l.attribution?.landing ?? '', l.page ?? l.attribution?.page ?? '', l.value_eur != null ? String(l.value_eur) : '', (l.notes ?? '').replace(/\n/g, ' ')]));
+    const rows = [['Email', 'Nome', 'Telefono', 'Intento', 'Stato', 'Data', 'Fonte', 'Come ci ha conosciuto', 'Prima pagina', 'Pagina del contatto', 'Valore €', 'Note']];
+    leads.forEach((l) => rows.push([l.email ?? '', l.name ?? '', l.phone ?? '', l.intent ?? '', STATUS_LABEL[statusOf(l)], new Date(l.created_at).toLocaleString('it'), l.fonte ?? '', l.come_ci_hai_conosciuto ?? '', l.attribution?.landing ?? '', l.page ?? l.attribution?.page ?? '', l.value_eur != null ? String(l.value_eur) : '', (l.notes ?? '').replace(/\n/g, ' ')]));
     // Celle che iniziano con = + - @ tab o a capo: apostrofo davanti, così Excel/Sheets non le
     // eseguono come formule (i nomi arrivano dal modulo pubblico; proposta analista 12/11)
     const safe = (c: string) => (/^[=+\-@\t\r]/.test(c) ? `'${c}` : c);
@@ -200,6 +202,7 @@ export const Leads = () => {
                 {selected.name && <Field icon={<Tag size={14} />} label="Nome">{selected.name}</Field>}
                 {selected.phone && <Field icon={<Phone size={14} />} label="Telefono">{selected.phone}</Field>}
                 {selected.intent && <Field icon={<Tag size={14} />} label="Intento">{selected.intent}</Field>}
+                {selected.come_ci_hai_conosciuto && <Field icon={<Tag size={14} />} label="Come ci ha conosciuto">{selected.come_ci_hai_conosciuto}</Field>}
                 {/* Da dove arriva (P1-2): presente sui lead dal 12/11 */}
                 {selected.attribution ? <>
                   <Field icon={<Tag size={14} />} label="Fonte">{selected.fonte || '—'}{selected.attribution.utm_campaign ? ` · campagna ${selected.attribution.utm_campaign}` : ''}</Field>
