@@ -2,13 +2,15 @@
 
 ATTENZIONE: il caso Paresteta è GIÀ pubblicato sul sito. Il nuovo blocco ha una casella «Mostra sul sito», SPENTA per i blocchi nuovi: finché è spenta, il sito non mostra né le slide né il download (la prova «Prova il download» dalla dashboard funziona lo stesso). Le date incoerenti del documento restano come sono (decisione di Nicola, 23/11). Il consenso di Paresteta va ottenuto prima di spuntare «Mostra sul sito».
 
-## Passi (dopo che la #133 è online o sull'anteprima della PR)
+## Passi (la #133 è online dal 23/11, merge 562ace6)
 a) Dashboard → Non solo contenuti → Paresteta → in fondo «Aggiungi blocco» → «Presentazione (slide + download)».
 b) «Carica PDF»: scegli il PDF (max 10 MB). Deve comparire «PDF caricato». Se compare un avviso «non salvato come privato», fermati e avvisa il Direttore.
 c) Salva (il blocco resta nascosto), poi «Prova il download»: si apre una scheda che deve scaricare il PDF.
 d) Se la scheda mostra un errore di Cloudinary (401 o «resource not allowed»): cloudinary.com → Settings → Security → spunta «Allow delivery of PDF and ZIP files» → Save, poi ripeti «Prova il download». Se ancora non va: avvisa il Direttore (piano B: PDF compresso sotto 4,5 MB).
-e) Slide: «Aggiungi slide» × 11; per ognuna il pulsante 📁 per caricare slide-01…11.jpg (cartella `docs/direzione/paresteta-presentazione/`), testo alternativo e didascalia dalla tabella sotto.
+e) Slide (SOLO quando il contenuto è condivisibile, cioè dopo il consenso di Paresteta: i dati della dashboard sono leggibili pubblicamente, quindi le slide caricate sono tecnicamente reperibili da chi interroga il database anche con «Mostra sul sito» spento; il PDF invece resta protetto perché è privato): «Aggiungi slide» × 11; per ognuna il pulsante 📁 per caricare slide-01…11.jpg (cartella `docs/direzione/paresteta-presentazione/`), testo alternativo e didascalia dalla tabella sotto.
 f) Spunta «Mostra sul sito» nel blocco (non «Pubblica» del caso, già attivo) solo dopo il consenso di Paresteta.
+
+ORDINE CONSIGLIATO: 1) subito: aggiungi il blocco, carica il PDF e fai «Prova il download» (punti a-d), poi scrivi «fatto, PDF caricato» al Direttore (l'analista controlla da fuori che il PDF non sia raggiungibile senza dati); 2) dopo il consenso di Paresteta: slide, testi e «Mostra sul sito».
 
 ## Titolo e testo del blocco
 - **Titolo:** Il piano strategico presentato a Paresteta
