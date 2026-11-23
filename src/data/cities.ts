@@ -1144,6 +1144,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per aziende agricole, artigiani e attività di Rutigliano: lavoro e prodotti raccontati con immagini vere." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Rotondella", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Rotondella sorge su un colle che domina la costa jonica e la piana del Metapontino. Il territorio è agricolo e arriva fino al mare, con aziende di ortofrutta e attività legate al turismo estivo.",
+    settori: ["aziende agricole e ortofrutta", "strutture ricettive", "attività del paese"],
+    faq: { q: "Lavorate anche con attività piccole?", a: "Sì: partiamo da social e foto e cresciamo con sito e campagne quando serve." },
+    description: "Agenzia di comunicazione a Rotondella: social, foto, video e siti per aziende agricole, strutture e attività tra collina e costa jonica. Preventivo gratuito.",
+    intro: "Rotondella è chiamata il balcone dello Jonio, per la vista sul golfo e sulla piana. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, strutture e attività, da Castellaneta.",
+    focus: { titolo: "Un paesaggio che vende", testo: "La vista di Rotondella è il primo contenuto che colpisce. La usiamo per raccontare aziende, strutture e prodotti con foto e video veri, siti chiari e una presenza social costante, per farsi conoscere da clienti e visitatori." },
+    servizi: { 'gestione-social': "Social per aziende e strutture di Rotondella: il balcone dello Jonio raccontato con immagini vere." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
