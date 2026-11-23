@@ -849,7 +849,7 @@ const PageGestioneSocial = () => (
       h1b="IL TUO BRAND"
       italic="con la giusta comunicazione social."
       sub="Non pubblichiamo solo post. Costruiamo una presenza digitale strategica che trasforma follower in clienti reali."
-      cta1="Richiedi un preventivo" cta1to={CONTACT_GS}
+      cta1="Richiedi una consulenza gratuita" cta1to={CONTACT_GS}
       cta2="Vedi i risultati" cta2to="/clienti"
     />
     <Marquee items={["Analisi","✦","Strategia","✦","Contenuti","✦","Pubblicazione","✦","Ottimizzazione","✦","Crescita","✦"]}/>
@@ -1889,7 +1889,8 @@ const PageCittaSEO = ({city, service}) => {
             {info?.servizi?.[svc.slug] ? <IntroText text={info.servizi[svc.slug]} link={info.introLink}/> : `InLab Communication segue ${svc.label} per attività di ${cityName} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-            <button className="btn btn-p" onClick={()=>go(svc.slug==="gestione-social"?CONTACT_GS:"/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
+            {/* GS-3 (Nicola 23/11): "consulenza gratuita" solo sulle pagine gestione social, per misurarne l'effetto */}
+            <button className="btn btn-p" onClick={()=>go(svc.slug==="gestione-social"?CONTACT_GS:"/contatti")}>{svc.slug==="gestione-social"?"Richiedi una consulenza gratuita":"Richiedi un preventivo gratuito"} <ArrowRight size={14}/></button>
             <button className="btn btn-g" onClick={()=>go("/"+svc.slug)}>Scopri il servizio</button>
           </div>
         </div>
