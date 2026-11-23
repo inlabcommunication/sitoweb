@@ -1091,6 +1091,7 @@ export const CITY_INFO: CityInfo[] = [
     faq: { q: "Potete aiutarci con le prenotazioni dirette?", a: "Sì: sito con prenotazione, foto e video, scheda Google e campagne, anche in inglese." },
     description: "Agenzia di comunicazione a Santa Maria di Leuca e Castrignano del Capo: social, foto, video e campagne per strutture, ristoranti e attività turistiche.",
     h1: "Agenzia di comunicazione a Castrignano del Capo e Santa Maria di Leuca",
+    title: "Agenzia di comunicazione a Santa Maria di Leuca | InLab",
     intro: "Santa Maria di Leuca è il punto più a sud della Puglia, dove finisce il Salento. Seguiamo social, foto, video, sponsorizzate e siti per hotel, B&B, ristoranti e attività turistiche, da Castellaneta.",
     focus: { titolo: "Farsi scegliere alla fine del Salento", testo: "Chi arriva a Leuca ha già deciso di vedere il punto più a sud della Puglia: deve solo scegliere dove dormire, mangiare o prenotare un'escursione. Prepariamo foto e video all'altezza, scheda Google curata e campagne per chi sta per arrivare, anche in inglese." },
     servizi: { 'gestione-social': "Social per strutture, ristoranti ed escursioni a Santa Maria di Leuca: immagini che fanno partire e contenuti anche in inglese." },

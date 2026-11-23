@@ -457,7 +457,9 @@ export const getSeo = (rawPath: string): Seo => {
       const own = cityInfo(city)?.paginaServizio?.[s.slug];
       // Gestione social (brief SEO 12/11, GS-1): "Gestione social media a {Città} | InLab",
       // senza " | InLab" se supera i 60 caratteri; Taranto con title e description propri
+      // Castrignano del Capo: title con Santa Maria di Leuca, il nome che la gente cerca (SEO 23/11, lotto 8)
       const gsTitle = (c: string) => c === 'Taranto' ? 'Gestione social media a Taranto | Agenzia InLab'
+        : c === 'Castrignano del Capo' ? 'Gestione social media a Santa Maria di Leuca | InLab'
         : [`Gestione social media ${aCity(c)} | InLab`, `Gestione social media ${aCity(c)}`].find((t) => t.length <= 60) || `Gestione social media ${aCity(c)}`;
       const gsTaranto = 'Gestione social media per aziende di Taranto: piano editoriale, reel, foto, community e sponsorizzate. Agenzia da Castellaneta, preventivo gratuito.';
       const isGs = s.slug === 'gestione-social';
