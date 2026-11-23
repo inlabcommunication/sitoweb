@@ -3650,6 +3650,7 @@ Seguiamo ristoranti e bar in tutta la provincia: vedi la nostra gestione social 
     tags: ['pubblicità locale', 'attività locali', 'taranto', 'google', 'social media'],
     author: 'Nicola Carpignano',
     date: '2026-11-10',
+    updated: '2026-11-23',
     cover: '/blog/pubblicizzare-attivita-locale-provincia-taranto/cover.jpg',
     coverAlt: 'Mappa della provincia di Taranto con i canali per pubblicizzare un\'attività locale',
     published: true,
@@ -3709,7 +3710,7 @@ Servono entrambi. Su Google ti trova chi cerca già un'attività come la tua; su
 
 ### Quanto tempo serve per vedere risultati?
 
-Le sponsorizzate danno i primi contatti in poche settimane. Scheda Google, recensioni e social crescono in qualche mese di lavoro costante.
+Le sponsorizzate possono dare i primi contatti in poche settimane, e già dopo il primo mese si vedono i primi effetti anche sui social. Scheda Google e recensioni migliorano passo dopo passo: più a lungo lavori con costanza, più la pubblicità rende.
 
 ## Da dove partire
 
