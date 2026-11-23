@@ -1108,6 +1108,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per ristoranti e negozi di Oria: eventi raccontati bene e presenza costante tutto l'anno." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Bisceglie", provincia: "provincia di Barletta-Andria-Trani",
+    contesto: "Bisceglie ha un porto vivace, un centro storico sul mare e, nelle campagne, il Dolmen della Chianca, uno dei monumenti preistorici più noti della Puglia. È anche la città dei sospiri, il dolce tipico locale.",
+    settori: ["pasticcerie e prodotti tipici", "ristoranti e locali del porto", "negozi e imprese"],
+    faq: { q: "Lavorate con pasticcerie?", a: "Sì: foto dei prodotti, video in laboratorio, social e campagne, come facciamo con Sublime Tentazione a Palagianello.", link: { testo: "Sublime Tentazione", href: "/cliente/sublime-tentazione" } },
+    description: "Agenzia di comunicazione a Bisceglie: social, foto, video, siti e campagne per ristoranti, pasticcerie, negozi e imprese. Preventivo gratuito.",
+    intro: "Bisceglie è una città di mare, di storia antica e di dolci tipici. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, pasticcerie, negozi e imprese, da Castellaneta.",
+    focus: { titolo: "Il prodotto tipico come biglietto da visita", testo: "Un dolce o un piatto tipico possono diventare il motivo per cui le persone scelgono proprio te. Li raccontiamo con foto e video di laboratorio e di sala, social costanti e campagne per chi vive in zona e per chi passa da Bisceglie." },
+    servizi: { 'gestione-social': "Social per pasticcerie, ristoranti e negozi di Bisceglie: prodotti tipici e lavoro vero raccontati con foto e video." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);

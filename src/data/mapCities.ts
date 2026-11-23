@@ -84,6 +84,7 @@ export const MAP_CITIES: MapCity[] = [
   { name: "Tricase", region: 'Puglia', lat: 39.93, lon: 18.355 },
   { name: "Castrignano del Capo", region: 'Puglia', lat: 39.832, lon: 18.35 },
   { name: "Oria", region: 'Puglia', lat: 40.498, lon: 17.641 },
+  { name: "Bisceglie", region: 'Puglia', lat: 41.241, lon: 16.502 },
   { name: 'Ferrara', region: 'Emilia-Romagna', lat: 44.836, lon: 11.619 },
   { name: 'Bologna', region: 'Emilia-Romagna', lat: 44.494, lon: 11.343 },
   { name: 'Roma', region: 'Lazio', lat: 41.903, lon: 12.496 },
