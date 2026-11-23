@@ -2,7 +2,18 @@
 
 Una sola lista, senza ripetizioni. Il Direttore la ripete in chat solo quando cambia qualcosa. Gli altri agenti non ripetono a Nicola ciò che c'è qui: lo segnalano al Direttore.
 
-Aggiornata: 10/10/2026
+Aggiornata: 23/11/2026
+
+## Priorità 23/11 (dashboard)
+- [ ] **4 schede clienti con i risultati verificati** (Inox, Nunzio Putignano, Sublime Tentazione, Masseria Sacramento): testi in `CORREZIONI-SCHEDE-CLIENTI-2026-11-20.md`. Sbloccano la PR #130 (articolo Blog) e i risultati su /gestione-social. Poi scrivere "fatto".
+- [ ] **PROMEMORIA (Nicola, 23/11): mettere i dati/risultati veri anche negli ALTRI clienti** (Ricciardi, DIRAM, Ventimiglia, Paresteta, Tacco, Hermitage, Casa28, Arte e Oro, La Vela, Il Paradiso, Emmesse, ecc.): per ognuno 1-3 fatti reali (da… a…, periodo, "secondo il titolare" se è un dato del cliente). Finché non ci sono dati veri, le schede restano senza numeri. Il Direttore prepara i testi appena Nicola dà i dati.
+- [ ] Caso **Pala Padel** (testi in `palapadel/COPIA-INCOLLA-DASHBOARD.md`).
+- [ ] Presentazione **Paresteta**: prima blocco + PDF + "Prova il download" (scrivere "fatto, PDF caricato"); slide e «Mostra sul sito» solo dopo il consenso di Paresteta (`paresteta-presentazione/ISTRUZIONI-DASHBOARD-PARESTETA.md`).
+- [ ] Cancellare i 2 contatti di prova «TEST Sito Inlab - da cancellare» (e controllare «Come ci ha conosciuto: Ricerca su Google»).
+- [ ] Limitare la Browser key per referrer (con *.vercel.app) · scollegare `clinicaricciardilumina-alt` · archivio vecchia storia (`serene-noether`) sì/no · restringere la routine "Chat InLab - agenti" sì/no.
+- Email dei lead: NON attive (né Resend né Brevo), decisione di Nicola 23/11.
+
+(Voci precedenti, 10/10/2026)
 
 ## Dashboard
 - [ ] Togliere l'esempio Aleph (Servizi → Esempi → Shooting → cliente "aleph-caffe") — già segnalato anche dalla SEO.
