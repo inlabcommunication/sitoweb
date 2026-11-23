@@ -844,7 +844,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
 const PageGestioneSocial = () => (
   <>
     <PageHero
-      tag="Servizio — Gestione Social Media"
+      tag="Gestione social per aziende · Taranto e Puglia"
       h1="FAI CRESCERE"
       h1b="IL TUO BRAND"
       italic="con la giusta comunicazione social."
