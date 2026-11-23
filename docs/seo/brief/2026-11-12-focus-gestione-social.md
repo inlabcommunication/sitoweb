@@ -61,7 +61,7 @@
    - **Cosa include la gestione social?** → Piano editoriale mensile, reel e video (script, riprese, montaggio), foto e grafiche, pubblicazione, risposte a commenti e messaggi, report mensile con i dati e i correttivi.
    - **Quanto costa la gestione dei social?** → Dipende da quanti canali seguiamo, quanti contenuti al mese, se servono riprese sul posto e sponsorizzate. Dopo una prima chiamata gratuita ti mandiamo una proposta su misura.
    - **Venite voi a fare foto e video?** → Sì: in provincia di Taranto e nei paesi vicini veniamo sul posto. Per le zone più lontane organizziamo giornate di riprese.
-   - **Quanto tempo serve per vedere risultati?** → I primi segnali (contenuti più visti, profilo più ordinato) arrivano nelle prime settimane. Per crescita e contatti servono di solito alcuni mesi di lavoro costante, misurati nel report mensile.
+   - **Quanto tempo serve per vedere risultati?** → ~~I primi segnali… servono di solito alcuni mesi…~~ **Superato il 23/11:** vale il testo scelto da Nicola in `docs/direzione/TESTO-FAQ-TEMPI-RISULTATI-2026-11-23.md` (vedi `brief/2026-11-23-tempi-risultati.md`).
    - **Lavorate con attività piccole?** → Sì: buona parte dei nostri clienti sono ristoranti, pasticcerie, negozi e studi della provincia di Taranto.
    - **Chi segue i miei social?** → Nicola Carpignano e Ilaria Gemma, i fondatori, con un contatto diretto.
 4. **Numeri in testa alla pagina** ("+280% crescita media follower", "94% clienti rinnovano"):

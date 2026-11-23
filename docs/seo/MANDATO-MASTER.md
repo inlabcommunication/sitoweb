@@ -84,5 +84,13 @@ Inoltre: risposte alle 30 domande finali, con prove, limiti, decisione e risulta
 
 - **23/11:** Nicola per ora NON attiva le email dei lead (né Resend né Brevo). Non chiederlo più nei resoconti.
 
+- **23/11, tempi dei risultati (Nicola):**
+  - mai scrivere "servono alcuni mesi", "4-6 mesi" o "almeno tre mesi";
+  - i primi risultati si vedono già dopo il primo mese;
+  - chi pensa di fermarsi dopo un mese è meglio che non inizi, perché sarebbe una spesa e non un investimento;
+  - i social sono un investimento;
+  - nessun numero garantito, nessun prezzo;
+  - testi in `brief/2026-11-23-tempi-risultati.md`.
+
 ## Stato
 - **12/11:** audit iniziale e prime 10 priorità in `docs/seo/audit/2026-11-12-audit-iniziale-prime-10-priorita.md`.

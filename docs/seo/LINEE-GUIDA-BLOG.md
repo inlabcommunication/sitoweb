@@ -417,3 +417,31 @@ collegati dal 28/09/2026: le priorità dei prossimi brief nasceranno dai loro da
    Gli articoli da aggiornare li segnala la SEO.
 7. **Date vere nei dati strutturati.** datePublished è la data di uscita, dateModified quella dell'ultimo aggiornamento. Verificato il 03/11: il codice le gestisce già bene; i 15 articoli del 28/09 sono usciti davvero quel giorno.
 8. **Link alle pagine città che scendono:** `/agenzia-comunicazione-castellaneta`, `/agenzia-comunicazione-massafra`, `/agenzia-comunicazione-bari`. Oggi nessun articolo le collega.
+
+## 13. Tempi dei risultati: cosa scrivere (decisione di Nicola, 23/11/2026)
+
+**Non scrivere mai:**
+- "servono alcuni mesi";
+- "ci vogliono 4-6 mesi";
+- "almeno tre mesi";
+- "nei primi mesi";
+- frasi simili riferite ai risultati di social, sponsorizzate o comunicazione.
+
+**Il messaggio di InLab:**
+- i primi risultati si vedono **già dopo il primo mese** (più persone che vedono i contenuti, più interazioni, i primi messaggi o richieste);
+- poi crescono con la **continuità**;
+- i social sono un **investimento, non una spesa**: chi pensa di fermarsi dopo un mese è meglio che non inizi.
+
+**Limiti:**
+- nessun numero garantito ("+50% follower in 30 giorni" no);
+- nessun prezzo;
+- nessun tempo promesso per le posizioni su Google;
+- per la SEO si può dire che è un lavoro che si costruisce nel tempo, senza date.
+
+**Anti-somiglianza:**
+- la frase "se pensi di fermarti dopo un mese, meglio non iniziare" è della FAQ di `/gestione-social`: negli articoli si dice lo stesso concetto con parole proprie, diverse in ogni articolo;
+- esempi di come variare: "chi smette dopo poche settimane paga senza raccogliere"; "va pensata come un investimento, non come un tentativo di poche settimane".
+
+**Dove serve una prova:** con il link alla scheda cliente, usare i risultati in `docs/seo/RISULTATI-CLIENTI-VERIFICATI.md` (Inox Racing, Sublime Tentazione, Masseria Sacramento, Nunzio Putignano), con le stesse parole.
+
+**Articoli già usciti da correggere:** elenco e testi in `docs/seo/brief/2026-11-23-tempi-risultati.md` (B1-B6).

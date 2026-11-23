@@ -21,7 +21,7 @@ Lo stile è quello delle FAQ delle pagine città.
    Sì. In provincia di Taranto e nei paesi vicini veniamo direttamente nella tua attività. Per le zone più lontane organizziamo giornate di riprese.
 
 4. **Quanto tempo serve per vedere i risultati?**
-   Un profilo più curato e contenuti più visti si notano già nelle prime settimane. Per far crescere seguito e contatti servono di solito alcuni mesi di lavoro costante, e il report mensile ti mostra a che punto siamo.
+   **Testo aggiornato da Nicola il 23/11** (sostituisce il mio, che diceva "alcuni mesi"): "I primi segnali si vedono già dopo il primo mese: un profilo più curato, contenuti più visti, le prime richieste. Poi i risultati crescono con la continuità. Per questo i social sono un investimento, non una spesa: se pensi di fermarti dopo un mese, meglio non iniziare. Ogni mese ti mandiamo un report che ti mostra a che punto siamo."
 
 5. **Lavorate anche con attività piccole?**
    Sì. Buona parte dei nostri clienti sono ristoranti, pasticcerie, officine, negozi e studi della provincia di Taranto.
