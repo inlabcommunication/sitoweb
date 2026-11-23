@@ -14,6 +14,7 @@ import { initAnalytics, trackPageview } from "./lib/analytics";
 import { getCurrentPath, linkClick, navigate } from "./lib/router";
 import { useAgencyStats } from "./data/stats";
 import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
+import { GS_FAQ } from "./data/gsFaq";
 import { BrowserMockup } from "./components/BrowserMockup";
 import { getSeo, seoReady, onBlogPostsChange } from "./seo/routes";
 import { applySeo } from "./seo/head";
@@ -844,12 +845,12 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
 const PageGestioneSocial = () => (
   <>
     <PageHero
-      tag="Servizio — Gestione Social Media"
+      tag="Gestione social per aziende · Taranto e Puglia"
       h1="FAI CRESCERE"
       h1b="IL TUO BRAND"
       italic="con la giusta comunicazione social."
       sub="Non pubblichiamo solo post. Costruiamo una presenza digitale strategica che trasforma follower in clienti reali."
-      cta1="Richiedi un preventivo" cta1to={CONTACT_GS}
+      cta1="Richiedi una consulenza gratuita" cta1to={CONTACT_GS}
       cta2="Vedi i risultati" cta2to="/clienti"
     />
     <Marquee items={["Analisi","✦","Strategia","✦","Contenuti","✦","Pubblicazione","✦","Ottimizzazione","✦","Crescita","✦"]}/>
@@ -902,6 +903,19 @@ const PageGestioneSocial = () => (
  
     <ServiceExamples slug="gestione-social"/>
     <DoveLavoriamo slug="gestione-social"/>
+    {/* GS-3 (Nicola 23/11): domande frequenti nello stile delle pagine città; stesso testo nel FAQPage */}
+    <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:880,margin:"0 auto"}}>
+        <p className="section-label">Domande frequenti</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase",fontWeight:400}}>Gestione social: le domande più comuni</h2>
+        {GS_FAQ.map(f=>(
+          <React.Fragment key={f.q}>
+            <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{f.q}</h3>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{f.a}</p>
+          </React.Fragment>
+        ))}
+      </div>
+    </section>
     <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito" to={CONTACT_GS}/>
   </>
 );
@@ -1341,7 +1355,7 @@ const PageChiSiamo = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
   const contact = ((useContent() as any).contact) || {};
-  const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
+  const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",come:"",msg:"",privacy:false});
   // Arrivo da una pagina gestione social (?servizio=gestione-social): servizio preselezionato,
   // sempre modificabile. Dopo il primo render, così l'HTML statico resta uguale (GS-2)
   useEffect(()=>{
@@ -1380,7 +1394,7 @@ const PageContatti = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
-          service: form.servizio, message: form.msg, privacy: form.privacy,
+          service: form.servizio, howFound: form.come, message: form.msg, privacy: form.privacy,
           website: honeypot, formToken: await tokenForSubmit(), page: window.location.pathname, attribution: getAttribution(),
         }),
       });
@@ -1462,6 +1476,15 @@ const PageContatti = () => {
                       style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.servizio?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
                       <option value="">Seleziona un servizio</option>
                       {["Strategia social","Gestione social","Foto & video","Branding","Campagne Meta Ads","Sito o landing page","Organizzazione eventi","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
+                    </select>
+                  </div>
+                  {/* GS-3 (Nicola 23/11): facoltativo, salvato col lead; non va a GA4. Stesse voci in api/lead.ts */}
+                  <div>
+                    <label htmlFor="f-come" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Come ci hai conosciuto?</label>
+                    <select id="f-come" className="form-field" value={form.come} onChange={e=>setForm({...form,come:e.target.value})}
+                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.come?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
+                      <option value="">Seleziona</option>
+                      {["Passaparola","Ho visto un vostro lavoro sui social di un cliente","Instagram o Facebook di InLab","Ricerca su Google","ChatGPT o altre AI","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
                     </select>
                   </div>
                   <div>
@@ -1889,7 +1912,8 @@ const PageCittaSEO = ({city, service}) => {
             {info?.servizi?.[svc.slug] ? <IntroText text={info.servizi[svc.slug]} link={info.introLink}/> : `InLab Communication segue ${svc.label} per attività di ${cityName} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-            <button className="btn btn-p" onClick={()=>go(svc.slug==="gestione-social"?CONTACT_GS:"/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
+            {/* GS-3 (Nicola 23/11): "consulenza gratuita" solo sulle pagine gestione social, per misurarne l'effetto */}
+            <button className="btn btn-p" onClick={()=>go(svc.slug==="gestione-social"?CONTACT_GS:"/contatti")}>{svc.slug==="gestione-social"?"Richiedi una consulenza gratuita":"Richiedi un preventivo gratuito"} <ArrowRight size={14}/></button>
             <button className="btn btn-g" onClick={()=>go("/"+svc.slug)}>Scopri il servizio</button>
           </div>
         </div>
