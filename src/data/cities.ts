@@ -1132,6 +1132,18 @@ export const CITY_INFO: CityInfo[] = [
     servizi: { 'gestione-social': "Social per ristoranti, locali e negozi di Giovinazzo: contenuti che fanno scegliere il tuo posto per la serata." },
     lavoriVicini: true,
   },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Rutigliano", provincia: "provincia di Bari",
+    contesto: "Rutigliano è conosciuto per la tradizione dei fischietti in terracotta, celebrata ogni anno con una fiera dedicata, e per la produzione di uva da tavola, che dà lavoro a molte aziende del territorio.",
+    settori: ["aziende agricole e uva da tavola", "artigiani", "negozi e attività del paese"],
+    faq: { q: "Lavorate con aziende agricole che vendono fuori regione?", a: "Sì: sito, foto e video della produzione, LinkedIn e campagne per i contatti commerciali." },
+    description: "Agenzia di comunicazione a Rutigliano: social, foto, video, siti e campagne per aziende agricole, artigiani e attività del paese. Preventivo gratuito.",
+    intro: "Rutigliano è il paese dei fischietti in terracotta e dell'uva da tavola. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, artigiani e attività, da Castellaneta.",
+    focus: { titolo: "Artigianato e campi, raccontati per vendere", testo: "Un artigiano o un'azienda agricola di Rutigliano hanno un lavoro che si vede e si racconta bene. Lo trasformiamo in foto, video e contenuti social, in un sito chiaro e in campagne per vendere direttamente o farsi trovare da grossisti e clienti fuori regione." },
+    servizi: { 'gestione-social': "Social per aziende agricole, artigiani e attività di Rutigliano: lavoro e prodotti raccontati con immagini vere." },
+    lavoriVicini: true,
+  },
 ];
 
 export const cityInfo = (name: string): CityInfo | undefined => CITY_INFO.find((c) => c.name === name);
