@@ -7,6 +7,7 @@ import { WEBSITE_CONTENT } from '../constants';
 import { getClientId } from '../lib/clientUtils';
 import { otherClientPages } from '../data/otherClients';
 import { CLIENT_SEO, withSeoSuffix } from '../data/clientSeo';
+import { GS_FAQ } from '../data/gsFaq';
 // Solo il tipo: il testo degli articoli (molto pesante) si carica solo quando
 // si apre il blog (src/lib/blog.ts lo registra qui) o nello script di build.
 import type { BlogPost } from '../data/blogSeed';
@@ -440,7 +441,7 @@ export const getSeo = (rawPath: string): Seo => {
         '@context': 'https://schema.org', '@type': 'Service', name: svc.label, serviceType: svc.keyword,
         description: svc.description, url: abs(path), provider: orgRef,
         areaServed: [{ '@type': 'AdministrativeArea', name: 'Puglia' }, { '@type': 'Country', name: 'Italia' }],
-      }],
+      }, ...(gs ? faqPage(GS_FAQ) : [])],
     }, [['Servizi', '/servizi'], [svc.label, path]]);
   }
 

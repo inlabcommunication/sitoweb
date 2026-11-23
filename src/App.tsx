@@ -14,6 +14,7 @@ import { initAnalytics, trackPageview } from "./lib/analytics";
 import { getCurrentPath, linkClick, navigate } from "./lib/router";
 import { useAgencyStats } from "./data/stats";
 import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
+import { GS_FAQ } from "./data/gsFaq";
 import { BrowserMockup } from "./components/BrowserMockup";
 import { getSeo, seoReady, onBlogPostsChange } from "./seo/routes";
 import { applySeo } from "./seo/head";
@@ -902,6 +903,19 @@ const PageGestioneSocial = () => (
  
     <ServiceExamples slug="gestione-social"/>
     <DoveLavoriamo slug="gestione-social"/>
+    {/* GS-3 (Nicola 23/11): domande frequenti nello stile delle pagine città; stesso testo nel FAQPage */}
+    <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:880,margin:"0 auto"}}>
+        <p className="section-label">Domande frequenti</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase",fontWeight:400}}>Gestione social: le domande più comuni</h2>
+        {GS_FAQ.map(f=>(
+          <React.Fragment key={f.q}>
+            <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{f.q}</h3>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{f.a}</p>
+          </React.Fragment>
+        ))}
+      </div>
+    </section>
     <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito" to={CONTACT_GS}/>
   </>
 );
