@@ -1,5 +1,5 @@
 ---
-pubblicare: venerdì 20/11/2026
+pubblicare: martedì 24/11/2026
 slug: social-pasticcerie-gelaterie-provincia-taranto
 title: "Social media per pasticcerie e gelaterie in provincia di Taranto: cosa pubblicare tutto l'anno"
 excerpt: "Come usare Instagram e Facebook per una pasticceria o una gelateria in provincia di Taranto: il calendario delle stagioni e delle ricorrenze, i video del laboratorio, gli ordini e le vetrine."
