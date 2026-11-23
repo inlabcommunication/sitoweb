@@ -179,7 +179,7 @@ const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }
       const d = await r.json().catch(() => ({}));
       setState({ done: true, url: safeUrl(d?.url) });
       // GA4: evento a parte, non generate_lead, per non contare i download come richieste (Direttore 23/11)
-      gaEvent('download_presentazione', { caso: caseId });
+      if (!hp) gaEvent('download_presentazione', { caso: caseId });
     } catch {
       setState({ error: 'Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com' });
     }

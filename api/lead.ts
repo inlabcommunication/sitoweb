@@ -6,6 +6,7 @@
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
+import { FieldValue } from "firebase-admin/firestore";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
 import { createHash } from "node:crypto";
@@ -69,7 +70,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const total = (await db.collection("leads").count().get()).data().count;
         const last = await db.collection("leads").orderBy("created_at", "desc").limit(1).get();
         const l = last.docs[0]?.data();
-        return res.status(200).json({ project, total, last: l ? { created_at: str(l.created_at, 40), source: str(l.source, 40) } : null });
+        // invii scartati dagli ultimi 7 giorni (solo numeri), per vedere se il campo trappola blocca persone vere
+        const days = Array.from({ length: 7 }, (_, i) => new Date(Date.now() - i * 86_400_000).toISOString().slice(0, 10));
+        const snaps = await db.getAll(...days.map((d) => db.collection("_usage").doc(`lead_scartati_${d}`)));
+        const discarded = { trappola: 0, trappola_token_valido: 0 };
+        for (const s of snaps) for (const k of Object.keys(discarded) as (keyof typeof discarded)[]) discarded[k] += Number(s.data()?.[k] || 0);
+        return res.status(200).json({ project, total, last: l ? { created_at: str(l.created_at, 40), source: str(l.source, 40) } : null, discarded });
       } catch (e) {
         console.error("Lead check error:", e);
         return res.status(500).json({ error: "Database del server non raggiungibile" });
@@ -88,7 +94,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const [ts = "", mac = ""] = str(b.formToken, 80).split(".");
   const elapsed = Date.now() - Number(ts);
   const validToken = /^\d{13}$/.test(ts) && safeEqual(mac, sign("lead:" + ts));
-  if (str(b.website, 200) || !validToken || !Number.isFinite(elapsed) || elapsed < 3000 || elapsed > 86_400_000) {
+  const trap = !!str(b.website, 200);
+  if (trap || !validToken || !Number.isFinite(elapsed) || elapsed < 3000 || elapsed > 86_400_000) {
+    // Scarto contato e registrato senza dati personali (Direttore 23/11): se il campo trappola si riempie
+    // spesso con token valido, è la compilazione automatica di un browser e si perdono lead veri.
+    const reason = trap ? (validToken && elapsed >= 3000 ? "trappola_token_valido" : "trappola") : "token";
+    console.warn(`[lead] invio scartato: ${reason}${b.download ? " (download)" : ""}`);
+    // contatore solo per il campo trappola (gli invii con token non valido, i più frequenti dei bot, solo nel log:
+    // nessuna scrittura sul database per ogni richiesta di un attacco)
+    if (trap) try {
+      const day = new Date().toISOString().slice(0, 10);
+      await getAdminDb().collection("_usage").doc(`lead_scartati_${day}`).set({ day, [reason]: FieldValue.increment(1) }, { merge: true });
+    } catch { /* il contatore non deve mai cambiare la risposta */ }
     return res.status(200).json({ ok: true }); // risposta neutra: il bot non capisce di essere stato scartato
   }
 

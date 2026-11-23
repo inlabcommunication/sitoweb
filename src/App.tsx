@@ -1401,7 +1401,8 @@ const PageContatti = () => {
       if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       setSent(true);
-      gaEvent('generate_lead', { method: 'modulo_contatti', service: form.servizio || 'non indicato' });
+      // campo trappola pieno: il server ha scartato l'invio, quindi non è un lead (Direttore 23/11)
+      if (!honeypot) gaEvent('generate_lead', { method: 'modulo_contatti', service: form.servizio || 'non indicato' });
     } catch(e){
       console.error('Save contact failed',e);
       setError("Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com");
