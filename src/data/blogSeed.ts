@@ -3886,6 +3886,7 @@ Realizziamo siti per attività in tutta la Puglia: vedi la nostra agenzia di com
     tags: ['gestione social', 'risultati', 'clienti', 'taranto', 'attività locali'],
     author: 'Nicola Carpignano',
     date: '2026-11-20',
+    updated: '2026-11-23',
     cover: '/blog/social-investimento-risultati-clienti/cover.jpg',
     coverAlt: 'I risultati di quattro clienti InLab dopo la gestione dei social: follower, prenotazioni, vendite ed eventi sold out',
     published: true,
@@ -3928,7 +3929,7 @@ Sono quattro attività molto diverse: un'azienda artigiana, un'officina, una pas
 1. **Un obiettivo preciso**: prenotazioni, clienti nuovi, vendite in negozio o posti agli eventi, non solo "più like".
 2. **Contenuti veri**: le persone, il lavoro, i prodotti, senza immagini prese da internet.
 3. **Costanza**: un piano mese per mese, anche quando sembra che non succeda niente.
-4. **Pazienza**: i risultati più grandi arrivano dopo mesi, non dopo il primo post.
+4. **Continuità**: i primi segnali arrivano già nel primo mese, quelli più grandi crescono restando costanti.
 
 Quanto costa un lavoro così dipende da molte voci, che spieghiamo nella guida su [quanto costa un social media manager in Puglia](/blog/quanto-costa-social-media-manager-puglia).
 
@@ -3936,7 +3937,7 @@ Quanto costa un lavoro così dipende da molte voci, che spieghiamo nella guida s
 
 ### In quanto tempo si vedono i risultati sui social?
 
-Dipende dall'attività e dall'obiettivo. I primi segnali, come più messaggi e più richieste, arrivano spesso nei primi mesi; i risultati più solidi, come agenda piena o eventi sold out, si costruiscono nel tempo.
+Dipende dall'attività e dall'obiettivo, ma i primi segnali, come più messaggi e più richieste, si vedono già dopo il primo mese. I risultati più solidi, come agenda piena o eventi sold out, arrivano con la continuità. È proprio questa la differenza tra spesa e investimento: chi smette dopo poche settimane paga senza raccogliere.
 
 ### Come si misura se la gestione social sta funzionando?
 
