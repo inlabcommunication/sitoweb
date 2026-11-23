@@ -30,7 +30,7 @@ const CaseHeroBack: React.FC<{ onBack: () => void }> = ({ onBack }) => (
 );
 
 const SectionTitle: React.FC<{ tag: string; title: React.ReactNode }> = ({ tag, title }) => (
-  <div style={{ marginBottom: '2rem' }}>
+  <div className="h2-mob" style={{ marginBottom: '2rem' }}>
     <p className="section-label">{tag}</p>
     <h2 style={{
       fontFamily: 'var(--fd)',
@@ -87,7 +87,7 @@ const Lead: React.FC<{ text?: string; mb?: string }> = ({ text, mb = '2.5rem' })
   text ? <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, maxWidth: 760, marginBottom: mb, whiteSpace: 'pre-line' }}>{text}</p> : null;
 
 const Section: React.FC<{ children: React.ReactNode; glow?: boolean }> = ({ children, glow }) => (
-  <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
+  <section className="sec-mob" style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
     {glow && <div style={{ position: 'absolute', top: '50%', left: '50%', width: 600, height: 600, transform: 'translate(-50%, -50%)', background: 'radial-gradient(closest-side, rgba(205,178,255,0.04) 0%, rgba(205,178,255,0.02) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%', pointerEvents: 'none' }} />}
     <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1 }}>{children}</div>
   </section>
@@ -435,7 +435,7 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
 
   return (
     <>
-      <section ref={heroRef} style={{ minHeight: '88vh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '8rem 2rem 4rem', overflow: 'hidden', borderBottom: '.5px solid var(--b)' }}>
+      <section ref={heroRef} className="hero-mob" style={{ minHeight: '88vh', position: 'relative', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', padding: '8rem 2rem 4rem', overflow: 'hidden', borderBottom: '.5px solid var(--b)' }}>
         <motion.div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 30%, rgba(205,178,255,0.18) 0%, transparent 50%), linear-gradient(135deg, #1e1d1d 0%, #2a1f3d 100%)', y: heroY, opacity: heroOpacity }} />
         {heroImage && (
           <>
