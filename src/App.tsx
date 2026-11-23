@@ -172,11 +172,6 @@ const G = () => (
       .sec-mob{padding-top:3.5rem!important;padding-bottom:3.5rem!important}
       .gap-mob{gap:2rem!important}
       .h2-mob{margin-bottom:1.5rem!important}
-      /* Reel da telefono: scorrimento orizzontale a scatti (una card al 78%, si vede che ce n'è un'altra)
-         invece di una card alta ~600 px sotto l'altra; foto in 2 colonne */
-      .reels-mob{grid-template-columns:none!important;grid-auto-flow:column;grid-auto-columns:78%;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding-bottom:6px}
-      .reels-mob>*{scroll-snap-align:start}
-      .gallery-mob{grid-template-columns:repeat(2,1fr)!important;gap:8px!important}
       .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
       /* area di tocco di almeno 44 px per i link del footer (richiesta analista, approvata) */
