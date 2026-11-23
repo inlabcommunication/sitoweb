@@ -2651,6 +2651,7 @@ Scopri il nostro servizio di [branding e identità visiva](/branding) oppure [ra
     tags: ['agenzia di comunicazione', 'Taranto', 'attività locali', 'marketing locale', 'social media'],
     author: 'Nicola Carpignano',
     date: '2026-10-03',
+    updated: '2026-11-23',
     cover: '/blog/agenzia-comunicazione-taranto-come-scegliere/cover.jpg',
     coverAlt: 'Checklist con le domande per scegliere un\'agenzia di comunicazione a Taranto',
     published: true,
@@ -2751,7 +2752,7 @@ Un freelance può bastare se ti serve una sola competenza, per esempio solo i te
 
 ### Quanto tempo serve per vedere i primi risultati?
 
-Con le sponsorizzate i primi contatti possono arrivare in poche settimane. La crescita dei social e la visibilità su Google richiedono invece alcuni mesi di lavoro costante. Diffida di chi promette risultati importanti in pochi giorni.
+Un buon lavoro mostra i primi risultati già dopo il primo mese, e con le sponsorizzate i primi contatti possono arrivare anche prima. Da lì i risultati crescono solo se la comunicazione continua: va pensata come un investimento, non come un tentativo di poche settimane. Diffida di chi promette risultati importanti in pochi giorni, e chiedi all'agenzia cosa misurerete insieme già alla fine del primo mese.
 
 ### Posso cambiare agenzia senza perdere i profili?
 
