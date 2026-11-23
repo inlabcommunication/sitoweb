@@ -16,6 +16,8 @@ const small: React.CSSProperties = { padding: '7px 12px', background: 'rgba(205,
 export const PrivateFileField = ({ value, onChange, caseId }: { value?: PresentationFile | null; onChange: (v: PresentationFile | null) => void; caseId: string }) => {
   const [busy, setBusy] = useState(0);
   const [msg, setMsg] = useState('');
+  // link della prova: sempre a schermo (window.open dopo una chiamata al server viene bloccato, soprattutto sul telefono)
+  const [testUrl, setTestUrl] = useState('');
   const token = async () => (await auth?.currentUser?.getIdToken()) || '';
 
   const upload = async (file?: File) => {
@@ -48,14 +50,17 @@ export const PrivateFileField = ({ value, onChange, caseId }: { value?: Presenta
 
   // Prova del download dalla dashboard (anche con il caso in bozza): usa i dati già salvati
   const test = async () => {
-    setMsg('Preparo il link…');
+    setMsg('Preparo il link e lo provo…'); setTestUrl('');
     try {
       const r = await fetch(`/api/lead?download=${encodeURIComponent(caseId)}`, { headers: { Authorization: `Bearer ${await token()}` } });
       const d = await r.json().catch(() => ({}));
-      if (!r.ok || !d.url) return setMsg(d.error || 'Link non disponibile: hai salvato le modifiche?');
-      window.open(d.url, '_blank', 'noopener');
-      setMsg('Link aperto in una nuova scheda. Se Cloudinary risponde con un errore, va abilitata la consegna dei PDF (vedi istruzioni).');
-    } catch { setMsg('Prova non riuscita: riprova.'); }
+      if (!r.ok || !d.url) return setMsg(`Link non disponibile (HTTP ${r.status}): ${d.error || 'hai salvato le modifiche?'}`);
+      if (/^https:\/\//.test(d.url)) setTestUrl(d.url);
+      const p = d.probe || {};
+      if (p.status === 200 || p.status === 206) setMsg('Cloudinary consegna il file correttamente. Tocca «Apri il download» qui sotto (il link vale 10 minuti).');
+      else if (p.status === 401 || p.status === 403) setMsg(`Cloudinary rifiuta il download (HTTP ${p.status}${p.error ? `: ${p.error}` : ''}). Se parla di PDF o di accesso negato: Cloudinary → Settings → Security → «Allow delivery of PDF and ZIP files» → Save, poi riprova. Copia questo messaggio a Sito Inlab.`);
+      else setMsg(`Esito della prova: ${p.status ? `HTTP ${p.status}` : 'nessuna risposta'}${p.error ? ` — ${p.error}` : ''}. Copia questo messaggio a Sito Inlab. Puoi comunque provare il link qui sotto.`);
+    } catch { setMsg('Prova non riuscita: controlla la connessione e riprova.'); }
   };
 
   return (
@@ -71,7 +76,8 @@ export const PrivateFileField = ({ value, onChange, caseId }: { value?: Presenta
         {value?.publicId && <button type="button" style={small} onClick={test}>Prova il download</button>}
         {value?.publicId && <button type="button" style={{ ...small, color: '#ff8888', borderColor: '#3a2a2a' }} onClick={() => { onChange(null); setMsg('File tolto dal blocco (resta su Cloudinary).'); }}>Togli</button>}
       </div>
-      {msg && <div style={{ fontSize: 11, color: '#aaa', marginTop: 8 }}>{msg}</div>}
+      {msg && <div role="status" style={{ fontSize: 11, color: '#aaa', marginTop: 8, userSelect: 'text' }}>{msg}</div>}
+      {testUrl && <a href={testUrl} target="_blank" rel="noopener noreferrer" style={{ ...small, display: 'inline-block', marginTop: 8, textDecoration: 'none' }}>Apri il download</a>}
     </div>
   );
 };

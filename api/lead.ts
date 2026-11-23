@@ -65,7 +65,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           const doc = await findPresentation(getAdminDb(), testCase, true);
           if (!doc) return res.status(404).json({ error: "Nessun PDF salvato in questo caso: salva le modifiche e riprova." });
           const url = signedDownload(doc.publicId);
-          return url ? res.status(200).json({ url }) : res.status(501).json({ error: "Manca CLOUDINARY_API_SECRET su Vercel" });
+          if (!url) return res.status(501).json({ error: "Manca CLOUDINARY_API_SECRET su Vercel" });
+          // Prova del link dal server (solo per l'admin): Cloudinary risponde con lo stato e, se rifiuta,
+          // con il motivo nell'intestazione x-cld-error (nessun segreto). Si legge solo il primo byte.
+          let probe: { status: number; error: string } = { status: 0, error: "" };
+          try {
+            const r = await fetch(url, { headers: { Range: "bytes=0-0" }, signal: AbortSignal.timeout(8000) });
+            probe = { status: r.status, error: str(r.headers.get("x-cld-error"), 300) };
+            await r.body?.cancel().catch(() => {});
+          } catch (e: any) { probe = { status: 0, error: e?.name === "TimeoutError" ? "Cloudinary non risponde (timeout 8 s)" : "Cloudinary non raggiungibile" }; }
+          return res.status(200).json({ url, probe });
         } catch (e) {
           console.error("Download test error:", e);
           return res.status(500).json({ error: "Database del server non raggiungibile" });
