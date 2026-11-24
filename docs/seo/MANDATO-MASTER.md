@@ -99,5 +99,14 @@ Inoltre: risposte alle 30 domande finali, con prove, limiti, decisione e risulta
   - **Dati mancanti:** si scrive "non disponibile", non si inventa.
   - **Esempi:** pagine indicizzate nel tempo, quota indicizzata, impressioni e clic per settimana, posizioni locali.
 
+- **24/11, Patto del team e ciclo di miglioramento (Nicola, tramite il Direttore):**
+  - **decisioni:** nascono dai dati (Search Console, GA4), non dalle opinioni;
+  - **analisi del lunedì:** contiene la sezione "Per il Blog: cosa funziona";
+  - **richieste:** ognuna ha misura prima, obiettivo e rimisura a 2-4 settimane, con esito scritto;
+  - **fine di ogni analisi:** tre righe (cosa ho imparato / cosa cambio / cosa insegno a un collega);
+  - **diario:** `docs/seo/DIARIO-LEZIONI.md`, riletto ogni lunedì;
+  - **apporti dei colleghi:** uso le novità del Blog e i dati del Competitor nei brief;
+  - **obiettivo:** il 24/11/2027 essere un vero esperto.
+
 ## Stato
 - **12/11:** audit iniziale e prime 10 priorità in `docs/seo/audit/2026-11-12-audit-iniziale-prime-10-priorita.md`.

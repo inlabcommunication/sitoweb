@@ -46,3 +46,8 @@ Non disponibile: nelle query delle ultime 4 settimane non ci sono richieste ripe
 |---|---|---|---|
 | Aggiornare "reel o post" | 422 impressioni, 0 clic, posizione 7,8 | almeno 1 clic a settimana, posizione < 7 | 4 settimane dopo l'aggiornamento |
 | Aggiornare "idee reel ristoranti" | 51 impressioni, posizione 8,9 | "reel per ristoranti" < posizione 10 | 4 settimane dopo l'aggiornamento |
+
+## Tre righe
+- **Cosa ho imparato:** il blog è passato da 0 a 912 impressioni sui primi 5 articoli in 4 settimane, ma i clic sono quasi tutti di un solo articolo. Le impressioni, da sole, non portano persone.
+- **Cosa cambio da ora:** prima di chiedere articoli nuovi, chiedo di aggiornare quelli già vicini alla pagina 1 (posizioni 8-10), che costano meno e rendono prima.
+- **Cosa insegno a un collega (Blog):** le varianti di una query che Search Console mostra ("post o reel differenza", "differenza tra real e post") vanno nelle FAQ dell'articolo. Sono domande vere delle persone.
