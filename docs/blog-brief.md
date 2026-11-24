@@ -202,3 +202,25 @@ Per il testo completo vedi `docs/seo/LINEE-GUIDA-BLOG.md` §13 e il brief SEO `2
 - **Cosa non promettere:** numeri garantiti, prezzi, tempi per le posizioni su Google.
 - **Regola anti-somiglianza:** la frase "se pensi di fermarti dopo un mese, meglio non iniziare" resta solo nella FAQ di `/gestione-social`. Negli articoli lo stesso concetto va scritto con parole nuove.
 - **Prima di ogni PR:** `grep -n -i "alcuni mesi\|tre mesi\|primi mesi\|qualche mese" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`. Restano ammessi i "mesi" che indicano altro: scadenze di legge, contratti, piano editoriale, i "4 mesi di agenda piena" di Inox Racing.
+
+## Giro settimanale sulle fonti (richiesta di Nicola, 24/11/2026)
+
+**Ogni martedì** si fa il giro completo sulle fonti elencate sopra, non 2-3 ricerche generiche. Il giro si divide per gruppi, con una ricerca per gruppo, limitata ai domini delle fonti (`allowed_domains`):
+
+1. **Google:** Search Status Dashboard, Search Central (aggiornamenti della documentazione), Business Profile Help, Google Ads, e la stampa di settore (Search Engine Land, Search Engine Roundtable).
+2. **Meta:** Newsroom, Meta for Business, e la stampa di settore (Social Media Today).
+3. **TikTok:** Newsroom e Business Resource Center.
+4. **Normativa:** Garante, AGCOM, AgID, Commissione UE, EDPB.
+5. **Settore ed esperti:** Search Engine Journal, Buffer, Later, Sprout Social, HubSpot.
+
+Il risultato va in `docs/blog-reports/monitoraggio-AAAA-MM-GG.md`:
+- ogni novità con la sua classe A, B o C e la fonte;
+- le decisioni prese.
+
+Il venerdì basta un controllo rapido delle notizie A.
+
+Le novità di classe A e le B confermate da una fonte ufficiale diventano:
+- un articolo di novità con taglio locale, entro il massimo di 3 nazionali al mese;
+- oppure un aggiornamento di un articolo esistente.
+
+Lo scopo è non scrivere solo articoli di zona, ma restare aggiornati su quello che cambia.
