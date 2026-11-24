@@ -50,3 +50,69 @@ Nicola il 24/11 ha chiesto se facevo il giro settimanale sulle fonti del brief. 
    - i termini commerciali di Meta;
    - Messenger nella scheda Google;
    - la fine del core update.
+
+## Prova delle fonti (richiesta del Direttore, 24/11)
+
+Il Direttore ha chiesto una tabella. La regola di Nicola vieta le tabelle Markdown, quindi uso un elenco con gli stessi campi: gruppo di fonti, ricerche fatte, link e data, esito.
+
+Ricerche fatte in tutto: 8, tutte con WebSearch e con `allowed_domains` limitati ai domini delle fonti.
+
+### 1. Google
+- **Ricerche:** 3, il 24/11.
+  - Search Central, Google Ads e Business Profile (extended).
+  - Link di prenotazione su Business Profile (extended).
+  - Search Status Dashboard (standard).
+- **Fonti trovate:**
+  - [Search Status Dashboard](https://status.search.google.com/): core update attivo dal 10/11, rilascio fino a 2 settimane.
+  - [Aggiornamenti della documentazione di Search Central](https://developers.google.com/search/updates): voci del 9, 12 e 18/11.
+  - [Business Profile Help, answer 6218037](https://support.google.com/business/answer/6218037).
+  - [Search Engine Roundtable, 11/2026](https://www.seroundtable.com/google-business-profiles-adding-booking-links-42477.html).
+  - [Search Engine Land, core update](https://searchengineland.com/google-november-2026-core-update-rolling-out-now-501348).
+- **Esito:**
+  - **Trattate** il core update e i link Prenota/Ordina: articolo del 27/11.
+  - **Scartate** la pagina sul referer di Search Console e il ritiro dello strumento per i feed: troppo tecniche per le attività locali.
+  - **Da ricontrollare il 1/12** Messenger nella scheda Google: c'è solo la stampa di settore.
+
+### 2. Meta
+- **Ricerche:** 3, il 24/11.
+  - Newsroom (extended).
+  - Social Media Today (extended).
+  - Conferma ufficiale delle storie modificabili (extended).
+- **Fonti trovate:**
+  - [Meta Newsroom](https://about.fb.com/news/): Direct dal 16-17/11, protezione dei teenager dal 09/11, termini commerciali del 18/11, WhatsApp Events del 05/11.
+  - [Social Media Today, Stories editing](https://www.socialmediatoday.com/news/instagram-adds-stories-editing/875261/), circa il 20/11.
+- **Esito:**
+  - **In programma** le storie modificabili: articolo del 1/12, solo con conferma ufficiale. Oggi nessuna pagina di Instagram o Meta la conferma.
+  - **Da leggere** i termini commerciali: della Newsroom ho trovato solo il titolo.
+  - **Scartati** Direct, WhatsApp Events e la protezione dei teenager: in prova fuori dall'Italia o non utili alle aziende.
+
+### 3. TikTok
+- **Ricerche:** 1, il 24/11 (Newsroom e Business Resource Center, extended).
+- **Fonti trovate:** [TikTok Business Resource Center](https://ads.tiktok.com/resources/): Smart+ per le piccole imprese, aggiornato a 11/2026.
+- **Esito:**
+  - **Trattata** Smart+: entra nell'articolo "Instagram o TikTok" del 22/12.
+  - **Scartato** TikTok Shop in Italia: nessuna novità di novembre.
+
+### 4. Normativa
+- **Ricerche:** 1, il 24/11 (Garante, AGCOM, AgID, Commissione UE, EDPB; extended).
+- **Fonti trovate:**
+  - [AGCOM, influencer](https://www.agcom.it/influencer-linee-guida-codice-di-condotta-e-faq): FAQ del 16/03/2026.
+  - [Garante, provvedimento del 23/09/2026](https://www.garanteprivacy.it/web/guest/home/docweb/-/docweb-display/docweb/10312650).
+- **Esito:**
+  - Nessun provvedimento nuovo di novembre.
+  - **AGCOM influencer:** articolo a gennaio.
+  - **Non consultati di proposito:** AgID ed EDPB non hanno dato risultati in questa ricerca. Al giro del 1/12 farò una ricerca separata per AgID.
+
+### 5. Settore
+- **Ricerche:** coperto in parte, con la ricerca su Social Media Today, Search Engine Journal, Buffer, Later e Sprout Social (extended, già contata nel gruppo Meta).
+- **Fonti trovate:**
+  - [Buffer, audio di tendenza di novembre 2026](https://buffer.com/resources/trending-audio-instagram/);
+  - [Sprout Social, novità di novembre 2026](https://support.sproutsocial.com/hc/en-us/articles/50117332809869-November-2026).
+- **Esito:**
+  - Nessuna novità A.
+  - **Non consultati:** HubSpot e Content Marketing Institute.
+  - **Dal giro del 1/12:** ricerca separata per questo gruppo.
+
+### Ricerche per giro, da ora in poi
+- **Martedì:** almeno 1 ricerca per ciascuno dei 5 gruppi, più le ricerche di conferma ufficiale per ogni notizia B. In tutto tra 6 e 9 ricerche.
+- **Venerdì:** 2-3 ricerche sulle notizie A, più i ricontrolli dei punti aperti.
