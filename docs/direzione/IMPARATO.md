@@ -28,3 +28,4 @@
 ## 24/11/2026 — Una regressione di velocità è rimasta 16 giorni senza essere vista
 - Paresteta da 94 a 71 (8/11 → 24/11) dopo l'aggiunta di un'immagine non passata da Cloudinary. Scoperta solo alla misura successiva.
 - **Regola:** controllo di regressione a ogni misura (calo ≥5 punti, LCP +1 s, peso +50%) con il commit sospetto; ogni nuovo tipo di contenuto caricato dalla dashboard (immagini nelle testate) deve passare da Cloudinary nel codice, non dipendere da chi carica.
+- Aggiornamento (Performance, 24/11): il calo di Paresteta non è stato causato da un commit ma da un'immagine caricata dalla dashboard (git blame invariato dal 02/10): i cali dovuti ai contenuti non lasciano traccia in git e si vedono solo misurando il sito online. Quindi: misura settimanale + controllo che le immagini Cloudinary abbiano f_auto/w_.
