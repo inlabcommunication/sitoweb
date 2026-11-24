@@ -4,6 +4,7 @@ Cosa cambia: solo la regola `analytics_events`. Ora l'ora dell'evento deve esser
 
 ## Per Nicola: come pubblicare (SOLO quando il Direttore dà il via, dopo il deploy del sito)
 
+0. **Prima di tutto, una copia di sicurezza:** nella scheda Regole seleziona tutto il testo attuale e incollalo in un file di testo sul computer (oppure controlla che la versione attuale compaia nella scheda **Cronologia**). Così, se in console ci fosse una versione diversa da quella del repository, non si perde niente. (Nota dell'Analista, 24/11.)
 1. Firebase Console → Firestore Database → **Regole**.
 2. Cancella tutto e incolla l'intero file `firestore.rules` del repository (versione su `main` dopo il merge). Il blocco che cambia è questo:
 
@@ -39,6 +40,13 @@ Cosa cambia: solo la regola `analytics_events`. Ora l'ora dell'evento deve esser
 1. Firebase Console → Firestore Database → Regole → scheda **Cronologia** (in alto) → scegli la versione precedente → **Ripristina**.
 2. In alternativa: incolla il contenuto di `docs/sviluppo/firestore-rules-ripristino-2026-11-24.rules` e premi Pubblica.
 3. Ha effetto in circa un minuto; il sito non va rifatto.
+
+## Stato e verifiche
+
+- **24/11 ore 00:44:** client in produzione (#139). Verificato online alle 12:35: gli eventi delle statistiche si salvano (risposta 200) con l'ora del server (`setToServerValue: REQUEST_TIME`), con le regole ancora vecchie.
+- **Regole:** da pubblicare con Nicola presente, quando il Direttore dà il via.
+- **Dopo la pubblicazione** (Sito Inlab e Analista): una visita normale con consenso deve salvare l'evento (200); un POST con `created_at` nel 2000 deve dare 403 (non scrive niente); la pagina Statistiche della dashboard e il modulo contatti devono funzionare.
+- **Resta aperto (P1, volume):** queste regole tolgono le date false e i numeri assurdi, ma **non limitano quante scritture** può fare qualcuno. Per questo serve la scelta di Nicola: contatore ibrido (b) oppure statistiche interne spente (`create: false`).
 
 ## Perché l'ordine conta
 
