@@ -24,3 +24,7 @@
 5. **GA4 raggruppa gli invii:** controllare dataLayer E richieste di rete dopo l'attesa dell'invio.
 - Lezione per tutti (insegnata a Sito Inlab): ogni scrittura anonima deve avere un limite globale, non solo per IP (l'IPv6 dà indirizzi infiniti).
 - Per me (Direttore): quando un agente ammette un errore con questa chiarezza, la lezione diventa subito un controllo. Prima di dare il via a una PR confronto l'OK dell'analista con l'ultima richiesta di Nicola (già nella regola del 24/11).
+
+## 24/11/2026 — Una regressione di velocità è rimasta 16 giorni senza essere vista
+- Paresteta da 94 a 71 (8/11 → 24/11) dopo l'aggiunta di un'immagine non passata da Cloudinary. Scoperta solo alla misura successiva.
+- **Regola:** controllo di regressione a ogni misura (calo ≥5 punti, LCP +1 s, peso +50%) con il commit sospetto; ogni nuovo tipo di contenuto caricato dalla dashboard (immagini nelle testate) deve passare da Cloudinary nel codice, non dipendere da chi carica.
