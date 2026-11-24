@@ -15,3 +15,12 @@
 
 ## 24/11/2026 — Leggere senza toccare
 - Ho provato un comando che avrebbe sovrascritto i file locali. Per leggere il codice uso solo `git show`/`git grep`.
+
+## 24/11/2026 — Lezioni dell'Analista (registrate dal Direttore)
+1. **OK incompleto sulla #137.** L'analista aveva verificato la tecnica ma non il diff contro la richiesta («solo da telefono», poi «desktop identico»). Nuovo controllo: prima di ogni OK, una riga «richiesta di Nicola → cosa deve cambiare / cosa NON deve cambiare», poi il diff contro quella riga; per le richieste «solo telefono»: nessuna regola fuori da @media e misura desktop prima/dopo identica.
+2. **Scritture anonime: il NUMERO, non solo lo schema.** Il rischio P1 (quota Spark) non era stato colto nei controlli di routine dal 01/10: si verificavano i campi, non quante volte al giorno uno script può scrivere. Nuovo controllo: per ogni percorso anonimo (regole Firestore e /api) «quante volte al giorno? cosa succede alla quota?»; senza limite globale = almeno MEDIO. Un revisore indipendente trova ciò che chi ha fatto i controlli non vede più: da usare negli audit settimanali.
+3. **Configurazioni esterne al codice** mai controllate (main non protetto). Controllo settimanale: protezione di main, collaboratori, workflow, SPF/DMARC/CAA, preset Cloudinary firmato, piano e quota Firebase.
+4. **Falsi allarmi:** una regex dei telefoni ha preso gli ID Cloudinary negli URL. Verificare il contesto prima di segnalare dati personali.
+5. **GA4 raggruppa gli invii:** controllare dataLayer E richieste di rete dopo l'attesa dell'invio.
+- Lezione per tutti (insegnata a Sito Inlab): ogni scrittura anonima deve avere un limite globale, non solo per IP (l'IPv6 dà indirizzi infiniti).
+- Per me (Direttore): quando un agente ammette un errore con questa chiarezza, la lezione diventa subito un controllo. Prima di dare il via a una PR confronto l'OK dell'analista con l'ultima richiesta di Nicola (già nella regola del 24/11).
