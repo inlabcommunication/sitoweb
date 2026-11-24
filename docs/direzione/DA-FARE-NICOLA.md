@@ -36,3 +36,15 @@ Aggiornata: 23/11/2026
 
 ## Schede esterne (guida `GUIDA-SCHEDE-ESTERNE.md`)
 - [ ] Orari, servizi/città da mostrare, indirizzo o solo area di servizio → poi Google Business, Bing, Apple, Pagine Gialle.
+
+## Per domani (24/11) — in ordine, tutto breve
+**Decisioni (una parola ciascuna):**
+1. Statistiche interne della dashboard: **A** (tenerle, più lavoro) o **B** (solo Google Analytics, consigliata dal Direttore)?
+2. GEO: confermi «controllo gratuito» se compari nelle risposte AI e «misura mensile» ai clienti dei siti web? (sì/no, poi si pubblica)
+3. Routine dell'analista: aggiornare con i controlli nuovi? Routine di Performance: misura settimanale su 8 pagine? (sì/no)
+**Azioni:**
+4. **Pubblicare le regole Firestore in console (con il Direttore, 5 minuti)** dopo che la PR #139 è unita.
+5. **Proteggere `main` su GitHub** (5 minuti): `CHECKLIST-SICUREZZA-NICOLA-2026-11-24.md`, punto 1.
+6. 2FA sugli account (GitHub, Vercel, Google, Cloudinary, GoDaddy), SPF/DMARC/CAA su GoDaddy, tetto di spesa AI.
+7. Dashboard: salvare le 4 schede clienti con i risultati veri (`CORREZIONI-SCHEDE-CLIENTI-2026-11-20.md`) e togliere la nota «Metriche indicative — da confermare…» da Paresteta e Ricciardi.
+8. Prove: download Paresteta da due browser; evento chatbot in Analytics (DebugView o Tempo reale).
