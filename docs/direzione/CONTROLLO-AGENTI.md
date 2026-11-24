@@ -18,3 +18,6 @@ Ogni report di un agente deve contenere la **prova del lavoro fatto**; se manca,
 1. Blog: log delle fonti obbligatorio in ogni report (gruppo di fonti → ricerca → esito).
 2. Direttore: audit a campione dei report Blog di ottobre–novembre per contare articoli di novità vs di zona.
 3. Lunedì: tabella nel resoconto "chi ha consegnato cosa, con quale prova".
+
+## Competitor (dal 24/11, responsabile: Direttore)
+Prova richiesta nel resoconto del lunedì: paesi e query controllate, chi compare, quanti sono attività del posto e quanti pagine in serie, 1–3 opportunità per la SEO (che il Direttore gira alla SEO). Primo lunedì del mese: Forte & Chiaro, Vyon, Saphìra, Mediabrand. Prima analisi: 30/11.
