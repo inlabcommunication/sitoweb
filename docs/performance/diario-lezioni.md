@@ -4,6 +4,8 @@ Da rileggere ogni settimana (Patto del team, 24/11/2026). Ogni lezione viene da 
 
 | Data | Lezione | Da dove viene |
 |---|---|---|
+| 24/11/2026 | Per controllare le immagini scaricate si guardano solo `<img>` e `<link rel=preload>`: l'HTML contiene anche indirizzi nei dati della pagina che non vengono scaricati. | Falso allarme su `/casi-studio/ricciardi` |
+| 24/11/2026 | Un riferimento vale solo se la pagina era la stessa: con un'immagine di testata in più, 86 non è un calo rispetto al 94 senza immagine. | Rimisura di Paresteta |
 | 24/11/2026 | Un'immagine caricata dalla dashboard può far crollare una pagina se in quel punto del codice manca `cld()`. Bisogna controllare sempre che gli indirizzi Cloudinary abbiano `f_auto,q_auto,w_…`. | `/casi-studio/paresteta`: da 94 a 71, PNG da 2,3 MB |
 | 08/11/2026 | Con `f_auto` Cloudinary può scegliere JPEG a 900 px (207 KB) e WebP a 600 px (105 KB). La larghezza giusta conta più del formato. | Galleria delle schede cliente, 2,5 MB su desktop |
 | 08/11/2026 | Senza chiave API, PageSpeed risponde 429 e non dà i dati reali (CrUX). I dati reali vanno letti in Search Console. | Analisi dettagliata |

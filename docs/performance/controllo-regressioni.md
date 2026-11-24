@@ -48,6 +48,6 @@ Da aggiornare a ogni misura. Il riferimento di ogni pagina è la sua ultima misu
 
 Proposta al Direttore il 24/11: misura **settimanale**, una prova mobile sulle 8 pagine qui sopra. Desktop solo se il mobile cala. In più:
 - una rimisura mirata dopo ogni PR che tocca immagini, pagine o caricamento;
-- per le pagine con contenuti caricati dalla dashboard (casi studio, schede cliente), un controllo leggero che tutte le immagini Cloudinary nell'HTML abbiano `f_auto`/`w_`. Basta `curl`, non serve Lighthouse.
+- per le pagine con contenuti caricati dalla dashboard (casi studio, schede cliente), un controllo leggero che le immagini Cloudinary nei tag `<img>` e `<link rel=preload>` abbiano `f_auto`/`w_` (non in tutto l'HTML: i dati della pagina contengono indirizzi che non vengono scaricati). Basta `curl`, non serve Lighthouse.
 
 La frequenza la decide il Direttore in base ai crediti.
