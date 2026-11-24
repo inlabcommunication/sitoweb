@@ -237,3 +237,13 @@ Se un gruppo non è stato consultato, va scritto. Si usa un elenco, non una tabe
 Il Direttore controlla a campione che i link funzionino.
 
 **Articoli di novità:** almeno 1 a settimana quando il giro trova notizie A o B confermate da una fonte ufficiale. Hanno sempre un taglio locale nel titolo.
+
+## Patto del team (Nicola, 24/11/2026; testo in docs/direzione/PATTO-DEL-TEAM.md)
+
+1. **Tre righe fisse alla fine di ogni report:**
+   - **Cosa ho imparato** (un fatto, con la fonte o il dato);
+   - **Cosa cambio da ora**;
+   - **Cosa insegno a un collega** (a chi, e cosa).
+2. **Diario:** si tiene in `docs/blog-reports/diario-lezioni.md` e si rilegge ogni martedì, all'inizio della routine.
+3. **Dati della SEO:** ogni martedì si legge la sezione «Per il Blog: cosa funziona» dell'ultimo report del lunedì della SEO, e si scrive in base a quella.
+4. **Misure degli articoli:** in `docs/blog-reports/misure-articoli.md`. Ogni articolo si misura 2-4 settimane dopo l'uscita e si annota l'esito.
