@@ -45,21 +45,47 @@ Gli articoli di novità hanno sempre un taglio locale, cioè la provincia di Tar
    - Fonte attuale: [Social Media Today](https://www.socialmediatoday.com/news/instagram-adds-stories-editing/875261/), che è secondaria.
    - **Condizione:** si pubblica solo con la conferma di una fonte ufficiale (about.instagram.com, help.instagram.com o Meta Newsroom), da ricontrollare il 27/11 e il 1/12. Senza conferma, il 1/12 esce "Agenzia o freelance per i social" e la novità slitta.
 4. **Venerdì 4/12:** "Social per ristoranti a Natale e Capodanno: menu delle feste, prenotazioni e cenoni" (locale, social; deve uscire entro il 10/12).
-5. **Martedì 8/12:** "Agenzia o freelance per i social: cosa conviene a un'attività locale" (locale, social), oppure la novità del giro del 8/12, se c'è.
+5. **Martedì 8/12: GEO 1, "La tua attività compare nelle risposte di ChatGPT, Gemini e Google? Come controllarlo in provincia di Taranto"**. Fa parte della serie sulle risposte AI (vedi sotto). La novità del giro dell'8/12, se c'è, esce venerdì 11/12 insieme all'articolo del giorno.
 6. **Venerdì 11/12:** "Gestione social per studi dentistici e medici: cosa si può comunicare" (locale, social, Ricciardi).
    - Insieme a questa uscita: l'aggiornamento del mese di `sponsorizzate-instagram-attivita-locali`.
 7. **Martedì 15/12:** NOVITÀ dal giro del 15/12. Se non ci sono notizie A o B, esce "Quanto costa un video promozionale per un'attività locale" (locale, costo, senza cifre).
-8. **Venerdì 18/12:** "Social per lidi e strutture balneari: preparare la stagione già a febbraio" (locale, social).
+8. **Venerdì 18/12: GEO 2, "Quante visite ti portano ChatGPT e Gemini? Il canale AI Assistant di GA4 spiegato a un'attività locale"**. Fa parte della serie sulle risposte AI.
 9. **Martedì 22/12:** "Instagram o TikTok per un'attività locale in Puglia: quale scegliere" (locale, social). Include la novità TikTok Smart+ per le piccole imprese ([TikTok Business](https://ads.tiktok.com/resources/)).
 10. **Martedì 29/12:** "Social media per parrucchieri ed estetiste in provincia di Taranto" (locale, social).
 
 **Passano a gennaio:**
+- social per lidi e strutture balneari (va bene anche a gennaio: la stagione si prepara a febbraio);
+- "Agenzia o freelance", se il 1/12 esce la novità sulle storie;
 - video per agenzie immobiliari;
 - social per officine e ricambi;
 - regole AGCOM per collaborare con un influencer locale (novità, normativa);
 - l'aggiornamento di `gestione-social-attivita-locale-cosa-include`.
 
 Conteggio di dicembre: almeno 9 uscite. Ci sono 1 o 2 articoli di novità, più quelli che arriveranno dai giri dell'8 e del 15/12. Gli articoli sui social sono almeno 6.
+
+## Serie "Visibilità nelle risposte AI" (GEO), richiesta di Nicola e del Direttore del 24/11
+
+Questi articoli si **aggiungono** a quelli di novità. Regole:
+- coerenza con `seo-ai-overviews-geo-google`: GEO vuol dire SEO fatta anche per le AI, nessuna promessa e nessun trucco;
+- solo fonti ufficiali;
+- nessun prezzo;
+- link a `/siti-web` e agli articoli esistenti;
+- taglio locale.
+
+I temi vanno proposti prima alla SEO, per evitare che i nostri articoli si facciano concorrenza su Google.
+
+1. **GEO 1, martedì 8/12: "La tua attività compare nelle risposte di ChatGPT, Gemini e Google? Come controllarlo in provincia di Taranto"** (articolo nuovo).
+   - Domande da fare alle AI come un cliente, cosa guardare, scheda Google e sito coerenti, cosa non promettere.
+   - Link a `seo-ai-overviews-geo-google`, `instagram-su-google-seo-profilo`, `/siti-web`.
+2. **GEO 2, venerdì 18/12: "Quante visite ti portano ChatGPT e Gemini? Il canale AI Assistant di GA4 spiegato a un'attività locale"** (articolo nuovo).
+   - Fonte ufficiale: [guida ai gruppi di canali di GA4](https://support.google.com/analytics/answer/9756891?hl=en). Il canale raccoglie le visite da ChatGPT, Gemini, Claude e altri. AI Overviews e AI Mode di Google restano in "Ricerca organica".
+   - Limiti: le app che non passano il referer non vengono contate.
+   - È distinto da `google-business-profile-ga4`, che parla delle visite dalla scheda Google.
+3. **GEO 3, gennaio (aggiornamento, non articolo nuovo): il report "Generative AI performance" di Search Console passo passo.**
+   - C'è già `ai-overviews-search-console-report`: va aggiornato quello, così i due articoli non si fanno concorrenza su Google.
+   - Fonte: [guida della community di Search Central](https://support.google.com/webmasters/community-guide/463964235/understanding-and-utilizing-generative-ai-performance-reports-in-google-search-console?hl=en-KY). La data di lancio va verificata su una pagina ufficiale di Google.
+4. **GEO 4, gennaio: "Risposte AI e attività locali: cosa cambia per ristoranti, studi, strutture ricettive e officine"** (articolo nuovo).
+   - Un esempio per ogni settore, con clienti reali: Casa28, Ricciardi, Masseria Sacramento, DIRAM.
 
 ## Aggiornamento del mese
 
