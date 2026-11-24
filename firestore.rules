@@ -65,12 +65,15 @@ service cloud.firestore {
         && shortStr(request.resource.data.user_agent, 200)
         && request.resource.data.device in ['mobile', 'tablet', 'desktop']
         && shortStr(request.resource.data.path, 300)
-        && request.resource.data.created_at is timestamp
+        // ora del server (serverTimestamp nel client): niente date inventate
+        && request.resource.data.created_at == request.time
         && (!('referrer' in request.resource.data) || request.resource.data.referrer == null || shortStr(request.resource.data.referrer, 500))
         && (!('section' in request.resource.data) || shortStr(request.resource.data.section, 60))
         && (!('target' in request.resource.data) || shortStr(request.resource.data.target, 80))
-        && (!('scroll_depth' in request.resource.data) || request.resource.data.scroll_depth is number)
-        && (!('duration' in request.resource.data) || request.resource.data.duration is number);
+        && (!('scroll_depth' in request.resource.data) || (request.resource.data.scroll_depth is number
+             && request.resource.data.scroll_depth >= 0 && request.resource.data.scroll_depth <= 100))
+        && (!('duration' in request.resource.data) || (request.resource.data.duration is number
+             && request.resource.data.duration >= 0 && request.resource.data.duration <= 86400));
     }
 
     // Contatori anti-abuso usati dalle funzioni /api: mai accessibili dal browser

@@ -470,7 +470,13 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
         <motion.div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 30%, rgba(205,178,255,0.18) 0%, transparent 50%), linear-gradient(135deg, #1e1d1d 0%, #2a1f3d 100%)', y: heroY, opacity: heroOpacity }} />
         {heroImage && (
           <>
-            <motion.img src={heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, y: heroY }} />
+            {/* Versioni ridotte da Cloudinary (richiesta Performance 24/11: la testata originale da 2,3 MB
+                era l'LCP). Stesse larghezze della testata delle schede cliente, più 1920 per gli schermi grandi.
+                L'immagine è al 35% sotto una sfumatura scura: la riduzione sui telefoni non si nota. */}
+            <motion.img src={cld(heroImage, 1600)} alt="" fetchPriority="high"
+              srcSet={/\/image\/upload\//.test(heroImage) ? [640, 960, 1280, 1600, 1920].map((w) => `${cld(heroImage, w)} ${w}w`).join(', ') : undefined}
+              sizes="100vw"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, y: heroY }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(30,29,29,1) 0%, rgba(30,29,29,.6) 50%, rgba(30,29,29,.25) 100%)' }} />
           </>
         )}
