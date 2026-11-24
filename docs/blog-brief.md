@@ -224,3 +224,16 @@ Le novità di classe A e le B confermate da una fonte ufficiale diventano:
 - oppure un aggiornamento di un articolo esistente.
 
 Lo scopo è non scrivere solo articoli di zona, ma restare aggiornati su quello che cambia.
+
+### Prova delle fonti in ogni report (richiesta del Direttore, 24/11/2026)
+
+Ogni report e ogni file di monitoraggio hanno una sezione "Prova delle fonti" per **tutti i 5 gruppi**. Per ogni gruppo si scrive:
+- **ricerche:** quante sono state fatte e quali;
+- **fonti:** link con data;
+- **esito:** trattata, scartata (con il motivo) o da ricontrollare.
+
+Se un gruppo non è stato consultato, va scritto. Si usa un elenco, non una tabella Markdown (regola di Nicola).
+
+Il Direttore controlla a campione che i link funzionino.
+
+**Articoli di novità:** almeno 1 a settimana quando il giro trova notizie A o B confermate da una fonte ufficiale. Hanno sempre un taglio locale nel titolo.
