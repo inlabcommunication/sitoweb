@@ -14,6 +14,7 @@ import { initAnalytics, trackPageview } from "./lib/analytics";
 import { getCurrentPath, linkClick, navigate } from "./lib/router";
 import { useAgencyStats } from "./data/stats";
 import { SERVICE_EXAMPLES, type ServiceExample } from "./data/serviceExamples";
+import { GS_FAQ } from "./data/gsFaq";
 import { BrowserMockup } from "./components/BrowserMockup";
 import { getSeo, seoReady, onBlogPostsChange } from "./seo/routes";
 import { applySeo } from "./seo/head";
@@ -33,12 +34,14 @@ import { OtherClients } from './sections/OtherClients';
 import { otherClientPages } from './data/otherClients';
 import { CLIENT_SEO } from './data/clientSeo';
 import { MAP_CITIES } from './data/mapCities';
+import { getAttribution } from './lib/attribution';
+import { BLOG_CITY_LINKS, BLOG_TITLES } from "./data/blogCityLinks.generated";
 import { clientServiceSlugs, clientsInCity, locationCities } from './lib/localClients';
 import { CaseStudiesSection } from "./sections/CaseStudiesSection";
 import { ReelsGrid, Gallery, hasReel } from "./components/ReelCard";
 import { registerContent, CITIES, citySlug, authorByName, authorPath, BUSINESS, AGENCY_CITIES, agencyPath, AUTHORS, serviceCities, aCity } from "./seo/routes";
 import { cityInfo, BARI_PROVINCE_CITIES, isBariProvince } from "./data/cities";
-import { DEFAULT_CASES } from "./data/caseStudies";
+import { DEFAULT_CASES, isPublishedCase, hasPublishedCase } from "./data/caseStudies";
 import { AnimatedStats, FinalCTA } from "./sections/StatsAndCTA";
 import { cld, cldVideo, cldVideoPoster } from "./lib/media";
 import { workAlt } from "./lib/altText";
@@ -67,6 +70,9 @@ const G = () => (
     a{color:inherit;text-decoration:none;cursor:pointer}
     button{cursor:pointer;font-family:var(--fb)}
     img{max-width:100%}
+    .skip-link{position:absolute;left:-9999px;top:16px;z-index:10001;background:var(--a);color:#000;font-weight:500;padding:.7rem 1.1rem;border-radius:999px}
+    .skip-link:focus{left:16px}
+    #contenuto:focus{outline:none}
  
     .fd{font-family:var(--fd)}
     .fs{font-family:var(--fs)}
@@ -161,6 +167,11 @@ const G = () => (
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
+      /* Schede cliente e casi studio più compatte da telefono (richiesta Nicola 23/11): solo spazi,
+         stessa grafica. Le classi sono usate solo in quelle pagine (la home non cambia). */
+      .sec-mob{padding-top:3.5rem!important;padding-bottom:3.5rem!important}
+      .gap-mob{gap:2rem!important}
+      .h2-mob{margin-bottom:1.5rem!important}
       .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
       /* area di tocco di almeno 44 px per i link del footer (richiesta analista, approvata) */
@@ -452,6 +463,8 @@ const DoveLavoriamo = ({slug}: {slug: string}) => (
   </section>
 );
 
+// Link ai contatti dalle pagine gestione social: il modulo preseleziona il servizio (brief SEO 12/11, GS-2)
+const CONTACT_GS = "/contatti?servizio=gestione-social";
 const ServiceCTA = ({title="Vuoi questo servizio?",sub="Parliamo del tuo progetto senza impegno.",btn="Richiedi un preventivo",to="/contatti"}) => {
   const {go}=useRouter();
   return (
@@ -785,7 +798,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
   const content = useContent();
   const examples = (((content as any).serviceExamples || SERVICE_EXAMPLES)[slug] || []) as ServiceExample[];
   if (!examples.length) return null;
-  const cases = ((content as any).cases?.items || []) as any[];
+  const cases = (((content as any).cases?.items || []) as any[]).filter(isPublishedCase);
   const clients = normalizeClients(((content as any).clients?.items || []) as any[]);
   const sites = examples.filter((e): e is Extract<ServiceExample, { kind: 'site' }> => e.kind === 'site');
   const cards = examples.filter(e => e.kind !== 'site');
@@ -807,7 +820,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
               <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
               <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
                 <a className="btn btn-p" href={site.url} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
-                {site.caseStudy && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
+                {site.caseStudy && cases.some((x: any)=>x.id===site.caseStudy) && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
               </div>
             </div>
           </div>
@@ -837,12 +850,12 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
 const PageGestioneSocial = () => (
   <>
     <PageHero
-      tag="Servizio — Gestione Social Media"
+      tag="Gestione social per aziende · Taranto e Puglia"
       h1="FAI CRESCERE"
       h1b="IL TUO BRAND"
       italic="con la giusta comunicazione social."
       sub="Non pubblichiamo solo post. Costruiamo una presenza digitale strategica che trasforma follower in clienti reali."
-      cta1="Richiedi un preventivo" cta1to="/contatti"
+      cta1="Richiedi una consulenza gratuita" cta1to={CONTACT_GS}
       cta2="Vedi i risultati" cta2to="/clienti"
     />
     <Marquee items={["Analisi","✦","Strategia","✦","Contenuti","✦","Pubblicazione","✦","Ottimizzazione","✦","Crescita","✦"]}/>
@@ -895,7 +908,20 @@ const PageGestioneSocial = () => (
  
     <ServiceExamples slug="gestione-social"/>
     <DoveLavoriamo slug="gestione-social"/>
-    <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito"/>
+    {/* GS-3 (Nicola 23/11): domande frequenti nello stile delle pagine città; stesso testo nel FAQPage */}
+    <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:880,margin:"0 auto"}}>
+        <p className="section-label">Domande frequenti</p>
+        <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase",fontWeight:400}}>Gestione social: le domande più comuni</h2>
+        {GS_FAQ.map(f=>(
+          <React.Fragment key={f.q}>
+            <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{f.q}</h3>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{f.a}</p>
+          </React.Fragment>
+        ))}
+      </div>
+    </section>
+    <ServiceCTA title="PRONTO A CRESCERE?" sub="Analizziamo gratuitamente il tuo profilo social e ti diciamo dove puoi migliorare." btn="Audit gratuito" to={CONTACT_GS}/>
   </>
 );
  
@@ -1288,7 +1314,9 @@ const PageChiSiamo = () => {
                     <div style={{fontSize:16,fontWeight:500}}>{authorByName(p.name) ? <Link to={authorPath(authorByName(p.name)!.slug)} style={{color:"inherit"}}>{p.name}</Link> : p.name}</div>
                   </div>
                 </div>
-                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:"1.5rem"}}>{p.bio}{authorByName(p.name)?.inBreve ? " "+authorByName(p.name)!.inBreve : ""}</p>
+                <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginBottom:authorByName(p.name)?".8rem":"1.5rem"}}>{p.bio}{authorByName(p.name)?.inBreve ? " "+authorByName(p.name)!.inBreve : ""}</p>
+                {/* Link testuale alla pagina autore (analisi SEO 08/11, R5) */}
+                {authorByName(p.name) && <Link to={authorPath(authorByName(p.name)!.slug)} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)",marginBottom:"1rem"}}>{p.name}, {authorByName(p.name)!.jobTitle.toLowerCase()} <ArrowRight size={13}/></Link>}
                 {p.edu?.length>0&&(
                   <div style={{marginBottom:"1.5rem",padding:"1rem 1.1rem",borderRadius:14,background:"rgba(205,178,255,0.06)",border:".5px solid rgba(205,178,255,0.2)"}}>
                     <div style={{display:"flex",alignItems:"center",gap:6,fontSize:12,letterSpacing:".15em",textTransform:"uppercase",color:"var(--a)",marginBottom:8}}>
@@ -1332,7 +1360,12 @@ const PageChiSiamo = () => {
 ═══════════════════════════════════════════════════════════════ */
 const PageContatti = () => {
   const contact = ((useContent() as any).contact) || {};
-  const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",msg:"",privacy:false});
+  const [form,setForm]=useState({nome:"",email:"",tel:"",azienda:"",servizio:"",come:"",msg:"",privacy:false});
+  // Arrivo da una pagina gestione social (?servizio=gestione-social): servizio preselezionato,
+  // sempre modificabile. Dopo il primo render, così l'HTML statico resta uguale (GS-2)
+  useEffect(()=>{
+    if(new URLSearchParams(window.location.search).get("servizio")==="gestione-social") setForm(f=>f.servizio?f:{...f,servizio:"Gestione social"});
+  },[]);
   // Anti-bot: campo nascosto (le persone non lo vedono) e ora di apertura del modulo
   const [honeypot,setHoneypot]=useState("");
   // Token firmato dal server all'apertura del modulo (anti-bot sul tempo di compilazione)
@@ -1366,14 +1399,15 @@ const PageContatti = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.nome, email: form.email, phone: form.tel, company: form.azienda,
-          service: form.servizio, message: form.msg, privacy: form.privacy,
-          website: honeypot, formToken: await tokenForSubmit(),
+          service: form.servizio, howFound: form.come, message: form.msg, privacy: form.privacy,
+          website: honeypot, formToken: await tokenForSubmit(), page: window.location.pathname, attribution: getAttribution(),
         }),
       });
       if (r.status === 429) { setError("Hai inviato troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com"); return; }
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       setSent(true);
-      gaEvent('generate_lead', { method: 'modulo_contatti', service: form.servizio || 'non indicato' });
+      // campo trappola pieno: il server ha scartato l'invio, quindi non è un lead (Direttore 23/11)
+      if (!honeypot) gaEvent('generate_lead', { method: 'modulo_contatti', service: form.servizio || 'non indicato' });
     } catch(e){
       console.error('Save contact failed',e);
       setError("Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com");
@@ -1450,6 +1484,15 @@ const PageContatti = () => {
                       {["Strategia social","Gestione social","Foto & video","Branding","Campagne Meta Ads","Sito o landing page","Organizzazione eventi","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
                     </select>
                   </div>
+                  {/* GS-3 (Nicola 23/11): facoltativo, salvato col lead; non va a GA4. Stesse voci in api/lead.ts */}
+                  <div>
+                    <label htmlFor="f-come" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Come ci hai conosciuto?</label>
+                    <select id="f-come" className="form-field" value={form.come} onChange={e=>setForm({...form,come:e.target.value})}
+                      style={{width:"100%",background:"rgba(255,255,255,0.04)",border:".5px solid var(--b)",borderRadius:12,padding:"12px 16px",color:form.come?"var(--t)":"var(--m)",fontSize:16,fontFamily:"var(--fb)"}}>
+                      <option value="">Seleziona</option>
+                      {["Passaparola","Ho visto un vostro lavoro sui social di un cliente","Instagram o Facebook di InLab","Ricerca su Google","ChatGPT o altre AI","Altro"].map(s=><option key={s} value={s} style={{background:"#111"}}>{s}</option>)}
+                    </select>
+                  </div>
                   <div>
                     <label htmlFor="f-msg" style={{fontSize:12,fontWeight:500,letterSpacing:".13em",textTransform:"uppercase",color:"var(--m)",display:"block",marginBottom:6}}>Raccontaci il progetto *</label>
                     {/* campo trappola anti-bot: invisibile alle persone. Nome senza significato
@@ -1512,29 +1555,32 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
   const content=useContent() as any;
   // clienti principali + "Altri clienti" pubblicati, città confrontata in modo esatto (brief SEO 10/10 territorio, punto 3)
   const localClients=clientsInCity(content, city);
-  const localCases=((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
+  const localCases=((content.cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(city)));
   // Le città fuori da CITIES hanno solo le pagine servizio previste in EXTRA_SERVICE_CITIES
   // (oggi gestione social): gli altri servizi puntano alle pagine generali.
   const hasServicePage=(slug: string)=>serviceCities(slug).includes(city);
   const isHome=city===BUSINESS.city;
+  // H1 personalizzato (R4): prima riga fino a "a {città}", seconda riga da lì in poi; così l'H1 può
+  // continuare dopo il nome della città, es. "a Castrignano del Capo e Santa Maria di Leuca" (lotto 8)
+  const h1At=info?.h1 ? info.h1.indexOf(aCity(city)) : -1;
   const featured=info?.clientiInEvidenza;
   // Taranto: clienti e casi di tutta la provincia, raggruppati per città, Taranto per primo (brief SEO 02/10 e 03/10)
   // Città nuove senza clienti (lavoriVicini): stesso blocco con i lavori dei paesi vicini (brief SEO 10/10 territorio)
   const nearby=!!(city!=="Taranto"&&info?.lavoriVicini&&!localClients.length&&!localCases.length);
   const allGroups=(city==="Taranto"||nearby) ? (nearby ? byDistance(city, PROVINCE_CITIES) : ["Taranto",...PROVINCE_CITIES.filter(c=>c!=="Taranto")]).map(c=>({
     city:c,
-    cases:((content.cases?.items||[]) as any[]).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
+    cases:((content.cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
     clients:clientsInCity(content, c),
   })).filter(g=>g.cases.length||g.clients.length) : [];
   // Città senza clienti: solo 6 schede, dei paesi più vicini (brief SEO 10/10: niente blocco uguale su tante pagine)
-  const provinceGroups=nearby ? limitCards(allGroups, 6) : allGroups;
+  const provinceGroups=nearby ? limitCards(allGroups, 4) : allGroups; // 4 schede come R1 (brief SEO 16/11, R9; prima 6)
   return (
     <>
       <section style={{padding:"10rem 2rem 5rem",position:"relative",overflow:"hidden",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto",position:"relative",zIndex:1}}>
           <p className="section-label">Agenzia {aCity(city)} — {provincia}</p>
           <h1 style={{fontFamily:"var(--fd)",fontSize:"clamp(3rem,8vw,7.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>
-            Agenzia di comunicazione e marketing<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{aCity(city)}</span>
+            {h1At>0 ? info!.h1!.slice(0,h1At).trim() : "Agenzia di comunicazione e marketing"}<br/><span style={{WebkitTextStroke:"1px var(--t)",color:"transparent"}}>{h1At>0 ? info!.h1!.slice(h1At) : aCity(city)}</span>
           </h1>
           <p style={{maxWidth:620,fontSize:17,lineHeight:1.75,color:"var(--m)",marginBottom:"2.5rem",fontWeight:300}}>
             {info?.intro ? <IntroText text={info.intro} link={info.introLink}/> : isHome
@@ -1569,7 +1615,7 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
               {localClients.map((cl: any, i: number)=>{
                 const v=featured.voci.find(x=>x.cliente===cl.id);
                 return <CaseCard key={cl.id} heading href={`/cliente/${cl.id}`} number={localCases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"
-                  note={v?.riga} secondary={v?.caso ? {href:`/casi-studio/${v.caso}`,label:"Leggi il caso studio"} : undefined}/>;
+                  note={v?.riga} secondary={v?.caso && hasPublishedCase(content, v.caso) ? {href:`/casi-studio/${v.caso}`,label:"Leggi il caso completo"} : undefined}/>;
               })}
             </CaseCardGrid>
           </div>
@@ -1615,12 +1661,18 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label">Servizi {aCity(city)}</p>
-          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
+          <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"1.2rem",textTransform:"uppercase",fontWeight:400}}>Cosa facciamo per le attività di {city}</h2>
+          {/* Descrizioni generiche dei servizi tolte dalle schede (uguali in tutte le pagine agenzia):
+              restano solo quelle scritte per la città; il resto è in /servizi (brief SEO 16/11, R9) */}
+          <p style={{maxWidth:760,fontSize:15,color:"var(--m)",lineHeight:1.75,marginBottom:"2rem"}}>
+            Scegli il servizio che ti serve: ogni scheda porta alla pagina con il metodo e gli esempi. Tutti i servizi insieme, con cosa comprendono, sono nella pagina{" "}
+            <Link to="/servizi" className="foot-link" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>Servizi</Link>.
+          </p>
           <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,300px),1fr))",gap:"1rem"}}>
             {SERVICES.map(s=>(
               <Link key={s.slug} to={hasServicePage(s.slug)?`/${s.slug}-${citySlug(city)}`:`/${s.slug}`} className="glass" style={{display:"block",borderRadius:20,padding:"1.6rem",color:"var(--t)",textDecoration:"none"}}>
                 <span style={{display:"flex",alignItems:"center",gap:10,color:"var(--a)",marginBottom:".8rem"}}>{s.icon}<span style={{fontFamily:"var(--fd)",fontSize:22,letterSpacing:".04em",color:"var(--t)"}}>{hasServicePage(s.slug)?`${s.label} ${aCity(city)}`:s.label}</span></span>
-                <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info?.servizi?.[s.slug]||s.short}</span>
+                {info?.servizi?.[s.slug] && <span style={{display:"block",fontSize:14,color:"var(--m)",lineHeight:1.6}}>{info.servizi[s.slug]}</span>}
               </Link>
             ))}
           </div>
@@ -1675,11 +1727,16 @@ const PageAgenziaCitta = ({city}: {city: string}) => {
         </section>
       )}
 
+      <BlogCityLinks city={city}/>
+
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
           <p className="section-label" style={{marginBottom:"1.5rem"}}>Agenzia anche in queste città</p>
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-            {AGENCY_CITIES.filter(c=>c!==city).map(c=>(
+            {/* Solo le 8 città più vicine (prima: tutte, 67 link uguali in ogni pagina; brief SEO 16/11, R9
+                come R1). Tutte le altre restano raggiungibili da /dove-lavoriamo, linkata qui sotto. */}
+            {/* più, sempre, le città principali (richiesta SEO 16/11), senza ripetere quelle già vicine */}
+            {[...new Set([...byDistance(city, AGENCY_CITIES.filter(c=>c!==city)).slice(0,8), ...MAIN_AGENCY_CITIES.filter(c=>c!==city&&AGENCY_CITIES.includes(c))])].map(c=>(
               <Link key={c} to={agencyPath(c)} className="tag tag-g city-link" style={{fontSize:12,padding:"8px 16px"}}>Agenzia a {c}</Link>
             ))}
           </div>
@@ -1703,7 +1760,7 @@ const PageDoveLavoriamoWrap = () => {
   const clients=normalizeClients((c.clients?.items||[]) as any[]);
   const activities=[
     ...clients.filter((cl: any)=>cl.location&&cl.sector).map((cl: any)=>({city:cityName(cl.location),sector:String(cl.sector),services:splitList(cl.services),href:`/cliente/${cl.id}`})),
-    ...((c.cases?.items||[]) as any[]).filter((cs: any)=>!clients.some((cl: any)=>cl.id===cs.clientId)).flatMap((cs: any)=>{
+    ...((c.cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>!clients.some((cl: any)=>cl.id===cs.clientId)).flatMap((cs: any)=>{
       const sector=cs.sector||(DEFAULT_CASES.find((d: any)=>d.id===cs.id) as any)?.sector;
       return sector ? caseLocations(cs).map((city: string)=>({city:cityName(city),sector,services:splitList(cs.category),href:`/casi-studio/${cs.id}`})) : [];
     }),
@@ -1742,6 +1799,8 @@ const limitCards=(groups: {city:string;cases:any[];clients:any[]}[], max: number
     return {...g,cases,clients};
   }).filter(g=>g.cases.length||g.clients.length);
 };
+// Città principali sempre linkate dalle pagine agenzia, oltre alle 8 più vicine (richiesta SEO 16/11, R9)
+const MAIN_AGENCY_CITIES=["Castellaneta","Taranto","Palagianello","Palagiano","Mottola","Massafra","Ginosa","Laterza","Bari","Ferrara"];
 // Città della provincia di Taranto per la sezione "Lavoriamo in tutta la provincia"
 const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Palagiano","Mottola","Taranto","Laterza","Ginosa"];
 
@@ -1751,6 +1810,27 @@ const PROVINCE_CITIES=["Castellaneta","Castellaneta Marina","Palagianello","Pala
 const caseLocations = (cs: any): string[] =>
   Array.isArray(cs?.locations) && cs.locations.length ? cs.locations
     : ((DEFAULT_CASES.find((d: any)=>d.id===cs?.id) as any)?.locations || []);
+
+// "Dal blog" nelle pagine agenzia e gestione social (analisi SEO 08/11, R3): 2-3 articoli
+// scelti a ogni build da scripts/blog-city-links.ts (prima quelli che citano la città o la provincia)
+const BlogCityLinks = ({city}: {city: string}) => {
+  const slugs=(BLOG_CITY_LINKS[city]||[]).filter(s=>BLOG_TITLES[s]);
+  if(slugs.length<2) return null;
+  return (
+    <section style={{padding:"4rem 2rem",borderBottom:".5px solid var(--b)"}}>
+      <div style={{maxWidth:1280,margin:"0 auto"}}>
+        <h2 className="section-label" style={{marginBottom:"1.2rem"}}>Dal blog: idee per le attività di {city}</h2>
+        <ul style={{listStyle:"none",padding:0,margin:0,display:"grid",gridTemplateColumns:"repeat(auto-fill,minmax(min(100%,320px),1fr))",gap:"0 2rem"}}>
+          {slugs.map(s=>(
+            <li key={s} style={{borderBottom:".5px solid var(--b)"}}>
+              <Link to={`/blog/${s}`} className="foot-link" style={{display:"flex",alignItems:"center",justifyContent:"space-between",gap:12,minHeight:44,padding:".9rem 0",fontSize:15,color:"var(--t)",lineHeight:1.5}}>{BLOG_TITLES[s]} <ArrowRight size={14} style={{flexShrink:0,color:"var(--a)"}}/></Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+};
 
 // Settori e domanda frequente della città (testi in src/data/cities.ts)
 const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) => (
@@ -1786,7 +1866,7 @@ const CityDetails = ({info}: {info: NonNullable<ReturnType<typeof cityInfo>>}) =
         {(info.altreFaq||[]).map(f=>(
           <React.Fragment key={f.q}>
             <h3 style={{fontFamily:"var(--fs)",fontStyle:"italic",fontWeight:400,fontSize:"clamp(1.4rem,2.2vw,1.9rem)",lineHeight:1.25,color:"var(--a)",margin:"2rem 0 1rem"}}>{f.q}</h3>
-            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>{f.a}</p>
+            <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}><IntroText text={f.a} link={f.link}/></p>
           </React.Fragment>
         ))}
       </div>
@@ -1802,11 +1882,19 @@ const PageCittaSEO = ({city, service}) => {
   const norm=(v: string)=>String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
   // per primi i clienti che hanno questo servizio (brief SEO 10/10 territorio, punto 3)
   const localClients=clientsInCity(useContent(), cityName, svc.slug);
-  const localCases=(((useContent() as any).cases?.items||[]) as any[])
+  const localCases=(((useContent() as any).cases?.items||[]) as any[]).filter(isPublishedCase)
     .filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(cityName)));
   const info=cityInfo(cityName);
   const provincia=info?.provincia||"provincia di Taranto";
   const project=info?.paginaServizio?.[svc.slug]?.progettoInEvidenza;
+  // Lavori dei paesi più vicini (al massimo 4 schede) per le città senza lavori propri (R1)
+  const content=useContent();
+  const nearbyGroups=(localClients.length||localCases.length) ? [] : limitCards(
+    byDistance(cityName, AGENCY_CITIES.filter(c=>c!==cityName)).map(c=>({
+      city:c,
+      cases:(((content as any).cases?.items||[]) as any[]).filter(isPublishedCase).filter((cs: any)=>caseLocations(cs).some((l: string)=>norm(l)===norm(c))),
+      clients:clientsInCity(content, c),
+    })).filter(g=>g.cases.length||g.clients.length), 4);
  
   return (
     <>
@@ -1830,7 +1918,8 @@ const PageCittaSEO = ({city, service}) => {
             {info?.servizi?.[svc.slug] ? <IntroText text={info.servizi[svc.slug]} link={info.introLink}/> : `InLab Communication segue ${svc.label} per attività di ${cityName} e della ${provincia}, da Castellaneta: strategia su misura, lavoro fatto da noi e risultati che misuriamo insieme.`}
           </motion.p>
           <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-            <button className="btn btn-p" onClick={()=>go("/contatti")}>Richiedi un preventivo gratuito <ArrowRight size={14}/></button>
+            {/* GS-3 (Nicola 23/11): "consulenza gratuita" solo sulle pagine gestione social, per misurarne l'effetto */}
+            <button className="btn btn-p" onClick={()=>go(svc.slug==="gestione-social"?CONTACT_GS:"/contatti")}>{svc.slug==="gestione-social"?"Richiedi una consulenza gratuita":"Richiedi un preventivo gratuito"} <ArrowRight size={14}/></button>
             <button className="btn btn-g" onClick={()=>go("/"+svc.slug)}>Scopri il servizio</button>
           </div>
         </div>
@@ -1851,7 +1940,7 @@ const PageCittaSEO = ({city, service}) => {
               </ul>
             </> : null}
             <div style={{display:"flex",flexWrap:"wrap",gap:"0 1.5rem"}}>
-              {project.caso && <Link to={`/casi-studio/${project.caso}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>Leggi il caso studio <ArrowRight size={13}/></Link>}
+              {project.caso && hasPublishedCase(content, project.caso) && <Link to={`/casi-studio/${project.caso}`} className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>Leggi il caso studio <ArrowRight size={13}/></Link>}
               {project.sito && /^https:\/\//.test(project.sito.url) && <a href={project.sito.url} target="_blank" rel="noopener" className="foot-link" style={{display:"inline-flex",alignItems:"center",gap:6,minHeight:44,fontSize:14,color:"var(--a)"}}>{project.sito.label} <ArrowUpRight size={13}/></a>}
             </div>
           </div>
@@ -1862,8 +1951,8 @@ const PageCittaSEO = ({city, service}) => {
  
       {/* Local content */}
       <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"4rem",alignItems:"start"}} className="grid-1-mob">
-          <div>
+        <div style={{maxWidth:1280,margin:"0 auto"}}>
+          <div style={{maxWidth:760}}>
             <p className="section-label">Perché scegliere InLab {aCity(cityName)}</p>
             <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.5rem,4.5vw,4.5rem)",lineHeight:.9,marginBottom:"2rem",textTransform:"uppercase"}}>
               CONOSCIAMO<br/><span className="stroke">IL TERRITORIO</span>
@@ -1873,22 +1962,14 @@ const PageCittaSEO = ({city, service}) => {
             ) : (
               <p style={{fontSize:15,color:"var(--m)",lineHeight:1.8}}>Lavoriamo con attività di {cityName} e della {provincia}: campagne e contenuti che parlano la lingua giusta alle persone giuste, nel posto giusto.</p>
             )}
-          </div>
-          <div style={{display:"flex",flexDirection:"column",gap:0}}>
-            {[
-              {t:"Conoscenza del mercato locale",d:`Lavoriamo da Castellaneta con attività della ${provincia}: conosciamo stagionalità e abitudini del territorio.`},
-              {t:"Presenza sul territorio",d:"Possiamo venire da voi per shooting, riprese o riunioni. La qualità del lavoro è superiore quando lavoriamo di persona."},
-              {t:"Risultati misurabili",d:"Non vendiamo aria fritta. Definiamo insieme KPI chiari e ti mostriamo ogni mese se stiamo raggiungendo gli obiettivi."},
-              {t:"Supporto continuo",d:"Parli direttamente con noi, Nicola e Ilaria."},
-            ].map((item,i)=>(
-              <div key={i} style={{display:"flex",gap:"1rem",padding:"1.2rem 0",borderBottom:".5px solid var(--b)"}}>
-                <Check size={16} style={{color:"var(--a)",flexShrink:0,marginTop:3}}/>
-                <div>
-                  <div style={{fontSize:14,fontWeight:500,marginBottom:.3+"rem"}}>{item.t}</div>
-                  <div style={{fontSize:13,color:"var(--m)",lineHeight:1.65}}>{item.d}</div>
-                </div>
-              </div>
-            ))}
+            {/* Blocco uguale per tutte le città ridotto a due righe, il metodo è nella pagina del
+                servizio (analisi SEO 08/11, R1: meno testo comune tra le pagine città) */}
+            <p style={{fontSize:14,color:"var(--m)",lineHeight:1.75,marginTop:"1.5rem",paddingTop:"1.2rem",borderTop:".5px solid var(--b)"}}>
+              {cityName===BUSINESS.city
+                ? "Abbiamo sede a Castellaneta: ci vediamo in agenzia o da te per riprese e incontri, e parli direttamente con Nicola e Ilaria."
+                : `Lavoriamo da Castellaneta, veniamo ${aCity(cityName)} per riprese e incontri e parli direttamente con Nicola e Ilaria.`}{" "}
+              Come funziona il servizio, passo per passo: <Link to={"/"+svc.slug} className="foot-link" style={{color:"var(--t)",textDecoration:"underline",textUnderlineOffset:3}}>{svc.label}</Link>.
+            </p>
           </div>
         </div>
       </section>
@@ -1925,20 +2006,47 @@ const PageCittaSEO = ({city, service}) => {
         </section>
       )}
 
+      {svc.slug==="gestione-social" && <BlogCityLinks city={cityName}/>}
+
       {/* Other cities */}
       <section style={{padding:"5rem 2rem",borderBottom:".5px solid var(--b)"}}>
         <div style={{maxWidth:1280,margin:"0 auto"}}>
-          <p className="section-label" style={{marginBottom:"1.5rem"}}>Operiamo anche in queste città</p>
+          <p className="section-label" style={{marginBottom:"1.5rem"}}>Operiamo anche nei paesi vicini</p>
+          {/* Solo le 8 città più vicine (prima: tutte, oltre 50 link uguali in ogni pagina; analisi SEO 08/11, R1).
+              Le altre restano raggiungibili dalla pagina del servizio e dalle pagine agenzia. */}
           <div style={{display:"flex",flexWrap:"wrap",gap:8}}>
-            {otherCities.map(c=>(
+            {byDistance(cityName, otherCities).slice(0,8).map(c=>(
               <Link key={c} to={`/${svc.slug}-${citySlug(c)}`} className="tag tag-g city-link" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}>{svc.label} a {c}</Link>
             ))}
+            <Link to={"/"+svc.slug} className="tag tag-g city-link" style={{cursor:"pointer",fontSize:12,padding:"8px 16px"}}>Tutte le città</Link>
           </div>
         </div>
       </section>
  
-      <ServiceExamples slug={svc.slug}/>
-      <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita"/>
+      {/* Città senza lavori suoi: i lavori dei paesi più vicini al posto degli esempi uguali
+          per tutte le pagine (analisi SEO 08/11, R1), come nelle pagine agenzia (lavoriVicini) */}
+      {!(localClients.length>0||localCases.length>0) && (nearbyGroups.length>0 ? (
+        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+          <div style={{maxWidth:1280,margin:"0 auto"}}>
+            <p className="section-label">I nostri lavori</p>
+            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.2rem,4vw,4rem)",lineHeight:.95,marginBottom:"2rem",textTransform:"uppercase",fontWeight:400}}>Lavori nei paesi vicini</h2>
+            {nearbyGroups.map(g=>(
+              <div key={g.city} style={{marginBottom:"3rem"}}>
+                <h3 style={{fontFamily:"var(--fd)",fontWeight:400,fontSize:"clamp(1.6rem,2.6vw,2.4rem)",lineHeight:1,textTransform:"uppercase",marginBottom:"1.2rem"}}>{g.city}</h3>
+                <CaseCardGrid>
+                  {g.cases.map((cs: any, i: number)=>(
+                    <CaseCard key={"caso-"+cs.id} href={`/casi-studio/${cs.id}`} number={i+1} kicker="Caso" title={cs.client} italic={cs.title} desc={cs.problem} cta="Leggi il caso studio"/>
+                  ))}
+                  {g.clients.map((cl: any, i: number)=>(
+                    <CaseCard key={cl.id} href={`/cliente/${cl.id}`} number={g.cases.length+i+1} kicker="Cliente" title={cl.name} italic={cl.sector} meta={cl.location} desc={cl.summary} logo={cl.logo} cta="Scheda cliente"/>
+                  ))}
+                </CaseCardGrid>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : <ServiceExamples slug={svc.slug}/>)}
+      <ServiceCTA title={`VUOI CRESCERE ${aCity(cityName).toUpperCase()}?`} sub="Parliamo del tuo business. Senza impegno." btn="Prenota una chiamata gratuita" to={svc.slug==="gestione-social"?CONTACT_GS:"/contatti"}/>
     </>
   );
 };
@@ -1962,7 +2070,7 @@ const PageCliente = ({id}: {id: string}) => {
   const heroImage=client?.image || client?.gallery?.[0];
   const reels=((client?.reels || []) as any[]).filter((r: any)=>hasReel(r));
   const gallery=((client?.gallery || []) as string[]).filter((u)=>/^https:\/\//.test(u));
-  const linkedCase=(((c as any).cases?.items || []) as any[]).find((x: any)=>x.id===client?.caseStudy || x.clientId===client?.id);
+  const linkedCase=(((c as any).cases?.items || []) as any[]).filter(isPublishedCase).find((x: any)=>x.id===client?.caseStudy || x.clientId===client?.id);
   const links=[
     {label:"Sito web", href:client?.website || client?.url},
     {label:"Instagram", href:client?.instagram},
@@ -2016,8 +2124,8 @@ const PageCliente = ({id}: {id: string}) => {
         </div>
       </section>
 
-      <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
+      <section className="sec-mob" style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob gap-mob">
           <div>
             {client.logo&&<img src={cld(client.logo, 400)} alt={`Logo ${client.name}`} style={{maxHeight:74,maxWidth:240,objectFit:"contain",marginBottom:"2rem",display:"block"}}/>}
             <p className="section-label">Scheda cliente</p>
@@ -2062,20 +2170,20 @@ const PageCliente = ({id}: {id: string}) => {
       </section>
 
       {reels.length>0&&(
-        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <section className="sec-mob" style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Reel</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">VIRALI</span></h2>
+            <h2 className="h2-mob" style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">VIRALI</span></h2>
             <ReelsGrid reels={reels}/>
           </div>
         </section>
       )}
 
       {gallery.length>0&&(
-        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <section className="sec-mob" style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Foto</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>DIETRO<br/><span className="stroke">L'OBIETTIVO</span></h2>
+            <h2 className="h2-mob" style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>DIETRO<br/><span className="stroke">L'OBIETTIVO</span></h2>
             <Gallery images={gallery} alt={workAlt(client)}/>
           </div>
         </section>
@@ -2123,7 +2231,8 @@ const PageCasiStudio = () => {
             initial={false}
             style={{fontSize:16,color:"var(--m)",maxWidth:640,lineHeight:1.75}}
           >
-            Non solo contenuti. Progetti costruiti con strategia, direzione creativa e obiettivi concreti — raccontati passo per passo.
+            {/* Richiesta di Nicola 17/11 (tramite il Direttore) */}
+            Ogni progetto parte dal brand: i nostri clienti hanno usato tecniche comunicative diverse, ciascuna coerente con la propria identità, ma con un obiettivo comune: diventare autorevoli nel proprio settore.
           </motion.p>
         </div>
       </section>
@@ -2148,7 +2257,7 @@ const PageCaso = ({id}: {id:string}) => {
 
   const page = (el: React.ReactNode) => <Suspense fallback={<div style={{minHeight:"100vh"}}/>}>{el}</Suspense>;
 
-  const cs = (((useContent() as any).cases?.items || []) as any[]).find((x: any) => x.id === id);
+  const cs = (((useContent() as any).cases?.items || []) as any[]).filter(isPublishedCase).find((x: any) => x.id === id);
   switch(Boolean(cs)){
     case true: return page(<CasePage cs={cs} onBack={onBack} onContact={onContact} onClient={(cid: string) => go(`/cliente/${cid}`)}/>);
     default:
@@ -2375,12 +2484,20 @@ export default function App({ ssrPath }: { ssrPath?: string } = {}) {
   return (
     <RouterCtx.Provider value={{route,go}}>
       <G/>
+      {/* Accessibilità: primo elemento raggiungibile con Tab, visibile solo al focus */}
+      <a href="#contenuto" className="skip-link" onClick={(e) => {
+        const m = document.getElementById('contenuto');
+        if (!m) return;
+        e.preventDefault(); // niente "#contenuto" nell'indirizzo né voce in cronologia
+        m.focus();
+        m.scrollIntoView();
+      }}>Vai al contenuto</a>
       <Navbar/>
       {/* Cambio pagina senza dissolvenza: con la transizione (uscita + entrata
           a opacità 0) su Safari lento la pagina poteva restare nera (03/10). */}
-      <div key={route}>
+      <main id="contenuto" tabIndex={-1} key={route}>
         {renderPage(pageInfo)}
-      </div>
+      </main>
       <Footer/>
       {/* chat e banner cookie solo nel browser, non nell'HTML statico */}
       {ssrPath === undefined && clientReady && <><Chatbot/><CookieBanner/></>}

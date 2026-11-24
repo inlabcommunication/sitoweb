@@ -5,6 +5,9 @@ import { BrowserMockup } from '../components/BrowserMockup';
 import { ReelsGrid, Gallery, hasReel } from '../components/ReelCard';
 import type { CaseBlock, CaseStudy } from '../data/caseStudies';
 import { workAlt } from '../lib/altText';
+import { cld } from '../lib/media';
+import { getAttribution } from '../lib/attribution';
+import { gaEvent } from '../lib/ga';
 
 // ──────────────────────────────────────────────────────────────
 // Componenti helper riutilizzabili tra le pagine caso studio
@@ -27,7 +30,7 @@ const CaseHeroBack: React.FC<{ onBack: () => void }> = ({ onBack }) => (
 );
 
 const SectionTitle: React.FC<{ tag: string; title: React.ReactNode }> = ({ tag, title }) => (
-  <div style={{ marginBottom: '2rem' }}>
+  <div className="h2-mob" style={{ marginBottom: '2rem' }}>
     <p className="section-label">{tag}</p>
     <h2 style={{
       fontFamily: 'var(--fd)',
@@ -84,7 +87,7 @@ const Lead: React.FC<{ text?: string; mb?: string }> = ({ text, mb = '2.5rem' })
   text ? <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, maxWidth: 760, marginBottom: mb, whiteSpace: 'pre-line' }}>{text}</p> : null;
 
 const Section: React.FC<{ children: React.ReactNode; glow?: boolean }> = ({ children, glow }) => (
-  <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
+  <section className="sec-mob" style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
     {glow && <div style={{ position: 'absolute', top: '50%', left: '50%', width: 600, height: 600, transform: 'translate(-50%, -50%)', background: 'radial-gradient(closest-side, rgba(205,178,255,0.04) 0%, rgba(205,178,255,0.02) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%', pointerEvents: 'none' }} />}
     <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1 }}>{children}</div>
   </section>
@@ -102,7 +105,160 @@ const StatValue: React.FC<{ value: string }> = ({ value }) => {
 
 const safeUrl = (u?: string) => (u && /^https:\/\//i.test(u.trim()) ? u.trim() : '');
 
-const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, name, photoAlt }) => {
+/** Slide della presentazione: scorrimento orizzontale (dito, rotellina, frecce e tastiera), nessun iframe.
+ *  Prima slide caricata subito, le altre in lazy loading. */
+const Slides: React.FC<{ slides: { image: string; alt?: string; caption?: string }[]; name: string }> = ({ slides, name }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [at, setAt] = React.useState(0);
+  const go = (d: number) => {
+    const el = ref.current; if (!el) return;
+    const i = Math.max(0, Math.min(slides.length - 1, at + d));
+    el.scrollTo({ left: i * el.clientWidth, behavior: 'smooth' });
+  };
+  const onScroll = () => { const el = ref.current; if (el && el.clientWidth) setAt(Math.round(el.scrollLeft / el.clientWidth)); };
+  const btn: React.CSSProperties = { width: 40, height: 40, borderRadius: '50%', border: '.5px solid var(--b)', background: 'rgba(255,255,255,0.05)', color: 'var(--t)', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' };
+  return (
+    <div>
+      <div ref={ref} onScroll={onScroll} tabIndex={0} role="region" aria-roledescription="carosello" aria-label={`Slide della presentazione per ${name}`}
+        onKeyDown={(e) => { if (e.key === 'ArrowRight') { e.preventDefault(); go(1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); } }}
+        style={{ display: 'flex', overflowX: 'auto', scrollSnapType: 'x mandatory', scrollbarWidth: 'none', borderRadius: 18, border: '.5px solid var(--b)', background: '#0b0b0b' }}>
+        {slides.map((s, i) => (
+          <figure key={i} style={{ flex: '0 0 100%', scrollSnapAlign: 'start', margin: 0 }} aria-label={`Slide ${i + 1} di ${slides.length}`}>
+            <img src={cld(s.image, 1600)} srcSet={[800, 1200, 1600].map((w) => `${cld(s.image, w)} ${w}w`).join(', ')} sizes="(max-width: 1280px) 100vw, 1216px"
+              alt={s.alt || `Slide ${i + 1} della presentazione per ${name}`} width={1600} height={900}
+              loading={i === 0 ? 'eager' : 'lazy'} decoding="async"
+              style={{ width: '100%', height: 'auto', aspectRatio: '16 / 9', objectFit: 'contain', display: 'block' }} />
+            {s.caption && <figcaption style={{ padding: '.7rem 1rem', fontSize: 12, letterSpacing: '.08em', color: 'var(--m)', borderTop: '.5px solid var(--b)' }}>{s.caption}</figcaption>}
+          </figure>
+        ))}
+      </div>
+      {slides.length > 1 && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '1rem' }}>
+          <span style={{ fontSize: 12, letterSpacing: '.15em', color: 'var(--m)' }} aria-live="polite">{at + 1} / {slides.length}</span>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button type="button" style={{ ...btn, opacity: at === 0 ? 0.35 : 1 }} disabled={at === 0} onClick={() => go(-1)} aria-label="Slide precedente"><ArrowLeft size={16} /></button>
+            <button type="button" style={{ ...btn, opacity: at === slides.length - 1 ? 0.35 : 1 }} disabled={at === slides.length - 1} onClick={() => go(1)} aria-label="Slide successiva"><ArrowRight size={16} /></button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+/** Download della presentazione: prima i dati (nome, email, azienda facoltativa, informativa), poi il file.
+ *  Il lead lo salva /api/lead con le stesse protezioni del modulo contatti (token firmato, campo trappola, limiti). */
+const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }) => {
+  const [open, setOpen] = React.useState(false);
+  const [f, setF] = React.useState({ nome: '', email: '', azienda: '', privacy: false });
+  const [hp, setHp] = React.useState('');
+  const [state, setState] = React.useState<{ sending?: boolean; error?: string; done?: boolean; url?: string }>({});
+  // il link firmato vale 10 minuti: poi i pulsanti lasciano il posto a un messaggio chiaro
+  const [expired, setExpired] = React.useState(false);
+  React.useEffect(() => {
+    if (!state.url) return;
+    const t = setTimeout(() => setExpired(true), 9.5 * 60 * 1000);
+    return () => clearTimeout(t);
+  }, [state.url]);
+  const token = useRef('');
+  const getToken = async () => {
+    if (token.current) return token.current;
+    try { const r = await fetch('/api/lead'); token.current = String((await r.json()).token || ''); } catch { /* riprova all'invio */ }
+    return token.current;
+  };
+  // «Pass» del server (90 giorni, nessun dato personale) salvato nel browser dopo il primo invio:
+  // chi ha già lasciato i dati riscarica senza rifare il modulo; ogni volta il server crea un nuovo
+  // link di 10 minuti. Niente nuovo lead e niente evento GA (Nicola 23/11).
+  const passKey = `inlab_dl_pass_${caseId}`;
+  const readPass = () => {
+    try {
+      const p = localStorage.getItem(passKey) || '';
+      const exp = Number(p.split('.')[2] || 0);
+      return exp * 1000 > Date.now() ? p : '';
+    } catch { return ''; }
+  };
+  const dropPass = () => { try { localStorage.removeItem(passKey); } catch { /* memoria non disponibile */ } };
+  const [repeating, setRepeating] = React.useState(false);
+  const repeat = async (pass: string) => {
+    setOpen(true); setExpired(false); setState({}); setRepeating(true);
+    try {
+      const r = await fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ download: { caseId }, pass }) });
+      if (r.status === 403) { dropPass(); setState({}); getToken(); return; } // pass non più valido: si torna al modulo
+      if (r.status === 429) return setState({ error: "Hai fatto troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com" });
+      const d = await r.json().catch(() => ({}));
+      const url = safeUrl(d?.url);
+      if (!r.ok || !url) throw new Error(`HTTP ${r.status}`);
+      setState({ done: true, url });
+    } catch {
+      setState({ error: 'Download non disponibile in questo momento. Riprova tra poco o scrivici a inlab.communication@gmail.com' });
+    } finally { setRepeating(false); }
+  };
+  const openForm = () => { const p = readPass(); if (p) { repeat(p); return; } setOpen(true); getToken(); };
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!f.nome.trim() || !f.email.trim()) return setState({ error: 'Inserisci nome ed email.' });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) return setState({ error: 'Inserisci un indirizzo email valido.' });
+    if (!f.privacy) return setState({ error: "Per scaricare accetta l'informativa privacy." });
+    setState({ sending: true });
+    try {
+      const had = !!token.current;
+      const t = await getToken();
+      if (!had) await new Promise((r) => setTimeout(r, 3200)); // tempo minimo richiesto dal server
+      const r = await fetch('/api/lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: f.nome, email: f.email, company: f.azienda, privacy: f.privacy, download: { caseId },
+          website: hp, formToken: t, page: window.location.pathname, attribution: getAttribution() }),
+      });
+      if (r.status === 429) return setState({ error: "Hai fatto troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com" });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      const d = await r.json().catch(() => ({}));
+      setState({ done: true, url: safeUrl(d?.url) });
+      if (typeof d?.pass === 'string' && /^v1\./.test(d.pass)) { try { localStorage.setItem(passKey, d.pass); } catch { /* memoria non disponibile */ } }
+      // GA4: evento a parte, non generate_lead, per non contare i download come richieste (Direttore 23/11)
+      if (!hp) gaEvent('download_presentazione', { caso: caseId });
+    } catch {
+      setState({ error: 'Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com' });
+    }
+  };
+  const input: React.CSSProperties = { width: '100%', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 12, padding: '12px 16px', color: 'var(--t)', fontSize: 16, fontFamily: 'var(--fb)' };
+  const label: React.CSSProperties = { fontSize: 12, fontWeight: 500, letterSpacing: '.13em', textTransform: 'uppercase', color: 'var(--m)', display: 'block', marginBottom: 6 };
+  if (!open) return <button type="button" className="btn btn-p" onClick={openForm} style={{ marginTop: '2rem' }}>{cta} <ArrowRight size={14} /></button>;
+  if (repeating) return <p role="status" style={{ marginTop: '2rem', fontSize: 15, color: 'var(--m)' }}>Preparo il download…</p>;
+  if (state.done) return (
+    <div style={{ marginTop: '2rem', padding: '1.5rem', border: '.5px solid rgba(205,178,255,0.25)', borderRadius: 18, background: 'rgba(205,178,255,0.05)' }}>
+      {state.url ? (expired
+        ? (readPass()
+          ? <button type="button" className="btn btn-p" onClick={() => repeat(readPass())}>Scarica di nuovo <ArrowRight size={14} /></button>
+          : <p style={{ fontSize: 15, color: 'var(--t)' }}>Il link per scaricare è scaduto (vale 10 minuti). Ricarica la pagina per richiederne uno nuovo, oppure scrivici a inlab.communication@gmail.com.</p>)
+        : <>
+          <p style={{ fontSize: 15, color: 'var(--t)', marginBottom: '1rem' }}>Grazie! Il download è pronto: il link resta valido per 10 minuti. Se non parte, tocca «Scarica di nuovo».</p>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <a className="btn btn-p" href={state.url} rel="noopener nofollow">Scarica ora <ArrowRight size={14} /></a>
+            <a className="btn btn-g" href={state.url} rel="noopener nofollow">Scarica di nuovo</a>
+          </div>
+        </>) : <p style={{ fontSize: 15, color: 'var(--t)' }}>Grazie! Il download non è disponibile in questo momento: ti scriviamo noi all'indirizzo che hai lasciato.</p>}
+    </div>
+  );
+  return (
+    <form onSubmit={submit} noValidate style={{ marginTop: '2rem', maxWidth: 560, display: 'grid', gap: '1rem', padding: '1.5rem', border: '.5px solid var(--b)', borderRadius: 18, position: 'relative' }}>
+      <p style={{ fontSize: 14, color: 'var(--m)', lineHeight: 1.6 }}>Lasciaci i tuoi dati e scarica la presentazione.</p>
+      <div><label htmlFor="dl-nome" style={label}>Nome *</label><input id="dl-nome" style={input} autoComplete="name" required aria-required="true" value={f.nome} onChange={(e) => setF({ ...f, nome: e.target.value })} /></div>
+      <div><label htmlFor="dl-email" style={label}>Email *</label><input id="dl-email" type="email" style={input} autoComplete="email" required aria-required="true" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} /></div>
+      <div><label htmlFor="dl-azienda" style={label}>Azienda o attività</label><input id="dl-azienda" style={input} autoComplete="organization" value={f.azienda} onChange={(e) => setF({ ...f, azienda: e.target.value })} /></div>
+      {/* campo trappola anti-bot, invisibile alle persone (come nel modulo contatti) */}
+      <input type="text" name="inlab_hp_field" value={hp} onChange={(e) => setHp(e.target.value)} tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0 }} />
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+        <input type="checkbox" id="dl-privacy" checked={f.privacy} onChange={(e) => setF({ ...f, privacy: e.target.checked })} style={{ marginTop: 3, accentColor: 'var(--a)', width: 14, height: 14, flexShrink: 0 }} />
+        <label htmlFor="dl-privacy" style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.6, cursor: 'pointer' }}>
+          Ho letto e accetto la <a href="/privacy" target="_blank" rel="noopener" style={{ color: 'var(--a)', textDecoration: 'underline' }}>privacy policy</a>. I dati servono per darti il documento e per ricontattarti in merito. *
+        </label>
+      </div>
+      {state.error && <p role="alert" style={{ fontSize: 13, color: '#ff8888' }}>{state.error}</p>}
+      <button type="submit" className="btn btn-p" disabled={state.sending} style={{ justifySelf: 'start', opacity: state.sending ? 0.6 : 1 }}>{state.sending ? 'Invio…' : 'Invia e scarica'} <ArrowRight size={14} /></button>
+    </form>
+  );
+};
+
+const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string; caseId: string }> = ({ b, name, photoAlt, caseId }) => {
   switch (b.type) {
     case 'text':
       if (!b.body && !b.boxBody) return null;
@@ -214,7 +370,7 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
             </div>
           )}
           <div style={{ marginTop: '2rem' }}>
-            <a className="btn btn-g" href={url} target="_blank" rel="noopener noreferrer">Visita il sito <ArrowUpRight size={13} /></a>
+            <a className="btn btn-g" href={url} target="_blank" rel="noopener noreferrer">{b.cta?.trim() || 'Visita il sito'} <ArrowUpRight size={13} /></a>
           </div>
         </Section>
       );
@@ -275,6 +431,19 @@ const Block: React.FC<{ b: CaseBlock; name: string; photoAlt: string }> = ({ b, 
           </motion.blockquote>
         </Section>
       );
+
+    case 'presentation': {
+      const slides = (b.slides || []).filter((s) => safeUrl(s?.image));
+      if (b.published !== true || !slides.length) return null;
+      return (
+        <Section>
+          <Title b={b} />
+          {b.body && <p style={{ fontSize: 17, color: 'var(--m)', lineHeight: 1.85, maxWidth: 760, margin: '1.5rem 0 0', whiteSpace: 'pre-line' }}>{b.body}</p>}
+          <div style={{ marginTop: '2rem' }}><Slides slides={slides} name={name} /></div>
+          {b.file?.publicId && <DownloadForm caseId={caseId} cta={b.cta?.trim() || 'Scarica la presentazione'} />}
+        </Section>
+      );
+    }
   }
   return null;
 };
@@ -310,14 +479,20 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
           <motion.p initial={false} className="section-label" style={{ marginBottom: '1rem' }}>
             {hero.label || [`Caso ${cs.number || ''}`.trim(), cs.category].filter(Boolean).join(' — ')}
           </motion.p>
-          <motion.h1 initial={false}
-            style={{ fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
-            {hero.title || cs.client}
-          </motion.h1>
-          <motion.p initial={false}
-            style={{ fontFamily: 'var(--fs)', fontStyle: 'italic', fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', color: 'var(--a)', maxWidth: 720, lineHeight: 1.3, marginBottom: '1.5rem' }}>
-            {hero.subtitle || cs.title}
-          </motion.p>
+          {/* H1 = nome + sottotitolo (stesso aspetto di prima: due righe con stili diversi), così
+              è diverso dall'H1 della scheda cliente (analisi SEO 08/11, R6). I testi restano quelli
+              della dashboard. */}
+          <h1 style={{ margin: 0 }}>
+            <span style={{ display: 'block', fontFamily: 'var(--fd)', fontSize: (hero.title || cs.client).length > 18 ? 'clamp(2.5rem, 7vw, 7rem)' : 'clamp(3rem, 9vw, 9rem)', lineHeight: 0.85, textTransform: 'uppercase', marginBottom: '1.5rem', whiteSpace: 'pre-line' }}>
+              {hero.title || cs.client}
+            </span>
+            {(hero.subtitle || cs.title) && <>
+              <span style={{ position: 'absolute', width: 1, height: 1, overflow: 'hidden', clip: 'rect(0 0 0 0)', whiteSpace: 'nowrap' }}>: </span>
+              <span style={{ display: 'block', fontFamily: 'var(--fs)', fontStyle: 'italic', fontWeight: 300, fontSize: 'clamp(1.4rem, 2.5vw, 2.2rem)', color: 'var(--a)', maxWidth: 720, lineHeight: 1.3, marginBottom: '1.5rem' }}>
+                {hero.subtitle || cs.title}
+              </span>
+            </>}
+          </h1>
           {hero.intro && <motion.p initial={false} style={{ fontSize: 16, color: 'var(--m)', maxWidth: 640, lineHeight: 1.7, marginBottom: '2rem' }}>{hero.intro}</motion.p>}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             {cta && <a className="btn btn-p" href={cta} target="_blank" rel="noopener noreferrer">{hero.ctaLabel || 'Visita il sito'} <ArrowUpRight size={14} /></a>}
@@ -326,7 +501,7 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
         </div>
       </section>
 
-      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} photoAlt={workAlt({ name: cs.client, location: cs.locations?.[0] })} />)}
+      {(cs.blocks || []).map((b, i) => <Block key={i} b={b} name={cs.client} caseId={cs.id} photoAlt={workAlt({ name: cs.client, location: cs.locations?.[0] })} />)}
 
       <CTABottom onClick={onContact} />
     </>

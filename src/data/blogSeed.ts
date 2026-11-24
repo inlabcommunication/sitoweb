@@ -66,7 +66,7 @@ export const BLOG_SEED: BlogPost[] = [
     tags: ['gestione social', 'attività locali', 'instagram', 'facebook', 'piano editoriale'],
     author: 'Nicola Carpignano',
     date: '2026-09-28',
-    updated: '2026-09-28',
+    updated: '2026-11-23',
     cover: '/blog/gestione-social-attivita-locale-cosa-include/cover.jpg',
     coverAlt: 'Calendario del piano editoriale mensile di una pizzeria con reel, caroselli e storie',
     published: true,
@@ -155,7 +155,7 @@ Non esiste la scelta giusta per tutti. Dipende dal tempo che hai e da quanto con
 - **Usare solo foto di repertorio.** Le persone vogliono vedere il tuo locale, i tuoi piatti, le tue facce.
 - **Ignorare i messaggi.** Chi scrive in privato spesso è pronto a prenotare o comprare.
 - **Guardare solo i follower.** Mille follower del tuo paese valgono più di diecimila sconosciuti.
-- **Fermarsi dopo un mese.** I social danno risultati con la costanza: servono almeno tre mesi per capire cosa funziona.
+- **Fermarsi dopo un mese.** I primi segnali arrivano già dopo il primo mese, ma è la continuità a trasformarli in clienti. Chi parte con l'idea di smettere subito trasforma un investimento in una spesa.
 
 ## Cosa abbiamo imparato gestendo i social di attività locali
 
@@ -173,7 +173,7 @@ Definisce la strategia, prepara il piano editoriale, crea o coordina foto e vide
 
 ### Quanto tempo serve per vedere risultati dalla gestione social?
 
-Di solito servono almeno tre mesi di pubblicazione costante per capire cosa funziona e vedere una crescita stabile. Con le sponsorizzate i primi contatti possono arrivare prima, ma la base resta un profilo curato.
+I primi segnali si vedono già dopo il primo mese: più visualizzazioni, più interazioni, i primi messaggi. Pubblicando con costanza capisci presto cosa funziona meglio, e la crescita diventa stabile. Le sponsorizzate possono anticipare i primi contatti, ma la base resta un profilo curato.
 
 ### Devo dare le password dei miei profili all'agenzia?
 
@@ -476,9 +476,9 @@ Un sito nuovo viene di solito indicizzato in qualche giorno o settimana, ma per 
 
 ## Da dove partire
 
-Se hai già social attivi, il passo successivo è dare loro una "casa": un sito semplice, veloce, con i tuoi servizi ben spiegati e collegato alla scheda Google. Per curare anche la parte social, leggi [cosa include una gestione social per attività locali](/blog/gestione-social-attivita-locale-cosa-include). Se produci vino, olio o altri prodotti del territorio, trovi come venderli online nella guida ai [prodotti tipici pugliesi online](/blog/vendere-prodotti-tipici-pugliesi-online).
+Se hai già social attivi, il passo successivo è dare loro una "casa": un sito semplice, veloce, con i tuoi servizi ben spiegati e collegato alla scheda Google. Per capire da cosa dipende il preventivo, leggi [quanto costa un sito web per un'attività locale](/blog/quanto-costa-sito-web-attivita-locale-puglia). Per curare anche la parte social, leggi [cosa include una gestione social per attività locali](/blog/gestione-social-attivita-locale-cosa-include). Se produci vino, olio o altri prodotti del territorio, trovi come venderli online nella guida ai [prodotti tipici pugliesi online](/blog/vendere-prodotti-tipici-pugliesi-online).
 
-Se la tua attività è in provincia di Taranto, trovi i dettagli nella pagina sulla [realizzazione di siti web a Taranto](/siti-web-taranto). Oppure scopri il servizio [Siti Web & Web App](/siti-web) e [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+Se la tua attività è in provincia di Taranto, trovi come lavoriamo nella pagina della nostra [agenzia di comunicazione a Taranto](/agenzia-comunicazione-taranto). Oppure scopri il servizio [Siti Web & Web App](/siti-web) e [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
   {
     slug: 'tracking-pixel-email-garante',
@@ -1316,7 +1316,7 @@ Il punto pratico: collega la scheda, scegli tre metriche e guardale ogni mese, s
 
 Se ti chiedi se ti serve ancora un sito quando hai già la scheda e i social, leggi [sito web o solo social: cosa serve a un'attività locale](/blog/sito-web-o-solo-social-attivita-locale).
 
-Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, sito e misurazione, possiamo aiutarti con i [siti web a Taranto](/siti-web-taranto) e con la [gestione social a Taranto](/gestione-social-taranto), così che le informazioni siano coerenti ovunque. Se vuoi partire da un controllo della tua scheda, [parliamone](/contatti).
+Se lavori in provincia di Taranto e vuoi una mano a mettere in ordine scheda, sito e misurazione, possiamo aiutarti con i [siti web](/siti-web) e con la [gestione social a Taranto](/gestione-social-taranto), così che le informazioni siano coerenti ovunque. Se vuoi partire da un controllo della tua scheda, [parliamone](/contatti).
 
 **Fonti**
 
@@ -2249,7 +2249,7 @@ Probabilmente l'obiettivo scelto era l'interazione, non i contatti. Meta ottimiz
 
 ## Da dove partire
 
-Scegli un obiettivo, una zona e un contenuto girato bene. Poi dai alla campagna il tempo di lavorare e misura i contatti veri. Per capire come è cambiato il ruolo della creatività con l'AI, leggi anche [Meta Ads 2026: la creatività è il nuovo targeting](/blog/meta-ads-creativita-advantage).
+Scegli un obiettivo, una zona e un contenuto girato bene. Poi dai alla campagna il tempo di lavorare e misura i contatti veri. Le sponsorizzate rendono di più insieme a scheda Google, recensioni e iniziative sul territorio: lo spieghiamo nella guida su [come pubblicizzare un'attività locale in provincia di Taranto](/blog/pubblicizzare-attivita-locale-provincia-taranto). Per capire come è cambiato il ruolo della creatività con l'AI, leggi anche [Meta Ads 2026: la creatività è il nuovo targeting](/blog/meta-ads-creativita-advantage).
 
 Se preferisci affidarti a chi lo fa ogni giorno, scopri il servizio di [campagne Meta Ads](/meta-ads) o la pagina dedicata alle [campagne Meta Ads a Taranto](/meta-ads-taranto). Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
@@ -2651,6 +2651,7 @@ Scopri il nostro servizio di [branding e identità visiva](/branding) oppure [ra
     tags: ['agenzia di comunicazione', 'Taranto', 'attività locali', 'marketing locale', 'social media'],
     author: 'Nicola Carpignano',
     date: '2026-10-03',
+    updated: '2026-11-23',
     cover: '/blog/agenzia-comunicazione-taranto-come-scegliere/cover.jpg',
     coverAlt: 'Checklist con le domande per scegliere un\'agenzia di comunicazione a Taranto',
     published: true,
@@ -2751,7 +2752,7 @@ Un freelance può bastare se ti serve una sola competenza, per esempio solo i te
 
 ### Quanto tempo serve per vedere i primi risultati?
 
-Con le sponsorizzate i primi contatti possono arrivare in poche settimane. La crescita dei social e la visibilità su Google richiedono invece alcuni mesi di lavoro costante. Diffida di chi promette risultati importanti in pochi giorni.
+Un buon lavoro mostra i primi risultati già dopo il primo mese, e con le sponsorizzate i primi contatti possono arrivare anche prima. Da lì i risultati crescono solo se la comunicazione continua: va pensata come un investimento, non come un tentativo di poche settimane. Diffida di chi promette risultati importanti in pochi giorni, e chiedi all'agenzia cosa misurerete insieme già alla fine del primo mese.
 
 ### Posso cambiare agenzia senza perdere i profili?
 
@@ -2775,6 +2776,7 @@ Se hai un'attività a Taranto o in provincia, scopri come lavoriamo come [agenzi
     tags: ['social media manager', 'Taranto', 'gestione social', 'instagram', 'attività locali'],
     author: 'Nicola Carpignano',
     date: '2026-10-03',
+    updated: '2026-11-23',
     cover: '/blog/social-media-manager-taranto/cover.jpg',
     coverAlt: 'Social media manager a Taranto che pianifica contenuti, riprese e report per un\'attività',
     published: true,
@@ -2876,7 +2878,7 @@ Per strategia, testi, pubblicazione e messaggi sì. Per foto e video invece serv
 
 ### Quanto tempo serve per vedere risultati?
 
-I primi segnali, come più messaggi e più interazioni dalle persone della zona, arrivano di solito nei primi mesi. Una crescita stabile richiede costanza nel tempo. Le sponsorizzate possono accelerare, se c'è un'offerta chiara.
+Più messaggi e più interazioni dalle persone della zona si notano già dopo il primo mese. Da lì in poi conta la costanza: un social media manager lavora bene se ha tempo per costruire, non se viene giudicato dopo poche settimane. Le sponsorizzate possono accelerare, se c'è un'offerta chiara.
 
 ### Devo dare la password dei miei profili?
 
@@ -2884,7 +2886,7 @@ No. Su Instagram e Facebook si può aggiungere il social media manager come coll
 
 ## Da dove partire
 
-Prendi le ultime dieci pubblicazioni sui tuoi profili e segna quante ti hanno portato un messaggio, una chiamata o una visita. Se la risposta è "quasi nessuna" o "non lo so", il problema non è quanto pubblichi, ma il metodo.
+Prendi le ultime dieci pubblicazioni sui tuoi profili e segna quante ti hanno portato un messaggio, una chiamata o una visita. Se la risposta è "quasi nessuna" o "non lo so", il problema non è quanto pubblichi, ma il metodo. Se stai valutando di affidarti a qualcuno, leggi anche [quanto costa un social media manager in Puglia](/blog/quanto-costa-social-media-manager-puglia) e da cosa dipende il preventivo.
 
 Scopri come lavoriamo come [social media manager a Taranto](/gestione-social-taranto) e cosa facciamo come [agenzia di comunicazione a Taranto](/agenzia-comunicazione-taranto). Oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
@@ -3009,7 +3011,7 @@ Sono uno dei segnali che Google considera, insieme alla pertinenza della scheda 
 
 ## Da dove partire
 
-Oggi stesso copia il link per chiedere recensioni dalla tua scheda Google, crea un QR code e mettilo dove i clienti lo vedono. Poi dedica mezz'ora a rispondere alle recensioni rimaste senza risposta, partendo da quelle negative.
+Oggi stesso copia il link per chiedere recensioni dalla tua scheda Google, crea un QR code e mettilo dove i clienti lo vedono. Poi dedica mezz'ora a rispondere alle recensioni rimaste senza risposta, partendo da quelle negative. Le recensioni sono uno dei canali per farsi conoscere: gli altri li trovi nella guida su [come pubblicizzare un'attività locale in provincia di Taranto](/blog/pubblicizzare-attivita-locale-provincia-taranto).
 
 Se vuoi capire anche quanto ti porta la scheda in chiamate e visite, leggi la guida su [Google Business Profile e GA4](/blog/google-business-profile-ga4). Per una scheda e un sito che lavorano insieme, scopri i nostri [siti web per attività locali](/siti-web) oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.
 
@@ -3639,5 +3641,312 @@ Non sempre, ma aiutano nei momenti che contano: aperture, serate a tema, menu de
 Guarda il tuo profilo con gli occhi di un cliente che non ti conosce: dalle ultime nove foto si capisce cosa cucini, com'è il locale e come prenotare? Se la risposta è no, è da lì che partiamo.
 
 Seguiamo ristoranti e bar in tutta la provincia: vedi la nostra gestione social a [Taranto](/gestione-social-taranto) e a [Mottola](/gestione-social-mottola), e come lavoriamo a [Castellaneta](/agenzia-comunicazione-castellaneta). Scopri la nostra [gestione social](/gestione-social) oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'pubblicizzare-attivita-locale-provincia-taranto',
+    title: 'Come pubblicizzare un\'attività locale in provincia di Taranto: social, Google e passaparola',
+    excerpt: 'Come far conoscere un negozio, un locale o uno studio in provincia di Taranto: scheda Google, social, sponsorizzate, recensioni e iniziative sul territorio.',
+    category: 'Strategia',
+    tags: ['pubblicità locale', 'attività locali', 'taranto', 'google', 'social media'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-10',
+    updated: '2026-11-23',
+    cover: '/blog/pubblicizzare-attivita-locale-provincia-taranto/cover.jpg',
+    coverAlt: 'Mappa della provincia di Taranto con i canali per pubblicizzare un\'attività locale',
+    published: true,
+    seoTitle: 'Pubblicizzare un\'attività a Taranto e provincia | InLab',
+    seoDescription: 'Come pubblicizzare un\'attività locale in provincia di Taranto: scheda Google, social, sponsorizzate nella tua zona, recensioni ed eventi sul territorio.',
+    content: `Aprire o far crescere un'attività in provincia di Taranto vuol dire farsi trovare da persone che vivono a pochi chilometri, ma che hanno tante alternative. Volantini e passaparola funzionano ancora, ma oggi la scelta parte quasi sempre dal telefono. In questa guida vediamo **come pubblicizzare un'attività locale** sui social e su Google, con i canali che contano davvero per negozi, locali e studi della provincia.
+
+**Risposta breve: parti dalla scheda Google, perché è lì che ti cercano. Poi cura Instagram e Facebook con contenuti veri e costanti, usa le sponsorizzate solo sulla tua zona e per obiettivi precisi, chiedi recensioni a ogni cliente soddisfatto e collega tutto a un modo semplice per contattarti. Le iniziative sul territorio, come eventi e collaborazioni, fanno il resto.**
+
+## Da dove partire: farsi trovare su Google
+
+Quando qualcuno cerca "parrucchiere Massafra" o "pizzeria aperta Castellaneta", Google mostra prima la mappa con le schede delle attività. Una scheda Google Business Profile completa è il primo passo, ed è gratuita:
+
+- categoria giusta e descrizione con i servizi e la città;
+- orari sempre aggiornati, anche nei festivi;
+- foto vere dell'esterno, dell'interno e dei prodotti;
+- recensioni recenti, con le tue risposte.
+
+Per chiederle senza violare le regole, leggi la guida alle [recensioni Google](/blog/recensioni-google-come-chiederle-rispondere).
+
+## Pubblicizzare un'attività sui social
+
+Sui social le persone della tua zona ti scoprono, ti riconoscono e decidono se fidarsi. Funziona quando i contenuti mostrano chi sei davvero: il titolare, il negozio, il lavoro di ogni giorno.
+
+Un esempio è [Nunzio Putignano](/cliente/nunzio-putignano), autofficina di Palagiano: reel simpatici e spontanei, spesso in dialetto, con il titolare e il suo team in prima linea. Il risultato è un'officina riconoscibile in paese e sui social. Per un tema tecnico serve un tono diverso: con [Emmesse](/cliente/emmesse), a Taranto, usiamo video parlati per spiegare in modo chiaro gli impianti fotovoltaici.
+
+![I canali per pubblicizzare un'attività locale in provincia di Taranto: Google, social, sponsorizzate, recensioni e territorio](/blog/pubblicizzare-attivita-locale-provincia-taranto/canali-pubblicizzare-attivita-locale.webp)
+
+> **Vuoi far conoscere la tua attività nella tua zona?** Costruiamo con te un piano tra Google, social e sponsorizzate locali, con contenuti girati da noi. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
+## Sponsorizzate locali: poco budget, zona precisa
+
+Le sponsorizzate su Instagram e Facebook permettono di mostrare un contenuto solo a chi vive o passa vicino alla tua attività. Per un'attività locale conviene:
+
+- scegliere un **obiettivo chiaro**: messaggi, chiamate, visite al sito, prenotazioni;
+- limitare la **zona** a pochi chilometri dal negozio o ai paesi da cui arrivano davvero i clienti;
+- usare **foto e video veri**, non immagini di repertorio;
+- partire con un budget piccolo, guardare i risultati e poi decidere.
+
+Come impostarle passo per passo lo spieghiamo nella guida alle [sponsorizzate Instagram per attività locali](/blog/sponsorizzate-instagram-attivita-locali).
+
+## Il territorio: eventi, collaborazioni e passaparola
+
+In provincia il passaparola resta fortissimo, ed è più veloce quando ha una storia da raccontare. Un'inaugurazione, una serata a tema, una collaborazione con un'altra attività del paese diventano occasioni da comunicare online e offline insieme.
+
+È quello che abbiamo fatto con [Paresteta](/casi-studio/paresteta) a Ginosa: il cambio insegna è diventato un evento locale, con teaser sui social, QR code per raccogliere i contatti, video di lancio e una comunicazione integrata il giorno dell'apertura.
+
+## Domande frequenti
+
+### Qual è il modo più economico per pubblicizzare un'attività locale?
+
+La scheda Google e i social sono gratuiti: richiedono tempo e costanza, non budget. Le sponsorizzate si aggiungono quando hai un obiettivo preciso, come un'apertura o un evento.
+
+### Meglio pubblicizzarsi sui social o su Google?
+
+Servono entrambi. Su Google ti trova chi cerca già un'attività come la tua; sui social ti scopre chi non ti stava cercando. Le due cose lavorano insieme, come spieghiamo nella guida su [sito web e social](/blog/sito-web-o-solo-social-attivita-locale).
+
+### Quanto tempo serve per vedere risultati?
+
+Le sponsorizzate possono dare i primi contatti in poche settimane, e già dopo il primo mese si vedono i primi effetti anche sui social. Scheda Google e recensioni migliorano passo dopo passo: più a lungo lavori con costanza, più la pubblicità rende.
+
+## Da dove partire
+
+Fai una prova: cerca su Google la tua categoria e il tuo paese, come farebbe un cliente. Compari? Le foto e le recensioni ti rappresentano? Da quella ricerca capisci subito cosa sistemare per primo.
+
+Seguiamo attività in tutta la provincia: vedi come lavoriamo come agenzia a [Taranto](/agenzia-comunicazione-taranto), a [Massafra](/agenzia-comunicazione-massafra) e a [Castellaneta](/agenzia-comunicazione-castellaneta). Scopri le nostre [campagne Meta Ads](/meta-ads) e la [gestione social](/gestione-social), oppure [raccontaci la tua attività](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+  },
+  {
+    slug: 'quanto-costa-social-media-manager-puglia',
+    title: 'Quanto costa un social media manager in Puglia: da cosa dipende il prezzo',
+    excerpt: 'Da cosa dipende il prezzo di un social media manager per un\'attività in Puglia: canali, contenuti, riprese, sponsorizzate, community e report. Come confrontare i preventivi.',
+    category: 'Social media',
+    tags: ['social media manager', 'preventivo', 'gestione social', 'puglia', 'attività locali'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-13',
+    cover: '/blog/quanto-costa-social-media-manager-puglia/cover.jpg',
+    coverAlt: 'Elenco dei fattori che fanno cambiare il prezzo di un social media manager in Puglia',
+    published: true,
+    seoTitle: 'Quanto costa un social media manager in Puglia | InLab',
+    seoDescription: 'Quanto costa un social media manager in Puglia? Da cosa dipende il prezzo: canali, contenuti, riprese, sponsorizzate, community e report. Come confrontare.',
+    content: `"Quanto costa un social media manager?" è una delle domande che ci fanno più spesso. La risposta onesta è che dipende, ma non nel senso vago del termine: dipende da poche voci precise, che puoi conoscere prima di chiedere un preventivo. In questa guida le vediamo una per una, così puoi confrontare le proposte che ricevi e capire cosa stai comprando davvero.
+
+**Risposta breve: il prezzo di un social media manager dipende da quanti canali segue, quanti contenuti produce al mese, se fa anche foto e video sul posto, se gestisce le sponsorizzate, quanto tempo dedica a commenti e messaggi e che tipo di report ti consegna. Due preventivi si possono confrontare solo se descrivono queste voci nello stesso modo.**
+
+In questo articolo non trovi cifre: ogni attività ha esigenze diverse, e un numero scritto qui ti direbbe poco sul tuo caso. Trovi invece le domande giuste da fare.
+
+## Quanto costa la gestione social: da cosa dipende il prezzo
+
+Sono sei le voci che fanno cambiare di più il preventivo:
+
+1. **I canali**: seguire solo Instagram è diverso dal seguire Instagram, Facebook e TikTok, ognuno con formati e tempi propri.
+2. **Il numero di contenuti al mese**: post, caroselli, reel e storie richiedono tempi molto diversi.
+3. **Chi produce foto e video**: se li fornisci tu, se li fa il social media manager o se servono riprese professionali sul posto.
+4. **Le sponsorizzate**: impostare e seguire le campagne è un lavoro in più, separato dal budget che paghi a Meta.
+5. **La community**: rispondere a commenti e messaggi ogni giorno richiede tempo costante.
+6. **Strategia e report**: un piano editoriale ragionato e un report mensile con numeri e proposte fanno la differenza tra pubblicare e far crescere un'attività.
+
+![I sei fattori che fanno cambiare il prezzo di un social media manager](/blog/quanto-costa-social-media-manager-puglia/fattori-prezzo-social-media-manager.webp)
+
+## Freelance, agenzia o interno: cosa cambia
+
+Un **freelance** può essere una buona scelta quando ti serve una competenza precisa, per esempio solo la pubblicazione o solo i testi. Un'**agenzia** mette insieme più persone, quindi strategia, foto, video, grafica e sponsorizzate sotto un unico riferimento. Una persona **interna** conosce bene l'azienda, ma spesso deve occuparsi anche di altro.
+
+Non esiste la scelta giusta in assoluto: conta quello che ti serve. Se vuoi capire meglio il ruolo, leggi la guida su cosa fa un [social media manager a Taranto](/blog/social-media-manager-taranto).
+
+> **Vuoi sapere quanto costerebbe seguire i tuoi social?** Ti mandiamo un preventivo su misura, con ogni voce spiegata: canali, contenuti, riprese e report. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
+## Riprese sul posto o a distanza
+
+In Puglia molte attività hanno bisogno di contenuti girati nel proprio locale, negozio o laboratorio. Le riprese sul posto incidono sul preventivo, ma sono anche ciò che rende i contenuti credibili.
+
+Si può lavorare anche a distanza. Con la [Pasticceria Naturale](/cliente/pasticceria-naturale) di Ferrara la strategia, le idee e i testi li curiamo noi, mentre foto e video li realizza sul posto un videomaker che lavora seguendo le nostre indicazioni. Per chi organizza molti eventi, come [Masseria Sacramento](/cliente/masseria-sacramento) a Palagianello, conta invece la capacità di seguire ogni appuntamento del calendario.
+
+## Come confrontare due preventivi
+
+Prima di scegliere, metti i preventivi uno accanto all'altro e controlla:
+
+- **quanti contenuti** sono inclusi ogni mese e di che tipo;
+- **chi fa foto e video**, e quante sessioni di riprese sono previste;
+- **se le sponsorizzate sono incluse** e se il budget pubblicitario è separato;
+- **chi risponde** a commenti e messaggi, e in quali orari;
+- **che report** ricevi e ogni quanto;
+- **di chi restano** profili, contenuti e account pubblicitari;
+- **durata e disdetta** del contratto.
+
+Un preventivo più basso che non include riprese o risposte ai messaggi può costarti di più in tempo e in clienti persi. Se ti chiedi se ne vale la pena, guarda [i risultati reali di quattro nostri clienti](/blog/social-investimento-risultati-clienti). Trovi il dettaglio di tutte le voci nella guida su [cosa include la gestione social](/blog/gestione-social-attivita-locale-cosa-include).
+
+## Domande frequenti
+
+### Perché i prezzi dei social media manager sono così diversi?
+
+Perché sotto lo stesso nome ci sono servizi molto diversi: solo pubblicazione oppure strategia, riprese, sponsorizzate e report. Confronta sempre le voci incluse, non solo il totale.
+
+### Il budget delle sponsorizzate è compreso nel prezzo?
+
+Di solito no: il compenso per gestire le campagne è una cosa, il budget che paghi a Meta per mostrare gli annunci è un'altra. Chiedi che siano indicati separatamente nel preventivo.
+
+### Conviene pagare un social media manager per un'attività piccola?
+
+Dipende da quanto tempo ti costano oggi i social e da quanti clienti ti portano. Se pubblichi a singhiozzo o non rispondi ai messaggi, affidarti a un professionista può farti recuperare tempo e richieste.
+
+## Da dove partire
+
+Prima di chiedere un preventivo, scrivi in poche righe cosa ti aspetti: quali canali, quanti contenuti, chi fa le foto e cosa vuoi ottenere in sei mesi. Con queste informazioni ogni preventivo sarà più chiaro e confrontabile.
+
+Seguiamo attività in tutta la Puglia: vedi la nostra gestione social a [Taranto](/gestione-social-taranto), a [Castellaneta](/gestione-social-castellaneta) e a [Massafra](/gestione-social-massafra). Scopri la nostra [gestione social](/gestione-social) oppure [mandaci le tue risposte](/contatti?servizio=gestione-social): entro 24 ore ti diciamo quali voci servono davvero alla tua attività.`,
+  },
+  {
+    slug: 'quanto-costa-sito-web-attivita-locale-puglia',
+    title: 'Quanto costa un sito web per un\'attività locale in Puglia: da cosa dipende il prezzo',
+    excerpt: 'Da cosa dipende il prezzo di un sito web per un negozio, uno studio o un locale in Puglia: pagine, testi, foto, prenotazioni, e-commerce, SEO e manutenzione. Come confrontare i preventivi.',
+    category: 'Siti web',
+    tags: ['sito web', 'preventivo', 'attività locali', 'puglia', 'e-commerce'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-17',
+    cover: '/blog/quanto-costa-sito-web-attivita-locale-puglia/cover.jpg',
+    coverAlt: 'Le voci che fanno cambiare il prezzo di un sito web per un\'attività locale in Puglia',
+    published: true,
+    seoTitle: 'Quanto costa un sito web per un\'attività locale | InLab',
+    seoDescription: 'Quanto costa un sito web per un\'attività locale in Puglia? Da cosa dipende il prezzo: pagine, testi, foto, prenotazioni, e-commerce, SEO e manutenzione.',
+    content: `"Quanto costa un sito web?" è una domanda che sembra semplice, ma due preventivi per "un sito" possono descrivere lavori completamente diversi. Una pagina con i contatti non è un sito con le schede di ogni servizio, le prenotazioni e un negozio online. In questa guida vediamo da cosa dipende il prezzo di un sito per un'attività locale in Puglia, così sai cosa chiedere e come confrontare le proposte.
+
+**Risposta breve: il prezzo di un sito web dipende da quante pagine servono, da chi scrive i testi e fa le foto, dalle funzioni (prenotazioni, moduli, e-commerce), dal lavoro di SEO per farsi trovare su Google, dall'accessibilità e da chi si occupa di aggiornamenti e manutenzione dopo la consegna. Due preventivi si confrontano solo voce per voce.**
+
+Qui non diamo cifre, ed è una scelta: il costo di un sito si capisce solo dopo aver chiarito a cosa deve servire. Partiamo da lì.
+
+## Le sette voci di un preventivo per un sito
+
+Ogni preventivo serio si può scomporre in queste parti, e il totale dipende da come sono dosate:
+
+1. **Il numero di pagine**: una pagina unica è diversa da un sito con una pagina per ogni servizio, trattamento o prodotto.
+2. **I testi**: se li scrivi tu o se li scrive chi fa il sito, pensati per i clienti e per Google.
+3. **Foto e video**: usare immagini che hai già oppure organizzare un servizio fotografico nella tua attività.
+4. **Le funzioni**: modulo contatti, prenotazioni, WhatsApp, mappe, area riservata, più lingue.
+5. **L'e-commerce**: un catalogo con ordini e pagamenti richiede molto più lavoro di un sito vetrina.
+6. **SEO e velocità**: struttura, titoli e pagine pensate per farsi trovare nella tua zona, su un sito che si apre in fretta dal telefono.
+7. **Manutenzione e assistenza**: aggiornamenti, sicurezza, copie di sicurezza e modifiche dopo la consegna.
+
+![Le voci che fanno cambiare il prezzo di un sito web](/blog/quanto-costa-sito-web-attivita-locale-puglia/fattori-prezzo-sito-web.webp)
+
+## Sito vetrina, sito con prenotazioni o e-commerce
+
+Un **sito vetrina** presenta l'attività, i servizi e i contatti. Va bene per molti negozi, studi e professionisti. Un sito con **prenotazioni o richieste online** serve a chi vive di appuntamenti, come studi medici, centri estetici e ristoranti. Un **e-commerce** serve quando vuoi vendere anche fuori dal paese e hai prodotti, foto e tempo per gestire gli ordini.
+
+Prima di chiedere un preventivo, decidi qual è il compito principale del sito. Se non sei sicuro che ti serva, leggi la guida su [sito web o solo social](/blog/sito-web-o-solo-social-attivita-locale).
+
+> **Vuoi sapere quanto costerebbe il sito della tua attività?** Ti mandiamo un preventivo su misura, con ogni voce spiegata: pagine, testi, foto, funzioni e manutenzione. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
+## Due esempi: un sito nuovo e un e-commerce da sistemare
+
+Per lo [Studio Dentistico Ricciardi](/casi-studio/ricciardi) di Palagiano abbiamo realizzato il nuovo sito con il brand Lumina: una pagina chiara per ogni trattamento, lo studio e il team raccontati con cura e i contatti sempre a portata di mano per prenotare una visita. Il sito lavora insieme alle campagne e ai social.
+
+Non sempre serve rifare tutto. Con [Tacco](/cliente/tacco), un marchio di vini, abbiamo rivisto l'e-commerce già realizzato su Shopify, perché fosse più chiaro da navigare e più coerente con l'immagine del marchio. Anche questo cambia il preventivo: sistemare un sito esistente è un lavoro diverso dal costruirne uno da zero.
+
+## Le voci che spesso restano fuori dal preventivo
+
+Quando confronti due proposte, controlla anche queste voci, che spesso non sono scritte:
+
+- **dominio e hosting**: chi li intesta, chi li rinnova e a nome di chi restano;
+- **privacy e cookie**: informativa e banner dei cookie in regola;
+- **accessibilità**: per alcune attività è un obbligo, come spieghiamo nella guida sull'[European Accessibility Act](/blog/accessibilita-sito-web-european-accessibility-act);
+- **collegamento con Google**: scheda Google, Search Console e statistiche delle visite;
+- **formazione**: se potrai modificare da solo testi, orari e foto;
+- **proprietà**: di chi restano sito, testi, foto e accessi alla fine del lavoro.
+
+Un preventivo più basso che lascia fuori queste voci può costarti di più dopo, in tempo e in clienti persi.
+
+## Domande frequenti
+
+### Meglio un sito fatto su misura o un modello già pronto?
+
+Un modello già pronto va bene per partire in fretta con poche pagine. Se il sito deve farti trovare su Google, ricevere prenotazioni o vendere, conviene una struttura pensata per la tua attività, che si possa ampliare senza ricominciare.
+
+### Si può partire da un sito piccolo e farlo crescere?
+
+Sì, se il sito è costruito bene fin dall'inizio. Si parte dalle pagine che servono subito e si aggiungono servizi, prenotazioni o negozio online quando servono, senza rifare tutto.
+
+### Il sito si paga una volta sola?
+
+Il progetto sì, ma dominio, hosting e manutenzione hanno costi che continuano nel tempo. Chiedi che siano indicati separatamente nel preventivo, insieme a cosa succede se vuoi cambiare fornitore.
+
+## Da dove partire
+
+Apri il telefono e cerca la tua attività su Google come farebbe un cliente: cosa trova? Annota cosa manca (orari, servizi, foto, un modo per prenotare) e quali siti dei concorrenti ti sembrano più chiari. Quella lista è già una traccia per il tuo futuro sito, e la base per chiedere preventivi confrontabili.
+
+Realizziamo siti per attività in tutta la Puglia: vedi la nostra agenzia di comunicazione a [Taranto](/agenzia-comunicazione-taranto), a [Castellaneta](/agenzia-comunicazione-castellaneta) e a [Bari](/agenzia-comunicazione-bari). Scopri il servizio di [siti web](/siti-web) oppure [mandaci la tua lista](/contatti): ti rispondiamo entro 24 ore con le pagine che faremmo per prime.`,
+  },
+  {
+    slug: 'social-investimento-risultati-clienti',
+    title: 'I social non sono una spesa ma un investimento: lo dimostrano i nostri clienti in provincia di Taranto',
+    excerpt: 'La gestione social conviene a un\'attività locale? Quattro clienti in provincia di Taranto e i loro risultati reali: più follower, più prenotazioni, più vendite, eventi sold out.',
+    category: 'Social media',
+    tags: ['gestione social', 'risultati', 'clienti', 'taranto', 'attività locali'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-20',
+    updated: '2026-11-23',
+    cover: '/blog/social-investimento-risultati-clienti/cover.jpg',
+    coverAlt: 'I risultati di quattro clienti InLab dopo la gestione dei social: follower, prenotazioni, vendite ed eventi sold out',
+    published: true,
+    seoTitle: 'Gestione social: spesa o investimento? I risultati | InLab',
+    seoDescription: 'La gestione social conviene a un\'attività locale? I risultati reali di quattro clienti in provincia di Taranto: follower, prenotazioni, vendite e sold out.',
+    content: `Quando un titolare ci chiede se la gestione dei social conviene, la domanda vera è un'altra: "Mi tornerà indietro quello che spendo?". È una domanda giusta. Una spesa è qualcosa che esce e non torna. Un investimento è qualcosa che, fatto bene, porta clienti, prenotazioni e vendite nei mesi successivi. Invece di rispondere con le teorie, in questo articolo ti raccontiamo **quattro attività che seguiamo** e cosa è cambiato per loro.
+
+**Risposta breve: la gestione social conviene quando ha un obiettivo chiaro, è costante e racconta l'attività con contenuti veri. Per i nostri clienti ha significato più follower, mesi di prenotazioni, vendite in crescita ed eventi sold out. Non è magia e non succede in una settimana: è il risultato di un lavoro fatto bene, mese dopo mese.**
+
+## Inox Racing Puglia: da un mese a 4 mesi di prenotazioni
+
+[Inox Racing Puglia](/cliente/inox-racing-puglia) realizza marmitte sportive in acciaio inox per auto sportive e storiche. Il profilo è partito da circa 800 follower e oggi ne ha quasi 4.000.
+
+Il dato più importante, però, non sono i follower. Secondo il titolare, le prenotazioni sono passate da un mese a 4 mesi di agenda piena, in continuo. Oggi Inox Racing Puglia è un punto di riferimento nel suo settore. Per un artigiano significa poter programmare il lavoro con mesi di anticipo.
+
+## Nunzio Putignano: clienti da Bari e da altre regioni
+
+L'[Autofficina Nunzio Putignano](/cliente/nunzio-putignano) lavora a Palagiano. Con i social sono aumentati molto i clienti e l'autorevolezza. Arrivano clienti anche da Bari, a circa 60 km, e contatti da altre regioni.
+
+C'è un segnale che dice molto della fiducia costruita: Nunzio è stato contattato anche come consulente per l'acquisto di un'auto nuova. Quando le persone ti chiedono un consiglio prima di comprare, non sei più "un'officina": sei il loro esperto di fiducia.
+
+> **Vuoi capire cosa potrebbero fare i social per la tua attività?** Partiamo dai tuoi obiettivi e ti diciamo con onestà cosa possiamo ottenere e in quanto tempo. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
+## Sublime Tentazione: più gelato e più torte
+
+[Sublime Tentazione](/cliente/sublime-tentazione) è una gelateria e pasticceria artigianale di Palagianello. In pochi mesi le vendite sono aumentate. Secondo il titolare, l'estate con InLab ha venduto il 30% di gelato in più rispetto all'anno prima e oltre il 70% di torte in più durante la settimana.
+
+Quel "durante la settimana" è importante: non parliamo del sabato sera, quando il negozio è già pieno, ma dei giorni in cui una pasticceria di paese fatica di più. È lì che una presenza costante sui social fa la differenza.
+
+## Masseria Sacramento: il 95% degli eventi sold out
+
+[Masseria Sacramento](/cliente/masseria-sacramento) organizza eventi tutto l'anno. Nel 2026 i follower sono passati da circa 2.400 a oltre 6.000, e il 95% degli eventi è andato sold out.
+
+Per chi organizza eventi, ogni posto vuoto è un mancato incasso. Annunciare ogni appuntamento in tempo, con contenuti che fanno venire voglia di esserci, è il modo per riempire il calendario.
+
+## Cosa hanno in comune questi risultati
+
+Sono quattro attività molto diverse: un'azienda artigiana, un'officina, una pasticceria, una masseria. Eppure i risultati arrivano dalle stesse scelte:
+
+1. **Un obiettivo preciso**: prenotazioni, clienti nuovi, vendite in negozio o posti agli eventi, non solo "più like".
+2. **Contenuti veri**: le persone, il lavoro, i prodotti, senza immagini prese da internet.
+3. **Costanza**: un piano mese per mese, anche quando sembra che non succeda niente.
+4. **Continuità**: i primi segnali arrivano già nel primo mese, quelli più grandi crescono restando costanti.
+
+Quanto costa un lavoro così dipende da molte voci, che spieghiamo nella guida su [quanto costa un social media manager in Puglia](/blog/quanto-costa-social-media-manager-puglia).
+
+## Domande frequenti
+
+### In quanto tempo si vedono i risultati sui social?
+
+Dipende dall'attività e dall'obiettivo, ma i primi segnali, come più messaggi e più richieste, si vedono già dopo il primo mese. I risultati più solidi, come agenda piena o eventi sold out, arrivano con la continuità. È proprio questa la differenza tra spesa e investimento: chi smette dopo poche settimane paga senza raccogliere.
+
+### Come si misura se la gestione social sta funzionando?
+
+Non con i soli follower. Conta quante persone ti scrivono, prenotano, chiamano o entrano in negozio dicendo "vi ho visto su Instagram". Per questo ogni mese guardiamo i numeri insieme al cliente.
+
+## Da dove partire
+
+Scrivi su un foglio una sola frase: "Fra un anno vorrei che i social mi portassero…". Più clienti, più prenotazioni, più vendite in un giorno preciso della settimana. Quella frase è l'obiettivo da cui parte ogni piano che costruiamo.
+
+Seguiamo attività come queste a [Palagianello](/gestione-social-palagianello), a [Palagiano](/gestione-social-palagiano) e a [Taranto](/gestione-social-taranto). Scopri la nostra [gestione social](/gestione-social) oppure [mandaci la tua frase](/contatti?servizio=gestione-social): entro 24 ore ti diciamo come la trasformeremmo in un piano.`,
   },
 ];

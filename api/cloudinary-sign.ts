@@ -18,6 +18,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!secret) return res.status(501).json({ error: "Firma upload non configurata" });
   if (!(await requireAdmin(req))) return res.status(401).json({ error: "Non autorizzato" });
 
+  // File privato da scaricare dopo il modulo (blocco «Presentazione», Paresteta 23/11): tipo "authenticated",
+  // senza preset (così nessuna impostazione del preset lo rende pubblico), sempre nella cartella dei documenti
+  if (req.body?.privateFile === true) {
+    const p: Record<string, string> = { folder: "inlab/documenti", timestamp: String(Math.floor(Date.now() / 1000)), type: "authenticated" };
+    const sig = createHash("sha1").update(Object.keys(p).sort().map((k) => `${k}=${p[k]}`).join("&") + secret).digest("hex");
+    return res.status(200).json({ ...p, signature: sig });
+  }
   const folder = str(req.body?.folder, 80).replace(/[^a-z0-9/_-]/gi, "") || "inlab/generale";
   const context = str(req.body?.context, 200);
   const params: Record<string, string> = {

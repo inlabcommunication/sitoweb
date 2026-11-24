@@ -20,7 +20,10 @@ export const getCurrentPath = (): string => {
 /** Naviga senza ricaricare la pagina; App ascolta l'evento popstate. */
 export const navigate = (to: string) => {
   const path = normalize(to);
-  if (path !== window.location.pathname) window.history.pushState(null, '', path);
+  // la query resta nell'indirizzo (es. /contatti?servizio=gestione-social, brief SEO 12/11 GS-2);
+  // la pagina mostrata dipende solo dal percorso
+  const query = to.match(/\?[^#]*/)?.[0] || '';
+  if (path + query !== window.location.pathname + window.location.search) window.history.pushState(null, '', path + query);
   window.dispatchEvent(new PopStateEvent('popstate'));
 };
 

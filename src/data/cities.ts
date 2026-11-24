@@ -15,7 +15,9 @@ export type CityInfo = {
   /** Terza domanda (brief SEO 02/10 pomeriggio) */
   faq3?: { q: string; a: string };
   /** Domande in più dopo la terza (brief SEO 03/10 Taranto) */
-  altreFaq?: { q: string; a: string }[];
+  altreFaq?: { q: string; a: string; link?: { testo: string; href: string } }[];
+  /** H1 proprio della pagina agenzia, finisce con "a {città}" (analisi SEO 08/11, R4 Ferrara) */
+  h1?: string;
   /** Sezione in più nella pagina agenzia (es. "Castellaneta Marina", brief SEO 02/10) */
   /** `link`: collegamento in fondo alla sezione (es. Castellaneta Marina → la sua pagina, decisione SEO 10/10) */
   /** `link.href` esterno (https://…): si apre in una nuova scheda (es. Google Maps, brief SEO 03/11).
@@ -79,7 +81,7 @@ export const CITY_INFO: CityInfo[] = [
     faq2: { q: "Si possono fare sponsorizzate solo per alcune zone di Taranto?", a: "Sì. Con Meta Ads si può scegliere un raggio intorno all'attività o alcune zone della città, così il budget va solo alle persone che possono venire da te." },
     faq3: { q: "Che tipo di attività di Taranto seguite?", a: "Soprattutto negozi, locali, studi professionali e attività che vogliono farsi trovare da chi cerca in città. Partiamo spesso da scheda Google, sito e social, poi aggiungiamo campagne mirate per zona quando servono." },
     altreFaq: [
-      { q: "Quanto tempo serve per vedere risultati a Taranto?", a: "Per le sponsorizzate bastano poche settimane per i primi contatti. Per la visibilità su Google e la crescita dei social servono alcuni mesi di lavoro costante. Te lo spieghiamo con numeri chiari, mese per mese." },
+      { q: "Quanto tempo serve per vedere risultati a Taranto?", a: "I primi effetti si vedono già dopo il primo mese: contenuti visti da più persone della zona, i primi messaggi e, con le sponsorizzate, i primi contatti. Poi i risultati si rafforzano mese dopo mese, se il lavoro continua. Per questo la comunicazione è un investimento e non una prova di qualche settimana. Ogni mese ti mostriamo i numeri in modo chiaro." },
       { q: "Seguite anche aziende in provincia di Taranto fuori città?", a: "Sì: lavoriamo con attività di Castellaneta, Palagianello, Palagiano, Mottola, Laterza, Ginosa e Massafra. Trovi i lavori qui sopra, divisi per città." },
     ],
     sezione: { titolo: "Perché un'agenzia di Castellaneta per Taranto", testo: "Siamo a meno di un'ora da Taranto: veniamo di persona per incontri, shooting e riprese, e seguiamo il resto a distanza con un contatto diretto. Conosciamo la provincia perché ci lavoriamo ogni giorno, da Castellaneta a Palagianello, da Mottola a Ginosa: per un'attività di Taranto vuol dire avere un'agenzia vicina, con costi e tempi da agenzia locale." },
@@ -388,7 +390,11 @@ export const CITY_INFO: CityInfo[] = [
     contesto: "Ferrara è la città degli Estensi, con il Castello Estense, le Mura e un centro rinascimentale patrimonio UNESCO. È una città di botteghe, locali e attività storiche, dove la qualità si racconta bene con immagini curate.",
     settori: ["pasticcerie e botteghe", "locali e ristoranti", "attività storiche del centro"],
     faq: { q: "Seguite attività di Ferrara anche se siete in Puglia?", a: "Sì: per la Pasticceria Naturale gestiamo i social a distanza e facciamo foto e video sul posto." },
-    description: "Agenzia di comunicazione per attività di Ferrara: gestione social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    // analisi SEO 08/11, R4: "studio di comunicazione ferrara"
+    title: "Agenzia e studio di comunicazione a Ferrara | InLab",
+    h1: "Agenzia e studio di comunicazione a Ferrara",
+    description: "Studio di comunicazione per attività di Ferrara: social, foto e video sul posto, strategia e testi. Il caso Pasticceria Naturale. Preventivo gratuito.",
+    altreFaq: [{ q: "Siete uno studio di comunicazione o un'agenzia?", a: "Siamo uno studio di comunicazione e marketing: seguiamo social, foto, video, siti e campagne. A Ferrara lavoriamo con attività come Pasticceria Naturale.", link: { testo: "Pasticceria Naturale", href: "/cliente/pasticceria-naturale" } }],
     intro: "A Ferrara gestiamo i social della Pasticceria Naturale: strategia, idee e testi nostri, foto e video realizzati sul posto. Seguiamo attività di Ferrara con lo stesso metodo che usiamo in Puglia, lavorando a distanza e venendo di persona per le riprese.",
     focus: { titolo: "Seguire un'attività a distanza, senza perdere il contatto", testo: "Con la Pasticceria Naturale lavoriamo così: strategia e piano editoriale condivisi, testi e idee scritti da noi, foto e video girati sul posto. Il resto si fa a distanza, con un contatto diretto e report chiari. Per un'attività di Ferrara significa avere un social media manager dedicato, non un account gestito in serie." },
     servizi: { 'gestione-social': "Gestione social a Ferrara come per la Pasticceria Naturale: strategia, testi, idee per i contenuti e foto e video realizzati sul posto." },
@@ -920,6 +926,248 @@ export const CITY_INFO: CityInfo[] = [
     focus: { titolo: "Farsi scegliere da professionisti e imprese", testo: "A Potenza molte attività lavorano con altre aziende, enti e professionisti. Per loro contano un sito chiaro, un profilo LinkedIn curato, una scheda Google completa e contenuti che spiegano bene cosa fai. Costruiamo questa presenza e la sosteniamo con campagne mirate." },
     lavoriVicini: true,
     servizi: { 'gestione-social': "Social per studi, imprese e negozi di Potenza: contenuti chiari, LinkedIn e campagne mirate." },
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Leporano", provincia: "provincia di Taranto",
+    contesto: "Leporano ha una costa frequentata d'estate dai tarantini e dai turisti, con le spiagge di Gandoli e Saturo, e il Parco archeologico di Saturo, dove sorgeva l'antica Satyrion. Accanto al turismo ci sono attività che lavorano tutto l'anno con Taranto e i paesi vicini.",
+    settori: ["lidi e strutture balneari", "ristoranti e locali sul mare", "attività e servizi del paese"],
+    faq: { q: "Le sponsorizzate possono raggiungere chi abita a Taranto?", a: "Sì: scegliamo zona e raggio in base a da dove arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Leporano: social, foto, video e campagne per lidi, ristoranti e attività di Saturo e Gandoli. Preventivo gratuito.",
+    intro: "Leporano è sulla costa ionica, a sud di Taranto, tra le spiagge di Gandoli e Saturo. Seguiamo social, foto, video, sponsorizzate e siti per lidi, ristoranti e attività del paese, da Castellaneta.",
+    focus: { titolo: "Il mare vicino alla città", testo: "Chi vive a Taranto sceglie spesso Leporano per il mare e per una cena fuori. Per un lido o un ristorante conta farsi trovare su Google Maps, avere foto vere del posto e social aggiornati quando le persone decidono dove andare. Prepariamo contenuti e sponsorizzate mirate a chi abita entro mezz'ora di strada." },
+    servizi: { 'gestione-social': "Social per lidi, ristoranti e attività di Leporano: foto vere di Saturo e Gandoli, contenuti per la stagione e sponsorizzate per chi arriva da Taranto." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Lizzano", provincia: "provincia di Taranto",
+    contesto: "Lizzano si trova nella parte orientale della provincia di Taranto. Il suo territorio dà il nome al vino Lizzano DOC e fa parte della zona del Primitivo, con una costa sullo Ionio frequentata d'estate.",
+    settori: ["cantine e aziende vinicole", "aziende agricole", "attività del paese e della marina"],
+    faq: { q: "Potete aiutare una cantina a vendere online?", a: "Sì: foto dei prodotti, social, sito o catalogo con ordini e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Lizzano: social, foto, video e siti per cantine, aziende agricole e attività del paese e della marina. Preventivo gratuito.",
+    intro: "Lizzano è terra di vigneti, con un vino che porta il suo nome e una marina sullo Ionio. Seguiamo social, foto, video, sponsorizzate e siti per cantine, aziende agricole e attività, da Castellaneta.",
+    focus: { titolo: "Un vino con il nome del paese", testo: "Quando il nome del paese è anche il nome del vino, il racconto è già a metà. Mostriamo vigne, cantina e persone con foto e video veri, curiamo etichette, sito e social, e prepariamo campagne per la vendita diretta, l'enoturismo e gli ordini online." },
+    servizi: { 'gestione-social': "Social per cantine, aziende agricole e attività di Lizzano: vigne, vino e marina raccontati con foto e video veri." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Copertino", provincia: "provincia di Lecce",
+    contesto: "Copertino è conosciuta per il Castello, uno dei più grandi del Salento, e per San Giuseppe da Copertino, il santo protettore degli studenti, che porta in città pellegrini tutto l'anno. È un centro vivace a pochi chilometri da Lecce e dalla costa di Porto Cesareo.",
+    settori: ["ristoranti e bar", "negozi del centro", "strutture ricettive e servizi"],
+    faq: { q: "Fate contenuti per attività che lavorano con i turisti?", a: "Sì: foto e video del posto, scheda Google, social e campagne per chi sta arrivando in zona." },
+    description: "Agenzia di comunicazione a Copertino: social, foto, video, siti e campagne per negozi, ristoranti e attività del centro. Preventivo gratuito.",
+    intro: "Copertino è la città di San Giuseppe e del suo castello, nel nord del Salento. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e attività, da Castellaneta.",
+    focus: { titolo: "Farsi trovare da chi arriva in città", testo: "Tra pellegrini, visitatori del castello e chi passa verso il mare, Copertino ha un pubblico che cambia tutto l'anno. Per un ristorante o un negozio servono una scheda Google curata, foto vere e social che dicano subito cosa offri e dove sei. Li prepariamo insieme a campagne per chi è già in zona." },
+    servizi: { 'gestione-social': "Social per ristoranti, negozi e strutture di Copertino: contenuti per chi vive in città e per chi arriva al castello o verso il mare." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Maglie", provincia: "provincia di Lecce",
+    contesto: "Maglie è la città natale di Aldo Moro ed è da sempre un punto di riferimento per il commercio e i servizi dei paesi vicini. Ogni estate ospita il Mercatino del Gusto, una delle rassegne enogastronomiche più note del Salento.",
+    settori: ["negozi e commercio", "pasticcerie, ristoranti e prodotti tipici", "studi e professionisti"],
+    faq: { q: "Le sponsorizzate possono raggiungere i paesi vicini?", a: "Sì: impostiamo zona e raggio sui comuni da cui arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Maglie: social, foto, video, siti e campagne per negozi, pasticcerie, ristoranti e professionisti. Preventivo gratuito.",
+    intro: "Maglie è uno dei centri commerciali del Salento interno, crocevia tra Lecce e Otranto. Seguiamo social, foto, video, sponsorizzate e siti per negozi, ristoranti e professionisti, da Castellaneta.",
+    focus: { titolo: "Il negozio di riferimento della zona", testo: "A Maglie arrivano a fare acquisti da molti paesi intorno. Per un negozio o uno studio conta essere il primo nome che viene in mente: scheda Google completa, recensioni, social costanti e sponsorizzate sul raggio giusto. Lo costruiamo insieme, con contenuti veri del tuo lavoro." },
+    servizi: { 'gestione-social': "Social per negozi, pasticcerie e studi di Maglie: presenza costante per essere il primo nome che viene in mente nei paesi intorno." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Mesagne", provincia: "provincia di Brindisi",
+    contesto: "Mesagne è conosciuta per il centro storico, il Castello normanno-svevo e il Museo archeologico Ugo Granafei. Si trova a pochi chilometri da Brindisi ed è un centro di commercio e servizi per l'entroterra.",
+    settori: ["ristoranti e locali del centro", "negozi e commercio", "servizi e professionisti"],
+    faq: { q: "Fate foto e video nei locali?", a: "Sì: veniamo sul posto per foto e video di piatti, ambienti e persone." },
+    description: "Agenzia di comunicazione a Mesagne: social, foto, video, siti e campagne per ristoranti, negozi e attività del centro storico. Preventivo gratuito.",
+    intro: "Mesagne ha un centro storico barocco tra i più curati del Brindisino. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Il centro storico come vetrina", testo: "Un locale nel centro storico di Mesagne ha già uno sfondo che si fa notare. Lo usiamo per foto e video che fanno venire voglia di passare, curiamo social e scheda Google e prepariamo campagne per chi abita a Brindisi e nei paesi vicini." },
+    servizi: { 'gestione-social': "Social per ristoranti e negozi del centro storico di Mesagne: foto e video che fanno venire voglia di passare, e campagne su Brindisi e dintorni." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Carovigno", provincia: "provincia di Brindisi",
+    contesto: "Carovigno ha un centro storico dominato dal Castello Dentice di Frasso e un territorio che arriva alla Riserva naturale di Torre Guaceto. È conosciuta anche per la 'Nzegna, la festa con lo sbandieramento che si tiene ogni anno dopo Pasqua.",
+    settori: ["masserie e B&B", "lidi e attività sul mare", "ristoranti e attività del paese"],
+    faq: { q: "Potete aiutarci ad avere più prenotazioni dirette?", a: "Sì: sito con prenotazione, foto e video, scheda Google e campagne, anche in inglese." },
+    description: "Agenzia di comunicazione a Carovigno: social, foto, video e campagne per masserie, B&B, lidi e attività vicino a Torre Guaceto. Preventivo gratuito.",
+    intro: "Carovigno è tra il castello e il mare di Torre Guaceto. Seguiamo social, foto, video, sponsorizzate e siti per masserie, B&B, lidi e attività, da Castellaneta.",
+    focus: { titolo: "Prenotazioni dirette, non solo dalle piattaforme", testo: "Masserie e B&B vicino a Torre Guaceto lavorano molto con le piattaforme di prenotazione. Con un sito chiaro, foto e video all'altezza e campagne mirate, una parte delle prenotazioni può arrivare direttamente, anche dall'estero. Costruiamo la presenza che serve a farlo." },
+    servizi: { 'gestione-social': "Social per masserie, B&B e attività di Carovigno: immagini all'altezza di Torre Guaceto, contenuti anche in inglese e campagne per la stagione." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Bitonto", provincia: "provincia di Bari",
+    contesto: "Bitonto è conosciuta per la Cattedrale romanica e per il centro storico, ed è da secoli una delle capitali dell'olio extravergine pugliese. Molte aziende del territorio vendono in tutta Italia e all'estero.",
+    settori: ["frantoi e produttori di olio", "aziende e imprese", "negozi e attività del centro"],
+    faq: { q: "Potete aiutare un frantoio a vendere online?", a: "Sì: foto dei prodotti, social, e-commerce o catalogo con ordini e campagne mirate, come facciamo con Olio Vanessa a Castellaneta.", link: { testo: "Olio Vanessa", href: "/cliente/olio-vanessa" } },
+    description: "Agenzia di comunicazione a Bitonto: social, foto, video, siti e campagne per frantoi, aziende, negozi e attività del centro. Preventivo gratuito.",
+    intro: "Bitonto è la città dell'olio e della cattedrale romanica, alle porte di Bari. Seguiamo social, foto, video, sponsorizzate e siti per frantoi, aziende, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Dall'uliveto al cliente finale", testo: "Un olio di Bitonto ha già un nome che conta. Lo rafforziamo con foto e video della raccolta e della molitura, un sito con vendita online o ordini diretti, social costanti e campagne per chi cerca olio pugliese di qualità." },
+    servizi: { 'gestione-social': "Social per frantoi, aziende e negozi di Bitonto: l'olio e il lavoro vero raccontati con foto e video, per vendere anche fuori città." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Corato", provincia: "provincia di Bari",
+    contesto: "Corato si trova sulla Murgia nord-barese, tra Bari e Andria. La varietà di oliva Coratina prende il nome dalla città, e intorno all'olio e all'agricoltura lavorano molte aziende, accanto a commercio e imprese.",
+    settori: ["produttori di olio e aziende agricole", "imprese e aziende", "negozi e servizi"],
+    faq: { q: "Fate branding per aziende agricole?", a: "Sì: nome, logo, etichette e identità, poi applicati a sito, social e materiali." },
+    description: "Agenzia di comunicazione a Corato: social, foto, video, siti e campagne per produttori, aziende, negozi e attività della città. Preventivo gratuito.",
+    intro: "Corato dà il nome alla Coratina, una delle olive più conosciute d'Italia. Seguiamo social, foto, video, sponsorizzate e siti per produttori, aziende e negozi, da Castellaneta.",
+    focus: { titolo: "Un prodotto famoso, un marchio da costruire", testo: "Tutti conoscono la Coratina, ma pochi conoscono il nome di chi la produce. Aiutiamo aziende e produttori di Corato a farsi riconoscere: identità, foto e video veri, sito, social e campagne per vendere in Italia e all'estero." },
+    servizi: { 'gestione-social': "Social per produttori, aziende e negozi di Corato: un nome riconoscibile accanto a un prodotto famoso, con contenuti costanti." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Tursi", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Tursi è conosciuta per la Rabatana, l'antico quartiere arroccato sulla collina, per il santuario di Santa Maria d'Anglona e per il poeta Albino Pierro, che scriveva nel dialetto del paese. Intorno ci sono aziende agricole e la vicina costa jonica.",
+    settori: ["aziende agricole e prodotti tipici", "strutture ricettive", "attività del paese"],
+    faq: { q: "Lavorate anche con attività piccole?", a: "Sì: partiamo da social e foto e cresciamo con sito e campagne quando serve." },
+    description: "Agenzia di comunicazione a Tursi: social, foto, video e siti per aziende agricole, strutture e attività della Rabatana. Preventivo gratuito.",
+    intro: "Tursi è il paese della Rabatana, tra le colline e la costa jonica lucana. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, strutture e attività, da Castellaneta.",
+    focus: { titolo: "Raccontare un posto che pochi conoscono", testo: "La Rabatana e Anglona sono luoghi che colpiscono chi li vede. Per strutture, aziende e attività di Tursi li trasformiamo in foto, video e contenuti che fanno conoscere il territorio e portano visitatori e clienti, con campagne per chi cerca la Basilicata autentica." },
+    servizi: { 'gestione-social': "Social per strutture, aziende agricole e attività di Tursi: la Rabatana e il territorio raccontati per portare visitatori e clienti." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 09/11, lotto 6 (pagina agenzia; gestione social dal lotto 7, 16/11)
+    name: "Montalbano Jonico", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Montalbano Jonico è conosciuto per la Riserva naturale dei Calanchi, paesaggi di argilla scolpiti dalla pioggia. Il territorio è agricolo, vicino alla piana del Metapontino, con aziende di ortofrutta e prodotti tipici.",
+    settori: ["aziende agricole e ortofrutta", "prodotti tipici", "attività del paese"],
+    faq: { q: "Lavorate con aziende che vendono fuori regione?", a: "Sì: sito, foto e video della produzione, LinkedIn e campagne per i contatti commerciali." },
+    description: "Agenzia di comunicazione a Montalbano Jonico: social, foto, video e siti per aziende agricole e attività tra i Calanchi. Preventivo gratuito.",
+    intro: "Montalbano Jonico è affacciato sui Calanchi, vicino alla piana del Metapontino. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole e attività, da Castellaneta.",
+    focus: { titolo: "Dal paesaggio al prodotto", testo: "I Calanchi sono un paesaggio unico, e i prodotti di questa terra possono raccontarlo. Mostriamo campi, raccolta e lavorazione con foto e video veri, creiamo siti chiari e una presenza social costante per farsi conoscere da clienti, grossisti e visitatori." },
+    servizi: { 'gestione-social': "Social per aziende agricole e attività di Montalbano Jonico: campi, prodotti e Calanchi raccontati con immagini vere." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "San Marzano di San Giuseppe", provincia: "provincia di Taranto",
+    contesto: "San Marzano è una delle comunità arbëreshë della Puglia, di origine albanese, dove lingua e tradizioni si tramandano ancora oggi. Il territorio è coltivato a vigneto, nella zona del Primitivo.",
+    settori: ["cantine e aziende vinicole", "aziende agricole", "negozi e attività del paese"],
+    faq: { q: "Fate contenuti per cantine e prodotti tipici?", a: "Sì: foto e video di vigne e prodotti, etichette, social e campagne per la vendita diretta e online." },
+    description: "Agenzia di comunicazione a San Marzano di San Giuseppe: social, foto, video e siti per cantine, aziende e attività del paese. Preventivo gratuito.",
+    intro: "San Marzano di San Giuseppe è un paese di vigneti e di tradizioni arbëreshë, a est di Taranto. Seguiamo social, foto, video, sponsorizzate e siti per cantine, aziende e attività, da Castellaneta.",
+    focus: { titolo: "Un'identità che si riconosce", testo: "Poche zone hanno una storia così riconoscibile. Per una cantina o un'attività di San Marzano, raccontare le radici del paese e il lavoro di ogni giorno rende il marchio diverso da tutti gli altri. Lo facciamo con foto e video veri, social costanti e un sito che parla anche a chi compra da fuori." },
+    servizi: { 'gestione-social': "Social per cantine e attività di San Marzano: vigne, tradizioni e prodotti raccontati con immagini vere." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Maruggio", provincia: "provincia di Taranto",
+    contesto: "Il centro storico di Maruggio conserva le tracce della Commenda dei Cavalieri di Malta. La marina di Campomarino, con spiagge e dune sullo Ionio, d'estate si riempie di turisti.",
+    settori: ["lidi e strutture balneari", "B&B e case vacanza", "ristoranti e attività del borgo"],
+    faq: { q: "Quando conviene iniziare a comunicare per l'estate?", a: "In primavera: molti turisti scelgono dove andare già da aprile." },
+    description: "Agenzia di comunicazione a Maruggio: social, foto, video e campagne per lidi, B&B e attività del borgo e di Campomarino. Preventivo gratuito.",
+    intro: "Maruggio unisce un borgo legato ai Cavalieri di Malta e il mare di Campomarino. Seguiamo social, foto, video, sponsorizzate e siti per lidi, B&B e attività, da Castellaneta.",
+    focus: { titolo: "Il borgo e il mare nella stessa comunicazione", testo: "Chi arriva a Campomarino per il mare spesso non conosce il borgo, e viceversa. Per lidi, B&B e ristoranti costruiamo contenuti che raccontano entrambi, una scheda Google curata e campagne mirate a chi sta scegliendo dove passare l'estate." },
+    servizi: { 'gestione-social': "Social per lidi, B&B e ristoranti di Maruggio e Campomarino: contenuti per la stagione e presenza tutto l'anno." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Tricase", provincia: "provincia di Lecce",
+    contesto: "Tricase ha un centro storico dominato da Palazzo Gallone, un porto sulla costa adriatica e, nelle campagne, una grande quercia vallonea secolare. È un punto di riferimento per il commercio del Capo di Leuca.",
+    settori: ["ristoranti e locali del porto", "strutture ricettive", "negozi e servizi del centro"],
+    faq: { q: "Le campagne possono raggiungere i paesi vicini?", a: "Sì: scegliamo zona e raggio in base a dove abitano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Tricase: social, foto, video e siti per ristoranti, strutture e attività del porto e del centro. Preventivo gratuito.",
+    intro: "Tricase è nel Capo di Leuca, tra il porto, Palazzo Gallone e la costa adriatica. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, strutture e attività, da Castellaneta.",
+    focus: { titolo: "Il riferimento del Capo di Leuca", testo: "Molti paesi del Capo di Leuca guardano a Tricase per acquisti e servizi. Per un negozio o un ristorante conta essere il primo nome trovato su Google e sui social: lo costruiamo con contenuti veri e campagne sul raggio giusto, per residenti e turisti." },
+    servizi: { 'gestione-social': "Social per ristoranti, strutture e negozi di Tricase: presenza costante per residenti e turisti del Capo di Leuca." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Castrignano del Capo", provincia: "provincia di Lecce",
+    contesto: "Nel comune di Castrignano del Capo si trova Santa Maria di Leuca, con la Basilica De Finibus Terrae e il faro. È meta di turisti e pellegrini e punto di partenza per le escursioni in barca lungo la costa.",
+    settori: ["hotel, B&B e case vacanza", "ristoranti e locali", "escursioni e attività turistiche"],
+    faq: { q: "Potete aiutarci con le prenotazioni dirette?", a: "Sì: sito con prenotazione, foto e video, scheda Google e campagne, anche in inglese." },
+    description: "Agenzia di comunicazione a Santa Maria di Leuca e Castrignano del Capo: social, foto, video e campagne per strutture, ristoranti e attività turistiche.",
+    h1: "Agenzia di comunicazione a Castrignano del Capo e Santa Maria di Leuca",
+    title: "Agenzia di comunicazione a Santa Maria di Leuca | InLab",
+    intro: "Santa Maria di Leuca è il punto più a sud della Puglia, dove finisce il Salento. Seguiamo social, foto, video, sponsorizzate e siti per hotel, B&B, ristoranti e attività turistiche, da Castellaneta.",
+    focus: { titolo: "Farsi scegliere alla fine del Salento", testo: "Chi arriva a Leuca ha già deciso di vedere il punto più a sud della Puglia: deve solo scegliere dove dormire, mangiare o prenotare un'escursione. Prepariamo foto e video all'altezza, scheda Google curata e campagne per chi sta per arrivare, anche in inglese." },
+    servizi: { 'gestione-social': "Social per strutture, ristoranti ed escursioni a Santa Maria di Leuca: immagini che fanno partire e contenuti anche in inglese." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Oria", provincia: "provincia di Brindisi",
+    contesto: "Oria domina la pianura tra Brindisi e Taranto dal suo Castello svevo. Ogni estate ospita il corteo storico di Federico II e il Torneo dei Rioni, che attirano visitatori da tutta la regione.",
+    settori: ["ristoranti e locali del centro", "negozi e prodotti tipici", "attività e servizi"],
+    faq: { q: "Seguite la comunicazione di eventi?", a: "Sì: grafiche, reel, dirette e sponsorizzate prima e durante l'evento." },
+    description: "Agenzia di comunicazione a Oria: social, foto, video, siti e campagne per ristoranti, negozi e attività della città federiciana. Preventivo gratuito.",
+    intro: "Oria è la città del Castello svevo e del corteo storico di Federico II. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, negozi e attività, da Castellaneta.",
+    focus: { titolo: "Un evento che può portare clienti tutto l'anno", testo: "Il corteo storico porta a Oria migliaia di persone in pochi giorni. Per ristoranti e negozi è il momento di farsi conoscere, ma il lavoro vero è non farsi dimenticare dopo: contenuti costanti, scheda Google e campagne che riportano i visitatori anche nel resto dell'anno." },
+    servizi: { 'gestione-social': "Social per ristoranti e negozi di Oria: eventi raccontati bene e presenza costante tutto l'anno." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Bisceglie", provincia: "provincia di Barletta-Andria-Trani",
+    contesto: "Bisceglie ha un porto vivace, un centro storico sul mare e, nelle campagne, il Dolmen della Chianca, uno dei monumenti preistorici più noti della Puglia. È anche la città dei sospiri, il dolce tipico locale.",
+    settori: ["pasticcerie e prodotti tipici", "ristoranti e locali del porto", "negozi e imprese"],
+    faq: { q: "Lavorate con pasticcerie?", a: "Sì: foto dei prodotti, video in laboratorio, social e campagne, come facciamo con Sublime Tentazione a Palagianello.", link: { testo: "Sublime Tentazione", href: "/cliente/sublime-tentazione" } },
+    description: "Agenzia di comunicazione a Bisceglie: social, foto, video, siti e campagne per ristoranti, pasticcerie, negozi e imprese. Preventivo gratuito.",
+    intro: "Bisceglie è una città di mare, di storia antica e di dolci tipici. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, pasticcerie, negozi e imprese, da Castellaneta.",
+    focus: { titolo: "Il prodotto tipico come biglietto da visita", testo: "Un dolce o un piatto tipico possono diventare il motivo per cui le persone scelgono proprio te. Li raccontiamo con foto e video di laboratorio e di sala, social costanti e campagne per chi vive in zona e per chi passa da Bisceglie." },
+    servizi: { 'gestione-social': "Social per pasticcerie, ristoranti e negozi di Bisceglie: prodotti tipici e lavoro vero raccontati con foto e video." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Giovinazzo", provincia: "provincia di Bari",
+    contesto: "Giovinazzo, a pochi chilometri da Bari, ha un centro storico affacciato sul porto, con la Cattedrale romanica. Le sere d'estate è frequentata da molti baresi per cena e passeggiate.",
+    settori: ["ristoranti e locali", "negozi del centro", "strutture ricettive"],
+    faq: { q: "Le sponsorizzate possono raggiungere chi abita a Bari?", a: "Sì: impostiamo zona e raggio sulle zone da cui arrivano i tuoi clienti." },
+    description: "Agenzia di comunicazione a Giovinazzo: social, foto, video e campagne per ristoranti, locali e negozi del centro storico sul mare. Preventivo gratuito.",
+    intro: "Giovinazzo ha un centro storico sul mare tra i più belli del nord barese. Seguiamo social, foto, video, sponsorizzate e siti per ristoranti, locali e negozi, da Castellaneta.",
+    focus: { titolo: "Una serata a Giovinazzo si decide sul telefono", testo: "Chi parte da Bari per cenare a Giovinazzo sceglie il locale guardando foto, recensioni e reel. Curiamo la scheda Google, i social e campagne mirate a chi abita nel raggio di mezz'ora, con contenuti che mostrano il posto com'è." },
+    servizi: { 'gestione-social': "Social per ristoranti, locali e negozi di Giovinazzo: contenuti che fanno scegliere il tuo posto per la serata." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Rutigliano", provincia: "provincia di Bari",
+    contesto: "Rutigliano è conosciuto per la tradizione dei fischietti in terracotta, celebrata ogni anno con una fiera dedicata, e per la produzione di uva da tavola, che dà lavoro a molte aziende del territorio.",
+    settori: ["aziende agricole e uva da tavola", "artigiani", "negozi e attività del paese"],
+    faq: { q: "Lavorate con aziende agricole che vendono fuori regione?", a: "Sì: sito, foto e video della produzione, LinkedIn e campagne per i contatti commerciali." },
+    description: "Agenzia di comunicazione a Rutigliano: social, foto, video, siti e campagne per aziende agricole, artigiani e attività del paese. Preventivo gratuito.",
+    intro: "Rutigliano è il paese dei fischietti in terracotta e dell'uva da tavola. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, artigiani e attività, da Castellaneta.",
+    focus: { titolo: "Artigianato e campi, raccontati per vendere", testo: "Un artigiano o un'azienda agricola di Rutigliano hanno un lavoro che si vede e si racconta bene. Lo trasformiamo in foto, video e contenuti social, in un sito chiaro e in campagne per vendere direttamente o farsi trovare da grossisti e clienti fuori regione." },
+    servizi: { 'gestione-social': "Social per aziende agricole, artigiani e attività di Rutigliano: lavoro e prodotti raccontati con immagini vere." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Rotondella", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Rotondella sorge su un colle che domina la costa jonica e la piana del Metapontino. Il territorio è agricolo e arriva fino al mare, con aziende di ortofrutta e attività legate al turismo estivo.",
+    settori: ["aziende agricole e ortofrutta", "strutture ricettive", "attività del paese"],
+    faq: { q: "Lavorate anche con attività piccole?", a: "Sì: partiamo da social e foto e cresciamo con sito e campagne quando serve." },
+    description: "Agenzia di comunicazione a Rotondella: social, foto, video e siti per aziende agricole, strutture e attività tra collina e costa jonica. Preventivo gratuito.",
+    intro: "Rotondella è chiamata il balcone dello Jonio, per la vista sul golfo e sulla piana. Seguiamo social, foto, video, sponsorizzate e siti per aziende agricole, strutture e attività, da Castellaneta.",
+    focus: { titolo: "Un paesaggio che vende", testo: "La vista di Rotondella è il primo contenuto che colpisce. La usiamo per raccontare aziende, strutture e prodotti con foto e video veri, siti chiari e una presenza social costante, per farsi conoscere da clienti e visitatori." },
+    servizi: { 'gestione-social': "Social per aziende e strutture di Rotondella: il balcone dello Jonio raccontato con immagini vere." },
+    lavoriVicini: true,
+  },
+  {
+    // brief SEO 23/11, lotto 8 (agenzia + gestione social)
+    name: "Irsina", provincia: "provincia di Matera (Basilicata)",
+    contesto: "Irsina conserva un centro storico antico e la Cattedrale con la statua di Sant'Eufemia, attribuita ad Andrea Mantegna. Intorno, campagne di grano e aziende agricole.",
+    settori: ["strutture ricettive", "produttori e aziende agricole", "attività del paese"],
+    faq: { q: "Potete aiutare una struttura a farsi trovare da chi visita Matera?", a: "Sì: scheda Google, sito, foto e video e campagne mirate a chi cerca dove stare vicino a Matera." },
+    description: "Agenzia di comunicazione a Irsina: social, foto, video e siti per strutture, produttori e attività di uno dei borghi più antichi della Basilicata.",
+    intro: "Irsina è un borgo sulla collina tra Matera e Potenza, con una cattedrale che custodisce un'opera attribuita a Mantegna. Seguiamo social, foto, video, sponsorizzate e siti per strutture, produttori e attività, da Castellaneta.",
+    focus: { titolo: "Far scoprire un borgo poco conosciuto", testo: "Irsina ha molto da raccontare a chi non la conosce ancora. Per strutture, produttori e attività creiamo contenuti che fanno scoprire il borgo e i suoi prodotti, con campagne per chi cerca la Basilicata autentica, vicino a Matera." },
+    servizi: { 'gestione-social': "Social per strutture e produttori di Irsina: il borgo e i suoi prodotti raccontati per chi cerca la Basilicata autentica." },
+    lavoriVicini: true,
   },
 ];
 

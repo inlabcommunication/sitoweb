@@ -13,11 +13,21 @@ export type CaseBlock =
   | { type: 'timeline'; tag?: string; title?: string; titleAccent?: string; items: { title: string; desc?: string }[] }
   | { type: 'checklist'; tag?: string; title?: string; titleAccent?: string; numbered?: boolean; items: string[] }
   | { type: 'steps'; tag?: string; title?: string; titleAccent?: string; body?: string; items: { title: string; desc?: string }[] }
-  | { type: 'website'; tag?: string; title?: string; titleAccent?: string; body?: string; url: string; image?: string; pages?: { url: string; label: string; text?: string }[] }
+  | { type: 'website'; tag?: string; title?: string; titleAccent?: string; body?: string; url: string; image?: string; /** testo del bottone, es. "Apri l'app" (vuoto: "Visita il sito") */ cta?: string; pages?: { url: string; label: string; text?: string }[] }
   | { type: 'stats'; tag?: string; title?: string; titleAccent?: string; body?: string; items: { value: string; label: string }[]; note?: string }
   | { type: 'reels'; tag?: string; title?: string; titleAccent?: string; items: Reel[] }
   | { type: 'gallery'; tag?: string; title?: string; titleAccent?: string; images: string[] }
-  | { type: 'quote'; text: string; author?: string };
+  | { type: 'quote'; text: string; author?: string }
+  /** Presentazione a slide (es. il piano presentato al cliente): immagini a scorrimento e, se c'è il file,
+   *  pulsante di download con modulo (richiesta Nicola 23/11, Paresteta). Il file è privato su Cloudinary. */
+  | { type: 'presentation'; tag?: string; title?: string; titleAccent?: string; body?: string; slides: PresentationSlide[]; cta?: string; file?: PresentationFile | null;
+      /** il blocco compare sul sito solo se true, anche se il caso è pubblicato (Paresteta: serve il consenso del cliente) */
+      published?: boolean };
+
+/** Slide: immagine, testo alternativo (8-15 parole) e didascalia facoltativa (es. "visual di concept del piano") */
+export type PresentationSlide = { image: string; alt?: string; caption?: string };
+/** File da scaricare: caricato su Cloudinary come file privato ("authenticated"), mai con un indirizzo pubblico */
+export type PresentationFile = { publicId: string; name?: string; bytes?: number };
 
 export type CaseStudy = {
   id: string;
@@ -41,7 +51,16 @@ export type CaseStudy = {
   /** SEO */
   seoTitle?: string;
   seoDescription?: string;
+  /** false = bozza: pagina noindex, fuori da elenchi, pagine città e sitemap. I casi già
+   *  salvati senza questo campo restano pubblicati (richiesta Direttore 12/11). */
+  published?: boolean;
 };
+
+/** Caso studio da mostrare sul sito: tutti tranne le bozze (published === false). */
+export const isPublishedCase = (c: any): boolean => !!c && c.published !== false;
+/** true se il caso con questo id esiste ed è pubblicato: i link "Leggi il caso studio" scritti nei dati statici spariscono se il caso passa a bozza */
+export const hasPublishedCase = (content: any, id: string): boolean =>
+  ((content?.cases?.items || []) as any[]).some((c: any) => c?.id === id && isPublishedCase(c));
 
 const LUMINA = 'https://luminaricciardi.it/';
 
@@ -173,6 +192,7 @@ export const BLOCK_LABELS: Record<CaseBlock['type'], string> = {
   reels: 'Reel',
   gallery: 'Galleria foto',
   quote: 'Citazione / recensione',
+  presentation: 'Presentazione (slide + download)',
 };
 
 export const emptyBlock = (type: CaseBlock['type']): CaseBlock => {
@@ -186,5 +206,6 @@ export const emptyBlock = (type: CaseBlock['type']): CaseBlock => {
     case 'reels': return { type, tag: 'I reel', title: 'Contenuti', titleAccent: 'che girano.', items: [{ title: '', embed: '', showViews: false, views: '' }] };
     case 'gallery': return { type, tag: 'Foto', title: '', titleAccent: '', images: [] };
     case 'quote': return { type, text: '', author: '' };
+    case 'presentation': return { type, tag: 'La presentazione', title: '', titleAccent: '', body: '', slides: [], cta: 'Scarica la presentazione', file: null, published: false };
   }
 };

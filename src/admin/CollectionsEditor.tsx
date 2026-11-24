@@ -7,6 +7,9 @@ import { BLOCK_LABELS, emptyBlock, type CaseBlock } from '../data/caseStudies';
 import { SERVICES_SEO } from '../seo/routes';
 import { ReelsList } from './ReelCoverImport';
 import { getClientId } from '../lib/clientUtils';
+import { SERVICE_EXAMPLES } from '../data/serviceExamples';
+import { caseLinksWarning, otherItemsOf } from './caseLinks';
+import { PrivateFileField } from './PrivateFileField';
 // Durante la digitazione: minuscole, niente spazi o accenti (i trattini finali restano)
 const slugify = (v: string) => v.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9-]+/g, '-').slice(0, 80);
 
@@ -22,6 +25,44 @@ const moved = <T,>(arr: T[], i: number, d: number) => {
   [a[i], a[j]] = [a[j], a[i]];
   return a;
 };
+
+// ── Sposta cliente tra "Progetti raccontati" e "Collaborazioni su misura" (richiesta di
+// Nicola tramite il Direttore, 12/11). Stessi campi, stesso indirizzo /cliente/{id}: si sposta
+// la scheda intera, in fondo alla sezione di destinazione, dopo una conferma. Va online con Salva.
+/** Pagine servizio i cui "esempi" mostrano questo cliente (leggono solo i Progetti raccontati). */
+const examplesUsing = (content: any, id: string): string[] => {
+  const all: Record<string, any[]> = content.serviceExamples || SERVICE_EXAMPLES;
+  return Object.entries(all).filter(([, list]) => (list || []).some((e: any) => e?.kind === 'client' && e.clientId === id)).map(([slug]) => '/' + slug);
+};
+// ── "Crea caso studio da questo cliente" / "Crea scheda cliente da questo caso" (Direttore 12/11,
+// punto C): niente spostamento tra strutture diverse; si crea una BOZZA nell'altra sezione,
+// collegata all'originale, che resta dov'è. Nessun dato perso, nessun indirizzo che cambia.
+const uniqueId = (base: string, taken: Set<string>) => {
+  const b = slugify(base || 'nuovo').replace(/-+$/, '') || 'nuovo';
+  let id = b; let n = 2;
+  while (taken.has(id)) id = `${b}-${n++}`;
+  return id;
+};
+const cityList = (loc: string) => String(loc || '').replace(/\([^)]*\)/g, '').split(/,|\/|\s+e\s+/i).map((t) => t.trim()).filter(Boolean);
+/** Bozza di caso studio a partire da una scheda cliente: solo i dati che esistono già, nessun testo inventato. */
+const caseFromClient = (c: any, id: string, clientId: string) => ({
+  id, client: c.name || '', title: '', number: '', category: Array.isArray(c.services) ? c.services.join(' · ') : String(c.services || ''),
+  sector: c.sector || '', problem: c.summary || '', result: '', cover: c.image || '', clientId, locations: cityList(c.location),
+  hero: { title: c.name || '', subtitle: '', intro: c.description || '', image: c.image || '' }, blocks: [], published: false,
+});
+/** Bozza di scheda cliente ("Collaborazioni su misura") a partire da un caso studio. */
+const clientFromCase = (cs: any, id: string) => ({
+  id, name: cs.client || '', sector: cs.sector || '', location: (cs.locations || []).join(', '), summary: cs.problem || '',
+  description: cs.hero?.intro || '', services: String(cs.category || '').split('·').map((x: string) => x.trim()).filter(Boolean),
+  results: cs.result ? [cs.result] : [], logo: '', image: cs.hero?.image || cs.cover || '', website: cs.hero?.ctaUrl || '', url: cs.hero?.ctaUrl || '',
+  instagram: '', gallery: [], reels: [], caseStudy: cs.id, published: false,
+});
+
+const MoveBtn = ({ label, onClick }: { label: string; onClick: () => void }) => (
+  <button onClick={onClick} style={{ margin: '4px 0 12px', padding: '7px 12px', background: 'rgba(205,178,255,0.06)', border: '.5px solid #cdb2ff44', borderRadius: 8, color: '#cdb2ff', fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', cursor: 'pointer' }}>
+    {label}
+  </button>
+);
 
 const Select = ({ label, value, onChange, options, hint }: { label: string; value: string; onChange: (v: string) => void; options: [string, string][]; hint?: string }) => (
   <div style={{ marginBottom: 12 }}>
@@ -93,6 +134,8 @@ const REEL_FIELDS: FieldDef[] = [
   { key: 'showViews', label: 'Mostra visualizzazioni', kind: 'check', showIf: (r) => !!(r.embed || '').trim(), getValue: (r) => r.showViews ?? !!r.views },
   { key: 'views', label: 'Visualizzazioni', placeholder: 'Es. 1,2M', hint: 'Scrivi solo il numero: "visualizzazioni" lo aggiunge il sito (Instagram non lo passa nell\'embed)',
     showIf: (r) => !(r.embed || '').trim() || (r.showViews ?? !!r.views) },
+  { key: 'video', label: 'Oppure: video MP4 dalla libreria, verticale e leggero (al posto dell\'embed)', kind: 'video', showIf: (r) => !(r.embed || '').trim(),
+    hint: 'Per un video tuo, non pubblicato su Instagram. Meglio verticale 9:16 e leggero (pochi MB): parte solo quando il visitatore preme play.' },
   { key: 'cover', label: 'Copertina (facoltativa)', kind: 'image', showIf: (r) => !!(r.embed || '').trim(),
     hint: 'Immagine mostrata prima che il visitatore avvii il reel. Si importa da sola da Instagram quando incolli il reel; puoi anche caricarla a mano.' },
 ];
@@ -175,6 +218,32 @@ export const ClientsEditor = ({ content, set }: Props) => {
           onUp={i > 0 ? () => set('clients.items', moved(items, i, -1)) : undefined}
           onDown={i < items.length - 1 ? () => set('clients.items', moved(items, i, 1)) : undefined}
           onDelete={() => { const a = clone(items); a.splice(i, 1); set('clients.items', a); }}>
+          <MoveBtn label='Sposta in "Collaborazioni su misura"' onClick={() => {
+            const id = getClientId(c, i);
+            const others = otherItemsOf(content);
+            if (others.some((x: any, j: number) => getClientId(x, j) === id)) { alert(`In "Collaborazioni su misura" c'è già un cliente con l'indirizzo /cliente/${id}: cambia prima l'indirizzo di uno dei due.`); return; }
+            // La home non deve cambiare (regola di Nicola, Direttore 12/11): un cliente il cui logo è
+            // nella striscia della home per ora non si sposta (la striscia mostra solo i Progetti raccontati)
+            const inHome = !!c.logo && (homeIds ? homeIds.includes(id) : true);
+            if (inHome) { alert(`Il logo di "${c.name}" è nella striscia della home: spostandolo la home cambierebbe. Per ora non si può spostare (la decisione sulla home è in attesa di Nicola). ${homeIds ? 'Puoi togliere la spunta in "Loghi in home" e poi spostarlo.' : ''}`.trim()); return; }
+            const refs = examplesUsing(content, id);
+            const msg = [`Spostare "${c.name}" in "Collaborazioni su misura"?`, '',
+              `- Va in fondo a quella sezione con tutti i suoi dati; la pagina /cliente/${id} resta uguale e resta su Google.`,
+              ...(refs.length ? [`- È negli esempi di ${refs.join(', ')}: lì non comparirà più finché non cambi l'esempio.`] : []),
+              '', 'La modifica va online quando premi Salva.'].join('\n');
+            if (!confirm(msg)) return;
+            const a = clone(items); const [x] = a.splice(i, 1);
+            set('clients.items', a);
+            set('otherClients.items', [...clone(others), { ...x, id, published: true }]);
+            if (homeIds) set('clients.homeIds', homeIds.filter((h) => h !== id));
+          }} />
+          <MoveBtn label="Crea caso studio da questo cliente" onClick={() => {
+            const allCases: any[] = content.cases?.items || [];
+            const caseId = uniqueId(getClientId(c, i), new Set(allCases.map((x: any) => x.id)));
+            if (!confirm(`Creare una bozza di caso studio per "${c.name}"?\n\n- Va in fondo a "Non solo contenuti" come BOZZA (non visibile sul sito finché non spunti "Pubblica").\n- Prende nome, settore, località, servizi, riassunto e immagine dalla scheda; il resto lo completi tu.\n- La scheda cliente resta dov'è e viene collegata al caso.\n\nLa modifica va online quando premi Salva.`)) return;
+            set('cases.items', [...clone(allCases), caseFromClient(c, caseId, getClientId(c, i))]);
+            patch(i, { caseStudy: caseId });
+          }} />
           <ClientFields c={c} cases={cases} patch={(o) => patch(i, o)} />
         </CardBlock>
       ))}
@@ -196,7 +265,7 @@ const TITLE_FIELDS: FieldDef[] = [
   { key: 'titleAccent', label: 'Titolo (seconda riga, in evidenza)' },
 ];
 
-const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: CaseBlock) => void; clientName: string }) => {
+const BlockFields = ({ b, onChange, clientName, caseId }: { b: CaseBlock; onChange: (b: CaseBlock) => void; clientName: string; caseId: string }) => {
   const u = (k: string, v: any) => onChange({ ...(b as any), [k]: v });
   const titles = TITLE_FIELDS.map((f) => <FieldFor key={f.key} f={f} value={(b as any)[f.key]} onChange={(v) => u(f.key, v)} />);
   switch (b.type) {
@@ -218,6 +287,7 @@ const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: 
       <Field label="Testo" value={b.body} onChange={(v: string) => u('body', v)} multiline rows={4} />
       <Field label="Indirizzo del sito" value={b.url} onChange={(v: string) => u('url', v)} placeholder="https://..." />
       <ImageField label="Screenshot (facoltativo, altrimenti generato in automatico)" value={b.image} onChange={(v: string) => u('image', v)} />
+      <Field label="Testo del bottone (facoltativo)" value={b.cta} onChange={(v: string) => u('cta', v)} placeholder="Visita il sito" hint="Per una web app, per esempio: Apri l'app. Il link si apre in una nuova scheda." />
       <ObjList items={b.pages || []} onChange={(a) => u('pages', a)} addLabel="Aggiungi pagina del sito" newItem={() => ({ url: 'https://', label: '', text: '' })} titleOf={(x, i) => x.label || `Pagina ${i + 1}`}
         fields={[{ key: 'label', label: 'Nome pagina' }, { key: 'url', label: 'Indirizzo pagina' }, { key: 'text', label: 'Descrizione', kind: 'textarea' }]} /></>;
     case 'stats': return <>{titles}
@@ -229,6 +299,14 @@ const BlockFields = ({ b, onChange, clientName }: { b: CaseBlock; onChange: (b: 
       <ReelsList List={ObjList} items={b.items} onChange={(a) => u('items', a)} fields={REEL_FIELDS} newItem={newReel} addLabel="Aggiungi reel" titleOf={(r, j) => r.title || `Reel ${j + 1}`} /></>;
     case 'gallery': return <>{titles}
       <Images label={`Foto — ${clientName}`} value={b.images} onChange={(a) => u('images', a)} /></>;
+    case 'presentation': return <>
+      <Check label="Mostra sul sito (solo dopo il consenso del cliente: il caso Paresteta è già pubblicato)" value={b.published === true} onChange={(v) => u('published', v)} />
+      {titles}
+      <Field label="Testo" value={b.body} onChange={(v: string) => u('body', v)} multiline rows={4} hint="Presentala come piano o proposta, non come risultato ottenuto." />
+      <ObjList items={b.slides || []} onChange={(a) => u('slides', a)} addLabel="Aggiungi slide" newItem={() => ({ image: '', alt: '', caption: '' })} titleOf={(x, i) => `Slide ${i + 1}${x.caption ? ` — ${x.caption}` : ''}`}
+        fields={[{ key: 'image', label: 'Immagine della slide (16:9)', kind: 'image' }, { key: 'alt', label: 'Testo alternativo', hint: '8-15 parole: cosa mostra la slide (per chi non vede le immagini e per Google)' }, { key: 'caption', label: 'Didascalia (facoltativa)', placeholder: 'Es. Visual di concept del piano' }]} />
+      <Field label="Testo del pulsante" value={b.cta} onChange={(v: string) => u('cta', v)} placeholder="Scarica la presentazione" />
+      <PrivateFileField value={b.file} onChange={(v) => u('file', v)} caseId={caseId} /></>;
     case 'quote': return <>
       <Field label="Citazione / recensione" value={b.text} onChange={(v: string) => u('text', v)} multiline rows={3} />
       <Field label="Autore" value={b.author} onChange={(v: string) => u('author', v)} placeholder="Es. Dott. Francesco Ricciardi" /></>;
@@ -249,11 +327,25 @@ export const CasesEditor = ({ content, set }: Props) => {
       <Note>Ogni caso studio ha una <b>card</b> (nell'elenco) e una <b>pagina</b> fatta di blocchi: aggiungi solo quelli che ti servono (testo, fasi, sito web, numeri, reel, foto, citazione) e ordinali con le frecce. La pagina mostra solo i blocchi compilati.</Note>
       {items.map((cs, i) => (
         <CardBlock key={cs.id || i} title={cs.client || 'Nuovo caso studio'} collapsed accent
-          confirmDelete={`Eliminare il caso studio "${cs.client}"?`}
+          confirmDelete={`Eliminare il caso studio "${cs.client}"?${(() => { const w = caseLinksWarning(content, cs.id, 'senza il caso'); return w ? `\n\n${w}` : ''; })()}`}
           onUp={i > 0 ? () => set('cases.items', moved(items, i, -1)) : undefined}
           onDown={i < items.length - 1 ? () => set('cases.items', moved(items, i, 1)) : undefined}
           onDelete={() => { const a = clone(items); a.splice(i, 1); set('cases.items', a); }}>
 
+          <SectionTitle>Pubblicazione</SectionTitle>
+          <Check label={`Pubblica il caso studio (pagina /casi-studio/${cs.id || '…'})`} value={cs.published !== false} onChange={(v) => {
+            const warn = v ? null : caseLinksWarning(content, cs.id, 'con il caso in bozza');
+            if (warn && !confirm(`Mettere in bozza il caso "${cs.client}"?\n\n${warn}\nLa modifica va online quando premi Salva.`)) return;
+            updCase(i, { published: v });
+          }} />
+          <Note>{cs.published === false ? 'Bozza: il caso non compare sul sito (né in elenco, né nelle pagine città, né su Google) finché non spunti "Pubblica".' : 'Pubblicato: compare in "Non solo contenuti" e ha la sua pagina.'}</Note>
+          <MoveBtn label='Crea scheda cliente da questo caso' onClick={() => {
+            const others = otherItemsOf(content);
+            const taken = new Set<string>([...clients.map((x: any, j: number) => getClientId(x, j)), ...others.map((x: any, j: number) => getClientId(x, j))]);
+            const newId = uniqueId(cs.client || cs.id, taken);
+            if (!confirm(`Creare una scheda cliente per "${cs.client}"?\n\n- Va in fondo a "Collaborazioni su misura" come BOZZA (pagina /cliente/${newId} fuori da Google finché non spunti "Pubblica").\n- Prende nome, settore, località, categorie, problema e immagine dal caso; logo e altri campi li completi tu.\n- Il caso studio resta dov'è e la scheda viene collegata al caso.\n\nLa modifica va online quando premi Salva.`)) return;
+            set('otherClients.items', [...clone(others), clientFromCase(cs, newId)]);
+          }} />
           <SectionTitle>Card nell'elenco</SectionTitle>
           <Field label="Cliente / nome progetto" value={cs.client} onChange={(v: string) => updCase(i, { client: v })} />
           <Field label="Indirizzo pagina (ID)" value={cs.id} onChange={(v: string) => updCase(i, { id: slugify(v) })} hint={`Pagina: /casi-studio/${cs.id || '…'}`} />
@@ -283,7 +375,7 @@ export const CasesEditor = ({ content, set }: Props) => {
               onUp={j > 0 ? () => setBlocks(i, moved(cs.blocks, j, -1)) : undefined}
               onDown={j < cs.blocks.length - 1 ? () => setBlocks(i, moved(cs.blocks, j, 1)) : undefined}
               onDelete={() => { const a = clone(cs.blocks); a.splice(j, 1); setBlocks(i, a); }}>
-              <BlockFields b={b} clientName={cs.client} onChange={(nb) => { const a = clone(cs.blocks); a[j] = nb; setBlocks(i, a); }} />
+              <BlockFields b={b} clientName={cs.client} caseId={cs.id} onChange={(nb) => { const a = clone(cs.blocks); a[j] = nb; setBlocks(i, a); }} />
             </CardBlock>
           ))}
           <div style={{ display: 'flex', gap: 6, marginTop: 6 }}>
@@ -336,10 +428,10 @@ export const ServiceExamplesEditor = ({ content, set }: Props) => {
           <Select label="Tipo" value={e.kind} onChange={(v) => upd(i, v === 'site' ? { kind: v, title: e.title || '', url: e.url || 'https://', desc: e.desc || '' } : v === 'client' ? { kind: v, clientId: e.clientId || clients[0]?.id } : { kind: v, caseId: e.caseId || cases[0]?.id, title: e.title || '', desc: e.desc || '' })}
             options={[['site', 'Sito web / web app'], ['client', 'Scheda cliente'], ['case', 'Caso studio']]} />
           {e.kind === 'site' && <>
-            <Field label="Titolo" value={e.title} onChange={(v: string) => upd(i, { title: v })} placeholder="Es. Pala Padel — prenotazione campi" />
+            <Field label="Titolo" value={e.title} onChange={(v: string) => upd(i, { title: v })} placeholder="Es. Pala Padel — web app dei campionati" />
             <Field label="Indirizzo" value={e.url} onChange={(v: string) => upd(i, { url: v })} placeholder="https://..." />
             <Field label="Descrizione" value={e.desc} onChange={(v: string) => upd(i, { desc: v })} multiline rows={3} />
-            <Field label="Etichette (separate da virgola)" value={(e.tags || []).join(', ')} onChange={(v: string) => upd(i, { tags: v.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="Web app, Prenotazioni" />
+            <Field label="Etichette (separate da virgola)" value={(e.tags || []).join(', ')} onChange={(v: string) => upd(i, { tags: v.split(',').map((t) => t.trim()).filter(Boolean) })} placeholder="Web app, Campionati" />
             <ImageField label="Screenshot (facoltativo, altrimenti generato in automatico)" value={e.image} onChange={(v: string) => upd(i, { image: v })} />
             <Select label="Caso studio collegato" value={e.caseStudy || ''} onChange={(v) => upd(i, { caseStudy: v || undefined })}
               options={[['', '— Nessuno —'], ...cases.map((c: any) => [c.id, c.client] as [string, string])]} />
@@ -386,6 +478,29 @@ export const OtherClientsEditor = ({ content, set }: Props) => {
             onUp={i > 0 ? () => set('otherClients.items', moved(items, i, -1)) : undefined}
             onDown={i < items.length - 1 ? () => set('otherClients.items', moved(items, i, 1)) : undefined}
             onDelete={() => { const a = clone(items); a.splice(i, 1); set('otherClients.items', a); }}>
+            <MoveBtn label='Sposta in "Progetti raccontati"' onClick={() => {
+              const main: any[] = content.clients?.items || [];
+              if (clash) { alert(`In "Progetti raccontati" c'è già un cliente con l'indirizzo /cliente/${id}: cambia prima l'indirizzo di uno dei due.`); return; }
+              const homeIds: string[] | undefined = Array.isArray(content.clients?.homeIds) ? content.clients.homeIds : undefined;
+              const msg = [`Spostare "${c.name}" in "Progetti raccontati"?`, '',
+                `- Va in fondo a quella sezione con tutti i suoi dati; la pagina /cliente/${id} resta uguale.`,
+                ...(!live ? ['- Oggi è una bozza fuori da Google: nei Progetti raccontati la scheda è sempre pubblica e va su Google.' + (ready ? '' : ' Manca anche il riassunto: compilalo prima di salvare.')] : []),
+                '- La striscia dei loghi in home resta com\'è oggi.',
+                '', 'La modifica va online quando premi Salva.'].join('\n');
+              if (!confirm(msg)) return;
+              const a = clone(items); const [x] = a.splice(i, 1);
+              set('otherClients.items', a);
+              // Home invariata: se oggi la home mostra tutti i loghi (nessuna scelta salvata), si salva
+              // quella scelta così com'è, prima di aggiungere il nuovo cliente, che quindi non entra in home
+              if (!homeIds) set('clients.homeIds', main.filter((m: any) => m.logo).map((m: any, j: number) => getClientId(m, j)));
+              set('clients.items', [...clone(main), { ...x, id }]);
+            }} />
+            <MoveBtn label="Crea caso studio da questo cliente" onClick={() => {
+              const caseId = uniqueId(id, new Set(cases.map((x: any) => x.id)));
+              if (!confirm(`Creare una bozza di caso studio per "${c.name}"?\n\n- Va in fondo a "Non solo contenuti" come BOZZA (non visibile sul sito finché non spunti "Pubblica").\n- Prende nome, settore, località, servizi, riassunto e immagine dalla scheda; il resto lo completi tu.\n- La scheda cliente resta dov'è e viene collegata al caso.\n\nLa modifica va online quando premi Salva.`)) return;
+              set('cases.items', [...clone(cases), caseFromClient(c, caseId, id)]);
+              patch(i, { caseStudy: caseId });
+            }} />
             <SectionTitle>Pubblicazione</SectionTitle>
             <Check label={`Pubblica la scheda su Google (pagina /cliente/${id})`} value={c.published === true} onChange={(v) => patch(i, { published: v })} />
             <Note>{clash ? `L'indirizzo /cliente/${id} è già usato da un cliente di "Progetti raccontati": cambia "Indirizzo pagina (ID)" qui sotto.`

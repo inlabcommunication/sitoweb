@@ -5,6 +5,20 @@
 import React from 'react';
 import { MAP_CITIES, MAP_HOME, type MapCity } from '../data/mapCities';
 import { BUSINESS, aCity } from '../seo/routes';
+import { cityInfo } from '../data/cities';
+
+// Una o due frasi sopra ogni provincia, senza nomi di clienti; il link è sul nome
+// del capoluogo e porta alla sua pagina agenzia (testi della SEO, analisi 08/11 R7)
+const PROVINCE: { titolo: string; match: RegExp; testo: string; link: string; capoluogo: string }[] = [
+  { titolo: 'Provincia di Taranto', match: /Taranto/, capoluogo: 'Taranto', link: 'Taranto', testo: "In provincia di Taranto lavoriamo da casa: la sede è a Castellaneta e siamo a meno di un'ora da ogni paese, per incontri, foto e video sul posto." },
+  { titolo: 'Provincia di Bari', match: /di Bari/, capoluogo: 'Bari', link: 'Bari città', testo: 'In provincia di Bari seguiamo attività dalla Murgia alla costa, da Altamura a Monopoli. Per Bari città c\'è una pagina dedicata.' },
+  { titolo: 'Barletta-Andria-Trani', match: /Barletta/, capoluogo: 'Barletta', link: 'Barletta', testo: 'Nel nord barese lavoriamo con attività di Barletta, Andria e Trani, tra prodotti tipici, ristorazione e imprese.' },
+  { titolo: 'Provincia di Brindisi', match: /Brindisi/, capoluogo: 'Brindisi', link: 'Brindisi', testo: "In provincia di Brindisi seguiamo masserie, strutture turistiche e attività dalla Valle d'Itria alla costa." },
+  { titolo: 'Provincia di Lecce', match: /Lecce/, capoluogo: 'Lecce', link: 'Lecce', testo: 'Nel Salento lavoriamo con attività di Lecce e dei paesi vicini, con contenuti pensati per chi vive qui e per chi arriva in vacanza.' },
+  { titolo: 'Provincia di Matera', match: /Matera/, capoluogo: 'Matera', link: 'Matera', testo: 'In provincia di Matera siamo a pochi chilometri: seguiamo attività di Matera, del Metapontino e dei paesi vicini al confine con la Puglia.' },
+  { titolo: 'Provincia di Potenza', match: /Potenza/, capoluogo: 'Potenza', link: 'Potenza', testo: 'In provincia di Potenza seguiamo imprese, studi e attività del capoluogo lucano.' },
+  { titolo: 'Fuori dal Sud', match: /Ferrara/, capoluogo: 'Ferrara', link: 'Ferrara', testo: 'Lavoriamo anche fuori dal Sud: a Ferrara seguiamo attività con contenuti e campagne a distanza e riprese sul posto.' },
+];
 
 type Go = (to: string) => void;
 export type Activity = { city: string; sector: string; services: string[]; href?: string };
@@ -80,7 +94,10 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
   const isEmpty = (c: MapCity) => !groups.has(c.name) && c.name !== MAP_HOME;
   // Prima i puntini vuoti, così quelli pieni (e i loro nomi) restano sopra
   onMap.sort((x, y) => Number(isEmpty(y)) - Number(isEmpty(x)));
-  const others = [...agencyCities, ...MAP_CITIES.map((c) => c.name)].filter((c, i, a) => a.indexOf(c) === i && !groups.has(c));
+  // Città con pagina agenzia raggruppate per provincia (R7); "Lavoriamo anche a" tiene solo le altre
+  const provinces = PROVINCE.map((pr) => ({ ...pr, cities: agencyCities.filter((c) => pr.match.test(cityInfo(c)?.provincia || '')) })).filter((pr) => pr.cities.length);
+  const inProvince = new Set(provinces.flatMap((pr) => pr.cities));
+  const others = [...agencyCities, ...MAP_CITIES.map((c) => c.name)].filter((c, i, a) => a.indexOf(c) === i && !groups.has(c) && !inProvince.has(c));
 
   // Ingrandimento: solo l'area delle città pugliesi e lucane con attività
   // I puntini vuoti troppo lontani dalla sede (oltre 90 km, es. Salento) vanno
@@ -153,6 +170,27 @@ export const PageDoveLavoriamo: React.FC<Props> = ({ activities, agencyCities, a
               {hasPage(city) && <a href={agencyPath(city)} onClick={linkTo(go, agencyPath(city))} className="foot-link" style={{ display: 'inline-flex', alignItems: 'center', minHeight: 44, fontSize: 14, color: 'var(--a)' }}>Agenzia a {city} →</a>}
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Le città con la loro pagina, divise per provincia, con una frase per provincia (R7) */}
+      <section style={{ padding: '4rem 2rem', borderBottom: '.5px solid var(--b)' }}>
+        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fill,minmax(min(100%,420px),1fr))', gap: '3rem' }}>
+          {provinces.map((pr) => {
+            const i = pr.testo.indexOf(pr.link);
+            const capo = hasPage(pr.capoluogo) ? agencyPath(pr.capoluogo) : '';
+            return (
+              <div key={pr.titolo}>
+                <h2 style={{ fontFamily: 'var(--fd)', fontSize: 'clamp(1.8rem,3vw,2.6rem)', lineHeight: 1, textTransform: 'uppercase', fontWeight: 400, marginBottom: '.8rem' }}>{pr.titolo}</h2>
+                <p style={{ fontSize: 15, color: 'var(--m)', lineHeight: 1.75, marginBottom: '1.2rem' }}>
+                  {capo && i >= 0 ? <>{pr.testo.slice(0, i)}<a href={capo} onClick={linkTo(go, capo)} style={{ color: 'var(--t)', textDecoration: 'underline', textUnderlineOffset: 3 }}>{pr.link}</a>{pr.testo.slice(i + pr.link.length)}</> : pr.testo}
+                </p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {pr.cities.map((c) => <a key={c} href={agencyPath(c)} onClick={linkTo(go, agencyPath(c))} className="tag tag-g city-link" style={{ fontSize: 12, padding: '8px 16px' }}>{c}</a>)}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
 

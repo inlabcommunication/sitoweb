@@ -142,3 +142,63 @@ In `docs/blog-reports/AAAA-MM-GG.md`:
 4. Decisione: pubblicato / non pubblicato.
 5. Se pubblicato: URL dell'articolo, keyword target, fonti usate.
 6. Prossime opportunità editoriali.
+
+## File generato dalla build (avviso di Sito Inlab, 11/11/2026)
+
+Dopo la PR #119, che aggiunge il blocco "Dal blog" nelle pagine città, `npm run build` rigenera `src/data/blogCityLinks.generated.ts`.
+
+- Questo file è fuori dall'area Blog: **non va mai incluso nei commit**. Lo rigenera la build su Vercel.
+- Se compare modificato, ripristinalo con `git checkout -- src/data/blogCityLinks.generated.ts`.
+- Per i controlli del blog basta `tsc` su `src/data/blogSeed.ts`.
+
+## Contenuti non ripetitivi (richiesta di Nicola, 12/11/2026)
+
+Prima di ogni PR, misura quanto il nuovo articolo somiglia agli altri:
+- confronta le sequenze di 6 parole di ogni coppia di articoli e bozze;
+- se una coppia supera il **5%** di testo in comune, riscrivi le frasi che si ripetono.
+
+Regole di scrittura:
+- **Frasi d'apertura e di chiusura:** ogni articolo ha le sue. Non riusare "In questo articolo non trovi cifre…", "Confronta sempre le voci incluse…" e simili.
+- **Invito finale:** la frase "raccontaci la tua attività: in 24 ore ti diciamo da dove partiremmo" è già in 12 articoli. Nei nuovi va scritta in modo diverso e legata al tema. Restano fissi solo il link a /contatti e "entro 24 ore".
+- **FAQ:** le domande non si ripetono tra un articolo e l'altro.
+- **Argomenti:** un articolo nuovo deve rispondere a una ricerca diversa da quelle già coperte. Se l'argomento è già trattato, si aggiorna l'articolo esistente invece di scriverne un altro.
+- **Esempi e clienti:** ogni articolo porta un esempio concreto suo. Si varia il cliente citato quando è possibile.
+
+## Casi studio in bozza (avviso dell'analista, tramite Sito Inlab, 13/11/2026)
+
+Dal 13/11 un caso studio si può mettere in bozza dalla dashboard. In quel caso, i link scritti a mano negli articoli verso `/casi-studio/…` danno errore 404.
+
+- Se il Direttore avvisa che un caso studio passa in bozza, togli quei link o sostituiscili, per esempio con la scheda `/cliente/…` dello stesso cliente, se esiste.
+- Prima di pubblicare, cerca gli articoli che linkano quel caso con `grep -n "/casi-studio/" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`.
+- Oggi sono linkati `paresteta` e `ricciardi`.
+
+## Pagine città escluse da Google (avviso di Sito Inlab, 17/11/2026)
+
+Dall'08/11 le pagine `/siti-web-{città}` sono in "noindex" (R2 della SEO): funzionano, ma Google non le mostra.
+
+- Negli articoli non vanno linkate. Al loro posto usa `/siti-web` oppure le pagine `/agenzia-comunicazione-{città}`.
+- Prima di linkare una pagina città, controlla che non sia in noindex.
+
+## Unione delle PR del blog (decisione del Direttore, 17/11/2026, con la precisazione dell'analista)
+
+Per le PR solo-blog, il Direttore ha dato un via fisso. Questo via sostituisce **solo il suo via** per ogni PR. Sono PR solo-blog quelle che toccano solo articoli, immagini, bozze, report e spec, senza cifre di prezzo.
+
+Per ogni PR restano comunque obbligatori:
+- il controllo tecnico di Sito Inlab (build ok, link esistenti);
+- l'OK dell'analista sull'**ultimo** commit;
+- l'anteprima Vercel verde.
+
+Ne segue:
+- **Chi unisce:** sempre Sito Inlab.
+- **Commit aggiunti dopo un controllo:** fanno ripartire i controlli, quindi vanno evitati.
+- **PR che toccano altro:** serve di nuovo il via del Direttore.
+
+## Tempi dei risultati (regola di Nicola del 23/11/2026)
+
+Per il testo completo vedi `docs/seo/LINEE-GUIDA-BLOG.md` §13 e il brief SEO `2026-11-23-tempi-risultati.md`.
+
+- **Frasi vietate:** "alcuni mesi", "almeno tre mesi", "nei primi mesi", "4-6 mesi" o simili, quando si parla del tempo che serve per vedere i risultati.
+- **Cosa dire invece:** i primi risultati si vedono **già dopo il primo mese**, poi crescono con la continuità. I social sono un investimento, non una spesa.
+- **Cosa non promettere:** numeri garantiti, prezzi, tempi per le posizioni su Google.
+- **Regola anti-somiglianza:** la frase "se pensi di fermarti dopo un mese, meglio non iniziare" resta solo nella FAQ di `/gestione-social`. Negli articoli lo stesso concetto va scritto con parole nuove.
+- **Prima di ogni PR:** `grep -n -i "alcuni mesi\|tre mesi\|primi mesi\|qualche mese" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`. Restano ammessi i "mesi" che indicano altro: scadenze di legge, contratti, piano editoriale, i "4 mesi di agenda piena" di Inox Racing.
