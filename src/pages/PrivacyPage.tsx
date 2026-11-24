@@ -37,7 +37,7 @@ export const PagePrivacy: React.FC = () => (
       </ul>
 
       <H>Cookie</H>
-      <P><b>Tecnici</b> (sempre attivi): necessari al funzionamento del sito, per esempio per ricordare la tua scelta sui cookie o la sessione della chat. Non richiedono consenso.</P>
+      <P><b>Tecnici</b> (sempre attivi): necessari al funzionamento del sito, per esempio per ricordare la tua scelta sui cookie, la sessione della chat o, se hai scaricato un documento, che hai già compilato il modulo: in questo caso il browser conserva per 90 giorni un codice tecnico senza dati personali, così puoi scaricarlo di nuovo senza ricompilarlo. Puoi cancellarlo svuotando i dati del sito nel browser. Non richiedono consenso.</P>
       <P><b>Statistici di terze parti</b>{GA_ID ? '' : ' (al momento non attivi)'}: cookie di Google Analytics (<code>_ga</code>, <code>_ga_*</code>, durata fino a 2 anni), installati solo se premi «Accetta» nel banner. Se rifiuti o chiudi il banner non vengono installati. Google Ireland Ltd. tratta i dati come responsabile; eventuali trasferimenti verso gli USA avvengono nell'ambito dell'EU-US Data Privacy Framework.</P>
       {GA_ID && (
         <P><button onClick={() => reopenConsent()} className="btn btn-g" style={{ fontSize: 12, padding: '10px 18px' }}>Modifica le preferenze cookie</button></P>
@@ -52,7 +52,7 @@ export const PagePrivacy: React.FC = () => (
       <H>I tuoi diritti</H>
       <P>Puoi chiedere in qualsiasi momento di accedere ai tuoi dati, correggerli, cancellarli, limitarne l'uso o opporti al trattamento, e revocare il consenso ai cookie statistici, scrivendo a <a href="mailto:inlab.communication@gmail.com" style={{ color: 'var(--a)' }}>inlab.communication@gmail.com</a>. Hai anche diritto di presentare reclamo al Garante per la protezione dei dati personali (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--a)' }}>garanteprivacy.it</a>).</P>
 
-      <P><span style={{ fontSize: 12, color: 'var(--m)' }}>Ultimo aggiornamento: 23 novembre 2026.</span></P>
+      <P><span style={{ fontSize: 12, color: 'var(--m)' }}>Ultimo aggiornamento: 24 novembre 2026.</span></P>
     </div>
   </section>
 );

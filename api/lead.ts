@@ -4,7 +4,7 @@
  * più scrivere direttamente nel database.
  */
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import { clientIp, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
+import { clientIp, getAdminDb, hashKey, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
 import { FieldValue } from "firebase-admin/firestore";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
@@ -37,6 +37,21 @@ function signedDownload(publicId: string): string {
   const signature = createHash("sha1").update(Object.keys(p).sort().map((k) => `${k}=${p[k]}`).join("&") + secret).digest("hex");
   const qs = new URLSearchParams({ ...p, api_key: key, signature }).toString();
   return `https://api.cloudinary.com/v1_1/${cloud}/raw/download?${qs}`;
+}
+
+/** «Pass» di download (Nicola 23/11): chi ha già lasciato i dati riscarica il documento senza rifare il
+ *  modulo. Firmato dal server, legato al caso, scade dopo 90 giorni; nessun dato personale dentro.
+ *  Formato: v1.{caso}.{scadenza in secondi}.{firma} */
+const PASS_DAYS = 90;
+function issuePass(caseId: string): string {
+  const exp = Math.floor(Date.now() / 1000) + PASS_DAYS * 86_400;
+  return `v1.${caseId}.${exp}.${sign(`dlpass:${caseId}:${exp}`)}`;
+}
+function passValid(pass: string, caseId: string): boolean {
+  const m = /^v1\.([a-z0-9-]{1,80})\.(\d{10})\.([A-Za-z0-9_-]{32})$/i.exec(pass);
+  if (!m || m[1] !== caseId) return false;
+  const exp = Number(m[2]);
+  return exp > Date.now() / 1000 && safeEqual(m[3], sign(`dlpass:${caseId}:${exp}`));
 }
 
 /** Blocco «Presentazione» con file del caso (dati della dashboard: app/site_content); le bozze solo per la prova dell'admin */
@@ -107,6 +122,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const b = req.body || {};
 
+  // Nuovo download con il pass: nessun dato personale, nessun lead, solo un nuovo link di 10 minuti
+  if (b.download && typeof b.pass === "string") {
+    const caseId = str(b.download?.caseId, 80).replace(/[^a-z0-9-]/gi, "");
+    const pass = str(b.pass, 200);
+    if (!caseId || !passValid(pass, caseId)) return res.status(403).json({ error: "pass" });
+    try {
+      const db = getAdminDb();
+      if (!(await rateLimit(db, "dlpass_ip", clientIp(req), 20, 3600)) || !(await rateLimit(db, "dlpass", hashKey(pass), 10, 3600))) {
+        return res.status(429).json({ error: "Troppe richieste. Riprova più tardi." });
+      }
+      const doc = await findPresentation(db, caseId);
+      if (!doc) return res.status(404).json({ error: "Documento non disponibile" });
+      return res.status(200).json({ ok: true, url: signedDownload(doc.publicId) });
+    } catch (e) {
+      console.error("Download pass error:", e);
+      return res.status(500).json({ error: "Errore interno" });
+    }
+  }
+
   // Anti-bot: campo nascosto che le persone non compilano, e tempo minimo di
   // compilazione misurato dal token firmato (min 3 secondi, max 24 ore)
   const [ts = "", mac = ""] = str(b.formToken, 80).split(".");
@@ -174,7 +208,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         created_at: new Date().toISOString(),
       });
       await notifyLeadCapped(db, { source: "contact_form", name: lead.name, email: lead.email, company: lead.company, service: `Download: ${tag}`, page: lead.page, fonte, landing: attribution?.landing });
-      return res.status(200).json({ ok: true, url: signedDownload(doc.publicId) });
+      return res.status(200).json({ ok: true, url: signedDownload(doc.publicId), pass: issuePass(downloadCase) });
     }
     await db.collection("leads").add({
       name: lead.name,
