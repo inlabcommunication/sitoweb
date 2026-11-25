@@ -51,9 +51,14 @@ Gli articoli di novità hanno sempre un taglio locale, cioè la provincia di Tar
 7. **Martedì 15/12:** NOVITÀ dal giro del 15/12. Se non ci sono notizie A o B, esce "Quanto costa un video promozionale per un'attività locale" (locale, costo, senza cifre).
 8. **Venerdì 18/12: GEO 2, "Quante visite ti portano ChatGPT e Gemini? Il canale AI Assistant di GA4 spiegato a un'attività locale"**. Fa parte della serie sulle risposte AI.
 9. **Martedì 22/12:** "Instagram o TikTok per un'attività locale in Puglia: quale scegliere" (locale, social). Include la novità TikTok Smart+ per le piccole imprese ([TikTok Business](https://ads.tiktok.com/resources/)).
-10. **Martedì 29/12:** "Social media per parrucchieri ed estetiste in provincia di Taranto" (locale, social).
+10. **Martedì 29/12: "Comunicare un'attività a Polignano a Mare e Monopoli: turisti d'estate, clienti del posto tutto l'anno"** (locale). Richiesta dai dati SEO del 24/11: la pagina `/agenzia-comunicazione-polignano-a-mare` è in posizione 9,9-12,8 per "agenzia di comunicazione/marketing Polignano a Mare".
+    - Linka `/agenzia-comunicazione-polignano-a-mare` e `/agenzia-comunicazione-monopoli`.
+    - Temi: scheda Google per chi arriva da fuori, social in due lingue, stagione e fuori stagione.
+    - Prima di scrivere: niente clienti inventati. Se non abbiamo clienti in zona, si usano clienti di settori simili dichiarandolo, per esempio Masseria Sacramento per il turismo.
 
 **Passano a gennaio:**
+- social media per parrucchieri ed estetiste (era il 29/12);
+- aggiornamento di `instagram-su-google-seo-profilo`: secondo i dati SEO del 24/11 ha 2 clic su 16 impressioni ed è in posizione 4,4, quindi è un tema che la gente clicca. Si aggiorna con le novità del 2026 e con il riquadro contatti, e si misura dopo 4 settimane;
 - social per lidi e strutture balneari (va bene anche a gennaio: la stagione si prepara a febbraio);
 - "Agenzia o freelance", se il 1/12 esce la novità sulle storie;
 - video per agenzie immobiliari;
@@ -86,6 +91,22 @@ I temi vanno proposti prima alla SEO, per evitare che i nostri articoli si facci
    - Fonte: [guida della community di Search Central](https://support.google.com/webmasters/community-guide/463964235/understanding-and-utilizing-generative-ai-performance-reports-in-google-search-console?hl=en-KY). La data di lancio va verificata su una pagina ufficiale di Google.
 4. **GEO 4, gennaio: "Risposte AI e attività locali: cosa cambia per ristoranti, studi, strutture ricettive e officine"** (articolo nuovo).
    - Un esempio per ogni settore, con clienti reali: Casa28, Ricciardi, Masseria Sacramento, DIRAM.
+
+## Aggiornamenti fatti il 25/11 (richiesta del Direttore, sui dati SEO del 24/11)
+
+- **`reel-o-post-cosa-pubblicare-instagram`:**
+  - risposta netta nelle prime 2 righe;
+  - confronto punto per punto (con l'immagine già presente: niente tabelle Markdown, per regola di Nicola);
+  - FAQ con le varianti "post o reel differenza" e "reel o post";
+  - seoDescription più diretta.
+  - Obiettivo: almeno 1 clic a settimana e posizione sotto 7. Ricontrollo il 23/12.
+- **`idee-reel-ristoranti`:**
+  - title e seoTitle che partono da "Reel per ristoranti";
+  - esempio della Pizzeria Hermitage;
+  - riquadro contatti a metà;
+  - link a gestione social Castellaneta, Mottola e Laterza.
+  - Obiettivo: "reel per ristoranti" sotto la posizione 10. Ricontrollo il 23/12.
+- **`sponsorizzate-instagram-attivita-locali`:** link a `/meta-ads-taranto` nella sezione sulla zona, con il testo "campagne Facebook Ads e Instagram a Taranto".
 
 ## Aggiornamento del mese
 

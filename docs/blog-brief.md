@@ -247,3 +247,9 @@ Il Direttore controlla a campione che i link funzionino.
 2. **Diario:** si tiene in `docs/blog-reports/diario-lezioni.md` e si rilegge ogni martedì, all'inizio della routine.
 3. **Dati della SEO:** ogni martedì si legge la sezione «Per il Blog: cosa funziona» dell'ultimo report del lunedì della SEO, e si scrive in base a quella.
 4. **Misure degli articoli:** in `docs/blog-reports/misure-articoli.md`. Ogni articolo si misura 2-4 settimane dopo l'uscita e si annota l'esito.
+
+### Novità per la SEO: formato fisso (Direttore, 25/11/2026)
+
+Si mette in coda a ogni report e in fondo a ogni monitoraggio, con **una riga per novità**:
+
+`data | fonte ufficiale (link) | cosa cambia | per chi (sito / blog / nessuno) | urgenza (subito / mese / info)`

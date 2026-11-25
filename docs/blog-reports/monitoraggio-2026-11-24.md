@@ -116,3 +116,12 @@ Ricerche fatte in tutto: 8, tutte con WebSearch e con `allowed_domains` limitati
 ### Ricerche per giro, da ora in poi
 - **Martedì:** almeno 1 ricerca per ciascuno dei 5 gruppi, più le ricerche di conferma ufficiale per ogni notizia B. In tutto tra 6 e 9 ricerche.
 - **Venerdì:** 2-3 ricerche sulle notizie A, più i ricontrolli dei punti aperti.
+
+## Novità per la SEO (formato fisso)
+
+- 10/11/2026 | [Search Status Dashboard](https://status.search.google.com/) | core update di novembre: tutte le lingue, rilascio fino a 2 settimane | blog (articolo del 27/11) e sito (controllare le posizioni a rilascio finito) | subito
+- 11/2026 | [Business Profile Help, answer 6218037](https://support.google.com/business/answer/6218037) | link Prenota/Ordina aggiunti da partner esterni sulla scheda Google | blog (27/11) e sito (controllare la scheda InLab) | subito
+- 12/11/2026 | [Search Central, aggiornamenti della documentazione](https://developers.google.com/search/updates) | pagina nuova su come riconoscere il traffico da Google Search tramite il referer | sito (analytics) | info
+- circa 20/11/2026 | [Social Media Today](https://www.socialmediatoday.com/news/instagram-adds-stories-editing/875261/), fonte non ufficiale | storie di Instagram modificabili per 15 minuti, con più immagini | blog (1/12, solo con conferma ufficiale) | mese
+- 11/2026 | [TikTok Business Resource Center](https://ads.tiktok.com/resources/) | Smart+ per le piccole imprese: automazione completa, parziale o manuale | blog (22/12) | mese
+- 05/2026 | [GA4, gruppi di canali predefiniti](https://support.google.com/analytics/answer/9756891?hl=en) | canale "AI Assistant" per le visite da ChatGPT, Gemini e Claude | sito (GA4) e blog (GEO 2, 18/12) | mese
