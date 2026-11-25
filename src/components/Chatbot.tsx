@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import { gaEvent } from '../lib/ga';
 import { getAttribution } from '../lib/attribution';
+import { newSessionId } from '../lib/sessionId';
 
 // ════════════════════════════════════════════════════════════════
 // CHATBOT v3 — Backend serverless /api/chat
@@ -26,12 +27,12 @@ const getSessionId = (): string => {
   try {
     let sid = sessionStorage.getItem(SESSION_KEY);
     if (!sid) {
-      sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+      sid = newSessionId();
       sessionStorage.setItem(SESSION_KEY, sid);
     }
     return sid;
   } catch {
-    return memSid ||= `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+    return memSid ||= newSessionId();
   }
 };
 
