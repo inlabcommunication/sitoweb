@@ -80,6 +80,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Nessun dato personale: solo ID del progetto, conteggio, data e origine dell'ultimo.
     if (req.headers.authorization) {
       if (!(await requireAdmin(req))) return res.status(401).json({ error: "Non autorizzato" });
+      // Stato del tetto giornaliero dei lead (Direttore 25/11): la dashboard mostra «tetto raggiunto oggi»,
+      // così uno spam non passa inosservato. Solo numeri, nessuna notifica.
+      if (req.query?.cap) {
+        try {
+          const day = new Date().toISOString().slice(0, 10);
+          const snap = await getAdminDb().collection("_usage").doc(`lead_create_${day}`).get();
+          return res.status(200).json({ day, count: Number(snap.data()?.count || 0), limit: LEAD_DAILY_CAP });
+        } catch (e) {
+          console.error("Lead cap check error:", dbError(e));
+          return res.status(503).json({ error: "Database del server non raggiungibile" });
+        }
+      }
       // Prova del download dalla dashboard (anche con il caso in bozza): nessun lead salvato
       const testCase = str(req.query?.download, 80).replace(/[^a-z0-9-]/gi, "");
       if (testCase) {

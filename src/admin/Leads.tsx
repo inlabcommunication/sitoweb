@@ -54,6 +54,7 @@ export const Leads = () => {
   const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>(null);
   const [hasMore, setHasMore] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [cap, setCap] = useState<{ count: number; limit: number } | null>(null);
 
   const load = async () => {
     if (!db) { setLoading(false); return; }
@@ -107,6 +108,18 @@ export const Leads = () => {
   const dashboardProject = firebaseConfig.projectId || '';
 
   useEffect(() => { load(); }, []);
+  // Tetto giornaliero dei lead (Direttore 25/11): se è raggiunto, un avviso in cima alla pagina
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = await auth?.currentUser?.getIdToken();
+        if (!token) return;
+        const r = await fetch('/api/lead?cap=1', { headers: { Authorization: `Bearer ${token}` } });
+        const d = await r.json().catch(() => null);
+        if (r.ok && d && typeof d.count === 'number' && typeof d.limit === 'number') setCap({ count: d.count, limit: d.limit });
+      } catch { /* l'avviso è facoltativo */ }
+    })();
+  }, []);
 
   const updateLead = async (id: string, patch: Partial<Lead>) => {
     if (!db) return;
@@ -156,6 +169,9 @@ export const Leads = () => {
         </div>
       </div>
 
+      {cap && cap.count >= cap.limit && <div role="alert" style={{ padding: '12px 16px', marginBottom: '1rem', borderRadius: 12, border: '.5px solid #ff9b9b', color: '#ffb4b4', fontSize: 13, lineHeight: 1.6 }}>
+        <b>Tetto raggiunto oggi:</b> oggi sono già stati salvati {cap.limit} lead, il massimo giornaliero. Fino a mezzanotte (UTC) i nuovi invii non vengono salvati e chi scrive vede email e telefono di InLab. Se non aspettavi così tanti contatti è probabilmente spam: avvisa Sito Inlab.
+      </div>}
       {loadError && <div role="alert" style={{ padding: '12px 16px', marginBottom: '1rem', borderRadius: 12, border: '.5px solid #ff9b9b', color: '#ffb4b4', fontSize: 13 }}>{loadError}</div>}
       {check && (() => {
         const mismatch = !!(check.project && dashboardProject && check.project !== dashboardProject);
