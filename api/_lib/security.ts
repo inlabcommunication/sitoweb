@@ -134,6 +134,19 @@ export function securityHeaders(res: VercelResponse) {
   res.setHeader("X-Content-Type-Options", "nosniff");
 }
 
+/**
+ * Corpo JSON della richiesta, o null se non è un JSON valido. Su Vercel req.body è letto alla prima
+ * lettura e lancia un'eccezione se il JSON è malformato: così diventa un 400, non un 500.
+ */
+export function jsonBody(req: VercelRequest): Record<string, any> | null {
+  try {
+    const b = req.body;
+    return b && typeof b === "object" && !Array.isArray(b) ? b : b == null || b === "" ? {} : null;
+  } catch {
+    return null;
+  }
+}
+
 export const str = (v: unknown, max: number): string =>
   typeof v === "string" ? v.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, "").trim().slice(0, max) : "";
 

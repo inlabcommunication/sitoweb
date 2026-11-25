@@ -4,7 +4,7 @@
  * più scrivere direttamente nel database.
  */
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import { ipKey, dailyCap, getAdminDb, hashKey, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
+import { ipKey, dailyCap, getAdminDb, hashKey, isAllowedOrigin, jsonBody, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
 import { FieldValue } from "firebase-admin/firestore";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
@@ -127,7 +127,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   if (!isAllowedOrigin(req)) return res.status(403).json({ error: "Forbidden" });
 
-  const b = req.body || {};
+  const b = jsonBody(req);
+  if (!b) return res.status(400).json({ error: "Dati non validi" });
 
   // Nuovo download con il pass: nessun dato personale, nessun lead, solo un nuovo link di 10 minuti
   if (b.download && typeof b.pass === "string") {

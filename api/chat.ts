@@ -6,7 +6,7 @@
 
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import type Anthropic from "@anthropic-ai/sdk";
-import { ipKey, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
+import { ipKey, dailyCap, getAdminDb, isAllowedOrigin, jsonBody, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
 
@@ -199,11 +199,13 @@ async function handle(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   if (!isAllowedOrigin(req)) return res.status(403).json({ error: "Forbidden" });
 
-  const messages = sanitizeMessages(req.body?.messages);
+  const body = jsonBody(req);
+  if (!body) return res.status(400).json({ error: "Invalid JSON", reply: "Messaggio non valido." });
+  const messages = sanitizeMessages(body.messages);
   if (!messages) return res.status(400).json({ error: "Invalid request", reply: "Messaggio non valido o troppo lungo." });
-  const sessionId = str(req.body?.sessionId, 64).replace(/[^a-zA-Z0-9_-]/g, "") || null;
-  const attribution = cleanAttribution(req.body?.attribution);
-  const page = attribution?.page || cleanPath(req.body?.page);
+  const sessionId = str(body.sessionId, 64).replace(/[^a-zA-Z0-9_-]/g, "") || null;
+  const attribution = cleanAttribution(body.attribution);
+  const page = attribution?.page || cleanPath(body.page);
 
   try {
     const ip = ipKey(req);
