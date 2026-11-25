@@ -106,6 +106,12 @@ async function callAnthropic(apiKey: string, model: string, systemPrompt: string
 
 // Modelli provati in ordine: se uno è ritirato/non disponibile si passa al successivo.
 // "-latest" sono alias di Google che puntano sempre al modello Flash più recente.
+/** Tetto dei token in uscita per Gemini (verifica audit 24/11, P3). È più alto dei 400 di Claude
+ *  perché nei modelli Gemini recenti il «ragionamento» consuma token dello stesso tetto: con 400 le
+ *  risposte arrivavano tagliate o vuote. La lunghezza visibile resta corta (2-3 frasi, prompt).
+ *  Caso peggiore al giorno: CHAT_DAILY_LIMIT risposte × 1024 token (400 × 1024 = circa 410.000). */
+const GEMINI_MAX_OUTPUT_TOKENS = 1024;
+
 const GEMINI_FALLBACKS = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-flash-lite-latest", "gemini-2.5-flash-lite"];
 
 async function callGemini(apiKey: string, model: string, systemPrompt: string, messages: any[], maxTokens: number) {
@@ -133,8 +139,7 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
     try {
       const chat = ai.chats.create({
         model: mdl,
-        // margine ampio: i modelli recenti usano token anche per "ragionare" prima di rispondere
-        config: { systemInstruction: systemPrompt, maxOutputTokens: Math.max(maxTokens, 1024), temperature: 0.7 },
+        config: { systemInstruction: systemPrompt, maxOutputTokens: Math.max(maxTokens, GEMINI_MAX_OUTPUT_TOKENS), temperature: 0.7 },
         history,
       });
       const response = await chat.sendMessage({ message: String(lastMessage?.content || "") });
