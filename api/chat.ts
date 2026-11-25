@@ -163,31 +163,9 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
   throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: quotaHit ? "AI_QUOTA" : "AI_MODEL", attempts });
 }
 
-// Tetto giornaliero di riserva per istanza, usato solo se Firestore non è
-// raggiungibile: così il limite di spesa vale anche senza database (più basso
-// di quello normale, perché le istanze attive possono essere più di una)
-const MEM_GLOBAL_DAY = Math.max(20, Math.floor(LIMIT_GLOBAL_DAY / 4));
-let memDay = "";
-let memDayCount = 0;
-function memoryDailyCap(): boolean {
-  const day = new Date().toISOString().slice(0, 10);
-  if (day !== memDay) { memDay = day; memDayCount = 0; }
-  memDayCount += 1;
-  return memDayCount <= MEM_GLOBAL_DAY;
-}
-
-// Limite di riserva per istanza, usato solo se Firestore non è raggiungibile
-const memHits = new Map<string, number[]>();
-function memoryLimit(ip: string): boolean {
-  const now = Date.now();
-  const hits = (memHits.get(ip) || []).filter((t) => now - t < 600_000);
-  hits.push(now);
-  memHits.set(ip, hits);
-  if (memHits.size > 5000) memHits.clear();
-  return hits.length <= Math.min(LIMIT_PER_IP_10MIN, 10);
-}
-
 const FALLBACK_REPLY = "Mi dispiace, c'è stato un problema tecnico. Scrivici a inlab.communication@gmail.com 🙂";
+/** Modalità «scrivici» (audit 24/11, P3): senza database non ci sono i limiti condivisi, quindi niente AI */
+const OFFLINE_REPLY = "In questo momento l'assistente non è disponibile. Scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319: ti rispondiamo noi 🙂";
 
 /** Valida e ripulisce la conversazione inviata dal browser. */
 function sanitizeMessages(input: unknown): { role: "user" | "assistant"; content: string }[] | null {
@@ -238,13 +216,11 @@ async function handle(req: VercelRequest, res: VercelResponse) {
       // Dal database leggiamo SOLO provider e modello; le chiavi stanno esclusivamente nelle variabili d'ambiente
       const settingsSnap = await db.collection("app").doc("settings").get();
       settings = settingsSnap.exists ? (settingsSnap.data() as any) : {};
-    } catch (e) {
-      // Database non raggiungibile (es. FIREBASE_SERVICE_ACCOUNT_KEY mancante/errata):
-      // la chat continua con un limite in memoria, più prudente, invece di bloccarsi
-      console.error("[chat] Firestore non disponibile, uso limiti in memoria:", e);
-      db = null;
-      if (!memoryLimit(ip)) return res.status(429).json({ error: "Too many requests", code: "RATE", reply: "Hai inviato molti messaggi in poco tempo. Riprova tra qualche minuto 🙂" });
-      if (!memoryDailyCap()) return res.status(429).json({ error: "Daily limit", reply: "L'assistente è molto richiesto oggi. Scrivici a inlab.communication@gmail.com e ti rispondiamo noi 🙂" });
+    } catch (e: any) {
+      // Database non raggiungibile (chiave mancante, quota esaurita…): senza i limiti condivisi e il
+      // tetto di spesa giornaliero l'AI non si chiama. Il visitatore riceve i contatti diretti.
+      console.error("[chat] Firestore non disponibile, modalità «scrivici»:", e?.code ?? "", String(e?.message ?? e).slice(0, 200));
+      return res.status(503).json({ error: "Unavailable", code: "DB", reply: OFFLINE_REPLY });
     }
     const provider = (settings.aiProvider || process.env.AI_PROVIDER) === "anthropic" ? "anthropic" : "gemini";
     const maxTokens = 400;
