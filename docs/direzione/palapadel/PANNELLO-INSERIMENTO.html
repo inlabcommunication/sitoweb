@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pala Padel – Pannello di inserimento</title>
+<style>
+:root{--bg:#faf7f2;--card:#fff;--ink:#1c1a17;--mut:#6b655c;--line:#e4ddd1;--acc:#1f6f4a;--accbg:#e6f3ec;--warn:#9a4a00;--warnbg:#fff1e0}
+@media (prefers-color-scheme:dark){:root{--bg:#161512;--card:#1f1d19;--ink:#f1ede5;--mut:#a79f92;--line:#35312a;--acc:#6fd2a0;--accbg:#1c2d24;--warn:#ffb067;--warnbg:#2f2418}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:16px}
+h1{font-size:1.5rem;margin:8px 0 4px}
+.sub{color:var(--mut);margin:0 0 12px}
+.box{background:var(--warnbg);color:var(--warn);border-radius:10px;padding:12px 14px;margin:12px 0;font-size:.95rem}
+.bar{position:sticky;top:0;background:var(--bg);padding:8px 0;z-index:5;border-bottom:1px solid var(--line)}
+.bar div{height:8px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--acc);width:0;transition:width .2s}
+.bar p{margin:4px 0 0;font-size:.85rem;color:var(--mut)}
+section{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:16px 0;overflow:hidden}
+section>h2{margin:0;padding:12px 14px;font-size:1.05rem;background:var(--accbg);color:var(--acc)}
+section>p.note{margin:0;padding:8px 14px;color:var(--mut);font-size:.9rem;border-bottom:1px solid var(--line)}
+.f{padding:10px 14px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:start}
+.f:last-child{border-bottom:0}
+.f label.k{font-size:.8rem;color:var(--mut);display:block}
+.f .v{white-space:pre-wrap;word-break:break-word}
+.f.done .v{opacity:.5}
+.f input[type=checkbox]{width:22px;height:22px;margin-top:2px;accent-color:var(--acc)}
+button{font:inherit;border:1px solid var(--acc);background:var(--card);color:var(--acc);border-radius:8px;padding:6px 10px;cursor:pointer}
+button.ok{background:var(--acc);color:var(--bg)}
+button.reset{border-color:var(--line);color:var(--mut);margin-top:8px}
+.steps{margin:0;padding:0 14px 8px 36px}
+.steps li{margin:4px 0}
+.vuoto{color:var(--mut);font-style:italic}
+@media (max-width:520px){.f{grid-template-columns:auto 1fr}.f button{grid-column:2}}
+</style>
+</head>
+<body>
+<main>
+<h1>Pala Padel – Pannello di inserimento</h1>
+<p class="sub">Apri questo file dal PC, tieni la dashboard in un'altra scheda. Per ogni campo: premi <b>Copia</b>, incolla in dashboard, spunta la casella. I segni di spunta restano salvati in questo browser.</p>
+<div class="box"><b>Importante:</b> il caso resta in <b>bozza</b>: la casella <b>«Pubblica» NON va spuntata</b>. Quando hai finito, scrivi «fatto» al Direttore: Sito Inlab controlla i dati e poi si pubblica. Non inserire prezzi, funzioni che l'app non ha (prenotazione campi, iscrizioni, pagamenti) né una località.</div>
+<div class="bar"><div><span id="pb"></span></div><p id="pt">0 campi completati</p></div>
+<div id="root"></div>
+<button class="reset" id="rs">Azzera le spunte</button>
+</main>
+<script>
+var APP="https://palapadel-c3tj-theta.vercel.app";
+var S=[
+{t:"0. Prima carica nella Libreria media",steps:["5 schermate da telefono: home-news, classifica-serie-a, calendario-risultati-set, scheda-squadra, albo-oro","2-3 schermate desktop dell'area organizzatore","Logo su sfondo crema","Video MP4 di navigazione (22 s)","Tutti i file sono in docs/direzione/palapadel/ (cartelle screenshot, loghi, video)"]},
+{t:"1. Non solo contenuti → Nuovo caso: SCHEDA",f:[
+["Cliente","PalaPadel Club"],["Indirizzo pagina (ID)","palapadel-club"],["Titolo","La web app dei campionati di padel"],["Categoria","Web app"],
+["Problema","Classifiche e risultati di più campionati da tenere aggiornati a mano e da comunicare ai giocatori."],
+["Risultato","Una web app che calcola da sola le classifiche e che i giocatori consultano dal telefono, senza login."],
+["Immagine di copertina","Schermata da telefono «classifica-serie-a» (o la home)",1],
+["Scheda cliente collegata","(lascia vuota per ora)",1],["Città / località","(lascia VUOTA)",1],["Pubblica","NON spuntare (resta bozza)",1]]},
+{t:"2. HERO (testata)",f:[
+["Etichetta","Web app"],["Titolo","La web app dei campionati di padel"],["Sottotitolo","Classifiche, calendario e risultati sempre aggiornati, dal telefono."],
+["Introduzione","PalaPadel Club gestisce più campionati. Abbiamo costruito una web app che calcola da sola le classifiche e permette a giocatori e pubblico di seguire risultati e calendario senza login."],
+["Immagine","Schermata da telefono «home-news»",1],["Testo bottone","Apri l'app"],["Indirizzo bottone",APP]]},
+{t:"3. BLOCCO 1 – Testo",f:[
+["Etichetta","Il problema"],["Titolo","Classifiche sempre"],["Titolo evidenziato","aggiornate, per tutti."],
+["Testo","Tenere aggiornate a mano classifiche e risultati di più campionati fa perdere tempo, porta errori e costringe a rimandare i messaggi a tutti. Serviva un posto unico, sempre aggiornato, da consultare dal telefono."]]},
+{t:"4. BLOCCO 2 – Percorso a step",f:[
+["Etichetta","Cosa abbiamo costruito"],["Titolo","Una web app,"],["Titolo evidenziato","sei funzioni."],["Testo","(lascia vuoto)",1],
+["Step 1 – titolo","Classifiche automatiche"],["Step 1 – descrizione","Per serie e stagione, con spareggi: partite giocate, scontri diretti, differenza game."],
+["Step 2 – titolo","Calendario"],["Step 2 – descrizione","Per giornata, con data, ora, campo e risultato set per set."],
+["Step 3 – titolo","Schede squadra"],["Step 3 – descrizione","Rosa, statistiche della stagione e titoli vinti."],
+["Step 4 – titolo","Albo d'oro"],["Step 4 – descrizione","I vincitori di tutte le stagioni, filtrabile per serie."],
+["Step 5 – titolo","News e notifiche"],["Step 5 – descrizione","News in Home e notifiche push, solo se l'utente le attiva."],
+["Step 6 – titolo","Area organizzatore"],["Step 6 – descrizione","Risultati set per set, correzioni, rinvii, import da Excel o testo, ruoli e registro delle operazioni."]]},
+{t:"5. BLOCCO 3 – Sito web (anteprime)",f:[
+["Etichetta","L'app"],["Titolo","Provala"],["Titolo evidenziato","dal telefono."],
+["Testo","Consultabile da tutti, senza login. Si può installare sul telefono come una vera app."],
+["Indirizzo",APP],["Screenshot","Carica a mano una schermata desktop (quella automatica vedrebbe solo l'accesso)",1],["Testo del bottone","Apri l'app"],["Pagine","(nessuna)",1]]},
+{t:"6. BLOCCO 4 – Galleria foto",f:[
+["Etichetta","Le schermate"],["Titolo","Schermate con"],["Titolo evidenziato","dati di esempio."],
+["Immagini","5 da telefono + 2-3 desktop dell'area organizzatore",1]]},
+{t:"7. BLOCCO 5 – Reel",f:[
+["Etichetta","In movimento"],["Titolo","La navigazione"],["Titolo evidenziato","da telefono."],
+["Titolo del reel","Navigazione dell'app"],["Embed Instagram","(lascia VUOTO)",1],["Video","«Oppure: video MP4 dalla libreria» → scegli il video",1]]},
+{t:"8. BLOCCO 6 – Checklist",f:[
+["Etichetta","Come funziona per chi gioca"],["Titolo","Semplice"],["Titolo evidenziato","per tutti."],
+["Voce 1","Consultabile da tutti, senza login"],["Voce 2","Installabile sul telefono (Android e iPhone) con l'icona sulla schermata Home"],["Voce 3","Notifiche solo se l'utente le attiva"],
+["Numerata","NO (non numerata)",1]]},
+{t:"9. SEO (in fondo alla scheda)",f:[
+["Title","Web app per campionati di padel: PalaPadel Club | InLab"],
+["Description","La web app dei campionati di padel realizzata da InLab per PalaPadel Club: classifiche automatiche, calendario con risultati set per set e notifiche."]],
+note:"NON aggiungere blocchi «Numeri e risultati» né citazioni."},
+{t:"10. Fine",steps:["Controlla che «Pubblica» sia NON spuntato","Salva","Scrivi «fatto» al Direttore: Sito Inlab controlla e poi si pubblica","Scheda cliente col logo (facoltativa): dal caso → «Crea scheda cliente da questo caso» → finisce in «Collaborazioni su misura», in bozza. Mai in «Progetti raccontati»."]}
+];
+var KEY="palapadel-pannello-v1",st={};
+try{st=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+var root=document.getElementById("root"),total=0;
+function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
+S.forEach(function(sec,si){
+ var s=el("section");s.appendChild(el("h2",null,sec.t));
+ if(sec.note)s.appendChild(el("p","note",sec.note));
+ if(sec.steps){var ol=el("ol","steps");sec.steps.forEach(function(x){ol.appendChild(el("li",null,x))});s.appendChild(ol)}
+ (sec.f||[]).forEach(function(f,fi){
+  total++;var id=si+"-"+fi;
+  var row=el("div","f"+(st[id]?" done":""));
+  var cb=el("input");cb.type="checkbox";cb.checked=!!st[id];
+  var mid=el("div");mid.appendChild(el("label","k",f[0]));
+  mid.appendChild(el("div","v"+(f[2]?" vuoto":""),f[1]));
+  cb.onchange=function(){st[id]=cb.checked;row.className="f"+(cb.checked?" done":"");save();upd()};
+  row.appendChild(cb);row.appendChild(mid);
+  if(!f[2]){var b=el("button",null,"Copia");b.onclick=function(){
+    var done=function(){b.textContent="Copiato";b.className="ok";setTimeout(function(){b.textContent="Copia";b.className=""},1200)};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(f[1]).then(done,function(){fb(f[1]);done()})}else{fb(f[1]);done()}};
+    row.appendChild(b)}
+  s.appendChild(row)});
+ root.appendChild(s)});
+function fb(t){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy")}catch(e){}document.body.removeChild(a)}
+function upd(){var n=0;for(var k in st)if(st[k])n++;document.getElementById("pb").style.width=(total?Math.round(n*100/total):0)+"%";document.getElementById("pt").textContent=n+" di "+total+" campi completati"}
+document.getElementById("rs").onclick=function(){if(confirm("Azzerare tutte le spunte?")){st={};save();location.reload()}};
+upd();
+</script>
+</body>
+</html>
