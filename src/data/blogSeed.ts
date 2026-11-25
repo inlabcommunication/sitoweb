@@ -2168,6 +2168,8 @@ Qualche indicazione pratica:
 - **Considera la stagionalità.** D'estate un locale di Castellaneta Marina o Ginosa Marina parla anche a turisti e a chi ha una casa al mare.
 - **Non restringere troppo.** Un pubblico piccolissimo, con molti interessi combinati, rende la campagna più lenta a imparare.
 
+Se la tua attività è a Taranto o in provincia, nella pagina dedicata alle [campagne Facebook Ads e Instagram a Taranto](/meta-ads-taranto) trovi come impostiamo zona, obiettivo e contenuti per i clienti del territorio.
+
 Negli ultimi anni i sistemi di Meta sono diventati molto bravi a trovare le persone giuste da soli, dentro la zona che scegli. Per questo conta sempre di più il contenuto: ne abbiamo parlato nell'articolo su [Meta Ads 2026 e la creatività](/blog/meta-ads-creativita-advantage).
 
 ![I cinque passi per impostare una sponsorizzata Instagram per un'attività locale](/blog/sponsorizzate-instagram-attivita-locali/impostare-campagna.webp)
