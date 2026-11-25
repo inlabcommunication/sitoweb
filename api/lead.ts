@@ -209,13 +209,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!(await rateLimit(db, "lead", ipKey(req), 5, 3600))) {
       return res.status(429).json({ error: "Troppi invii. Riprova più tardi." });
     }
+    // Il caso del download si controlla prima del tetto: un caso inesistente (404) non consuma un posto
+    const doc = downloadCase ? await findPresentation(db, downloadCase) : null;
+    if (downloadCase && !doc) return res.status(404).json({ error: "Documento non disponibile" });
     if (!(await dailyCap(db, "lead_create", LEAD_DAILY_CAP))) {
       console.warn("[lead] tetto giornaliero dei lead raggiunto");
       return res.status(429).json({ error: CONTACT_FALLBACK });
     }
-    if (downloadCase) {
-      const doc = await findPresentation(db, downloadCase);
-      if (!doc) return res.status(404).json({ error: "Documento non disponibile" });
+    if (downloadCase && doc) {
       const tag = `download-presentazione-${downloadCase}`;
       await db.collection("leads").add({
         name: lead.name,
