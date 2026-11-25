@@ -92,6 +92,13 @@ I temi vanno proposti prima alla SEO, per evitare che i nostri articoli si facci
 4. **GEO 4, gennaio: "Risposte AI e attività locali: cosa cambia per ristoranti, studi, strutture ricettive e officine"** (articolo nuovo).
    - Un esempio per ogni settore, con clienti reali: Casa28, Ricciardi, Masseria Sacramento, DIRAM.
 
+**Parere della SEO del 25/11, da applicare:**
+- **GEO 1:** nel title va la frase che la gente scrive, per esempio "come sapere se ChatGPT conosce la tua attività". Le ricerche sono ancora poche, quindi le impressioni saranno basse.
+- **GEO 2:** nella stessa PR va ridotta a 2-3 righe la sezione "Un canale per il traffico da ChatGPT" di `google-business-profile-ga4`, con un link al nuovo articolo, così i due non si fanno concorrenza su Google.
+- **GEO 3:** confermato come aggiornamento, non come articolo nuovo.
+- **GEO 4:** solo i risultati di RISULTATI-CLIENTI-VERIFICATI.md.
+- **Link:** `/siti-web#geo` solo dopo che Sito Inlab ha pubblicato la sezione GEO (brief SEO 2026-11-24-geo-servizi.md, punto G4). Fino ad allora si linka `/siti-web`.
+
 ## Aggiornamenti fatti il 25/11 (richiesta del Direttore, sui dati SEO del 24/11)
 
 - **`reel-o-post-cosa-pubblicare-instagram`:**
