@@ -4,7 +4,7 @@
  * più scrivere direttamente nel database.
  */
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import { clientIp, getAdminDb, hashKey, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
+import { ipKey, getAdminDb, hashKey, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
 import { FieldValue } from "firebase-admin/firestore";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
@@ -129,7 +129,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!caseId || !passValid(pass, caseId)) return res.status(403).json({ error: "pass" });
     try {
       const db = getAdminDb();
-      if (!(await rateLimit(db, "dlpass_ip", clientIp(req), 20, 3600)) || !(await rateLimit(db, "dlpass", hashKey(pass), 10, 3600))) {
+      if (!(await rateLimit(db, "dlpass_ip", ipKey(req), 20, 3600)) || !(await rateLimit(db, "dlpass", hashKey(pass), 10, 3600))) {
         return res.status(429).json({ error: "Troppe richieste. Riprova più tardi." });
       }
       const doc = await findPresentation(db, caseId);
@@ -186,7 +186,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const db = getAdminDb();
-    if (!(await rateLimit(db, "lead", clientIp(req), 5, 3600))) {
+    if (!(await rateLimit(db, "lead", ipKey(req), 5, 3600))) {
       return res.status(429).json({ error: "Troppi invii. Riprova più tardi." });
     }
     if (downloadCase) {

@@ -6,7 +6,7 @@
 
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import type Anthropic from "@anthropic-ai/sdk";
-import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
+import { ipKey, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
 
@@ -223,7 +223,7 @@ async function handle(req: VercelRequest, res: VercelResponse) {
   const page = attribution?.page || cleanPath(req.body?.page);
 
   try {
-    const ip = clientIp(req);
+    const ip = ipKey(req);
     let db: ReturnType<typeof getAdminDb> | null = null;
     let settings: any = {};
     try {
