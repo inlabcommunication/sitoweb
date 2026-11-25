@@ -203,13 +203,15 @@ Vuoi capire come potrebbe funzionare per la tua attività? [Scopri il servizio d
     tags: ['reel', 'instagram', 'contenuti', 'video', 'caroselli'],
     author: 'Ilaria Gemma',
     date: '2026-09-28',
-    updated: '2026-11-03',
+    updated: '2026-11-25',
     cover: '/blog/reel-o-post-cosa-pubblicare-instagram/cover.jpg',
     coverAlt: 'Schermate di un reel, di un carosello e delle storie di Instagram affiancate',
     published: true,
     seoTitle: 'Differenza tra reel e post su Instagram: quale usare | InLab',
-    seoDescription: 'Differenza tra reel e post su Instagram: a cosa serve ogni formato, quanto dura un reel, chi lo vede e 10 idee per attività locali da copiare.',
-    content: `Qual è la differenza tra reel e post su Instagram, e quale conviene usare? È la domanda che ci fanno più spesso i titolari di attività locali che gestiscono Instagram da soli. In questa guida trovi a cosa serve ogni formato, quanto deve durare un reel, 10 idee concrete divise per settore e un piano settimanale da copiare.
+    seoDescription: 'Differenza tra reel e post su Instagram: il reel ti fa scoprire da chi non ti segue, il post convince chi ti segue già. Quale usare e 10 idee.',
+    content: `**La differenza tra reel e post su Instagram è questa: il reel è un video verticale che Instagram mostra anche a chi non ti segue, quindi serve a farti scoprire; il post (foto o carosello) arriva soprattutto a chi ti segue già, quindi serve a spiegare e convincere.**
+
+È la domanda che ci fanno più spesso i titolari di attività locali che gestiscono Instagram da soli. In questa guida trovi a cosa serve ogni formato, quanto deve durare un reel, 10 idee concrete divise per settore e un piano settimanale da copiare.
 
 **Risposta breve: i reel servono a farti scoprire da persone che non ti seguono ancora, i caroselli a spiegare e convincere, le storie a restare presenti ogni giorno con chi ti segue già. Per un'attività locale funziona un mix dei tre formati, non uno solo.**
 
@@ -219,7 +221,7 @@ Nessun formato è "il migliore" in assoluto. Ognuno ha un lavoro preciso da fare
 
 **La differenza principale sta in chi li vede e a cosa servono. Un reel è un video verticale che Instagram mostra spesso anche a chi non ti segue, quindi serve a farti scoprire da persone nuove. Un post (foto singola o carosello) arriva soprattutto a chi ti segue già e serve a spiegare, informare e convincere.**
 
-Le differenze punto per punto:
+Reel e post a confronto, punto per punto:
 
 - **Formato:** il reel è un video verticale a schermo intero (9:16). Il post è una foto o un carosello di più immagini, di solito in formato 4:5.
 - **Durata:** un reel può arrivare fino a qualche minuto, ma per farsi scoprire funzionano meglio quelli brevi, tra 7 e 30 secondi. Il post non ha durata: si guarda e si scorre al ritmo di chi legge.
@@ -336,11 +338,11 @@ Sono settori molto diversi, ma il principio è lo stesso: **meglio un video aute
 
 ## Domande frequenti
 
-### È meglio pubblicare reel o post?
+### Post o reel: qual è la differenza e quale è meglio pubblicare?
 
-Dipende dall'obiettivo. I reel servono soprattutto a raggiungere persone nuove, i post e i caroselli a spiegare e convincere chi è già interessato. Per un'attività locale conviene alternarli, con le storie ogni giorno.
+Il reel è un video che ti fa scoprire da persone nuove, il post è una foto o un carosello che parla soprattutto a chi ti segue già. Quale pubblicare dipende dall'obiettivo. I reel servono soprattutto a raggiungere persone nuove, i post e i caroselli a spiegare e convincere chi è già interessato. Per un'attività locale conviene alternarli, con le storie ogni giorno.
 
-### I reel arrivano a più persone dei post?
+### Reel o post: chi arriva a più persone?
 
 Di solito sì: Instagram mostra i reel anche a chi non ti segue, nella sezione Reel e tra i contenuti suggeriti. I post arrivano soprattutto a chi ti segue già. Per questo i reel sono il formato migliore per farsi scoprire, i post per farsi scegliere.
 
@@ -2166,6 +2168,8 @@ Qualche indicazione pratica:
 - **Considera la stagionalità.** D'estate un locale di Castellaneta Marina o Ginosa Marina parla anche a turisti e a chi ha una casa al mare.
 - **Non restringere troppo.** Un pubblico piccolissimo, con molti interessi combinati, rende la campagna più lenta a imparare.
 
+Se la tua attività è a Taranto o in provincia, nella pagina dedicata alle [campagne Facebook Ads e Instagram a Taranto](/meta-ads-taranto) trovi come impostiamo zona, obiettivo e contenuti per i clienti del territorio.
+
 Negli ultimi anni i sistemi di Meta sono diventati molto bravi a trovare le persone giuste da soli, dentro la zona che scegli. Per questo conta sempre di più il contenuto: ne abbiamo parlato nell'articolo su [Meta Ads 2026 e la creatività](/blog/meta-ads-creativita-advantage).
 
 ![I cinque passi per impostare una sponsorizzata Instagram per un'attività locale](/blog/sponsorizzate-instagram-attivita-locali/impostare-campagna.webp)
@@ -2255,18 +2259,19 @@ Se preferisci affidarti a chi lo fa ogni giorno, scopri il servizio di [campagne
   },
   {
     slug: 'idee-reel-ristoranti',
-    title: '15 idee di reel per ristoranti e bar (con esempi da girare subito)',
+    title: 'Reel per ristoranti e bar: 15 idee da girare subito, con esempi dalla provincia di Taranto',
     excerpt: 'Dalla cucina allo staff, dal locale pieno agli eventi: 15 idee di reel per ristoranti, bar e pizzerie, con le regole per girarle e come organizzare le riprese in mezza giornata.',
     category: 'Video & Reel',
     tags: ['reel', 'ristoranti', 'instagram', 'video', 'contenuti'],
     author: 'Ilaria Gemma',
     date: '2026-09-28',
+    updated: '2026-11-25',
     cover: '/blog/idee-reel-ristoranti/cover.jpg',
     coverAlt: 'Smartphone che mostra il reel di una pizza del giorno appena sfornata',
     published: true,
-    seoTitle: 'Idee reel per ristoranti e bar: 15 esempi da girare | InLab',
-    seoDescription: 'Idee reel per ristoranti e bar: 15 esempi da girare subito, come aprire il video nei primi 3 secondi e come organizzare le riprese in mezza giornata.',
-    content: `Cerchi **idee di reel per ristoranti** e bar che non siano il solito piatto ripreso dall'alto? Qui ne trovi 15, divise per tema, con come girarle e cosa mettere nei primi secondi. Sono pensate per chi ha poco tempo e uno smartphone, e funzionano anche per pizzerie, pasticcerie, pub e caffetterie.
+    seoTitle: 'Reel per ristoranti e bar: 15 idee da girare subito | InLab',
+    seoDescription: 'Reel per ristoranti, bar e pizzerie: 15 idee da girare subito, come aprire il video nei primi 3 secondi ed esempi di locali in provincia di Taranto.',
+    content: `Cerchi idee di **reel per ristoranti** e bar che non siano il solito piatto ripreso dall'alto? Qui ne trovi 15, divise per tema, con come girarle e cosa mettere nei primi secondi. Sono pensate per chi ha poco tempo e uno smartphone, e funzionano anche per pizzerie, pasticcerie, pub e caffetterie.
 
 **Risposta breve: i reel che portano clienti a un ristorante mostrano cose vere e riconoscibili: il piatto mentre nasce, le persone che ci lavorano, il locale pieno, le informazioni utili (menu, serate, orari). Si girano in verticale, con luce naturale, e fanno capire nei primi 3 secondi dove siamo e cosa si mangia.**
 
@@ -2324,6 +2329,8 @@ Un buon reel non deve per forza diventare virale. Deve far venire voglia a chi a
 
 ![Le 15 idee di reel per ristoranti e bar divise per tema](/blog/idee-reel-ristoranti/quindici-idee.webp)
 
+> **Il tuo locale ha bei piatti ma reel che non portano prenotazioni?** Organizziamo le riprese nel tuo ristorante e prepariamo i reel da pubblicare nelle settimane successive. [Chiedi un preventivo gratuito](/contatti?servizio=gestione-social): rispondiamo entro 24 ore.
+
 ## Come organizzare le riprese in mezza giornata
 
 Non serve girare tutti i giorni. Con un po' di organizzazione, una mattina di riprese può coprire due o tre settimane di contenuti.
@@ -2347,9 +2354,11 @@ Con i locali che seguiamo abbiamo visto che il contenuto più efficace è quello
 
 Per [Masseria Sacramento](/cliente/masseria-sacramento) a Palagianello la comunicazione accompagna ogni appuntamento del calendario, dalla festa della birra alle serate con musica live e al pranzo della domenica. Il reel non è mai isolato: annuncia, racconta e invita al prossimo evento.
 
+Per la [Pizzeria Hermitage](/cliente/pizzeria-hermitage) di Laterza ci hanno chiamati come professionisti esterni per la produzione video: riprese e montaggio di contenuti che raccontano il locale, la pizza e l'atmosfera della sala. È un esempio di come i reel di un ristorante possono essere girati in una sola sessione e poi pubblicati nel tempo.
+
 ## Domande frequenti
 
-### Che reel fare per un ristorante?
+### Che reel fare per un ristorante o una pizzeria?
 
 I più efficaci mostrano il piatto mentre nasce, le persone dello staff, il locale pieno e le informazioni utili come menu, serate e come prenotare. Scegli pochi format fissi e ripetili nel tempo, così il pubblico li riconosce.
 
@@ -2373,7 +2382,7 @@ Sì, se la tua clientela è anche lì. Molti usano TikTok per cercare dove mangi
 
 Scegli tre idee da questa lista, gira questa settimana e pubblica la prossima. Poi guarda quali reel portano messaggi, prenotazioni e commenti, e fai di più di quelli. Per il piano completo, dalle foto alle prenotazioni, leggi la guida ai [social media per ristoranti in provincia di Taranto](/blog/social-media-ristoranti-provincia-taranto).
 
-Se vuoi reel che raccontano davvero il tuo locale, scopri il nostro servizio di [video e reel per attività](/video). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+Giriamo reel per ristoranti e bar del territorio: guarda la nostra gestione social a [Castellaneta](/gestione-social-castellaneta), a [Mottola](/gestione-social-mottola) e a [Laterza](/gestione-social-laterza), e il servizio di [video e reel per attività](/video). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
   {
     slug: 'servizio-fotografico-ristoranti',
@@ -3914,7 +3923,7 @@ C'è un segnale che dice molto della fiducia costruita: Nunzio è stato contatta
 
 [Sublime Tentazione](/cliente/sublime-tentazione) è una gelateria e pasticceria artigianale di Palagianello. In pochi mesi le vendite sono aumentate. Secondo il titolare, l'estate con InLab ha venduto il 30% di gelato in più rispetto all'anno prima e oltre il 70% di torte in più durante la settimana.
 
-Quel "durante la settimana" è importante: non parliamo del sabato sera, quando il negozio è già pieno, ma dei giorni in cui una pasticceria di paese fatica di più. È lì che una presenza costante sui social fa la differenza.
+Quel "durante la settimana" è importante: non parliamo del sabato sera, quando il negozio è già pieno, ma dei giorni in cui una pasticceria di paese fatica di più. È lì che una presenza costante sui social fa la differenza. Se hai una pasticceria o una gelateria, trovi le idee per tutto l'anno nella guida ai [social per pasticcerie e gelaterie](/blog/social-pasticcerie-gelaterie-provincia-taranto).
 
 ## Masseria Sacramento: il 95% degli eventi sold out
 
@@ -3948,5 +3957,89 @@ Non con i soli follower. Conta quante persone ti scrivono, prenotano, chiamano o
 Scrivi su un foglio una sola frase: "Fra un anno vorrei che i social mi portassero…". Più clienti, più prenotazioni, più vendite in un giorno preciso della settimana. Quella frase è l'obiettivo da cui parte ogni piano che costruiamo.
 
 Seguiamo attività come queste a [Palagianello](/gestione-social-palagianello), a [Palagiano](/gestione-social-palagiano) e a [Taranto](/gestione-social-taranto). Scopri la nostra [gestione social](/gestione-social) oppure [mandaci la tua frase](/contatti?servizio=gestione-social): entro 24 ore ti diciamo come la trasformeremmo in un piano.`,
+  },
+  {
+    slug: 'social-pasticcerie-gelaterie-provincia-taranto',
+    title: 'Social media per pasticcerie e gelaterie in provincia di Taranto: cosa pubblicare tutto l\'anno',
+    excerpt: 'Come usare Instagram e Facebook per una pasticceria o una gelateria in provincia di Taranto: il calendario delle stagioni e delle ricorrenze, i video del laboratorio, gli ordini e le vetrine.',
+    category: 'Social media',
+    tags: ['pasticcerie', 'gelaterie', 'social media', 'taranto', 'instagram'],
+    author: 'Nicola Carpignano',
+    date: '2026-11-25',
+    cover: '/blog/social-pasticcerie-gelaterie-provincia-taranto/cover.jpg',
+    coverAlt: 'Calendario social di una pasticceria e gelateria in provincia di Taranto, dalle colombe al gelato ai panettoni',
+    published: true,
+    seoTitle: 'Social media per pasticcerie e gelaterie a Taranto | InLab',
+    seoDescription: 'Cosa pubblicare sui social per una pasticceria o gelateria in provincia di Taranto: stagioni, ricorrenze, video del laboratorio, ordini e torte su misura.',
+    content: `Una pasticceria ha un vantaggio che pochi altri negozi hanno: quello che fa è bello da guardare e fa venire voglia subito. Una gelateria ancora di più, almeno da maggio a settembre. Eppure molti profili di pasticcerie e gelaterie in provincia di Taranto pubblicano solo la foto della vetrina, a volte, quando c'è tempo. In questa guida vediamo **cosa pubblicare sui social per una pasticceria o una gelateria** durante tutto l'anno, così che i clienti si ricordino di te prima di ogni ricorrenza.
+
+**Risposta breve: segui il calendario del tuo laboratorio. Ogni stagione ha i suoi prodotti e ogni ricorrenza ha il suo picco di ordini: annunciali con qualche settimana di anticipo, mostra le mani e il laboratorio con video brevi, rendi semplice ordinare una torta su misura e rispondi in fretta ai messaggi.**
+
+## Il calendario di una pasticceria: stagioni e ricorrenze
+
+Il lavoro di una pasticceria segue l'anno, e i social devono seguirlo con un passo di anticipo:
+
+1. **Gennaio e febbraio**: dolci di Carnevale e San Valentino. È il momento delle prenotazioni per le coppie.
+2. **Marzo e aprile**: festa del papà e Pasqua, con colombe e uova. Gli ordini si raccolgono settimane prima.
+3. **Maggio e giugno**: festa della mamma, comunioni, cresime e matrimoni. Le torte su misura sono le protagoniste.
+4. **Estate**: il gelato, le granite, i gusti nuovi, le serate in piazza e i turisti in paese.
+5. **Autunno**: i dolci della tradizione, i biscotti, le prime prenotazioni per i panettoni.
+6. **Dicembre**: Natale, con panettoni, cesti e regali aziendali.
+
+Per Natale abbiamo scritto una guida a parte, valida per tutti i settori: [i social di Natale per le attività locali](/blog/social-natale-attivita-locali).
+
+![Il calendario social di una pasticceria e gelateria](/blog/social-pasticcerie-gelaterie-provincia-taranto/calendario-social-pasticceria.webp)
+
+## Cosa mostrare: il laboratorio vale più della vetrina
+
+La foto del vassoio pronto funziona, ma è uguale a quella di tutte le altre pasticcerie. Quello che ti distingue è il **come**: la crema che si monta, la glassa che cola, il gelato mantecato, le mani di chi lavora da anni. Sono video di pochi secondi che si girano con il telefono durante il lavoro, senza fermare il laboratorio.
+
+Alcune idee che funzionano bene:
+
+- il **gusto o il dolce del giorno**, sempre alla stessa ora, così le persone sanno quando guardare;
+- il **prima e dopo** di una torta su misura, dalla base alla decorazione;
+- le **persone**: chi impasta, chi decora, chi serve al banco;
+- le **domande dei clienti**, come "senza glutine?" o "si può avere più piccola?", con la risposta in un video.
+
+> **La tua pasticceria pubblica solo quando c'è tempo?** Ci occupiamo noi del piano, dei testi e della pubblicazione, seguendo le stagioni del tuo laboratorio. [Chiedi un preventivo gratuito](/contatti): rispondiamo entro 24 ore.
+
+## Gelateria: farsi trovare nei mesi giusti
+
+Per una gelateria la stagione è corta e va sfruttata tutta. Prima dell'apertura annuncia la data e i gusti che tornano. Durante l'estate pubblica spesso, anche nelle storie, perché le persone decidono all'ultimo dove fermarsi la sera. Aggiorna sempre orari e posizione sulla scheda Google: chi è in vacanza in zona cerca "gelateria" dal telefono e sceglie tra le prime che vede.
+
+Quando la stagione finisce, non sparire. Racconta cosa prepari in inverno, come i dolci, le torte gelato su ordinazione o i panettoni, così i clienti dell'estate restano in contatto con te.
+
+## Due esempi: Palagianello e Ferrara
+
+[Sublime Tentazione](/cliente/sublime-tentazione) è una gelateria e pasticceria artigianale di Palagianello. Per loro i contenuti seguono le stagioni del laboratorio, dal gelato d'estate ai panettoni di Natale, con una presenza costante e riconoscibile che fa venire voglia di passare in negozio.
+
+Con la [Pasticceria Naturale](/cliente/pasticceria-naturale) di Ferrara lavoriamo a distanza: strategia, idee e testi li curiamo noi, mentre foto e video li gira sul posto un videomaker che segue le nostre indicazioni. Lo stesso metodo funziona per una pasticceria del nostro territorio che non ha tempo di filmarsi da sola.
+
+## Ordini e torte su misura: dal messaggio al ritiro
+
+Molte richieste arrivano in privato su Instagram o su WhatsApp. Per non perderle:
+
+- scrivi nella bio **come si ordina** e con quanto anticipo;
+- tieni nelle storie in evidenza le torte su misura, i prodotti delle ricorrenze e le informazioni su allergeni e ritiro;
+- prepara risposte pronte per le domande più frequenti;
+- quando una ricorrenza si avvicina, ricorda la data ultima per ordinare.
+
+Se vuoi dare una mano anche con le foto dei prodotti, leggi la guida al [servizio fotografico per ristoranti](/blog/servizio-fotografico-ristoranti): i consigli su luce e piatti valgono anche per vassoi e torte.
+
+## Domande frequenti
+
+### Quante volte deve pubblicare una pasticceria?
+
+Più spesso prima delle ricorrenze e in stagione, meno nei periodi calmi. Conta la costanza: meglio tre contenuti curati a settimana che dieci in un mese e poi niente.
+
+### Servono le sponsorizzate per una gelateria?
+
+Non sempre. Diventano utili per l'apertura di stagione, per un gusto nuovo o per raggiungere chi è in vacanza nei paesi vicini, con una zona stretta intorno al negozio.
+
+## Da dove partire
+
+Prendi un calendario e segna le prossime tre ricorrenze importanti per il tuo laboratorio. Per ognuna scrivi la data in cui inizieresti a parlarne sui social e la data ultima per ordinare. È il primo piano editoriale della tua pasticceria.
+
+Seguiamo pasticcerie e gelaterie del territorio: guarda la nostra gestione social a [Palagianello](/gestione-social-palagianello), a [Castellaneta](/gestione-social-castellaneta) e a [Taranto](/gestione-social-taranto), e i nostri [video per attività locali](/video). Se vuoi, [mandaci le tue tre date](/contatti?servizio=gestione-social): entro 24 ore ti proponiamo cosa pubblicare per la prima.`,
   },
 ];

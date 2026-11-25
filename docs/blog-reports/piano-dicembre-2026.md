@@ -12,7 +12,7 @@ Scritto il 17/11 con le priorità della SEO (messaggio del 17/11) e il brief "fo
    - somiglianza con gli altri articoli sotto il 5%;
    - niente link a pagine in noindex (`/siti-web-{città}`).
 
-## Calendario aggiornato il 17/11 (richiesta di Nicola tramite la SEO)
+## Calendario aggiornato il 17/11 (superato dal calendario del 24/11, qui sotto)
 
 Nicola ha chiesto un articolo in più, da far uscire presto: "I social non sono una spesa ma un investimento", con i risultati veri dei clienti. Esce **venerdì 20/11**. Le altre uscite slittano di un posto:
 - **24/11:** pasticcerie e gelaterie;
@@ -22,65 +22,102 @@ Nicola ha chiesto un articolo in più, da far uscire presto: "I social non sono 
 
 La SEO ha approvato il piano e le due proposte contro la sovrapposizione tra articoli.
 
-## Articolo spostato a dicembre
+## Articolo spostato a dicembre (superato dal calendario del 24/11)
 
 **Martedì 1/12 (era il 27/11): "Agenzia o freelance per i social: cosa conviene a un'attività locale"**
 - Keyword: *agenzia o freelance social media*.
 - Città: gestione social Taranto, Massafra e Ginosa.
 - **Rischio di sovrapposizione:** il tema è già una sezione di `gestione-social-attivita-locale-cosa-include` ("Agenzia, freelance o fai-da-te") e di `quanto-costa-social-media-manager-puglia`. Per tenerlo distinto, l'articolo nuovo approfondisce la scelta caso per caso: tempo del titolare, riprese, sponsorizzate, continuità, chi sostituisce chi in ferie. Le due sezioni esistenti si accorciano e rimandano qui.
 
-## Articoli di dicembre
+## Calendario dal 24/11 (richiesta del Direttore del 24/11: recupero degli articoli di novità)
 
-Date aggiornate: il primo articolo dell'elenco esce venerdì 4/12, entro il 10/12 come chiede la SEO. Gli altri slittano di una data. L'articolo sulle officine, il n. 8, passa a gennaio.
+Regola nuova: **almeno 1 articolo di novità a settimana**, quando il giro del martedì trova notizie di livello A o B confermate da una fonte ufficiale. Tutti gli altri articoli restano locali.
 
-1. **Venerdì 4/12: "Social per ristoranti a Natale e Capodanno: menu delle feste, prenotazioni e cenoni"**
-   - Social. Deve uscire entro il 10/12, come chiede la SEO.
-   - Città: gestione social Castellaneta, Mottola e Taranto.
-   - Clienti: Casa28, Il Paradiso, Sottoscala.
-   - **Per tenerlo distinto** da `social-natale-attivita-locali` (tutti i settori) e da `social-media-ristoranti-provincia-taranto` (tutto l'anno), parla solo dei ristoranti nelle feste:
-     - il calendario delle prenotazioni;
-     - il menu delle feste;
-     - il posto rimasto libero per Capodanno;
-     - le recensioni dopo le feste.
-2. **Martedì 8/12: "Gestione social per studi dentistici e medici: cosa si può comunicare"**
-   - Social.
-   - Città: gestione social Palagiano, Massafra e Taranto.
-   - Cliente: Studio Dentistico Ricciardi (caso studio).
-   - **Attenzione:** le regole sulla pubblicità sanitaria vanno citate solo con la fonte ufficiale (legge 145/2018, comma 525, e i codici deontologici). Nessuna promessa di risultato.
-3. **Venerdì 11/12: "Quanto costa un video promozionale per un'attività locale"**
-   - Tema di costo: solo i fattori, **nessuna cifra**.
-   - Città: agenzia di comunicazione Castellaneta, Taranto e Massafra.
-   - Clienti: Studio Ventimiglia Solution, Ottica Occhi Blu, DIRAM.
-4. **Martedì 15/12: "Social per lidi e strutture balneari: preparare la stagione già a febbraio"**
-   - Social.
-   - Città: gestione social Castellaneta, Ginosa e Taranto.
-   - Clienti: Il Paradiso e La Vela (Castellaneta Marina).
-5. **Venerdì 18/12: "Instagram o TikTok per un'attività locale in Puglia: quale scegliere"**
-   - Social, per chi deve decidere su quale piattaforma stare.
-   - Città: gestione social Taranto, Massafra e Laterza.
-   - Clienti: Inox Racing Puglia e Vision Ottica.
-6. **Martedì 22/12: "Social media per parrucchieri ed estetiste in provincia di Taranto"**
-   - Social.
-   - Città: gestione social Castellaneta, Palagianello e Mottola.
-   - Cliente: Feliciano Fangio. Del cliente uso solo quello che è già pubblicato sul sito.
-7. **Martedì 29/12: "Video per agenzie immobiliari a Taranto e provincia: come presentare una casa"**
-   - Città: agenzia di comunicazione Castellaneta, Taranto e Massafra.
-   - Cliente: Studio Ventimiglia Solution.
-8. **Gennaio: "Social media per officine, ricambi e negozi di moto in provincia di Taranto"**
-   - Social.
-   - Città: gestione social Palagianello, Castellaneta e Taranto.
-   - Clienti: DIRAM e Inox Racing Puglia.
+Gli articoli di novità hanno sempre un taglio locale, cioè la provincia di Taranto o la Puglia nel titolo. Contano quindi tra gli articoli locali e non superano il massimo di 3 nazionali al mese. Valgono come per tutti: nessun prezzo, regola sui tempi dei risultati, somiglianza sotto il 5%.
 
-Venerdì 25/12 è Natale: quell'uscita si sposta a martedì 29/12.
+1. **Martedì 24/11:** social per pasticcerie e gelaterie (locale, social). Bozza pronta.
+2. **Venerdì 27/11:** due articoli.
+   - Social per negozi di ottica (locale, social).
+   - **NOVITÀ:** "Google a novembre 2026: core update e link sulla scheda, cosa controllare per un'attività in provincia di Taranto". Bozza pronta.
+   - Fonti dell'articolo di novità: [Search Status Dashboard](https://status.search.google.com/) (core update dal 10/11), [guida di Google sui core update](https://developers.google.com/search/docs/appearance/core-updates), [Business Profile Help, link dell'attività](https://support.google.com/business/answer/6218037).
+3. **Martedì 1/12: NOVITÀ, "Storie di Instagram: le novità di fine 2026 e come usarle per un'attività locale in Puglia"** (social).
+   - Novità: storie modificabili per 15 minuti dopo la pubblicazione, storie con più immagini, nuovi sticker.
+   - Fonte attuale: [Social Media Today](https://www.socialmediatoday.com/news/instagram-adds-stories-editing/875261/), che è secondaria.
+   - **Condizione:** si pubblica solo con la conferma di una fonte ufficiale (about.instagram.com, help.instagram.com o Meta Newsroom), da ricontrollare il 27/11 e il 1/12. Senza conferma, il 1/12 esce "Agenzia o freelance per i social" e la novità slitta.
+4. **Venerdì 4/12:** "Social per ristoranti a Natale e Capodanno: menu delle feste, prenotazioni e cenoni" (locale, social; deve uscire entro il 10/12).
+5. **Martedì 8/12: GEO 1, "La tua attività compare nelle risposte di ChatGPT, Gemini e Google? Come controllarlo in provincia di Taranto"**. Fa parte della serie sulle risposte AI (vedi sotto). La novità del giro dell'8/12, se c'è, esce venerdì 11/12 insieme all'articolo del giorno.
+6. **Venerdì 11/12:** "Gestione social per studi dentistici e medici: cosa si può comunicare" (locale, social, Ricciardi).
+   - Insieme a questa uscita: l'aggiornamento del mese di `sponsorizzate-instagram-attivita-locali`.
+7. **Martedì 15/12:** NOVITÀ dal giro del 15/12. Se non ci sono notizie A o B, esce "Quanto costa un video promozionale per un'attività locale" (locale, costo, senza cifre).
+8. **Venerdì 18/12: GEO 2, "Quante visite ti portano ChatGPT e Gemini? Il canale AI Assistant di GA4 spiegato a un'attività locale"**. Fa parte della serie sulle risposte AI.
+9. **Martedì 22/12:** "Instagram o TikTok per un'attività locale in Puglia: quale scegliere" (locale, social). Include la novità TikTok Smart+ per le piccole imprese ([TikTok Business](https://ads.tiktok.com/resources/)).
+10. **Martedì 29/12: "Comunicare un'attività a Polignano a Mare e Monopoli: turisti d'estate, clienti del posto tutto l'anno"** (locale). Richiesta dai dati SEO del 24/11: la pagina `/agenzia-comunicazione-polignano-a-mare` è in posizione 9,9-12,8 per "agenzia di comunicazione/marketing Polignano a Mare".
+    - Linka `/agenzia-comunicazione-polignano-a-mare` e `/agenzia-comunicazione-monopoli`.
+    - Temi: scheda Google per chi arriva da fuori, social in due lingue, stagione e fuori stagione.
+    - Prima di scrivere: niente clienti inventati. Se non abbiamo clienti in zona, si usano clienti di settori simili dichiarandolo, per esempio Masseria Sacramento per il turismo.
 
-Conteggio di dicembre: 8 uscite, tutte con aggancio locale.
-- **1/12:** agenzia o freelance.
-- **Dal 4/12 al 29/12:** i punti da 1 a 7 dell'elenco.
-- **Articoli sui social:** 6 su 8.
+**Passano a gennaio:**
+- social media per parrucchieri ed estetiste (era il 29/12);
+- aggiornamento di `instagram-su-google-seo-profilo`: secondo i dati SEO del 24/11 ha 2 clic su 16 impressioni ed è in posizione 4,4, quindi è un tema che la gente clicca. Si aggiorna con le novità del 2026 e con il riquadro contatti, e si misura dopo 4 settimane;
+- social per lidi e strutture balneari (va bene anche a gennaio: la stagione si prepara a febbraio);
+- "Agenzia o freelance", se il 1/12 esce la novità sulle storie;
+- video per agenzie immobiliari;
+- social per officine e ricambi;
+- regole AGCOM per collaborare con un influencer locale (novità, normativa);
+- l'aggiornamento di `gestione-social-attivita-locale-cosa-include`.
+
+Conteggio di dicembre: almeno 9 uscite. Ci sono 1 o 2 articoli di novità, più quelli che arriveranno dai giri dell'8 e del 15/12. Gli articoli sui social sono almeno 6.
+
+## Serie "Visibilità nelle risposte AI" (GEO), richiesta di Nicola e del Direttore del 24/11
+
+Questi articoli si **aggiungono** a quelli di novità. Regole:
+- coerenza con `seo-ai-overviews-geo-google`: GEO vuol dire SEO fatta anche per le AI, nessuna promessa e nessun trucco;
+- solo fonti ufficiali;
+- nessun prezzo;
+- link a `/siti-web` e agli articoli esistenti;
+- taglio locale.
+
+I temi vanno proposti prima alla SEO, per evitare che i nostri articoli si facciano concorrenza su Google.
+
+1. **GEO 1, martedì 8/12: "La tua attività compare nelle risposte di ChatGPT, Gemini e Google? Come controllarlo in provincia di Taranto"** (articolo nuovo).
+   - Domande da fare alle AI come un cliente, cosa guardare, scheda Google e sito coerenti, cosa non promettere.
+   - Link a `seo-ai-overviews-geo-google`, `instagram-su-google-seo-profilo`, `/siti-web`.
+2. **GEO 2, venerdì 18/12: "Quante visite ti portano ChatGPT e Gemini? Il canale AI Assistant di GA4 spiegato a un'attività locale"** (articolo nuovo).
+   - Fonte ufficiale: [guida ai gruppi di canali di GA4](https://support.google.com/analytics/answer/9756891?hl=en). Il canale raccoglie le visite da ChatGPT, Gemini, Claude e altri. AI Overviews e AI Mode di Google restano in "Ricerca organica".
+   - Limiti: le app che non passano il referer non vengono contate.
+   - È distinto da `google-business-profile-ga4`, che parla delle visite dalla scheda Google.
+3. **GEO 3, gennaio (aggiornamento, non articolo nuovo): il report "Generative AI performance" di Search Console passo passo.**
+   - C'è già `ai-overviews-search-console-report`: va aggiornato quello, così i due articoli non si fanno concorrenza su Google.
+   - Fonte: [guida della community di Search Central](https://support.google.com/webmasters/community-guide/463964235/understanding-and-utilizing-generative-ai-performance-reports-in-google-search-console?hl=en-KY). La data di lancio va verificata su una pagina ufficiale di Google.
+4. **GEO 4, gennaio: "Risposte AI e attività locali: cosa cambia per ristoranti, studi, strutture ricettive e officine"** (articolo nuovo).
+   - Un esempio per ogni settore, con clienti reali: Casa28, Ricciardi, Masseria Sacramento, DIRAM.
+
+**Parere della SEO del 25/11, da applicare:**
+- **GEO 1:** nel title va la frase che la gente scrive, per esempio "come sapere se ChatGPT conosce la tua attività". Le ricerche sono ancora poche, quindi le impressioni saranno basse.
+- **GEO 2:** nella stessa PR va ridotta a 2-3 righe la sezione "Un canale per il traffico da ChatGPT" di `google-business-profile-ga4`, con un link al nuovo articolo, così i due non si fanno concorrenza su Google.
+- **GEO 3:** confermato come aggiornamento, non come articolo nuovo.
+- **GEO 4:** solo i risultati di RISULTATI-CLIENTI-VERIFICATI.md.
+- **Link:** `/siti-web#geo` solo dopo che Sito Inlab ha pubblicato la sezione GEO (brief SEO 2026-11-24-geo-servizi.md, punto G4). Fino ad allora si linka `/siti-web`.
+
+## Aggiornamenti fatti il 25/11 (richiesta del Direttore, sui dati SEO del 24/11)
+
+- **`reel-o-post-cosa-pubblicare-instagram`:**
+  - risposta netta nelle prime 2 righe;
+  - confronto punto per punto (con l'immagine già presente: niente tabelle Markdown, per regola di Nicola);
+  - FAQ con le varianti "post o reel differenza" e "reel o post";
+  - seoDescription più diretta.
+  - Obiettivo: almeno 1 clic a settimana e posizione sotto 7. Ricontrollo il 23/12.
+- **`idee-reel-ristoranti`:**
+  - title e seoTitle che partono da "Reel per ristoranti";
+  - esempio della Pizzeria Hermitage;
+  - riquadro contatti a metà;
+  - link a gestione social Castellaneta, Mottola e Laterza.
+  - Obiettivo: "reel per ristoranti" sotto la posizione 10. Ricontrollo il 23/12.
+- **`sponsorizzate-instagram-attivita-locali`:** link a `/meta-ads-taranto` nella sezione sulla zona, con il testo "campagne Facebook Ads e Instagram a Taranto".
 
 ## Aggiornamento del mese
 
-**`sponsorizzate-instagram-attivita-locali`** (richiesta SEO del 17/11, §12). Esce martedì 8/12, insieme all'articolo del giorno. Oggi è in posizione 5,8, con 28 impressioni e 0 clic in una settimana.
+**`sponsorizzate-instagram-attivita-locali`** (richiesta SEO del 17/11, §12). Esce venerdì 11/12, insieme all'articolo del giorno. Oggi è in posizione 5,8, con 28 impressioni e 0 clic in una settimana.
 - **title e seoTitle più cliccabili:** la domanda concreta in testa, per esempio *"Sponsorizzate su Instagram per un'attività locale: come farle rendere"*.
 - **Risposta diretta in apertura:** 2-3 righe con la risposta, prima di tutto il resto.
 - **Sezione nuova** "Come promuovere un reel su Instagram", già prevista dal piano di novembre.

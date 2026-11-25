@@ -202,3 +202,54 @@ Per il testo completo vedi `docs/seo/LINEE-GUIDA-BLOG.md` §13 e il brief SEO `2
 - **Cosa non promettere:** numeri garantiti, prezzi, tempi per le posizioni su Google.
 - **Regola anti-somiglianza:** la frase "se pensi di fermarti dopo un mese, meglio non iniziare" resta solo nella FAQ di `/gestione-social`. Negli articoli lo stesso concetto va scritto con parole nuove.
 - **Prima di ogni PR:** `grep -n -i "alcuni mesi\|tre mesi\|primi mesi\|qualche mese" src/data/blogSeed.ts docs/blog-reports/bozze/*.md`. Restano ammessi i "mesi" che indicano altro: scadenze di legge, contratti, piano editoriale, i "4 mesi di agenda piena" di Inox Racing.
+
+## Giro settimanale sulle fonti (richiesta di Nicola, 24/11/2026)
+
+**Ogni martedì** si fa il giro completo sulle fonti elencate sopra, non 2-3 ricerche generiche. Il giro si divide per gruppi, con una ricerca per gruppo, limitata ai domini delle fonti (`allowed_domains`):
+
+1. **Google:** Search Status Dashboard, Search Central (aggiornamenti della documentazione), Business Profile Help, Google Ads, e la stampa di settore (Search Engine Land, Search Engine Roundtable).
+2. **Meta:** Newsroom, Meta for Business, e la stampa di settore (Social Media Today).
+3. **TikTok:** Newsroom e Business Resource Center.
+4. **Normativa:** Garante, AGCOM, AgID, Commissione UE, EDPB.
+5. **Settore ed esperti:** Search Engine Journal, Buffer, Later, Sprout Social, HubSpot.
+
+Il risultato va in `docs/blog-reports/monitoraggio-AAAA-MM-GG.md`:
+- ogni novità con la sua classe A, B o C e la fonte;
+- le decisioni prese.
+
+Il venerdì basta un controllo rapido delle notizie A.
+
+Le novità di classe A e le B confermate da una fonte ufficiale diventano:
+- un articolo di novità con taglio locale, entro il massimo di 3 nazionali al mese;
+- oppure un aggiornamento di un articolo esistente.
+
+Lo scopo è non scrivere solo articoli di zona, ma restare aggiornati su quello che cambia.
+
+### Prova delle fonti in ogni report (richiesta del Direttore, 24/11/2026)
+
+Ogni report e ogni file di monitoraggio hanno una sezione "Prova delle fonti" per **tutti i 5 gruppi**. Per ogni gruppo si scrive:
+- **ricerche:** quante sono state fatte e quali;
+- **fonti:** link con data;
+- **esito:** trattata, scartata (con il motivo) o da ricontrollare.
+
+Se un gruppo non è stato consultato, va scritto. Si usa un elenco, non una tabella Markdown (regola di Nicola).
+
+Il Direttore controlla a campione che i link funzionino.
+
+**Articoli di novità:** almeno 1 a settimana quando il giro trova notizie A o B confermate da una fonte ufficiale. Hanno sempre un taglio locale nel titolo.
+
+## Patto del team (Nicola, 24/11/2026; testo in docs/direzione/PATTO-DEL-TEAM.md)
+
+1. **Tre righe fisse alla fine di ogni report:**
+   - **Cosa ho imparato** (un fatto, con la fonte o il dato);
+   - **Cosa cambio da ora**;
+   - **Cosa insegno a un collega** (a chi, e cosa).
+2. **Diario:** si tiene in `docs/blog-reports/diario-lezioni.md` e si rilegge ogni martedì, all'inizio della routine.
+3. **Dati della SEO:** ogni martedì si legge la sezione «Per il Blog: cosa funziona» dell'ultimo report del lunedì della SEO, e si scrive in base a quella.
+4. **Misure degli articoli:** in `docs/blog-reports/misure-articoli.md`. Ogni articolo si misura 2-4 settimane dopo l'uscita e si annota l'esito.
+
+### Novità per la SEO: formato fisso (Direttore, 25/11/2026)
+
+Si mette in coda a ogni report e in fondo a ogni monitoraggio, con **una riga per novità**:
+
+`data | fonte ufficiale (link) | cosa cambia | per chi (sito / blog / nessuno) | urgenza (subito / mese / info)`
