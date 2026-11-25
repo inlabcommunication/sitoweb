@@ -32,3 +32,6 @@
 
 ## 24/11/2026 — Messaggio duplicato a Sito Inlab
 - Ho fatto un `fire_trigger` manuale su un messaggio già programmato a un orario: Sito Inlab l'ha ricevuto due volte. **Regola:** per un messaggio una-tantum o lo programmo (e non lo sparo) o lo sparo subito (e lo programmo lontano nel tempo per non averlo due volte): non entrambe le cose.
+
+## 25/11/2026 — Verificare la regola completa prima di segnalare «fuori area»
+- Ho presentato `tools/blog-images/` come fuori dall'area del Blog: nel CLAUDE.md l'area comprende anche lo strumento delle immagini. **Regola:** prima di segnalare una violazione di area, rileggere la riga intera del CLAUDE.md, non l'elenco abbreviato nel mio riepilogo.
