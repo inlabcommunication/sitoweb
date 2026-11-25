@@ -4,7 +4,7 @@
  * più scrivere direttamente nel database.
  */
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import { ipKey, getAdminDb, hashKey, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
+import { ipKey, dailyCap, getAdminDb, hashKey, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
 import { FieldValue } from "firebase-admin/firestore";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
@@ -13,6 +13,10 @@ import { createHash } from "node:crypto";
 
 // "Come ci hai conosciuto?" (GS-3, Nicola 23/11): solo queste voci, uguali a quelle del modulo in src/App.tsx
 const HOW_FOUND = new Set(["Passaparola", "Ho visto un vostro lavoro sui social di un cliente", "Instagram o Facebook di InLab", "Ricerca su Google", "ChatGPT o altre AI", "Altro"]);
+
+/** Tetto giornaliero globale dei lead salvati (audit 24/11, P2): oltre, niente scritture e i contatti diretti */
+const LEAD_DAILY_CAP = 200;
+const CONTACT_FALLBACK = "Non riusciamo a salvare la richiesta in questo momento: scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319.";
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
@@ -188,6 +192,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const db = getAdminDb();
     if (!(await rateLimit(db, "lead", ipKey(req), 5, 3600))) {
       return res.status(429).json({ error: "Troppi invii. Riprova più tardi." });
+    }
+    if (!(await dailyCap(db, "lead_create", LEAD_DAILY_CAP))) {
+      console.warn("[lead] tetto giornaliero dei lead raggiunto");
+      return res.status(429).json({ error: CONTACT_FALLBACK });
     }
     if (downloadCase) {
       const doc = await findPresentation(db, downloadCase);
