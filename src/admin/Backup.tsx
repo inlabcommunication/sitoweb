@@ -7,10 +7,11 @@ import { collection, doc, documentId, getCountFromServer, getDoc, getDocs, limit
 // «Scarica copia» (Direttore 25/11): copia di sicurezza in JSON di contenuti del sito, lead e articoli.
 // Tutto avviene nel browser dell'admin: nessun invio a servizi esterni, niente scritto nel database
 // o nel repository. Lettura a pagine da 500 documenti, per non esaurire le letture del piano Spark.
-// Costo: 1 lettura per documento (minimo 1 per pagina) + 1 per site_content + 2 conteggi di controllo.
+// Costo: 1 lettura per documento (minimo 1 per pagina) + 3 documenti di app/ + 2 conteggi di controllo.
 
 const PAGE = 500;
 const COLLECTIONS = ['leads', 'blog_posts'] as const;
+const SINGLE_DOCS = ['site_content', 'media_library', 'settings'] as const;
 
 /** Le date di Firestore diventano testo ISO, così il file è leggibile e si reimporta facilmente */
 const plain = (v: any): any => {
@@ -45,11 +46,21 @@ export const Backup = () => {
     if (!db) return;
     setState({ busy: true, progress: 'Lettura dei contenuti del sito…' });
     try {
-      const site = await getDoc(doc(db, 'app', 'site_content'));
-      const data: Record<string, any> = { site_content: site.exists() ? plain(site.data()) : null };
-      const counts: Record<string, number> = { site_content: site.exists() ? 1 : 0 };
+      const data: Record<string, any> = {};
+      const counts: Record<string, number> = {};
+      // Documenti singoli: contenuti del sito, indice della libreria media (file su Cloudinary) e
+      // impostazioni del chatbot (provider, modello, informazioni; le chiavi API non sono qui)
+      for (const id of SINGLE_DOCS) {
+        const snap = await getDoc(doc(db, 'app', id));
+        // Le chiavi API non devono mai finire in un file: se ne è rimasta qualcuna in app/settings
+        // (salvata in passato, vedi Impostazioni) si toglie dalla copia
+        const raw = snap.exists() ? { ...snap.data() } : null;
+        if (raw && id === 'settings') for (const k of Object.keys(raw)) if (/key|secret|token|password/i.test(k)) delete raw[k];
+        data[id] = raw ? plain(raw) : null;
+        counts[id] = snap.exists() ? 1 : 0;
+      }
       const expected: Record<string, number> = {};
-      let reads = 1;
+      let reads = SINGLE_DOCS.length;
       for (const name of COLLECTIONS) {
         const r = await readAll(name, (n) => setState({ busy: true, progress: `Lettura ${name}: ${n} documenti…` }));
         data[name] = r.docs;
@@ -84,7 +95,7 @@ export const Backup = () => {
   return (
     <div>
       <p style={{ fontSize: 12, color: 'var(--m)', lineHeight: 1.7, marginBottom: 12 }}>
-        Scarica in un file JSON i contenuti del sito, tutti i lead e gli articoli del blog. Consigliato una volta a settimana. Istruzioni e ripristino: <code>docs/sviluppo/backup.md</code>.
+        Scarica in un file JSON i contenuti del sito, tutti i lead, gli articoli del blog, l'elenco della libreria media e le impostazioni del chatbot. Consigliato una volta a settimana. Istruzioni e ripristino: <code>docs/sviluppo/backup.md</code>.
       </p>
       <div role="note" style={{ padding: '12px 14px', background: 'rgba(255,200,120,0.08)', border: '.5px solid rgba(255,200,120,0.35)', borderRadius: 12, fontSize: 12, color: '#ffd9a0', lineHeight: 1.7, marginBottom: 12 }}>
         <AlertCircle size={12} style={{ display: 'inline', marginRight: 6 }} />

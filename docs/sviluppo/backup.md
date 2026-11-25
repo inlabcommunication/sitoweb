@@ -2,7 +2,7 @@
 
 ## Come scaricarla
 1. Dashboard → **Impostazioni** → riquadro **Copia di sicurezza** → **Scarica copia**.
-2. Si scarica il file `inlab-copia-AAAA-MM-GG.json` con i contenuti del sito (`site_content`), tutti i lead e tutti gli articoli del blog (anche le bozze).
+2. Si scarica il file `inlab-copia-AAAA-MM-GG.json` con i contenuti del sito (`site_content`), tutti i lead, tutti gli articoli del blog (anche le bozze), l'elenco della libreria media (`media_library`) e le impostazioni del chatbot (`settings`, senza chiavi).
 3. Il messaggio verde dice **«Copia scaricata e completa»**: il numero di lead e articoli nel file è uguale a quello in Firestore. Se il messaggio è rosso, riprova; se si ripete, avvisa Sito Inlab.
 
 ## Dove conservarla
@@ -15,7 +15,7 @@
 **Una volta a settimana** (per esempio il lunedì) e **prima di ogni modifica grossa** dalla dashboard.
 
 ## Quanto costa
-Circa 1 lettura per ogni lead e articolo, più 3 letture: con 100 lead e 20 articoli sono circa 123 letture. Il piano gratuito di Firebase ne consente 50.000 al giorno: una copia alla settimana non pesa.
+Circa 1 lettura per ogni lead e articolo, più 5 letture: con 100 lead e 20 articoli sono circa 125 letture. Il piano gratuito di Firebase ne consente 50.000 al giorno: una copia alla settimana non pesa.
 
 ## Come si ripristina
 - **Un testo o un caso studio cancellato per sbaglio:** apri il file con un editor di testo, cerca la parte che serve dentro `site_content` e ricopiala a mano nella dashboard (Editor).
@@ -26,4 +26,4 @@ Circa 1 lettura per ogni lead e articolo, più 3 letture: con 100 lead e 20 arti
   - Resta solo sul tuo computer, e solo per il tempo del ripristino.
 
 ## Cosa NON c'è nella copia
-Le statistiche interne (`analytics_events`), le impostazioni del chatbot (`app/settings`) e i file su Cloudinary (immagini, video, PDF). Quei file restano su Cloudinary.
+Le statistiche interne (`analytics_events`) e i file veri e propri su Cloudinary (immagini, video, PDF): restano su Cloudinary, nella copia c'è il loro elenco. Le chiavi API non sono mai nel database, quindi nemmeno nella copia.
