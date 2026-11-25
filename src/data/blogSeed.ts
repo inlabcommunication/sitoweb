@@ -2257,18 +2257,19 @@ Se preferisci affidarti a chi lo fa ogni giorno, scopri il servizio di [campagne
   },
   {
     slug: 'idee-reel-ristoranti',
-    title: '15 idee di reel per ristoranti e bar (con esempi da girare subito)',
+    title: 'Reel per ristoranti e bar: 15 idee da girare subito, con esempi dalla provincia di Taranto',
     excerpt: 'Dalla cucina allo staff, dal locale pieno agli eventi: 15 idee di reel per ristoranti, bar e pizzerie, con le regole per girarle e come organizzare le riprese in mezza giornata.',
     category: 'Video & Reel',
     tags: ['reel', 'ristoranti', 'instagram', 'video', 'contenuti'],
     author: 'Ilaria Gemma',
     date: '2026-09-28',
+    updated: '2026-11-25',
     cover: '/blog/idee-reel-ristoranti/cover.jpg',
     coverAlt: 'Smartphone che mostra il reel di una pizza del giorno appena sfornata',
     published: true,
-    seoTitle: 'Idee reel per ristoranti e bar: 15 esempi da girare | InLab',
-    seoDescription: 'Idee reel per ristoranti e bar: 15 esempi da girare subito, come aprire il video nei primi 3 secondi e come organizzare le riprese in mezza giornata.',
-    content: `Cerchi **idee di reel per ristoranti** e bar che non siano il solito piatto ripreso dall'alto? Qui ne trovi 15, divise per tema, con come girarle e cosa mettere nei primi secondi. Sono pensate per chi ha poco tempo e uno smartphone, e funzionano anche per pizzerie, pasticcerie, pub e caffetterie.
+    seoTitle: 'Reel per ristoranti e bar: 15 idee da girare subito | InLab',
+    seoDescription: 'Reel per ristoranti, bar e pizzerie: 15 idee da girare subito, come aprire il video nei primi 3 secondi ed esempi di locali in provincia di Taranto.',
+    content: `Cerchi idee di **reel per ristoranti** e bar che non siano il solito piatto ripreso dall'alto? Qui ne trovi 15, divise per tema, con come girarle e cosa mettere nei primi secondi. Sono pensate per chi ha poco tempo e uno smartphone, e funzionano anche per pizzerie, pasticcerie, pub e caffetterie.
 
 **Risposta breve: i reel che portano clienti a un ristorante mostrano cose vere e riconoscibili: il piatto mentre nasce, le persone che ci lavorano, il locale pieno, le informazioni utili (menu, serate, orari). Si girano in verticale, con luce naturale, e fanno capire nei primi 3 secondi dove siamo e cosa si mangia.**
 
@@ -2326,6 +2327,8 @@ Un buon reel non deve per forza diventare virale. Deve far venire voglia a chi a
 
 ![Le 15 idee di reel per ristoranti e bar divise per tema](/blog/idee-reel-ristoranti/quindici-idee.webp)
 
+> **Il tuo locale ha bei piatti ma reel che non portano prenotazioni?** Organizziamo le riprese nel tuo ristorante e prepariamo i reel da pubblicare nelle settimane successive. [Chiedi un preventivo gratuito](/contatti?servizio=gestione-social): rispondiamo entro 24 ore.
+
 ## Come organizzare le riprese in mezza giornata
 
 Non serve girare tutti i giorni. Con un po' di organizzazione, una mattina di riprese può coprire due o tre settimane di contenuti.
@@ -2349,9 +2352,11 @@ Con i locali che seguiamo abbiamo visto che il contenuto più efficace è quello
 
 Per [Masseria Sacramento](/cliente/masseria-sacramento) a Palagianello la comunicazione accompagna ogni appuntamento del calendario, dalla festa della birra alle serate con musica live e al pranzo della domenica. Il reel non è mai isolato: annuncia, racconta e invita al prossimo evento.
 
+Per la [Pizzeria Hermitage](/cliente/pizzeria-hermitage) di Laterza ci hanno chiamati come professionisti esterni per la produzione video: riprese e montaggio di contenuti che raccontano il locale, la pizza e l'atmosfera della sala. È un esempio di come i reel di un ristorante possono essere girati in una sola sessione e poi pubblicati nel tempo.
+
 ## Domande frequenti
 
-### Che reel fare per un ristorante?
+### Che reel fare per un ristorante o una pizzeria?
 
 I più efficaci mostrano il piatto mentre nasce, le persone dello staff, il locale pieno e le informazioni utili come menu, serate e come prenotare. Scegli pochi format fissi e ripetili nel tempo, così il pubblico li riconosce.
 
@@ -2375,7 +2380,7 @@ Sì, se la tua clientela è anche lì. Molti usano TikTok per cercare dove mangi
 
 Scegli tre idee da questa lista, gira questa settimana e pubblica la prossima. Poi guarda quali reel portano messaggi, prenotazioni e commenti, e fai di più di quelli. Per il piano completo, dalle foto alle prenotazioni, leggi la guida ai [social media per ristoranti in provincia di Taranto](/blog/social-media-ristoranti-provincia-taranto).
 
-Se vuoi reel che raccontano davvero il tuo locale, scopri il nostro servizio di [video e reel per attività](/video). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
+Giriamo reel per ristoranti e bar del territorio: guarda la nostra gestione social a [Castellaneta](/gestione-social-castellaneta), a [Mottola](/gestione-social-mottola) e a [Laterza](/gestione-social-laterza), e il servizio di [video e reel per attività](/video). Oppure [raccontaci il tuo locale](/contatti): in 24 ore ti diciamo da dove partiremmo.`,
   },
   {
     slug: 'servizio-fotografico-ristoranti',
