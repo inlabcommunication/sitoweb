@@ -264,12 +264,18 @@ async function handle(req: VercelRequest, res: VercelResponse) {
 
     if (sessionId && db) {
       try {
-        const conversation = [...messages, { role: "assistant", content: visibleText }].slice(-30);
+        // Si salvano solo i messaggi del visitatore e le risposte generate qui dal server: le battute
+        // «assistant» che arrivano dal browser potrebbero essere inventate (audit 24/11, L2).
+        const reply = { role: "assistant" as const, content: visibleText };
+        const userTurns = messages.filter((x) => x.role === "user");
         const leadsRef = db.collection("leads");
         // Un solo lead per conversazione: se esiste già si aggiornano conversazione e contatti mancanti
         const existing = await leadsRef.where("session_id", "==", sessionId).limit(1).get();
         if (!existing.empty) {
           const old = existing.docs[0].data();
+          // conversazione già salvata dal server + l'ultimo messaggio del visitatore + la risposta di adesso
+          const saved = Array.isArray(old.conversation) ? old.conversation : [];
+          const conversation = [...saved, messages[messages.length - 1], reply].slice(-30);
           await existing.docs[0].ref.update({
             conversation, updated_at: new Date().toISOString(),
             ...(email && !old.email ? { email } : {}),
@@ -278,6 +284,7 @@ async function handle(req: VercelRequest, res: VercelResponse) {
           });
         } else if (email || phone) {
           const classification = ["freddo", "tiepido", "caldo", "urgente"].includes(m.classification) ? m.classification : "freddo";
+          const conversation = [...userTurns, reply].slice(-30);
           const tags = Array.isArray(m.tags) ? m.tags.map((t: unknown) => str(t, 40)).filter(Boolean).slice(0, 6) : [];
           await leadsRef.add({
             email, name, phone,
