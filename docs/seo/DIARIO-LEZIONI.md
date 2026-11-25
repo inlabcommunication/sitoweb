@@ -15,11 +15,18 @@ Lo rileggo ogni lunedì, prima dell'analisi settimanale. Ogni voce indica: cosa 
 - **Trends (24/11):** "geo seo" in Italia è intermittente e "seo chatgpt" è quasi a 0. Per la GEO non serve una pagina dedicata: basta una sezione su una pagina che vende.
 - **IndexNow e Bing:** Bing ha letto la sitemap da solo (229 pagine). Le richieste di indicizzazione su Google restano utili per le pagine nuove non scoperte.
 
+- **Core update di novembre (segnalato dal Blog il 25/11):**
+  - fonte: Search Status Dashboard; partito intorno al 10/11, con rilascio fino a 2 settimane;
+  - il calo delle impressioni delle pagine agenzia del 16-20/11 può dipendere dall'aggiornamento e non solo da R9;
+  - il 30/11 confronto le date sulla dashboard ufficiale prima di attribuire la causa;
+  - lezione: prima di dare la colpa a una nostra modifica, controllo se Google ha fatto aggiornamenti in quelle date.
+
 ## Regole nate dalle lezioni
 1. Ogni richiesta a Sito Inlab ha misura prima, obiettivo e data di ricontrollo (2-4 settimane), poi l'esito scritto: funzionato, no o da riprovare.
 2. Ogni analisi del lunedì ha 1-2 grafici e la sezione "Per il Blog: cosa funziona".
 3. Ogni analisi finisce con tre righe: cosa ho imparato, cosa cambio, cosa insegno a un collega.
 4. Le novità che porta il Blog e i dati del Competitor entrano nei brief: li cito come fonte.
+5. Prima di ogni diagnosi su un calo o una crescita controllo la Search Status Dashboard di Google per aggiornamenti nelle stesse date.
 
 ## Rilettura settimanale
 | Data | Riletto | Lezione nuova della settimana |
