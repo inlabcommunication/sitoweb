@@ -18,6 +18,9 @@ const HOW_FOUND = new Set(["Passaparola", "Ho visto un vostro lavoro sui social 
 const LEAD_DAILY_CAP = 200;
 const CONTACT_FALLBACK = "Non riusciamo a salvare la richiesta in questo momento: scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319.";
 
+/** Solo codice e messaggio dell'errore nel log, mai i dati del lead */
+const dbError = (e: any) => `${e?.code ?? ""} ${String(e?.message ?? e).slice(0, 200)}`.trim();
+
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
 /** Tetto giornaliero per istanza alle scritture del contatore degli scarti (il numero in dashboard è «almeno N») */
@@ -140,8 +143,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       if (!doc) return res.status(404).json({ error: "Documento non disponibile" });
       return res.status(200).json({ ok: true, url: signedDownload(doc.publicId) });
     } catch (e) {
-      console.error("Download pass error:", e);
-      return res.status(500).json({ error: "Errore interno" });
+      console.error("Download pass error:", dbError(e));
+      return res.status(503).json({ error: CONTACT_FALLBACK });
     }
   }
 
@@ -236,7 +239,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await notifyLeadCapped(db, { source: "contact_form", ...lead, fonte, landing: attribution?.landing });
     return res.status(200).json({ ok: true });
   } catch (e) {
-    console.error("Lead API error:", e);
-    return res.status(500).json({ error: "Errore interno" });
+    // Database non raggiungibile (es. quota esaurita): il lead non si può salvare, quindi la risposta
+    // dà subito email e telefono di InLab (audit 24/11, P2). Nel log solo codice e messaggio dell'errore.
+    console.error("Lead API error:", dbError(e));
+    return res.status(503).json({ error: CONTACT_FALLBACK });
   }
 }

@@ -1410,7 +1410,7 @@ const PageContatti = () => {
       if (!honeypot) gaEvent('generate_lead', { method: 'modulo_contatti', service: form.servizio || 'non indicato' });
     } catch(e){
       console.error('Save contact failed',e);
-      setError("Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com");
+      setError("Invio non riuscito. Riprova tra qualche istante, scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319");
     } finally {
       setSending(false);
     }

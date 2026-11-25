@@ -216,7 +216,7 @@ const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }
       // GA4: evento a parte, non generate_lead, per non contare i download come richieste (Direttore 23/11)
       if (!hp) gaEvent('download_presentazione', { caso: caseId });
     } catch {
-      setState({ error: 'Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com' });
+      setState({ error: 'Invio non riuscito. Riprova tra qualche istante, scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319' });
     }
   };
   const input: React.CSSProperties = { width: '100%', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 12, padding: '12px 16px', color: 'var(--t)', fontSize: 16, fontFamily: 'var(--fb)' };
