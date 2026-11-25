@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Phone, Calendar, Download, Search, Trash2, MessageSquare, Tag, X } from 'lucide-react';
 import { auth, db } from '../lib/firebase';
 import { firebaseConfig } from '../lib/firebaseConfig';
-import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
+import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc, limit, startAfter, type QueryDocumentSnapshot } from 'firebase/firestore';
 
 type Lead = {
   id: string;
@@ -39,6 +39,9 @@ const STATUS_COLOR: Record<Status, string> = { new: '#cdb2ff', qualified: '#a3e4
 const statusOf = (l: Lead): Status => (l.status in STATUS_LABEL ? l.status : 'new');
 const pageUrl = (p?: string | null) => (p ? p : '—');
 
+// Lead caricati per volta (audit 24/11, P2): una pagina da 500, poi «Carica altri»
+const PAGE = 500;
+
 export const Leads = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,14 +51,19 @@ export const Leads = () => {
   const [loadError, setLoadError] = useState('');
   const [check, setCheck] = useState<{ project?: string; total?: number; last?: { created_at: string; source: string } | null; error?: string; discarded?: { trappola_token_valido: number } } | null>(null);
   const [checking, setChecking] = useState(false);
+  const [lastDoc, setLastDoc] = useState<QueryDocumentSnapshot | null>(null);
+  const [hasMore, setHasMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const load = async () => {
     if (!db) { setLoading(false); return; }
     setLoading(true);
     setLoadError('');
     try {
-      const snap = await getDocs(query(collection(db, 'leads'), orderBy('created_at', 'desc')));
+      const snap = await getDocs(query(collection(db, 'leads'), orderBy('created_at', 'desc'), limit(PAGE)));
       setLeads(snap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead)));
+      setLastDoc(snap.docs[snap.docs.length - 1] ?? null);
+      setHasMore(snap.size === PAGE);
     } catch (e: any) {
       console.error('Caricamento lead non riuscito', e);
       setLoadError(e?.code === 'permission-denied'
@@ -63,6 +71,21 @@ export const Leads = () => {
         : `Caricamento non riuscito (${e?.code || e?.message || 'errore sconosciuto'}).`);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadMore = async () => {
+    if (!db || !lastDoc) return;
+    setLoadingMore(true);
+    try {
+      const snap = await getDocs(query(collection(db, 'leads'), orderBy('created_at', 'desc'), startAfter(lastDoc), limit(PAGE)));
+      setLeads((prev) => [...prev, ...snap.docs.map((d) => ({ id: d.id, ...d.data() } as Lead))]);
+      setLastDoc(snap.docs[snap.docs.length - 1] ?? lastDoc);
+      setHasMore(snap.size === PAGE);
+    } catch (e: any) {
+      setLoadError(`Caricamento non riuscito (${e?.code || e?.message || 'errore sconosciuto'}).`);
+    } finally {
+      setLoadingMore(false);
     }
   };
 
@@ -136,7 +159,8 @@ export const Leads = () => {
       {loadError && <div role="alert" style={{ padding: '12px 16px', marginBottom: '1rem', borderRadius: 12, border: '.5px solid #ff9b9b', color: '#ffb4b4', fontSize: 13 }}>{loadError}</div>}
       {check && (() => {
         const mismatch = !!(check.project && dashboardProject && check.project !== dashboardProject);
-        const missing = !check.error && (check.total ?? 0) > leads.length;
+        // con altre pagine ancora da caricare il server ne vede di più per forza: non è un problema
+        const missing = !check.error && !hasMore && (check.total ?? 0) > leads.length;
         const ok = !check.error && !mismatch && !missing;
         return (
           <div role="status" style={{ padding: '12px 16px', marginBottom: '1rem', borderRadius: 12, border: `.5px solid ${ok ? '#a3e4a3' : '#ffd699'}`, color: 'var(--t)', fontSize: 13, lineHeight: 1.6 }}>
@@ -176,7 +200,7 @@ export const Leads = () => {
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {filtered.map((l, i) => (
-            <motion.div key={l.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.02 }} onClick={() => setSelected(l)}
+            <motion.div key={l.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(i, 25) * 0.02 }} onClick={() => setSelected(l)}
               style={{ padding: '1rem 1.25rem', background: 'var(--s)', border: '.5px solid var(--b)', borderRadius: 14, cursor: 'pointer', display: 'grid', gridTemplateColumns: 'auto 1fr auto auto', gap: 16, alignItems: 'center', transition: 'border-color .2s' }}
               whileHover={{ borderColor: 'rgba(205,178,255,0.3)', x: 2 }}>
               <div style={{ width: 8, height: 8, borderRadius: '50%', background: STATUS_COLOR[statusOf(l)] }} />
@@ -185,6 +209,12 @@ export const Leads = () => {
               <div style={{ fontSize: 10, letterSpacing: '.1em', textTransform: 'uppercase', color: STATUS_COLOR[statusOf(l)], fontWeight: 500 }}>{STATUS_LABEL[statusOf(l)]}</div>
             </motion.div>
           ))}
+        </div>
+      )}
+      {!loading && hasMore && (
+        <div style={{ textAlign: 'center', marginTop: '1rem' }}>
+          <button onClick={loadMore} disabled={loadingMore} className="btn btn-g">{loadingMore ? 'Caricamento...' : `Carica altri (mostrati ${leads.length})`}</button>
+          <div style={{ fontSize: 11, color: 'var(--m)', marginTop: 6 }}>Ricerca, filtri ed esportazione CSV valgono per i lead caricati.</div>
         </div>
       )}
 
