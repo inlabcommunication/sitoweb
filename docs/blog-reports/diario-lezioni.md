@@ -19,6 +19,11 @@ Patto del team del 24/11/2026: dati, non opinioni. Si aggiunge una lezione ogni 
 - **24/11, notizie solo da fonti secondarie.** La modifica delle storie di Instagram la riporta solo Social Media Today.
   - **Regola:** un articolo di novità esce solo con una fonte ufficiale, altrimenti resta "da ricontrollare".
 
+- **25/11, i dati della SEO.** `tracking-pixel`, che è un articolo di novità, è l'unico con clic veri (5). `reel-o-post` ha invece 422 impressioni e 0 clic.
+  - **Regola:** la risposta netta va nella prima frase e le varianti delle query di Search Console diventano le domande delle FAQ.
+- **25/11, routine in ritardo.** La routine di martedì 24/11 è arrivata con 36 ore di ritardo.
+  - **Regola:** all'inizio di ogni routine controllare la data reale (`date -u`) e dire nel report se l'uscita è in ritardo.
+
 ## Lezioni da passare ai colleghi
 
 - **Alla SEO:**
