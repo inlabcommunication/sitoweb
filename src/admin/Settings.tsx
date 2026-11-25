@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import type React from 'react';
-import { Bot, Key, Save, CheckCircle, AlertCircle, Zap } from 'lucide-react';
+import { Bot, Key, Save, CheckCircle, AlertCircle, Zap, DownloadCloud } from 'lucide-react';
+import { Backup } from './Backup';
 import { auth, db } from '../lib/firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
@@ -170,6 +171,12 @@ export const Settings = () => {
       <button onClick={save} disabled={saving} className="btn btn-p" style={{ display: 'flex', alignItems: 'center', gap: 8, opacity: saving ? 0.6 : 1 }}>
         {status === 'saved' ? <><CheckCircle size={14} /> Salvato</> : status === 'error' ? <><AlertCircle size={14} /> Errore</> : <><Save size={14} /> {saving ? 'Salvataggio...' : 'Salva impostazioni'}</>}
       </button>
+
+      <div style={{ marginTop: '2.5rem' }}>
+        <Section icon={<DownloadCloud size={15} />} title="Copia di sicurezza">
+          <Backup />
+        </Section>
+      </div>
     </div>
   );
 };
