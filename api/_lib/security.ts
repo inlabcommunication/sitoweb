@@ -20,6 +20,26 @@ export function clientIp(req: VercelRequest): string {
 }
 
 /**
+ * Chiave per i limiti di frequenza: l'IPv4 com'è, l'IPv6 ridotto al suo /64.
+ * Una singola connessione IPv6 riceve di solito un intero /64 (milioni di
+ * indirizzi): limitare l'indirizzo esatto non fermerebbe nessuno (audit 24/11, P2).
+ */
+export function ipKey(req: VercelRequest): string {
+  return ipRateKey(clientIp(req));
+}
+export function ipRateKey(ip: string): string {
+  let v = ip.trim().toLowerCase().replace(/^\[|\]$/g, "").split("%")[0];
+  if (!v.includes(":")) return v;                          // IPv4 (o "unknown")
+  if (/^::ffff:\d+\.\d+\.\d+\.\d+$/.test(v)) return v.slice(7); // IPv4 scritto come IPv6
+  const [head, tail = ""] = v.split("::");
+  const h = head ? head.split(":") : [];
+  const t = v.includes("::") && tail ? tail.split(":") : [];
+  const groups = v.includes("::") ? [...h, ...Array(Math.max(0, 8 - h.length - t.length)).fill("0"), ...t] : h;
+  const prefix = groups.slice(0, 4).map((g) => (parseInt(g || "0", 16) || 0).toString(16));
+  return `${prefix.join(":")}::/64`;
+}
+
+/**
  * Segreto del server per hash e firme. Nessun valore predefinito nel codice:
  * RATE_LIMIT_SALT se impostato, altrimenti derivato dalla chiave dell'account
  * di servizio (segreta anche lei), altrimenti casuale per istanza.
@@ -112,6 +132,19 @@ export async function requireAdmin(req: VercelRequest): Promise<string | null> {
 export function securityHeaders(res: VercelResponse) {
   res.setHeader("Cache-Control", "no-store");
   res.setHeader("X-Content-Type-Options", "nosniff");
+}
+
+/**
+ * Corpo JSON della richiesta, o null se non è un JSON valido. Su Vercel req.body è letto alla prima
+ * lettura e lancia un'eccezione se il JSON è malformato: così diventa un 400, non un 500.
+ */
+export function jsonBody(req: VercelRequest): Record<string, any> | null {
+  try {
+    const b = req.body;
+    return b && typeof b === "object" && !Array.isArray(b) ? b : b == null || b === "" ? {} : null;
+  } catch {
+    return null;
+  }
 }
 
 export const str = (v: unknown, max: number): string =>

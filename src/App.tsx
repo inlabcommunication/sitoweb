@@ -167,6 +167,11 @@ const G = () => (
       .pad-mob{padding:4rem 1.25rem!important}
       .grid-col-span-1-mob{grid-column:span 1!important}
       .grid-2-mob{grid-template-columns:repeat(2,1fr)!important}
+      /* Schede cliente e casi studio più compatte da telefono (richiesta Nicola 23/11): solo spazi,
+         stessa grafica. Le classi sono usate solo in quelle pagine (la home non cambia). */
+      .sec-mob{padding-top:3.5rem!important;padding-bottom:3.5rem!important}
+      .gap-mob{gap:2rem!important}
+      .h2-mob{margin-bottom:1.5rem!important}
       .chat-launcher{transform:scale(.8);transform-origin:bottom right;bottom:12px!important;right:12px!important}
       .chat-bubble{display:none!important}
       /* area di tocco di almeno 44 px per i link del footer (richiesta analista, approvata) */
@@ -814,7 +819,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
               <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase"}}>{site.title}</h3>
               <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
               <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-                <a className="btn btn-p" href={site.url} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
+                <a className="btn btn-p" href={/^https:\/\//i.test(site.url.trim()) ? site.url.trim() : undefined} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
                 {site.caseStudy && cases.some((x: any)=>x.id===site.caseStudy) && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
               </div>
             </div>
@@ -1405,7 +1410,7 @@ const PageContatti = () => {
       if (!honeypot) gaEvent('generate_lead', { method: 'modulo_contatti', service: form.servizio || 'non indicato' });
     } catch(e){
       console.error('Save contact failed',e);
-      setError("Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com");
+      setError("Invio non riuscito. Riprova tra qualche istante, scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319");
     } finally {
       setSending(false);
     }
@@ -2119,8 +2124,8 @@ const PageCliente = ({id}: {id: string}) => {
         </div>
       </section>
 
-      <section style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
-        <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob">
+      <section className="sec-mob" style={{padding:"7rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <div style={{maxWidth:1280,margin:"0 auto",display:"grid",gridTemplateColumns:"1fr 1fr",gap:"5rem",alignItems:"start"}} className="grid-1-mob gap-mob">
           <div>
             {client.logo&&<img src={cld(client.logo, 400)} alt={`Logo ${client.name}`} style={{maxHeight:74,maxWidth:240,objectFit:"contain",marginBottom:"2rem",display:"block"}}/>}
             <p className="section-label">Scheda cliente</p>
@@ -2165,20 +2170,20 @@ const PageCliente = ({id}: {id: string}) => {
       </section>
 
       {reels.length>0&&(
-        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <section className="sec-mob" style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Reel</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">VIRALI</span></h2>
+            <h2 className="h2-mob" style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>CONTENUTI<br/><span className="stroke">VIRALI</span></h2>
             <ReelsGrid reels={reels}/>
           </div>
         </section>
       )}
 
       {gallery.length>0&&(
-        <section style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
+        <section className="sec-mob" style={{padding:"6rem 2rem",borderBottom:".5px solid var(--b)"}}>
           <div style={{maxWidth:1280,margin:"0 auto"}}>
             <p className="section-label">Foto</p>
-            <h2 style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>DIETRO<br/><span className="stroke">L'OBIETTIVO</span></h2>
+            <h2 className="h2-mob" style={{fontFamily:"var(--fd)",fontSize:"clamp(2.6rem,5vw,5rem)",lineHeight:.9,marginBottom:"2.5rem"}}>DIETRO<br/><span className="stroke">L'OBIETTIVO</span></h2>
             <Gallery images={gallery} alt={workAlt(client)}/>
           </div>
         </section>

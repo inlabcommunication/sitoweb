@@ -30,7 +30,7 @@ const CaseHeroBack: React.FC<{ onBack: () => void }> = ({ onBack }) => (
 );
 
 const SectionTitle: React.FC<{ tag: string; title: React.ReactNode }> = ({ tag, title }) => (
-  <div style={{ marginBottom: '2rem' }}>
+  <div className="h2-mob" style={{ marginBottom: '2rem' }}>
     <p className="section-label">{tag}</p>
     <h2 style={{
       fontFamily: 'var(--fd)',
@@ -87,7 +87,7 @@ const Lead: React.FC<{ text?: string; mb?: string }> = ({ text, mb = '2.5rem' })
   text ? <p style={{ fontSize: 17, color: 'var(--t)', lineHeight: 1.85, maxWidth: 760, marginBottom: mb, whiteSpace: 'pre-line' }}>{text}</p> : null;
 
 const Section: React.FC<{ children: React.ReactNode; glow?: boolean }> = ({ children, glow }) => (
-  <section style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
+  <section className="sec-mob" style={{ padding: '7rem 2rem', borderBottom: '.5px solid var(--b)', position: 'relative', overflow: 'hidden' }}>
     {glow && <div style={{ position: 'absolute', top: '50%', left: '50%', width: 600, height: 600, transform: 'translate(-50%, -50%)', background: 'radial-gradient(closest-side, rgba(205,178,255,0.04) 0%, rgba(205,178,255,0.02) 45%, rgba(205,178,255,0) 100%)', borderRadius: '50%', pointerEvents: 'none' }} />}
     <div style={{ maxWidth: 1120, margin: '0 auto', position: 'relative', zIndex: 1 }}>{children}</div>
   </section>
@@ -165,7 +165,34 @@ const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }
     try { const r = await fetch('/api/lead'); token.current = String((await r.json()).token || ''); } catch { /* riprova all'invio */ }
     return token.current;
   };
-  const openForm = () => { setOpen(true); getToken(); };
+  // «Pass» del server (90 giorni, nessun dato personale) salvato nel browser dopo il primo invio:
+  // chi ha già lasciato i dati riscarica senza rifare il modulo; ogni volta il server crea un nuovo
+  // link di 10 minuti. Niente nuovo lead e niente evento GA (Nicola 23/11).
+  const passKey = `inlab_dl_pass_${caseId}`;
+  const readPass = () => {
+    try {
+      const p = localStorage.getItem(passKey) || '';
+      const exp = Number(p.split('.')[2] || 0);
+      return exp * 1000 > Date.now() ? p : '';
+    } catch { return ''; }
+  };
+  const dropPass = () => { try { localStorage.removeItem(passKey); } catch { /* memoria non disponibile */ } };
+  const [repeating, setRepeating] = React.useState(false);
+  const repeat = async (pass: string) => {
+    setOpen(true); setExpired(false); setState({}); setRepeating(true);
+    try {
+      const r = await fetch('/api/lead', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ download: { caseId }, pass }) });
+      if (r.status === 403) { dropPass(); setState({}); getToken(); return; } // pass non più valido: si torna al modulo
+      if (r.status === 429) return setState({ error: "Hai fatto troppe richieste. Riprova tra un'ora o scrivici a inlab.communication@gmail.com" });
+      const d = await r.json().catch(() => ({}));
+      const url = safeUrl(d?.url);
+      if (!r.ok || !url) throw new Error(`HTTP ${r.status}`);
+      setState({ done: true, url });
+    } catch {
+      setState({ error: 'Download non disponibile in questo momento. Riprova tra poco o scrivici a inlab.communication@gmail.com' });
+    } finally { setRepeating(false); }
+  };
+  const openForm = () => { const p = readPass(); if (p) { repeat(p); return; } setOpen(true); getToken(); };
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!f.nome.trim() || !f.email.trim()) return setState({ error: 'Inserisci nome ed email.' });
@@ -185,19 +212,23 @@ const DownloadForm: React.FC<{ caseId: string; cta: string }> = ({ caseId, cta }
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
       const d = await r.json().catch(() => ({}));
       setState({ done: true, url: safeUrl(d?.url) });
+      if (typeof d?.pass === 'string' && /^v1\./.test(d.pass)) { try { localStorage.setItem(passKey, d.pass); } catch { /* memoria non disponibile */ } }
       // GA4: evento a parte, non generate_lead, per non contare i download come richieste (Direttore 23/11)
       if (!hp) gaEvent('download_presentazione', { caso: caseId });
     } catch {
-      setState({ error: 'Invio non riuscito. Riprova tra qualche istante o scrivici a inlab.communication@gmail.com' });
+      setState({ error: 'Invio non riuscito. Riprova tra qualche istante, scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319' });
     }
   };
   const input: React.CSSProperties = { width: '100%', background: 'rgba(255,255,255,0.04)', border: '.5px solid var(--b)', borderRadius: 12, padding: '12px 16px', color: 'var(--t)', fontSize: 16, fontFamily: 'var(--fb)' };
   const label: React.CSSProperties = { fontSize: 12, fontWeight: 500, letterSpacing: '.13em', textTransform: 'uppercase', color: 'var(--m)', display: 'block', marginBottom: 6 };
   if (!open) return <button type="button" className="btn btn-p" onClick={openForm} style={{ marginTop: '2rem' }}>{cta} <ArrowRight size={14} /></button>;
+  if (repeating) return <p role="status" style={{ marginTop: '2rem', fontSize: 15, color: 'var(--m)' }}>Preparo il download…</p>;
   if (state.done) return (
     <div style={{ marginTop: '2rem', padding: '1.5rem', border: '.5px solid rgba(205,178,255,0.25)', borderRadius: 18, background: 'rgba(205,178,255,0.05)' }}>
       {state.url ? (expired
-        ? <p style={{ fontSize: 15, color: 'var(--t)' }}>Il link per scaricare è scaduto (vale 10 minuti). Ricarica la pagina per richiederne uno nuovo, oppure scrivici a inlab.communication@gmail.com.</p>
+        ? (readPass()
+          ? <button type="button" className="btn btn-p" onClick={() => repeat(readPass())}>Scarica di nuovo <ArrowRight size={14} /></button>
+          : <p style={{ fontSize: 15, color: 'var(--t)' }}>Il link per scaricare è scaduto (vale 10 minuti). Ricarica la pagina per richiederne uno nuovo, oppure scrivici a inlab.communication@gmail.com.</p>)
         : <>
           <p style={{ fontSize: 15, color: 'var(--t)', marginBottom: '1rem' }}>Grazie! Il download è pronto: il link resta valido per 10 minuti. Se non parte, tocca «Scarica di nuovo».</p>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -439,7 +470,13 @@ export const CasePage: React.FC<CasePageProps> = ({ cs, onBack, onContact, onCli
         <motion.div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 70% 30%, rgba(205,178,255,0.18) 0%, transparent 50%), linear-gradient(135deg, #1e1d1d 0%, #2a1f3d 100%)', y: heroY, opacity: heroOpacity }} />
         {heroImage && (
           <>
-            <motion.img src={heroImage} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, y: heroY }} />
+            {/* Versioni ridotte da Cloudinary (richiesta Performance 24/11: la testata originale da 2,3 MB
+                era l'LCP). Stesse larghezze della testata delle schede cliente, più 1920 per gli schermi grandi.
+                L'immagine è al 35% sotto una sfumatura scura: la riduzione sui telefoni non si nota. */}
+            <motion.img src={cld(heroImage, 1600)} alt="" fetchPriority="high"
+              srcSet={/\/image\/upload\//.test(heroImage) ? [640, 960, 1280, 1600, 1920].map((w) => `${cld(heroImage, w)} ${w}w`).join(', ') : undefined}
+              sizes="100vw"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35, y: heroY }} />
             <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(30,29,29,1) 0%, rgba(30,29,29,.6) 50%, rgba(30,29,29,.25) 100%)' }} />
           </>
         )}

@@ -1,6 +1,7 @@
 import type { Firestore } from 'firebase/firestore/lite';
 import { isFirebaseConfigured } from './firebaseConfig';
 import { getLiteDb, liteFirestore } from './firestoreLite';
+import { newSessionId } from './sessionId';
 
 // Riferimenti risolti dopo il primo caricamento lazy di Firestore lite, così
 // session_end (su pagehide) può scrivere in modo sincrono.
@@ -11,9 +12,11 @@ const ensureDb = async () => {
   if (addEvent) return addEvent;
   const liteDb = await getLiteDb();
   if (!liteDb) return null;
-  const { collection, addDoc } = await liteFirestore();
+  const { collection, addDoc, serverTimestamp } = await liteFirestore();
   db = liteDb;
-  addEvent = (e) => addDoc(collection(liteDb, 'analytics_events'), e);
+  // L'ora la mette il server (le regole accettano solo created_at == request.time):
+  // un orologio del browser sbagliato o falsificato non può spostare gli eventi nel tempo.
+  addEvent = (e) => addDoc(collection(liteDb, 'analytics_events'), { ...e, created_at: serverTimestamp() });
   return addEvent;
 };
 
@@ -27,13 +30,13 @@ const getSessionId = (): string => {
   try {
     let sid = sessionStorage.getItem(SESSION_KEY);
     if (!sid) {
-      sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+      sid = newSessionId();
       sessionStorage.setItem(SESSION_KEY, sid);
       sessionStorage.setItem(SESSION_START_KEY, Date.now().toString());
     }
     return sid;
   } catch {
-    if (!mem.sid) { mem.sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`; mem.start = Date.now().toString(); }
+    if (!mem.sid) { mem.sid = newSessionId(); mem.start = Date.now().toString(); }
     return mem.sid;
   }
 };
@@ -51,7 +54,6 @@ const baseEvent = () => ({
   user_agent: navigator.userAgent.slice(0, 200),
   device: getDevice(),
   path: window.location.pathname.slice(0, 300),
-  created_at: new Date(), // salvato da Firestore come Timestamp
 });
 
 // "Non contare le mie visite su questo dispositivo" (richiesta di Nicola 25/10):
@@ -144,7 +146,8 @@ export const trackClick = (target: string) => {
 const trackSessionEnd = () => {
   const start = parseInt(sessionStart() || '0', 10);
   if (!start || !db || !addEvent || skip()) return;
-  const duration = Math.round((Date.now() - start) / 1000);
+  // Le regole accettano 0–86400 s (una scheda lasciata aperta per giorni conta come un giorno)
+  const duration = Math.min(86400, Math.max(0, Math.round((Date.now() - start) / 1000)));
   addEvent({
     ...baseEvent(),
     event_type: 'session_end',
@@ -163,7 +166,8 @@ export const initAnalytics = () => {
     const doc = document.documentElement;
     const max = doc.scrollHeight - doc.clientHeight;
     if (max <= 0) return;
-    const pct = (window.scrollY / max) * 100;
+    // Lo «scroll elastico» di iOS può dare valori fuori scala: le regole accettano solo 0–100
+    const pct = Math.min(100, Math.max(0, (window.scrollY / max) * 100));
     const sections = document.querySelectorAll<HTMLElement>('[data-section]');
     const mid = window.scrollY + window.innerHeight / 2;
     let active = '';
