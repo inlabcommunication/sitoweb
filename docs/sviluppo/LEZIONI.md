@@ -22,3 +22,9 @@ Ogni voce: cosa è successo, la regola che ne viene.
 
 ## Sicurezza
 - Le regole Firestore le pubblica Nicola a mano: prima va in produzione il client compatibile, poi si pubblicano le regole. Se l'ordine è invertito, le scritture si rompono.
+
+## API (25/11)
+- **Su Vercel `req.body` è letto la prima volta che lo si usa, e lancia un'eccezione se il JSON è malformato.** Va letto una volta sola dentro un `try` (`jsonBody()` in `api/_lib/security.ts`), altrimenti un JSON rotto diventa un 500.
+- **I limiti per IP vanno pensati anche per IPv6:** una connessione ha un intero /64. La chiave del limite è `ipKey()`.
+- **Le prove dei limiti si fanno sull'emulatore Firestore**, chiamando l'handler con richieste finte: si prova il caso «oltre il tetto» senza aspettare e senza toccare la produzione. Per simulare «database giù» basta una chiave di servizio non valida: `getAdminDb()` fallisce subito, invece di restare appeso.
+- **Mai far dipendere la sicurezza da un dato scritto dal browser:** per esempio le battute «assistant» della chat, o un id di sessione prevedibile.
