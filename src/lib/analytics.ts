@@ -1,6 +1,7 @@
 import type { Firestore } from 'firebase/firestore/lite';
 import { isFirebaseConfigured } from './firebaseConfig';
 import { getLiteDb, liteFirestore } from './firestoreLite';
+import { newSessionId } from './sessionId';
 
 // Riferimenti risolti dopo il primo caricamento lazy di Firestore lite, così
 // session_end (su pagehide) può scrivere in modo sincrono.
@@ -29,13 +30,13 @@ const getSessionId = (): string => {
   try {
     let sid = sessionStorage.getItem(SESSION_KEY);
     if (!sid) {
-      sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`;
+      sid = newSessionId();
       sessionStorage.setItem(SESSION_KEY, sid);
       sessionStorage.setItem(SESSION_START_KEY, Date.now().toString());
     }
     return sid;
   } catch {
-    if (!mem.sid) { mem.sid = `${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 10)}`; mem.start = Date.now().toString(); }
+    if (!mem.sid) { mem.sid = newSessionId(); mem.start = Date.now().toString(); }
     return mem.sid;
   }
 };

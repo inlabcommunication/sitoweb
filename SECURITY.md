@@ -11,7 +11,7 @@
 | Spam dal modulo contatti | Validazione lato server, campo trappola anti-bot, tempo minimo di compilazione, max 5 invii all'ora per visitatore. |
 | Accesso alla dashboard | Serve un account Firebase **e** un documento `admins/{uid}`: gli altri account vedono "Accesso negato" e le regole bloccano comunque i dati. |
 | Upload abusivi su Cloudinary | Gli upload sono **firmati** dal server solo per admin verificati (`/api/cloudinary-sign`). |
-| Attacchi dal browser (XSS, clickjacking…) | Intestazioni di sicurezza su tutto il sito: Content-Security-Policy restrittiva, HSTS, X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy. |
+| Attacchi dal browser (XSS, clickjacking…) | Intestazioni di sicurezza su tutto il sito: Content-Security-Policy restrittiva, HSTS, X-Frame-Options SAMEORIGIN e `frame-ancestors 'self'` (il sito si può incorniciare solo da sé stesso, per l'anteprima della dashboard), nosniff, Referrer-Policy, Permissions-Policy. |
 | Codice visibile | Il codice del sito nel browser è sempre visibile (vale per ogni sito): per questo **nessun segreto** è nel codice pubblico. Verificato sul bundle e nella storia git. |
 
 ## ⚠️ Da fare nelle console (non si può fare dal codice)

@@ -4,7 +4,7 @@
  * più scrivere direttamente nel database.
  */
 import type { VercelRequest, VercelResponse } from "./_lib/types";
-import { clientIp, getAdminDb, hashKey, isAllowedOrigin, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
+import { ipKey, dailyCap, getAdminDb, hashKey, isAllowedOrigin, jsonBody, rateLimit, requireAdmin, safeEqual, securityHeaders, sign, str } from "./_lib/security";
 import { getApps } from "firebase-admin/app";
 import { FieldValue } from "firebase-admin/firestore";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
@@ -13,6 +13,13 @@ import { createHash } from "node:crypto";
 
 // "Come ci hai conosciuto?" (GS-3, Nicola 23/11): solo queste voci, uguali a quelle del modulo in src/App.tsx
 const HOW_FOUND = new Set(["Passaparola", "Ho visto un vostro lavoro sui social di un cliente", "Instagram o Facebook di InLab", "Ricerca su Google", "ChatGPT o altre AI", "Altro"]);
+
+/** Tetto giornaliero globale dei lead salvati (audit 24/11, P2): oltre, niente scritture e i contatti diretti */
+const LEAD_DAILY_CAP = 200;
+const CONTACT_FALLBACK = "Non riusciamo a salvare la richiesta in questo momento: scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319.";
+
+/** Solo codice e messaggio dell'errore nel log, mai i dati del lead */
+const dbError = (e: any) => `${e?.code ?? ""} ${String(e?.message ?? e).slice(0, 200)}`.trim();
 
 const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[a-z]{2,24}$/i;
 
@@ -73,6 +80,18 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Nessun dato personale: solo ID del progetto, conteggio, data e origine dell'ultimo.
     if (req.headers.authorization) {
       if (!(await requireAdmin(req))) return res.status(401).json({ error: "Non autorizzato" });
+      // Stato del tetto giornaliero dei lead (Direttore 25/11): la dashboard mostra «tetto raggiunto oggi»,
+      // così uno spam non passa inosservato. Solo numeri, nessuna notifica.
+      if (req.query?.cap) {
+        try {
+          const day = new Date().toISOString().slice(0, 10);
+          const snap = await getAdminDb().collection("_usage").doc(`lead_create_${day}`).get();
+          return res.status(200).json({ day, count: Number(snap.data()?.count || 0), limit: LEAD_DAILY_CAP });
+        } catch (e) {
+          console.error("Lead cap check error:", dbError(e));
+          return res.status(503).json({ error: "Database del server non raggiungibile" });
+        }
+      }
       // Prova del download dalla dashboard (anche con il caso in bozza): nessun lead salvato
       const testCase = str(req.query?.download, 80).replace(/[^a-z0-9-]/gi, "");
       if (testCase) {
@@ -120,7 +139,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   if (!isAllowedOrigin(req)) return res.status(403).json({ error: "Forbidden" });
 
-  const b = req.body || {};
+  const b = jsonBody(req);
+  if (!b) return res.status(400).json({ error: "Dati non validi" });
 
   // Nuovo download con il pass: nessun dato personale, nessun lead, solo un nuovo link di 10 minuti
   if (b.download && typeof b.pass === "string") {
@@ -129,15 +149,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     if (!caseId || !passValid(pass, caseId)) return res.status(403).json({ error: "pass" });
     try {
       const db = getAdminDb();
-      if (!(await rateLimit(db, "dlpass_ip", clientIp(req), 20, 3600)) || !(await rateLimit(db, "dlpass", hashKey(pass), 10, 3600))) {
+      if (!(await rateLimit(db, "dlpass_ip", ipKey(req), 20, 3600)) || !(await rateLimit(db, "dlpass", hashKey(pass), 10, 3600))) {
         return res.status(429).json({ error: "Troppe richieste. Riprova più tardi." });
       }
       const doc = await findPresentation(db, caseId);
       if (!doc) return res.status(404).json({ error: "Documento non disponibile" });
       return res.status(200).json({ ok: true, url: signedDownload(doc.publicId) });
     } catch (e) {
-      console.error("Download pass error:", e);
-      return res.status(500).json({ error: "Errore interno" });
+      console.error("Download pass error:", dbError(e));
+      return res.status(503).json({ error: CONTACT_FALLBACK });
     }
   }
 
@@ -186,12 +206,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   try {
     const db = getAdminDb();
-    if (!(await rateLimit(db, "lead", clientIp(req), 5, 3600))) {
+    if (!(await rateLimit(db, "lead", ipKey(req), 5, 3600))) {
       return res.status(429).json({ error: "Troppi invii. Riprova più tardi." });
     }
-    if (downloadCase) {
-      const doc = await findPresentation(db, downloadCase);
-      if (!doc) return res.status(404).json({ error: "Documento non disponibile" });
+    // Il caso del download si controlla prima del tetto: un caso inesistente (404) non consuma un posto
+    const doc = downloadCase ? await findPresentation(db, downloadCase) : null;
+    if (downloadCase && !doc) return res.status(404).json({ error: "Documento non disponibile" });
+    if (!(await dailyCap(db, "lead_create", LEAD_DAILY_CAP))) {
+      console.warn("[lead] tetto giornaliero dei lead raggiunto");
+      return res.status(429).json({ error: CONTACT_FALLBACK });
+    }
+    if (downloadCase && doc) {
       const tag = `download-presentazione-${downloadCase}`;
       await db.collection("leads").add({
         name: lead.name,
@@ -228,7 +253,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await notifyLeadCapped(db, { source: "contact_form", ...lead, fonte, landing: attribution?.landing });
     return res.status(200).json({ ok: true });
   } catch (e) {
-    console.error("Lead API error:", e);
-    return res.status(500).json({ error: "Errore interno" });
+    // Database non raggiungibile (es. quota esaurita): il lead non si può salvare, quindi la risposta
+    // dà subito email e telefono di InLab (audit 24/11, P2). Nel log solo codice e messaggio dell'errore.
+    console.error("Lead API error:", dbError(e));
+    return res.status(503).json({ error: CONTACT_FALLBACK });
   }
 }

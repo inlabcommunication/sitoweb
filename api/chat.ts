@@ -6,7 +6,7 @@
 
 import type { VercelRequest, VercelResponse } from "./_lib/types";
 import type Anthropic from "@anthropic-ai/sdk";
-import { clientIp, dailyCap, getAdminDb, isAllowedOrigin, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
+import { ipKey, dailyCap, getAdminDb, isAllowedOrigin, jsonBody, rateLimit, requireAdmin, securityHeaders, str } from "./_lib/security";
 import { cleanPath, notifyLeadCapped } from "./_lib/notify";
 import { cleanAttribution, fonteOf } from "./_lib/attribution";
 
@@ -106,6 +106,12 @@ async function callAnthropic(apiKey: string, model: string, systemPrompt: string
 
 // Modelli provati in ordine: se uno è ritirato/non disponibile si passa al successivo.
 // "-latest" sono alias di Google che puntano sempre al modello Flash più recente.
+/** Tetto dei token in uscita per Gemini (verifica audit 24/11, P3). È più alto dei 400 di Claude
+ *  perché nei modelli Gemini recenti il «ragionamento» consuma token dello stesso tetto: con 400 le
+ *  risposte arrivavano tagliate o vuote. La lunghezza visibile resta corta (2-3 frasi, prompt).
+ *  Caso peggiore al giorno: CHAT_DAILY_LIMIT risposte × 1024 token (400 × 1024 = circa 410.000). */
+const GEMINI_MAX_OUTPUT_TOKENS = 1024;
+
 const GEMINI_FALLBACKS = ["gemini-flash-latest", "gemini-3.5-flash", "gemini-2.5-flash", "gemini-flash-lite-latest", "gemini-2.5-flash-lite"];
 
 async function callGemini(apiKey: string, model: string, systemPrompt: string, messages: any[], maxTokens: number) {
@@ -133,8 +139,7 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
     try {
       const chat = ai.chats.create({
         model: mdl,
-        // margine ampio: i modelli recenti usano token anche per "ragionare" prima di rispondere
-        config: { systemInstruction: systemPrompt, maxOutputTokens: Math.max(maxTokens, 1024), temperature: 0.7 },
+        config: { systemInstruction: systemPrompt, maxOutputTokens: Math.max(maxTokens, GEMINI_MAX_OUTPUT_TOKENS), temperature: 0.7 },
         history,
       });
       const response = await chat.sendMessage({ message: String(lastMessage?.content || "") });
@@ -163,31 +168,9 @@ async function callGemini(apiKey: string, model: string, systemPrompt: string, m
   throw Object.assign(lastError || new Error("All Gemini models unavailable"), { chatCode: quotaHit ? "AI_QUOTA" : "AI_MODEL", attempts });
 }
 
-// Tetto giornaliero di riserva per istanza, usato solo se Firestore non è
-// raggiungibile: così il limite di spesa vale anche senza database (più basso
-// di quello normale, perché le istanze attive possono essere più di una)
-const MEM_GLOBAL_DAY = Math.max(20, Math.floor(LIMIT_GLOBAL_DAY / 4));
-let memDay = "";
-let memDayCount = 0;
-function memoryDailyCap(): boolean {
-  const day = new Date().toISOString().slice(0, 10);
-  if (day !== memDay) { memDay = day; memDayCount = 0; }
-  memDayCount += 1;
-  return memDayCount <= MEM_GLOBAL_DAY;
-}
-
-// Limite di riserva per istanza, usato solo se Firestore non è raggiungibile
-const memHits = new Map<string, number[]>();
-function memoryLimit(ip: string): boolean {
-  const now = Date.now();
-  const hits = (memHits.get(ip) || []).filter((t) => now - t < 600_000);
-  hits.push(now);
-  memHits.set(ip, hits);
-  if (memHits.size > 5000) memHits.clear();
-  return hits.length <= Math.min(LIMIT_PER_IP_10MIN, 10);
-}
-
 const FALLBACK_REPLY = "Mi dispiace, c'è stato un problema tecnico. Scrivici a inlab.communication@gmail.com 🙂";
+/** Modalità «scrivici» (audit 24/11, P3): senza database non ci sono i limiti condivisi, quindi niente AI */
+const OFFLINE_REPLY = "In questo momento l'assistente non è disponibile. Scrivici a inlab.communication@gmail.com o chiama il +39 329 565 4319: ti rispondiamo noi 🙂";
 
 /** Valida e ripulisce la conversazione inviata dal browser. */
 function sanitizeMessages(input: unknown): { role: "user" | "assistant"; content: string }[] | null {
@@ -216,14 +199,16 @@ async function handle(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") return res.status(405).json({ error: "Method not allowed" });
   if (!isAllowedOrigin(req)) return res.status(403).json({ error: "Forbidden" });
 
-  const messages = sanitizeMessages(req.body?.messages);
+  const body = jsonBody(req);
+  if (!body) return res.status(400).json({ error: "Invalid JSON", reply: "Messaggio non valido." });
+  const messages = sanitizeMessages(body.messages);
   if (!messages) return res.status(400).json({ error: "Invalid request", reply: "Messaggio non valido o troppo lungo." });
-  const sessionId = str(req.body?.sessionId, 64).replace(/[^a-zA-Z0-9_-]/g, "") || null;
-  const attribution = cleanAttribution(req.body?.attribution);
-  const page = attribution?.page || cleanPath(req.body?.page);
+  const sessionId = str(body.sessionId, 64).replace(/[^a-zA-Z0-9_-]/g, "") || null;
+  const attribution = cleanAttribution(body.attribution);
+  const page = attribution?.page || cleanPath(body.page);
 
   try {
-    const ip = clientIp(req);
+    const ip = ipKey(req);
     let db: ReturnType<typeof getAdminDb> | null = null;
     let settings: any = {};
     try {
@@ -238,13 +223,11 @@ async function handle(req: VercelRequest, res: VercelResponse) {
       // Dal database leggiamo SOLO provider e modello; le chiavi stanno esclusivamente nelle variabili d'ambiente
       const settingsSnap = await db.collection("app").doc("settings").get();
       settings = settingsSnap.exists ? (settingsSnap.data() as any) : {};
-    } catch (e) {
-      // Database non raggiungibile (es. FIREBASE_SERVICE_ACCOUNT_KEY mancante/errata):
-      // la chat continua con un limite in memoria, più prudente, invece di bloccarsi
-      console.error("[chat] Firestore non disponibile, uso limiti in memoria:", e);
-      db = null;
-      if (!memoryLimit(ip)) return res.status(429).json({ error: "Too many requests", code: "RATE", reply: "Hai inviato molti messaggi in poco tempo. Riprova tra qualche minuto 🙂" });
-      if (!memoryDailyCap()) return res.status(429).json({ error: "Daily limit", reply: "L'assistente è molto richiesto oggi. Scrivici a inlab.communication@gmail.com e ti rispondiamo noi 🙂" });
+    } catch (e: any) {
+      // Database non raggiungibile (chiave mancante, quota esaurita…): senza i limiti condivisi e il
+      // tetto di spesa giornaliero l'AI non si chiama. Il visitatore riceve i contatti diretti.
+      console.error("[chat] Firestore non disponibile, modalità «scrivici»:", e?.code ?? "", String(e?.message ?? e).slice(0, 200));
+      return res.status(503).json({ error: "Unavailable", code: "DB", reply: OFFLINE_REPLY });
     }
     const provider = (settings.aiProvider || process.env.AI_PROVIDER) === "anthropic" ? "anthropic" : "gemini";
     const maxTokens = 400;
@@ -281,12 +264,18 @@ async function handle(req: VercelRequest, res: VercelResponse) {
 
     if (sessionId && db) {
       try {
-        const conversation = [...messages, { role: "assistant", content: visibleText }].slice(-30);
+        // Si salvano solo i messaggi del visitatore e le risposte generate qui dal server: le battute
+        // «assistant» che arrivano dal browser potrebbero essere inventate (audit 24/11, L2).
+        const reply = { role: "assistant" as const, content: visibleText };
+        const userTurns = messages.filter((x) => x.role === "user");
         const leadsRef = db.collection("leads");
         // Un solo lead per conversazione: se esiste già si aggiornano conversazione e contatti mancanti
         const existing = await leadsRef.where("session_id", "==", sessionId).limit(1).get();
         if (!existing.empty) {
           const old = existing.docs[0].data();
+          // conversazione già salvata dal server + l'ultimo messaggio del visitatore + la risposta di adesso
+          const saved = Array.isArray(old.conversation) ? old.conversation : [];
+          const conversation = [...saved, messages[messages.length - 1], reply].slice(-30);
           await existing.docs[0].ref.update({
             conversation, updated_at: new Date().toISOString(),
             ...(email && !old.email ? { email } : {}),
@@ -295,6 +284,7 @@ async function handle(req: VercelRequest, res: VercelResponse) {
           });
         } else if (email || phone) {
           const classification = ["freddo", "tiepido", "caldo", "urgente"].includes(m.classification) ? m.classification : "freddo";
+          const conversation = [...userTurns, reply].slice(-30);
           const tags = Array.isArray(m.tags) ? m.tags.map((t: unknown) => str(t, 40)).filter(Boolean).slice(0, 6) : [];
           await leadsRef.add({
             email, name, phone,
