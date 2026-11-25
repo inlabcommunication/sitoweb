@@ -28,3 +28,5 @@ Ogni voce: cosa è successo, la regola che ne viene.
 - **I limiti per IP vanno pensati anche per IPv6:** una connessione ha un intero /64. La chiave del limite è `ipKey()`.
 - **Le prove dei limiti si fanno sull'emulatore Firestore**, chiamando l'handler con richieste finte: si prova il caso «oltre il tetto» senza aspettare e senza toccare la produzione. Per simulare «database giù» basta una chiave di servizio non valida: `getAdminDb()` fallisce subito, invece di restare appeso.
 - **Mai far dipendere la sicurezza da un dato scritto dal browser:** per esempio le battute «assistant» della chat, o un id di sessione prevedibile.
+- **Una build senza `VITE_FIREBASE_API_KEY` toglie la dashboard dal bundle**, perché il codice admin risulta irraggiungibile. Per controllare l'admin in una build locale serve una chiave finta (lezione dell'Analista, 25/11).
+- **Una copia di sicurezza non deve mai contenere segreti:** prima di metterci un documento di configurazione, si tolgono i campi con nomi tipo key, secret, token o password.
