@@ -819,7 +819,7 @@ const ServiceExamples = ({ slug }: { slug: string }) => {
               <h3 style={{fontFamily:"var(--fd)",fontSize:"clamp(1.8rem,3vw,2.6rem)",lineHeight:.95,marginBottom:"1rem",textTransform:"uppercase"}}>{site.title}</h3>
               <p style={{fontSize:15.5,color:"var(--m)",lineHeight:1.75,marginBottom:"1.6rem"}}>{site.desc}</p>
               <div style={{display:"flex",gap:10,flexWrap:"wrap"}}>
-                <a className="btn btn-p" href={site.url} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
+                <a className="btn btn-p" href={/^https:\/\//i.test(site.url.trim()) ? site.url.trim() : undefined} target="_blank" rel="noreferrer">Visita il sito <ArrowUpRight size={14}/></a>
                 {site.caseStudy && cases.some((x: any)=>x.id===site.caseStudy) && <Link to={`/casi-studio/${site.caseStudy}`} className="btn btn-g">Leggi il caso studio</Link>}
               </div>
             </div>

@@ -10,8 +10,10 @@ export const siteShot = (url: string, w = 1280, h = 800) =>
 
 export const BrowserMockup: React.FC<{ url: string; label: string; w?: number; h?: number; image?: string }> = ({ url, label, w, h, image }) => {
   const [failed, setFailed] = React.useState(false);
+  // solo link https (audit 24/11, L3): l'indirizzo arriva dalla dashboard
+  const href = /^https:\/\//i.test(url.trim()) ? url.trim() : undefined;
   return (
-    <a href={url} target="_blank" rel="noreferrer" style={{
+    <a href={href} target="_blank" rel="noreferrer" style={{
       display: 'block', textDecoration: 'none', color: 'inherit',
       borderRadius: 18, overflow: 'hidden', border: '.5px solid rgba(205,178,255,0.25)',
       background: '#161518', boxShadow: '0 30px 80px rgba(0,0,0,.45)',
